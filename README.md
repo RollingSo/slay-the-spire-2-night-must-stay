@@ -13,6 +13,11 @@ Requirements:
 - .NET 9 SDK.
 - PowerShell on Windows.
 
+`NuGet.Config` intentionally contains only the public NuGet source. The Godot
+Mono package source is machine-specific; configure it locally (or restore the
+Godot package source from your installed Godot SDK) rather than committing an
+absolute Windows path or a user profile path.
+
 Build and install the complete mod from the project root:
 
 ```powershell
