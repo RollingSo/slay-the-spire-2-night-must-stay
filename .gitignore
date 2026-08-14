@@ -10,6 +10,7 @@
 .codex/
 **/bin/
 **/obj/
+images/packed/card_portraits/guardian/
 
 # Local game assemblies are supplied by the developer's installation.
 sts2dll/
