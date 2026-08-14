@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="768" height="768" viewBox="0 0 768 768">
+  <defs>
+    <g id="shield" stroke="#102536" stroke-width="8" stroke-linejoin="round">
+      <path fill="#8ec6d6" d="M64 10 108 28 101 83 64 118 27 83 20 28Z"/>
+      <path fill="#dce8e8" d="M64 18v88L34 78 29 34Z"/>
+      <path fill="#49758c" d="M64 18 99 34 94 78 64 106Z"/>
+    </g>
+    <g id="wing" stroke="#102536" stroke-width="7" stroke-linejoin="round">
+      <path fill="#b97b45" d="M16 77C30 35 58 18 109 14 91 31 83 43 106 43 85 55 79 66 99 68 76 78 63 93 48 115 48 92 38 88 16 77Z"/>
+      <path fill="#e2b06d" d="M29 72C44 43 62 31 91 24 74 41 68 54 83 57 62 65 51 77 45 94 43 82 37 76 29 72Z"/>
+    </g>
+    <g id="spear" stroke="#102536" stroke-width="7" stroke-linejoin="round">
+      <path fill="#3c6073" d="m25 107 70-70 8 8-70 70Z"/>
+      <path fill="#dce8e8" d="m79 18 34-9-9 34-17 2-10-10Z"/>
+      <path fill="#8ec6d6" d="m95 36 18-27-9 34Z"/>
+    </g>
+    <g id="feather" stroke="#102536" stroke-width="7" stroke-linejoin="round">
+      <path fill="#dce8e8" d="M19 101C33 46 59 17 109 13 102 58 78 91 34 105Z"/>
+      <path fill="#65b8c5" d="m33 105 51-65M55 78l-21-5M72 59l-19-7" fill="none"/>
+    </g>
+    <g id="star" stroke="#102536" stroke-width="7" stroke-linejoin="round">
+      <path fill="#f4c95d" d="m64 7 12 36 38 1-31 22 11 37-30-23-31 23 12-37-31-22 38-1Z"/>
+    </g>
+    <g id="swirl" fill="none" stroke="#65d2df" stroke-width="12" stroke-linecap="round">
+      <path d="M19 73c12-47 78-56 91-13 11 39-42 67-67 39-17-19 5-44 27-31 13 8 6 25-7 25"/>
+    </g>
+    <g id="boot" stroke="#102536" stroke-width="8" stroke-linejoin="round">
+      <path fill="#8ec6d6" d="M30 18h41l-5 48 42 24-7 24H24L12 91l27-24Z"/>
+      <path fill="#dce8e8" d="M38 26h25l-4 44-35 22-4-5 27-24Z"/>
+    </g>
+    <g id="wall" stroke="#102536" stroke-width="8" stroke-linejoin="round">
+      <path fill="#6f8794" d="M13 38h28V17h45v21h29v76H13Z"/>
+      <path fill="#b5c9cf" d="M22 48h84v17H22Zm0 30h84v17H22Z"/>
+    </g>
+    <g id="eye" stroke="#102536" stroke-width="8" stroke-linejoin="round">
+      <path fill="#dce8e8" d="M10 64c28-39 80-39 108 0-28 39-80 39-108 0Z"/>
+      <circle cx="64" cy="64" r="23" fill="#65d2df"/><circle cx="64" cy="64" r="10" fill="#102536"/>
+    </g>
+    <g id="heart" stroke="#102536" stroke-width="8" stroke-linejoin="round">
+      <path fill="#5ec0b3" d="M64 112C40 91 15 74 15 45 15 16 50 9 64 33 78 9 113 16 113 45c0 29-25 46-49 67Z"/>
+    </g>
+    <g id="arrow" stroke="#102536" stroke-width="7" stroke-linejoin="round">
+      <path fill="#f4c95d" d="M15 55h60V25l39 39-39 39V73H15Z"/>
+    </g>
+    <g id="halo" fill="none" stroke="#f4c95d" stroke-width="9"><circle cx="64" cy="64" r="45"/><path d="M64 3v16M64 109v16M3 64h16M109 64h16"/></g>
+    <g id="ban" stroke="#102536" stroke-width="8"><circle cx="64" cy="64" r="48" fill="#a64f56"/><path d="m29 29 70 70" stroke="#f3d6cb" stroke-width="14"/></g>
+  </defs>
+
+  <!-- row 1 -->
+  <g transform="translate(0 0)"><use href="#shield"/><use href="#halo"/></g>
+  <g transform="translate(128 0)"><use href="#shield"/><path d="m31 93 62-62" stroke="#f4c95d" stroke-width="13"/><path d="m80 23 21 2-2 21" fill="none" stroke="#f4c95d" stroke-width="9"/></g>
+  <g transform="translate(256 0)"><use href="#boot"/><path d="M12 116h103" stroke="#65d2df" stroke-width="9" stroke-linecap="round"/></g>
+  <g transform="translate(384 0)"><use href="#shield"/><path d="M14 110h100" stroke="#f4c95d" stroke-width="10"/><path d="M31 97v20M64 94v23M97 97v20" stroke="#f4c95d" stroke-width="7"/></g>
+  <g transform="translate(512 0)"><use href="#feather"/><use href="#spear"/></g>
+  <g transform="translate(640 0)"><use href="#shield"/><path d="M17 112h94" stroke="#f4c95d" stroke-width="12"/></g>
+
+  <!-- row 2 -->
+  <g transform="translate(0 128)"><use href="#heart"/><use href="#shield" transform="scale(.62) translate(39 39)"/></g>
+  <g transform="translate(128 128)"><use href="#shield"/><path d="M5 64h28M95 64h28" stroke="#f4c95d" stroke-width="12"/><path d="m13 50-9 14 9 14M115 50l9 14-9 14" fill="none" stroke="#f4c95d" stroke-width="8"/></g>
+  <g transform="translate(256 128)"><use href="#swirl"/><use href="#wing" transform="scale(.55) translate(49 43)"/></g>
+  <g transform="translate(384 128)"><use href="#shield"/><path d="M64 4v30" stroke="#f4c95d" stroke-width="10"/><path d="m48 19 16-16 16 16" fill="none" stroke="#f4c95d" stroke-width="8"/></g>
+  <g transform="translate(512 128)"><use href="#spear"/><path d="M18 18h44v44" fill="none" stroke="#65d2df" stroke-width="11"/><path d="m19 48-1-30 30 1" fill="none" stroke="#65d2df" stroke-width="8"/></g>
+  <g transform="translate(640 128)"><use href="#shield"/><use href="#spear" transform="scale(.7) translate(35 33)"/></g>
+
+  <!-- row 3 -->
+  <g transform="translate(0 256)"><use href="#shield"/><path d="M25 20 64 4l39 16" fill="none" stroke="#f4c95d" stroke-width="10"/></g>
+  <g transform="translate(128 256)"><use href="#eye"/><path d="M64 4v23" stroke="#f4c95d" stroke-width="9"/></g>
+  <g transform="translate(256 256)"><use href="#shield"/><path d="m78 86 30-36" stroke="#63cc73" stroke-width="13"/><path d="m95 49 13 1-1 14" fill="none" stroke="#63cc73" stroke-width="8"/></g>
+  <g transform="translate(384 256)"><use href="#swirl"/><path d="m28 28 72 72" stroke="#a64f56" stroke-width="12"/></g>
+  <g transform="translate(512 256)"><use href="#wall"/></g>
+  <g transform="translate(640 256)"><use href="#shield"/><path d="M18 17 110 111" stroke="#65d2df" stroke-width="9"/><path d="M39 17 111 89" stroke="#65d2df" stroke-width="6"/></g>
+
+  <!-- row 4 -->
+  <g transform="translate(0 384)"><use href="#shield"/><path d="M64 6v31" stroke="#f4c95d" stroke-width="12"/><path d="m48 20 16-16 16 16" fill="none" stroke="#f4c95d" stroke-width="8"/></g>
+  <g transform="translate(128 384)"><use href="#ban"/><use href="#spear" transform="scale(.68) translate(30 28)"/></g>
+  <g transform="translate(256 384)"><use href="#spear"/><path d="M25 25 103 103" stroke="#65d2df" stroke-width="9" stroke-dasharray="10 8"/></g>
+  <g transform="translate(384 384)"><use href="#eye"/><path d="M17 105 111 23" stroke="#a64f56" stroke-width="11"/></g>
+  <g transform="translate(512 384)"><use href="#shield"/><use href="#star" transform="scale(.48) translate(69 66)"/></g>
+  <g transform="translate(640 384)"><use href="#shield"/><path d="M64 12 81 45 116 50 90 76 96 112 64 95 32 112 38 76 12 50 47 45Z" fill="none" stroke="#f4c95d" stroke-width="8"/></g>
+
+  <!-- row 5 -->
+  <g transform="translate(0 512)"><use href="#wing"/><path d="M24 108h80" stroke="#65d2df" stroke-width="9"/></g>
+  <g transform="translate(128 512)"><use href="#eye"/><use href="#shield" transform="scale(.48) translate(70 70)"/></g>
+  <g transform="translate(256 512)"><use href="#wall"/><use href="#halo" transform="scale(.62) translate(39 38)"/></g>
+  <g transform="translate(384 512)"><use href="#spear"/><path d="M25 103 103 25" stroke="#f4c95d" stroke-width="5"/></g>
+  <g transform="translate(512 512)"><use href="#boot"/><use href="#shield" transform="scale(.48) translate(70 69)"/></g>
+  <g transform="translate(640 512)"><use href="#wing"/><use href="#swirl" transform="scale(.65) translate(35 34)"/></g>
+
+  <!-- row 6 -->
+  <g transform="translate(0 640)"><use href="#spear"/><path d="M19 109 109 19" stroke="#f4c95d" stroke-width="15" opacity=".75"/></g>
+  <g transform="translate(128 640)"><use href="#wall"/><path d="M12 112h104" stroke="#65d2df" stroke-width="10"/></g>
+  <g transform="translate(256 640)"><use href="#star"/><use href="#swirl" transform="scale(.56) translate(50 49)"/></g>
+  <g transform="translate(384 640)"><use href="#wing"/><path d="M20 106 108 18" stroke="#65d2df" stroke-width="8"/></g>
+  <g transform="translate(512 640)"><use href="#shield"/><use href="#wing" transform="scale(.55) translate(48 47)"/></g>
+  <g transform="translate(640 640)"><use href="#wing"/><path d="M11 95c35 23 69 23 106 0" fill="none" stroke="#65d2df" stroke-width="10"/></g>
+</svg>

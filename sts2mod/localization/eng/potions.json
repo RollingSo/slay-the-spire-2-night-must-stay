@@ -1,0 +1,14 @@
+{
+  "STALWART_SHIELD_GREASE.title": "Stalwart Shield Grease",
+  "STALWART_SHIELD_GREASE.description": "Gain {FortifyPower} [gold]Fortify[/gold].",
+  "KNIGHTLY_SPIRIT.title": "Knightly Spirit",
+  "KNIGHTLY_SPIRIT.description": "Gain {GuardCounterPower} [gold]Guard Counter[/gold].",
+  "FEARLESS_LIQUOR.title": "‘Fearless’ Liquor",
+  "FEARLESS_LIQUOR.description": "Add {Cards} upgraded [gold]Shield Pokes[/gold] to your [gold]Hand[/gold].",
+  "POISON_GREASE.title": "Poison Grease",
+  "POISON_GREASE.description": "Apply {HiddenPoisonPower} [gold]Hidden Poison[/gold].",
+  "THROWN_ARROW_POTION.title": "Thrown Arrow",
+  "THROWN_ARROW_POTION.description": "Apply {MarkPower} [gold]Mark[/gold]. Trigger all [gold]Mark[/gold] on that enemy.",
+  "PICKLED_TURTLE_NECK_MEAT.title": "Pickled Turtle-Neck Meat",
+  "PICKLED_TURTLE_NECK_MEAT.description": "Add 1 upgraded [gold]Approach[/gold] and 1 upgraded [gold]Retreat[/gold] to your [gold]Hand[/gold]."
+}

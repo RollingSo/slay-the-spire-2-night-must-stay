@@ -1,0 +1,54 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://guardian_assets/merchant/guardian_merchant.png" id="2_texture"]
+
+[sub_resource type="Animation" id="Animation_reset"]
+resource_name = "RESET"
+length = 0.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [Vector2(-35, -254)]}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:rotation")
+tracks/1/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [0.0]}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:modulate")
+tracks/2/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [Color(1, 1, 1, 1)]}
+
+[sub_resource type="Animation" id="Animation_relaxed"]
+resource_name = "relaxed_loop"
+length = 2.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 2
+tracks/0/keys = {"times": PackedFloat32Array(0, 1.2, 2.4), "transitions": PackedFloat32Array(0.5, 0.5, 0.5), "update": 0, "values": [Vector2(-35, -254), Vector2(-35, -260), Vector2(-35, -254)]}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:rotation")
+tracks/1/interp = 2
+tracks/1/keys = {"times": PackedFloat32Array(0, 1.2, 2.4), "transitions": PackedFloat32Array(0.5, 0.5, 0.5), "update": 0, "values": [-0.006, 0.006, -0.006]}
+
+[sub_resource type="Animation" id="Animation_die"]
+resource_name = "die"
+length = 0.75
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation")
+tracks/0/interp = 2
+tracks/0/keys = {"times": PackedFloat32Array(0, 0.75), "transitions": PackedFloat32Array(0.5, 0.5), "update": 0, "values": [0.0, 0.12]}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:modulate")
+tracks/1/interp = 2
+tracks/1/keys = {"times": PackedFloat32Array(0, 0.75), "transitions": PackedFloat32Array(0.5, 0.5), "update": 0, "values": [Color(1, 1, 1, 1), Color(0.45, 0.45, 0.5, 0)]}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_main"]
+_data = {&"RESET": SubResource("Animation_reset"), &"die": SubResource("Animation_die"), &"relaxed_loop": SubResource("Animation_relaxed")}
+
+[node name="GuardianMerchantLayout" type="Node2D"]
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_texture")
+position = Vector2(-35, -254)
+scale = Vector2(0.43, 0.43)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {&"": SubResource("AnimationLibrary_main")}

@@ -1,0 +1,58 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://src/Core/Nodes/Vfx/NCardTrailVfx.cs" id="1_vfx"]
+[ext_resource type="Script" path="res://src/Core/Nodes/Vfx/NCardTrail.cs" id="2_trail"]
+[ext_resource type="Texture2D" path="res://images/packed/vfx/trail.png" id="3_outer"]
+[ext_resource type="Texture2D" path="res://images/packed/vfx/trail2.png" id="4_inner"]
+[ext_resource type="CanvasItemMaterial" path="res://themes/canvas_item_material_additive_shared.tres" id="5_additive"]
+[ext_resource type="Texture2D" path="res://ironeye_assets/energy_icon/ironeye_energy_card_icon.png" id="6_emblem"]
+
+[sub_resource type="Curve" id="Curve_outer"]
+_data = [Vector2(0, 0.15), 0.0, 0.0, 0, 0, Vector2(0.82, 0.72), -2.4, -2.4, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_outer"]
+colors = PackedColorArray(0.17, 0.2, 0.1, 0, 0.48, 0.54, 0.24, 0.7, 0.78, 0.86, 0.25, 0)
+
+[sub_resource type="Curve" id="Curve_inner"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.78, 0.6), -2.8, -2.8, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_inner"]
+colors = PackedColorArray(0.78, 0.86, 0.25, 0, 0.85, 0.92, 0.24, 0.8, 1, 0.98, 0.72, 0)
+
+[node name="CardTrailIroneye" type="Node2D"]
+show_behind_parent = true
+script = ExtResource("1_vfx")
+
+[node name="Trails" type="Node2D" parent="."]
+
+[node name="OuterTrail" type="Line2D" parent="Trails"]
+modulate = Color(0.45, 0.55, 0.2, 0.82)
+material = ExtResource("5_additive")
+width = 88.0
+width_curve = SubResource("Curve_outer")
+gradient = SubResource("Gradient_outer")
+texture = ExtResource("3_outer")
+texture_mode = 2
+joint_mode = 2
+script = ExtResource("2_trail")
+
+[node name="InnerTrail" type="Line2D" parent="Trails"]
+modulate = Color(0.86, 0.93, 0.2, 0.7)
+material = ExtResource("5_additive")
+width = 46.0
+width_curve = SubResource("Curve_inner")
+gradient = SubResource("Gradient_inner")
+texture = ExtResource("4_inner")
+texture_mode = 2
+joint_mode = 2
+script = ExtResource("2_trail")
+
+[node name="Sprites" type="Node2D" parent="."]
+
+[node name="Emblem" type="Sprite2D" parent="Sprites"]
+modulate = Color(0.8, 0.9, 0.25, 0.75)
+material = ExtResource("5_additive")
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("6_emblem")

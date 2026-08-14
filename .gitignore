@@ -1,0 +1,45 @@
+# Godot and IDE generated state
+.godot/
+.vs/
+.idea/
+.codex_bin/
+.codex_obj/
+.msbuild-sdks/
+.claude/
+.agents/
+.codex/
+**/bin/
+**/obj/
+
+# Local game assemblies are supplied by the developer's installation.
+sts2dll/
+
+# Build, export, release and temporary output
+build/
+output/
+releases/
+.tmp/
+.tmp-reflect/
+tmp/
+*.log
+replay_*.log
+
+# Godot import products are regenerated from source assets
+*.import
+
+# Spreadsheet extraction/cache folders
+.xlsx_extract_*/
+qodana.sarif.json
+
+# Large reference dumps and generated art previews (keep specifications and
+# approved runtime assets in source control).
+design/卡图预览/
+design/icon_previews/
+design/图标预览/
+design/角色资源预览/
+design/骨骼动画预览/
+design/pets/
+design/艾尔登法环黑夜君临_图标合集_2026-07-15/
+
+# Keep local editor settings out of the repository
+*.DotSettings.user

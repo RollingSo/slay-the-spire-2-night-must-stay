@@ -1,0 +1,6 @@
+[gd_scene format=3]
+
+; Runtime marker. RevenantAssetPatch instantiates the engine-owned trail and
+; replaces its visible elements with Revenant's lyre-and-spirit visual language.
+[node name="RevenantCardTrailMarker" type="Node2D"]
+metadata/revenant_trail_marker = true

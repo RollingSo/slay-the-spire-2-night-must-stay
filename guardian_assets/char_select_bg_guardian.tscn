@@ -1,0 +1,114 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Texture2D" path="res://guardian_assets/character_select_guardian_bg.png" id="1_bg"]
+[ext_resource type="Shader" path="res://materials/character_select_idle.gdshader" id="2_idle"]
+[ext_resource type="Texture2D" path="res://guardian_assets/vfx/guardian_wind_streak.svg" id="3_wind"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_idle"]
+shader = ExtResource("2_idle")
+shader_parameter/body_center = Vector2(0.59, 0.55)
+shader_parameter/body_radius = Vector2(0.3, 0.5)
+shader_parameter/secondary_center = Vector2(0.36, 0.65)
+shader_parameter/secondary_radius = Vector2(0.16, 0.34)
+shader_parameter/breath_amount = 0.0022
+shader_parameter/secondary_amount = 0.006
+shader_parameter/idle_speed = 0.72
+
+[sub_resource type="Gradient" id="Gradient_wind_far"]
+offsets = PackedFloat32Array(0, 0.18, 0.76, 1)
+colors = PackedColorArray(0.3, 0.68, 0.9, 0, 0.44, 0.79, 1, 0.18, 0.74, 0.92, 1, 0.14, 0.3, 0.68, 0.9, 0)
+
+[sub_resource type="Gradient" id="Gradient_wind_near"]
+offsets = PackedFloat32Array(0, 0.22, 0.7, 1)
+colors = PackedColorArray(0.65, 0.9, 1, 0, 0.72, 0.93, 1, 0.24, 0.88, 0.97, 1, 0.18, 0.65, 0.9, 1, 0)
+
+[sub_resource type="Animation" id="Animation_reset"]
+length = 0.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Artwork:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [Vector2(1, 1)]}
+
+[sub_resource type="Animation" id="Animation_idle"]
+resource_name = "idle"
+length = 6.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Artwork:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {"times": PackedFloat32Array(0, 3, 6), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [Vector2(1, 1), Vector2(1.0015, 1.004), Vector2(1, 1)]}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_default"]
+_data = {&"RESET": SubResource("Animation_reset"), &"idle": SubResource("Animation_idle")}
+
+[node name="GuardianBg" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -523.0
+offset_right = 1600.0
+offset_bottom = 677.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(1280, 600)
+
+[node name="Artwork" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_idle")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(1280, 600)
+texture = ExtResource("1_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="WindFar" type="CPUParticles2D" parent="."]
+position = Vector2(1210, 650)
+amount = 24
+texture = ExtResource("3_wind")
+lifetime = 7.0
+preprocess = 7.0
+emission_shape = 3
+emission_rect_extents = Vector2(1420, 650)
+direction = Vector2(1, -0.12)
+spread = 9.0
+gravity = Vector2(7, -2)
+initial_velocity_min = 95.0
+initial_velocity_max = 155.0
+scale_amount_min = 0.35
+scale_amount_max = 0.9
+color_ramp = SubResource("Gradient_wind_far")
+
+[node name="WindNear" type="CPUParticles2D" parent="."]
+position = Vector2(1200, 690)
+amount = 12
+texture = ExtResource("3_wind")
+lifetime = 5.2
+preprocess = 5.2
+emission_shape = 3
+emission_rect_extents = Vector2(1450, 620)
+direction = Vector2(1, -0.16)
+spread = 7.0
+gravity = Vector2(10, -4)
+initial_velocity_min = 165.0
+initial_velocity_max = 250.0
+scale_amount_min = 0.7
+scale_amount_max = 1.5
+color_ramp = SubResource("Gradient_wind_near")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {&"": SubResource("AnimationLibrary_default")}
+autoplay = "idle"

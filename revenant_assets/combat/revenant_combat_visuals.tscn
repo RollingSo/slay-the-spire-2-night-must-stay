@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://revenant_assets/combat/revenant_combat_rig.tscn" id="1_rig"]
+
+[node name="RevenantCombatVisuals" type="Node2D"]
+[node name="Visuals" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Prototype" parent="Visuals" instance=ExtResource("1_rig")]
+
+[node name="Bounds" type="Control" parent="."]
+unique_name_in_owner = true
+offset_left = -160.0
+offset_top = -410.0
+offset_right = 180.0
+offset_bottom = 45.0
+mouse_filter = 2
+
+[node name="CenterPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -190)
+
+[node name="IntentPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(10, -420)
+
+[node name="OrbPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -430)
+
+[node name="TalkPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(145, -455)

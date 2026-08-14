@@ -1,0 +1,118 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Texture2D" path="res://ironeye_assets/character_select_ironeye_bg.png" id="1_bg"]
+[ext_resource type="Shader" path="res://materials/character_select_idle.gdshader" id="2_idle"]
+[ext_resource type="Texture2D" path="res://ironeye_assets/vfx/ironeye_dust_mote.svg" id="3_dust"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_idle"]
+shader = ExtResource("2_idle")
+shader_parameter/body_center = Vector2(0.4025, 0.54)
+shader_parameter/body_radius = Vector2(0.24, 0.48)
+shader_parameter/secondary_center = Vector2(0.3625, 0.68)
+shader_parameter/secondary_radius = Vector2(0.22, 0.3)
+shader_parameter/breath_amount = 0.0024
+shader_parameter/secondary_amount = 0.004
+shader_parameter/idle_speed = 0.68
+
+[sub_resource type="Gradient" id="Gradient_dust_far"]
+offsets = PackedFloat32Array(0, 0.2, 0.78, 1)
+colors = PackedColorArray(0.44, 0.45, 0.42, 0, 0.57, 0.59, 0.54, 0.2, 0.72, 0.73, 0.67, 0.16, 0.44, 0.45, 0.42, 0)
+
+[sub_resource type="Gradient" id="Gradient_dust_near"]
+offsets = PackedFloat32Array(0, 0.16, 0.72, 1)
+colors = PackedColorArray(0.5, 0.51, 0.47, 0, 0.68, 0.69, 0.62, 0.28, 0.79, 0.8, 0.72, 0.2, 0.5, 0.51, 0.47, 0)
+
+[sub_resource type="Animation" id="Animation_reset"]
+length = 0.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Artwork:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [Vector2(1, 1)]}
+
+[sub_resource type="Animation" id="Animation_idle"]
+resource_name = "idle"
+length = 6.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Artwork:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {"times": PackedFloat32Array(0, 3.25, 6.5), "transitions": PackedFloat32Array(1, 1, 1), "update": 0, "values": [Vector2(1, 1), Vector2(1.001, 1.0035), Vector2(1, 1)]}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_default"]
+_data = {&"RESET": SubResource("Animation_reset"), &"idle": SubResource("Animation_idle")}
+
+[node name="IroneyeBg" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -523.0
+offset_right = 1600.0
+offset_bottom = 677.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(1280, 600)
+
+[node name="Artwork" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_idle")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(1280, 600)
+texture = ExtResource("1_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="DustFar" type="CPUParticles2D" parent="."]
+position = Vector2(1200, 650)
+amount = 38
+texture = ExtResource("3_dust")
+lifetime = 8.5
+preprocess = 8.5
+emission_shape = 3
+emission_rect_extents = Vector2(1480, 660)
+direction = Vector2(1, -0.08)
+spread = 13.0
+gravity = Vector2(12, 1)
+initial_velocity_min = 65.0
+initial_velocity_max = 125.0
+angle_min = -24.0
+angle_max = 24.0
+scale_amount_min = 0.3
+scale_amount_max = 0.9
+color_ramp = SubResource("Gradient_dust_far")
+
+[node name="DustNear" type="CPUParticles2D" parent="."]
+position = Vector2(1180, 720)
+amount = 18
+texture = ExtResource("3_dust")
+lifetime = 6.0
+preprocess = 6.0
+emission_shape = 3
+emission_rect_extents = Vector2(1500, 600)
+direction = Vector2(1, -0.12)
+spread = 10.0
+gravity = Vector2(18, 0)
+initial_velocity_min = 120.0
+initial_velocity_max = 195.0
+angle_min = -32.0
+angle_max = 32.0
+scale_amount_min = 0.65
+scale_amount_max = 1.45
+color_ramp = SubResource("Gradient_dust_near")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {&"": SubResource("AnimationLibrary_default")}
+autoplay = "idle"

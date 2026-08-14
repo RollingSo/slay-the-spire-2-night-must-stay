@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+; Runtime marker only. GuardianAssetPatch intercepts this path and instantiates
+; the engine-owned NCardTrailVfx type, then replaces every visible element with
+; Guardian artwork and colors.
+[node name="GuardianCardTrailMarker" type="Node2D"]
+metadata/guardian_trail_marker = true

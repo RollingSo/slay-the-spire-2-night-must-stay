@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://packed/card_portraits/guardian/defend_guardian.png" id="1_defend_guardian"]
+
+[resource]
+atlas = ExtResource("1_defend_guardian")
+region = Rect2(0, 0, 1000, 700)

@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3]
+
+[ext_resource type="Texture2D" path="res://packed/card_portraits/guardian/horn.png" id="1_horn"]
+
+[resource]
+atlas = ExtResource("1_horn")
+region = Rect2(0, 0, 1000, 700)

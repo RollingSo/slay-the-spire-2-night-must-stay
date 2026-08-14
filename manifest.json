@@ -1,0 +1,10 @@
+{
+  "id": "sts2mod",
+  "name": "Slay the Spire 2 : Night Must Stay",
+  "author": "wenti",
+  "description": "A Slay the Spire 2 character expansion inspired by Elden Ring: Nightreign, featuring Guardian, Ironeye, and Revenant.",
+  "version": "0.1.0",
+  "has_dll": true,
+  "has_pck": true,
+  "affects_gameplay": true
+}
