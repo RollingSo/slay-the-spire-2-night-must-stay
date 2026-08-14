@@ -24,6 +24,7 @@ releases/
 tmp/
 *.log
 replay_*.log
+config.json
 
 # Godot import products are regenerated from source assets
 *.import
