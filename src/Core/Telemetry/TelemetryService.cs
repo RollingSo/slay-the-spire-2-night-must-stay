@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -56,7 +57,24 @@ public static class TelemetryService
         try
         {
             string exeDir = Path.GetDirectoryName(Environment.ProcessPath) ?? "";
-            _modsDir = Path.Combine(exeDir, "mods", "sts2mod");
+            // 配置目录：优先与 dll 同目录（mod 装在哪 config 就在哪，层级正确）；
+            // 兼容旧结构 <游戏根目录>/mods/sts2mod/
+            string dllDir = "";
+            try
+            {
+                dllDir = Path.GetDirectoryName(typeof(TelemetryService).Assembly.Location) ?? "";
+            }
+            catch
+            {
+            }
+            if (!string.IsNullOrEmpty(dllDir) && File.Exists(Path.Combine(dllDir, ConfigFileName)))
+            {
+                _modsDir = dllDir;
+            }
+            else
+            {
+                _modsDir = Path.Combine(exeDir, "mods", "sts2mod");
+            }
             LoadConfig();
 
             if (!_enabled || string.IsNullOrEmpty(_serverUrl))

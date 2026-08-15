@@ -35,13 +35,15 @@ mods/
 ├── sts2mod.runtimeconfig.json
 ├── sts2mod.deps.json
 ├── sts2mod.pdb               # 可选（调试符号）
-└── sts2mod/                  # ⚠️ 子目录，别漏！
-    └── config.json           # 数据上报配置（见第 3 节）
+└── config.json               # ⚠️ 数据上报配置（与 dll 同目录！见第 3 节）
 ```
+
+> 原则：**config.json 与 sts2mod.dll 放在同一个目录**（mod 装到哪，配置就跟到哪，层级自然正确）。
+> 旧版结构 `mods/sts2mod/config.json`（子目录）仍然兼容，但新发布请使用与 dll 同目录的平铺方式。
 
 ## 3. config.json（最容易漏，漏了 = 数据上报静默禁用）
 
-- **位置**：`mods/sts2mod/config.json`（注意是 `mods/` 下的子目录 `sts2mod/`，不是平铺在 `mods/` 根下）
+- **位置**：与 `sts2mod.dll` **同一目录**（如 `mods/config.json`）——采集器优先读取 dll 所在目录的 `config.json`
 - **内容**（模板见仓库根目录 `config.json`）：
 
 ```json
@@ -52,8 +54,15 @@ mods/
 }
 ```
 
-- 打包时把仓库根目录的 `config.json` 复制为 `mods/sts2mod/config.json` 即可
+- 打包时把仓库根目录的 `config.json` 与 dll 放在一起即可
 - **缺少此文件时**：采集器检测不到配置会**静默禁用**，游戏内无任何报错，但玩家的战局数据不会上报
+
+### 3.1 安全说明（重要：不要删除仓库中的 config.json 模板）
+
+- `config.json` 是 mod 的**客户端运行时配置**，不是服务器密钥
+- 其中的 `token` 只是"防路人乱传数据"的接入标识——它**随 mod 分发给所有玩家**，玩家打开配置文件就能看到，本身就不是机密（服务器端真正的防滥用靠限流、请求大小限制等，与 token 无关）
+- **删除仓库中的 `config.json` 会导致下次打包没有模板可用 → 发布遗漏此文件 → 全部玩家数据上报静默失效**（没有任何报错，极难排查）
+- 如果担心 token 暴露：正确做法是**轮换 token**（服务器端和客户端模板同步更新），而不是删除模板文件
 
 ## 4. 版本号（发布新版本时必须更新）
 
@@ -76,7 +85,7 @@ mods/
 | 现象 | 原因 |
 |---|---|
 | godot.log 中完全没有 `[NMS]` 日志 | mod 未加载，或 dll 不是含采集代码的版本 |
-| godot.log 显示"数据上报未启用" | `config.json` 缺失 / 路径不对 / `enabled: false` |
+| godot.log 显示"数据上报未启用" | `config.json` 缺失 / 不在 dll 同目录 / `enabled: false` |
 | 打了局但服务器没收到 | 战局是从主菜单**放弃**的（放弃局不触发上报，官方同源） |
 | `modVersion` 显示 unknown | `manifest.json` 的 version 为空，或 mod id 不是 `sts2mod` |
 | 玩家改了配置导致不上报 | 正常：`config.json` 的 `enabled: false` 或游戏设置关闭数据上传时，采集器尊重开关 |
