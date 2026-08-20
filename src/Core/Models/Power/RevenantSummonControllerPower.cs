@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -25,8 +26,10 @@ public sealed class RevenantSummonControllerPower : PowerModel
             return;
 
         RevenantSummonManager manager = RevenantSummonManager.For(player);
+        await manager.SummonMarkedNecro(context);
         await manager.ExecuteScheduledFamilyAction(context);
         await manager.ScheduleFamilyNormalAction(context);
+        await manager.TriggerAllNecros(context);
     }
 
     public override async Task AfterDamageReceived(
@@ -49,8 +52,9 @@ public sealed class RevenantSummonControllerPower : PowerModel
         Creature target,
         CardModel cardSource)
     {
-        if (dealer == Owner && result.WasTargetKilled)
-            RevenantSummonManager.For(Owner.Player).TryRegisterNecro(target);
+        RevenantSummonManager manager = RevenantSummonManager.For(Owner.Player);
+        if ((dealer == Owner || manager.IsFamilyCreature(dealer) || manager.GetLivingNecros().Any(necro => necro.Creature == dealer)) && result.WasTargetKilled)
+            manager.TryRegisterNecro(target);
         return Task.CompletedTask;
     }
 

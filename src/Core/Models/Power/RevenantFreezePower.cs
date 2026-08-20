@@ -50,52 +50,6 @@ public sealed class FreezePower : PowerModel
     }
 }
 
-public sealed class IceLightningSpearReturnPower : PowerModel
-{
-    private sealed class Data
-    {
-        public readonly List<CardModel> Cards = new();
-    }
-
-    public override PowerType Type => PowerType.Buff;
-
-    public override PowerStackType StackType => PowerStackType.Single;
-
-    protected override bool IsVisibleInternal => false;
-
-    protected override object InitInternalData() => new Data();
-
-    public override Task AfterApplied(Creature applier, CardModel cardSource)
-    {
-        if (cardSource != null && !GetInternalData<Data>().Cards.Contains(cardSource))
-            GetInternalData<Data>().Cards.Add(cardSource);
-        return Task.CompletedTask;
-    }
-
-    public override async Task AfterSideTurnStart(
-        CombatSide side,
-        IReadOnlyList<Creature> creatures,
-        ICombatState combatState)
-    {
-        if (side != Owner.Side || !creatures.Contains(Owner))
-            return;
-
-        foreach (CardModel card in GetInternalData<Data>().Cards.ToArray())
-        {
-            if (card?.Pile != null
-                && card.Pile.Type != PileType.Hand
-                && card.Pile.Type.IsCombatPile())
-            {
-                if (card is IceLightningSpear iceSpear)
-                    iceSpear.IncreaseFreezeForCurrentCombat();
-                await CardPileCmd.Add(card, PileType.Hand);
-            }
-        }
-
-        await PowerCmd.Remove(this);
-    }
-}
-
 public sealed class HaloReturnPower : PowerModel
 {
     private sealed class Data

@@ -79,7 +79,7 @@ public sealed class Ensemble : CardModel
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         new DynamicVar[] { new DamageVar(11m, ValueProp.Move) };
-    public override string PortraitPath => "res://revenant_assets/cards/resonance.png";
+    public override string PortraitPath => "res://revenant_assets/cards/ensemble.png";
 
     public Ensemble() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
 
@@ -99,7 +99,7 @@ public sealed class Ensemble : CardModel
 public sealed class Surge : CardModel
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new CardsVar(0) };
-    public override string PortraitPath => "res://revenant_assets/cards/resonance.png";
+    public override string PortraitPath => "res://revenant_assets/cards/surge.png";
 
     public Surge() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
 
@@ -121,7 +121,7 @@ public sealed class Surge : CardModel
 public sealed class UnderworldRising : CardModel
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new CardsVar(0) };
-    public override string PortraitPath => "res://revenant_assets/cards/call.png";
+    public override string PortraitPath => "res://revenant_assets/cards/underworld_rising.png";
 
     public UnderworldRising() : base(3, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
 
@@ -143,7 +143,7 @@ public sealed class UnderworldRising : CardModel
 public sealed class Resurgence : CardModel
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new EnergyVar(2) };
-    public override string PortraitPath => "res://revenant_assets/cards/recover.png";
+    public override string PortraitPath => "res://revenant_assets/cards/resurgence.png";
 
     public Resurgence() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
 
@@ -162,7 +162,7 @@ public sealed class Soulbound : CardModel
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         IsUpgraded ? new[] { CardKeyword.Retain } : Array.Empty<CardKeyword>();
-    public override string PortraitPath => "res://revenant_assets/cards/grave_rob.png";
+    public override string PortraitPath => "res://revenant_assets/cards/soulbound.png";
 
     public Soulbound() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
 
@@ -184,26 +184,28 @@ public sealed class Soulbound : CardModel
 
 public sealed class AnswerTheCall : CardModel
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        IsUpgraded ? new[] { CardKeyword.Retain } : Array.Empty<CardKeyword>();
-    public override string PortraitPath => "res://revenant_assets/cards/call.png";
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        new DynamicVar[] { new CardsVar(2) };
+    public override string PortraitPath => "res://revenant_assets/cards/answer_the_call.png";
 
-    public AnswerTheCall() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+    public AnswerTheCall() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        CardModel selected = (await CardSelectCmd.FromHandForDiscard(
+        IEnumerable<CardModel> selected = await CardSelectCmd.FromHandForDiscard(
             context,
             Owner,
-            new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 1),
+            new CardSelectorPrefs(
+                CardSelectorPrefs.DiscardSelectionPrompt,
+                Math.Min(DynamicVars.Cards.IntValue, Owner.PlayerCombatState.Hand.Cards.Count)),
             null,
-            this)).FirstOrDefault();
-        if (selected != null)
-            await CardCmd.Discard(context, selected);
+            this);
+        foreach (CardModel card in selected)
+            await CardCmd.Discard(context, card);
         await RevenantCall.ChooseFamilyAndCall(context, Owner);
     }
 
-    protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);
+    protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(-1m);
 }
 
 public sealed class RevenantCard : CardModel
@@ -214,7 +216,7 @@ public sealed class RevenantCard : CardModel
         new IHoverTip[] { HoverTipFactory.FromPower<BufferPower>() };
     public override CardMultiplayerConstraint MultiplayerConstraint =>
         CardMultiplayerConstraint.MultiplayerOnly;
-    public override string PortraitPath => "res://revenant_assets/cards/soulguard.png";
+    public override string PortraitPath => "res://revenant_assets/cards/revenant_card.png";
 
     public RevenantCard() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self) { }
 

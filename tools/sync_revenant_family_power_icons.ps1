@@ -23,6 +23,13 @@ $revenantPowerIcons = @(
     'blessing_of_grace_power.png'
     'spirit_link_power.png'
     'undying_march_power.png'
+    'frenzied_three_fingers_power.png'
+    'fight_for_me_power.png'
+    'light_spirit_power.png'
+    'heavy_echo_power.png'
+    'chanting_blessing_power.png'
+    'following_shadow_power.png'
+    'necromancy_power.png'
 )
 
 Add-Type -AssemblyName System.Drawing

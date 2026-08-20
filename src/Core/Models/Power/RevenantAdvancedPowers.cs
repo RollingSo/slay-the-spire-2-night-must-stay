@@ -132,7 +132,7 @@ public sealed class BeastClawMarkPower : PowerModel
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public async Task AfterFamilyCalled(PlayerChoiceContext context)
+    public async Task AfterResonance(PlayerChoiceContext context)
     {
         Creature family = Owner.Player.Osty;
         if (family is { IsAlive: true })

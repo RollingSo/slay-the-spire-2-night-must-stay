@@ -43,24 +43,24 @@ public sealed class RevenantFamilyState
 
 public sealed class RevenantNecro
 {
-    public required string MonsterId { get; init; }
-    public required string MonsterType { get; init; }
-    public required string SourceVisualsPath { get; init; }
-    public int CurrentHp { get; set; }
+    public required MonsterModel SourceMonster { get; init; }
+    public required Creature Creature { get; init; }
     public int MaxHp { get; init; }
-    public bool IsAlive { get; set; } = true;
-    public Sprite2D VisualNode { get; set; }
+    public bool IsAlive => Creature is { IsAlive: true };
 
-    public Task PerformAction(PlayerChoiceContext choiceContext)
+    public async Task PerformAction(PlayerChoiceContext choiceContext)
     {
-        // TODO_REVENANT_NECRO_ACTION: Per-monster action tables are intentionally absent.
-        return Task.CompletedTask;
+        Creature[] enemies = Creature.CombatState.HittableEnemies.Where(enemy => enemy.IsAlive).ToArray();
+        if (!IsAlive || enemies.Length == 0) return;
+        Creature target = Creature.PetOwner.RunState.Rng.CombatTargets.NextItem(enemies);
+        await CreatureCmd.Damage(choiceContext, target, 10m, ValueProp.Unpowered, Creature, null);
     }
 }
 
 public sealed class RevenantSummonManager
 {
     private static readonly Dictionary<Player, RevenantSummonManager> Managers = new();
+    private static readonly Dictionary<Player, (MonsterModel monster, int originalHp)> MarkedForNextCombat = new();
     private readonly Dictionary<RevenantFamilyId, RevenantFamilyState> _families =
         Enum.GetValues<RevenantFamilyId>().ToDictionary(
             id => id,
@@ -70,6 +70,7 @@ public sealed class RevenantSummonManager
                 MaxHp = GetInitialFamilyHp(id),
             });
     private readonly List<RevenantNecro> _necros = new();
+    private readonly List<(MonsterModel monster, int originalHp)> _deadEnemies = new();
     private readonly HashSet<Creature> _convertedEnemies = new();
     private readonly List<NIntent> _familyIntentNodes = new();
     private Sprite2D _familyVisual;
@@ -86,6 +87,9 @@ public sealed class RevenantSummonManager
 
     public bool HasLivingFamily =>
         CurrentFamilyId is not null && _familyCreature is { IsAlive: true };
+
+    public Creature CurrentFamilyCreature =>
+        _familyCreature is { IsAlive: true } ? _familyCreature : null;
 
     public bool IsFamilyCreature(Creature creature) =>
         creature != null && creature == _familyCreature;
@@ -155,8 +159,8 @@ public sealed class RevenantSummonManager
     {
         foreach (SpiritLinkPower power in Owner.Creature.Powers.OfType<SpiritLinkPower>().ToArray())
             await power.AfterFamilyCalled();
-        foreach (BeastClawMarkPower power in Owner.Creature.Powers.OfType<BeastClawMarkPower>().ToArray())
-            await power.AfterFamilyCalled(context);
+        foreach (FollowingShadowPower power in Owner.Creature.Powers.OfType<FollowingShadowPower>().ToArray())
+            await power.AfterFamilyCalled(context, CurrentFamilyId);
         SnapshotCurrentFamily();
     }
 
@@ -320,12 +324,9 @@ public sealed class RevenantSummonManager
     public void RegisterNecro(RevenantNecro necro)
     {
         _necros.Add(necro);
-        CreateNecroVisual(necro);
     }
     public void RemoveNecro(RevenantNecro necro)
     {
-        necro.IsAlive = false;
-        necro.VisualNode?.QueueFree();
         _necros.Remove(necro);
     }
     public Task TriggerNecroAction(PlayerChoiceContext context, RevenantNecro necro) =>
@@ -342,6 +343,8 @@ public sealed class RevenantSummonManager
         await ExecuteScheduledFamilyAction(context);
         await ScheduleFamilyNormalAction(context);
         await TriggerAllNecros(context);
+        foreach (BeastClawMarkPower power in Owner.Creature.Powers.OfType<BeastClawMarkPower>().ToArray())
+            await power.AfterResonance(context);
     }
 
     public bool CanBecomeNecro(Creature enemy)
@@ -358,16 +361,64 @@ public sealed class RevenantSummonManager
         if (!CanBecomeNecro(enemy))
             return;
         _convertedEnemies.Add(enemy);
-        string visualPath = AccessTools.Property(enemy.Monster.GetType(), "VisualsPath")
-            ?.GetValue(enemy.Monster) as string ?? string.Empty;
-        RegisterNecro(new RevenantNecro
+        _deadEnemies.Add((enemy.Monster.ToMutable(), enemy.MaxHp));
+    }
+
+    public void MarkForNextCombat(Creature enemy)
+    {
+        if (enemy?.Monster == null) return;
+        MarkedForNextCombat[Owner] = (enemy.Monster.ToMutable(), enemy.MaxHp);
+    }
+
+    public async Task ReviveDeadEnemy(PlayerChoiceContext context)
+    {
+        if (_deadEnemies.Count == 0) return;
+        (MonsterModel monster, int originalHp) corpse = _deadEnemies[^1];
+        _deadEnemies.RemoveAt(_deadEnemies.Count - 1);
+        await SummonNecro(context, corpse.monster, corpse.originalHp);
+    }
+
+    public async Task ReviveRandomNecro(PlayerChoiceContext context)
+    {
+        RevenantNecro dead = _necros.FirstOrDefault(necro => !necro.IsAlive);
+        if (dead != null)
         {
-            MonsterId = enemy.Monster.Id.ToString(),
-            MonsterType = enemy.Monster.GetType().FullName ?? enemy.Monster.GetType().Name,
-            SourceVisualsPath = visualPath, // TODO_REVENANT_NECRO_VISUAL: reuse source with summon tint later.
-            CurrentHp = enemy.MaxHp,
-            MaxHp = enemy.MaxHp,
-        });
+            await CreatureCmd.SetMaxAndCurrentHp(dead.Creature, dead.MaxHp);
+            return;
+        }
+        await ReviveDeadEnemy(context);
+    }
+
+    public async Task SummonMarkedNecro(PlayerChoiceContext context)
+    {
+        if (!MarkedForNextCombat.Remove(Owner, out var marked)) return;
+        await SummonNecro(context, marked.monster, marked.originalHp);
+    }
+
+    private async Task SummonNecro(PlayerChoiceContext context, MonsterModel sourceMonster, int originalHp)
+    {
+        Creature pet = Owner.Creature.CombatState.CreateCreature(sourceMonster.ToMutable(), Owner.Creature.Side, null);
+        await PlayerCmd.AddPet(pet, Owner);
+        int maxHp = Math.Max(1, (int)Math.Ceiling(originalHp * 0.30m));
+        await CreatureCmd.SetMaxAndCurrentHp(pet, maxHp);
+        await PowerCmd.Apply<DieForYouPower>(context, pet, 1m, Owner.Creature, null);
+        await PowerCmd.Apply<NecromancyPower>(context, pet, 1m, Owner.Creature, null);
+        RegisterNecro(new RevenantNecro { SourceMonster = sourceMonster, Creature = pet, MaxHp = maxHp });
+        NCreature node = FindCreatureNode(pet);
+        if (node != null)
+            node.Scale *= Vector2.One / 3f;
+    }
+
+    public async Task NotifyChargeCompleted()
+    {
+        foreach (ChantingBlessingPower power in Owner.Creature.Powers.OfType<ChantingBlessingPower>().ToArray())
+            await power.AfterChargeCompleted();
+    }
+
+    public async Task NotifyChargedCardPlayed(PlayerChoiceContext context)
+    {
+        foreach (HeavyEchoPower power in Owner.Creature.Powers.OfType<HeavyEchoPower>().ToArray())
+            await power.AfterChargedCardPlayed(context);
     }
 
     public void CleanupVisuals()
@@ -376,8 +427,6 @@ public sealed class RevenantSummonManager
         StopFamilyTweens();
         _familyVisual?.QueueFree();
         _familyVisual = null;
-        foreach (RevenantNecro necro in _necros)
-            necro.VisualNode?.QueueFree();
     }
 
     public async Task HandleFamilyDeath(Creature creature)
@@ -604,23 +653,6 @@ public sealed class RevenantSummonManager
                 await PowerCmd.Apply<SebastianSlamPower>(context, _familyCreature, 1m, Owner.Creature, null);
                 break;
         }
-    }
-
-    private void CreateNecroVisual(RevenantNecro necro)
-    {
-        NCreature playerNode = FindCreatureNode(Owner.Creature);
-        if (playerNode?.GetParent() is not Node2D parent)
-            return;
-        var sprite = new Sprite2D
-        {
-            Name = $"RevenantNecroVisual{_necros.Count}",
-            Texture = PreloadManager.Cache.GetTexture2D("res://revenant_assets/families/necro.png"),
-            Modulate = new Color(0.72f, 0.55f, 0.95f, 0.62f),
-            Scale = Vector2.One * 0.28f,
-            GlobalPosition = playerNode.GlobalPosition + new Vector2(150f + 72f * (_necros.Count - 1), -105f),
-        };
-        parent.AddChild(sprite);
-        necro.VisualNode = sprite; // TODO_REVENANT_NECRO_VISUAL: replace with safe source visuals/tint.
     }
 
     private static NCreature FindCreatureNode(Creature creature)
