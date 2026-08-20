@@ -123,8 +123,8 @@ public sealed class HeavenlyEyeFormPower : PowerModel
     public override PowerStackType StackType => PowerStackType.Counter;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        HoverTipFactory.FromCardWithCardHoverTips<Approach>()
-            .Concat(HoverTipFactory.FromCardWithCardHoverTips<Retreat>());
+        HoverTipFactory.FromCardWithCardHoverTips<Approach>(true)
+            .Concat(HoverTipFactory.FromCardWithCardHoverTips<Retreat>(true));
 
     public override async Task AfterSideTurnStart(
         CombatSide side,
@@ -153,7 +153,53 @@ public sealed class HeavenlyEyeFormPower : PowerModel
     }
 }
 
-public sealed class SharedIntelligencePower : PowerModel
+public sealed class SharedIntelligencePower : PowerModel, IMarkTriggerPower
+{
+    private sealed class Data
+    {
+        public int TriggersThisTurn;
+    }
+
+    public override PowerType Type => PowerType.Buff;
+
+    public override PowerStackType StackType => PowerStackType.Counter;
+
+    protected override object InitInternalData() => new Data();
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        new[] { HoverTipFactory.FromPower<MarkPower>() };
+
+    public async Task AfterMarkTriggered(
+        PlayerChoiceContext choiceContext,
+        Creature markedTarget,
+        CardModel triggeringCard)
+    {
+        Data data = GetInternalData<Data>();
+        if (Owner.Player == null || data.TriggersThisTurn >= Amount)
+            return;
+
+        data.TriggersThisTurn++;
+        Flash();
+        foreach (var teammate in CombatState.Players.Where(player =>
+                     player.Creature != Owner && player.Creature.IsAlive))
+        {
+            await CardPileCmd.Draw(choiceContext, 1, teammate);
+        }
+    }
+
+    public override Task AfterSideTurnStart(
+        CombatSide side,
+        IReadOnlyList<Creature> creatures,
+        ICombatState combatState)
+    {
+        if (side == Owner.Side && creatures.Contains(Owner))
+            GetInternalData<Data>().TriggersThisTurn = 0;
+
+        return Task.CompletedTask;
+    }
+}
+
+public sealed class IronEyePower : PowerModel
 {
     private sealed class Data
     {
@@ -214,37 +260,6 @@ public sealed class SharedIntelligencePower : PowerModel
                 Owner,
                 cardSource);
         }
-    }
-}
-
-public sealed class IronEyePower : PowerModel
-{
-    public override PowerType Type => PowerType.Buff;
-
-    public override PowerStackType StackType => PowerStackType.Counter;
-
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        new[] { HoverTipFactory.FromPower<MarkPower>() };
-
-    public override decimal ModifyDamageMultiplicative(
-        Creature target,
-        decimal amount,
-        ValueProp props,
-        Creature dealer,
-        CardModel cardSource)
-    {
-        if (target == null
-            || dealer == null
-            || dealer == Owner
-            || dealer.Side != CombatSide.Player
-            || cardSource?.Type != CardType.Attack
-            || !props.IsPoweredAttack()
-            || target.GetPower<MarkPower>() == null)
-        {
-            return 1m;
-        }
-
-        return 1m + Amount / 100m;
     }
 }
 

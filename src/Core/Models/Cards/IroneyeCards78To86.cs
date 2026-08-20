@@ -30,7 +30,7 @@ public sealed class Offensive : CardModel
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/offensive.png");
 
     public Offensive()
-        : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+        : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
     {
     }
 

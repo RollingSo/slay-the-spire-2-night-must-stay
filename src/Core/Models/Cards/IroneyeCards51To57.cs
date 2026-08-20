@@ -22,12 +22,15 @@ public sealed class DeathMark : CardModel
     private const string MarkKey = "Mark";
     private const string DistanceKey = "Distance";
 
+    public override bool GainsBlock => true;
+
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        new[] { CardKeyword.Retain };
+        IsUpgraded ? new[] { CardKeyword.Retain } : Array.Empty<CardKeyword>();
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         new DynamicVar[]
         {
+            new BlockVar(8m, ValueProp.Move),
             new PowerVar<MarkPower>(MarkKey, 3m),
             new DynamicVar(DistanceKey, 1m),
         };
@@ -35,21 +38,24 @@ public sealed class DeathMark : CardModel
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         new IHoverTip[]
         {
-            HoverTipFactory.FromKeyword(CardKeyword.Retain),
+            HoverTipFactory.Static(StaticHoverTip.Block),
             HoverTipFactory.FromPower<MarkPower>(),
             HoverTipFactory.FromPower<DistancePower>(),
-        };
+        }.Concat(IsUpgraded
+            ? new[] { HoverTipFactory.FromKeyword(CardKeyword.Retain) }
+            : Array.Empty<IHoverTip>());
 
     public override string PortraitPath =>
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/death_mark.png");
 
     public DeathMark()
-        : base(1, CardType.Skill, CardRarity.Ancient, TargetType.AllEnemies)
+        : base(0, CardType.Skill, CardRarity.Ancient, TargetType.AllEnemies)
     {
     }
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
         Creature[] enemies = CombatState.HittableEnemies
             .Where(enemy => enemy.IsAlive)
             .ToArray();
@@ -67,7 +73,9 @@ public sealed class DeathMark : CardModel
             this);
     }
 
-    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+    protected override void OnUpgrade()
+    {
+    }
 }
 
 // Card-table ID 52: 终局一战（达弗的先古魔典给予）
@@ -183,7 +191,7 @@ public sealed class Hunt : CardModel
     private const string CardsKey = "Cards";
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new[] { new PowerVar<HuntPower>(CardsKey, 1m) };
+        new[] { new PowerVar<HuntPower>(CardsKey, 2m) };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         new[] { HoverTipFactory.FromPower<MarkPower>() };

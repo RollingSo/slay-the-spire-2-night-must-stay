@@ -208,7 +208,7 @@ public sealed class RoadAlreadyTraveled : CardModel
         new DynamicVar[]
         {
             new CalculationBaseVar(4m),
-            new CalculationExtraVar(1m),
+            new CalculationExtraVar(2m),
             new CalculatedBlockVar(ValueProp.Move).WithMultiplier(
                 static (card, _) =>
                     card.Owner.Creature.GetPower<DistancePower>()
@@ -254,8 +254,8 @@ public sealed class HeavenlyEyeForm : CardModel
         IsUpgraded ? new[] { CardKeyword.Retain } : Array.Empty<CardKeyword>();
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        HoverTipFactory.FromCardWithCardHoverTips<Approach>()
-            .Concat(HoverTipFactory.FromCardWithCardHoverTips<Retreat>())
+        HoverTipFactory.FromCardWithCardHoverTips<Approach>(true)
+            .Concat(HoverTipFactory.FromCardWithCardHoverTips<Retreat>(true))
             .Concat(IsUpgraded ? new[] { HoverTipFactory.FromKeyword(CardKeyword.Retain) } : Array.Empty<IHoverTip>());
 
     public override string PortraitPath =>
@@ -282,15 +282,16 @@ public sealed class HeavenlyEyeForm : CardModel
 // Card-table ID 48: 共享情报
 public sealed class SharedIntelligence : CardModel
 {
+    private const string TriggersKey = "Triggers";
+
     public override CardMultiplayerConstraint MultiplayerConstraint =>
         CardMultiplayerConstraint.MultiplayerOnly;
 
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        new[] { new PowerVar<SharedIntelligencePower>(TriggersKey, 1m) };
+
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        new IHoverTip[]
-        {
-            HoverTipFactory.FromPower<DistancePower>(),
-            HoverTipFactory.FromPower<MegaCrit.Sts2.Core.Models.Powers.DexterityPower>(),
-        };
+        new[] { HoverTipFactory.FromPower<MarkPower>() };
 
     public override string PortraitPath =>
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/shared_intelligence.png");
@@ -305,27 +306,27 @@ public sealed class SharedIntelligence : CardModel
         await PowerCmd.Apply<SharedIntelligencePower>(
             context,
             Owner.Creature,
-            1m,
+            DynamicVars[TriggersKey].BaseValue,
             Owner.Creature,
             this);
     }
 
-    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+    protected override void OnUpgrade() =>
+        DynamicVars[TriggersKey].UpgradeValueBy(1m);
 }
 
 // Card-table ID 49: 铁之眼
 public sealed class IronEye : CardModel
 {
-    private const string DamageIncreaseKey = "DamageIncrease";
-
     public override CardMultiplayerConstraint MultiplayerConstraint =>
         CardMultiplayerConstraint.MultiplayerOnly;
 
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new[] { new PowerVar<IronEyePower>(DamageIncreaseKey, 25m) };
-
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        new[] { HoverTipFactory.FromPower<MarkPower>() };
+        new IHoverTip[]
+        {
+            HoverTipFactory.FromPower<DistancePower>(),
+            HoverTipFactory.FromPower<MegaCrit.Sts2.Core.Models.Powers.DexterityPower>(),
+        };
 
     public override string PortraitPath =>
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/iron_eye.png");
@@ -340,13 +341,13 @@ public sealed class IronEye : CardModel
         await PowerCmd.Apply<IronEyePower>(
             context,
             Owner.Creature,
-            DynamicVars[DamageIncreaseKey].BaseValue,
+            1m,
             Owner.Creature,
             this);
     }
 
     protected override void OnUpgrade() =>
-        DynamicVars[DamageIncreaseKey].UpgradeValueBy(25m);
+        EnergyCost.UpgradeBy(-1);
 }
 
 // Card-table ID 50: 观察力

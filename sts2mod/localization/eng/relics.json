@@ -53,9 +53,9 @@
   "GLIDING_GARB.title": "Gliding Garb",
   "GLIDING_GARB.description": "Whenever you move {Distance} [gold]Distance[/gold], gain {Energy:energyIcons()}.",
   "GLIDING_GARB.flavor": "The cloak skims the ground without leaving dust worth following.",
-  "TEMP_REVENANT_STARTER_RELIC.title": "Revenant Starter Relic",
-  "TEMP_REVENANT_STARTER_RELIC.description": "None.",
-  "TEMP_REVENANT_STARTER_RELIC.flavor": "Temporary technical placeholder.",
+  "SMALL_MAKEUP_BRUSH.title": "Small Makeup Brush",
+  "SMALL_MAKEUP_BRUSH.description": "At the start of combat, [gold]Call[/gold].",
+  "SMALL_MAKEUP_BRUSH.flavor": "Its soft bristles still carry the faint fragrance of an old dressing table.",
   "SEA_GLASS.GUARDIAN.title": "Guardian Glass",
   "SEA_GLASS.IRONEYE.title": "Ironeye Glass",
   "SEA_GLASS.REVENANT.title": "Revenant Glass"

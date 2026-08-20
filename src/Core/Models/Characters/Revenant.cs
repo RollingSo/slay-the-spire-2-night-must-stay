@@ -42,7 +42,7 @@ public sealed class Revenant : CharacterModel
     };
 
     public override IReadOnlyList<RelicModel> StartingRelics =>
-        new[] { ModelDb.Relic<TempRevenantStarterRelic>() };
+        new[] { ModelDb.Relic<SmallMakeupBrush>() };
     public override string CharacterSelectSfx => "event:/sfx/ui/clicks/ui_click";
     public override string CharacterTransitionSfx => "event:/sfx/ui/wipe_map";
     public override float AttackAnimDelay => 0.15f;

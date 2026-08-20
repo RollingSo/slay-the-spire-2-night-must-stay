@@ -2,6 +2,7 @@ using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using sts2mod.Core.Models.Characters;
+using sts2mod.Core.Models.Revenant;
 
 namespace sts2mod.Core.Patches;
 
@@ -20,6 +21,7 @@ public static class RevenantAnimationPatch
     [HarmonyPrefix]
     public static void StartDeathAnim(NCreature __instance)
     {
+        RevenantSummonManager.NotifyCreatureDeath(__instance.Entity);
         if (TryGetRig(__instance, out Node rig))
             rig.Call("play_trigger", "Dead");
     }

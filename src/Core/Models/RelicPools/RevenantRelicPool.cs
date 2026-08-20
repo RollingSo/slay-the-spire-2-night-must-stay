@@ -10,5 +10,5 @@ public sealed class RevenantRelicPool : RelicPoolModel
     public override string EnergyColorName => "revenant";
     public override Color LabOutlineColor => new("67538A");
     protected override IEnumerable<RelicModel> GenerateAllRelics() =>
-        new[] { ModelDb.Relic<TempRevenantStarterRelic>() };
+        new[] { ModelDb.Relic<SmallMakeupBrush>() };
 }

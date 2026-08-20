@@ -23,6 +23,14 @@ public static class RevenantAssetPatch
     private const string MerchantVisuals = "res://revenant_assets/merchant/revenant_merchant.tscn";
     private const string CardTrail = "res://revenant_assets/card_trail_revenant.tscn";
 
+    [HarmonyPatch(typeof(CardModel), "get_EnergyIconPath")]
+    [HarmonyPostfix]
+    public static void RevenantEnergyIcon(CardModel __instance, ref string __result)
+    {
+        if (__instance?.VisualCardPool?.Title == "revenant")
+            __result = "res://images/atlases/ui_atlas.sprites/card/energy_revenant.tres";
+    }
+
     [HarmonyPatch(typeof(CharacterModel), nameof(CharacterModel.CharacterSelectBg), MethodType.Getter)]
     [HarmonyPostfix]
     public static void CharacterSelectBg(CharacterModel __instance, ref string __result)
@@ -69,6 +77,30 @@ public static class RevenantAssetPatch
     {
         if (__instance is Revenant)
             __result = CardTrail;
+    }
+
+    [HarmonyPatch(typeof(CharacterModel), nameof(CharacterModel.AttackSfx), MethodType.Getter)]
+    [HarmonyPostfix]
+    public static void AttackSfx(CharacterModel __instance, ref string __result)
+    {
+        if (__instance is Revenant)
+            __result = "event:/sfx/ui/cards/card_impact_into_single";
+    }
+
+    [HarmonyPatch(typeof(CharacterModel), nameof(CharacterModel.CastSfx), MethodType.Getter)]
+    [HarmonyPostfix]
+    public static void CastSfx(CharacterModel __instance, ref string __result)
+    {
+        if (__instance is Revenant)
+            __result = "event:/sfx/ui/cards/card_exhaust";
+    }
+
+    [HarmonyPatch(typeof(CharacterModel), nameof(CharacterModel.DeathSfx), MethodType.Getter)]
+    [HarmonyPostfix]
+    public static void DeathSfx(CharacterModel __instance, ref string __result)
+    {
+        if (__instance is Revenant)
+            __result = "event:/sfx/ui/combat/end_turn";
     }
 
     [HarmonyPatch(typeof(NCardTrailVfx), nameof(NCardTrailVfx.Create))]
@@ -252,7 +284,93 @@ public static class RevenantAssetPatch
             "res://revenant_assets/energy/revenant_orb_layer_5.png",
             "res://images/atlases/ui_atlas.sprites/card/energy_revenant.tres",
             "res://revenant_assets/energy/revenant_energy_font_icon.png",
+            "res://images/packed/sprite_fonts/revenant_energy_icon.png",
             "res://revenant_assets/relics/revenant_starter_relic.png",
+            "res://revenant_assets/cards/ice_lightning_spear.png",
+            "res://revenant_assets/cards/cursed_claw_combo.png",
+            "res://revenant_assets/cards/halo.png",
+            "res://revenant_assets/cards/emergency_restore.png",
+            "res://revenant_assets/cards/precise_lightning_strike.png",
+            "res://revenant_assets/cards/threefold_halo.png",
+            "res://revenant_assets/cards/ancient_dragon_lightning.png",
+            "res://revenant_assets/cards/lansseax_blade.png",
+            "res://revenant_assets/cards/lightning_strike.png",
+            "res://revenant_assets/cards/ancient_dragon_spear.png",
+            "res://revenant_assets/cards/recover.png",
+            "res://revenant_assets/cards/flannsax_lightning_spear.png",
+            "res://revenant_assets/cards/beast_claw.png",
+            "res://revenant_assets/cards/death_lightning.png",
+            "res://revenant_assets/cards/space_rending_frenzy.png",
+            "res://revenant_assets/cards/white_shadow_lure.png",
+            "res://revenant_assets/cards/soulguard.png",
+            "res://revenant_assets/cards/lightning_spear.png",
+            "res://revenant_assets/cards/spirit_form.png",
+            "res://revenant_assets/cards/unbearable_frenzy.png",
+            "res://revenant_assets/cards/beaststone.png",
+            "res://revenant_assets/cards/radagon_halo.png",
+            "res://revenant_assets/cards/soul_summon.png",
+            "res://revenant_assets/cards/grave_rob.png",
+            "res://revenant_assets/cards/greater_recover.png",
+            "res://revenant_assets/cards/ancient_dragon_faith.png",
+            "res://revenant_assets/cards/beast_claw_mark.png",
+            "res://revenant_assets/cards/golden_order.png",
+            "res://revenant_assets/cards/spirit_link.png",
+            "res://revenant_assets/cards/blessing_of_grace.png",
+            "res://revenant_assets/cards/gurranq_beast_claw.png",
+            "res://revenant_assets/families/helen.png",
+            "res://revenant_assets/families/frederick.png",
+            "res://revenant_assets/families/sebastian.png",
+            "res://revenant_assets/families/necro.png",
+            "res://revenant_assets/powers/revenant_summon_controller_power.png",
+            "res://revenant_assets/powers/helen_step_strike_power.png",
+            "res://revenant_assets/powers/helen_retreat_power.png",
+            "res://revenant_assets/powers/frederick_heavy_hammer_power.png",
+            "res://revenant_assets/powers/frederick_headbutt_power.png",
+            "res://revenant_assets/powers/sebastian_roar_power.png",
+            "res://revenant_assets/powers/sebastian_slam_power.png",
+            "res://revenant_assets/powers/freeze_power.png",
+            "res://revenant_assets/powers/white_shadow_lure_power.png",
+            "res://revenant_assets/powers/soulguard_power.png",
+            "res://revenant_assets/powers/spirit_form_power.png",
+            "res://revenant_assets/powers/ancient_dragon_faith_power.png",
+            "res://revenant_assets/powers/beast_claw_mark_power.png",
+            "res://revenant_assets/powers/golden_order_power.png",
+            "res://revenant_assets/powers/blessing_of_grace_power.png",
+            "res://images/powers/helen_step_strike_power.png",
+            "res://images/powers/helen_retreat_power.png",
+            "res://images/powers/frederick_heavy_hammer_power.png",
+            "res://images/powers/frederick_headbutt_power.png",
+            "res://images/powers/sebastian_roar_power.png",
+            "res://images/powers/sebastian_slam_power.png",
+            "res://images/powers/freeze_power.png",
+            "res://images/powers/die_for_you_power.png",
+            "res://images/powers/white_shadow_lure_power.png",
+            "res://images/powers/soulguard_power.png",
+            "res://images/powers/spirit_form_power.png",
+            "res://images/powers/ancient_dragon_faith_power.png",
+            "res://images/powers/beast_claw_mark_power.png",
+            "res://images/powers/golden_order_power.png",
+            "res://images/powers/blessing_of_grace_power.png",
+            "res://images/atlases/power_atlas.sprites/die_for_you_power.tres",
+            "res://images/atlases/power_atlas.sprites/helen_step_strike_power.tres",
+            "res://images/atlases/power_atlas.sprites/helen_retreat_power.tres",
+            "res://images/atlases/power_atlas.sprites/frederick_heavy_hammer_power.tres",
+            "res://images/atlases/power_atlas.sprites/frederick_headbutt_power.tres",
+            "res://images/atlases/power_atlas.sprites/sebastian_roar_power.tres",
+            "res://images/atlases/power_atlas.sprites/sebastian_slam_power.tres",
+            "res://images/atlases/power_atlas.sprites/freeze_power.tres",
+            "res://images/atlases/power_atlas.sprites/white_shadow_lure_power.tres",
+            "res://images/atlases/power_atlas.sprites/soulguard_power.tres",
+            "res://images/atlases/power_atlas.sprites/spirit_form_power.tres",
+            "res://images/atlases/power_atlas.sprites/ancient_dragon_faith_power.tres",
+            "res://images/atlases/power_atlas.sprites/beast_claw_mark_power.tres",
+            "res://images/atlases/power_atlas.sprites/golden_order_power.tres",
+            "res://images/atlases/power_atlas.sprites/blessing_of_grace_power.tres",
+            "res://images/atlases/intent_atlas.sprites/intent_defend.tres",
+            "res://images/atlases/intent_atlas.sprites/intent_debuff.tres",
+            "res://scenes/creature_visuals/osty.tscn",
+            "res://scenes/vfx/vfx_heal_osty.tscn",
+            "res://materials/cards/frames/card_frame_revenant_mat.tres",
             RestVisuals,
             "res://revenant_assets/rest_site/revenant_rest_site.png",
             MerchantVisuals,
@@ -262,6 +380,8 @@ public static class RevenantAssetPatch
             "res://revenant_assets/multiplayer_hands/revenant_paper.png",
             "res://revenant_assets/multiplayer_hands/revenant_scissors.png",
             CardTrail,
+            SceneHelper.GetScenePath("vfx/card_trail_ironclad"),
+            SceneHelper.GetScenePath("combat/energy_counters/ironclad_energy_counter"),
             SceneHelper.GetScenePath("rest_site/characters/ironclad_rest_site"),
             SceneHelper.GetScenePath("merchant/characters/ironclad_merchant"),
         };

@@ -35,7 +35,9 @@ namespace sts2mod.Core.Patches
     {
         public static bool Prefix(Player localPlayer, CombatRoom combatRoom)
         {
-            if (localPlayer.Character is not Guardian && localPlayer.Character is not Ironeye)
+            if (localPlayer.Character is not Guardian
+                && localPlayer.Character is not Ironeye
+                && localPlayer.Character is not Revenant)
                 return true;
 
             ProgressState progress = SaveManager.Instance.Progress;
@@ -107,6 +109,7 @@ namespace sts2mod.Core.Patches
             {
                 ModelDb.Character<Guardian>(),
                 ModelDb.Character<Ironeye>(),
+                ModelDb.Character<Revenant>(),
             };
             foreach (CharacterModel character in modCharacters)
             {
@@ -134,22 +137,21 @@ namespace sts2mod.Core.Patches
             if (filters == null || ironcladFilter == null)
                 return;
 
-            NCardPoolFilter guardianFilter = GuardianCardLibraryFilterFactory.FindOrCreateGuardianPoolFilter(library, ironcladFilter);
-            if (guardianFilter == null)
-                return;
-
-            if (!filters.ContainsKey(guardianFilter))
+            NCardPoolFilter guardianFilter =
+                GuardianCardLibraryFilterFactory.FindOrCreateGuardianPoolFilter(library, ironcladFilter);
+            if (guardianFilter != null && !filters.ContainsKey(guardianFilter))
             {
                 filters[guardianFilter] = card => card.Pool is GuardianCardPool;
             }
 
             var characterFilters = AccessTools.Field(typeof(NCardLibrary), "_cardPoolFilters")?.GetValue(library) as IDictionary<CharacterModel, NCardPoolFilter>;
-            if (characterFilters != null)
+            if (characterFilters != null && guardianFilter != null)
             {
                 characterFilters[ModelDb.Character<Guardian>()] = guardianFilter;
             }
 
             EnsureIroneyeCardLibraryFilter(library, ironcladFilter, filters, characterFilters);
+            EnsureRevenantCardLibraryFilter(library, ironcladFilter, filters, characterFilters);
         }
 
         private static void EnsureIroneyeCardLibraryFilter(
@@ -169,6 +171,28 @@ namespace sts2mod.Core.Patches
             if (characterFilters != null)
                 characterFilters[ModelDb.Character<Ironeye>()] = ironeyeFilter;
         }
+
+        private static void EnsureRevenantCardLibraryFilter(
+            NCardLibrary library,
+            NCardPoolFilter template,
+            IDictionary<NCardPoolFilter, Func<CardModel, bool>> filters,
+            IDictionary<CharacterModel, NCardPoolFilter> characterFilters)
+        {
+            NCardPoolFilter revenantFilter =
+                GuardianCardLibraryFilterFactory.FindOrCreateRevenantPoolFilter(library, template);
+            if (revenantFilter == null)
+                return;
+
+            // Resolve membership by the pool's authoritative card IDs.  Some
+            // canonical CardModel instances can cache Pool before mod pools
+            // are appended to ModelDb.AllCardPools, which made the Revenant
+            // button select correctly while its predicate matched no cards.
+            filters[revenantFilter] = card =>
+                ModelDb.CardPool<RevenantCardPool>().AllCardIds.Contains(card.Id);
+
+            if (characterFilters != null)
+                characterFilters[ModelDb.Character<Revenant>()] = revenantFilter;
+        }
     }
 
     [HarmonyPatch(typeof(NCardLibrary), nameof(NCardLibrary.OnSubmenuOpened))]
@@ -177,6 +201,22 @@ namespace sts2mod.Core.Patches
         public static void Prefix(NCardLibrary __instance)
         {
             GuardianCardLibraryPatch.EnsureGuardianCardLibraryFilter(__instance);
+        }
+    }
+
+    [HarmonyPatch(typeof(NCardLibrary), nameof(NCardLibrary.AssetPaths), MethodType.Getter)]
+    public static class RevenantCardLibraryAssetsPatch
+    {
+        public static void Postfix(ref string[] __result)
+        {
+            __result = (__result ?? Array.Empty<string>())
+                .Concat(new[]
+                {
+                    "res://revenant_assets/character_icon_revenant.png",
+                    "res://revenant_assets/character_icon_revenant_outline.png",
+                })
+                .Distinct()
+                .ToArray();
         }
     }
 
@@ -289,6 +329,64 @@ namespace sts2mod.Core.Patches
             return filter;
         }
 
+        public static NCardPoolFilter FindOrCreateRevenantPoolFilter(
+            NCardLibrary library,
+            NCardPoolFilter template)
+        {
+            Node parent = template.GetParent();
+            if (parent == null)
+            {
+                Log.Warn("Revenant card library filter: template filter has no parent.");
+                return null;
+            }
+
+            NCardPoolFilter existing = parent.GetNodeOrNull<NCardPoolFilter>("RevenantPool");
+            if (existing != null)
+            {
+                existing.Visible = true;
+                ApplyRevenantPortrait(existing);
+                return existing;
+            }
+
+            PackedScene scene = GD.Load<PackedScene>(
+                SceneHelper.GetScenePath("screens/card_library/library_pool_toggle"));
+            NCardPoolFilter filter =
+                scene?.Instantiate<NCardPoolFilter>(PackedScene.GenEditState.Disabled);
+            if (filter == null)
+            {
+                Log.Warn("Revenant card library filter: failed to instantiate library_pool_toggle.");
+                return null;
+            }
+
+            filter.Name = "RevenantPool";
+            filter.Visible = true;
+            filter.CustomMinimumSize = template.CustomMinimumSize;
+            filter.FocusMode = template.FocusMode;
+            parent.AddChild(filter);
+            parent.MoveChild(filter, Math.Min(template.GetIndex() + 3, parent.GetChildCount() - 1));
+            filter.Loc = new LocString("card_library", "POOL_REVENANT_TIP");
+            ApplyRevenantPortrait(filter);
+
+            filter.Connect(
+                NCardPoolFilter.SignalName.Toggled,
+                Callable.From<NCardPoolFilter>(selected =>
+                {
+                    var updateCardPoolFilter =
+                        AccessTools.Method(typeof(NCardLibrary), "UpdateCardPoolFilter");
+                    updateCardPoolFilter?.Invoke(library, new object[] { selected });
+                }));
+            filter.Connect(
+                Control.SignalName.FocusEntered,
+                Callable.From(() =>
+                {
+                    AccessTools.Field(typeof(NCardLibrary), "_lastHoveredControl")
+                        ?.SetValue(library, filter);
+                }));
+            Log.Info(
+                $"Revenant card library filter created under {parent.GetPath()} at index {filter.GetIndex()}.");
+            return filter;
+        }
+
         private static void ApplyGuardianPortrait(NCardPoolFilter filter)
         {
             Texture2D texture = PreloadManager.Cache.GetTexture2D("res://guardian_assets/character_icon_guardian.png");
@@ -333,6 +431,28 @@ namespace sts2mod.Core.Patches
                 shader.SetShaderParameter("v", 1f);
             }
         }
+
+        private static void ApplyRevenantPortrait(NCardPoolFilter filter)
+        {
+            Texture2D texture = PreloadManager.Cache.GetTexture2D(
+                "res://revenant_assets/character_icon_revenant.png");
+            TextureRect image = filter.GetNodeOrNull<TextureRect>("Image");
+            if (image == null)
+                return;
+
+            image.Texture = texture;
+            TextureRect shadow = image.GetNodeOrNull<TextureRect>("Shadow");
+            if (shadow != null)
+                shadow.Texture = texture;
+
+            image.Modulate = Colors.White;
+            if (image.Material is ShaderMaterial shader)
+            {
+                shader.SetShaderParameter("h", 1f);
+                shader.SetShaderParameter("s", 1f);
+                shader.SetShaderParameter("v", 1f);
+            }
+        }
     }
 
     internal static class GuardianProgressHelper
@@ -343,6 +463,7 @@ namespace sts2mod.Core.Patches
             {
                 ModelDb.Character<Guardian>(),
                 ModelDb.Character<Ironeye>(),
+                ModelDb.Character<Revenant>(),
             };
             foreach (CharacterModel character in modCharacters)
             {

@@ -18,25 +18,33 @@ namespace sts2mod.Core.Patches;
 
 internal static class IroneyeHybridTargetState
 {
-    private static readonly HashSet<ulong> ActiveCardPlays = new();
+    private static readonly Dictionary<ulong, CardModel> ActiveCardPlays = new();
 
     public static bool IsActive => ActiveCardPlays.Count > 0;
+    public static CardModel ActiveCard => ActiveCardPlays.Values.FirstOrDefault();
 
     public static bool IsHybridTargetCard(CardModel card) =>
-        card is AdvanceAndRetreat or IroneyeSwift;
+        card is AdvanceAndRetreat
+            or IroneyeSwift
+            or BeastClaw
+            or DeathLightning
+            or LightningSpear
+            or GurranqBeastClaw
+            or EmergencyRestore;
 
     public static void Begin(NCardPlay play)
     {
         if (play.Holder?.CardModel is { } card && IsHybridTargetCard(card))
-            ActiveCardPlays.Add(play.GetInstanceId());
+            ActiveCardPlays[play.GetInstanceId()] = card;
     }
 
     public static void End(NCardPlay play) => ActiveCardPlays.Remove(play.GetInstanceId());
 
     public static bool IsValid(Creature creature, CardModel card) =>
         creature.IsAlive
-        && (creature.Side != card.Owner.Creature.Side
-            || creature == card.Owner.Creature);
+        && (card is EmergencyRestore
+            ? creature == card.Owner.Creature || creature == card.Owner.Osty
+            : creature.Side != card.Owner.Creature.Side || creature == card.Owner.Creature);
 }
 
 [HarmonyPatch(typeof(CardModel), nameof(CardModel.IsValidTarget))]
@@ -65,10 +73,11 @@ internal static class AdvanceAndRetreatTargetManagerPatch
         if (!IroneyeHybridTargetState.IsActive)
             return true;
 
-        Creature local = LocalContext.GetMe(creature.CombatState)?.Creature;
-        __result = creature.IsAlive
-            && (creature.Side == MegaCrit.Sts2.Core.Combat.CombatSide.Enemy
-                || creature == local);
+        CardModel card = IroneyeHybridTargetState.ActiveCard;
+        if (card == null)
+            return true;
+
+        __result = IroneyeHybridTargetState.IsValid(creature, card);
         return false;
     }
 }
@@ -128,9 +137,13 @@ internal static class AdvanceAndRetreatControllerTargetingPatch
         NControllerCardPlay play,
         CardModel card)
     {
-        List<NCreature> nodes = card.CombatState.GetOpponentsOf(card.Owner.Creature)
-            .Where(creature => creature.IsHittable)
-            .Prepend(card.Owner.Creature)
+        IEnumerable<Creature> targets = card is EmergencyRestore
+            ? new[] { card.Owner.Creature, card.Owner.Osty }
+                .Where(creature => creature is { IsAlive: true })
+            : card.CombatState.GetOpponentsOf(card.Owner.Creature)
+                .Where(creature => creature.IsHittable)
+                .Prepend(card.Owner.Creature);
+        List<NCreature> nodes = targets
             .Select(creature => NCombatRoom.Instance.GetCreatureNode(creature))
             .OfType<NCreature>()
             .ToList();

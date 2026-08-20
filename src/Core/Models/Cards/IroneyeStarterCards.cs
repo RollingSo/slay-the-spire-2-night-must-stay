@@ -22,33 +22,40 @@ namespace sts2mod.Core.Models.Cards
         private const string DistanceKey = "Distance";
         private const string MarkKey = "Mark";
 
+        public override bool GainsBlock => true;
+
         public override IEnumerable<CardKeyword> CanonicalKeywords =>
-            new[] { CardKeyword.Retain };
+            IsUpgraded ? new[] { CardKeyword.Retain } : Array.Empty<CardKeyword>();
 
         public override string PortraitPath =>
             ImageHelper.GetImagePath("packed/card_portraits/ironeye/mark.png");
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
+            new BlockVar(4m, ValueProp.Move),
             new DynamicVar(DistanceKey, 1m),
             new PowerVar<MarkPower>(MarkKey, 1m),
         };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
         {
-            HoverTipFactory.FromKeyword(CardKeyword.Retain),
+            HoverTipFactory.Static(StaticHoverTip.Block),
             HoverTipFactory.FromPower<DistancePower>(),
             HoverTipFactory.FromPower<MarkPower>(),
-        };
+        }.Concat(IsUpgraded
+            ? new[] { HoverTipFactory.FromKeyword(CardKeyword.Retain) }
+            : Array.Empty<IHoverTip>());
 
         public IroneyeMark()
-            : base(1, CardType.Skill, CardRarity.Basic, TargetType.AnyEnemy)
+            : base(0, CardType.Skill, CardRarity.Basic, TargetType.AnyEnemy)
         {
         }
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
+
+            await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 
             await PowerCmd.Apply<DistancePower>(
                 choiceContext,
@@ -66,7 +73,9 @@ namespace sts2mod.Core.Models.Cards
                 this);
         }
 
-        protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+        protected override void OnUpgrade()
+        {
+        }
     }
 
     public sealed class FullDraw : CardModel, ILongShotCard

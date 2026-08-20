@@ -23,7 +23,7 @@ namespace sts2mod.Core.Models.Cards
         private const string DamageKey = "Damage";
 
         protected override IEnumerable<DynamicVar> CanonicalVars =>
-            new[] { new PowerVar<LightningArrowheadPower>(DamageKey, 4m) };
+            new[] { new PowerVar<LightningArrowheadPower>(DamageKey, 6m) };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
             new IHoverTip[]
@@ -53,7 +53,7 @@ namespace sts2mod.Core.Models.Cards
         }
 
         protected override void OnUpgrade() =>
-            DynamicVars[DamageKey].UpgradeValueBy(2m);
+            DynamicVars[DamageKey].UpgradeValueBy(3m);
     }
 
     public sealed class BowLikeFullMoon : CardModel
@@ -123,16 +123,16 @@ namespace sts2mod.Core.Models.Cards
     public sealed class CirclingManeuver : CardModel
     {
         private const string DistanceKey = "Distance";
-        private const string MarkKey = "Mark";
-
         public override bool GainsBlock => true;
+
+        public override IEnumerable<CardKeyword> CanonicalKeywords =>
+            new[] { CardKeyword.Retain };
 
         protected override IEnumerable<DynamicVar> CanonicalVars =>
             new DynamicVar[]
             {
-                new DynamicVar(DistanceKey, 1m),
-                new BlockVar(4m, ValueProp.Move),
-                new PowerVar<MarkPower>(MarkKey, 1m),
+                new DynamicVar(DistanceKey, 2m),
+                new BlockVar(8m, ValueProp.Move),
             };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -140,13 +140,14 @@ namespace sts2mod.Core.Models.Cards
             {
                 HoverTipFactory.FromPower<DistancePower>(),
                 HoverTipFactory.Static(StaticHoverTip.Block),
+                HoverTipFactory.FromKeyword(CardKeyword.Retain),
             };
 
         public override string PortraitPath =>
             ImageHelper.GetImagePath("packed/card_portraits/ironeye/circling_maneuver.png");
 
         public CirclingManeuver()
-            : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy)
+            : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
         {
         }
 
@@ -154,23 +155,15 @@ namespace sts2mod.Core.Models.Cards
             PlayerChoiceContext context,
             CardPlay cardPlay)
         {
-            ArgumentNullException.ThrowIfNull(cardPlay.Target);
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+            decimal currentDistance =
+                Owner.Creature.GetPower<DistancePower>()?.Amount ?? 0m;
             await PowerCmd.Apply<DistancePower>(
                 context,
                 Owner.Creature,
-                DynamicVars[DistanceKey].BaseValue,
+                DynamicVars[DistanceKey].BaseValue - currentDistance,
                 Owner.Creature,
                 this);
-            if (cardPlay.Target.IsAlive)
-            {
-                await PowerCmd.Apply<MarkPower>(
-                    context,
-                    cardPlay.Target,
-                    DynamicVars[MarkKey].BaseValue,
-                    Owner.Creature,
-                    this);
-            }
         }
 
         protected override void OnUpgrade() =>
@@ -298,7 +291,7 @@ namespace sts2mod.Core.Models.Cards
             ImageHelper.GetImagePath("packed/card_portraits/ironeye/return_to_zero.png");
 
         public ReturnToZero()
-            : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+            : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
         {
         }
 
@@ -320,7 +313,8 @@ namespace sts2mod.Core.Models.Cards
                 await PlayerCmd.GainEnergy(DynamicVars[EnergyKey].BaseValue, Owner);
         }
 
-        protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+        protected override void OnUpgrade() =>
+            DynamicVars[EnergyKey].UpgradeValueBy(1m);
     }
 
     public sealed class RetreatStep : CardModel

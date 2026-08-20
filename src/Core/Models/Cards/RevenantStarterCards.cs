@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -60,50 +60,79 @@ public sealed class DefendRevenant : CardModel
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3m);
 }
 
-// TODO_REVENANT_STARTER_CARD_BALANCE: Temporary zero-cost access to Call.
 public sealed class RevenantCall : CardModel
 {
     public override string PortraitPath =>
         "res://revenant_assets/cards/call.png";
 
-    public RevenantCall() : base(0, CardType.Skill, CardRarity.Basic, TargetType.Self) { }
+    protected override IEnumerable<IHoverTip> ExtraHoverTips
+    {
+        get
+        {
+            LocString description = new LocString("cards", "REVENANT_CALL.tooltipDescription");
+            return new IHoverTip[]
+            {
+                new HoverTip(new LocString("cards", "REVENANT_CALL.tooltipTitle"), description),
+            };
+        }
+    }
+
+    // Starter-only: keep it in RevenantCardPool for its visuals/library entry,
+    // while Basic rarity excludes it from ordinary card rewards.
+    public RevenantCall() : base(2, CardType.Skill, CardRarity.Basic, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        RevenantSummonManager manager = RevenantSummonManager.For(Owner);
+        await ChooseFamilyAndCall(context, Owner);
+    }
+
+    public static async Task ChooseFamilyAndCall(PlayerChoiceContext context, MegaCrit.Sts2.Core.Entities.Players.Player owner)
+    {
+        RevenantSummonManager manager = RevenantSummonManager.For(owner);
         IReadOnlyList<RevenantFamilyId> available = manager.GetCallableFamilies();
-        List<CardModel> options = available.Select(CreateChoiceCard).ToList();
+        List<CardModel> options = available.Select(family => CreateChoiceCard(owner, family)).ToList();
         if (options.Count == 0)
             return;
 
-        CardModel selected = (await CardSelectCmd.FromSimpleGrid(
-            context,
-            options,
-            Owner,
-            new CardSelectorPrefs(new LocString("cards", "REVENANT_CALL.selectionScreenPrompt"), 1)))
-            .FirstOrDefault();
+        CardModel selected = await CardSelectCmd.FromChooseACardScreen(context, options, owner);
         if (selected is IRevenantFamilyChoice choice)
             await manager.CallFamily(context, choice.FamilyId);
     }
 
-    private CardModel CreateChoiceCard(RevenantFamilyId family) => family switch
+    private static CardModel CreateChoiceCard(MegaCrit.Sts2.Core.Entities.Players.Player owner, RevenantFamilyId family) => family switch
     {
-        RevenantFamilyId.Helen => CombatState.CreateCard<RevenantFamilyHelenChoice>(Owner),
-        RevenantFamilyId.PumpkinHead => CombatState.CreateCard<RevenantFamilyPumpkinHeadChoice>(Owner),
-        _ => CombatState.CreateCard<RevenantFamilySkeletonChoice>(Owner),
+        RevenantFamilyId.Helen => owner.Creature.CombatState.CreateCard<RevenantFamilyHelenChoice>(owner),
+        RevenantFamilyId.PumpkinHead => owner.Creature.CombatState.CreateCard<RevenantFamilyPumpkinHeadChoice>(owner),
+        _ => owner.Creature.CombatState.CreateCard<RevenantFamilySkeletonChoice>(owner),
     };
+
+    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }
 
-// TODO_REVENANT_STARTER_CARD_BALANCE: Temporary zero-cost access to Resonance.
 public sealed class RevenantResonance : CardModel
 {
     public override string PortraitPath =>
         "res://revenant_assets/cards/resonance.png";
 
-    public RevenantResonance() : base(0, CardType.Skill, CardRarity.Basic, TargetType.Self) { }
+    protected override IEnumerable<IHoverTip> ExtraHoverTips
+    {
+        get
+        {
+            LocString genericDescription = new LocString("cards", "REVENANT_RESONANCE.tooltipDescription");
+            return new IHoverTip[]
+            {
+                new HoverTip(new LocString("cards", "REVENANT_RESONANCE.tooltipTitle"), genericDescription),
+            };
+        }
+    }
+
+    public RevenantResonance() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self) { }
 
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
         RevenantSummonManager.For(Owner).TriggerResonance(context);
+
+    protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);
+
 }
 
 public interface IRevenantFamilyChoice

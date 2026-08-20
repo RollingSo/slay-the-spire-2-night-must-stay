@@ -372,6 +372,7 @@ namespace sts2mod.Core.Models.Cards
             {
                 HoverTipFactory.FromPower<LongShotPower>(),
                 HoverTipFactory.FromPower<DistancePower>(),
+                HoverTipFactory.FromPower<MarkPower>(),
             };
 
         public override string PortraitPath =>
@@ -387,20 +388,26 @@ namespace sts2mod.Core.Models.Cards
             CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
-            decimal damage = DynamicVars.Damage.BaseValue;
-            if ((Owner.Creature.GetPower<DistancePower>()?.Amount ?? 0m) >= 2m)
-                damage *= 2m;
+            bool triggeredLongShot =
+                (Owner.Creature.GetPower<DistancePower>()?.Amount ?? 0m) >= 2m;
 
-            await DamageCmd.Attack(damage)
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
                 .FromCard(this)
                 .Targeting(cardPlay.Target)
                 .WithHitVfxNode(target =>
                     NightreignHitVfx.CreateIroneyeShot(Owner.Creature, target))
                 .Execute(context);
+
+            if (triggeredLongShot && cardPlay.Target.IsAlive)
+            {
+                MarkPower mark = cardPlay.Target.GetPower<MarkPower>();
+                if (mark != null)
+                    await mark.TriggerOne(context, Owner.Creature, this);
+            }
         }
 
         protected override void OnUpgrade() =>
-            DynamicVars.Damage.UpgradeValueBy(2m);
+            DynamicVars.Damage.UpgradeValueBy(4m);
     }
 
     // Card-table ID 11: 三箭齐射
@@ -438,64 +445,20 @@ namespace sts2mod.Core.Models.Cards
             DynamicVars.Damage.UpgradeValueBy(2m);
     }
 
-    // Card-table ID 12: 贯穿射击
-    public sealed class PiercingShot : CardModel, ILongShotCard
-    {
-        protected override IEnumerable<DynamicVar> CanonicalVars =>
-            new[] { new DamageVar(8m, ValueProp.Move) };
-
-        protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            new IHoverTip[]
-            {
-                HoverTipFactory.FromPower<LongShotPower>(),
-                HoverTipFactory.FromPower<DistancePower>(),
-            };
-
-        public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/ironeye/piercing_shot.png");
-
-        public PiercingShot()
-            : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
-        {
-        }
-
-        protected override async Task OnPlay(
-            PlayerChoiceContext context,
-            CardPlay cardPlay)
-        {
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this)
-                .TargetingAllOpponents(CombatState)
-                .WithHitVfxNode(target =>
-                    NightreignHitVfx.CreateIroneyeShot(Owner.Creature, target))
-                .Execute(context);
-
-        }
-
-        protected override void OnUpgrade() =>
-            DynamicVars.Damage.UpgradeValueBy(3m);
-    }
-
     // Card-table ID 13: 贴地滑移
     public sealed class GroundSkid : CardModel
     {
-        private const string DistanceKey = "Distance";
-        private const string CardsKey = "Cards";
-
         public override bool GainsBlock => true;
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new DynamicVar(DistanceKey, 1m),
-            new BlockVar(6m, ValueProp.Move),
-            new DynamicVar(CardsKey, 1m),
+            new BlockVar(4m, ValueProp.Move),
         };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
         {
-            HoverTipFactory.FromPower<DistancePower>(),
             HoverTipFactory.Static(StaticHoverTip.Block),
-        };
+        }.Concat(HoverTipFactory.FromCardWithCardHoverTips<Retreat>(IsUpgraded));
 
         public override string PortraitPath =>
             ImageHelper.GetImagePath("packed/card_portraits/ironeye/ground_skid.png");
@@ -510,20 +473,19 @@ namespace sts2mod.Core.Models.Cards
             CardPlay cardPlay)
         {
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-            await PowerCmd.Apply<DistancePower>(
-                context,
-                Owner.Creature,
-                DynamicVars[DistanceKey].BaseValue,
-                Owner.Creature,
-                this);
-            await CardPileCmd.Draw(
-                context,
-                (int)DynamicVars[CardsKey].BaseValue,
-                Owner);
+            CardModel retreat = CombatState.CreateCard<Retreat>(Owner);
+            if (IsUpgraded)
+                CardCmd.Upgrade(retreat);
+            CardCmd.PreviewCardPileAdd(
+                await CardPileCmd.AddGeneratedCardToCombat(
+                    retreat,
+                    PileType.Hand,
+                    Owner));
         }
 
-        protected override void OnUpgrade() =>
-            DynamicVars[CardsKey].UpgradeValueBy(1m);
+        protected override void OnUpgrade()
+        {
+        }
     }
 
     // Card-table ID 14: 猎步标记

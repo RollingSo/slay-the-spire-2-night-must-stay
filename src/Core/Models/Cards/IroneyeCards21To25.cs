@@ -33,7 +33,7 @@ namespace sts2mod.Core.Models.Cards
             ImageHelper.GetImagePath("packed/card_portraits/ironeye/pierce_the_willow.png");
 
         public PierceTheWillow()
-            : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self)
+            : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
         {
         }
 
@@ -54,7 +54,7 @@ namespace sts2mod.Core.Models.Cards
     }
 
     // Card-table ID 22: 穿心箭
-    public sealed class HeartpiercingArrow : CardModel
+    public sealed class HeartpiercingArrow : CardModel, ILongShotCard
     {
         protected override IEnumerable<DynamicVar> CanonicalVars =>
             new DynamicVar[]
@@ -65,6 +65,13 @@ namespace sts2mod.Core.Models.Cards
 
         public override string PortraitPath =>
             ImageHelper.GetImagePath("packed/card_portraits/ironeye/heartpiercing_arrow.png");
+
+        protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+            new IHoverTip[]
+            {
+                HoverTipFactory.FromPower<LongShotPower>(),
+                HoverTipFactory.FromPower<DistancePower>(),
+            };
 
         public HeartpiercingArrow()
             : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
@@ -137,7 +144,7 @@ namespace sts2mod.Core.Models.Cards
             DynamicVars.Damage.UpgradeValueBy(2m);
     }
 
-    // Card-table ID 24: 惊弓之鸟
+    // Card-table ID 24: 散射
     public sealed class StartledBird : CardModel
     {
         private const string DistanceKey = "Distance";
@@ -157,7 +164,7 @@ namespace sts2mod.Core.Models.Cards
             };
 
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/ironeye/startled_bird.png");
+            ImageHelper.GetImagePath("packed/card_portraits/ironeye/piercing_shot.png");
 
         public StartledBird()
             : base(0, CardType.Attack, CardRarity.Common, TargetType.AllEnemies)
@@ -194,6 +201,68 @@ namespace sts2mod.Core.Models.Cards
 
         protected override void OnUpgrade() =>
             DynamicVars.Damage.UpgradeValueBy(2m);
+    }
+
+    // New card: 惊弓之鸟
+    public sealed class FrightenedBird : CardModel
+    {
+        private const string DistanceKey = "Distance";
+        private const string StrengthLossKey = "StrengthLoss";
+
+        protected override IEnumerable<DynamicVar> CanonicalVars =>
+            new DynamicVar[]
+            {
+                new DynamicVar(DistanceKey, 1m),
+                new DynamicVar(StrengthLossKey, 8m),
+            };
+
+        protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+            new IHoverTip[]
+            {
+                HoverTipFactory.FromPower<DistancePower>(),
+                HoverTipFactory.FromPower<StrengthPower>(),
+            };
+
+        public override string PortraitPath =>
+            ImageHelper.GetImagePath("packed/card_portraits/ironeye/startled_bird.png");
+
+        public FrightenedBird()
+            : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+        {
+        }
+
+        protected override async Task OnPlay(
+            PlayerChoiceContext context,
+            CardPlay cardPlay)
+        {
+            decimal distanceBefore =
+                Owner.Creature.GetPower<DistancePower>()?.Amount ?? 0m;
+            await PowerCmd.Apply<DistancePower>(
+                context,
+                Owner.Creature,
+                DynamicVars[DistanceKey].BaseValue,
+                Owner.Creature,
+                this);
+            decimal distanceAfter =
+                Owner.Creature.GetPower<DistancePower>()?.Amount ?? 0m;
+            if (distanceBefore == distanceAfter || distanceAfter != 0m)
+                return;
+
+            foreach (Creature enemy in CombatState.HittableEnemies
+                         .Where(enemy => enemy.IsAlive)
+                         .ToArray())
+            {
+                await PowerCmd.Apply<DyingStarPower>(
+                    context,
+                    enemy,
+                    DynamicVars[StrengthLossKey].BaseValue,
+                    Owner.Creature,
+                    this);
+            }
+        }
+
+        protected override void OnUpgrade() =>
+            DynamicVars[StrengthLossKey].UpgradeValueBy(3m);
     }
 
     // Card-table ID 25: 鹰眼

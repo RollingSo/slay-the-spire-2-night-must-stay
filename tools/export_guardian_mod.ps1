@@ -9,7 +9,9 @@ $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $PSScriptRoot
 $buildDirectory = Join-Path $root 'build'
 $projectPath = Join-Path $root 'sts2mod.csproj'
-$releaseDirectory = Join-Path $root '.godot\mono\temp\bin\Release'
+$manifestPath = Join-Path $root 'manifest.json'
+$configPath = Join-Path $root 'config.json'
+$releaseDirectory = Join-Path $root '.godot\mono\temp\bin\CodexExport'
 $packPath = Join-Path $buildDirectory 'sts2mod.pck'
 
 New-Item -ItemType Directory -Path $buildDirectory -Force | Out-Null
@@ -24,8 +26,20 @@ if ($LASTEXITCODE -ne 0) {
     throw "Guardian card localization validation failed with exit code $LASTEXITCODE"
 }
 
+# Enforce shared card-text rules: one source for canonical keywords, sentence
+# line breaks, highlighted mechanics, and upgraded generated-card previews.
+powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'validate_card_text_format.ps1')
+if ($LASTEXITCODE -ne 0) {
+    throw "Card text format validation failed with exit code $LASTEXITCODE"
+}
+
 # Keep the compact icon and the large applied/triggered power flash in sync.
 & (Join-Path $PSScriptRoot 'sync_guardian_power_icons.ps1')
+
+# Family action powers use the standard PowerModel big-icon lookup under
+# images/powers in addition to their compact atlas textures. Keep both copies
+# synchronized and reject malformed alpha before Godot import.
+& (Join-Path $PSScriptRoot 'sync_revenant_family_power_icons.ps1')
 
 # Import changed images completely before creating the PCK. `--import` waits for
 # the import queue to finish; `--editor --quit` may exit before new textures are ready.
@@ -39,7 +53,9 @@ if ($LASTEXITCODE -ne 0) {
     throw "Godot PCK export failed with exit code $LASTEXITCODE"
 }
 
-dotnet build $projectPath -c Release --no-restore
+dotnet build $projectPath -c Release --no-restore `
+    -p:IntermediateOutputPath=.godot\mono\temp\obj\CodexExport\ `
+    -p:OutputPath=.godot\mono\temp\bin\CodexExport\
 if ($LASTEXITCODE -ne 0) {
     throw "Release build failed with exit code $LASTEXITCODE"
 }
@@ -54,7 +70,21 @@ foreach ($fileName in $runtimeFiles) {
     Copy-Item -LiteralPath (Join-Path $releaseDirectory $fileName) -Destination (Join-Path $buildDirectory $fileName) -Force
 }
 
-$installFiles = @('sts2mod.pck') + $runtimeFiles
+# Distribution metadata and telemetry configuration must stay beside the DLL.
+# Keep them in build as well so build/ and the installed Mods directory contain
+# the exact same publishable file set.
+Copy-Item -LiteralPath $manifestPath -Destination (Join-Path $buildDirectory 'sts2mod.json') -Force
+Copy-Item -LiteralPath $configPath -Destination (Join-Path $buildDirectory 'config.json') -Force
+
+$installFiles = @('sts2mod.pck', 'sts2mod.json', 'sts2mod.dll', 'sts2mod.pdb')
+
+# Keep telemetry configuration outside Mods.  The complete publishable set is
+# still preserved in build/, while the game sees only its one manifest JSON.
+if (-not $SkipInstall) {
+    $telemetryDirectory = Join-Path $env:APPDATA 'SlayTheSpire2\night_must_stay'
+    New-Item -ItemType Directory -Path $telemetryDirectory -Force | Out-Null
+    Copy-Item -LiteralPath $configPath -Destination (Join-Path $telemetryDirectory 'config.json') -Force
+}
 foreach ($fileName in $installFiles) {
     $buildPath = Join-Path $buildDirectory $fileName
     $buildHash = (Get-FileHash -LiteralPath $buildPath -Algorithm SHA256).Hash

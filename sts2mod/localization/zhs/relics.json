@@ -53,9 +53,9 @@
   "GLIDING_GARB.title": "滑行衣",
   "GLIDING_GARB.description": "每移动{Distance}点[gold]距离[/gold]，获得{Energy:energyIcons()}。",
   "GLIDING_GARB.flavor": "披风掠过地面，却从不留下能够追踪的尘痕。",
-  "TEMP_REVENANT_STARTER_RELIC.title": "复仇者初始遗物",
-  "TEMP_REVENANT_STARTER_RELIC.description": "无。",
-  "TEMP_REVENANT_STARTER_RELIC.flavor": "临时技术占位。",
+  "SMALL_MAKEUP_BRUSH.title": "小化妆刷",
+  "SMALL_MAKEUP_BRUSH.description": "战斗开始时，[gold]呼唤[/gold]。",
+  "SMALL_MAKEUP_BRUSH.flavor": "柔软的刷毛仍留着往昔妆奁中淡淡的香气。",
   "SEA_GLASS.GUARDIAN.title": "守护者玻璃",
   "SEA_GLASS.IRONEYE.title": "铁之眼玻璃",
   "SEA_GLASS.REVENANT.title": "复仇者玻璃"

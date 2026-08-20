@@ -40,7 +40,7 @@ public static class TelemetryService
     };
     private static readonly object _pendingLock = new object();
 
-    private static string _modsDir = "";
+    private static string _dataDir = "";
     private static string _serverUrl = "";
     private static string _token = "";
     private static bool _enabled;
@@ -56,25 +56,10 @@ public static class TelemetryService
         _initialized = true;
         try
         {
-            string exeDir = Path.GetDirectoryName(Environment.ProcessPath) ?? "";
-            // 配置目录：优先与 dll 同目录（mod 装在哪 config 就在哪，层级正确）；
-            // 兼容旧结构 <游戏根目录>/mods/sts2mod/
-            string dllDir = "";
-            try
-            {
-                dllDir = Path.GetDirectoryName(typeof(TelemetryService).Assembly.Location) ?? "";
-            }
-            catch
-            {
-            }
-            if (!string.IsNullOrEmpty(dllDir) && File.Exists(Path.Combine(dllDir, ConfigFileName)))
-            {
-                _modsDir = dllDir;
-            }
-            else
-            {
-                _modsDir = Path.Combine(exeDir, "mods", "sts2mod");
-            }
+            // STS2 recursively scans every JSON file below Mods as a manifest.
+            // Keep ordinary configuration and retry queues in user data.
+            string appData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            _dataDir = Path.Combine(appData, "SlayTheSpire2", "night_must_stay");
             LoadConfig();
 
             if (!_enabled || string.IsNullOrEmpty(_serverUrl))
@@ -97,7 +82,7 @@ public static class TelemetryService
 
     private static void LoadConfig()
     {
-        string cfgPath = Path.Combine(_modsDir, ConfigFileName);
+        string cfgPath = Path.Combine(_dataDir, ConfigFileName);
         if (!File.Exists(cfgPath))
         {
             return;
@@ -225,9 +210,9 @@ public static class TelemetryService
         {
             try
             {
-                Directory.CreateDirectory(_modsDir);
+                Directory.CreateDirectory(_dataDir);
                 // 清理过期的排队文件（防无限积压）
-                string[] existing = Directory.GetFiles(_modsDir, PendingPrefix + "*.json");
+                string[] existing = Directory.GetFiles(_dataDir, PendingPrefix + "*.json");
                 if (existing.Length >= MaxPendingFiles)
                 {
                     Array.Sort(existing);
@@ -236,7 +221,7 @@ public static class TelemetryService
                         TryDelete(existing[i]);
                     }
                 }
-                string file = Path.Combine(_modsDir, PendingPrefix + Guid.NewGuid().ToString("N") + ".json");
+                string file = Path.Combine(_dataDir, PendingPrefix + Guid.NewGuid().ToString("N") + ".json");
                 File.WriteAllText(file, json, Encoding.UTF8);
                 return file;
             }
@@ -278,7 +263,7 @@ public static class TelemetryService
     {
         try
         {
-            string[] files = Directory.GetFiles(_modsDir, PendingPrefix + "*.json");
+            string[] files = Directory.GetFiles(_dataDir, PendingPrefix + "*.json");
             foreach (string file in files)
             {
                 try

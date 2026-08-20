@@ -11,14 +11,15 @@ $root = Split-Path -Parent $PSScriptRoot
 $statePath = Join-Path $PSScriptRoot 'release_state.json'
 # Keep the script ASCII-safe for Windows PowerShell 5.1 while retaining the
 # requested colon-like separator, which is legal in Windows filenames.
-$productName = "Slay The Spire $([char]0xFF1A) Nightreigren"
+$productName = "Slay the Spire 2 $([char]0xFF1A) Night Must Stay"
 $requiredFiles = @(
     'sts2mod.deps.json',
     'sts2mod.dll',
     'sts2mod.json',
     'sts2mod.pck',
     'sts2mod.pdb',
-    'sts2mod.runtimeconfig.json'
+    'sts2mod.runtimeconfig.json',
+    'config.json'
 )
 
 function Get-NextVersion([string]$CurrentVersion) {
@@ -41,7 +42,6 @@ if (Test-Path -LiteralPath $statePath) {
 if ([string]::IsNullOrWhiteSpace($Version)) {
     if ($null -ne $existingState) {
         $Version = [string]$existingState.next_version
-        $Version = [string]$state.next_version
     }
     else {
         $Version = '0.1'

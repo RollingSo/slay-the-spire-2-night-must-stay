@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -14,11 +15,30 @@ public sealed class RevenantSummonControllerPower : PowerModel
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
+    // The controller is an implementation detail; its hooks remain active, but
+    // it should never occupy a visible power slot in the combat UI.
+    protected override bool IsVisibleInternal => false;
 
     public override async Task AfterPlayerTurnStartLate(PlayerChoiceContext context, Player player)
     {
-        if (player == Owner.Player)
-            await RevenantSummonManager.For(player).TriggerFamilyNormalAction(context);
+        if (player != Owner.Player)
+            return;
+
+        RevenantSummonManager manager = RevenantSummonManager.For(player);
+        await manager.ExecuteScheduledFamilyAction(context);
+        await manager.ScheduleFamilyNormalAction(context);
+    }
+
+    public override async Task AfterDamageReceived(
+        PlayerChoiceContext context,
+        Creature target,
+        DamageResult result,
+        ValueProp props,
+        Creature dealer,
+        CardModel cardSource)
+    {
+        if (result.WasTargetKilled)
+            await RevenantSummonManager.For(Owner.Player).HandleFamilyDeath(target);
     }
 
     public override Task AfterDamageGiven(

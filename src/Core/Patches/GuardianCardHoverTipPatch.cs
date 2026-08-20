@@ -35,9 +35,19 @@ namespace sts2mod.Core.Patches
                 "[gold]盾戳[/gold]", "[gold]Shield Poke[/gold]");
             AddIfMentioned(tips, text, HoverTipFactory.FromPower<PhantomImbalancePower>(),
                 "[gold]失衡[/gold]", "[gold]Imbalance[/gold]");
+            AddIfMentioned(tips, text, GuardianCardHoverTips.RevenantCharge,
+                "[gold]蓄力[/gold]", "[gold]Charge[/gold]");
+            AddIfMentioned(tips, text, GuardianCardHoverTips.RevenantRecover,
+                "[gold]回收[/gold]", "[gold]Recover[/gold]", "[gold]Recovered[/gold]");
+            AddIfMentioned(tips, text, GuardianCardHoverTips.RevenantCall,
+                "[gold]呼唤[/gold]", "[gold]Call[/gold]");
+            AddIfMentioned(tips, text, GuardianCardHoverTips.RevenantResonance,
+                "[gold]共鸣[/gold]", "[gold]Resonance[/gold]");
 
             AddIfMentioned(tips, text, HoverTipFactory.FromPower<WeakPower>(),
                 "[gold]虚弱[/gold]", "[gold]Weak[/gold]");
+            AddIfMentioned(tips, text, HoverTipFactory.FromPower<VulnerablePower>(),
+                "[gold]易伤[/gold]", "[gold]Vulnerable[/gold]");
             AddIfMentioned(tips, text, HoverTipFactory.Static(StaticHoverTip.Block),
                 "[gold]格挡[/gold]", "[gold]Block[/gold]");
             AddIfMentioned(tips, text, HoverTipFactory.FromPower<StrengthPower>(),
@@ -50,6 +60,8 @@ namespace sts2mod.Core.Patches
                 "[gold]保留[/gold]", "[gold]Retain[/gold]");
             AddIfMentioned(tips, text, HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
                 "[gold]消耗[/gold]", "[gold]Exhaust[/gold]", "[gold]Exhausted[/gold]");
+            AddIfMentioned(tips, text, HoverTipFactory.FromKeyword(CardKeyword.Ethereal),
+                "[gold]虚无[/gold]", "[gold]Ethereal[/gold]");
 
             if (text.Contains("energyIcons", StringComparison.Ordinal))
                 tips.MegaTryAddingTip(HoverTipFactory.ForEnergy(__instance));
