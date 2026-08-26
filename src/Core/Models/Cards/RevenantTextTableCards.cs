@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -19,7 +20,11 @@ namespace sts2mod.Core.Models.Cards;
 
 internal static class RevenantTextTableHelpers
 {
-    public static async Task DiscardFromDraw(CardModel source, PlayerChoiceContext context, int count)
+    public static async Task DiscardFromDraw(
+        CardModel source,
+        PlayerChoiceContext context,
+        LocString selectionPrompt,
+        int count)
     {
         CardPile draw = PileType.Draw.GetPile(source.Owner);
         if (draw.Cards.Count == 0) return;
@@ -28,10 +33,10 @@ internal static class RevenantTextTableHelpers
             draw,
             source.Owner,
             new CardSelectorPrefs(
-                new LocString("cards", "REVENANT_SELECT_DRAW_DISCARD"),
+                selectionPrompt,
                 Math.Min(count, draw.Cards.Count)));
         foreach (CardModel card in selected)
-            await CardCmd.Discard(context, card);
+            await CardPileCmd.Add(card, PileType.Discard);
     }
 
     public static async Task DamageAsFamily(
@@ -49,9 +54,9 @@ internal static class RevenantTextTableHelpers
             Creature[] enemies = source.CombatState.HittableEnemies.Where(enemy => enemy.IsAlive).ToArray();
             if (enemies.Length == 0) return;
             if (all)
-                await CreatureCmd.Damage(context, enemies, amount, ValueProp.Unpowered, family, source);
+                await CreatureCmd.Damage(context, enemies, amount, ValueProp.Move, family, source);
             else
-                await CreatureCmd.Damage(context, source.Owner.RunState.Rng.CombatTargets.NextItem(enemies), amount, ValueProp.Unpowered, family, source);
+                await CreatureCmd.Damage(context, source.Owner.RunState.Rng.CombatTargets.NextItem(enemies), amount, ValueProp.Move, family, source);
         }
     }
 }
@@ -121,7 +126,7 @@ public sealed class SkyRendingChord : CardModel
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target).Execute(context);
-        await RevenantTextTableHelpers.DiscardFromDraw(this, context, DynamicVars.Cards.IntValue);
+        await RevenantTextTableHelpers.DiscardFromDraw(this, context, SelectionScreenPrompt, DynamicVars.Cards.IntValue);
     }
     protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1m);
 }
@@ -135,7 +140,7 @@ public sealed class SubstituteDoll : CardModel
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        await RevenantTextTableHelpers.DiscardFromDraw(this, context, 1);
+        await RevenantTextTableHelpers.DiscardFromDraw(this, context, SelectionScreenPrompt, 1);
     }
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3m);
 }
@@ -201,7 +206,7 @@ public sealed class SoulCursingBell : CardModel
 public sealed class LightSpirit : CardModel
 {
     public override string PortraitPath => "res://revenant_assets/cards/light_spirit.png";
-    public LightSpirit() : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self) { }
+    public LightSpirit() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) { }
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) => PowerCmd.Apply<LightSpiritPower>(context, Owner.Creature, 1m, Owner.Creature, this);
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }
@@ -213,7 +218,7 @@ public sealed class Grooming : CardModel
     public Grooming() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        await RevenantTextTableHelpers.DiscardFromDraw(this, context, 1);
+        await RevenantTextTableHelpers.DiscardFromDraw(this, context, SelectionScreenPrompt, 1);
         await CardPileCmd.Draw(context, DynamicVars.Cards.IntValue, Owner);
     }
     protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1m);
@@ -224,7 +229,11 @@ public sealed class ReanimateDead : CardModel
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
     public override string PortraitPath => "res://revenant_assets/cards/reanimate_dead.png";
     public ReanimateDead() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
-    protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) => RevenantSummonManager.For(Owner).ReviveDeadEnemy(context);
+    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
+    {
+        await RevenantCall.ChooseFamilyAndCall(context, Owner);
+        await RevenantSummonManager.For(Owner).ReviveDeadEnemy(context);
+    }
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }
 
@@ -307,15 +316,35 @@ public sealed class WatchfulWaiting : CardModel, IRevenantChargeCard
     public override bool GainsBlock => true;
     public override string PortraitPath => "res://revenant_assets/cards/watchful_waiting.png";
     public bool IsChargeComplete => _chargeComplete;
-    public WatchfulWaiting() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
+    {
+        new CardHoverTip(CreateOppositeChargePreview()),
+    };
+    public WatchfulWaiting() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy) { }
+    protected override void AddExtraArgsToDescription(LocString description) =>
+        RevenantCardHelpers.AddChargeStateDescription(this, description, IsChargeComplete);
+    private WatchfulWaiting CreateOppositeChargePreview()
+    {
+        var preview = (WatchfulWaiting)MutableClone();
+        preview.SetChargePreviewState(!IsChargeComplete);
+        return preview;
+    }
+    private void SetChargePreviewState(bool complete)
+    {
+        _chargeComplete = complete;
+        ((BoolVar)DynamicVars["Ready"]).BoolVal = complete;
+    }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        if (!_chargeComplete)
+        if (!_chargeComplete && cardPlay.Target == Owner.Creature)
         {
             await CompleteCharge(context);
             return;
         }
+
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+        if (!_chargeComplete)
+            return;
 
         _chargeComplete = false;
         ((BoolVar)DynamicVars["Ready"]).BoolVal = false;
@@ -344,7 +373,7 @@ public sealed class AllSoulsReturn : CardModel
         if (discard.Cards.Count == 0) return;
         IEnumerable<CardModel> selected = await CardSelectCmd.FromCombatPile(
             context, discard, Owner,
-            new CardSelectorPrefs(new LocString("cards", "REVENANT_SELECT_CARD"), 0, discard.Cards.Count));
+            new CardSelectorPrefs(new LocString("cards", "REVENANT_RECOVER_ANY_CARDS"), 0, discard.Cards.Count));
         await CardPileCmd.Add(selected, PileType.Hand);
     }
     protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);

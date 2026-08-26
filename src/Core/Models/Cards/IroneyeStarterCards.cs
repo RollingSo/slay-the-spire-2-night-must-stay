@@ -75,6 +75,7 @@ namespace sts2mod.Core.Models.Cards
 
         protected override void OnUpgrade()
         {
+            AddKeyword(CardKeyword.Retain);
         }
     }
 

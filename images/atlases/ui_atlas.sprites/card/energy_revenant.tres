@@ -1,7 +1,7 @@
 [gd_resource type="AtlasTexture" load_steps=2 format=3]
 
-[ext_resource type="Texture2D" path="res://revenant_assets/energy/revenant_energy_font_icon.png" id="1_energy"]
+[ext_resource type="Texture2D" path="res://revenant_assets/energy/revenant_energy_card_icon.png" id="1_energy"]
 
 [resource]
 atlas = ExtResource("1_energy")
-region = Rect2(0, 0, 64, 64)
+region = Rect2(0, 0, 74, 74)

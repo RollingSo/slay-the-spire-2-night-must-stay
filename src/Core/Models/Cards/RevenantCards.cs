@@ -42,9 +42,7 @@ public sealed class CursedClawCombo : CardModel
             .WithHitCount(2)
             .Execute(context);
 
-        CardPile draw = PileType.Draw.GetPile(Owner);
-        for (int i = 0; i < 2 && draw.Cards.Count > 0; i++)
-            await CardPileCmd.Add(draw.Cards[0], PileType.Discard);
+        await RevenantCardHelpers.DiscardFromDrawTopWithShuffle(this, context, 2);
     }
 
     protected override void OnUpgrade() =>

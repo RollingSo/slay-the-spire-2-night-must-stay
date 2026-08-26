@@ -20,6 +20,11 @@
 - Reject photorealistic, painterly concept-art, cinematic, highly textured, or realistic-metal results before presenting previews to the user.
 - Save approval candidates under `design/卡图预览` until the user approves them.
 
+## Revenant necros
+
+- Before revising Revenant Necro health, damage scaling, actions, summon limits, or battlefield layout, read `design/Revenant_死灵机制规范.md` completely.
+- Keep the meanings of the Necro fixed HP value, HP ratio, and damage ratio distinct; changing one must not silently change the others.
+
 ## Power artwork
 
 - Before generating or revising any power/status/action icon, read `design/能力图标生成强制规范.md` completely.

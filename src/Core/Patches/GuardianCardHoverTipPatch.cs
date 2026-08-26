@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -43,6 +44,16 @@ namespace sts2mod.Core.Patches
                 "[gold]呼唤[/gold]", "[gold]Call[/gold]");
             AddIfMentioned(tips, text, GuardianCardHoverTips.RevenantResonance,
                 "[gold]共鸣[/gold]", "[gold]Resonance[/gold]");
+            AddIfMentioned(tips, text, GuardianCardHoverTips.RevenantFamily,
+                "[gold]家人[/gold]", "[gold]Family[/gold]", "[gold]family member[/gold]");
+            AddIfMentioned(tips, text, GuardianCardHoverTips.RevenantNecro,
+                "[gold]死灵[/gold]", "[gold]Necro[/gold]", "[gold]Necros[/gold]");
+            AddAllIfMentioned(tips, text, GuardianCardHoverTips.HelenActions,
+                "[gold]海伦[/gold]", "[gold]Helen[/gold]");
+            AddAllIfMentioned(tips, text, GuardianCardHoverTips.FrederickActions,
+                "[gold]弗雷德利克[/gold]", "[gold]Frederick[/gold]");
+            AddAllIfMentioned(tips, text, GuardianCardHoverTips.SebastianActions,
+                "[gold]塞巴斯蒂安[/gold]", "[gold]Sebastian[/gold]");
 
             AddIfMentioned(tips, text, HoverTipFactory.FromPower<WeakPower>(),
                 "[gold]虚弱[/gold]", "[gold]Weak[/gold]");
@@ -73,9 +84,16 @@ namespace sts2mod.Core.Patches
         {
             string id = card.Id.Entry;
             string text = card.Description.Exists() ? card.Description.GetRawText() : string.Empty;
-            if (LocString.Exists("cards", id + ".upgradeDescription"))
+            string[] supplementalKeys =
             {
-                text += "\n" + new LocString("cards", id + ".upgradeDescription").GetRawText();
+                id + ".upgradeDescription",
+                id + ".unchargedDescription",
+                id + ".chargedDescription",
+            };
+            foreach (string key in supplementalKeys)
+            {
+                if (LocString.Exists("cards", key))
+                    text += "\n" + new LocString("cards", key).GetRawText();
             }
 
             return text;
@@ -95,6 +113,71 @@ namespace sts2mod.Core.Patches
                 tips.MegaTryAddingTip(tip);
                 return;
             }
+        }
+
+        private static void AddAllIfMentioned(
+            ICollection<IHoverTip> tips,
+            string text,
+            IEnumerable<IHoverTip> additions,
+            params string[] tokens)
+        {
+            if (!tokens.Any(token => text.Contains(token, StringComparison.OrdinalIgnoreCase)))
+                return;
+
+            foreach (IHoverTip tip in additions)
+                tips.MegaTryAddingTip(tip);
+        }
+    }
+
+    [HarmonyPatch(typeof(PowerModel), nameof(PowerModel.HoverTips), MethodType.Getter)]
+    public static class RevenantPowerHoverTipPatch
+    {
+        [HarmonyPostfix]
+        public static void AddFamilyGlossaryTips(PowerModel __instance, ref IEnumerable<IHoverTip> __result)
+        {
+            if (__instance.GetType().Namespace != "sts2mod.Core.Models.Power")
+                return;
+
+            string text = __instance.Description.Exists()
+                ? __instance.Description.GetRawText()
+                : string.Empty;
+            var tips = new List<IHoverTip>(__result);
+
+            AddIfMentioned(tips, text, GuardianCardHoverTips.RevenantFamily,
+                "[gold]家人[/gold]", "[gold]Family[/gold]", "[gold]family member[/gold]");
+            AddIfMentioned(tips, text, GuardianCardHoverTips.RevenantNecro,
+                "[gold]死灵[/gold]", "[gold]Necro[/gold]", "[gold]Necros[/gold]");
+            AddAllIfMentioned(tips, text, GuardianCardHoverTips.HelenActions,
+                "[gold]海伦[/gold]", "[gold]Helen[/gold]");
+            AddAllIfMentioned(tips, text, GuardianCardHoverTips.FrederickActions,
+                "[gold]弗雷德利克[/gold]", "[gold]Frederick[/gold]");
+            AddAllIfMentioned(tips, text, GuardianCardHoverTips.SebastianActions,
+                "[gold]塞巴斯蒂安[/gold]", "[gold]Sebastian[/gold]");
+
+            __result = tips;
+        }
+
+        private static void AddIfMentioned(
+            ICollection<IHoverTip> tips,
+            string text,
+            IHoverTip tip,
+            params string[] tokens)
+        {
+            if (tokens.Any(token => text.Contains(token, StringComparison.OrdinalIgnoreCase)))
+                tips.MegaTryAddingTip(tip);
+        }
+
+        private static void AddAllIfMentioned(
+            ICollection<IHoverTip> tips,
+            string text,
+            IEnumerable<IHoverTip> additions,
+            params string[] tokens)
+        {
+            if (!tokens.Any(token => text.Contains(token, StringComparison.OrdinalIgnoreCase)))
+                return;
+
+            foreach (IHoverTip tip in additions)
+                tips.MegaTryAddingTip(tip);
         }
     }
 }

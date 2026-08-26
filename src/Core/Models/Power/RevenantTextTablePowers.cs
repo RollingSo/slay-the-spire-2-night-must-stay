@@ -52,13 +52,28 @@ public sealed class FightForMePower : PowerModel
 
 public sealed class LightSpiritPower : PowerModel
 {
+    private bool _triggeredThisTurn;
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
+    public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
     {
-        if (card?.Owner == Owner.Player && RevenantCardHelpers.WasMovedFromDiscardToHand(card, oldPileType))
-            card.EnergyCost.AddThisTurn(-(int)Amount, true);
+        if (_triggeredThisTurn ||
+            card?.Owner != Owner.Player ||
+            !RevenantCardHelpers.WasMovedFromDiscardToHand(card, oldPileType))
+            return;
+
+        _triggeredThisTurn = true;
+        await PlayerCmd.GainEnergy(Amount, Owner.Player);
+    }
+
+    public override Task AfterSideTurnStart(
+        CombatSide side,
+        IReadOnlyList<Creature> creatures,
+        ICombatState combatState)
+    {
+        if (side == Owner.Side && creatures.Contains(Owner))
+            _triggeredThisTurn = false;
         return Task.CompletedTask;
     }
 }

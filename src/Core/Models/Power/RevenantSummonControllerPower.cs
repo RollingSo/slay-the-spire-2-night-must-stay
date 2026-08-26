@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
+using sts2mod.Core.Models.Cards;
 using sts2mod.Core.Models.Revenant;
 
 namespace sts2mod.Core.Models.Power;
@@ -19,6 +20,23 @@ public sealed class RevenantSummonControllerPower : PowerModel
     // The controller is an implementation detail; its hooks remain active, but
     // it should never occupy a visible power slot in the combat UI.
     protected override bool IsVisibleInternal => false;
+
+    public override bool TryModifyEnergyCostInCombat(
+        CardModel card,
+        decimal unmodifiedCost,
+        out decimal modifiedCost)
+    {
+        if (card is TravelingSatchel &&
+            card.Owner == Owner.Player &&
+            RevenantSummonManager.For(Owner.Player).CurrentFamilyId == RevenantFamilyId.Helen)
+        {
+            modifiedCost = System.Math.Max(0m, unmodifiedCost - 1m);
+            return true;
+        }
+
+        modifiedCost = unmodifiedCost;
+        return false;
+    }
 
     public override async Task AfterPlayerTurnStartLate(PlayerChoiceContext context, Player player)
     {
@@ -60,7 +78,9 @@ public sealed class RevenantSummonControllerPower : PowerModel
 
     public override Task AfterCombatEnd(CombatRoom room)
     {
-        RevenantSummonManager.For(Owner.Player).CleanupVisuals();
+        // Keep the family sprite visible throughout the combat result screen.
+        // Its combat scene owns the node and will free it during scene teardown.
+        RevenantSummonManager.For(Owner.Player).PrepareForSceneExit();
         RevenantSummonManager.Clear(Owner.Player);
         return Task.CompletedTask;
     }

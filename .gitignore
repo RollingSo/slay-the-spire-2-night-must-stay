@@ -5,6 +5,7 @@
 .codex_bin/
 .codex_obj/
 .msbuild-sdks/
+.tools/
 .claude/
 .agents/
 .codex/

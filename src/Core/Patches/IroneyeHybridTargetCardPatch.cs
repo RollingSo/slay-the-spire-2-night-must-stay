@@ -30,6 +30,7 @@ internal static class IroneyeHybridTargetState
             or DeathLightning
             or LightningSpear
             or GurranqBeastClaw
+            or WatchfulWaiting
             or EmergencyRestore;
 
     public static void Begin(NCardPlay play)
@@ -40,11 +41,18 @@ internal static class IroneyeHybridTargetState
 
     public static void End(NCardPlay play) => ActiveCardPlays.Remove(play.GetInstanceId());
 
-    public static bool IsValid(Creature creature, CardModel card) =>
-        creature.IsAlive
-        && (card is EmergencyRestore
-            ? creature == card.Owner.Creature || creature == card.Owner.Osty
-            : creature.Side != card.Owner.Creature.Side || creature == card.Owner.Creature);
+    public static bool IsValid(Creature creature, CardModel card)
+    {
+        if (!creature.IsAlive)
+            return false;
+        if (card is EmergencyRestore)
+            return creature == card.Owner.Creature || creature == card.Owner.Osty;
+        if (card is WatchfulWaiting { IsChargeComplete: true })
+            return creature == card.Owner.Creature;
+        if (card is IRevenantChargeCard { IsChargeComplete: true })
+            return creature.Side != card.Owner.Creature.Side;
+        return creature.Side != card.Owner.Creature.Side || creature == card.Owner.Creature;
+    }
 }
 
 [HarmonyPatch(typeof(CardModel), nameof(CardModel.IsValidTarget))]
@@ -142,7 +150,8 @@ internal static class AdvanceAndRetreatControllerTargetingPatch
                 .Where(creature => creature is { IsAlive: true })
             : card.CombatState.GetOpponentsOf(card.Owner.Creature)
                 .Where(creature => creature.IsHittable)
-                .Prepend(card.Owner.Creature);
+                .Prepend(card.Owner.Creature)
+                .Where(creature => IroneyeHybridTargetState.IsValid(creature, card));
         List<NCreature> nodes = targets
             .Select(creature => NCombatRoom.Instance.GetCreatureNode(creature))
             .OfType<NCreature>()

@@ -70,7 +70,7 @@ public sealed class SpiritFormPower : PowerModel
         IEnumerable<Creature> participants)
     {
         if (side == Owner.Side && participants.Contains(Owner))
-            await RevenantSummonManager.For(Owner.Player).ExecuteScheduledFamilyAction(context);
+            await RevenantSummonManager.For(Owner.Player).TriggerResonance(context);
     }
 }
 

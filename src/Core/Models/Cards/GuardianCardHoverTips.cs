@@ -1,5 +1,6 @@
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
+using sts2mod.Core.Models.Power;
 
 namespace sts2mod.Core.Models.Cards
 {
@@ -28,5 +29,31 @@ namespace sts2mod.Core.Models.Cards
         public static IHoverTip RevenantResonance => new HoverTip(
             new LocString("cards", "REVENANT_RESONANCE.tooltipTitle"),
             new LocString("cards", "REVENANT_RESONANCE.tooltipDescription"));
+
+        public static IHoverTip RevenantFamily => new HoverTip(
+            new LocString("cards", "REVENANT_FAMILY.tooltipTitle"),
+            new LocString("cards", "REVENANT_FAMILY.tooltipDescription"));
+
+        public static IHoverTip RevenantNecro => new HoverTip(
+            new LocString("cards", "REVENANT_NECRO.tooltipTitle"),
+            new LocString("cards", "REVENANT_NECRO.tooltipDescription"));
+
+        public static IHoverTip[] HelenActions => new IHoverTip[]
+        {
+            HoverTipFactory.FromPower<HelenStepStrikePower>(),
+            HoverTipFactory.FromPower<HelenRetreatPower>(),
+        };
+
+        public static IHoverTip[] FrederickActions => new IHoverTip[]
+        {
+            HoverTipFactory.FromPower<FrederickHeavyHammerPower>(),
+            HoverTipFactory.FromPower<FrederickHeadbuttPower>(),
+        };
+
+        public static IHoverTip[] SebastianActions => new IHoverTip[]
+        {
+            HoverTipFactory.FromPower<SebastianRoarPower>(),
+            HoverTipFactory.FromPower<SebastianSlamPower>(),
+        };
     }
 }

@@ -47,7 +47,7 @@ public sealed class GurranqsRock : CardModel
 public sealed class FrenziedFlame : CardModel
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new DynamicVar[] { new DamageVar(4m, ValueProp.Move) };
+        new DynamicVar[] { new DynamicVar("DamageMultiplier", 2m) };
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         IsUpgraded
             ? new[] { CardKeyword.Exhaust, CardKeyword.Retain }
@@ -64,12 +64,17 @@ public sealed class FrenziedFlame : CardModel
             return;
         decimal hpBefore = family.CurrentHp;
         await RevenantCardHelpers.DamageFamily(this, context, hpBefore);
-        int hpLost = Math.Max(0, (int)(hpBefore - family.CurrentHp));
-        await RevenantCardHelpers.DamageRandomEachHit(
-            this,
-            context,
-            DynamicVars.Damage.BaseValue,
-            hpLost);
+        decimal hpLost = Math.Max(0m, hpBefore - family.CurrentHp);
+        if (hpLost <= 0m)
+            return;
+        Creature[] enemies = CombatState.HittableEnemies.Where(enemy => enemy.IsAlive).ToArray();
+        if (enemies.Length == 0)
+            return;
+        Creature target = Owner.RunState.Rng.CombatTargets.NextItem(enemies);
+        await DamageCmd.Attack(hpLost * DynamicVars["DamageMultiplier"].BaseValue)
+            .FromCard(this)
+            .Targeting(target)
+            .Execute(context);
     }
 
     protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);
@@ -145,15 +150,17 @@ public sealed class Resurgence : CardModel
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new EnergyVar(2) };
     public override string PortraitPath => "res://revenant_assets/cards/resurgence.png";
 
-    public Resurgence() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
+    public Resurgence() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
 
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
         PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
 
-    public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source) =>
-        card == this
-            ? RevenantCardHelpers.AutoPlayWhenRecovered(this, oldPileType)
-            : Task.CompletedTask;
+    public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
+    {
+        if (card == this && RevenantCardHelpers.WasMovedFromDiscardToHand(card, oldPileType))
+            EnergyCost.AddUntilPlayed(-1, true);
+        return Task.CompletedTask;
+    }
 
     protected override void OnUpgrade() => DynamicVars.Energy.UpgradeValueBy(1m);
 }
@@ -188,7 +195,7 @@ public sealed class AnswerTheCall : CardModel
         new DynamicVar[] { new CardsVar(2) };
     public override string PortraitPath => "res://revenant_assets/cards/answer_the_call.png";
 
-    public AnswerTheCall() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+    public AnswerTheCall() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
@@ -260,9 +267,7 @@ public sealed class KingsRecovery : CardModel
 public sealed class UndyingMarch : CardModel
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        IsUpgraded
-            ? new[] { CardKeyword.Exhaust, CardKeyword.Retain }
-            : new[] { CardKeyword.Exhaust };
+        new[] { CardKeyword.Exhaust, CardKeyword.Retain };
     protected override bool IsPlayable => RevenantSummonManager.For(Owner).HasLivingFamily;
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         new IHoverTip[] { HoverTipFactory.FromPower<UndyingMarchPower>() };
@@ -275,5 +280,5 @@ public sealed class UndyingMarch : CardModel
             ? PowerCmd.Apply<UndyingMarchPower>(context, family, 1m, Owner.Creature, this)
             : Task.CompletedTask;
 
-    protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);
+    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }

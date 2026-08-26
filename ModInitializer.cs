@@ -20,7 +20,7 @@ namespace sts2mod
             SavedPropertiesTypeCache.InjectTypeIntoCache(typeof(EvolutionWings));
             SavedPropertiesTypeCache.InjectTypeIntoCache(typeof(FlyingFeatherHelm));
 
-            var harmony = new Harmony("sts2mod.author");
+            var harmony = new HarmonyLib.Harmony("sts2mod.author");
             harmony.PatchAll();
 
             // 战局数据上报（异步，不影响游戏；未配置 config.json 时自动禁用）

@@ -14,6 +14,7 @@ using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.ValueProps;
 using sts2mod.Core.Models.Revenant;
 using sts2mod.Core.Models.CardPools;
+using sts2mod.Core.Models.Power;
 
 namespace sts2mod.Core.Models.Cards;
 
@@ -84,19 +85,26 @@ public sealed class RevenantCall : CardModel
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         await ChooseFamilyAndCall(context, Owner);
+        if (IsUpgraded)
+            await RevenantCardHelpers.AddFromDiscard(this, context, 1, false);
     }
 
-    public static async Task ChooseFamilyAndCall(PlayerChoiceContext context, MegaCrit.Sts2.Core.Entities.Players.Player owner)
+    public static async Task<RevenantFamilyId?> ChooseFamilyAndCall(PlayerChoiceContext context, MegaCrit.Sts2.Core.Entities.Players.Player owner)
     {
         RevenantSummonManager manager = RevenantSummonManager.For(owner);
         IReadOnlyList<RevenantFamilyId> available = manager.GetCallableFamilies();
         List<CardModel> options = available.Select(family => CreateChoiceCard(owner, family)).ToList();
         if (options.Count == 0)
-            return;
+            return null;
 
         CardModel selected = await CardSelectCmd.FromChooseACardScreen(context, options, owner);
         if (selected is IRevenantFamilyChoice choice)
+        {
             await manager.CallFamily(context, choice.FamilyId);
+            return choice.FamilyId;
+        }
+
+        return null;
     }
 
     private static CardModel CreateChoiceCard(MegaCrit.Sts2.Core.Entities.Players.Player owner, RevenantFamilyId family) => family switch
@@ -106,7 +114,7 @@ public sealed class RevenantCall : CardModel
         _ => owner.Creature.CombatState.CreateCard<RevenantFamilySkeletonChoice>(owner),
     };
 
-    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+    protected override void OnUpgrade() { }
 }
 
 public sealed class RevenantResonance : CardModel
@@ -145,6 +153,21 @@ public abstract class RevenantFamilyChoiceCard : CardModel, IRevenantFamilyChoic
     public abstract RevenantFamilyId FamilyId { get; }
     public override CardPoolModel Pool => ModelDb.CardPool<TokenCardPool>();
     public override CardPoolModel VisualCardPool => ModelDb.CardPool<RevenantCardPool>();
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips
+    {
+        get
+        {
+            var tips = new List<IHoverTip> { GuardianCardHoverTips.RevenantFamily };
+            tips.AddRange(FamilyId switch
+            {
+                RevenantFamilyId.Helen => GuardianCardHoverTips.HelenActions,
+                RevenantFamilyId.PumpkinHead => GuardianCardHoverTips.FrederickActions,
+                _ => GuardianCardHoverTips.SebastianActions,
+            });
+            return tips;
+        }
+    }
 
     protected RevenantFamilyChoiceCard() : base(-2, CardType.Skill, CardRarity.Token, TargetType.None) { }
 }
