@@ -9,10 +9,10 @@ using MegaCrit.Sts2.Core.Entities.Relics;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
-using sts2mod.Core.Models.Cards;
-using sts2mod.Core.Models.Power;
+using NightMustStay.Core.Models.Cards;
+using NightMustStay.Core.Models.Power;
 
-namespace sts2mod.Core.Models.Relics
+namespace NightMustStay.Core.Models.Relics
 {
     public sealed class CursemarkSignet : RelicModel
     {

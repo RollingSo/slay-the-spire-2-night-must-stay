@@ -9,10 +9,10 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
-using sts2mod.Core.Models.Cards;
-using sts2mod.Core.Models.Revenant;
+using NightMustStay.Core.Models.Cards;
+using NightMustStay.Core.Models.Revenant;
 
-namespace sts2mod.Core.Models.Power;
+namespace NightMustStay.Core.Models.Power;
 
 public sealed class FrenziedThreeFingersPower : PowerModel
 {
@@ -41,11 +41,14 @@ public sealed class FrenziedThreeFingersPower : PowerModel
 public sealed class FightForMePower : PowerModel
 {
     public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Single;
+    public override PowerStackType StackType => PowerStackType.Counter;
 
     public override async Task AfterPlayerTurnStartLate(PlayerChoiceContext context, MegaCrit.Sts2.Core.Entities.Players.Player player)
     {
-        if (player == Owner.Player)
+        if (player != Owner.Player)
+            return;
+
+        for (int i = 0; i < (int)Amount; i++)
             await RevenantCall.ChooseFamilyAndCall(context, player);
     }
 }
@@ -81,11 +84,12 @@ public sealed class LightSpiritPower : PowerModel
 public sealed class HeavyEchoPower : PowerModel
 {
     public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Single;
+    public override PowerStackType StackType => PowerStackType.Counter;
 
     public async Task AfterChargedCardPlayed(PlayerChoiceContext context)
     {
-        await RevenantCall.ChooseFamilyAndCall(context, Owner.Player);
+        for (int i = 0; i < (int)Amount; i++)
+            await RevenantCall.ChooseFamilyAndCall(context, Owner.Player);
     }
 }
 
@@ -102,14 +106,14 @@ public sealed class FollowingShadowPower : PowerModel
 {
     private bool _triggeredThisTurn;
     public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Single;
+    public override PowerStackType StackType => PowerStackType.Counter;
 
     public async Task AfterFamilyCalled(PlayerChoiceContext context, RevenantFamilyId? family)
     {
         if (_triggeredThisTurn || family != RevenantFamilyId.Helen) return;
         _triggeredThisTurn = true;
-        await CardPileCmd.Draw(context, 1m, Owner.Player);
-        await PlayerCmd.GainEnergy(1m, Owner.Player);
+        await CardPileCmd.Draw(context, Amount, Owner.Player);
+        await PlayerCmd.GainEnergy(Amount, Owner.Player);
     }
 
     public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> creatures, ICombatState combatState)

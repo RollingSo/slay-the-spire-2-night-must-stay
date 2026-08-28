@@ -12,10 +12,10 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
-using sts2mod.Core.Models.Power;
-using sts2mod.Core.Models.Revenant;
+using NightMustStay.Core.Models.Power;
+using NightMustStay.Core.Models.Revenant;
 
-namespace sts2mod.Core.Models.Cards;
+namespace NightMustStay.Core.Models.Cards;
 
 public sealed class BurnLife : CardModel
 {
@@ -118,7 +118,7 @@ public sealed class SoulChargingClaw : CardModel, IRevenantChargeCard
             return;
         _chargeComplete = true;
         ((BoolVar)DynamicVars["Ready"]).BoolVal = true;
-        await RevenantSummonManager.For(Owner).NotifyChargeCompleted();
+        await RevenantSummonManager.For(Owner).NotifyChargeCompleted(this);
         await PowerCmd.Apply<ChargeReturnPower>(context, Owner.Creature, 1m, Owner.Creature, this);
     }
 

@@ -10,7 +10,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 
-namespace sts2mod.Core.Models.Power;
+namespace NightMustStay.Core.Models.Power;
 
 public sealed class NowhereToHidePower : PowerModel
 {

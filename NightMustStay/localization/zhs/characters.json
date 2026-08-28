@@ -29,8 +29,8 @@
   "IRONEYE.goldMonologue": "[sine]足够补充箭矢，也足够换取更多情报……[/sine]",
   "REVENANT.title": "复仇者",
   "REVENANT.titleObject": "复仇者",
-  "REVENANT.banter.alive.endTurnPing": "家人们，回应我。",
-  "REVENANT.banter.dead.endTurnPing": "……",
+  "REVENANT.banter.alive.endTurnPing": "海伦，听见了吗？下一小节要开始了",
+  "REVENANT.banter.dead.endTurnPing": "别停……把我带回曲子里",
   "REVENANT.pronounObject": "她",
   "REVENANT.possessiveAdjective": "她的",
   "REVENANT.pronounPossessive": "她的",
@@ -39,6 +39,6 @@
   "REVENANT.cardsModifierDescription": "属于复仇者的卡牌。",
   "REVENANT.description": "与家人和死灵并肩作战的召魂者。",
   "REVENANT.aromaPrinciple": "[sine][purple]无论生死，我们仍会重逢。[/purple][/sine]",
-  "REVENANT.eventDeathPrevention": "还不能离开他们。",
-  "REVENANT.goldMonologue": "[sine]这些足够为家人准备下一段旅途。[/sine]"
+  "REVENANT.eventDeathPrevention": "还不能谢幕——他们仍在等我",
+  "REVENANT.goldMonologue": "[sine]海伦会挑最亮的那枚，弗雷德利克则会假装自己毫不在意……[/sine]"
 }

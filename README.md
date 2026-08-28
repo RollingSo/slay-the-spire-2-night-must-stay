@@ -24,7 +24,7 @@ Build and install the complete mod from the project root:
 powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\export_guardian_mod.ps1
 ```
 
-The export script validates localization, synchronizes Guardian power icons, imports Godot assets, exports `build/sts2mod.pck`, builds the Release DLL/PDB/runtime files, copies them to the configured game Mods directory, and verifies SHA-256 hashes. It does not launch the game.
+The export script validates localization, synchronizes Guardian power icons, imports Godot assets, exports `build/NightMustStay.pck`, builds the Release DLL/PDB/runtime files, copies them to the configured game Mods directory, and verifies SHA-256 hashes. It does not launch the game.
 
 For a build without installing to Mods:
 
@@ -46,7 +46,7 @@ The default Godot and Mods paths are declared at the top of `tools/export_guardi
 | `src/Core/Patches` | Harmony integration with base-game scenes, events, UI and animation hooks. |
 | `src/Core/Nodes` | Godot UI/VFX nodes such as distance, mark and forecast overlays. |
 | `guardian_assets`, `ironeye_assets`, `revenant_assets` | Character-owned art, rigs, icons, scenes and transition assets. |
-| `sts2mod/localization/{zhs,eng}` | Mod localization tables. |
+| `NightMustStay/localization/{zhs,eng}` | Mod localization tables. |
 | `images/atlases`, `materials`, `atlases`, `powers`, `packed` | Godot atlas/material resources and packaged card/power assets. |
 | `tools` | Export, icon-sync and localization validation scripts. |
 | `design` | Art specifications, character bibles, card table snapshot and approved previews. |
@@ -67,11 +67,11 @@ The key must match the character's actual model ID. This prevents Orobas/Sea Gla
 
 ## Testing and diagnostics
 
-Do not start the game as part of unattended build verification. Use `dotnet build sts2mod.csproj -c Release --no-restore` for a fast compile check and inspect the latest game log under `%APPDATA%\\SlayTheSpire2\\logs` when a user reports an in-game failure. Distinguish base-game asset-cache warnings from mod exceptions; include the first exception and its stack trace in bug reports.
+Do not start the game as part of unattended build verification. Use `dotnet build NightMustStay.csproj -c Release --no-restore` for a fast compile check and inspect the latest game log under `%APPDATA%\\SlayTheSpire2\\logs` when a user reports an in-game failure. Distinguish base-game asset-cache warnings from mod exceptions; include the first exception and its stack trace in bug reports.
 
 ## Versioning
 
-The runtime assembly remains `sts2mod` for compatibility with the existing mod loader. The public project name and metadata are `Slay the Spire 2 : Night Must Stay`. Release archives should contain the five runtime files produced by the export script and use an incremented version directory under `releases/` (which is ignored locally so generated packages do not pollute source history).
+The runtime mod ID and assembly name are `NightMustStay`; the public project name and metadata are `Slay the Spire 2 : Night Must Stay`. Release archives should contain the runtime files produced by the export script and use an incremented version directory under `releases/` (which is ignored locally so generated packages do not pollute source history).
 
 ## License and assets
 

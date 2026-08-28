@@ -15,6 +15,8 @@ $outputDirectories = @(
     (Join-Path $root 'images\powers'),
     (Join-Path $root 'powers')
 )
+$updatedCount = 0
+$unchangedCount = 0
 
 if (-not (Test-Path -LiteralPath $atlasPath)) {
     throw "Guardian power atlas was not found: $atlasPath"
@@ -91,15 +93,38 @@ try {
                 $graphics.Dispose()
             }
 
+            $pngStream = New-Object System.IO.MemoryStream
+            try {
+                $icon.Save($pngStream, [System.Drawing.Imaging.ImageFormat]::Png)
+                $pngBytes = $pngStream.ToArray()
+            }
+            finally {
+                $pngStream.Dispose()
+            }
+
+            $sha256 = [System.Security.Cryptography.SHA256]::Create()
+            try {
+                $generatedHash = [System.BitConverter]::ToString($sha256.ComputeHash($pngBytes)).Replace('-', '')
+            }
+            finally {
+                $sha256.Dispose()
+            }
+
             foreach ($outputPath in $outputPaths) {
                 if (-not $MissingOnly -or -not (Test-Path -LiteralPath $outputPath)) {
+                    if ((Test-Path -LiteralPath $outputPath) -and
+                        (Get-FileHash -LiteralPath $outputPath -Algorithm SHA256).Hash -eq $generatedHash) {
+                        $unchangedCount++
+                        continue
+                    }
+
                     # Saving directly over an imported PNG can make GDI+ keep
                     # the destination handle open (especially after Godot has
                     # imported the atlas). Write beside it first, then replace
                     # the destination atomically so repeated exports are safe.
                     $temporaryPath = "$outputPath.tmp.$PID.png"
                     try {
-                        $icon.Save($temporaryPath, [System.Drawing.Imaging.ImageFormat]::Png)
+                        [System.IO.File]::WriteAllBytes($temporaryPath, $pngBytes)
                         Move-Item -LiteralPath $temporaryPath -Destination $outputPath -Force
                     }
                     finally {
@@ -107,6 +132,7 @@ try {
                             Remove-Item -LiteralPath $temporaryPath -Force -ErrorAction SilentlyContinue
                         }
                     }
+                    $updatedCount++
                     Write-Output $outputPath
                 }
             }
@@ -119,3 +145,5 @@ try {
 finally {
     $atlas.Dispose()
 }
+
+Write-Output "Guardian power icons: updated $updatedCount, unchanged $unchangedCount."

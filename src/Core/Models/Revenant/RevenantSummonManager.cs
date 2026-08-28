@@ -7,6 +7,7 @@ using Godot;
 using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -19,10 +20,10 @@ using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.ValueProps;
-using sts2mod.Core.Models.Power;
-using sts2mod.Core.Models.Relics;
+using NightMustStay.Core.Models.Power;
+using NightMustStay.Core.Models.Relics;
 
-namespace sts2mod.Core.Models.Revenant;
+namespace NightMustStay.Core.Models.Revenant;
 
 public enum RevenantFamilyId
 {
@@ -49,6 +50,7 @@ public sealed class RevenantNecro
 {
     public required MonsterModel SourceMonster { get; init; }
     public required Creature Creature { get; init; }
+    public int OriginalHp { get; init; }
     public int MaxHp { get; init; }
     public int DamagePerHit { get; init; }
     public int HitCount { get; init; } = 1;
@@ -184,20 +186,36 @@ public sealed class RevenantSummonManager
 
         if (HasLivingFamily)
         {
+            // Calling while a family member is already present always stacks
+            // the selected member's initial HP onto the CURRENT maximum HP.
+            // Capture A before SwitchFamily restores the selected member's
+            // stored state, otherwise switching silently loses the old maximum.
+            int currentMaxHp = _familyCreature.MaxHp;
+            int currentHp = _familyCreature.CurrentHp;
+            int selectedInitialHp = GetInitialFamilyHp(family);
             if (CurrentFamilyId != family)
                 await SwitchFamily(context, family);
-            int initialHp = GetInitialFamilyHp(family);
             if (_familyCreature is { IsAlive: true })
-                await CreatureCmd.GainMaxHp(_familyCreature, initialHp);
+            {
+                int stackedMaxHp = currentMaxHp + selectedInitialHp;
+                await CreatureCmd.SetMaxHp(
+                    _familyCreature,
+                    stackedMaxHp);
+                await CreatureCmd.SetCurrentHp(
+                    _familyCreature,
+                    Math.Min(stackedMaxHp, currentHp + selectedInitialHp));
+            }
             SnapshotCurrentFamily();
             await ApplyCallBonuses(context);
             await NotifyFamilyEntered(context, previousFamily, family);
+            RefreshScheduledFamilyIntent();
             return;
         }
 
         await SwitchFamily(context, family);
         await ApplyCallBonuses(context);
         await NotifyFamilyEntered(context, previousFamily, family);
+        RefreshScheduledFamilyIntent();
     }
 
     private async Task NotifyFamilyEntered(
@@ -230,6 +248,16 @@ public sealed class RevenantSummonManager
             await power.AfterFamilyCalled();
         foreach (FollowingShadowPower power in Owner.Creature.Powers.OfType<FollowingShadowPower>().ToArray())
             await power.AfterFamilyCalled(context, CurrentFamilyId);
+        if (Owner.GetRelic<MiniatureMakeupTools>() is { } miniatureMakeupTools)
+            await miniatureMakeupTools.AfterFamilyCalled(context);
+        SnapshotCurrentFamily();
+    }
+
+    public async Task IncreaseFamilyMaxHp(decimal amount)
+    {
+        if (_familyCreature is not { IsAlive: true } || amount <= 0m)
+            return;
+        await CreatureCmd.GainMaxHp(_familyCreature, amount);
         SnapshotCurrentFamily();
     }
 
@@ -326,12 +354,25 @@ public sealed class RevenantSummonManager
         SnapshotCurrentFamily();
     }
 
+    public void RefreshScheduledFamilyIntent()
+    {
+        if (CurrentFamilyId is RevenantFamilyId family &&
+            _familyCreature is { IsAlive: true } &&
+            _scheduledAction is RevenantFamilyAction action)
+        {
+            RefreshFamilyIntents(family, action);
+        }
+    }
+
     private async Task PerformFamilyAction(
         PlayerChoiceContext context,
         RevenantFamilyId family,
         bool first)
     {
         Creature pet = _familyCreature;
+        VigorPower vigor = pet?.GetPower<VigorPower>();
+        decimal vigorToConsume = vigor?.Amount ?? 0m;
+        bool attacked = false;
         PlayFamilyActionAnimation(family, first);
         Creature[] enemies = Owner.Creature.CombatState.HittableEnemies
             .Where(enemy => enemy.IsAlive)
@@ -348,14 +389,20 @@ public sealed class RevenantSummonManager
                 {
                     Creature target = RandomEnemy();
                     if (target != null)
+                    {
+                        attacked = true;
                         await CreatureCmd.Damage(context, target, 4m, ValueProp.Move, pet, null);
+                    }
                     await CardPileCmd.Draw(context, 1m, Owner);
                 }
                 else
                 {
                     Creature target = RandomEnemy();
                     if (target != null)
+                    {
+                        attacked = true;
                         await CreatureCmd.Damage(context, target, 4m, ValueProp.Move, pet, null);
+                    }
                     await PlayerCmd.GainEnergy(1m, Owner);
                 }
                 break;
@@ -365,12 +412,14 @@ public sealed class RevenantSummonManager
                     break;
                 if (first)
                 {
+                    attacked = true;
                     await CreatureCmd.Damage(context, pumpkinTarget, 6m, ValueProp.Move, pet, null);
                     if (pumpkinTarget.IsAlive)
                         await PowerCmd.Apply<VulnerablePower>(context, pumpkinTarget, 1m, pet, null);
                 }
                 else
                 {
+                    attacked = true;
                     for (int i = 0; i < 2 && pumpkinTarget.IsAlive; i++)
                         await CreatureCmd.Damage(context, pumpkinTarget, 6m, ValueProp.Move, pet, null);
                 }
@@ -378,15 +427,19 @@ public sealed class RevenantSummonManager
             case RevenantFamilyId.Skeleton:
                 if (first)
                 {
+                    attacked = enemies.Length > 0;
                     await CreatureCmd.Damage(context, enemies, 3m, ValueProp.Move, pet, null);
                     await PowerCmd.Apply<WeakPower>(context, enemies, 1m, pet, null);
                 }
                 else
                 {
+                    attacked = enemies.Length > 0;
                     await CreatureCmd.Damage(context, enemies, 7m, ValueProp.Move, pet, null);
                 }
                 break;
         }
+        if (attacked && vigor is not null && vigorToConsume > 0m)
+            await PowerCmd.ModifyAmount(context, vigor, -vigorToConsume, pet, null);
         await NotifySummonActed(context);
     }
 
@@ -434,6 +487,10 @@ public sealed class RevenantSummonManager
         await TriggerAllNecros(context);
         foreach (BeastClawMarkPower power in Owner.Creature.Powers.OfType<BeastClawMarkPower>().ToArray())
             await power.AfterResonance(context);
+        if (Owner.GetRelic<DeepSeaNight>() is { } deepSeaNight)
+            await deepSeaNight.AfterResonance();
+        if (Owner.GetRelic<OldPocketPortrait>() is { } oldPocketPortrait)
+            await oldPocketPortrait.AfterResonance(context);
     }
 
     public bool CanBecomeNecro(Creature enemy)
@@ -462,7 +519,8 @@ public sealed class RevenantSummonManager
         if (enemy?.Monster == null) return;
         int originalHp = enemy.MonsterMaxHpBeforeModification ?? enemy.MaxHp;
         MonsterModel monster = ModelDb.GetById<MonsterModel>(enemy.Monster.Id);
-        Owner.GetRelic<SmallMakeupBrush>()?.MarkNecroForNextCombat(monster, originalHp);
+        Owner.Relics.OfType<RevenantSummonRelicModel>().FirstOrDefault()
+            ?.MarkNecroForNextCombat(monster, originalHp);
     }
 
     public async Task ReviveDeadEnemy(PlayerChoiceContext context)
@@ -479,8 +537,10 @@ public sealed class RevenantSummonManager
         if (deadNecros.Length > 0)
         {
             RevenantNecro dead = Owner.RunState.Rng.CombatTargets.NextItem(deadNecros);
-            await CreatureCmd.SetMaxAndCurrentHp(dead.Creature, dead.MaxHp);
-            ConfigureNecroNode(dead);
+            // Recreate the monster-backed creature instead of only restoring
+            // HP. Monster death animations can leave body/spine state latched;
+            // a fresh creature guarantees the revived Necro is visibly alive.
+            await SummonNecro(context, dead.SourceMonster, dead.OriginalHp);
             return;
         }
 
@@ -513,7 +573,9 @@ public sealed class RevenantSummonManager
 
     public async Task SummonMarkedNecro(PlayerChoiceContext context)
     {
-        SmallMakeupBrush relic = Owner.GetRelic<SmallMakeupBrush>();
+        RevenantSummonRelicModel relic = Owner.Relics
+            .OfType<RevenantSummonRelicModel>()
+            .FirstOrDefault();
         if (relic == null || !relic.TryGetPendingNecro(out MonsterModel monster, out int originalHp))
             return;
 
@@ -535,6 +597,7 @@ public sealed class RevenantSummonManager
         {
             SourceMonster = sourceMonster,
             Creature = pet,
+            OriginalHp = originalHp,
             MaxHp = maxHp,
             DamagePerHit = damagePerHit,
             HitCount = hitCount,
@@ -631,10 +694,12 @@ public sealed class RevenantSummonManager
         node.ToggleIsInteractable(on: false);
     }
 
-    public async Task NotifyChargeCompleted()
+    public async Task NotifyChargeCompleted(CardModel card)
     {
         foreach (ChantingBlessingPower power in Owner.Creature.Powers.OfType<ChantingBlessingPower>().ToArray())
             await power.AfterChargeCompleted();
+        if (Owner.GetRelic<BelieversVowCloth>() is { } believersVowCloth)
+            believersVowCloth.AfterChargeCompleted(card);
     }
 
     public async Task NotifyChargedCardPlayed(PlayerChoiceContext context)

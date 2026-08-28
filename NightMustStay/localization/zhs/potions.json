@@ -10,5 +10,12 @@
   "THROWN_ARROW_POTION.title": "投掷箭",
   "THROWN_ARROW_POTION.description": "给予{MarkPower}层[gold]标记[/gold]。触发该名敌人的所有[gold]标记[/gold]。",
   "PICKLED_TURTLE_NECK_MEAT.title": "腌制龟颈肉",
-  "PICKLED_TURTLE_NECK_MEAT.description": "将1张[gold]接近+[/gold]和1张[gold]远离+[/gold]加入你的[gold]手牌[/gold]。"
+  "PICKLED_TURTLE_NECK_MEAT.description": "将1张[gold]接近+[/gold]和1张[gold]远离+[/gold]加入你的[gold]手牌[/gold]。",
+  "DUSTY_NOTE.title": "尘封音符",
+  "DUSTY_NOTE.description": "[gold]呼唤[/gold]。",
+  "WRAITH_JAR.title": "怨魂壶",
+  "WRAITH_JAR.description": "召唤1个随机[gold]死灵[/gold]。",
+  "STARLIGHT_SHARD.title": "星光碎片",
+  "STARLIGHT_SHARD.description": "[gold]回收[/gold]3张牌。",
+  "STARLIGHT_SHARD.selectionScreenPrompt": "选择并[gold]回收[/gold]3张牌。"
 }

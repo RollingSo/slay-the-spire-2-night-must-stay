@@ -1,9 +1,9 @@
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Models;
-using sts2mod.Core.Models.Characters;
-using sts2mod.Core.Models.Power;
+using NightMustStay.Core.Models.Characters;
+using NightMustStay.Core.Models.Power;
 
-namespace sts2mod.Core.Patches
+namespace NightMustStay.Core.Patches
 {
     [HarmonyPatch(typeof(PowerModel), nameof(PowerModel.SetAmount))]
     internal static class IroneyeDistanceAmountClampPatch

@@ -3,9 +3,9 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
-using sts2mod.Core.Models.Characters;
+using NightMustStay.Core.Models.Characters;
 
-namespace sts2mod.Core.Patches;
+namespace NightMustStay.Core.Patches;
 
 /// <summary>
 /// The base game forwards creature animation triggers only to Spine. This

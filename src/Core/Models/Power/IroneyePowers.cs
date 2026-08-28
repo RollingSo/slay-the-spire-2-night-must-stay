@@ -14,12 +14,12 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
-using sts2mod.Core.Models.Cards;
-using sts2mod.Core.Models.Characters;
-using sts2mod.Core.Models.Relics;
-using sts2mod.Core.Nodes.Vfx;
+using NightMustStay.Core.Models.Cards;
+using NightMustStay.Core.Models.Characters;
+using NightMustStay.Core.Models.Relics;
+using NightMustStay.Core.Nodes.Vfx;
 
-namespace sts2mod.Core.Models.Power
+namespace NightMustStay.Core.Models.Power
 {
     public interface ILongShotCard
     {

@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using Godot;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Models;
-using sts2mod.Core.Models.Relics;
+using NightMustStay.Core.Models.Relics;
 
-namespace sts2mod.Core.Models.RelicPools
+namespace NightMustStay.Core.Models.RelicPools
 {
     public sealed class GuardianRelicPool : RelicPoolModel
     {

@@ -3,9 +3,9 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Relics;
-using sts2mod.Core.Models.Power;
+using NightMustStay.Core.Models.Power;
 
-namespace sts2mod.Core.Patches
+namespace NightMustStay.Core.Patches
 {
     [HarmonyPatch(typeof(Hook), nameof(Hook.ShouldClearBlock))]
     public static class FortifySturdyClampPatch

@@ -1,10 +1,10 @@
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Nodes.Combat;
-using sts2mod.Core.Models.Characters;
-using sts2mod.Core.Models.Revenant;
+using NightMustStay.Core.Models.Characters;
+using NightMustStay.Core.Models.Revenant;
 
-namespace sts2mod.Core.Patches;
+namespace NightMustStay.Core.Patches;
 
 [HarmonyPatch]
 public static class RevenantAnimationPatch

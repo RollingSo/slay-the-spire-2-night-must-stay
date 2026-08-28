@@ -2,11 +2,11 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Saves.Runs;
-using sts2mod.Core.Models.Cards;
-using sts2mod.Core.Models.Relics;
-using sts2mod.Core.Telemetry;
+using NightMustStay.Core.Models.Cards;
+using NightMustStay.Core.Models.Relics;
+using NightMustStay.Core.Telemetry;
 
-namespace sts2mod
+namespace NightMustStay
 {
     [ModInitializer(nameof(Initialize))]
     public static class ModInitializer
@@ -20,10 +20,10 @@ namespace sts2mod
             SavedPropertiesTypeCache.InjectTypeIntoCache(typeof(EvolutionWings));
             SavedPropertiesTypeCache.InjectTypeIntoCache(typeof(FlyingFeatherHelm));
 
-            var harmony = new HarmonyLib.Harmony("sts2mod.author");
+            var harmony = new HarmonyLib.Harmony("NightMustStay.author");
             harmony.PatchAll();
 
-            // 战局数据上报（异步，不影响游戏；未配置 config.json 时自动禁用）
+            // 战局数据上报（异步，不影响游戏；AppData 配置可覆盖 DLL 内置默认值）
             TelemetryService.Initialize();
 
             Log.Info("Slay the Spire 2 : Night Must Stay loaded");

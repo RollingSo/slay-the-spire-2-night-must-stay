@@ -2,9 +2,9 @@ using Godot;
 using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
-using sts2mod.Core.Models.Power;
+using NightMustStay.Core.Models.Power;
 
-namespace sts2mod.Core.Nodes
+namespace NightMustStay.Core.Nodes
 {
     /// <summary>
     /// A persistent, character-anchored Distance readout. It follows the same

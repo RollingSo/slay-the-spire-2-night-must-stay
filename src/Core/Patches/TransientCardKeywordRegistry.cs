@@ -4,7 +4,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
 
-namespace sts2mod.Core.Patches
+namespace NightMustStay.Core.Patches
 {
     internal static class TransientCardKeywordRegistry
     {

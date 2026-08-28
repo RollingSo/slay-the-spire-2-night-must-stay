@@ -9,10 +9,10 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
-using sts2mod.Core.Models.Revenant;
-using sts2mod.Core.Models.Cards;
+using NightMustStay.Core.Models.Revenant;
+using NightMustStay.Core.Models.Cards;
 
-namespace sts2mod.Core.Models.Power;
+namespace NightMustStay.Core.Models.Power;
 
 public sealed class WhiteShadowLurePower : PowerModel
 {
@@ -62,14 +62,16 @@ public sealed class SoulguardPower : PowerModel
 public sealed class SpiritFormPower : PowerModel
 {
     public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Single;
+    public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override async Task AfterSideTurnEnd(
+    public override async Task AfterPlayerTurnStartLate(
         PlayerChoiceContext context,
-        CombatSide side,
-        IEnumerable<Creature> participants)
+        MegaCrit.Sts2.Core.Entities.Players.Player player)
     {
-        if (side == Owner.Side && participants.Contains(Owner))
+        if (player != Owner.Player)
+            return;
+
+        for (int i = 0; i < (int)Amount; i++)
             await RevenantSummonManager.For(Owner.Player).TriggerResonance(context);
     }
 }
@@ -113,7 +115,7 @@ public sealed class UndyingMarchPower : PowerModel
 public sealed class AncientDragonFaithPower : PowerModel
 {
     public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Single;
+    public override PowerStackType StackType => PowerStackType.Counter;
 
     public override async Task AfterSideTurnStart(
         CombatSide side,
@@ -122,8 +124,13 @@ public sealed class AncientDragonFaithPower : PowerModel
     {
         if (side != Owner.Side || !creatures.Contains(Owner)) return;
         CardPile discard = PileType.Discard.GetPile(Owner.Player);
-        CardModel card = discard.Cards.FirstOrDefault();
-        if (card != null) await CardPileCmd.Add(card, PileType.Hand);
+        for (int i = 0; i < (int)Amount; i++)
+        {
+            CardModel card = discard.Cards.FirstOrDefault();
+            if (card == null)
+                break;
+            await CardPileCmd.Add(card, PileType.Hand);
+        }
     }
 }
 
@@ -143,7 +150,7 @@ public sealed class BeastClawMarkPower : PowerModel
 public sealed class GoldenOrderPower : PowerModel
 {
     public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Single;
+    public override PowerStackType StackType => PowerStackType.Counter;
 
     public override bool TryModifyEnergyCostInCombat(
         CardModel card,

@@ -14,10 +14,10 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
-using sts2mod.Core.Models.Cards;
-using sts2mod.Core.Models.Power;
+using NightMustStay.Core.Models.Cards;
+using NightMustStay.Core.Models.Power;
 
-namespace sts2mod.Core.Models.Cards
+namespace NightMustStay.Core.Models.Cards
 {
     // 重戟无锋
     public sealed class HeavyHalberd : GuardianConcealedEdgeCard
@@ -207,7 +207,7 @@ namespace sts2mod.Core.Models.Cards
     }
 }
 
-namespace sts2mod.Core.Models.Power
+namespace NightMustStay.Core.Models.Power
 {
     public sealed class FeatherstepPower : PowerModel
     {

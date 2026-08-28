@@ -13,10 +13,10 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
-using sts2mod.Core.Models.Power;
-using sts2mod.Core.Nodes.Vfx;
+using NightMustStay.Core.Models.Power;
+using NightMustStay.Core.Nodes.Vfx;
 
-namespace sts2mod.Core.Models.Cards
+namespace NightMustStay.Core.Models.Cards
 {
     // Card-table ID 21: 穿杨
     public sealed class PierceTheWillow : CardModel
@@ -220,7 +220,7 @@ namespace sts2mod.Core.Models.Cards
             new IHoverTip[]
             {
                 HoverTipFactory.FromPower<DistancePower>(),
-                HoverTipFactory.FromPower<StrengthPower>(),
+                HoverTipFactory.FromPower<FrightenedBirdStrengthDownPower>(),
             };
 
         public override string PortraitPath =>
@@ -252,7 +252,7 @@ namespace sts2mod.Core.Models.Cards
                          .Where(enemy => enemy.IsAlive)
                          .ToArray())
             {
-                await PowerCmd.Apply<DyingStarPower>(
+                await PowerCmd.Apply<FrightenedBirdStrengthDownPower>(
                     context,
                     enemy,
                     DynamicVars[StrengthLossKey].BaseValue,

@@ -7,10 +7,10 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
-using sts2mod.Core.Models.Cards;
-using sts2mod.Core.Models.Power;
+using NightMustStay.Core.Models.Cards;
+using NightMustStay.Core.Models.Power;
 
-namespace sts2mod.Core.Patches
+namespace NightMustStay.Core.Patches
 {
     [HarmonyPatch(typeof(CardModel), nameof(CardModel.HoverTips), MethodType.Getter)]
     public static class GuardianCardHoverTipPatch
@@ -18,7 +18,7 @@ namespace sts2mod.Core.Patches
         [HarmonyPostfix]
         public static void AddGlossaryTips(CardModel __instance, ref IEnumerable<IHoverTip> __result)
         {
-            if (__instance.GetType().Namespace != "sts2mod.Core.Models.Cards")
+            if (__instance.GetType().Namespace != "NightMustStay.Core.Models.Cards")
                 return;
 
             string text = GetAllDescriptionText(__instance);
@@ -135,7 +135,7 @@ namespace sts2mod.Core.Patches
         [HarmonyPostfix]
         public static void AddFamilyGlossaryTips(PowerModel __instance, ref IEnumerable<IHoverTip> __result)
         {
-            if (__instance.GetType().Namespace != "sts2mod.Core.Models.Power")
+            if (__instance.GetType().Namespace != "NightMustStay.Core.Models.Power")
                 return;
 
             string text = __instance.Description.Exists()

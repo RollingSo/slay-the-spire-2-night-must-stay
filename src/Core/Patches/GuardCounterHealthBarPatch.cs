@@ -9,9 +9,9 @@ using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Nodes.Combat;
-using sts2mod.Core.Models.Power;
+using NightMustStay.Core.Models.Power;
 
-namespace sts2mod.Core.Patches;
+namespace NightMustStay.Core.Patches;
 
 [HarmonyPatch]
 public static class GuardCounterHealthBarPatch

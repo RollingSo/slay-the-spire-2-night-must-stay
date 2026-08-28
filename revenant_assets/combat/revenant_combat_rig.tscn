@@ -84,7 +84,7 @@ script = ExtResource("1_script")
 
 [node name="PoseRoot" type="Node2D" parent="."]
 position = Vector2(0, -116)
-scale = Vector2(0.8, 0.8)
+scale = Vector2(1.2, 1.2)
 
 [node name="Idle" type="Sprite2D" parent="PoseRoot"]
 scale = Vector2(0.21, 0.21)

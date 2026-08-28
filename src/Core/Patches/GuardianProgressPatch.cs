@@ -16,10 +16,10 @@ using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Saves;
 using MegaCrit.Sts2.Core.Saves.Managers;
 using MegaCrit.Sts2.Core.Nodes.Screens.StatsScreen;
-using sts2mod.Core.Models.CardPools;
-using sts2mod.Core.Models.Characters;
+using NightMustStay.Core.Models.CardPools;
+using NightMustStay.Core.Models.Characters;
 
-namespace sts2mod.Core.Patches
+namespace NightMustStay.Core.Patches
 {
     [HarmonyPatch(typeof(ProgressSaveManager), nameof(ProgressSaveManager.LoadProgress))]
     public static class GuardianProgressLoadPatch

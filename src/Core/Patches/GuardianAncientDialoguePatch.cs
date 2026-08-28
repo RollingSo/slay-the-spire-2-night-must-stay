@@ -3,9 +3,9 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Ancients;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Events;
-using sts2mod.Core.Models.Characters;
+using NightMustStay.Core.Models.Characters;
 
-namespace sts2mod.Core.Patches
+namespace NightMustStay.Core.Patches
 {
     [HarmonyPatch(typeof(AncientEventModel), nameof(AncientEventModel.DialogueSet), MethodType.Getter)]
     public static class GuardianAncientDialoguePatch
@@ -15,7 +15,8 @@ namespace sts2mod.Core.Patches
         {
             IReadOnlyList<AncientDialogue> guardianDialogues = CreateDialogues(__instance);
             IReadOnlyList<AncientDialogue> ironeyeDialogues = CreateDialogues(__instance);
-            if (guardianDialogues == null || ironeyeDialogues == null)
+            IReadOnlyList<AncientDialogue> revenantDialogues = CreateDialogues(__instance);
+            if (guardianDialogues == null || ironeyeDialogues == null || revenantDialogues == null)
                 return;
 
             // PopulateLocKeys mutates each AncientDialogue with its character-
@@ -23,6 +24,7 @@ namespace sts2mod.Core.Patches
             // two characters or the later entry would overwrite the former.
             AddCharacterDialogue<Guardian>(__result, guardianDialogues);
             AddCharacterDialogue<Ironeye>(__result, ironeyeDialogues);
+            AddCharacterDialogue<Revenant>(__result, revenantDialogues);
 
             // Dialogue sets can be constructed before mod localization tables are
             // merged. Populate on every access so repeating (.r) Guardian lines are

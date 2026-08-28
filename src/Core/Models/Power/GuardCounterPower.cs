@@ -15,12 +15,12 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
-using sts2mod.Core.Models.Cards;
-using sts2mod.Core.Models.Relics;
-using sts2mod.Core.Nodes.Vfx;
-using sts2mod.Core.Patches;
+using NightMustStay.Core.Models.Cards;
+using NightMustStay.Core.Models.Relics;
+using NightMustStay.Core.Nodes.Vfx;
+using NightMustStay.Core.Patches;
 
-namespace sts2mod.Core.Models.Power
+namespace NightMustStay.Core.Models.Power
 {
     public sealed class GuardCounterPower : PowerModel
     {

@@ -16,10 +16,10 @@ using MegaCrit.Sts2.Core.Nodes.CommonUi;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
-using sts2mod.Core.Models.Power;
-using sts2mod.Core.Patches;
+using NightMustStay.Core.Models.Power;
+using NightMustStay.Core.Patches;
 
-namespace sts2mod.Core.Models.Cards;
+namespace NightMustStay.Core.Models.Cards;
 
 // Card-table ID 42: 迫近毒牙
 public sealed class ApproachingVenomFang : CardModel

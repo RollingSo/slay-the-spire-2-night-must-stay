@@ -4,10 +4,10 @@ using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.ValueProps;
-using sts2mod.Core.Models.Power;
+using NightMustStay.Core.Models.Power;
 using System.Linq;
 
-namespace sts2mod.Core.Patches;
+namespace NightMustStay.Core.Patches;
 
 [HarmonyPatch(typeof(AttackCommand), nameof(AttackCommand.Execute), typeof(PlayerChoiceContext))]
 public static class GuardCounterAttackPatch

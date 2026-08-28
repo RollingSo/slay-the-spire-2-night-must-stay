@@ -7,7 +7,7 @@ using MegaCrit.Sts2.Core.Nodes.Cards;
 using MegaCrit.Sts2.Core.Nodes.Cards.Holders;
 using MegaCrit.Sts2.Core.Nodes.Screens.CardSelection;
 
-namespace sts2mod.Core.Patches;
+namespace NightMustStay.Core.Patches;
 
 internal static class ObservationRewardUpgradeRegistry
 {

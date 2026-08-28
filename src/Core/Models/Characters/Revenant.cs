@@ -7,13 +7,13 @@ using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.PotionPools;
 using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
-using sts2mod.Core.Models.CardPools;
-using sts2mod.Core.Models.Cards;
-using sts2mod.Core.Models.PotionPools;
-using sts2mod.Core.Models.RelicPools;
-using sts2mod.Core.Models.Relics;
+using NightMustStay.Core.Models.CardPools;
+using NightMustStay.Core.Models.Cards;
+using NightMustStay.Core.Models.PotionPools;
+using NightMustStay.Core.Models.RelicPools;
+using NightMustStay.Core.Models.Relics;
 
-namespace sts2mod.Core.Models.Characters;
+namespace NightMustStay.Core.Models.Characters;
 
 public sealed class Revenant : CharacterModel
 {
@@ -53,5 +53,11 @@ public sealed class Revenant : CharacterModel
     public override Color MapDrawingColor => new("8F74B7");
     public override Color RemoteTargetingLineColor => new("D7BDF5FF");
     public override Color RemoteTargetingLineOutline => new("21172EFF");
-    public override List<string> GetArchitectAttackVfx() => new() { "vfx/vfx_magic_attack" };
+    public override List<string> GetArchitectAttackVfx() => new()
+    {
+        "vfx/vfx_attack_lightning",
+        "vfx/vfx_starry_impact",
+        "vfx/vfx_thrash",
+        "vfx/vfx_attack_slash",
+    };
 }

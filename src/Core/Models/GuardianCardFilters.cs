@@ -1,7 +1,7 @@
 using System;
 using MegaCrit.Sts2.Core.Models;
 
-namespace sts2mod.Core.Models
+namespace NightMustStay.Core.Models
 {
     internal static class GuardianCardFilters
     {

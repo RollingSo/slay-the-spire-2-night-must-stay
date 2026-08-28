@@ -13,10 +13,10 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
-using sts2mod.Core.Models.Power;
-using sts2mod.Core.Models.Revenant;
+using NightMustStay.Core.Models.Power;
+using NightMustStay.Core.Models.Revenant;
 
-namespace sts2mod.Core.Models.Cards;
+namespace NightMustStay.Core.Models.Cards;
 
 public sealed class GurranqsRock : CardModel
 {
@@ -55,7 +55,7 @@ public sealed class FrenziedFlame : CardModel
     protected override bool IsPlayable => RevenantSummonManager.For(Owner).HasLivingFamily;
     public override string PortraitPath => "res://revenant_assets/cards/frenzied_flame.png";
 
-    public FrenziedFlame() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) { }
+    public FrenziedFlame() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
@@ -67,13 +67,10 @@ public sealed class FrenziedFlame : CardModel
         decimal hpLost = Math.Max(0m, hpBefore - family.CurrentHp);
         if (hpLost <= 0m)
             return;
-        Creature[] enemies = CombatState.HittableEnemies.Where(enemy => enemy.IsAlive).ToArray();
-        if (enemies.Length == 0)
-            return;
-        Creature target = Owner.RunState.Rng.CombatTargets.NextItem(enemies);
+        ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(hpLost * DynamicVars["DamageMultiplier"].BaseValue)
             .FromCard(this)
-            .Targeting(target)
+            .Targeting(cardPlay.Target)
             .Execute(context);
     }
 
@@ -103,46 +100,40 @@ public sealed class Ensemble : CardModel
 
 public sealed class Surge : CardModel
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new CardsVar(0) };
     public override string PortraitPath => "res://revenant_assets/cards/surge.png";
 
-    public Surge() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
+    public Surge() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
 
-    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
+    protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
+        RevenantSummonManager.For(Owner).TriggerResonance(context);
+
+    public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
     {
-        await RevenantSummonManager.For(Owner).TriggerResonance(context);
-        if (DynamicVars.Cards.IntValue > 0)
-            await CardPileCmd.Draw(context, DynamicVars.Cards.IntValue, Owner);
+        if (card == this && RevenantCardHelpers.WasMovedFromDiscardToHand(card, oldPileType))
+            EnergyCost.AddUntilPlayed(-1, true);
+        return Task.CompletedTask;
     }
 
-    public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source) =>
-        card == this
-            ? RevenantCardHelpers.AutoPlayWhenRecovered(this, oldPileType)
-            : Task.CompletedTask;
-
-    protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1m);
+    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }
 
 public sealed class UnderworldRising : CardModel
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new CardsVar(0) };
     public override string PortraitPath => "res://revenant_assets/cards/underworld_rising.png";
 
     public UnderworldRising() : base(3, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
 
-    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
+    protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
+        RevenantCall.ChooseFamilyAndCall(context, Owner);
+
+    public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
     {
-        await RevenantCall.ChooseFamilyAndCall(context, Owner);
-        if (DynamicVars.Cards.IntValue > 0)
-            await CardPileCmd.Draw(context, DynamicVars.Cards.IntValue, Owner);
+        if (card == this && RevenantCardHelpers.WasMovedFromDiscardToHand(card, oldPileType))
+            EnergyCost.AddUntilPlayed(-1, true);
+        return Task.CompletedTask;
     }
 
-    public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source) =>
-        card == this
-            ? RevenantCardHelpers.AutoPlayWhenRecovered(this, oldPileType)
-            : Task.CompletedTask;
-
-    protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1m);
+    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }
 
 public sealed class Resurgence : CardModel
@@ -150,7 +141,7 @@ public sealed class Resurgence : CardModel
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new EnergyVar(2) };
     public override string PortraitPath => "res://revenant_assets/cards/resurgence.png";
 
-    public Resurgence() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
+    public Resurgence() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
 
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
         PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);

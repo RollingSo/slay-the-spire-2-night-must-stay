@@ -3,9 +3,9 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.CardPools;
-using sts2mod.Core.Models.Cards;
+using NightMustStay.Core.Models.Cards;
 
-namespace sts2mod.Core.Models.CardPools
+namespace NightMustStay.Core.Models.CardPools
 {
     public sealed class GuardianCardPool : CardPoolModel
     {

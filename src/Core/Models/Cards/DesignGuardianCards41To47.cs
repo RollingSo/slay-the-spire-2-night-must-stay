@@ -15,12 +15,12 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
-using sts2mod.Core.Models;
-using sts2mod.Core.Models.Cards;
-using sts2mod.Core.Models.Power;
-using sts2mod.Core.Nodes.Vfx;
+using NightMustStay.Core.Models;
+using NightMustStay.Core.Models.Cards;
+using NightMustStay.Core.Models.Power;
+using NightMustStay.Core.Nodes.Vfx;
 
-namespace sts2mod.Core.Models.Cards
+namespace NightMustStay.Core.Models.Cards
 {
     // Card-table ID 41: 风暴袭击
     public sealed class StormAssault : CardModel
@@ -333,7 +333,7 @@ namespace sts2mod.Core.Models.Cards
     }
 }
 
-namespace sts2mod.Core.Models.Power
+namespace NightMustStay.Core.Models.Power
 {
     public sealed class PhantomImbalancePower : PowerModel
     {
