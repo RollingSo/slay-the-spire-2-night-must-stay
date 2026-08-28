@@ -7,13 +7,16 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using HarmonyLib;
 using MegaCrit.Sts2.Core.Debug;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
+using MegaCrit.Sts2.Core.Platform;
+using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves;
 using MegaCrit.Sts2.Core.Saves.Runs;
 
-namespace sts2mod.Core.Telemetry;
+namespace NightMustStay.Core.Telemetry;
 
 /// <summary>
 /// Night Must Stay 战局数据上报服务。
@@ -30,6 +33,7 @@ namespace sts2mod.Core.Telemetry;
 public static class TelemetryService
 {
     private const string ConfigFileName = "config.json";
+    private const string EmbeddedConfigName = "NightMustStay.telemetry.config.json";
     private const string PendingPrefix = "pending_";
     private const int MaxPayloadBytes = 512 * 1024;   // 单局 payload 上限（正常 ~30-120KB）
     private const int MaxPendingFiles = 50;           // 本地补传队列上限（防无限积压）
@@ -39,6 +43,7 @@ public static class TelemetryService
         Timeout = TimeSpan.FromSeconds(10)
     };
     private static readonly object _pendingLock = new object();
+    private static readonly HashSet<string> _queuedRuns = new HashSet<string>();
 
     private static string _dataDir = "";
     private static string _serverUrl = "";
@@ -83,18 +88,35 @@ public static class TelemetryService
     private static void LoadConfig()
     {
         string cfgPath = Path.Combine(_dataDir, ConfigFileName);
-        if (!File.Exists(cfgPath))
-        {
-            return;
-        }
         try
         {
-            using JsonDocument doc = JsonDocument.Parse(File.ReadAllText(cfgPath));
+            string configJson;
+            string configSource;
+            if (File.Exists(cfgPath))
+            {
+                configJson = File.ReadAllText(cfgPath);
+                configSource = cfgPath;
+            }
+            else
+            {
+                using Stream stream = typeof(TelemetryService).Assembly.GetManifestResourceStream(EmbeddedConfigName);
+                if (stream == null)
+                {
+                    Log.Warn("[NMS] 未找到内置数据上报配置，数据上报已禁用", 2);
+                    return;
+                }
+                using StreamReader reader = new StreamReader(stream, Encoding.UTF8);
+                configJson = reader.ReadToEnd();
+                configSource = "embedded";
+            }
+
+            using JsonDocument doc = JsonDocument.Parse(configJson);
             JsonElement root = doc.RootElement;
             _serverUrl = root.TryGetProperty("serverUrl", out JsonElement u) ? u.GetString() ?? "" : "";
             _token = root.TryGetProperty("token", out JsonElement t) ? t.GetString() ?? "" : "";
             // enabled 缺省为 true（写了配置文件就默认开）
             _enabled = !root.TryGetProperty("enabled", out JsonElement e) || e.GetBoolean();
+            Log.Info("[NMS] 数据上报配置来源: " + configSource, 2);
         }
         catch (Exception ex)
         {
@@ -106,15 +128,56 @@ public static class TelemetryService
     /// <summary>游戏主线程回调（战局结束）。只做组装与落盘，发送放后台。</summary>
     private static void OnRunFinished(SerializableRun run, bool isVictory, ulong localPlayerId)
     {
+        CaptureRun(run, isVictory, isAbandoned: false, localPlayerId);
+    }
+
+    /// <summary>由放弃战局历史补丁调用。</summary>
+    public static void CaptureAbandonedRun(SerializableRun run, PlatformType platformType)
+    {
+        ulong localPlayerId = 0;
         try
         {
+            localPlayerId = PlatformUtil.GetLocalPlayerId(platformType);
+        }
+        catch (Exception ex)
+        {
+            Log.Warn("[NMS] 获取放弃战局的本地玩家 ID 失败，将从存档回退: " + ex.Message, 2);
+        }
+
+        if (run.Players != null && run.Players.Count > 0 && !run.Players.Any(p => p.NetId == localPlayerId))
+        {
+            localPlayerId = run.Players[0].NetId;
+        }
+
+        CaptureRun(run, isVictory: false, isAbandoned: true, localPlayerId);
+    }
+
+    private static void CaptureRun(SerializableRun run, bool isVictory, bool isAbandoned, ulong localPlayerId)
+    {
+        try
+        {
+            if (!_enabled || string.IsNullOrEmpty(_serverUrl))
+            {
+                return;
+            }
+
             // 隐私与合规：玩家在游戏设置里关闭了官方数据上传，我们也不传
             if (!SaveManager.Instance.PrefsSave.UploadData)
             {
                 return;
             }
 
-            string json = BuildPayload(run, isVictory, localPlayerId);
+            string runKey = string.Join("|", run.StartTime, run.SerializableRng?.Seed ?? "", localPlayerId, isAbandoned);
+            lock (_pendingLock)
+            {
+                if (!_queuedRuns.Add(runKey))
+                {
+                    Log.Info("[NMS] 跳过重复战局数据: " + runKey, 2);
+                    return;
+                }
+            }
+
+            string json = BuildPayload(run, isVictory, isAbandoned, localPlayerId);
             if (json == null)
             {
                 return;
@@ -130,7 +193,7 @@ public static class TelemetryService
         }
     }
 
-    private static string BuildPayload(SerializableRun run, bool isVictory, ulong localPlayerId)
+    private static string BuildPayload(SerializableRun run, bool isVictory, bool isAbandoned, ulong localPlayerId)
     {
         try
         {
@@ -157,6 +220,7 @@ public static class TelemetryService
                 gameVersion = ReleaseInfoManager.Instance.ReleaseInfo?.Version ?? "unknown",
                 schemaVersion = run.SchemaVersion,   // 数据结构版本（如 9），随版本记录
                 isVictory,
+                isAbandoned,
                 localPlayerId,
                 character,            // 本地玩家角色，如 CARD.GUARDIAN / CHARACTER.GUARDIAN
                 team,                 // 全队角色（多人局）
@@ -191,7 +255,7 @@ public static class TelemetryService
         {
             foreach (Mod m in ModManager.Mods)
             {
-                if (m.manifest != null && m.manifest.id == "sts2mod" && !string.IsNullOrEmpty(m.manifest.version))
+                if (m.manifest != null && m.manifest.id == "NightMustStay" && !string.IsNullOrEmpty(m.manifest.version))
                 {
                     return m.manifest.version;
                 }
@@ -295,6 +359,18 @@ public static class TelemetryService
         catch
         {
             // 删除失败不影响主流程
+        }
+    }
+}
+
+[HarmonyPatch(typeof(RunHistoryUtilities), nameof(RunHistoryUtilities.CreateRunHistoryEntry))]
+internal static class AbandonedRunTelemetryPatch
+{
+    private static void Prefix(SerializableRun run, bool isAbandoned, PlatformType platformType)
+    {
+        if (isAbandoned)
+        {
+            TelemetryService.CaptureAbandonedRun(run, platformType);
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -12,11 +13,11 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.ValueProps;
-using sts2mod.Core.Models.Revenant;
-using sts2mod.Core.Models.CardPools;
-using sts2mod.Core.Models.Power;
+using NightMustStay.Core.Models.Revenant;
+using NightMustStay.Core.Models.CardPools;
+using NightMustStay.Core.Models.Power;
 
-namespace sts2mod.Core.Models.Cards;
+namespace NightMustStay.Core.Models.Cards;
 
 public sealed class StrikeRevenant : CardModel
 {
@@ -136,10 +137,25 @@ public sealed class RevenantResonance : CardModel
 
     public RevenantResonance() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self) { }
 
-    protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
-        RevenantSummonManager.For(Owner).TriggerResonance(context);
+    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
+    {
+        await RevenantSummonManager.For(Owner).TriggerResonance(context);
+        if (!IsUpgraded)
+            return;
 
-    protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);
+        CardPile draw = PileType.Draw.GetPile(Owner);
+        if (draw.Cards.Count == 0)
+            return;
+        CardModel selected = (await CardSelectCmd.FromCombatPile(
+            context,
+            draw,
+            Owner,
+            new CardSelectorPrefs(SelectionScreenPrompt, 1))).FirstOrDefault();
+        if (selected != null)
+            await CardPileCmd.Add(selected, PileType.Discard);
+    }
+
+    protected override void OnUpgrade() { }
 
 }
 

@@ -10,9 +10,9 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
-using sts2mod.Core.Models.Power;
+using NightMustStay.Core.Models.Power;
 
-namespace sts2mod.Core.Models.Cards
+namespace NightMustStay.Core.Models.Cards
 {
     public sealed class StepForwardForAll : CardModel
     {

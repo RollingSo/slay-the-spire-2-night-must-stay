@@ -14,10 +14,10 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
-using sts2mod.Core.Models.Power;
-using sts2mod.Core.Nodes.Vfx;
+using NightMustStay.Core.Models.Power;
+using NightMustStay.Core.Nodes.Vfx;
 
-namespace sts2mod.Core.Models.Cards
+namespace NightMustStay.Core.Models.Cards
 {
     public sealed class CloudRendingSweep : GuardianConcealedEdgeCard
     {
@@ -178,14 +178,14 @@ namespace sts2mod.Core.Models.Cards
     }
 }
 
-namespace sts2mod.Core.Models.Power
+namespace NightMustStay.Core.Models.Power
 {
     // Match Dying Star's native temporary Strength-loss lifecycle: the loss is
     // applied with this power and restored when the affected enemy's turn ends.
     public sealed class CloudRendingStrengthRestorePower : TemporaryStrengthPower
     {
         public override AbstractModel OriginModel =>
-            ModelDb.Card<sts2mod.Core.Models.Cards.CloudRendingSweep>();
+            ModelDb.Card<NightMustStay.Core.Models.Cards.CloudRendingSweep>();
 
         protected override bool IsPositive => false;
     }

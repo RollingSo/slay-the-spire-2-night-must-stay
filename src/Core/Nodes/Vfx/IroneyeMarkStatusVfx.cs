@@ -5,9 +5,9 @@ using Godot;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.TestSupport;
-using sts2mod.Core.Models.Power;
+using NightMustStay.Core.Models.Power;
 
-namespace sts2mod.Core.Nodes.Vfx
+namespace NightMustStay.Core.Nodes.Vfx
 {
     /// <summary>
     /// A restrained, persistent mark painted directly over a marked monster.

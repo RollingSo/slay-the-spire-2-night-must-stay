@@ -13,10 +13,10 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
-using sts2mod.Core.Models.Power;
-using sts2mod.Core.Models.Revenant;
+using NightMustStay.Core.Models.Power;
+using NightMustStay.Core.Models.Revenant;
 
-namespace sts2mod.Core.Models.Cards;
+namespace NightMustStay.Core.Models.Cards;
 
 internal static class RevenantTextTableHelpers
 {
@@ -49,15 +49,21 @@ internal static class RevenantTextTableHelpers
         RevenantSummonManager manager = RevenantSummonManager.For(source.Owner);
         Creature family = manager.CurrentFamilyCreature;
         if (family == null) return;
+        VigorPower vigor = family.GetPower<VigorPower>();
+        decimal vigorToConsume = vigor?.Amount ?? 0m;
+        bool attacked = false;
         for (int i = 0; i < hits; i++)
         {
             Creature[] enemies = source.CombatState.HittableEnemies.Where(enemy => enemy.IsAlive).ToArray();
-            if (enemies.Length == 0) return;
+            if (enemies.Length == 0) break;
+            attacked = true;
             if (all)
                 await CreatureCmd.Damage(context, enemies, amount, ValueProp.Move, family, source);
             else
                 await CreatureCmd.Damage(context, source.Owner.RunState.Rng.CombatTargets.NextItem(enemies), amount, ValueProp.Move, family, source);
         }
+        if (attacked && vigor is not null && vigorToConsume > 0m)
+            await PowerCmd.ModifyAmount(context, vigor, -vigorToConsume, family, source);
     }
 }
 
@@ -213,7 +219,7 @@ public sealed class LightSpirit : CardModel
 
 public sealed class Grooming : CardModel
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new CardsVar(3) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new CardsVar(2) };
     public override string PortraitPath => "res://revenant_assets/cards/grooming.png";
     public Grooming() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
@@ -297,7 +303,8 @@ public sealed class SpiritManipulation : CardModel
 
 public sealed class PreparationRitual : CardModel
 {
-    public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Retain };
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        IsUpgraded ? new[] { CardKeyword.Retain } : Array.Empty<CardKeyword>();
     public override string PortraitPath => "res://revenant_assets/cards/preparation_ritual.png";
     public PreparationRitual() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
@@ -306,7 +313,7 @@ public sealed class PreparationRitual : CardModel
         if (recovered.FirstOrDefault() is IRevenantChargeCard chargeCard)
             await chargeCard.CompleteCharge(context);
     }
-    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+    protected override void OnUpgrade() { }
 }
 
 public sealed class WatchfulWaiting : CardModel, IRevenantChargeCard
@@ -316,6 +323,8 @@ public sealed class WatchfulWaiting : CardModel, IRevenantChargeCard
     public override bool GainsBlock => true;
     public override string PortraitPath => "res://revenant_assets/cards/watchful_waiting.png";
     public bool IsChargeComplete => _chargeComplete;
+    public override TargetType TargetType =>
+        _chargeComplete ? TargetType.Self : TargetType.AnyEnemy;
     protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
     {
         new CardHoverTip(CreateOppositeChargePreview()),
@@ -356,7 +365,7 @@ public sealed class WatchfulWaiting : CardModel, IRevenantChargeCard
         if (_chargeComplete) return;
         _chargeComplete = true;
         ((BoolVar)DynamicVars["Ready"]).BoolVal = true;
-        await RevenantSummonManager.For(Owner).NotifyChargeCompleted();
+        await RevenantSummonManager.For(Owner).NotifyChargeCompleted(this);
         await PowerCmd.Apply<ChargeReturnPower>(context, Owner.Creature, 1m, Owner.Creature, this);
     }
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3m);

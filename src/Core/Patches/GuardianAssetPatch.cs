@@ -12,9 +12,9 @@ using MegaCrit.Sts2.Core.Nodes.RestSite;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Screens.Shops;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
-using sts2mod.Core.Models.Characters;
+using NightMustStay.Core.Models.Characters;
 
-namespace sts2mod.Core.Patches
+namespace NightMustStay.Core.Patches
 {
     [HarmonyPatch]
     public static class GuardianAssetPatch

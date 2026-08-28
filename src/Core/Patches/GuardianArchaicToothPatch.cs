@@ -3,9 +3,9 @@ using System.Reflection;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Relics;
-using sts2mod.Core.Models.Cards;
+using NightMustStay.Core.Models.Cards;
 
-namespace sts2mod.Core.Patches
+namespace NightMustStay.Core.Patches
 {
     [HarmonyPatch]
     public static class GuardianArchaicToothPatch

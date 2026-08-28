@@ -1,8 +1,8 @@
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
-using sts2mod.Core.Models.Power;
+using NightMustStay.Core.Models.Power;
 
-namespace sts2mod.Core.Models.Cards
+namespace NightMustStay.Core.Models.Cards
 {
     internal static class GuardianCardHoverTips
     {

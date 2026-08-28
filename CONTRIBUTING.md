@@ -8,7 +8,7 @@ Read `AGENTS.md`, then the relevant character and art specifications in `design/
 
 1. Add the `CharacterModel` and register it in `ModelDbCharacterPatch`.
 2. Add the starter deck, card pool, relic pool, potion pool, energy color and character-specific assets.
-3. Add character localization in `sts2mod/localization/zhs/characters.json` and `eng/characters.json`.
+3. Add character localization in `NightMustStay/localization/zhs/characters.json` and `eng/characters.json`.
 4. Add `SEA_GLASS.<MODEL_ID>.title` in both `relics.json` files. Use the exact model ID; this is required for Orobas/Sea Glass events.
 5. Add the character to any relevant card-library filters and multiplayer/ancient-event hooks.
 6. Add preload entries for every scene, texture, atlas resource and icon used by the character.

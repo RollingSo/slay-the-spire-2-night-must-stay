@@ -9,9 +9,9 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
-using sts2mod.Core.Models.Revenant;
+using NightMustStay.Core.Models.Revenant;
 
-namespace sts2mod.Core.Models.Power;
+namespace NightMustStay.Core.Models.Power;
 
 public sealed class MutualUnderstandingPower : PowerModel
 {
@@ -29,21 +29,28 @@ public sealed class MutualUnderstandingPower : PowerModel
 public sealed class ChangeHandsPower : PowerModel
 {
     public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Single;
+    public override PowerStackType StackType => PowerStackType.Counter;
 
-    public Task AfterFamilyEntered(PlayerChoiceContext context, RevenantFamilyId family) =>
-        family == RevenantFamilyId.PumpkinHead
-            ? RevenantSummonManager.For(Owner.Player).TriggerResonance(context)
-            : Task.CompletedTask;
+    public async Task AfterFamilyEntered(PlayerChoiceContext context, RevenantFamilyId family)
+    {
+        if (family != RevenantFamilyId.PumpkinHead)
+            return;
+
+        for (int i = 0; i < (int)Amount; i++)
+            await RevenantSummonManager.For(Owner.Player).TriggerResonance(context);
+    }
 }
 
 public sealed class RelayPower : PowerModel
 {
     public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Single;
+    public override PowerStackType StackType => PowerStackType.Counter;
 
-    public Task AfterFamilySwitched(PlayerChoiceContext context) =>
-        RevenantSummonManager.For(Owner.Player).TriggerResonance(context);
+    public async Task AfterFamilySwitched(PlayerChoiceContext context)
+    {
+        for (int i = 0; i < (int)Amount; i++)
+            await RevenantSummonManager.For(Owner.Player).TriggerResonance(context);
+    }
 }
 
 public sealed class PackUpPower : PowerModel

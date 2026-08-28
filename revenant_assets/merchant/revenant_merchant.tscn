@@ -35,7 +35,7 @@ _data = {&"RESET": SubResource("Animation_reset"), &"die": SubResource("Animatio
 metadata/revenant_merchant = true
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(-30, -300)
-scale = Vector2(0.43, 0.43)
+scale = Vector2(0.36, 0.36)
 texture = ExtResource("1_texture")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {&"": SubResource("AnimationLibrary_main")}

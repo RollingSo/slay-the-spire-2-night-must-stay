@@ -12,9 +12,9 @@ using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Nodes.Multiplayer;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
-using sts2mod.Core.Models.Cards;
+using NightMustStay.Core.Models.Cards;
 
-namespace sts2mod.Core.Patches;
+namespace NightMustStay.Core.Patches;
 
 internal static class IroneyeHybridTargetState
 {
@@ -26,11 +26,12 @@ internal static class IroneyeHybridTargetState
     public static bool IsHybridTargetCard(CardModel card) =>
         card is AdvanceAndRetreat
             or IroneyeSwift
-            or BeastClaw
-            or DeathLightning
+            or BeastClaw { IsChargeComplete: false }
+            or DeathLightning { IsChargeComplete: false }
             or LightningSpear
-            or GurranqBeastClaw
-            or WatchfulWaiting
+            or GurranqBeastClaw { IsChargeComplete: false }
+            or SoulChargingClaw
+            or WatchfulWaiting { IsChargeComplete: false }
             or EmergencyRestore;
 
     public static void Begin(NCardPlay play)
@@ -47,8 +48,8 @@ internal static class IroneyeHybridTargetState
             return false;
         if (card is EmergencyRestore)
             return creature == card.Owner.Creature || creature == card.Owner.Osty;
-        if (card is WatchfulWaiting { IsChargeComplete: true })
-            return creature == card.Owner.Creature;
+        if (card is WatchfulWaiting)
+            return creature.Side != card.Owner.Creature.Side || creature == card.Owner.Creature;
         if (card is IRevenantChargeCard { IsChargeComplete: true })
             return creature.Side != card.Owner.Creature.Side;
         return creature.Side != card.Owner.Creature.Side || creature == card.Owner.Creature;
@@ -69,6 +70,26 @@ internal static class AdvanceAndRetreatTargetValidationPatch
 
         __result = target != null && IroneyeHybridTargetState.IsValid(target, __instance);
         return false;
+    }
+}
+
+[HarmonyPatch(typeof(NCardPlay), "TryPlayCard")]
+internal static class RevenantDirectPlayFallbackPatch
+{
+    [HarmonyPrefix]
+    private static void BeforeTryPlayCard(NCardPlay __instance, ref Creature target)
+    {
+        if (target != null)
+            return;
+
+        CardModel card = __instance.Holder?.CardModel;
+        if (card is not BeastClaw { IsChargeComplete: false }
+            && card is not DeathLightning { IsChargeComplete: false }
+            && card is not GurranqBeastClaw { IsChargeComplete: false }
+            && card is not WatchfulWaiting { IsChargeComplete: false })
+            return;
+
+        target = card.Owner.RunState.Rng.CombatTargets.NextItem(card.CombatState.HittableEnemies);
     }
 }
 

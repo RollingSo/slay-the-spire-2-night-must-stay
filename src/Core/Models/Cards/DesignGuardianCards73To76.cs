@@ -15,9 +15,9 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
-using sts2mod.Core.Models.Power;
+using NightMustStay.Core.Models.Power;
 
-namespace sts2mod.Core.Models.Cards
+namespace NightMustStay.Core.Models.Cards
 {
     public sealed class SwallowReturnWind : CardModel
     {
@@ -155,7 +155,7 @@ namespace sts2mod.Core.Models.Cards
     }
 }
 
-namespace sts2mod.Core.Models.Power
+namespace NightMustStay.Core.Models.Power
 {
     public sealed class SwallowReturnWindPower : PowerModel
     {

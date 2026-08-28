@@ -4,11 +4,11 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models;
-using sts2mod.Core.Models.CardPools;
-using sts2mod.Core.Models.Cards;
-using sts2mod.Core.Models.Characters;
+using NightMustStay.Core.Models.CardPools;
+using NightMustStay.Core.Models.Cards;
+using NightMustStay.Core.Models.Characters;
 
-namespace sts2mod.Core.Patches
+namespace NightMustStay.Core.Patches
 {
     [HarmonyPatch(typeof(ModelDb), nameof(ModelDb.AllCardPools), MethodType.Getter)]
     public static class ModelDbCharacterCardPoolPatch

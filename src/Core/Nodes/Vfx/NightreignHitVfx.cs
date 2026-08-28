@@ -6,7 +6,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.TestSupport;
 
-namespace sts2mod.Core.Nodes.Vfx
+namespace NightMustStay.Core.Nodes.Vfx
 {
     /// <summary>
     /// Lightweight, project-owned hit effects for Nightreign characters.

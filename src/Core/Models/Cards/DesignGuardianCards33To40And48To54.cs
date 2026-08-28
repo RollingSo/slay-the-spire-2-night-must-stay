@@ -19,10 +19,10 @@ using MegaCrit.Sts2.Core.Models.Enchantments;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
-using sts2mod.Core.Models.Power;
-using sts2mod.Core.Nodes.Vfx;
+using NightMustStay.Core.Models.Power;
+using NightMustStay.Core.Nodes.Vfx;
 
-namespace sts2mod.Core.Models.Cards
+namespace NightMustStay.Core.Models.Cards
 {
     internal static class GuardianSynthesis
     {
@@ -371,7 +371,7 @@ namespace sts2mod.Core.Models.Cards
     }
 }
 
-namespace sts2mod.Core.Models.Power
+namespace NightMustStay.Core.Models.Power
 {
     public sealed class GreatTornadoPower : PowerModel
     {

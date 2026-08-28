@@ -4,9 +4,9 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Saves;
-using sts2mod.Core.Models.Relics;
+using NightMustStay.Core.Models.Relics;
 
-namespace sts2mod.Core.Patches
+namespace NightMustStay.Core.Patches
 {
     [HarmonyPatch]
     public static class GuardianTouchOfOrobasPatch
@@ -22,6 +22,8 @@ namespace sts2mod.Core.Patches
                 ModelDb.Relic<TwinWingGreatshield>();
             __result[ModelDb.Relic<CursemarkSignet>().Id] =
                 ModelDb.Relic<RunemarkSignet>();
+            __result[ModelDb.Relic<SmallMakeupBrush>().Id] =
+                ModelDb.Relic<TreasuredMakeupBrush>();
         }
     }
 
@@ -42,7 +44,7 @@ namespace sts2mod.Core.Patches
 
             RelicModel starterRelic =
                 SaveUtil.RelicOrDeprecated(__instance.StarterRelic);
-            if (starterRelic is CursemarkSignet or SingleWingGreatshield)
+            if (starterRelic is CursemarkSignet or SingleWingGreatshield or SmallMakeupBrush)
             {
                 value = __instance
                     .GetUpgradedStarterRelic(starterRelic)

@@ -1,8 +1,8 @@
 $ErrorActionPreference = 'Stop'
 
 $root = Split-Path -Parent $PSScriptRoot
-$zhsPath = Join-Path $root 'sts2mod\localization\zhs\cards.json'
-$engPath = Join-Path $root 'sts2mod\localization\eng\cards.json'
+$zhsPath = Join-Path $root 'NightMustStay\localization\zhs\cards.json'
+$engPath = Join-Path $root 'NightMustStay\localization\eng\cards.json'
 $zhs = Get-Content -LiteralPath $zhsPath -Raw -Encoding UTF8 | ConvertFrom-Json
 $eng = Get-Content -LiteralPath $engPath -Raw -Encoding UTF8 | ConvertFrom-Json
 
@@ -40,6 +40,57 @@ $revenantIds = @(
 )
 
 $errors = [System.Collections.Generic.List[string]]::new()
+
+# Starter Lyre has repeatedly regressed by changing only its upgrade behavior
+# or only its displayed text. Keep the implementation and both localization
+# tables locked together: the upgrade adds Recover 1 and never reduces cost.
+$revenantStarterPath = Join-Path $root 'src\Core\Models\Cards\RevenantStarterCards.cs'
+$revenantStarterSource = Get-Content -LiteralPath $revenantStarterPath -Raw -Encoding UTF8
+$zhCall = ConvertFrom-CodePoints @(0x547C, 0x5524)
+$zhCardCounter = ConvertFrom-CodePoints @(0x5F20, 0x724C)
+$zhLyreBase = '[gold]' + $zhCall + '[/gold]' + $zhFullStop
+$zhLyreUpgrade = $zhLyreBase + "`n[gold]" + $zhRecover + '[/gold]1' + $zhCardCounter + $zhFullStop
+$lyreChecks = @(
+    @($zhs, 'REVENANT_CALL.description', $zhLyreBase, 'Chinese base text'),
+    @($zhs, 'REVENANT_CALL.upgradeDescription', $zhLyreUpgrade, 'Chinese upgraded text'),
+    @($eng, 'REVENANT_CALL.description', '[gold]Call[/gold].', 'English base text'),
+    @($eng, 'REVENANT_CALL.upgradeDescription', "[gold]Call[/gold].`n[gold]Recover[/gold] 1 card.", 'English upgraded text')
+)
+foreach ($check in $lyreChecks) {
+    $actual = (Get-CardText $check[0] $check[1]) -replace "`r`n", "`n"
+    if ($actual -cne $check[2]) {
+        $errors.Add("$($check[1]): $($check[3]) must stay synchronized with the Recover 1 upgrade.")
+    }
+}
+$lyreClassMatch = [regex]::Match(
+    $revenantStarterSource,
+    'public sealed class RevenantCall\s*:[\s\S]*?(?=public sealed class RevenantResonance)'
+)
+$lyreClassSource = if ($lyreClassMatch.Success) { $lyreClassMatch.Value } else { '' }
+if (-not $lyreClassMatch.Success) {
+    $errors.Add('REVENANT_CALL: implementation class could not be found.')
+}
+if ($lyreClassSource -notmatch 'if\s*\(IsUpgraded\)[\s\S]*?AddFromDiscard\(this,\s*context,\s*1,\s*false\)') {
+    $errors.Add('REVENANT_CALL: upgraded implementation must Recover exactly 1 card.')
+}
+if ($lyreClassSource -match 'OnUpgrade\s*\(\)[\s\S]*?EnergyCost') {
+    $errors.Add('REVENANT_CALL: upgrade must not reduce Energy cost.')
+}
+$lyreDescriptionPatchPath = Join-Path $root 'src\Core\Patches\RevenantCallDescriptionPatch.cs'
+$lyreDescriptionPatchSource = if (Test-Path -LiteralPath $lyreDescriptionPatchPath) {
+    Get-Content -LiteralPath $lyreDescriptionPatchPath -Raw -Encoding UTF8
+} else {
+    ''
+}
+if ($lyreDescriptionPatchSource -notmatch 'HarmonyPatch\(typeof\(CardModel\),\s*nameof\(CardModel\.Description\),\s*MethodType\.Getter\)' -or
+    $lyreDescriptionPatchSource -notmatch 'RevenantCall\s*\{\s*IsUpgraded:\s*true\s*\}' -or
+    $lyreDescriptionPatchSource -notmatch 'REVENANT_CALL\.upgradeDescription') {
+    $errors.Add('REVENANT_CALL: upgraded cards must explicitly select the Recover 1 upgrade description at runtime.')
+}
+if ($lyreDescriptionPatchSource -notmatch 'RevenantResonance\s*\{\s*IsUpgraded:\s*true\s*\}' -or
+    $lyreDescriptionPatchSource -notmatch 'REVENANT_RESONANCE\.upgradeDescription') {
+    $errors.Add('REVENANT_RESONANCE: upgraded cards must explicitly select the draw-pile discard upgrade description at runtime.')
+}
 
 # Keep the localization tables aligned with the ModelId entries generated from
 # every card class explicitly registered in RevenantCardPool. A missing title
@@ -97,7 +148,6 @@ $canonicalKeywordCards = @{
     'RADAGON_HALO' = @($zhEthereal, 'Ethereal')
     'SOUL_SUMMON' = @($zhExhaust, 'Exhaust')
     'SPIRIT_FORM' = @($zhRetain, 'Retain')
-    'REVENANT_RESONANCE' = @($zhRetain, 'Retain')
 }
 foreach ($id in $canonicalKeywordCards.Keys) {
     foreach ($suffix in @('description', 'upgradeDescription')) {

@@ -1,7 +1,7 @@
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
 
-namespace sts2mod.Core.Models.Power;
+namespace NightMustStay.Core.Models.Power;
 
 /// <summary>
 /// Marker used by the summon manager to replace the family's currently

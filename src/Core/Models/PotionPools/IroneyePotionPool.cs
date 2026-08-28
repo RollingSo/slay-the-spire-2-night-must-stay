@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Godot;
 using MegaCrit.Sts2.Core.Models;
-using sts2mod.Core.Models.Potions;
+using NightMustStay.Core.Models.Potions;
 
-namespace sts2mod.Core.Models.PotionPools
+namespace NightMustStay.Core.Models.PotionPools
 {
     public sealed class IroneyePotionPool : PotionPoolModel
     {

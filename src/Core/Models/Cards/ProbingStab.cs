@@ -10,10 +10,10 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
-using sts2mod.Core.Models;
-using sts2mod.Core.Patches;
+using NightMustStay.Core.Models;
+using NightMustStay.Core.Patches;
 
-namespace sts2mod.Core.Models.Cards
+namespace NightMustStay.Core.Models.Cards
 {
     public sealed class ProbingStab : CardModel
     {

@@ -35,6 +35,8 @@ $revenantPowerIcons = @(
     'relay_power.png'
     'pack_up_power.png'
 )
+$updatedCount = 0
+$unchangedCount = 0
 
 Add-Type -AssemblyName System.Drawing
 
@@ -64,10 +66,19 @@ foreach ($fileName in $revenantPowerIcons) {
         $bitmap.Dispose()
     }
 
+    $sourceHash = (Get-FileHash -LiteralPath $sourcePath -Algorithm SHA256).Hash
     foreach ($targetDirectory in $targets) {
         New-Item -ItemType Directory -Path $targetDirectory -Force | Out-Null
-        Copy-Item -LiteralPath $sourcePath -Destination (Join-Path $targetDirectory $fileName) -Force
+        $targetPath = Join-Path $targetDirectory $fileName
+        if ((Test-Path -LiteralPath $targetPath) -and
+            $sourceHash -eq (Get-FileHash -LiteralPath $targetPath -Algorithm SHA256).Hash) {
+            $unchangedCount++
+            continue
+        }
+
+        Copy-Item -LiteralPath $sourcePath -Destination $targetPath -Force
+        $updatedCount++
     }
 }
 
-Write-Output "Synced and validated $($revenantPowerIcons.Count) Revenant power icons."
+Write-Output "Revenant power icons: validated $($revenantPowerIcons.Count), updated $updatedCount, unchanged $unchangedCount."

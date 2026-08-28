@@ -5,9 +5,9 @@ using MegaCrit.Sts2.Core.Entities.Ancients;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Events;
 using MegaCrit.Sts2.Core.Saves;
-using sts2mod.Core.Models.Characters;
+using NightMustStay.Core.Models.Characters;
 
-namespace sts2mod.Core.Patches
+namespace NightMustStay.Core.Patches
 {
     [HarmonyPatch(typeof(TheArchitect), "LoadDialogue")]
     public static class GuardianArchitectDialoguePatch
@@ -15,7 +15,8 @@ namespace sts2mod.Core.Patches
         public static bool Prefix(TheArchitect __instance)
         {
             if (__instance.Owner?.Character is not Guardian
-                && __instance.Owner?.Character is not Ironeye)
+                && __instance.Owner?.Character is not Ironeye
+                && __instance.Owner?.Character is not Revenant)
                 return true;
 
             ModelId characterId = __instance.Owner.Character.Id;

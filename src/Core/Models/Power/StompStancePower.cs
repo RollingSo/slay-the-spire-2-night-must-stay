@@ -5,9 +5,9 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
-using sts2mod.Core.Models;
+using NightMustStay.Core.Models;
 
-namespace sts2mod.Core.Models.Power
+namespace NightMustStay.Core.Models.Power
 {
     public sealed class StompStancePower : PowerModel
     {

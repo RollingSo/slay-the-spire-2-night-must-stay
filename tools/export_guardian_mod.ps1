@@ -8,11 +8,12 @@ $ErrorActionPreference = 'Stop'
 
 $root = Split-Path -Parent $PSScriptRoot
 $buildDirectory = Join-Path $root 'build'
-$projectPath = Join-Path $root 'sts2mod.csproj'
+$modId = 'NightMustStay'
+$projectPath = Join-Path $root "$modId.csproj"
 $manifestPath = Join-Path $root 'manifest.json'
 $configPath = Join-Path $root 'config.json'
 $releaseDirectory = Join-Path $root '.godot\mono\temp\bin\CodexExport'
-$packPath = Join-Path $buildDirectory 'sts2mod.pck'
+$packPath = Join-Path $buildDirectory "$modId.pck"
 
 New-Item -ItemType Directory -Path $buildDirectory -Force | Out-Null
 if (-not $SkipInstall) {
@@ -48,7 +49,7 @@ if ($LASTEXITCODE -ne 0) {
     throw "Godot asset import failed with exit code $LASTEXITCODE"
 }
 
-& $GodotPath --headless --path $root --export-pack 'Windows Desktop' $packPath --quit
+& $GodotPath --headless --path $root --export-pack 'Windows Desktop' $packPath
 if ($LASTEXITCODE -ne 0) {
     throw "Godot PCK export failed with exit code $LASTEXITCODE"
 }
@@ -61,25 +62,24 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 $runtimeFiles = @(
-    'sts2mod.dll',
-    'sts2mod.pdb',
-    'sts2mod.deps.json',
-    'sts2mod.runtimeconfig.json'
+    "$modId.dll",
+    "$modId.pdb",
+    "$modId.deps.json",
+    "$modId.runtimeconfig.json"
 )
 foreach ($fileName in $runtimeFiles) {
     Copy-Item -LiteralPath (Join-Path $releaseDirectory $fileName) -Destination (Join-Path $buildDirectory $fileName) -Force
 }
 
-# Distribution metadata and telemetry configuration must stay beside the DLL.
-# Keep them in build as well so build/ and the installed Mods directory contain
-# the exact same publishable file set.
-Copy-Item -LiteralPath $manifestPath -Destination (Join-Path $buildDirectory 'sts2mod.json') -Force
+# Keep the manifest in build for staging. The telemetry default is embedded in
+# the DLL; config.json remains here only as the editable build input/template.
+Copy-Item -LiteralPath $manifestPath -Destination (Join-Path $buildDirectory "$modId.json") -Force
 Copy-Item -LiteralPath $configPath -Destination (Join-Path $buildDirectory 'config.json') -Force
 
-$installFiles = @('sts2mod.pck', 'sts2mod.json', 'sts2mod.dll', 'sts2mod.pdb')
+$installFiles = @("$modId.pck", "$modId.json", "$modId.dll", "$modId.pdb")
 
-# Keep telemetry configuration outside Mods.  The complete publishable set is
-# still preserved in build/, while the game sees only its one manifest JSON.
+# Keep the local developer override outside Mods, while the game sees only its
+# one manifest JSON. Workshop users fall back to the DLL-embedded default.
 if (-not $SkipInstall) {
     $telemetryDirectory = Join-Path $env:APPDATA 'SlayTheSpire2\night_must_stay'
     New-Item -ItemType Directory -Path $telemetryDirectory -Force | Out-Null

@@ -6,7 +6,7 @@ function update(path, entries) {
   fs.writeFileSync(path, `${JSON.stringify(data, null, 2)}\n`, "utf8");
 }
 
-update("sts2mod/localization/zhs/cards.json", {
+update("NightMustStay/localization/zhs/cards.json", {
   "FINGER_SNAP.description": "触发1次该敌人的[gold]中毒[/gold]。",
   "FINGER_SNAP.upgradeDescription": "触发1次所有敌人的[gold]中毒[/gold]。",
   "POISON_BURST.title": "凋零箭",
@@ -67,7 +67,7 @@ update("sts2mod/localization/zhs/cards.json", {
   "AIM.upgradeDescription": "给予{Mark:diff()}层[gold]标记[/gold]。\n抽{Cards:diff()}张牌。"
 });
 
-update("sts2mod/localization/eng/cards.json", {
+update("NightMustStay/localization/eng/cards.json", {
   "FINGER_SNAP.description": "Trigger the target's [gold]Poison[/gold] once.",
   "FINGER_SNAP.upgradeDescription": "Trigger all enemies' [gold]Poison[/gold] once.",
   "POISON_BURST.title": "Withering Arrow",
@@ -128,7 +128,7 @@ update("sts2mod/localization/eng/cards.json", {
   "AIM.upgradeDescription": "Apply {Mark:diff()} [gold]Mark[/gold].\nDraw {Cards:diff()} cards."
 });
 
-update("sts2mod/localization/zhs/powers.json", {
+update("NightMustStay/localization/zhs/powers.json", {
   "DISTANCE_POWER.description": "获得等同于[gold]距离[/gold]的[gold]敏捷[/gold]，失去等同于[gold]距离[/gold]的[gold]力量[/gold]。[gold]距离[/gold]的最大值为5，最小值为-5。",
   "LONG_SHOT_POWER.description": "[gold]距离[/gold]为2或以上时，耗能-1{energyPrefix:energyIcons(1)}。",
   "POISON_BURST_POWER.title": "毒爆",
@@ -146,7 +146,7 @@ update("sts2mod/localization/zhs/powers.json", {
   "POISON_BLADE_POWER.description": "本回合打出的下张攻击牌对敌人造成伤害时，给予等量[gold]中毒[/gold]。"
 });
 
-update("sts2mod/localization/eng/powers.json", {
+update("NightMustStay/localization/eng/powers.json", {
   "DISTANCE_POWER.description": "Gain [gold]Dexterity[/gold] equal to [gold]Distance[/gold] and lose [gold]Strength[/gold] equal to [gold]Distance[/gold]. Maximum [gold]Distance[/gold] is 5 and minimum is -5.",
   "POISON_BURST_POWER.title": "Poison Burst",
   "POISON_BURST_POWER.description": "Deal double damage to enemies with the corresponding amount of [gold]Poison[/gold].",

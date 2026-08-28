@@ -13,9 +13,9 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
-using sts2mod.Core.Models.Cards;
+using NightMustStay.Core.Models.Cards;
 
-namespace sts2mod.Core.Models.Power;
+namespace NightMustStay.Core.Models.Power;
 
 public sealed class ApproachingVenomFangPower : PowerModel
 {

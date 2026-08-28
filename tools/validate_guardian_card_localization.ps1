@@ -3,7 +3,7 @@ param()
 $ErrorActionPreference = 'Stop'
 
 $root = Split-Path -Parent $PSScriptRoot
-$localizationRoot = Join-Path $root 'sts2mod\localization'
+$localizationRoot = Join-Path $root 'NightMustStay\localization'
 $failures = [System.Collections.Generic.List[string]]::new()
 
 function ConvertFrom-CodePoints([int[]]$CodePoints) {

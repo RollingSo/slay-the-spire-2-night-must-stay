@@ -7,13 +7,13 @@ using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.PotionPools;
 using MegaCrit.Sts2.Core.Models.Relics;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
-using sts2mod.Core.Models.CardPools;
-using sts2mod.Core.Models.Cards;
-using sts2mod.Core.Models.PotionPools;
-using sts2mod.Core.Models.RelicPools;
-using sts2mod.Core.Models.Relics;
+using NightMustStay.Core.Models.CardPools;
+using NightMustStay.Core.Models.Cards;
+using NightMustStay.Core.Models.PotionPools;
+using NightMustStay.Core.Models.RelicPools;
+using NightMustStay.Core.Models.Relics;
 
-namespace sts2mod.Core.Models.Characters
+namespace NightMustStay.Core.Models.Characters
 {
     public sealed class Ironeye : CharacterModel
     {

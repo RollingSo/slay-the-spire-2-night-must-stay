@@ -15,10 +15,10 @@ using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
-using sts2mod.Core.Models.Power;
-using sts2mod.Core.Models.Revenant;
+using NightMustStay.Core.Models.Power;
+using NightMustStay.Core.Models.Revenant;
 
-namespace sts2mod.Core.Models.Cards;
+namespace NightMustStay.Core.Models.Cards;
 
 public interface IRevenantChargeCard
 {
@@ -382,9 +382,17 @@ public sealed class FlannSaxLightningSpear : CardModel
 public sealed class BeastClaw : CardModel, IRevenantChargeCard
 {
     private int _chargeCount;
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(7m, ValueProp.Move), new DynamicVar("ChargeDamage", 8m), new BoolVar("Ready") };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
+    {
+        new DamageVar(7m, ValueProp.Move),
+        new DynamicVar("ChargeDamage", 8m),
+        new DynamicVar("Strength", 3m),
+        new BoolVar("Ready"),
+    };
     public override string PortraitPath => "res://revenant_assets/cards/beast_claw.png";
     public bool IsChargeComplete => _chargeCount > 0;
+    public override TargetType TargetType =>
+        IsChargeComplete ? TargetType.RandomEnemy : TargetType.AnyEnemy;
     protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
     {
         new CardHoverTip(CreateOppositeChargePreview()),
@@ -406,7 +414,6 @@ public sealed class BeastClaw : CardModel, IRevenantChargeCard
     }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target);
         if (cardPlay.Target == Owner.Creature)
         {
             await CompleteCharge(context);
@@ -418,15 +425,20 @@ public sealed class BeastClaw : CardModel, IRevenantChargeCard
         _chargeCount = 0;
         ((BoolVar)DynamicVars["Ready"]).BoolVal = false;
         await DamageCmd.Attack(damage).FromCard(this).TargetingAllOpponents(CombatState).Execute(context);
-        if (wasCharged) await RevenantSummonManager.For(Owner).NotifyChargedCardPlayed(context);
-        if (wasCharged) await RevenantCardHelpers.ChargeResonance(this, context);
+        if (wasCharged)
+        {
+            Creature family = RevenantCardHelpers.Family(this);
+            if (family is { IsAlive: true })
+                await PowerCmd.Apply<StrengthPower>(context, family, DynamicVars["Strength"].BaseValue, Owner.Creature, this);
+            await RevenantSummonManager.For(Owner).NotifyChargedCardPlayed(context);
+        }
     }
     public async Task CompleteCharge(PlayerChoiceContext context)
     {
         if (IsChargeComplete) return;
         _chargeCount = 1;
         ((BoolVar)DynamicVars["Ready"]).BoolVal = true;
-        await RevenantSummonManager.For(Owner).NotifyChargeCompleted();
+        await RevenantSummonManager.For(Owner).NotifyChargeCompleted(this);
         await PowerCmd.Apply<ChargeReturnPower>(context, Owner.Creature, 1m, Owner.Creature, this);
     }
     protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(0m); DynamicVars["ChargeDamage"].UpgradeValueBy(6m); }
@@ -438,6 +450,8 @@ public sealed class DeathLightning : CardModel, IRevenantChargeCard
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(5m, ValueProp.Move), new RepeatVar(4), new DynamicVar("ChargeHits", 5m), new BoolVar("Ready") };
     public override string PortraitPath => "res://revenant_assets/cards/death_lightning.png";
     public bool IsChargeComplete => _chargeCount > 0;
+    public override TargetType TargetType =>
+        IsChargeComplete ? TargetType.RandomEnemy : TargetType.AnyEnemy;
     protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
     {
         new CardHoverTip(CreateOppositeChargePreview()),
@@ -459,7 +473,6 @@ public sealed class DeathLightning : CardModel, IRevenantChargeCard
     }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target);
         if (cardPlay.Target == Owner.Creature)
         {
             await CompleteCharge(context);
@@ -470,7 +483,11 @@ public sealed class DeathLightning : CardModel, IRevenantChargeCard
         int hits = DynamicVars.Repeat.IntValue + DynamicVars["ChargeHits"].IntValue * _chargeCount;
         _chargeCount = 0;
         ((BoolVar)DynamicVars["Ready"]).BoolVal = false;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target).WithHitCount(hits).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .WithHitCount(hits)
+            .FromCard(this)
+            .TargetingRandomOpponents(CombatState)
+            .Execute(context);
         if (wasCharged) await RevenantSummonManager.For(Owner).NotifyChargedCardPlayed(context);
     }
     public async Task CompleteCharge(PlayerChoiceContext context)
@@ -478,7 +495,7 @@ public sealed class DeathLightning : CardModel, IRevenantChargeCard
         if (IsChargeComplete) return;
         _chargeCount = 1;
         ((BoolVar)DynamicVars["Ready"]).BoolVal = true;
-        await RevenantSummonManager.For(Owner).NotifyChargeCompleted();
+        await RevenantSummonManager.For(Owner).NotifyChargeCompleted(this);
         await PowerCmd.Apply<ChargeReturnPower>(context, Owner.Creature, 1m, Owner.Creature, this);
     }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(1m);
@@ -565,7 +582,7 @@ public sealed class LightningSpear : CardModel, IRevenantChargeCard
         if (IsChargeComplete) return;
         _chargeCount = 1;
         ((BoolVar)DynamicVars["Ready"]).BoolVal = true;
-        await RevenantSummonManager.For(Owner).NotifyChargeCompleted();
+        await RevenantSummonManager.For(Owner).NotifyChargeCompleted(this);
         await PowerCmd.Apply<ChargeReturnPower>(context, Owner.Creature, 1m, Owner.Creature, this);
     }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
@@ -585,8 +602,16 @@ public sealed class UnbearableFrenzy : CardModel
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(4m, ValueProp.Move), new DynamicVar("FamilyDamage", 8m), new RepeatVar(6) };
     public override string PortraitPath => "res://revenant_assets/cards/unbearable_frenzy.png";
     protected override bool IsPlayable => RevenantSummonManager.For(Owner).HasLivingFamily;
-    public UnbearableFrenzy() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
-    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) { await RevenantCardHelpers.DamageFamily(this, context, DynamicVars["FamilyDamage"].BaseValue); Creature[] enemies = CombatState.HittableEnemies.Where(e => e.IsAlive).ToArray(); if (enemies.Length == 0) return; Creature target = Owner.RunState.Rng.CombatTargets.NextItem(enemies); await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(target).WithHitCount(DynamicVars.Repeat.IntValue).Execute(context); }
+    public UnbearableFrenzy() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.RandomEnemy) { }
+    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
+    {
+        await RevenantCardHelpers.DamageFamily(this, context, DynamicVars["FamilyDamage"].BaseValue);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .WithHitCount(DynamicVars.Repeat.IntValue)
+            .FromCard(this)
+            .TargetingRandomOpponents(CombatState)
+            .Execute(context);
+    }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(1m);
 }
 
@@ -715,6 +740,8 @@ public sealed class GurranqBeastClaw : CardModel, IRevenantChargeCard
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(13m, ValueProp.Move), new DynamicVar("ChargeDamage", 10m), new BoolVar("Ready") };
     public override string PortraitPath => "res://revenant_assets/cards/gurranq_beast_claw.png";
     public bool IsChargeComplete => _chargeCount > 0;
+    public override TargetType TargetType =>
+        IsChargeComplete ? TargetType.RandomEnemy : TargetType.AnyEnemy;
     protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
     {
         new CardHoverTip(CreateOppositeChargePreview()),
@@ -736,7 +763,6 @@ public sealed class GurranqBeastClaw : CardModel, IRevenantChargeCard
     }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target);
         if (cardPlay.Target == Owner.Creature)
         {
             await CompleteCharge(context);
@@ -757,7 +783,7 @@ public sealed class GurranqBeastClaw : CardModel, IRevenantChargeCard
         if (IsChargeComplete) return;
         _chargeCount = 1;
         ((BoolVar)DynamicVars["Ready"]).BoolVal = true;
-        await RevenantSummonManager.For(Owner).NotifyChargeCompleted();
+        await RevenantSummonManager.For(Owner).NotifyChargeCompleted(this);
         await PowerCmd.Apply<ChargeReturnPower>(context, Owner.Creature, 1m, Owner.Creature, this);
     }
     protected override void OnUpgrade() => DynamicVars["ChargeDamage"].UpgradeValueBy(5m);

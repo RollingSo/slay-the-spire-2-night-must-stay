@@ -14,10 +14,10 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
-using sts2mod.Core.Models.Power;
-using sts2mod.Core.Nodes.Vfx;
+using NightMustStay.Core.Models.Power;
+using NightMustStay.Core.Nodes.Vfx;
 
-namespace sts2mod.Core.Models.Cards
+namespace NightMustStay.Core.Models.Cards
 {
     internal static class IroneyeHiddenPoison
     {

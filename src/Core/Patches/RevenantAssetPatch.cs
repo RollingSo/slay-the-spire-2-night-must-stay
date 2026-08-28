@@ -11,9 +11,9 @@ using MegaCrit.Sts2.Core.Nodes.RestSite;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Screens.Shops;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
-using sts2mod.Core.Models.Characters;
+using NightMustStay.Core.Models.Characters;
 
-namespace sts2mod.Core.Patches;
+namespace NightMustStay.Core.Patches;
 
 [HarmonyPatch]
 public static class RevenantAssetPatch
@@ -287,6 +287,20 @@ public static class RevenantAssetPatch
             "res://revenant_assets/energy/revenant_energy_font_icon.png",
             "res://images/packed/sprite_fonts/revenant_energy_icon.png",
             "res://revenant_assets/relics/revenant_starter_relic.png",
+            "res://revenant_assets/relics/treasured_makeup_brush.png",
+            "res://revenant_assets/relics/dirty_photo_frame.png",
+            "res://revenant_assets/relics/miniature_makeup_tools.png",
+            "res://revenant_assets/relics/deep_sea_night.png",
+            "res://revenant_assets/relics/old_pocket_portrait.png",
+            "res://revenant_assets/relics/blue_amber_amulet.png",
+            "res://revenant_assets/relics/believers_vow_cloth.png",
+            "res://revenant_assets/relics/portable_sewing_kit.png",
+            "res://revenant_assets/potions/dusty_note.png",
+            "res://revenant_assets/potions/wraith_jar.png",
+            "res://revenant_assets/potions/starlight_shard.png",
+            "res://images/atlases/potion_atlas.sprites/dusty_note.tres",
+            "res://images/atlases/potion_atlas.sprites/wraith_jar.tres",
+            "res://images/atlases/potion_atlas.sprites/starlight_shard.tres",
             "res://revenant_assets/cards/cursed_claw_combo.png",
             "res://revenant_assets/cards/strike_revenant.png",
             "res://revenant_assets/cards/defend_revenant.png",
