@@ -7,6 +7,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="tools\**\*.cs" />
+    <Compile Remove=".godot\**\*.cs" />
+    <Compile Remove="build\**\*.cs" />
     <EmbeddedResource Include="config.json" LogicalName="NightMustStay.telemetry.config.json" />
   </ItemGroup>
   <ItemGroup>

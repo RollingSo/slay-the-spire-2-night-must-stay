@@ -168,8 +168,12 @@ public sealed class EmergencyRestore : CardModel
     {
         if (cardPlay.Target == Owner.Creature)
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        else if (cardPlay.Target == Owner.Osty)
-            await RevenantCardHelpers.HealFamily(this, DynamicVars["Heal"].BaseValue);
+        else if (cardPlay.Target is { IsAlive: true } summon)
+        {
+            RevenantSummonManager manager = RevenantSummonManager.For(Owner);
+            if (manager.IsFamilyCreature(summon) || manager.IsNecroCreature(summon))
+                await CreatureCmd.Heal(summon, DynamicVars["Heal"].BaseValue);
+        }
     }
     protected override void OnUpgrade() { DynamicVars.Block.UpgradeValueBy(2m); DynamicVars["Heal"].UpgradeValueBy(2m); }
 }
@@ -186,15 +190,20 @@ public sealed class PreciseLightningStrike : CardModel
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        decimal damage = _recoveredThisTurn
-            ? DynamicVars.Damage.BaseValue * 2m
-            : DynamicVars.Damage.BaseValue;
-        await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+            .FromCard(this)
+            .Targeting(cardPlay.Target)
+            .Execute(context);
     }
     public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
     {
-        if (card == this && RevenantCardHelpers.WasMovedFromDiscardToHand(card, oldPileType))
+        if (card == this
+            && !_recoveredThisTurn
+            && RevenantCardHelpers.WasMovedFromDiscardToHand(card, oldPileType))
+        {
             _recoveredThisTurn = true;
+            DynamicVars.Damage.BaseValue *= 2m;
+        }
         return Task.CompletedTask;
     }
     public override Task AfterSideTurnEnd(
@@ -202,11 +211,15 @@ public sealed class PreciseLightningStrike : CardModel
         CombatSide side,
         IEnumerable<Creature> creatures)
     {
-        if (side == Owner.Creature.Side)
+        if (side == Owner.Creature.Side && _recoveredThisTurn)
+        {
+            DynamicVars.Damage.BaseValue /= 2m;
             _recoveredThisTurn = false;
+        }
         return Task.CompletedTask;
     }
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
+    protected override void OnUpgrade() =>
+        DynamicVars.Damage.UpgradeValueBy(_recoveredThisTurn ? 6m : 3m);
 }
 
 public sealed class ThreefoldHalo : CardModel

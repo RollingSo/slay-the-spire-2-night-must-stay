@@ -118,9 +118,9 @@ public sealed class GiantSkeletonWrath : CardModel
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target).Execute(context);
         RevenantSummonManager manager = RevenantSummonManager.For(Owner);
         if (manager.CurrentFamilyId == RevenantFamilyId.Skeleton)
-            await RevenantTextTableHelpers.DamageAsFamily(this, context, 5m, true, 4);
+            await RevenantTextTableHelpers.DamageAsFamily(this, context, 4m, true, 3);
     }
-    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);
 }
 
 public sealed class SkyRendingChord : CardModel
@@ -245,17 +245,28 @@ public sealed class ReanimateDead : CardModel
 
 public sealed class SoulReturn : CardModel
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new BlockVar(4m, ValueProp.Move), new CardsVar(1) };
-    public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
-    public override bool GainsBlock => true;
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
+    {
+        new PowerVar<FreezePower>("Freeze", 3m),
+        new CardsVar(1),
+    };
+    public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Ethereal };
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        new[] { HoverTipFactory.FromPower<FreezePower>() };
     public override string PortraitPath => "res://revenant_assets/cards/soul_return.png";
-    public SoulReturn() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+    public SoulReturn() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+        ArgumentNullException.ThrowIfNull(cardPlay.Target);
+        await PowerCmd.Apply<FreezePower>(
+            context,
+            cardPlay.Target,
+            DynamicVars["Freeze"].BaseValue,
+            Owner.Creature,
+            this);
         await RevenantCardHelpers.AddFromDiscard(this, context, DynamicVars.Cards.IntValue, false);
     }
-    protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1m);
+    protected override void OnUpgrade() => DynamicVars["Freeze"].UpgradeValueBy(1m);
 }
 
 public sealed class HeavyEcho : CardModel
@@ -313,7 +324,7 @@ public sealed class PreparationRitual : CardModel
         if (recovered.FirstOrDefault() is IRevenantChargeCard chargeCard)
             await chargeCard.CompleteCharge(context);
     }
-    protected override void OnUpgrade() { }
+    protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);
 }
 
 public sealed class WatchfulWaiting : CardModel, IRevenantChargeCard

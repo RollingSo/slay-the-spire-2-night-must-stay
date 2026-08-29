@@ -36,6 +36,8 @@ namespace NightMustStay.Core.Patches
                 "[gold]盾戳[/gold]", "[gold]Shield Poke[/gold]");
             AddIfMentioned(tips, text, HoverTipFactory.FromPower<PhantomImbalancePower>(),
                 "[gold]失衡[/gold]", "[gold]Imbalance[/gold]");
+            AddIfMentioned(tips, text, HoverTipFactory.Static(StaticHoverTip.Stun),
+                "[gold]失衡[/gold]", "[gold]Imbalance[/gold]");
             AddIfMentioned(tips, text, GuardianCardHoverTips.RevenantCharge,
                 "[gold]蓄力[/gold]", "[gold]Charge[/gold]");
             AddIfMentioned(tips, text, GuardianCardHoverTips.RevenantRecover,

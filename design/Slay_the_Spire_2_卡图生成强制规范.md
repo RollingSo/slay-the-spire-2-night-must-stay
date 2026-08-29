@@ -48,7 +48,19 @@
   - `regent/void_form.png`
   - `regent/tyranny.png`
 
-上述正式卡图的统一尺寸为 **1000×760 px**，横宽比约为 **1.316:1**。
+上述普通、稀有及常规卡池正式卡图的统一尺寸为 **1000×760 px**，横宽比约为 **1.316:1**。
+
+### 2.1 先古卡图尺寸例外
+
+先古牌不是横向卡图。对原游戏全部 `CardRarity.Ancient` 卡牌及其资源逐项核对后，正式先古卡图统一使用：
+
+- **606×852 px**；
+- 纵向比例约为 **0.711:1**；
+- 画面必须从上到下完整填满，不得把横图居中后用纯色、模糊背景或延展色带补齐；
+- 不得先生成 1000×760 横图再粗暴裁成竖图，必须从构图阶段就按 606×852 纵向画布设计；
+- 先古牌仍遵守本规范的图形化平涂、硬边赛璐璐、大黑色形状、有限色盘和单一视觉事件要求。
+
+核对样本包括 `apotheosis`、`apparition`、`biased_cognition`、`break`、`corruption`、`forbidden_grimoire`、`meteor_shower`、`protector`、`quadcast`、`the_sealed_throne`、`wraith_form` 等，资源尺寸均为 606×852。
 
 ## 3. 造型语言
 
@@ -192,6 +204,14 @@ photorealism, painterly brushwork, cinematic concept-art rendering,
 realistic metal reflections, dense environmental detail, tiny decorative details.
 ```
 
+先古牌不得使用上述横图尺寸行，必须替换为：
+
+```text
+Asset: 606x852 portrait Ancient card illustration, artwork only.
+Composition: native portrait composition filling the entire canvas from top to bottom;
+do not adapt, letterbox, pad, or crop a landscape illustration.
+```
+
 ## 9. “踏地架势”正确方向示例
 
 上一版错误点：完整角色、真实铠甲、雨夜战场、金属划痕、尘土粒子和电影光照共同抢占注意力，缩略后只剩“写实鹰人骑士”，没有《Slay the Spire 2》的图形语言。
@@ -216,7 +236,7 @@ realistic metal reflections, dense environmental detail, tiny decorative details
 
 每张预览提交审批前必须通过以下检查：
 
-- [ ] 尺寸或最终裁切比例为 1000×760。
+- [ ] 常规卡图尺寸或最终裁切比例为 1000×760；先古卡图必须为原生纵向 606×852。
 - [ ] 缩小到约 250×190 时，仍能一眼说出视觉事件。
 - [ ] 主体由大色块和硬边分面组成，而非厚涂纹理。
 - [ ] 主体轮廓明确，并有黑色形状或高饱和描边参与分离。

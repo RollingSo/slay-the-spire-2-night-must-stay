@@ -20,7 +20,7 @@ namespace NightMustStay.Core.Models.Cards
         };
 
         public BreathingRoom()
-            : base(3, CardRarity.Common)
+            : base(3, CardRarity.Uncommon)
         {
         }
 

@@ -1,7 +1,8 @@
 param(
     [string]$GodotPath = 'D:\Godot_v4.5.1-stable_mono_win64\Godot_v4.5.1-stable_mono_win64_console.exe',
     [string]$ModsDirectory = 'D:\SteamLibrary\steamapps\common\Slay the Spire 2\mods',
-    [switch]$SkipInstall
+    [switch]$SkipInstall,
+    [switch]$BetaTestInstall
 )
 
 $ErrorActionPreference = 'Stop'
@@ -14,6 +15,7 @@ $manifestPath = Join-Path $root 'manifest.json'
 $configPath = Join-Path $root 'config.json'
 $releaseDirectory = Join-Path $root '.godot\mono\temp\bin\CodexExport'
 $packPath = Join-Path $buildDirectory "$modId.pck"
+$installModId = if ($BetaTestInstall) { 'NightMustStayBetaTest' } else { $modId }
 
 New-Item -ItemType Directory -Path $buildDirectory -Force | Out-Null
 if (-not $SkipInstall) {
@@ -76,7 +78,31 @@ foreach ($fileName in $runtimeFiles) {
 Copy-Item -LiteralPath $manifestPath -Destination (Join-Path $buildDirectory "$modId.json") -Force
 Copy-Item -LiteralPath $configPath -Destination (Join-Path $buildDirectory 'config.json') -Force
 
-$installFiles = @("$modId.pck", "$modId.json", "$modId.dll", "$modId.pdb")
+$installSources = [ordered]@{
+    "$installModId.pck" = Join-Path $buildDirectory "$modId.pck"
+    "$installModId.dll" = Join-Path $buildDirectory "$modId.dll"
+    "$installModId.pdb" = Join-Path $buildDirectory "$modId.pdb"
+}
+
+if ($BetaTestInstall) {
+    $stableManifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
+    $betaManifest = [ordered]@{
+        id = $installModId
+        name = "$($stableManifest.name) [Beta Test]"
+        author = $stableManifest.author
+        description = "Local Beta Test build. Do not enable together with the Steam Workshop release. $($stableManifest.description)"
+        version = "$($stableManifest.version)-beta-test"
+        has_dll = $true
+        has_pck = $true
+        affects_gameplay = $true
+    }
+    $betaManifestPath = Join-Path $buildDirectory "$installModId.json"
+    $betaManifest | ConvertTo-Json | Set-Content -LiteralPath $betaManifestPath -Encoding utf8
+    $installSources["$installModId.json"] = $betaManifestPath
+}
+else {
+    $installSources["$installModId.json"] = Join-Path $buildDirectory "$modId.json"
+}
 
 # Keep the local developer override outside Mods, while the game sees only its
 # one manifest JSON. Workshop users fall back to the DLL-embedded default.
@@ -85,8 +111,27 @@ if (-not $SkipInstall) {
     New-Item -ItemType Directory -Path $telemetryDirectory -Force | Out-Null
     Copy-Item -LiteralPath $configPath -Destination (Join-Path $telemetryDirectory 'config.json') -Force
 }
-foreach ($fileName in $installFiles) {
-    $buildPath = Join-Path $buildDirectory $fileName
+if (-not $SkipInstall -and $BetaTestInstall) {
+    $resolvedModsDirectory = [System.IO.Path]::GetFullPath($ModsDirectory).TrimEnd('\')
+    $legacyNames = @(
+        'NightMustStay.pck', 'NightMustStay.json', 'NightMustStay.dll', 'NightMustStay.pdb',
+        'NightMustStayBetaTest.pck', 'NightMustStayBetaTest.json', 'NightMustStayBetaTest.dll', 'NightMustStayBetaTest.pdb',
+        'sts2mod.pck', 'sts2mod.json', 'sts2mod.dll', 'sts2mod.pdb'
+    )
+    foreach ($legacyName in $legacyNames) {
+        $legacyPath = [System.IO.Path]::GetFullPath((Join-Path $resolvedModsDirectory $legacyName))
+        if (-not $legacyPath.StartsWith($resolvedModsDirectory + '\', [System.StringComparison]::OrdinalIgnoreCase)) {
+            throw "Refusing to remove a file outside the Mods directory: $legacyPath"
+        }
+        if (Test-Path -LiteralPath $legacyPath) {
+            Remove-Item -LiteralPath $legacyPath -Force
+        }
+    }
+}
+
+foreach ($entry in $installSources.GetEnumerator()) {
+    $fileName = $entry.Key
+    $buildPath = $entry.Value
     $buildHash = (Get-FileHash -LiteralPath $buildPath -Algorithm SHA256).Hash
 
     if ($SkipInstall) {

@@ -1,7 +1,9 @@
-[gd_scene format=3]
+[gd_scene load_steps=2 format=3]
 
-; Runtime marker only. GuardianAssetPatch intercepts this path and instantiates
-; the engine-owned NCardTrailVfx type, then replaces every visible element with
-; Guardian artwork and colors.
-[node name="GuardianCardTrailMarker" type="Node2D"]
-metadata/guardian_trail_marker = true
+; Keep a real engine-owned NCardTrailVfx root so every call path can safely
+; instantiate this scene. GuardianAssetPatch still replaces its visible
+; elements with Guardian artwork and colors when NCardTrailVfx.Create is used.
+[ext_resource type="PackedScene" path="res://scenes/vfx/card_trail_ironclad.tscn" id="1_base"]
+
+[node name="GuardianCardTrail" instance=ExtResource("1_base")]
+metadata/guardian_trail = true

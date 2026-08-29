@@ -21,8 +21,10 @@ NightMustStay.pdb   # 可选，便于用户提交可定位的崩溃日志
 
 - 每次更新前修改 `manifest.json` 的语义化版本号。
 - 确认是否添加 `min_game_version`；本地当前用于开发的游戏版本是 `0.107.1`。
+- 当前公开版本只支持 Production/正式版分支；创意工坊中英文说明必须在开头明确标注，不能让玩家在 Beta/Preview 分支误用。
 - 如果要同时支持 Production 与 Public Beta，必须分别验证，并在创意工坊项目中正确声明支持的游戏版本范围。
 - Mod ID 从旧的 `sts2mod` 改为 `NightMustStay` 后，Steam 会把它视为不同的 Mod 身份。发布前需要测试旧存档能否加载；不要再同时安装旧 ID 与新 ID。
+- 开发机本地测试包使用独立 ID `NightMustStayBetaTest` 与显示后缀 `[Beta Test]`。它只用于区分本地测试和线上稳定版，禁止与 Workshop 版本同时启用。
 
 ## 3. 页面素材
 

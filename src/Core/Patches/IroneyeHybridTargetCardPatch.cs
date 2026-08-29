@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.Nodes.GodotExtensions;
 using MegaCrit.Sts2.Core.Nodes.Multiplayer;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using NightMustStay.Core.Models.Cards;
+using NightMustStay.Core.Models.Revenant;
 
 namespace NightMustStay.Core.Patches;
 
@@ -47,7 +48,12 @@ internal static class IroneyeHybridTargetState
         if (!creature.IsAlive)
             return false;
         if (card is EmergencyRestore)
-            return creature == card.Owner.Creature || creature == card.Owner.Osty;
+        {
+            RevenantSummonManager manager = RevenantSummonManager.For(card.Owner);
+            return creature == card.Owner.Creature
+                || manager.IsFamilyCreature(creature)
+                || manager.IsNecroCreature(creature);
+        }
         if (card is WatchfulWaiting)
             return creature.Side != card.Owner.Creature.Side || creature == card.Owner.Creature;
         if (card is IRevenantChargeCard { IsChargeComplete: true })
@@ -167,8 +173,7 @@ internal static class AdvanceAndRetreatControllerTargetingPatch
         CardModel card)
     {
         IEnumerable<Creature> targets = card is EmergencyRestore
-            ? new[] { card.Owner.Creature, card.Owner.Osty }
-                .Where(creature => creature is { IsAlive: true })
+            ? GetEmergencyRestoreTargets(card)
             : card.CombatState.GetOpponentsOf(card.Owner.Creature)
                 .Where(creature => creature.IsHittable)
                 .Prepend(card.Owner.Creature)
@@ -211,5 +216,15 @@ internal static class AdvanceAndRetreatControllerTargetingPatch
         }
 
         TryPlayCardMethod.Invoke(play, new object[] { target });
+    }
+
+    private static IEnumerable<Creature> GetEmergencyRestoreTargets(CardModel card)
+    {
+        RevenantSummonManager manager = RevenantSummonManager.For(card.Owner);
+        yield return card.Owner.Creature;
+        if (manager.CurrentFamilyCreature is { IsAlive: true } family)
+            yield return family;
+        foreach (RevenantNecro necro in manager.GetLivingNecros())
+            yield return necro.Creature;
     }
 }

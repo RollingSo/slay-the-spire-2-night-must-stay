@@ -25,7 +25,7 @@ namespace NightMustStay.Core.Models.Cards
         };
 
         public StandFirm()
-            : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+            : base(0, CardType.Skill, CardRarity.Common, TargetType.Self)
         {
         }
 

@@ -63,13 +63,13 @@ public sealed class TravelingSatchel : CardModel
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         IsUpgraded ? new[] { CardKeyword.Retain } : Array.Empty<CardKeyword>();
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new CardsVar(1) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new CardsVar(2) };
     public override string PortraitPath => "res://revenant_assets/cards/traveling_satchel.png";
 
     public TravelingSatchel() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
 
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
-        RevenantCardHelpers.AddFromDiscard(this, context, DynamicVars.Cards.IntValue, false);
+        CardPileCmd.Draw(context, DynamicVars.Cards.IntValue, Owner);
 
     protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);
 }

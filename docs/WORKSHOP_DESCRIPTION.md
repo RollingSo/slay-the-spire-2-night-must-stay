@@ -8,6 +8,8 @@
 [h1]黑夜长留[/h1]
 “黑夜必须为我而留。”
 
+[b]兼容性提示：本 Mod 仅支持《杀戮尖塔 2》正式版分支，请勿在 Beta、Preview 或其他测试分支中启用。[/b]
+
 《黑夜长留》是《杀戮尖塔 2》的大型角色扩展模组，以《艾尔登法环：黑夜君临》中的角色形象与战斗特色为设计蓝本，将渡夜者们转化为拥有独立牌组与专属机制的尖塔角色。
 
 [h2]当前内容[/h2]
@@ -43,7 +45,7 @@
 
 [h2]模组信息[/h2]
 [list]
-[*][b]当前版本：[/b]0.2.1
+[*][b]当前版本：[/b]0.2.2
 [*][b]支持语言：[/b]简体中文、英语
 [*][b]模组类型：[/b]独立角色
 [*][b]前置模组：[/b]无
@@ -69,6 +71,8 @@ Title: `Night Must Stay`
 ```bbcode
 [h1]NIGHT MUST STAY[/h1]
 “The night must remain for me.”
+
+[b]Compatibility: this mod supports only the official release branch of Slay the Spire 2. Do not enable it on Beta, Preview, or other test branches.[/b]
 
 Night Must Stay is a large character expansion mod for Slay the Spire 2. Inspired by the characters and combat styles of ELDEN RING NIGHTREIGN, it reimagines the Nightfarers as Spire characters with independent card pools and unique mechanics.
 
@@ -105,7 +109,7 @@ If you encounter a problem or have feedback about character design or balance, y
 
 [h2]Mod Information[/h2]
 [list]
-[*][b]Current Version:[/b] 0.2.1
+[*][b]Current Version:[/b] 0.2.2
 [*][b]Supported Languages:[/b] Simplified Chinese and English
 [*][b]Mod Type:[/b] Standalone playable characters
 [*][b]Required Mods:[/b] None

@@ -141,7 +141,7 @@ public sealed class Resurgence : CardModel
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new EnergyVar(2) };
     public override string PortraitPath => "res://revenant_assets/cards/resurgence.png";
 
-    public Resurgence() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
+    public Resurgence() : base(4, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
 
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
         PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
@@ -153,7 +153,7 @@ public sealed class Resurgence : CardModel
         return Task.CompletedTask;
     }
 
-    protected override void OnUpgrade() => DynamicVars.Energy.UpgradeValueBy(1m);
+    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }
 
 public sealed class Soulbound : CardModel
@@ -166,15 +166,16 @@ public sealed class Soulbound : CardModel
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        CardModel selected = (await CardSelectCmd.FromHandForDiscard(
+        List<CardModel> selected = (await CardSelectCmd.FromHandForDiscard(
             context,
             Owner,
             new CardSelectorPrefs(CardSelectorPrefs.DiscardSelectionPrompt, 1),
             null,
-            this)).FirstOrDefault();
-        if (selected != null)
-            await CardCmd.Discard(context, selected);
-        await RevenantCardHelpers.AddFromDiscard(this, context, 1, false);
+            this)).ToList();
+        foreach (CardModel card in selected)
+            await CardCmd.Discard(context, card);
+        if (selected.Count > 0)
+            await RevenantCardHelpers.AddFromDiscard(this, context, selected.Count, false);
     }
 
     protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);
