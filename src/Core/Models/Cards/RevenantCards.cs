@@ -37,7 +37,7 @@ public sealed class CursedClawCombo : CardModel
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitCount(2)
             .Execute(context);
@@ -84,7 +84,7 @@ public sealed class Halo : CardModel
 
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .Targeting(cardPlay.Target)
             .Execute(context);
 

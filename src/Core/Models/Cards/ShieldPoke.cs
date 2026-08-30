@@ -44,7 +44,7 @@ namespace NightMustStay.Core.Models.Cards
             if (fearlessBonus <= 0m)
                 await CreatureCmd.GainBlock(base.Owner.Creature, base.DynamicVars.Block, cardPlay);
             await DamageCmd.Attack(damage)
-                .FromCard(this)
+                .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
                 .WithHitVfxNode(NightreignHitVfx.CreateGuardianShieldPoke)
                 .Execute(choiceContext);

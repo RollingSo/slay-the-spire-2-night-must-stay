@@ -26,7 +26,7 @@ namespace NightMustStay.Core.Models.Power
             }
 
             Flash();
-            await CreatureCmd.Damage(
+            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
                 choiceContext,
                 power.Owner,
                 base.Amount * amount,

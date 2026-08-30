@@ -138,7 +138,7 @@ namespace NightMustStay.Core.Models.Power
                 return 0;
             }
 
-            decimal modifiedDamage = Hook.ModifyDamage(
+            decimal modifiedDamage = NightMustStay.Core.Compatibility.Sts2BranchCompat.ModifyDamage(
                 IRunState.GetFrom(new[] { base.Owner, attacker }),
                 base.CombatState,
                 attacker,
@@ -214,7 +214,7 @@ namespace NightMustStay.Core.Models.Power
             if (attacker.IsAlive)
             {
                 NightreignHitVfx.PlayGuardianCounter(attacker);
-                await CreatureCmd.Damage(choiceContext, attacker, base.Amount, CounterDamageProps, base.Owner, null);
+                await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(choiceContext, attacker, base.Amount, CounterDamageProps, base.Owner, null);
                 EvolutionWingsPower evolutionWings = base.Owner.GetPower<EvolutionWingsPower>();
                 if (evolutionWings != null)
                     await evolutionWings.AfterGuardCounterSucceeded(choiceContext);

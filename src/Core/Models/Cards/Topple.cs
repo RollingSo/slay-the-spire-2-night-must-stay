@@ -35,7 +35,7 @@ namespace NightMustStay.Core.Models.Cards
             foreach (Creature target in targets)
             {
                 await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
-                    .FromCard(this)
+                    .CompatFromCard(this)
                     .Targeting(target)
                     .WithHitFx("vfx/vfx_attack_slash")
                     .Execute(choiceContext);

@@ -22,19 +22,6 @@ public sealed class FreezePower : PowerModel
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override decimal ModifyDamageAdditive(
-        Creature target,
-        decimal amount,
-        ValueProp props,
-        Creature dealer,
-        CardModel cardSource)
-    {
-        if (target != Owner || amount <= 0m || !Owner.IsAlive)
-            return 0m;
-
-        return Amount;
-    }
-
     public override async Task AfterSideTurnEnd(
         PlayerChoiceContext context,
         CombatSide side,

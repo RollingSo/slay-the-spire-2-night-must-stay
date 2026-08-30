@@ -17,14 +17,6 @@ namespace NightMustStay.Core.Models.Power
 
         public override PowerStackType StackType => PowerStackType.Counter;
 
-        public override decimal ModifyDamageMultiplicative(Creature target, decimal amount, ValueProp props, Creature dealer, CardModel cardSource)
-        {
-            if (target != base.Owner)
-                return 1m;
-
-            return (100m - base.Amount) / 100m;
-        }
-
         public override async Task AfterSideTurnEnd(PlayerChoiceContext choiceContext, CombatSide side, IEnumerable<Creature> creatures)
         {
             if (side != base.Owner.Side)

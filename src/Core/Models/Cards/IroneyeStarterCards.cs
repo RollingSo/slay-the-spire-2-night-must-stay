@@ -106,7 +106,7 @@ namespace NightMustStay.Core.Models.Cards
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this)
+                .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
                 .WithHitVfxNode(target =>
                     NightreignHitVfx.CreateIroneyeShot(Owner.Creature, target))
@@ -160,7 +160,7 @@ namespace NightMustStay.Core.Models.Cards
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this)
+                .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
                 .WithHitVfxNode(NightreignHitVfx.CreateIroneyeKnife)
                 .Execute(choiceContext);

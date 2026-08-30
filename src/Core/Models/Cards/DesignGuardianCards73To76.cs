@@ -135,7 +135,7 @@ namespace NightMustStay.Core.Models.Cards
             decimal weak = cardPlay.Target.GetPower<WeakPower>()?.Amount ?? 0m;
 
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this)
+                .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(context);

@@ -32,7 +32,7 @@ namespace NightMustStay.Core.Models.Cards
         {
             System.ArgumentNullException.ThrowIfNull(cardPlay.Target);
             await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
-                .FromCard(this)
+                .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(choiceContext);

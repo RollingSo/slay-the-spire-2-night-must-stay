@@ -132,7 +132,7 @@ public sealed class Release : CardModel
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitVfxNode(NightreignHitVfx.CreateIroneyeKnife)
             .Execute(choiceContext);

@@ -4,6 +4,7 @@
     <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net9.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <AssemblyName>NightMustStay</AssemblyName>
+    <Sts2AssemblyDir Condition="'$(Sts2AssemblyDir)' == ''">$(MSBuildProjectDirectory)\sts2dll</Sts2AssemblyDir>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="tools\**\*.cs" />
@@ -13,13 +14,13 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>sts2dll\0Harmony.dll</HintPath>
+      <HintPath>$(Sts2AssemblyDir)\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="GodotSharp">
-      <HintPath>sts2dll\GodotSharp.dll</HintPath>
+      <HintPath>$(Sts2AssemblyDir)\GodotSharp.dll</HintPath>
     </Reference>
     <Reference Include="sts2">
-      <HintPath>sts2dll\sts2.dll</HintPath>
+      <HintPath>$(Sts2AssemblyDir)\sts2.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

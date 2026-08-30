@@ -206,7 +206,7 @@
   "UNDYING_MARCH_POWER.title": "Undying March",
   "UNDYING_MARCH_POWER.description": "Cannot die this turn and remains at least at 1 HP.",
   "FRENZIED_THREE_FINGERS_POWER.title": "Frenzied Three Fingers",
-  "FRENZIED_THREE_FINGERS_POWER.description": "Whenever your [gold]Family[/gold] loses 1 HP, deal {Amount} damage to a random enemy.",
+  "FRENZIED_THREE_FINGERS_POWER.description": "Whenever your [gold]Family[/gold] loses HP, deal damage to a random enemy equal to the HP lost.",
   "FIGHT_FOR_ME_POWER.title": "Fight for Me",
   "FIGHT_FOR_ME_POWER.description": "At the start of your turn, [gold]Call[/gold].",
   "LIGHT_SPIRIT_POWER.title": "Light Spirit",

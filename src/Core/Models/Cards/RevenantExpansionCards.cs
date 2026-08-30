@@ -69,7 +69,7 @@ public sealed class FrenziedFlame : CardModel
             return;
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(hpLost * DynamicVars["DamageMultiplier"].BaseValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .Targeting(cardPlay.Target)
             .Execute(context);
     }
@@ -89,7 +89,7 @@ public sealed class Ensemble : CardModel
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .Targeting(cardPlay.Target)
             .Execute(context);
         await RevenantSummonManager.For(Owner).TriggerResonance(context);

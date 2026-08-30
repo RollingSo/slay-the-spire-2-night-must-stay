@@ -72,7 +72,7 @@ internal sealed class PostDistanceCalculatedDamageVar : CalculatedDamageVar
 
         decimal rawDamage = Calculate(target) + strengthDelta;
         PreviewValue = Math.Max(
-            Hook.ModifyDamage(
+            NightMustStay.Core.Compatibility.Sts2BranchCompat.ModifyDamage(
                 card.Owner.RunState,
                 card.CombatState,
                 target,

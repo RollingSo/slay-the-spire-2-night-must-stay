@@ -52,7 +52,7 @@ public sealed class CurtainCall : CardModel
 
             Creature target = Owner.RunState.Rng.CombatTargets.NextItem(enemies);
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this)
+                .CompatFromCard(this)
                 .Targeting(target)
                 .WithHitVfxNode(hit =>
                     NightreignHitVfx.CreateIroneyeShot(Owner.Creature, hit))
@@ -96,7 +96,7 @@ public sealed class AirRendingArrow : CardModel
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         AttackCommand attack = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitVfxNode(hit =>
                 NightreignHitVfx.CreateIroneyeShot(Owner.Creature, hit))

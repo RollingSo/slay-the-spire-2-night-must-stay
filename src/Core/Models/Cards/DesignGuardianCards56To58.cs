@@ -112,7 +112,7 @@ namespace NightMustStay.Core.Models.Cards
             decimal damage = ((CalculatedVar)DynamicVars[CalculatedDamageKey]).Calculate(cardPlay.Target);
 
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue + damage)
-                .FromCard(this)
+                .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(context);

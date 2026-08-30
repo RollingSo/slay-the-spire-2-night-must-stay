@@ -47,7 +47,7 @@ internal static class RevenantCardHelpers
         if (enemies.Length == 0) return;
         Creature target = card.Owner.RunState.Rng.CombatTargets.NextItem(enemies);
         for (int i = 0; i < hits && target.IsAlive; i++)
-            await CreatureCmd.Damage(context, target, amount, ValueProp.Move, card.Owner.Creature, card);
+            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, target, amount, ValueProp.Move, card.Owner.Creature, card);
     }
 
     public static async Task DamageRandomEachHit(
@@ -62,7 +62,7 @@ internal static class RevenantCardHelpers
             if (enemies.Length == 0)
                 return;
             Creature target = card.Owner.RunState.Rng.CombatTargets.NextItem(enemies);
-            await CreatureCmd.Damage(
+            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
                 context,
                 target,
                 amount,
@@ -76,7 +76,7 @@ internal static class RevenantCardHelpers
     {
         Creature family = Family(card);
         if (family is not { IsAlive: true } || amount <= 0m) return;
-        await CreatureCmd.Damage(
+        await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
             context,
             family,
             amount,
@@ -191,7 +191,7 @@ public sealed class PreciseLightningStrike : CardModel
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .Targeting(cardPlay.Target)
             .Execute(context);
     }
@@ -229,7 +229,7 @@ public sealed class ThreefoldHalo : CardModel
     public override string PortraitPath => "res://revenant_assets/cards/threefold_halo.png";
     public ThreefoldHalo() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
-    { await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).TargetingAllOpponents(CombatState).Execute(context); }
+    { await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).TargetingAllOpponents(CombatState).Execute(context); }
     public override async Task AfterCardPlayedLate(PlayerChoiceContext context, CardPlay cardPlay)
     {
         if (cardPlay.Card != this) return;
@@ -279,7 +279,7 @@ public sealed class LansseaxBlade : CardModel
     public override string PortraitPath => "res://revenant_assets/cards/lansseax_blade.png";
     public LansseaxBlade() : base(5, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
-    { ArgumentNullException.ThrowIfNull(cardPlay.Target); await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target).Execute(context); }
+    { ArgumentNullException.ThrowIfNull(cardPlay.Target); await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(cardPlay.Target).Execute(context); }
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
     {
@@ -295,7 +295,7 @@ public sealed class LightningStrike : CardModel
     public override string PortraitPath => "res://revenant_assets/cards/lightning_strike.png";
     public LightningStrike() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
-    { ArgumentNullException.ThrowIfNull(cardPlay.Target); await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target).Execute(context); }
+    { ArgumentNullException.ThrowIfNull(cardPlay.Target); await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(cardPlay.Target).Execute(context); }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);
     public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
     {
@@ -319,7 +319,7 @@ public sealed class AncientDragonSpear : CardModel
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .Targeting(cardPlay.Target)
             .Execute(context);
         if (_recoveredThisTurn && cardPlay.Target.IsAlive)
@@ -379,7 +379,7 @@ public sealed class FlannSaxLightningSpear : CardModel
     public override string PortraitPath => "res://revenant_assets/cards/flannsax_lightning_spear.png";
     public FlannSaxLightningSpear() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
-    { EnsureCombatValue(); await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).TargetingAllOpponents(CombatState).WithHitCount(DynamicVars.Repeat.IntValue).Execute(context); }
+    { EnsureCombatValue(); await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).TargetingAllOpponents(CombatState).WithHitCount(DynamicVars.Repeat.IntValue).Execute(context); }
     private void EnsureCombatValue() { if (ReferenceEquals(_combatIdentity, CombatState)) return; _combatIdentity = CombatState; DynamicVars.Damage.BaseValue = 5m; }
     public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
     {
@@ -437,7 +437,7 @@ public sealed class BeastClaw : CardModel, IRevenantChargeCard
         decimal damage = DynamicVars.Damage.BaseValue + DynamicVars["ChargeDamage"].BaseValue * _chargeCount;
         _chargeCount = 0;
         ((BoolVar)DynamicVars["Ready"]).BoolVal = false;
-        await DamageCmd.Attack(damage).FromCard(this).TargetingAllOpponents(CombatState).Execute(context);
+        await DamageCmd.Attack(damage).CompatFromCard(this).TargetingAllOpponents(CombatState).Execute(context);
         if (wasCharged)
         {
             Creature family = RevenantCardHelpers.Family(this);
@@ -498,7 +498,7 @@ public sealed class DeathLightning : CardModel, IRevenantChargeCard
         ((BoolVar)DynamicVars["Ready"]).BoolVal = false;
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(hits)
-            .FromCard(this)
+            .CompatFromCard(this)
             .TargetingRandomOpponents(CombatState)
             .Execute(context);
         if (wasCharged) await RevenantSummonManager.For(Owner).NotifyChargedCardPlayed(context);
@@ -520,7 +520,7 @@ public sealed class SpaceRendingFrenzy : CardModel
     public override string PortraitPath => "res://revenant_assets/cards/space_rending_frenzy.png";
     protected override bool IsPlayable => RevenantSummonManager.For(Owner).HasLivingFamily;
     public SpaceRendingFrenzy() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
-    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) { await RevenantCardHelpers.DamageFamily(this, context, DynamicVars["FamilyDamage"].BaseValue); Creature[] enemies = CombatState.HittableEnemies.Where(e => e.IsAlive).ToArray(); if (enemies.Length == 0) return; Creature target = Owner.RunState.Rng.CombatTargets.NextItem(enemies); await CreatureCmd.Damage(context, target, DynamicVars.Damage.BaseValue, ValueProp.Move, Owner.Creature, this); }
+    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) { await RevenantCardHelpers.DamageFamily(this, context, DynamicVars["FamilyDamage"].BaseValue); Creature[] enemies = CombatState.HittableEnemies.Where(e => e.IsAlive).ToArray(); if (enemies.Length == 0) return; Creature target = Owner.RunState.Rng.CombatTargets.NextItem(enemies); await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, target, DynamicVars.Damage.BaseValue, ValueProp.Move, Owner.Creature, this); }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);
 }
 
@@ -583,9 +583,9 @@ public sealed class LightningSpear : CardModel, IRevenantChargeCard
         }
 
         bool wasCharged = _chargeCount > 0;
-        await CreatureCmd.Damage(context, cardPlay.Target, DynamicVars.Damage.BaseValue, ValueProp.Move, Owner.Creature, this);
+        await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, cardPlay.Target, DynamicVars.Damage.BaseValue, ValueProp.Move, Owner.Creature, this);
         for (int i = 0; i < _chargeCount && cardPlay.Target.IsAlive; i++)
-            await CreatureCmd.Damage(context, cardPlay.Target, DynamicVars["ChargeDamage"].BaseValue, ValueProp.Move, Owner.Creature, this);
+            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, cardPlay.Target, DynamicVars["ChargeDamage"].BaseValue, ValueProp.Move, Owner.Creature, this);
         _chargeCount = 0;
         ((BoolVar)DynamicVars["Ready"]).BoolVal = false;
         if (wasCharged) await RevenantSummonManager.For(Owner).NotifyChargedCardPlayed(context);
@@ -621,7 +621,7 @@ public sealed class UnbearableFrenzy : CardModel
         await RevenantCardHelpers.DamageFamily(this, context, DynamicVars["FamilyDamage"].BaseValue);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .WithHitCount(DynamicVars.Repeat.IntValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .TargetingRandomOpponents(CombatState)
             .Execute(context);
     }
@@ -636,7 +636,7 @@ public sealed class Beaststone : CardModel
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await CreatureCmd.Damage(context, cardPlay.Target, DynamicVars.Damage.BaseValue, ValueProp.Move, Owner.Creature, this);
+        await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, cardPlay.Target, DynamicVars.Damage.BaseValue, ValueProp.Move, Owner.Creature, this);
         Creature family = Owner.Osty;
         if (family is { IsAlive: true })
             await PowerCmd.Apply<StrengthPower>(context, family, DynamicVars["Strength"].BaseValue, Owner.Creature, this);
@@ -651,7 +651,7 @@ public sealed class RadagonHalo : CardModel
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Ethereal };
     public override string PortraitPath => "res://revenant_assets/cards/radagon_halo.png";
     public RadagonHalo() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
-    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) { EnsureCombatValue(); ArgumentNullException.ThrowIfNull(cardPlay.Target); await CreatureCmd.Damage(context, cardPlay.Target, DynamicVars.Damage.BaseValue, ValueProp.Move, Owner.Creature, this); await PowerCmd.Apply<HaloReturnPower>(context, Owner.Creature, 1m, Owner.Creature, this); }
+    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) { EnsureCombatValue(); ArgumentNullException.ThrowIfNull(cardPlay.Target); await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, cardPlay.Target, DynamicVars.Damage.BaseValue, ValueProp.Move, Owner.Creature, this); await PowerCmd.Apply<HaloReturnPower>(context, Owner.Creature, 1m, Owner.Creature, this); }
     private void EnsureCombatValue() { if (ReferenceEquals(_combatIdentity, CombatState)) return; _combatIdentity = CombatState; DynamicVars.Damage.BaseValue = IsUpgraded ? 15m : 12m; }
     public void DoubleDamageForCurrentCombat() { EnsureCombatValue(); DynamicVars.Damage.BaseValue *= 2m; }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
@@ -787,7 +787,7 @@ public sealed class GurranqBeastClaw : CardModel, IRevenantChargeCard
         decimal damage = DynamicVars.Damage.BaseValue + DynamicVars["ChargeDamage"].BaseValue * _chargeCount;
         _chargeCount = 0;
         ((BoolVar)DynamicVars["Ready"]).BoolVal = false;
-        await DamageCmd.Attack(damage).FromCard(this).TargetingAllOpponents(CombatState).Execute(context);
+        await DamageCmd.Attack(damage).CompatFromCard(this).TargetingAllOpponents(CombatState).Execute(context);
         if (wasCharged) await RevenantSummonManager.For(Owner).NotifyChargedCardPlayed(context);
         await RevenantCardHelpers.ChargeResonance(this, context);
     }

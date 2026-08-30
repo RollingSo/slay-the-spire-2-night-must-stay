@@ -273,7 +273,7 @@ namespace NightMustStay.Core.Models.Power
                 return;
 
             Flash();
-            await CreatureCmd.Damage(
+            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
                 choiceContext,
                 Owner,
                 Amount,
@@ -328,7 +328,7 @@ namespace NightMustStay.Core.Models.Power
             Creature target = Owner.Player.RunState.Rng.CombatTargets.NextItem(enemies);
             Flash();
             NightreignHitVfx.PlayIroneyeMarkTrigger(target);
-            await CreatureCmd.Damage(
+            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
                 context,
                 target,
                 Amount,
@@ -485,7 +485,7 @@ namespace NightMustStay.Core.Models.Power
                 Creature target =
                     enemies[0].Monster?.Rng.NextItem(enemies) ?? enemies[0];
                 NightreignHitVfx.PlayIroneyeKnife(target);
-                await CreatureCmd.Damage(
+                await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
                     choiceContext,
                     target,
                     Amount,
@@ -532,7 +532,7 @@ namespace NightMustStay.Core.Models.Power
 
             Flash();
             NightreignHitVfx.PlayIroneyeMarkTrigger(power.Owner);
-            await CreatureCmd.Damage(
+            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
                 choiceContext,
                 power.Owner,
                 Amount,
@@ -746,7 +746,7 @@ namespace NightMustStay.Core.Models.Power
             IroneyeMarkStatusVfx.Pulse(Owner);
             NightreignHitVfx.PlayIroneyeMarkTrigger(Owner);
             decimal hiddenPoison = Owner.GetPower<HiddenPoisonPower>()?.Amount ?? 0m;
-            await CreatureCmd.Damage(
+            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
                 choiceContext,
                 Owner,
                 BonusDamage + hiddenPoison,

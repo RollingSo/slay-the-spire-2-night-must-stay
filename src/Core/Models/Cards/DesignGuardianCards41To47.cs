@@ -51,7 +51,7 @@ namespace NightMustStay.Core.Models.Cards
             bool targetWasWeak = cardPlay.Target.HasPower<WeakPower>();
 
             await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
-                .FromCard(this)
+                .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
                 .WithHitVfxNode(NightreignHitVfx.CreateGuardianWhirlwind)
                 .Execute(choiceContext);
@@ -95,7 +95,7 @@ namespace NightMustStay.Core.Models.Cards
             int xValue = ResolveEnergyXValue() + (base.IsUpgraded ? 1 : 0);
             await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
                 .WithHitCount(xValue)
-                .FromCard(this)
+                .CompatFromCard(this)
                 .TargetingAllOpponents(base.CombatState)
                 .WithHitVfxNode(NightreignHitVfx.CreateGuardianWhirlwind)
                 .Execute(choiceContext);
@@ -145,7 +145,7 @@ namespace NightMustStay.Core.Models.Cards
             ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
 
             await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
-                .FromCard(this)
+                .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(choiceContext);
@@ -192,7 +192,7 @@ namespace NightMustStay.Core.Models.Cards
             ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
 
             await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
-                .FromCard(this)
+                .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
                 .WithHitFx("vfx/vfx_attack_slash")
                 .Execute(choiceContext);
@@ -401,7 +401,7 @@ namespace NightMustStay.Core.Models.Power
             }
 
             Flash();
-            await CreatureCmd.Damage(
+            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
                 new BlockingPlayerChoiceContext(),
                 base.Owner,
                 base.Amount,

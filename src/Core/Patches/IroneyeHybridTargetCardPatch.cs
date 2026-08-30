@@ -125,6 +125,26 @@ internal static class AdvanceAndRetreatMouseStartPatch
         IroneyeHybridTargetState.Begin(__instance);
 }
 
+[HarmonyPatch(typeof(NMouseCardPlay), nameof(NMouseCardPlay._Input))]
+internal static class RevenantChargeRightClickCancelPatch
+{
+    [HarmonyPrefix]
+    private static bool BeforeInput(NMouseCardPlay __instance, InputEvent inputEvent)
+    {
+        if (__instance.Holder?.CardModel is not IRevenantChargeCard
+            || inputEvent is not InputEventMouseButton
+            {
+                ButtonIndex: MouseButton.Right,
+                Pressed: true,
+            })
+            return true;
+
+        __instance.CancelPlayCard();
+        __instance.GetViewport()?.SetInputAsHandled();
+        return false;
+    }
+}
+
 [HarmonyPatch(typeof(NMouseCardPlay), "_ExitTree")]
 internal static class AdvanceAndRetreatMouseExitPatch
 {

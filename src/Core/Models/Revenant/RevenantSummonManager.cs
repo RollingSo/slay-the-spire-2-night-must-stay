@@ -63,7 +63,7 @@ public sealed class RevenantNecro
         Creature target = Creature.PetOwner.RunState.Rng.CombatTargets.NextItem(enemies);
         NCombatRoom.Instance?.GetCreatureNode(Creature)?.SetAnimationTrigger("Attack");
         for (int hit = 0; hit < HitCount && target.IsAlive; hit++)
-            await CreatureCmd.Damage(choiceContext, target, DamagePerHit, ValueProp.Unpowered, Creature, null);
+            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(choiceContext, target, DamagePerHit, ValueProp.Unpowered, Creature, null);
     }
 }
 
@@ -99,6 +99,7 @@ public sealed class RevenantSummonManager
     private Creature _familyCreature;
     private RevenantFamilyAction? _scheduledAction;
     private bool _handlingFamilyDeath;
+    private readonly HashSet<Creature> _knownFamilyCreatures = new();
 
     private RevenantSummonManager(Player owner) => Owner = owner;
 
@@ -113,6 +114,9 @@ public sealed class RevenantSummonManager
 
     public bool IsFamilyCreature(Creature creature) =>
         creature != null && creature == _familyCreature;
+
+    public bool IsKnownFamilyCreature(Creature creature) =>
+        creature != null && _knownFamilyCreatures.Contains(creature);
 
     public static RevenantSummonManager For(Player player)
     {
@@ -175,7 +179,8 @@ public sealed class RevenantSummonManager
     {
         RevenantFamilyId? previousFamily = HasLivingFamily ? CurrentFamilyId : null;
         RevenantFamilyState selectedState = _families[family];
-        if (!selectedState.IsAlive)
+        bool revivingDeadCurrent = CurrentFamilyId == family && _familyCreature is not { IsAlive: true };
+        if (!selectedState.IsAlive || revivingDeadCurrent)
         {
             int initialHp = GetInitialFamilyHp(family);
             selectedState.IsAlive = true;
@@ -271,10 +276,14 @@ public sealed class RevenantSummonManager
 
     public async Task SwitchFamily(PlayerChoiceContext context, RevenantFamilyId family)
     {
-        if (CurrentFamilyId == family)
+        bool revivingSameFamily = CurrentFamilyId == family && _familyCreature is not { IsAlive: true };
+        if (CurrentFamilyId == family && !revivingSameFamily)
             return;
 
-        SnapshotCurrentFamily();
+        // CallFamily has already restored a dead selected family to its initial
+        // HP. Do not overwrite that reset with the dead Osty's stale snapshot.
+        if (!revivingSameFamily)
+            SnapshotCurrentFamily();
         Creature pet = Owner.Osty;
         if (pet == null || !pet.IsAlive)
         {
@@ -289,12 +298,13 @@ public sealed class RevenantSummonManager
         await CreatureCmd.SetMaxAndCurrentHp(pet, state.MaxHp);
         await CreatureCmd.SetCurrentHp(pet, state.CurrentHp);
         if (pet.Block > state.RetainedBlock)
-            await CreatureCmd.LoseBlock(pet, pet.Block - state.RetainedBlock);
+            await NightMustStay.Core.Compatibility.Sts2BranchCompat.LoseBlock(pet, pet.Block - state.RetainedBlock);
         else if (pet.Block < state.RetainedBlock)
             await CreatureCmd.GainBlock(pet, state.RetainedBlock - pet.Block, ValueProp.Unpowered, null);
 
         CurrentFamilyId = family;
         _familyCreature = pet;
+        _knownFamilyCreatures.Add(pet);
         RefreshFamilyVisual(family);
         PositionCurrentNecro();
         await ScheduleFamilyNormalAction(context);
@@ -391,7 +401,7 @@ public sealed class RevenantSummonManager
                     if (target != null)
                     {
                         attacked = true;
-                        await CreatureCmd.Damage(context, target, 4m, ValueProp.Move, pet, null);
+                        await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, target, 4m, ValueProp.Move, pet, null);
                     }
                     await CardPileCmd.Draw(context, 1m, Owner);
                 }
@@ -401,7 +411,7 @@ public sealed class RevenantSummonManager
                     if (target != null)
                     {
                         attacked = true;
-                        await CreatureCmd.Damage(context, target, 4m, ValueProp.Move, pet, null);
+                        await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, target, 4m, ValueProp.Move, pet, null);
                     }
                     await PlayerCmd.GainEnergy(1m, Owner);
                 }
@@ -413,7 +423,7 @@ public sealed class RevenantSummonManager
                 if (first)
                 {
                     attacked = true;
-                    await CreatureCmd.Damage(context, pumpkinTarget, 6m, ValueProp.Move, pet, null);
+                    await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, pumpkinTarget, 6m, ValueProp.Move, pet, null);
                     if (pumpkinTarget.IsAlive)
                         await PowerCmd.Apply<VulnerablePower>(context, pumpkinTarget, 1m, pet, null);
                 }
@@ -421,20 +431,20 @@ public sealed class RevenantSummonManager
                 {
                     attacked = true;
                     for (int i = 0; i < 2 && pumpkinTarget.IsAlive; i++)
-                        await CreatureCmd.Damage(context, pumpkinTarget, 6m, ValueProp.Move, pet, null);
+                        await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, pumpkinTarget, 6m, ValueProp.Move, pet, null);
                 }
                 break;
             case RevenantFamilyId.Skeleton:
                 if (first)
                 {
                     attacked = enemies.Length > 0;
-                    await CreatureCmd.Damage(context, enemies, 3m, ValueProp.Move, pet, null);
+                    await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, enemies, 3m, ValueProp.Move, pet, null);
                     await PowerCmd.Apply<WeakPower>(context, enemies, 1m, pet, null);
                 }
                 else
                 {
                     attacked = enemies.Length > 0;
-                    await CreatureCmd.Damage(context, enemies, 7m, ValueProp.Move, pet, null);
+                    await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, enemies, 7m, ValueProp.Move, pet, null);
                 }
                 break;
         }

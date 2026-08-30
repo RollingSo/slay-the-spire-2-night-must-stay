@@ -231,7 +231,7 @@ namespace NightMustStay.Core.Models.Power
             Flash();
             foreach (Creature enemy in CombatState.HittableEnemies.Where(enemy => enemy.IsAlive))
                 NightreignHitVfx.PlayGuardianWhirlwind(enemy);
-            await CreatureCmd.Damage(
+            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
                 context,
                 CombatState.HittableEnemies,
                 Amount,

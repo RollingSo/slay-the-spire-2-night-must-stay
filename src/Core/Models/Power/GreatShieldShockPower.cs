@@ -25,7 +25,7 @@ namespace NightMustStay.Core.Models.Power
                 && base.Owner.Block > 0)
             {
                 Flash();
-                await CreatureCmd.Damage(choiceContext, base.CombatState.HittableEnemies, base.Amount, ValueProp.Unpowered | ValueProp.SkipHurtAnim, base.Owner, null);
+                await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(choiceContext, base.CombatState.HittableEnemies, base.Amount, ValueProp.Unpowered | ValueProp.SkipHurtAnim, base.Owner, null);
             }
         }
     }

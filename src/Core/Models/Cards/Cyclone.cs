@@ -35,7 +35,7 @@ namespace NightMustStay.Core.Models.Cards
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
-                .FromCard(this)
+                .CompatFromCard(this)
                 .TargetingAllOpponents(base.CombatState)
                 .WithHitVfxNode(NightreignHitVfx.CreateGuardianWhirlwind)
                 .Execute(choiceContext);

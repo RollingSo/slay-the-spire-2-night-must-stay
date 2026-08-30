@@ -72,7 +72,7 @@ public sealed class RevenantSummonControllerPower : PowerModel
             decimal familyDamage = cannotDieThisTurn
                 ? remaining
                 : decimal.Min(remaining, family.CurrentHp);
-            await CreatureCmd.Damage(
+            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
                 new BlockingPlayerChoiceContext(),
                 family,
                 familyDamage,
@@ -89,7 +89,7 @@ public sealed class RevenantSummonControllerPower : PowerModel
         if (necro is { IsAlive: true } && remaining > 0m)
         {
             decimal necroDamage = decimal.Min(remaining, necro.CurrentHp);
-            await CreatureCmd.Damage(
+            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
                 new BlockingPlayerChoiceContext(),
                 necro,
                 necroDamage,
@@ -101,7 +101,7 @@ public sealed class RevenantSummonControllerPower : PowerModel
 
         if (remaining > 0m && Owner.IsAlive)
         {
-            await CreatureCmd.Damage(
+            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
                 new BlockingPlayerChoiceContext(),
                 Owner,
                 remaining,

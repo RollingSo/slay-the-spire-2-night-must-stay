@@ -58,9 +58,9 @@ internal static class RevenantTextTableHelpers
             if (enemies.Length == 0) break;
             attacked = true;
             if (all)
-                await CreatureCmd.Damage(context, enemies, amount, ValueProp.Move, family, source);
+                await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, enemies, amount, ValueProp.Move, family, source);
             else
-                await CreatureCmd.Damage(context, source.Owner.RunState.Rng.CombatTargets.NextItem(enemies), amount, ValueProp.Move, family, source);
+                await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, source.Owner.RunState.Rng.CombatTargets.NextItem(enemies), amount, ValueProp.Move, family, source);
         }
         if (attacked && vigor is not null && vigorToConsume > 0m)
             await PowerCmd.ModifyAmount(context, vigor, -vigorToConsume, family, source);
@@ -69,12 +69,11 @@ internal static class RevenantTextTableHelpers
 
 public sealed class FrenziedThreeFingers : CardModel
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new DamageVar(2m, ValueProp.Move) };
     public override string PortraitPath => "res://revenant_assets/cards/frenzied_three_fingers.png";
-    public FrenziedThreeFingers() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self) { }
+    public FrenziedThreeFingers() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self) { }
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
-        PowerCmd.Apply<FrenziedThreeFingersPower>(context, Owner.Creature, DynamicVars.Damage.BaseValue, Owner.Creature, this);
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(1m);
+        PowerCmd.Apply<FrenziedThreeFingersPower>(context, Owner.Creature, 1m, Owner.Creature, this);
+    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }
 
 public sealed class FormationBreakerHammer : CardModel
@@ -101,7 +100,7 @@ public sealed class LifeAndDeath : CardModel
         Creature family = RevenantSummonManager.For(Owner).CurrentFamilyCreature;
         int block = Owner.Creature.Block;
         if (family == null || block <= 0) return;
-        await CreatureCmd.LoseBlock(Owner.Creature, block);
+        await NightMustStay.Core.Compatibility.Sts2BranchCompat.LoseBlock(Owner.Creature, block);
         await CreatureCmd.GainMaxHp(family, block);
     }
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
@@ -115,7 +114,7 @@ public sealed class GiantSkeletonWrath : CardModel
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(cardPlay.Target).Execute(context);
         RevenantSummonManager manager = RevenantSummonManager.For(Owner);
         if (manager.CurrentFamilyId == RevenantFamilyId.Skeleton)
             await RevenantTextTableHelpers.DamageAsFamily(this, context, 4m, true, 3);
@@ -131,7 +130,7 @@ public sealed class SkyRendingChord : CardModel
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(cardPlay.Target).Execute(context);
         await RevenantTextTableHelpers.DiscardFromDraw(this, context, SelectionScreenPrompt, DynamicVars.Cards.IntValue);
     }
     protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1m);
@@ -199,7 +198,7 @@ public sealed class SoulCursingBell : CardModel
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(cardPlay.Target).Execute(context);
     }
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
     {
@@ -305,7 +304,7 @@ public sealed class SpiritManipulation : CardModel
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         Creature target = cardPlay.Target;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(target).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(target).Execute(context);
         if (!target.IsAlive)
             RevenantSummonManager.For(Owner).MarkForNextCombat(target);
     }

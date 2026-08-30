@@ -99,7 +99,7 @@ public sealed class SoulChargingClaw : CardModel, IRevenantChargeCard
         _chargeComplete = false;
         ((BoolVar)DynamicVars["Ready"]).BoolVal = false;
 
-        await DamageCmd.Attack(damage).FromCard(this).Targeting(cardPlay.Target).Execute(context);
+        await DamageCmd.Attack(damage).CompatFromCard(this).Targeting(cardPlay.Target).Execute(context);
         if (wasCharged && cardPlay.Target.IsAlive)
         {
             await PowerCmd.Apply<WeakPower>(

@@ -49,6 +49,15 @@ static void UpdateWorkshopMetadata(WorkshopMetadata metadata)
     Require(SteamUGC.SetItemUpdateLanguage(handle, metadata.Language), "language");
     Require(SteamUGC.SetItemTitle(handle, metadata.Title), "title");
     Require(SteamUGC.SetItemDescription(handle, metadata.Description), "description");
+    if (metadata.MinBranch is not null || metadata.MaxBranch is not null)
+    {
+        Require(
+            SteamUGC.SetRequiredGameVersions(
+                handle,
+                metadata.MinBranch ?? string.Empty,
+                metadata.MaxBranch ?? string.Empty),
+            "supported game branches");
+    }
 
     bool completed = false;
     SubmitItemUpdateResult_t result = default;
@@ -93,4 +102,6 @@ internal sealed record WorkshopMetadata(
     string Language,
     string Title,
     string Description,
-    string ChangeNote);
+    string ChangeNote,
+    string? MinBranch = null,
+    string? MaxBranch = null);

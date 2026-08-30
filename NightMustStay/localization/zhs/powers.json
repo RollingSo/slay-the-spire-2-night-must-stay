@@ -206,7 +206,7 @@
   "UNDYING_MARCH_POWER.title": "不死行军",
   "UNDYING_MARCH_POWER.description": "本回合不会死亡，生命至少剩余1点。",
   "FRENZIED_THREE_FINGERS_POWER.title": "癫狂叁指",
-  "FRENZIED_THREE_FINGERS_POWER.description": "[gold]家人[/gold]每失去1点生命，对随机敌人造成{Amount}点伤害。",
+  "FRENZIED_THREE_FINGERS_POWER.description": "[gold]家人[/gold]失去生命时，对随机敌人造成等同于失去生命的伤害。",
   "FIGHT_FOR_ME_POWER.title": "为我而战",
   "FIGHT_FOR_ME_POWER.description": "回合开始时，[gold]呼唤[/gold]。",
   "LIGHT_SPIRIT_POWER.title": "轻灵",

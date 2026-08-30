@@ -133,7 +133,7 @@ public sealed class WillowPiercingArrow : CardModel
             .ToArray();
 
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .TargetingAllOpponents(CombatState)
             .WithHitVfxNode(target =>
                 NightreignHitVfx.CreateIroneyeShot(Owner.Creature, target))
@@ -212,7 +212,7 @@ public sealed class TrackingArrow : CardModel, IMarkTriggerObserver
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         _triggeredMark = false;
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitVfxNode(target =>
                 NightreignHitVfx.CreateIroneyeShot(Owner.Creature, target))

@@ -46,7 +46,7 @@ namespace NightMustStay.Core.Models.Cards
         protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
         {
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this)
+                .CompatFromCard(this)
                 .TargetingAllOpponents(CombatState)
                 .WithHitVfxNode(NightreignHitVfx.CreateGuardianWhirlwind)
                 .Execute(context);
@@ -113,7 +113,7 @@ namespace NightMustStay.Core.Models.Cards
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
             decimal block = DynamicVars.CalculatedBlock.Calculate(cardPlay.Target);
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this)
+                .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
                 .WithHitVfxNode(NightreignHitVfx.CreateGuardianWhirlwind)
                 .Execute(context);
@@ -167,7 +167,7 @@ namespace NightMustStay.Core.Models.Cards
                 await CardPileCmd.Add(skill, PileType.Exhaust);
 
             await DamageCmd.Attack(damage)
-                .FromCard(this)
+                .CompatFromCard(this)
                 .TargetingAllOpponents(CombatState)
                 .WithHitVfxNode(NightreignHitVfx.CreateGuardianWhirlwind)
                 .Execute(context);

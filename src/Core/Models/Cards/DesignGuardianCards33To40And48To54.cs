@@ -86,7 +86,7 @@ namespace NightMustStay.Core.Models.Cards
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
 
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                .FromCard(this)
+                .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
                 .WithHitVfxNode(NightreignHitVfx.CreateGuardianWhirlwind)
                 .Execute(context);
@@ -124,7 +124,7 @@ namespace NightMustStay.Core.Models.Cards
         protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target).WithHitFx("vfx/vfx_attack_slash").Execute(context);
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(cardPlay.Target).WithHitFx("vfx/vfx_attack_slash").Execute(context);
         }
 
         public async Task AfterGuardCounterSucceeded()
@@ -250,7 +250,7 @@ namespace NightMustStay.Core.Models.Cards
         protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).FromCard(this).Targeting(cardPlay.Target).WithHitFx("vfx/vfx_attack_slash").Execute(context);
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(cardPlay.Target).WithHitFx("vfx/vfx_attack_slash").Execute(context);
             await PowerCmd.Apply<NoAttacksNextTurnPower>(context, Owner.Creature, 1m, Owner.Creature, this);
         }
         protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(6m);
@@ -404,7 +404,7 @@ namespace NightMustStay.Core.Models.Power
             if (sourceCard != null)
             {
                 await DamageCmd.Attack(Amount)
-                    .FromCard(sourceCard)
+                    .CompatFromCard(sourceCard)
                     .WithNoAttackerAnim()
                     .TargetingAllOpponents(CombatState)
                     .WithHitVfxNode(NightreignHitVfx.CreateGuardianWhirlwind)
@@ -414,7 +414,7 @@ namespace NightMustStay.Core.Models.Power
             {
                 foreach (Creature enemy in CombatState.HittableEnemies.Where(enemy => enemy.IsAlive))
                     NightreignHitVfx.PlayGuardianWhirlwind(enemy);
-                await CreatureCmd.Damage(
+                await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
                     context,
                     CombatState.HittableEnemies,
                     Amount,
@@ -535,7 +535,7 @@ namespace NightMustStay.Core.Models.Power
             if (enemies.Length == 0) return;
             Creature target = enemies[0].Monster?.Rng.NextItem(enemies) ?? enemies[0];
             Flash();
-            await CreatureCmd.Damage(context, target, Amount, ValueProp.Unpowered, Owner, null);
+            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, target, Amount, ValueProp.Unpowered, Owner, null);
         }
     }
 
@@ -562,7 +562,7 @@ namespace NightMustStay.Core.Models.Power
             {
                 decimal weak = enemy.GetPower<WeakPower>()?.Amount ?? 0m;
                 NightreignHitVfx.PlayGuardianWhirlwind(enemy);
-                await CreatureCmd.Damage(
+                await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
                     context,
                     enemy,
                     weak * Amount,

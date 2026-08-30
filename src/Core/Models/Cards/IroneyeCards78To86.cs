@@ -38,7 +38,7 @@ public sealed class Offensive : CardModel
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitVfxNode(NightreignHitVfx.CreateIroneyeKnife)
             .Execute(context);
@@ -122,7 +122,7 @@ public sealed class ReturningWindArrow : CardModel, IMarkTriggerObserver
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         _triggeredMark = false;
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitVfxNode(target =>
                 NightreignHitVfx.CreateIroneyeShot(Owner.Creature, target))
@@ -257,7 +257,7 @@ public sealed class TurningArrow : CardModel
             this);
 
         await DamageCmd.Attack(DynamicVars.CalculatedDamage)
-            .FromCard(this)
+            .CompatFromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitVfxNode(target =>
                 NightreignHitVfx.CreateIroneyeShot(Owner.Creature, target))
@@ -303,7 +303,7 @@ public sealed class SoulChasingVolley : CardModel, IMarkTriggerObserver
         {
             _triggeredMark = false;
             await DamageCmd.Attack(hitDamage)
-                .FromCard(this)
+                .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
                 .WithHitVfxNode(target =>
                     NightreignHitVfx.CreateIroneyeShot(Owner.Creature, target))
@@ -347,7 +347,7 @@ public sealed class CorrodeAll : CardModel
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitVfxNode(target =>
                 NightreignHitVfx.CreateIroneyeShot(Owner.Creature, target))
@@ -449,7 +449,7 @@ public sealed class CutThroughChaos : CardModel
         int hits = (int)((CalculatedVar)DynamicVars["CalculatedHits"])
             .Calculate(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitCount(hits)
             .WithHitVfxNode(NightreignHitVfx.CreateIroneyeKnife)
@@ -483,7 +483,7 @@ public sealed class GracefulBladeDance : CardModel
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitVfxNode(NightreignHitVfx.CreateIroneyeKnife)
             .Execute(context);

@@ -19,13 +19,6 @@ public sealed class WhiteShadowLurePower : PowerModel
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override decimal ModifyDamageCap(
-        Creature target,
-        MegaCrit.Sts2.Core.ValueProps.ValueProp props,
-        Creature dealer,
-        CardModel cardSource) =>
-        target == Owner && Amount > 0m ? 0m : decimal.MaxValue;
-
     public override async Task AfterDamageReceived(
         PlayerChoiceContext context,
         Creature target,

@@ -35,7 +35,7 @@ namespace NightMustStay.Core.Models.Cards
 
             await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
                 .WithHitCount(defendCardsInHand)
-                .FromCard(this)
+                .CompatFromCard(this)
                 .TargetingAllOpponents(base.CombatState)
                 .WithHitVfxNode(NightreignHitVfx.CreateGuardianWhirlwind)
                 .Execute(choiceContext);

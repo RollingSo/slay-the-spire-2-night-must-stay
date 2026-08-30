@@ -35,7 +35,7 @@ public sealed class DeadRealmSpiritFire : CardModel
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .TargetingAllOpponents(CombatState)
             .Execute(context);
         await PowerCmd.Apply<FreezePower>(
@@ -69,7 +69,7 @@ public sealed class IceLightningSpear : CardModel
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .Targeting(cardPlay.Target)
             .Execute(context);
         if (!cardPlay.Target.IsAlive)
@@ -169,7 +169,7 @@ public sealed class Harmony : CardModel
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .Targeting(cardPlay.Target)
             .Execute(context);
         Creature family = RevenantSummonManager.For(Owner).CurrentFamilyCreature;

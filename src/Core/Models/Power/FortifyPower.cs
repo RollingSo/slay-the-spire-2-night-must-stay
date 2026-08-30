@@ -39,7 +39,7 @@ namespace NightMustStay.Core.Models.Power
                 await guardianPower.GiveRetainedBlockToTeammates(retainedByFortify);
             int blockToLose = base.Owner.Block - retainedBlock;
             if (blockToLose > 0)
-                await CreatureCmd.LoseBlock(base.Owner, blockToLose);
+                await NightMustStay.Core.Compatibility.Sts2BranchCompat.LoseBlock(base.Owner, blockToLose);
             await PowerCmd.Decrement(this);
         }
     }

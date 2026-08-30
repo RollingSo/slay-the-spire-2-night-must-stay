@@ -27,14 +27,22 @@ public sealed class FrenziedThreeFingersPower : PowerModel
         Creature dealer,
         CardModel cardSource)
     {
-        if (!RevenantSummonManager.For(Owner.Player).IsFamilyCreature(target) || result.UnblockedDamage <= 0) return;
-        for (int i = 0; i < result.UnblockedDamage; i++)
-        {
-            Creature[] enemies = Owner.CombatState.HittableEnemies.Where(enemy => enemy.IsAlive).ToArray();
-            if (enemies.Length == 0) return;
-            Creature random = Owner.Player.RunState.Rng.CombatTargets.NextItem(enemies);
-            await CreatureCmd.Damage(context, random, Amount, ValueProp.Unpowered, Owner, null);
-        }
+        decimal hpLost = result.UnblockedDamage - result.OverkillDamage;
+        if (!RevenantSummonManager.For(Owner.Player).IsKnownFamilyCreature(target) || hpLost <= 0m)
+            return;
+
+        Creature[] enemies = Owner.CombatState.HittableEnemies.Where(enemy => enemy.IsAlive).ToArray();
+        if (enemies.Length == 0)
+            return;
+
+        Creature random = Owner.Player.RunState.Rng.CombatTargets.NextItem(enemies);
+        await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
+            context,
+            random,
+            hpLost * Amount,
+            ValueProp.Unpowered,
+            Owner,
+            null);
     }
 }
 
@@ -132,7 +140,7 @@ public sealed class NecromancyPower : PowerModel
     public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> creatures, ICombatState combatState)
     {
         if (side != Owner.Side || !creatures.Contains(Owner) || !Owner.IsAlive) return;
-        await CreatureCmd.Damage(
+        await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
             new BlockingPlayerChoiceContext(),
             Owner,
             5m,

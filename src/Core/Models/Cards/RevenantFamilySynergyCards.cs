@@ -88,7 +88,7 @@ public sealed class WrathfulNote : CardModel
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .TargetingAllOpponents(CombatState)
             .Execute(context);
         if (RevenantSummonManager.For(Owner).CurrentFamilyId == RevenantFamilyId.Skeleton)
@@ -117,7 +117,7 @@ public sealed class JointStrike : CardModel
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .Targeting(cardPlay.Target)
             .Execute(context);
         if (RevenantSummonManager.For(Owner).CurrentFamilyId == RevenantFamilyId.PumpkinHead)
@@ -142,7 +142,7 @@ public sealed class BruteForcePath : CardModel
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .FromCard(this)
+            .CompatFromCard(this)
             .Targeting(cardPlay.Target)
             .Execute(context);
         if (RevenantSummonManager.For(Owner).CurrentFamilyId == RevenantFamilyId.PumpkinHead && cardPlay.Target.IsAlive)
