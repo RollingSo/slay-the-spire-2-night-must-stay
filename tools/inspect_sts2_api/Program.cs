@@ -28,7 +28,7 @@ foreach (MethodInfo method in type
              .Where(method => string.IsNullOrEmpty(methodFilter) || method.Name.Contains(methodFilter, StringComparison.OrdinalIgnoreCase))
              .OrderBy(method => method.Name))
 {
-    Console.WriteLine(method);
+    Console.WriteLine($"{(method.IsStatic ? "static" : "instance")} {method}");
 }
 
 return 0;

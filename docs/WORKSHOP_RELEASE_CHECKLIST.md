@@ -9,6 +9,7 @@ NightMustStay.json
 NightMustStay.dll
 NightMustStay.pck
 NightMustStay.pdb   # 可选，便于用户提交可定位的崩溃日志
+workshop_branch.txt # 双分支发布时用于让两个快照生成不同 manifest
 ```
 
 - `NightMustStay.json` 内的 `id` 必须是 `NightMustStay`。
@@ -22,7 +23,10 @@ NightMustStay.pdb   # 可选，便于用户提交可定位的崩溃日志
 - 每次更新前修改 `manifest.json` 的语义化版本号。
 - 确认是否添加 `min_game_version`；本地当前用于开发的游戏版本是 `0.107.1`。
 - 当前公开版本同时支持 Production/正式版与 Public Beta 分支；每次发布前必须分别编译验证。
-- 创意工坊项目的最低/最高游戏分支均留空，表示支持所有分支；页面说明明确列出已验证的 Production 与 Public Beta。
+- 不要只上传一个“最低/最高分支留空”的默认 manifest。已有精确分支快照时，Steam 会继续优先分发旧快照，即使上传工具报告成功。
+- 使用 Mega Crit 官方 ModUploader 分别发布两个精确快照：正式版为 `minBranch=public, maxBranch=public`；测试版为 `minBranch=public-beta, maxBranch=public-beta`。
+- 两个快照的内容 manifest 必须不同，否则 Steam 会改写同一快照的分支范围，而不是同时保留两份。DLL、PCK 和 manifest JSON 保持一致，仅在其中一份加入内容不同的纯文本 `workshop_branch.txt` 即可。
+- 每次发布后都要用 SteamCMD 反向下载正式版快照，校验 DLL、PCK、manifest JSON 的 SHA-256；并检查 `appworkshop_2868840.acf` 中同时存在最新的 `public→public` 与 `public-beta→public-beta` author snapshot。
 - Mod ID 从旧的 `sts2mod` 改为 `NightMustStay` 后，Steam 会把它视为不同的 Mod 身份。发布前需要测试旧存档能否加载；不要再同时安装旧 ID 与新 ID。
 - 开发机本地测试包使用独立 ID `NightMustStayBetaTest` 与显示后缀 `[Beta Test]`。它只用于区分本地测试和线上稳定版，禁止与 Workshop 版本同时启用。
 
@@ -59,6 +63,7 @@ NightMustStay.pdb   # 可选，便于用户提交可定位的崩溃日志
 ## 7. 上传资料
 
 - 运行 `powershell -NoProfile -ExecutionPolicy Bypass -File tools/stage_workshop_release.ps1` 生成不含额外 JSON 的 Workshop 内容目录。
+- 分支快照发布必须使用 Mega Crit 官方 ModUploader 的 `SetRequiredGameVersions + SetItemContent` 流程；不要仅依赖 SteamCMD 的 `workshop_build_item`，后者会产生 `latest_manifest`，但可能不会替换游戏实际选择的 author snapshot。
 - App ID：`2868840`。
 - SteamCMD/上传工具需要内容目录、主预览图、标题、描述、可见度、变更说明和已发布项目 ID。
 - 首次创建后保存 `PublishedFileId`，后续更新必须复用该 ID，避免重复创建多个 Workshop 项目。

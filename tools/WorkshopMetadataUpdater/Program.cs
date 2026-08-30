@@ -49,7 +49,8 @@ static void UpdateWorkshopMetadata(WorkshopMetadata metadata)
     Require(SteamUGC.SetItemUpdateLanguage(handle, metadata.Language), "language");
     Require(SteamUGC.SetItemTitle(handle, metadata.Title), "title");
     Require(SteamUGC.SetItemDescription(handle, metadata.Description), "description");
-    if (metadata.MinBranch is not null || metadata.MaxBranch is not null)
+    if (!string.IsNullOrWhiteSpace(metadata.MinBranch)
+        || !string.IsNullOrWhiteSpace(metadata.MaxBranch))
     {
         Require(
             SteamUGC.SetRequiredGameVersions(

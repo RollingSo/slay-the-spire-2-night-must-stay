@@ -17,7 +17,12 @@ namespace NightMustStay.Core.Patches;
 internal static class DamageModifierBranchCompatibility
 {
     public static MethodBase Resolve(string name) =>
-        AccessTools.GetDeclaredMethods(typeof(PowerModel))
+        // These virtual hooks are inherited by PowerModel on the release branch.
+        // GetDeclaredMethods therefore returns no match at runtime even though a
+        // build against sts2.dll succeeds. Search the complete instance surface
+        // so the same patch resolves both the release and Public Beta signatures.
+        typeof(PowerModel)
+            .GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
             .Single(method => method.Name == name);
 }
 
