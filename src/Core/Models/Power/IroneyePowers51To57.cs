@@ -74,6 +74,11 @@ public sealed class WaveWalkingPower : PowerModel
 
     public override PowerStackType StackType => PowerStackType.Counter;
 
+    // Match Regent's Orbit: show progress remaining to the next trigger while
+    // Amount continues to represent the Energy gained per trigger.
+    public override int DisplayAmount => decimal.ToInt32(
+        DistanceThreshold - GetInternalData<Data>().DistanceMoved % DistanceThreshold);
+
     protected override object InitInternalData() => new Data();
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -103,6 +108,7 @@ public sealed class WaveWalkingPower : PowerModel
             Flash();
             await PlayerCmd.GainEnergy(Amount, Owner.Player);
         }
+        InvokeDisplayAmountChanged();
     }
 }
 

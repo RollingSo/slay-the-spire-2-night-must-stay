@@ -1,5 +1,5 @@
 from pathlib import Path
-from PIL import Image, ImageOps, ImageEnhance, ImageFilter, ImageChops
+from PIL import Image, ImageOps, ImageEnhance, ImageFilter, ImageChops, ImageDraw
 
 ROOT = Path(r"D:\sts-2-mod")
 GEN = Path(r"C:\Users\wenti\.codex\generated_images\019f6b05-d0b0-7af1-a624-760fba7be29d")
@@ -82,7 +82,18 @@ save(ImageOps.fit(energy,(24,24),Image.Resampling.LANCZOS),"revenant_assets/ener
 
 hands=load("hands"); w,h=hands.size
 for name,box in {"point":(0,0,w//2,h//2),"rock":(w//2,0,w,h//2),"paper":(0,h//2,w//2,h),"scissors":(w//2,h//2,w,h)}.items():
-    save(ImageOps.fit(hands.crop(box),(627,627),Image.Resampling.LANCZOS),f"revenant_assets/multiplayer_hands/revenant_{name}.png")
+    source = ImageOps.fit(hands.crop(box),(627,627),Image.Resampling.LANCZOS)
+    if name != "point":
+        save(source,f"revenant_assets/multiplayer_hands/revenant_{name}.png")
+        continue
+    alpha_box = source.getchannel("A").getbbox()
+    source = source.crop(alpha_box).rotate(48, Image.Resampling.BICUBIC, expand=True)
+    source = source.crop(source.getchannel("A").getbbox())
+    source = source.resize((330,1100),Image.Resampling.LANCZOS)
+    hand = Image.new("RGBA",(422,1200),(0,0,0,0))
+    hand.alpha_composite(source,((422-source.width)//2,22))
+    ImageDraw.Draw(hand).rectangle((300,0,422,1200),fill=(0,0,0,0))
+    save(hand,f"revenant_assets/multiplayer_hands/revenant_{name}.png")
 
 # A grayscale threshold mask: lyre-eye core expands into three spirit rings.
 mask=Image.new("L",(2560,1200),0)
@@ -90,7 +101,6 @@ em=ImageOps.fit(energy,(900,900),Image.Resampling.LANCZOS).convert("L")
 mask.paste(em,(830,150),em)
 for radius,value in [(540,80),(760,140),(980,200),(1250,245)]:
     ring=Image.new("L",mask.size,0)
-    from PIL import ImageDraw
     d=ImageDraw.Draw(ring); d.ellipse((1280-radius,600-radius,1280+radius,600+radius),outline=value,width=100)
     mask=ImageChops.lighter(mask,ring)
 mask_rgba=Image.new("RGBA",mask.size,(255,255,255,0)); mask_rgba.putalpha(mask)

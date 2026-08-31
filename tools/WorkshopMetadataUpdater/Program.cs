@@ -47,8 +47,18 @@ static void UpdateWorkshopMetadata(WorkshopMetadata metadata)
         new PublishedFileId_t(publishedFileId));
 
     Require(SteamUGC.SetItemUpdateLanguage(handle, metadata.Language), "language");
-    Require(SteamUGC.SetItemTitle(handle, metadata.Title), "title");
-    Require(SteamUGC.SetItemDescription(handle, metadata.Description), "description");
+    if (!string.IsNullOrWhiteSpace(metadata.Title))
+        Require(SteamUGC.SetItemTitle(handle, metadata.Title), "title");
+    if (!string.IsNullOrWhiteSpace(metadata.Description))
+        Require(SteamUGC.SetItemDescription(handle, metadata.Description), "description");
+    if (!string.IsNullOrWhiteSpace(metadata.ContentPath))
+    {
+        string contentPath = Path.GetFullPath(metadata.ContentPath);
+        if (!Directory.Exists(contentPath))
+            throw new DirectoryNotFoundException($"Workshop content directory does not exist: {contentPath}");
+
+        Require(SteamUGC.SetItemContent(handle, contentPath), "content directory");
+    }
     if (!string.IsNullOrWhiteSpace(metadata.MinBranch)
         || !string.IsNullOrWhiteSpace(metadata.MaxBranch))
     {
@@ -75,9 +85,20 @@ static void UpdateWorkshopMetadata(WorkshopMetadata metadata)
     callResult.Set(SteamUGC.SubmitItemUpdate(handle, metadata.ChangeNote));
 
     Stopwatch timeout = Stopwatch.StartNew();
-    while (!completed && timeout.Elapsed < TimeSpan.FromMinutes(2))
+    Stopwatch progressTimer = Stopwatch.StartNew();
+    while (!completed && timeout.Elapsed < TimeSpan.FromMinutes(20))
     {
         SteamAPI.RunCallbacks();
+        if (progressTimer.Elapsed >= TimeSpan.FromSeconds(5))
+        {
+            EItemUpdateStatus status = SteamUGC.GetItemUpdateProgress(
+                handle,
+                out ulong processed,
+                out ulong total);
+            double percent = total == 0 ? 0 : processed * 100d / total;
+            Console.WriteLine($"{metadata.Language}: {status}, {processed}/{total} bytes ({percent:F1}%).");
+            progressTimer.Restart();
+        }
         Thread.Sleep(50);
     }
 
@@ -89,7 +110,7 @@ static void UpdateWorkshopMetadata(WorkshopMetadata metadata)
         throw new InvalidOperationException($"Steam rejected {metadata.Language}: {result.m_eResult}.");
 
     Console.WriteLine(
-        $"Updated {metadata.Language}: {metadata.Title} " +
+        $"Updated {metadata.Language}: {metadata.Title ?? "(content only)"} " +
         $"(legal agreement required: {result.m_bUserNeedsToAcceptWorkshopLegalAgreement}).");
 }
 
@@ -101,8 +122,9 @@ static void Require(bool success, string field)
 
 internal sealed record WorkshopMetadata(
     string Language,
-    string Title,
-    string Description,
     string ChangeNote,
+    string? Title = null,
+    string? Description = null,
     string? MinBranch = null,
-    string? MaxBranch = null);
+    string? MaxBranch = null,
+    string? ContentPath = null);

@@ -13,6 +13,7 @@
 ## Card artwork
 
 - Before generating or revising any card artwork, read `design/Slay_the_Spire_2_卡图生成强制规范.md` completely.
+- Before auditing or batch-redrawing Guardian, Ironeye, or Revenant card artwork, also read `design/NightMustStay_三角色卡图审查与重绘强制规范.md` completely and apply its six-stage audit in order.
 - For Guardian identity, equipment, poses, or mechanics, also read `design/Guardian_角色设计与动作强制规范.md` completely.
 - Base visual-style judgments on the original portraits under `D:\STS2\images\packed\card_portraits`.
 - Do not use the deprecated prompt in `design/Slay_the_Spire_2_卡图美术风格报告.md`.
@@ -20,10 +21,21 @@
 - Reject photorealistic, painterly concept-art, cinematic, highly textured, or realistic-metal results before presenting previews to the user.
 - Save approval candidates under `design/卡图预览` until the user approves them.
 
+## Character combat visuals
+
+- Before revising Guardian, Ironeye, or Revenant combat model scale, ground alignment, creature bounds, health-bar width, or combat marker positions, read `design/角色战斗体型与血条强制规范.md` completely.
+- Character size must be compared by the final rendered non-transparent visual bounds after every nested scale, not by source-canvas dimensions or the `Bounds` control.
+
 ## Revenant necros
 
 - Before revising Revenant Necro health, damage scaling, actions, summon limits, or battlefield layout, read `design/Revenant_死灵机制规范.md` completely.
 - Keep the meanings of the Necro fixed HP value, HP ratio, and damage ratio distinct; changing one must not silently change the others.
+
+## Revenant family artwork
+
+- Before generating or revising Helen, Frederick, or Sebastian combat sprites, summon-choice artwork, character-select silhouettes, or family card artwork, read `design/Revenant_家人视觉规范.md` completely.
+- Scale family combat visuals by their visible non-transparent bounds relative to Osty: Helen `0.8×`, Frederick `1.0×`, Sebastian `1.2×`; do not infer size from canvas dimensions alone.
+- Helen's hood must completely hide her face, Frederick must wield a pumpkin-shaped hammer, and Sebastian must be an unclothed half-body skeleton with no full legs.
 
 ## Power artwork
 

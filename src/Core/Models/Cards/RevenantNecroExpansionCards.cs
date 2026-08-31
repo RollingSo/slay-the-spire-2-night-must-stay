@@ -155,13 +155,10 @@ public sealed class Harmony : CardModel
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(7m, ValueProp.Move),
-        new PowerVar<VigorPower>(3m),
+        new DamageVar(9m, ValueProp.Move),
     };
 
     public override string PortraitPath => "res://revenant_assets/cards/harmony.png";
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        new[] { HoverTipFactory.FromPower<VigorPower>() };
 
     public Harmony() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
 
@@ -172,17 +169,19 @@ public sealed class Harmony : CardModel
             .CompatFromCard(this)
             .Targeting(cardPlay.Target)
             .Execute(context);
-        Creature family = RevenantSummonManager.For(Owner).CurrentFamilyCreature;
-        if (family is { IsAlive: true })
-            await PowerCmd.Apply<VigorPower>(
+
+        CardModel selected = (await CardSelectCmd.FromHand(
                 context,
-                family,
-                DynamicVars["VigorPower"].BaseValue,
-                Owner.Creature,
-                this);
+                Owner,
+                new CardSelectorPrefs(SelectionScreenPrompt, 1),
+                card => card is IRevenantChargeCard { IsChargeComplete: false },
+                this))
+            .FirstOrDefault();
+        if (selected is IRevenantChargeCard chargeCard)
+            await chargeCard.CompleteCharge(context);
     }
 
-    protected override void OnUpgrade() => DynamicVars["VigorPower"].UpgradeValueBy(2m);
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
 }
 
 public sealed class GhostlyTouch : CardModel

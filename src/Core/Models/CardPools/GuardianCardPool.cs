@@ -94,7 +94,7 @@ namespace NightMustStay.Core.Models.CardPools
                 ModelDb.Card<WardingGale>(),
                 ModelDb.Card<AbsoluteDefense>(),
                 ModelDb.Card<GuardianWhirlwind>(),
-                ModelDb.Card<NightMustStay.Core.Models.Cards.Sidestep>(),
+                ModelDb.Card<NightMustStay.Core.Models.Cards.NightMustStaySidestep>(),
                 ModelDb.Card<UltimateDefendCounter>(),
                 ModelDb.Card<FinalCurtainHalberd>(),
                 ModelDb.Card<Fearless>(),

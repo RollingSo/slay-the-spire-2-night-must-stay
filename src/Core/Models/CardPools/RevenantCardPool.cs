@@ -57,7 +57,7 @@ public sealed class RevenantCardPool : CardPoolModel
         ModelDb.Card<Surge>(),
         ModelDb.Card<UnderworldRising>(),
         ModelDb.Card<Resurgence>(),
-        ModelDb.Card<NightMustStay.Core.Models.Cards.Soulbound>(),
+        ModelDb.Card<NightMustStay.Core.Models.Cards.NightMustStaySoulbound>(),
         ModelDb.Card<AnswerTheCall>(),
         ModelDb.Card<RevenantCard>(),
         ModelDb.Card<KingsRecovery>(),

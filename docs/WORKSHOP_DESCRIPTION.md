@@ -45,7 +45,7 @@
 
 [h2]模组信息[/h2]
 [list]
-[*][b]当前版本：[/b]0.2.2
+[*][b]当前版本：[/b]0.2.3
 [*][b]支持语言：[/b]简体中文、英语
 [*][b]模组类型：[/b]独立角色
 [*][b]前置模组：[/b]无
@@ -109,7 +109,7 @@ If you encounter a problem or have feedback about character design or balance, y
 
 [h2]Mod Information[/h2]
 [list]
-[*][b]Current Version:[/b] 0.2.2
+[*][b]Current Version:[/b] 0.2.3
 [*][b]Supported Languages:[/b] Simplified Chinese and English
 [*][b]Mod Type:[/b] Standalone playable characters
 [*][b]Required Mods:[/b] None

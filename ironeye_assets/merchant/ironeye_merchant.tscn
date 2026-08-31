@@ -7,7 +7,7 @@ resource_name = "RESET"
 length = 0.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:position")
-tracks/0/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [Vector2(-30, -300)]}
+tracks/0/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [Vector2(-30, -301)]}
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite:modulate")
 tracks/1/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [Color(1, 1, 1, 1)]}
@@ -19,7 +19,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:position")
 tracks/0/interp = 2
-tracks/0/keys = {"times": PackedFloat32Array(0, 1.2, 2.4), "transitions": PackedFloat32Array(0.5, 0.5, 0.5), "update": 0, "values": [Vector2(-30, -300), Vector2(-30, -305), Vector2(-30, -300)]}
+tracks/0/keys = {"times": PackedFloat32Array(0, 1.2, 2.4), "transitions": PackedFloat32Array(0.5, 0.5, 0.5), "update": 0, "values": [Vector2(-30, -301), Vector2(-30, -306), Vector2(-30, -301)]}
 
 [sub_resource type="Animation" id="Animation_die"]
 resource_name = "die"
@@ -36,8 +36,8 @@ _data = {&"RESET": SubResource("Animation_reset"), &"die": SubResource("Animatio
 metadata/ironeye_merchant = true
 
 [node name="Sprite" type="Sprite2D" parent="."]
-position = Vector2(-30, -300)
-scale = Vector2(0.43, 0.43)
+position = Vector2(-30, -301)
+scale = Vector2(0.4324, 0.4324)
 texture = ExtResource("1_texture")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

@@ -9,9 +9,11 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
 using NightMustStay.Core.Models.Revenant;
@@ -77,25 +79,75 @@ public sealed class FrenziedFlame : CardModel
     protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);
 }
 
-public sealed class Ensemble : CardModel
+public sealed class Ensemble : CardModel, IRevenantChargeCard
 {
+    private bool _chargeComplete;
+
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new DynamicVar[] { new DamageVar(11m, ValueProp.Move) };
+        new DynamicVar[] { new BlockVar(4m, ValueProp.Move), new BoolVar("Ready") };
+
+    public override bool GainsBlock => true;
     public override string PortraitPath => "res://revenant_assets/cards/ensemble.png";
 
-    public Ensemble() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
+    [SavedProperty]
+    public bool ChargeComplete
+    {
+        get => _chargeComplete;
+        set
+        {
+            AssertMutable();
+            _chargeComplete = value;
+            ((BoolVar)DynamicVars["Ready"]).BoolVal = value;
+        }
+    }
+
+    public bool IsChargeComplete => ChargeComplete;
+    public override TargetType TargetType =>
+        IsChargeComplete ? TargetType.Self : TargetType.AnyEnemy;
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
+    {
+        new CardHoverTip(CreateOppositeChargePreview()),
+    };
+
+    public Ensemble() : base(0, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy) { }
+
+    protected override void AddExtraArgsToDescription(LocString description) =>
+        RevenantCardHelpers.AddChargeStateDescription(this, description, IsChargeComplete);
+
+    private Ensemble CreateOppositeChargePreview()
+    {
+        var preview = (Ensemble)MutableClone();
+        preview.ChargeComplete = !IsChargeComplete;
+        return preview;
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .CompatFromCard(this)
-            .Targeting(cardPlay.Target)
-            .Execute(context);
+        if (!IsChargeComplete && cardPlay.Target == Owner.Creature)
+        {
+            await CompleteCharge(context);
+            return;
+        }
+
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+        if (!IsChargeComplete)
+            return;
+
+        ChargeComplete = false;
         await RevenantSummonManager.For(Owner).TriggerResonance(context);
+        await RevenantSummonManager.For(Owner).NotifyChargedCardPlayed(context);
     }
 
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);
+    public async Task CompleteCharge(PlayerChoiceContext context)
+    {
+        if (IsChargeComplete)
+            return;
+        ChargeComplete = true;
+        await RevenantSummonManager.For(Owner).NotifyChargeCompleted(this);
+        await PowerCmd.Apply<ChargeReturnPower>(context, Owner.Creature, 1m, Owner.Creature, this);
+    }
+
+    protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(2m);
 }
 
 public sealed class Surge : CardModel
@@ -156,13 +208,15 @@ public sealed class Resurgence : CardModel
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }
 
-public sealed class Soulbound : CardModel
+// Public Beta added an official Soulbound card. Model IDs are derived from
+// the simple type name rather than the namespace, so use a mod-prefixed name.
+public sealed class NightMustStaySoulbound : CardModel
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         IsUpgraded ? new[] { CardKeyword.Retain } : Array.Empty<CardKeyword>();
     public override string PortraitPath => "res://revenant_assets/cards/soulbound.png";
 
-    public Soulbound() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+    public NightMustStaySoulbound() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {

@@ -177,7 +177,10 @@ namespace NightMustStay.Core.Models.Cards
     }
 
     // Card-table ID 70: 垫步
-    public sealed class Sidestep : CardModel
+    // Prefix the model type because Public Beta now ships an official
+    // MegaCrit.Sts2.Core.Models.Cards.Sidestep. Model IDs ignore namespaces,
+    // so retaining the old type name prevents ModelDb from initializing.
+    public sealed class NightMustStaySidestep : CardModel
     {
         private const string CardsKey = "Cards";
 
@@ -189,7 +192,7 @@ namespace NightMustStay.Core.Models.Cards
             new CardsVar(2)
         };
 
-        public Sidestep() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
+        public NightMustStaySidestep() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
         {
         }
 

@@ -12,6 +12,7 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
 using NightMustStay.Core.Models.Revenant;
@@ -202,7 +203,13 @@ public sealed class SoulCursingBell : CardModel
     }
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
     {
-        if (card == this || !RevenantCardHelpers.WasMovedFromDiscardToHand(card, oldPileType) || Pile?.Type != PileType.Discard) return;
+        // Hook listeners include every player's cards in multiplayer. Only the
+        // owning Revenant's recovery may pull this bell from their discard.
+        if (card == this
+            || card.Owner != Owner
+            || !RevenantCardHelpers.WasMovedFromDiscardToHand(card, oldPileType)
+            || Pile?.Type != PileType.Discard)
+            return;
         await CardPileCmd.Add(this, PileType.Hand);
     }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2m);
@@ -332,9 +339,20 @@ public sealed class WatchfulWaiting : CardModel, IRevenantChargeCard
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new BlockVar(8m, ValueProp.Move), new BoolVar("Ready") };
     public override bool GainsBlock => true;
     public override string PortraitPath => "res://revenant_assets/cards/watchful_waiting.png";
-    public bool IsChargeComplete => _chargeComplete;
+    [SavedProperty]
+    public bool ChargeComplete
+    {
+        get => _chargeComplete;
+        set
+        {
+            AssertMutable();
+            _chargeComplete = value;
+            ((BoolVar)DynamicVars["Ready"]).BoolVal = value;
+        }
+    }
+    public bool IsChargeComplete => ChargeComplete;
     public override TargetType TargetType =>
-        _chargeComplete ? TargetType.Self : TargetType.AnyEnemy;
+        IsChargeComplete ? TargetType.Self : TargetType.AnyEnemy;
     protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
     {
         new CardHoverTip(CreateOppositeChargePreview()),
@@ -350,31 +368,28 @@ public sealed class WatchfulWaiting : CardModel, IRevenantChargeCard
     }
     private void SetChargePreviewState(bool complete)
     {
-        _chargeComplete = complete;
-        ((BoolVar)DynamicVars["Ready"]).BoolVal = complete;
+        ChargeComplete = complete;
     }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        if (!_chargeComplete && cardPlay.Target == Owner.Creature)
+        if (!IsChargeComplete && cardPlay.Target == Owner.Creature)
         {
             await CompleteCharge(context);
             return;
         }
 
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-        if (!_chargeComplete)
+        if (!IsChargeComplete)
             return;
 
-        _chargeComplete = false;
-        ((BoolVar)DynamicVars["Ready"]).BoolVal = false;
+        ChargeComplete = false;
         await RevenantCall.ChooseFamilyAndCall(context, Owner);
         await RevenantSummonManager.For(Owner).NotifyChargedCardPlayed(context);
     }
     public async Task CompleteCharge(PlayerChoiceContext context)
     {
-        if (_chargeComplete) return;
-        _chargeComplete = true;
-        ((BoolVar)DynamicVars["Ready"]).BoolVal = true;
+        if (IsChargeComplete) return;
+        ChargeComplete = true;
         await RevenantSummonManager.For(Owner).NotifyChargeCompleted(this);
         await PowerCmd.Apply<ChargeReturnPower>(context, Owner.Creature, 1m, Owner.Creature, this);
     }

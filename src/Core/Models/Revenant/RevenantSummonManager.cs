@@ -78,6 +78,8 @@ public sealed class RevenantSummonManager
     public const int NecroMinimumDamage = 3;
     private const float NecroVisualScale = 1f / 3f;
     private const float NecroOffsetRightOfFamily = 220f;
+    private const float FamilyGrowthReferenceHp = 150f;
+    private const float FamilyGroundY = -20f;
 
     private static readonly Dictionary<Player, RevenantSummonManager> Managers = new();
     private readonly Dictionary<RevenantFamilyId, RevenantFamilyState> _families =
@@ -303,6 +305,13 @@ public sealed class RevenantSummonManager
             await CreatureCmd.GainBlock(pet, state.RetainedBlock - pet.Block, ValueProp.Unpowered, null);
 
         CurrentFamilyId = family;
+        if (_familyCreature != pet)
+        {
+            if (_familyCreature != null)
+                _familyCreature.MaxHpChanged -= OnFamilyMaxHpChanged;
+            pet.MaxHpChanged -= OnFamilyMaxHpChanged;
+            pet.MaxHpChanged += OnFamilyMaxHpChanged;
+        }
         _familyCreature = pet;
         _knownFamilyCreatures.Add(pet);
         RefreshFamilyVisual(family);
@@ -457,6 +466,10 @@ public sealed class RevenantSummonManager
     public IReadOnlyList<RevenantNecro> GetLivingNecros() => _necros.Where(necro => necro.IsAlive).ToArray();
     public bool IsNecroCreature(Creature creature) =>
         creature != null && _necros.Any(necro => necro.Creature == creature);
+
+    public static bool IsRegisteredNecroCreature(Creature creature) =>
+        creature != null && Managers.Values.Any(manager => manager.IsNecroCreature(creature));
+
     public void RegisterNecro(RevenantNecro necro)
     {
         _necros.Add(necro);
@@ -758,9 +771,17 @@ public sealed class RevenantSummonManager
         _familyVisual?.QueueFree();
         _familyVisual = null;
         await ClearFamilyActionPower();
+        if (_familyCreature != null)
+            _familyCreature.MaxHpChanged -= OnFamilyMaxHpChanged;
         _familyCreature = null;
         CurrentFamilyId = null;
         _handlingFamilyDeath = false;
+    }
+
+    private void OnFamilyMaxHpChanged(int _, int __)
+    {
+        RefreshFamilyVisualScaleAndPosition();
+        PositionCurrentNecro();
     }
 
     private void RefreshFamilyVisual(RevenantFamilyId family)
@@ -784,8 +805,7 @@ public sealed class RevenantSummonManager
             petNode.AddChild(_familyVisual);
             petNode.MoveChild(_familyVisual, 0);
         }
-        _familyVisual.Scale = Vector2.One * GetFamilyVisualScale(family);
-        _familyVisual.Position = GetFamilyVisualBasePosition(family);
+        RefreshFamilyVisualScaleAndPosition();
         _familyVisual.Rotation = 0f;
         _familyVisual.Modulate = Colors.White;
         // Helen's source art faces left.  Player-side summons face the enemies
@@ -802,21 +822,47 @@ public sealed class RevenantSummonManager
         StartFamilyIdleAnimation(family);
     }
 
-    private static float GetFamilyVisualScale(RevenantFamilyId family) => family switch
+    // Osty's combat bounds are 204 px high. These values are derived from
+    // each 512x512 sprite's visible alpha bounds rather than its canvas size:
+    // Helen 409 px => 0.8x Osty, Frederick 488 px => 1.0x Osty,
+    // Sebastian 487 px => 1.2x Osty.
+    private static float GetFamilyBaseVisualScale(RevenantFamilyId family) => family switch
     {
-        RevenantFamilyId.Helen => 0.38f,
-        RevenantFamilyId.PumpkinHead => 0.76f,
-        RevenantFamilyId.Skeleton => 0.76f,
-        _ => 0.38f,
+        RevenantFamilyId.Helen => 0.3990f,
+        RevenantFamilyId.PumpkinHead => 0.4180f,
+        RevenantFamilyId.Skeleton => 0.5027f,
+        _ => 0.3990f,
     };
 
-    private static Vector2 GetFamilyVisualBasePosition(RevenantFamilyId family) => family switch
+    private static float GetFamilyBottomOffset(RevenantFamilyId family) => family switch
     {
-        RevenantFamilyId.Helen => new Vector2(0f, -110f),
-        RevenantFamilyId.PumpkinHead => new Vector2(0f, -195f),
-        RevenantFamilyId.Skeleton => new Vector2(0f, -204f),
-        _ => new Vector2(0f, -110f),
+        RevenantFamilyId.Helen => 243f,
+        RevenantFamilyId.PumpkinHead => 243f,
+        RevenantFamilyId.Skeleton => 242f,
+        _ => 243f,
     };
+
+    private float GetFamilyGrowthScale()
+    {
+        float maxHp = Math.Max(0f, _familyCreature?.MaxHp ?? 0f);
+        return Mathf.Lerp(1f, 2f, Mathf.Clamp(maxHp / FamilyGrowthReferenceHp, 0f, 1f));
+    }
+
+    private Vector2 GetFamilyVisualBasePosition(RevenantFamilyId family)
+    {
+        float scale = GetFamilyBaseVisualScale(family) * GetFamilyGrowthScale();
+        return new Vector2(0f, FamilyGroundY - GetFamilyBottomOffset(family) * scale);
+    }
+
+    private void RefreshFamilyVisualScaleAndPosition()
+    {
+        if (_familyVisual == null || !GodotObject.IsInstanceValid(_familyVisual) ||
+            CurrentFamilyId is not RevenantFamilyId family)
+            return;
+
+        _familyVisual.Scale = Vector2.One * GetFamilyBaseVisualScale(family) * GetFamilyGrowthScale();
+        _familyVisual.Position = GetFamilyVisualBasePosition(family);
+    }
 
     private void StartFamilyIdleAnimation(RevenantFamilyId family)
     {

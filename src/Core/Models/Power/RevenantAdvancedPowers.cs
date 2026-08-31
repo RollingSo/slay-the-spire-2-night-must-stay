@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using NightMustStay.Core.Models.Revenant;
@@ -117,11 +119,17 @@ public sealed class AncientDragonFaithPower : PowerModel
     {
         if (side != Owner.Side || !creatures.Contains(Owner)) return;
         CardPile discard = PileType.Discard.GetPile(Owner.Player);
-        for (int i = 0; i < (int)Amount; i++)
+        int count = System.Math.Min((int)Amount, discard.Cards.Count);
+        if (count <= 0)
+            return;
+
+        IReadOnlyList<CardModel> selected = (await CardSelectCmd.FromCombatPile(
+            new BlockingPlayerChoiceContext(),
+            discard,
+            Owner.Player,
+            new CardSelectorPrefs(new LocString("cards", "REVENANT_RECOVER_CARDS"), count))).ToArray();
+        foreach (CardModel card in selected)
         {
-            CardModel card = discard.Cards.FirstOrDefault();
-            if (card == null)
-                break;
             await CardPileCmd.Add(card, PileType.Hand);
         }
     }

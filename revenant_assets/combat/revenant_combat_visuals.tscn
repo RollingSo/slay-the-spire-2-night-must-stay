@@ -5,29 +5,31 @@
 [node name="RevenantCombatVisuals" type="Node2D"]
 [node name="Visuals" type="Node2D" parent="."]
 unique_name_in_owner = true
+position = Vector2(0, -39.2)
+scale = Vector2(0.9210, 0.9210)
 
 [node name="Prototype" parent="Visuals" instance=ExtResource("1_rig")]
 
 [node name="Bounds" type="Control" parent="."]
 unique_name_in_owner = true
-offset_left = -160.0
-offset_top = -410.0
-offset_right = 180.0
-offset_bottom = 45.0
+offset_left = -125.0
+offset_top = -260.0
+offset_right = 125.0
+offset_bottom = 0.0
 mouse_filter = 2
 
 [node name="CenterPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -190)
+position = Vector2(0, -146)
 
 [node name="IntentPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(10, -420)
+position = Vector2(10, -328)
 
 [node name="OrbPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -430)
+position = Vector2(0, -342)
 
 [node name="TalkPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(25, -245)
+position = Vector2(24, -268)

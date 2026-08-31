@@ -33,4 +33,29 @@ function Build-Branch([string]$Name, [string]$AssemblyDir) {
 
 Build-Branch 'Stable' $StableAssemblyDir
 Build-Branch 'PublicBeta' $BetaAssemblyDir
+
+function Assert-NoModelIdCollisions(
+    [string]$Name,
+    [string]$AssemblyDir,
+    [string]$ModAssemblyPath,
+    [string]$DependencyDirectory) {
+    $validatorProject = Join-Path $projectRoot `
+        'tools\ModelIdCollisionValidator\ModelIdCollisionValidator.csproj'
+    dotnet run --project $validatorProject --configuration Release -- `
+        (Join-Path $AssemblyDir 'sts2.dll') $ModAssemblyPath $DependencyDirectory
+    if ($LASTEXITCODE -ne 0) {
+        throw "$Name model ID collision scan failed with exit code $LASTEXITCODE"
+    }
+}
+
+Assert-NoModelIdCollisions `
+    'Stable' `
+    $StableAssemblyDir `
+    (Join-Path $projectRoot 'build\bin\CompatibilityStable\NightMustStay.dll') `
+    $BetaAssemblyDir
+Assert-NoModelIdCollisions `
+    'Public Beta' `
+    $BetaAssemblyDir `
+    (Join-Path $projectRoot 'build\bin\CompatibilityPublicBeta\NightMustStay.dll') `
+    $BetaAssemblyDir
 Write-Host 'Night Must Stay compiled successfully against Stable and Public Beta.'

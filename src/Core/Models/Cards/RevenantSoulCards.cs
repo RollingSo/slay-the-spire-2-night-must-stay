@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
 using NightMustStay.Core.Models.Revenant;
@@ -48,7 +49,6 @@ public sealed class BurnLife : CardModel
 public sealed class SoulChargingClaw : CardModel, IRevenantChargeCard
 {
     private bool _chargeComplete;
-
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
         new DamageVar(8m, ValueProp.Move),
@@ -57,7 +57,18 @@ public sealed class SoulChargingClaw : CardModel, IRevenantChargeCard
         new BoolVar("Ready"),
     };
 
-    public bool IsChargeComplete => _chargeComplete;
+    [SavedProperty]
+    public bool ChargeComplete
+    {
+        get => _chargeComplete;
+        set
+        {
+            AssertMutable();
+            _chargeComplete = value;
+            ((BoolVar)DynamicVars["Ready"]).BoolVal = value;
+        }
+    }
+    public bool IsChargeComplete => ChargeComplete;
     public override string PortraitPath => "res://revenant_assets/cards/soul_charging_claw.png";
     protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
     {
@@ -80,24 +91,22 @@ public sealed class SoulChargingClaw : CardModel, IRevenantChargeCard
 
     private void SetChargePreviewState(bool complete)
     {
-        _chargeComplete = complete;
-        ((BoolVar)DynamicVars["Ready"]).BoolVal = complete;
+        ChargeComplete = complete;
     }
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        if (!_chargeComplete && cardPlay.Target == Owner.Creature)
+        if (!IsChargeComplete && cardPlay.Target == Owner.Creature)
         {
             await CompleteCharge(context);
             return;
         }
 
-        bool wasCharged = _chargeComplete;
+        bool wasCharged = IsChargeComplete;
         decimal damage = DynamicVars.Damage.BaseValue
             + (wasCharged ? DynamicVars["ChargeDamage"].BaseValue : 0m);
-        _chargeComplete = false;
-        ((BoolVar)DynamicVars["Ready"]).BoolVal = false;
+        ChargeComplete = false;
 
         await DamageCmd.Attack(damage).CompatFromCard(this).Targeting(cardPlay.Target).Execute(context);
         if (wasCharged && cardPlay.Target.IsAlive)
@@ -114,10 +123,9 @@ public sealed class SoulChargingClaw : CardModel, IRevenantChargeCard
 
     public async Task CompleteCharge(PlayerChoiceContext context)
     {
-        if (_chargeComplete)
+        if (IsChargeComplete)
             return;
-        _chargeComplete = true;
-        ((BoolVar)DynamicVars["Ready"]).BoolVal = true;
+        ChargeComplete = true;
         await RevenantSummonManager.For(Owner).NotifyChargeCompleted(this);
         await PowerCmd.Apply<ChargeReturnPower>(context, Owner.Creature, 1m, Owner.Creature, this);
     }

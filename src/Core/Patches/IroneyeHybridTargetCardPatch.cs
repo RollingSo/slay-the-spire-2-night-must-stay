@@ -32,6 +32,7 @@ internal static class IroneyeHybridTargetState
             or LightningSpear
             or GurranqBeastClaw { IsChargeComplete: false }
             or SoulChargingClaw
+            or Ensemble { IsChargeComplete: false }
             or WatchfulWaiting { IsChargeComplete: false }
             or EmergencyRestore;
 
@@ -92,10 +93,16 @@ internal static class RevenantDirectPlayFallbackPatch
         if (card is not BeastClaw { IsChargeComplete: false }
             && card is not DeathLightning { IsChargeComplete: false }
             && card is not GurranqBeastClaw { IsChargeComplete: false }
+            && card is not Ensemble { IsChargeComplete: false }
             && card is not WatchfulWaiting { IsChargeComplete: false })
             return;
 
-        target = card.Owner.RunState.Rng.CombatTargets.NextItem(card.CombatState.HittableEnemies);
+        // This prefix runs in the local input/UI path, before the synchronized
+        // CardPlay action is created. Advancing CombatTargets RNG here changes
+        // only the acting peer and causes a checksum divergence. These cards
+        // do not use the fallback target for their actual effect, so use a
+        // deterministic placeholder instead.
+        target = card.CombatState.HittableEnemies.FirstOrDefault();
     }
 }
 

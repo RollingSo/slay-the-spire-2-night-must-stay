@@ -10,6 +10,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Cards;
+using NightMustStay.Core.Models.Relics;
 using NightMustStay.Core.Models.Revenant;
 
 namespace NightMustStay.Core.Models.Power;
@@ -128,13 +129,26 @@ public sealed class RevenantSummonControllerPower : PowerModel
         return false;
     }
 
+    public override async Task AfterPlayerTurnStart(
+        PlayerChoiceContext context,
+        Player player)
+    {
+        if (player != Owner.Player)
+            return;
+
+        RevenantSummonRelicModel summonRelic = player.Relics
+            .OfType<RevenantSummonRelicModel>()
+            .FirstOrDefault();
+        if (summonRelic != null)
+            await summonRelic.PerformInitialCall(context);
+    }
+
     public override async Task AfterPlayerTurnStartLate(PlayerChoiceContext context, Player player)
     {
         if (player != Owner.Player)
             return;
 
         RevenantSummonManager manager = RevenantSummonManager.For(player);
-        await manager.SummonMarkedNecro(context);
         await manager.ExecuteScheduledFamilyAction(context);
         await manager.ScheduleFamilyNormalAction(context);
         await manager.TriggerAllNecros(context);

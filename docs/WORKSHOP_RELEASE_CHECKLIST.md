@@ -64,6 +64,7 @@ workshop_branch.txt # 双分支发布时用于让两个快照生成不同 manife
 
 - 运行 `powershell -NoProfile -ExecutionPolicy Bypass -File tools/stage_workshop_release.ps1` 生成不含额外 JSON 的 Workshop 内容目录。
 - 分支快照发布必须使用 Mega Crit 官方 ModUploader 的 `SetRequiredGameVersions + SetItemContent` 流程；不要仅依赖 SteamCMD 的 `workshop_build_item`，后者会产生 `latest_manifest`，但可能不会替换游戏实际选择的 author snapshot。
+- 每次 Workshop 更新日志必须同时提供简体中文和英文版本；两种语言应表达相同的改动内容，不得只提交单一语言的更新说明。
 - App ID：`2868840`。
 - SteamCMD/上传工具需要内容目录、主预览图、标题、描述、可见度、变更说明和已发布项目 ID。
 - 首次创建后保存 `PublishedFileId`，后续更新必须复用该 ID，避免重复创建多个 Workshop 项目。

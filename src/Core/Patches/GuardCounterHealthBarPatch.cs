@@ -105,7 +105,17 @@ public static class GuardCounterHealthBarPatch
         if (!enemy.IsMonster || hpAfterStartDamage <= 0)
             return;
 
-        Creature guardian = LocalContext.GetMe(enemy.CombatState)?.Creature;
+        Creature guardian;
+        try
+        {
+            // A final health-bar refresh can run after the local player has
+            // already been removed during multiplayer combat teardown.
+            guardian = LocalContext.GetMe(enemy.CombatState)?.Creature;
+        }
+        catch (InvalidOperationException)
+        {
+            return;
+        }
         GuardCounterPower counter = guardian?.GetPower<GuardCounterPower>();
         if (counter == null)
         {

@@ -25,8 +25,7 @@ public sealed class Revenant : CharacterModel
     protected override string IconPath => "res://revenant_assets/character_icon_revenant.tscn";
     protected override string MapMarkerPath => "res://revenant_assets/map_marker_revenant.png";
 
-    // TODO_REVENANT_BASE_STATS: copied from the working Ironeye technical template.
-    public override int StartingHp => 70;
+    public override int StartingHp => 68;
     public override int StartingGold => 99;
     public override CardPoolModel CardPool => ModelDb.CardPool<RevenantCardPool>();
     public override PotionPoolModel PotionPool => ModelDb.PotionPool<RevenantPotionPool>();

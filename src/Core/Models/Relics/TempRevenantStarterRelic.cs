@@ -19,11 +19,23 @@ public abstract class RevenantSummonRelicModel : RelicModel
     private string _pendingNecroCategory;
     private string _pendingNecroEntry;
     private int _pendingNecroOriginalHp;
+    private bool _initialCallPending;
 
     public override bool SpawnsPets => true;
     protected override string PackedIconOutlinePath => PackedIconPath;
     protected override string BigIconPath => PackedIconPath;
     public override bool ShouldFlashOnPlayer => false;
+
+    [SavedProperty]
+    public bool InitialCallPending
+    {
+        get => _initialCallPending;
+        set
+        {
+            AssertMutable();
+            _initialCallPending = value;
+        }
+    }
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
     {
@@ -92,9 +104,20 @@ public abstract class RevenantSummonRelicModel : RelicModel
 
     public override async Task BeforeCombatStart()
     {
-        var context = new BlockingPlayerChoiceContext();
+        InitialCallPending = true;
         await PowerCmd.Apply<RevenantSummonControllerPower>(
-            context, Owner.Creature, 1m, Owner.Creature, null);
+            new BlockingPlayerChoiceContext(), Owner.Creature, 1m, Owner.Creature, null);
+    }
+
+    public async Task PerformInitialCall(PlayerChoiceContext context)
+    {
+        if (!InitialCallPending)
+            return;
+
+        // This is deliberately resolved from the owner's turn-start action
+        // queue. In multiplayer each Revenant then receives an independent
+        // choice action, so several opening Call screens can coexist.
+        InitialCallPending = false;
         await RevenantCall.ChooseFamilyAndCall(context, Owner);
         await AfterInitialCall(context);
         await RevenantSummonManager.For(Owner).SummonMarkedNecro(context);
@@ -112,28 +135,14 @@ public sealed class SmallMakeupBrush : RevenantSummonRelicModel
 
 public sealed class TreasuredMakeupBrush : RevenantSummonRelicModel
 {
-    private bool _initialResonancePending;
-
     public override RelicRarity Rarity => RelicRarity.Ancient;
     public override string PackedIconPath => "res://revenant_assets/relics/treasured_makeup_brush.png";
 
-    protected override Task AfterInitialCall(PlayerChoiceContext context)
+    protected override async Task AfterInitialCall(PlayerChoiceContext context)
     {
         Flash();
-        // Defer the opening Resonance until the first turn has actually
-        // started. Otherwise Helen's Retreat grants Energy before the engine
-        // initializes the turn's Energy and the gain is immediately erased.
-        _initialResonancePending = true;
-        return Task.CompletedTask;
-    }
-
-    public override async Task AfterPlayerTurnStartLate(
-        PlayerChoiceContext context,
-        MegaCrit.Sts2.Core.Entities.Players.Player player)
-    {
-        if (!_initialResonancePending || player != Owner)
-            return;
-        _initialResonancePending = false;
+        // Initial Call now runs after the turn's Energy initialization, so
+        // Helen's opening Retreat gain is preserved without a deferred flag.
         await RevenantSummonManager.For(Owner).TriggerResonance(context);
     }
 }
