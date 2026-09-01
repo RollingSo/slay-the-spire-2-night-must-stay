@@ -105,13 +105,13 @@ $concertoClassMatch = [regex]::Match(
 )
 $concertoClassSource = if ($concertoClassMatch.Success) { $concertoClassMatch.Value } else { '' }
 $zhResonance = ConvertFrom-CodePoints @(0x5171, 0x9E23)
-$zhConcertoBase = '[gold]' + $zhCall + '[/gold]' + $zhFullStop + "`n[gold]" + $zhResonance + '[/gold]' + $zhFullStop + "`n[gold]" + $zhCall + '[/gold]' + $zhFullStop
+$zhConcertoBase = '[gold]' + $zhResonance + '[/gold]' + $zhFullStop + "`n[gold]" + $zhCall + '[/gold]' + $zhFullStop + "`n[gold]" + $zhResonance + '[/gold]' + $zhFullStop
 $zhConcertoUpgrade = $zhConcertoBase + "`n[gold]" + $zhRecover + '[/gold]1' + $zhCardCounter + $zhFullStop
 $concertoChecks = @(
     @($zhs, 'CONCERTO.description', $zhConcertoBase, 'Chinese base text'),
     @($zhs, 'CONCERTO.upgradeDescription', $zhConcertoUpgrade, 'Chinese upgraded text'),
-    @($eng, 'CONCERTO.description', "[gold]Call[/gold].`n[gold]Resonance[/gold].`n[gold]Call[/gold].", 'English base text'),
-    @($eng, 'CONCERTO.upgradeDescription', "[gold]Call[/gold].`n[gold]Resonance[/gold].`n[gold]Call[/gold].`n[gold]Recover[/gold] 1 card.", 'English upgraded text')
+    @($eng, 'CONCERTO.description', "[gold]Resonance[/gold].`n[gold]Call[/gold].`n[gold]Resonance[/gold].", 'English base text'),
+    @($eng, 'CONCERTO.upgradeDescription', "[gold]Resonance[/gold].`n[gold]Call[/gold].`n[gold]Resonance[/gold].`n[gold]Recover[/gold] 1 card.", 'English upgraded text')
 )
 foreach ($check in $concertoChecks) {
     $actual = (Get-CardText $check[0] $check[1]) -replace "`r`n", "`n"
@@ -121,6 +121,9 @@ foreach ($check in $concertoChecks) {
 }
 if (-not $concertoClassMatch.Success) {
     $errors.Add('CONCERTO: implementation class could not be found.')
+}
+if ($concertoClassSource -notmatch 'TriggerResonance\(context\)[\s\S]*?ChooseFamilyAndCall\(context,\s*Owner\)[\s\S]*?TriggerResonance\(context\)') {
+    $errors.Add('CONCERTO: implementation must execute Resonance, Call, Resonance in that order.')
 }
 if ($concertoClassSource -notmatch 'if\s*\(IsUpgraded\)[\s\S]*?AddFromDiscard\(this,\s*context,\s*1,\s*false\)') {
     $errors.Add('CONCERTO: upgraded implementation must Recover exactly 1 card.')

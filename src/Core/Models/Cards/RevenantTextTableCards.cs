@@ -171,9 +171,9 @@ public sealed class Concerto : CardModel
     public Concerto() : base(2, CardType.Skill, CardRarity.Ancient, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        await RevenantCall.ChooseFamilyAndCall(context, Owner);
         await RevenantSummonManager.For(Owner).TriggerResonance(context);
         await RevenantCall.ChooseFamilyAndCall(context, Owner);
+        await RevenantSummonManager.For(Owner).TriggerResonance(context);
         if (IsUpgraded)
             await RevenantCardHelpers.AddFromDiscard(this, context, 1, false);
     }

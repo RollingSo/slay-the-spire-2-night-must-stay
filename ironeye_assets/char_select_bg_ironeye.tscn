@@ -6,9 +6,9 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_idle"]
 shader = ExtResource("2_idle")
-shader_parameter/body_center = Vector2(0.4025, 0.54)
+shader_parameter/body_center = Vector2(0.68, 0.55)
 shader_parameter/body_radius = Vector2(0.24, 0.48)
-shader_parameter/secondary_center = Vector2(0.3625, 0.68)
+shader_parameter/secondary_center = Vector2(0.78, 0.52)
 shader_parameter/secondary_radius = Vector2(0.22, 0.3)
 shader_parameter/breath_amount = 0.0024
 shader_parameter/secondary_amount = 0.004
