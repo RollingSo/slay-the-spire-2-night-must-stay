@@ -842,7 +842,7 @@
   "BLESSING_OF_GRACE.upgradeDescription": "[gold]耗能[/gold]1→0",
   "GURRANQ_BEAST_CLAW.title": "古兰格的兽爪",
   "GURRANQ_BEAST_CLAW.description": "{ChargeStateText}",
-  "GURRANQ_BEAST_CLAW.unchargedDescription": "对所有敌人造成{Damage:diff()}点伤害。\n[gold]共鸣[/gold]。\n[gold]蓄力[/gold]：使此牌的伤害增加{ChargeDamage:diff()}点。",
+  "GURRANQ_BEAST_CLAW.unchargedDescription": "对所有敌人造成{Damage:diff()}点伤害。\n[gold]蓄力[/gold]：[gold]共鸣[/gold]，并使此牌的伤害增加{ChargeDamage:diff()}点。",
   "GURRANQ_BEAST_CLAW.chargedDescription": "对所有敌人造成{ChargedDamage}点伤害。\n[gold]共鸣[/gold]。",
   "GURRANQ_BEAST_CLAW.upgradeDescription": "[gold]蓄力[/gold]后增加10→15点伤害",
   "GURRANQS_ROCK.title": "古兰格的岩石",

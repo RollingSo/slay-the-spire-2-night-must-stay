@@ -518,10 +518,19 @@ public sealed class RevenantSummonManager
 
     public bool CanBecomeNecro(Creature enemy)
     {
-        if (enemy == null || !enemy.IsMonster || !enemy.IsPrimaryEnemy || enemy.Monster == null)
+        if (enemy == null || !enemy.IsEnemy || !enemy.IsMonster || enemy.Monster == null)
             return false;
-        if (_convertedEnemies.Contains(enemy) || Owner.Creature.CombatState.Encounter.RoomType == RoomType.Boss)
+        if (_convertedEnemies.Contains(enemy))
             return false;
+
+        // Bosses themselves cannot become Necros, but secondary enemies in a
+        // boss encounter are still valid corpses. The Kin Followers, for
+        // example, have MinionPower and are therefore not primary enemies;
+        // rejecting every secondary enemy (or every creature in a boss room)
+        // made Reanimate Dead do nothing after either follower was defeated.
+        if (Owner.Creature.CombatState.Encounter.RoomType == RoomType.Boss && enemy.IsPrimaryEnemy)
+            return false;
+
         return enemy.Monster.ShouldShowInCompendium;
     }
 

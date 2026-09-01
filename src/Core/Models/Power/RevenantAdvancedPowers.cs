@@ -105,7 +105,11 @@ public sealed class UndyingMarchPower : PowerModel
         CombatSide side,
         IEnumerable<Creature> participants)
     {
-        if (side == Owner.Side && participants.Contains(Owner))
+        // Pets are not guaranteed to be included in the side-turn participant
+        // collection. Requiring the Family owner to appear there caused this
+        // one-turn power to survive indefinitely. Its lifetime is tied to the
+        // allied side turn, so the side check alone is the correct boundary.
+        if (side == Owner.Side)
             await PowerCmd.Remove(this);
     }
 }

@@ -19,5 +19,7 @@ internal static class RevenantCallDescriptionPatch
             __result = new LocString("cards", "REVENANT_CALL.upgradeDescription");
         else if (__instance is RevenantResonance { IsUpgraded: true })
             __result = new LocString("cards", "REVENANT_RESONANCE.upgradeDescription");
+        else if (__instance is Concerto { IsUpgraded: true })
+            __result = new LocString("cards", "CONCERTO.upgradeDescription");
     }
 }

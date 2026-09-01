@@ -842,7 +842,7 @@
   "BLESSING_OF_GRACE.upgradeDescription": "Energy 1→0",
   "GURRANQ_BEAST_CLAW.title": "Gurranq's Beast Claw",
   "GURRANQ_BEAST_CLAW.description": "{ChargeStateText}",
-  "GURRANQ_BEAST_CLAW.unchargedDescription": "Deal {Damage:diff()} damage to ALL enemies.\n[gold]Resonance[/gold].\n[gold]Charge[/gold]: Increase this card's damage by {ChargeDamage:diff()}.",
+  "GURRANQ_BEAST_CLAW.unchargedDescription": "Deal {Damage:diff()} damage to ALL enemies.\n[gold]Charge[/gold]: [gold]Resonance[/gold], and increase this card's damage by {ChargeDamage:diff()}.",
   "GURRANQ_BEAST_CLAW.chargedDescription": "Deal {ChargedDamage} damage to ALL enemies.\n[gold]Resonance[/gold].",
   "GURRANQ_BEAST_CLAW.upgradeDescription": "[gold]Charge[/gold] bonus 10→15 damage",
   "GURRANQS_ROCK.title": "Gurranq's Rock",
