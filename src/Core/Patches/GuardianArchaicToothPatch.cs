@@ -21,6 +21,8 @@ namespace NightMustStay.Core.Patches
                 ModelDb.Card<UnbreakableStance>();
             __result[ModelDb.Card<IroneyeMark>().Id] =
                 ModelDb.Card<DeathMark>();
+            __result[ModelDb.Card<RevenantCall>().Id] =
+                ModelDb.Card<Concerto>();
         }
     }
 }

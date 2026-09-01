@@ -67,7 +67,10 @@ public sealed class SpiritFormPower : PowerModel
             return;
 
         for (int i = 0; i < (int)Amount; i++)
+        {
+            await RevenantSummonManager.For(Owner.Player).IncreaseFamilyMaxHp(4m);
             await RevenantSummonManager.For(Owner.Player).TriggerResonance(context);
+        }
     }
 }
 

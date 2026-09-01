@@ -192,7 +192,7 @@
   "SOULGUARD_POWER.title": "Soulguard",
   "SOULGUARD_POWER.description": "Whenever a card is moved from your [gold]Discard Pile[/gold] to your [gold]Hand[/gold], gain {Amount} [gold]Block[/gold].",
   "SPIRIT_FORM_POWER.title": "Spirit Form",
-  "SPIRIT_FORM_POWER.description": "At the end of your turn, [gold]Resonance[/gold].",
+  "SPIRIT_FORM_POWER.description": "At the start of your turn, each stack increases your [gold]Family[/gold] member's Max HP by 4 and triggers [gold]Resonance[/gold].",
   "ANCIENT_DRAGON_FAITH_POWER.title": "Ancient Dragon Faith",
   "ANCIENT_DRAGON_FAITH_POWER.description": "At the start of your turn, move {Amount} card from your [gold]Discard Pile[/gold] to your [gold]Hand[/gold].",
   "BEAST_CLAW_MARK_POWER.title": "Beast Claw Mark",

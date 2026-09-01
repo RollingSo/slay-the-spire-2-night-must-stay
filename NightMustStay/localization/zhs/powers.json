@@ -192,7 +192,7 @@
   "SOULGUARD_POWER.title": "咒魂护身",
   "SOULGUARD_POWER.description": "每当将[gold]弃牌堆[/gold]中的牌加入[gold]手牌[/gold]时，获得{Amount}点[gold]格挡[/gold]。",
   "SPIRIT_FORM_POWER.title": "通灵形态",
-  "SPIRIT_FORM_POWER.description": "回合结束时，[gold]共鸣[/gold]。",
+  "SPIRIT_FORM_POWER.description": "回合开始时，每层使[gold]家人[/gold]提升4点生命并[gold]共鸣[/gold]。",
   "ANCIENT_DRAGON_FAITH_POWER.title": "古龙信仰",
   "ANCIENT_DRAGON_FAITH_POWER.description": "回合开始时，从[gold]弃牌堆[/gold]中将{Amount}张牌加入[gold]手牌[/gold]。",
   "BEAST_CLAW_MARK_POWER.title": "野兽爪痕",

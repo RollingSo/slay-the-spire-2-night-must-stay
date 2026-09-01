@@ -168,14 +168,16 @@ public sealed class SpiritGathering : CardModel
 public sealed class Concerto : CardModel
 {
     public override string PortraitPath => "res://revenant_assets/cards/concerto.png";
-    public Concerto() : base(1, CardType.Skill, CardRarity.Ancient, TargetType.Self) { }
+    public Concerto() : base(2, CardType.Skill, CardRarity.Ancient, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         await RevenantCall.ChooseFamilyAndCall(context, Owner);
         await RevenantSummonManager.For(Owner).TriggerResonance(context);
         await RevenantCall.ChooseFamilyAndCall(context, Owner);
+        if (IsUpgraded)
+            await RevenantCardHelpers.AddFromDiscard(this, context, 1, false);
     }
-    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+    protected override void OnUpgrade() { }
 }
 
 public sealed class FightForMe : CardModel
