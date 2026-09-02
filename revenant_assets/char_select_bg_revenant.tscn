@@ -6,10 +6,10 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_idle"]
 shader = ExtResource("2_idle")
-shader_parameter/body_center = Vector2(0.66, 0.55)
-shader_parameter/body_radius = Vector2(0.25, 0.48)
-shader_parameter/secondary_center = Vector2(0.66, 0.61)
-shader_parameter/secondary_radius = Vector2(0.20, 0.34)
+shader_parameter/body_center = Vector2(0.70, 0.58)
+shader_parameter/body_radius = Vector2(0.23, 0.42)
+shader_parameter/secondary_center = Vector2(0.50, 0.64)
+shader_parameter/secondary_radius = Vector2(0.24, 0.32)
 shader_parameter/breath_amount = 0.0023
 shader_parameter/secondary_amount = 0.0048
 shader_parameter/idle_speed = 0.66
