@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
@@ -28,8 +29,36 @@ namespace NightMustStay.Core.Models.Cards
     {
         public static async Task<CardModel> SelectOne(PlayerChoiceContext context, IEnumerable<CardModel> cards, CardModel source, string prompt)
         {
-            return (await CardSelectCmd.FromSimpleGrid(context, cards.ToList(), source.Owner,
+            List<CardModel> candidates = cards.ToList();
+            if (candidates.Count == 0)
+                return null;
+
+            return (await CardSelectCmd.FromSimpleGrid(context, candidates, source.Owner,
                 new CardSelectorPrefs(new LocString("cards", prompt), 1))).FirstOrDefault();
+        }
+
+        public static async Task<CardModel> SelectOneFromCombatPile(
+            PlayerChoiceContext context,
+            CardPile pile,
+            Func<CardModel, bool> filter,
+            CardModel source,
+            string prompt)
+        {
+            if (!pile.Cards.Any(filter))
+                return null;
+
+            return (await CardSelectCmd.FromCombatPile(
+                context,
+                pile,
+                source.Owner,
+                new CardSelectorPrefs(new LocString("cards", prompt), 1),
+                filter)).FirstOrDefault();
+        }
+
+        public static bool HasDefendSynthesisMaterials(Player owner)
+        {
+            IReadOnlyList<CardModel> cards = PileType.Discard.GetPile(owner).Cards;
+            return cards.Count >= 2 && cards.Any(card => card is DefendGuardian);
         }
 
         public static async Task Consume(PlayerChoiceContext context, params CardModel[] cards)
@@ -176,16 +205,34 @@ namespace NightMustStay.Core.Models.Cards
             GuardianCardHoverTips.Synthesis,
             HoverTipFactory.FromCard<UltimateDefend>(IsUpgraded)
         };
+        protected override bool IsPlayable => GuardianSynthesis.HasDefendSynthesisMaterials(Owner);
         public EvolvedDefend() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
         protected override void AddExtraArgsToDescription(LocString description) =>
             description.Add("GeneratedCard", ModelDb.Card<UltimateDefend>().Title + (IsUpgraded ? "+" : string.Empty));
         protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
         {
             CardPile discard = PileType.Discard.GetPile(Owner);
-            CardModel defend = await GuardianSynthesis.SelectOne(context, discard.Cards.Where(card => card is DefendGuardian), this, "EVOLVED_DEFEND.defendSelectionPrompt");
-            if (defend == null) return;
-            CardModel other = await GuardianSynthesis.SelectOne(context, discard.Cards.Where(card => card != defend), this, "EVOLVED_DEFEND.otherSelectionPrompt");
-            if (other == null) return;
+            if (!GuardianSynthesis.HasDefendSynthesisMaterials(Owner))
+                return;
+
+            CardModel defend = await GuardianSynthesis.SelectOneFromCombatPile(
+                context,
+                discard,
+                card => card is DefendGuardian,
+                this,
+                "EVOLVED_DEFEND.defendSelectionPrompt");
+            if (defend == null)
+                return;
+
+            CardModel other = await GuardianSynthesis.SelectOneFromCombatPile(
+                context,
+                discard,
+                card => card != defend,
+                this,
+                "EVOLVED_DEFEND.otherSelectionPrompt");
+            if (other == null)
+                return;
+
             await GuardianSynthesis.Consume(context, defend, other);
             CardModel result = CombatState.CreateCard<UltimateDefend>(Owner);
             if (IsUpgraded) CardCmd.Upgrade(result);

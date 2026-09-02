@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -31,6 +30,9 @@ namespace NightMustStay.Core.Models.Cards
             HoverTipFactory.FromCard<ShieldPoke>(IsUpgraded)
         };
 
+        protected override bool IsPlayable =>
+            GuardianSynthesis.HasDefendSynthesisMaterials(Owner);
+
         public SpearAndShield()
             : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
         {
@@ -46,19 +48,24 @@ namespace NightMustStay.Core.Models.Cards
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             CardPile discard = PileType.Discard.GetPile(base.Owner);
-            CardModel defend = (await CardSelectCmd.FromSimpleGrid(
+            if (!GuardianSynthesis.HasDefendSynthesisMaterials(base.Owner))
+                return;
+
+            CardModel defend = await GuardianSynthesis.SelectOneFromCombatPile(
                 choiceContext,
-                discard.Cards.Where(card => card is DefendGuardian).ToList(),
-                base.Owner,
-                new CardSelectorPrefs(new LocString("cards", "SPEAR_AND_SHIELD.defendSelectionPrompt"), 1))).FirstOrDefault();
+                discard,
+                card => card is DefendGuardian,
+                this,
+                "SPEAR_AND_SHIELD.defendSelectionPrompt");
             if (defend == null)
                 return;
 
-            CardModel other = (await CardSelectCmd.FromSimpleGrid(
+            CardModel other = await GuardianSynthesis.SelectOneFromCombatPile(
                 choiceContext,
-                discard.Cards.Where(card => card != defend).ToList(),
-                base.Owner,
-                new CardSelectorPrefs(new LocString("cards", "SPEAR_AND_SHIELD.otherSelectionPrompt"), 1))).FirstOrDefault();
+                discard,
+                card => card != defend,
+                this,
+                "SPEAR_AND_SHIELD.otherSelectionPrompt");
             if (other == null)
                 return;
 
