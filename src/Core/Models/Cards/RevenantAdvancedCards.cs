@@ -462,7 +462,7 @@ public sealed class BeastClaw : CardModel, IRevenantChargeCard
         if (IsChargeComplete) return;
         ChargeComplete = true;
         await RevenantSummonManager.For(Owner).NotifyChargeCompleted(this);
-        await PowerCmd.Apply<ChargeReturnPower>(context, Owner.Creature, 1m, Owner.Creature, this);
+        await ChargeReturnPower.Schedule(context, this);
     }
     protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(0m); DynamicVars["ChargeDamage"].UpgradeValueBy(6m); }
 }
@@ -528,7 +528,7 @@ public sealed class DeathLightning : CardModel, IRevenantChargeCard
         if (IsChargeComplete) return;
         ChargeComplete = true;
         await RevenantSummonManager.For(Owner).NotifyChargeCompleted(this);
-        await PowerCmd.Apply<ChargeReturnPower>(context, Owner.Creature, 1m, Owner.Creature, this);
+        await ChargeReturnPower.Schedule(context, this);
     }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(1m);
 }
@@ -623,7 +623,7 @@ public sealed class LightningSpear : CardModel, IRevenantChargeCard
         if (IsChargeComplete) return;
         ChargeComplete = true;
         await RevenantSummonManager.For(Owner).NotifyChargeCompleted(this);
-        await PowerCmd.Apply<ChargeReturnPower>(context, Owner.Creature, 1m, Owner.Creature, this);
+        await ChargeReturnPower.Schedule(context, this);
     }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
 }
@@ -835,7 +835,7 @@ public sealed class GurranqBeastClaw : CardModel, IRevenantChargeCard
         if (IsChargeComplete) return;
         ChargeComplete = true;
         await RevenantSummonManager.For(Owner).NotifyChargeCompleted(this);
-        await PowerCmd.Apply<ChargeReturnPower>(context, Owner.Creature, 1m, Owner.Creature, this);
+        await ChargeReturnPower.Schedule(context, this);
     }
     protected override void OnUpgrade() => DynamicVars["ChargeDamage"].UpgradeValueBy(5m);
 }

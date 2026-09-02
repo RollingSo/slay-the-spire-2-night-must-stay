@@ -94,9 +94,10 @@ public sealed class HaloReturnPower : PowerModel
 /// <summary>
 /// Remembers cards played on the Revenant to activate Charge. The card follows
 /// the normal play flow into the discard pile, so it can be recovered early;
-/// at the start of the next turn it is recovered from discard if it is there.
-/// Moving it with CardPileCmd deliberately fires the normal discard-to-hand
-/// hooks used by every Recover payoff.
+/// at the start of the next turn it is returned from any combat pile. This also
+/// covers the draw pile when the discard pile was shuffled before this power
+/// resolves. Moving it with CardPileCmd deliberately fires the normal pile
+/// change hooks.
 /// </summary>
 public sealed class ChargeReturnPower : PowerModel
 {
@@ -113,11 +114,32 @@ public sealed class ChargeReturnPower : PowerModel
 
     protected override object InitInternalData() => new Data();
 
+    public static async Task Schedule(PlayerChoiceContext context, CardModel card)
+    {
+        Creature owner = card.Owner.Creature;
+        ChargeReturnPower power = owner.GetPower<ChargeReturnPower>();
+        if (power == null)
+        {
+            power = await PowerCmd.Apply<ChargeReturnPower>(
+                context,
+                owner,
+                1m,
+                owner,
+                card);
+        }
+        power?.Remember(card);
+    }
+
     public override Task AfterApplied(Creature applier, CardModel cardSource)
     {
-        if (cardSource != null && !GetInternalData<Data>().Cards.Contains(cardSource))
-            GetInternalData<Data>().Cards.Add(cardSource);
+        Remember(cardSource);
         return Task.CompletedTask;
+    }
+
+    private void Remember(CardModel card)
+    {
+        if (card != null && !GetInternalData<Data>().Cards.Contains(card))
+            GetInternalData<Data>().Cards.Add(card);
     }
 
     public override async Task AfterSideTurnStart(
@@ -130,7 +152,9 @@ public sealed class ChargeReturnPower : PowerModel
 
         foreach (CardModel card in GetInternalData<Data>().Cards.ToArray())
         {
-            if (card?.Pile?.Type == PileType.Discard)
+            if (card?.Pile != null
+                && card.Pile.Type.IsCombatPile()
+                && card.Pile.Type != PileType.Hand)
                 await CardPileCmd.Add(card, PileType.Hand);
         }
 

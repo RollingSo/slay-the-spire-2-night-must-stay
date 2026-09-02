@@ -393,7 +393,7 @@ public sealed class WatchfulWaiting : CardModel, IRevenantChargeCard
         if (IsChargeComplete) return;
         ChargeComplete = true;
         await RevenantSummonManager.For(Owner).NotifyChargeCompleted(this);
-        await PowerCmd.Apply<ChargeReturnPower>(context, Owner.Creature, 1m, Owner.Creature, this);
+        await ChargeReturnPower.Schedule(context, this);
     }
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3m);
 }

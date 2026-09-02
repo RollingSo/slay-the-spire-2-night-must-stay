@@ -144,7 +144,7 @@ public sealed class Ensemble : CardModel, IRevenantChargeCard
             return;
         ChargeComplete = true;
         await RevenantSummonManager.For(Owner).NotifyChargeCompleted(this);
-        await PowerCmd.Apply<ChargeReturnPower>(context, Owner.Creature, 1m, Owner.Creature, this);
+        await ChargeReturnPower.Schedule(context, this);
     }
 
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(2m);
