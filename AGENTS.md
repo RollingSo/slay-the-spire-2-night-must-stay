@@ -26,6 +26,11 @@
 - Before revising Guardian, Ironeye, or Revenant combat model scale, ground alignment, creature bounds, health-bar width, or combat marker positions, read `design/角色战斗体型与血条强制规范.md` completely.
 - Character size must be compared by the final rendered non-transparent visual bounds after every nested scale, not by source-canvas dimensions or the `Bounds` control.
 
+## Character-select backgrounds
+
+- Before replacing or recomposing a character-select background, read `design/角色选择背景构图与裁切强制规范.md` completely.
+- Validate the final in-game 16:9 crop, not only the source PNG. A centered `2560×1200` background loses about `12.5%` from each horizontal edge in the standard viewport; essential character features must remain inside the central safe region.
+
 ## Revenant necros
 
 - Before revising Revenant Necro health, damage scaling, actions, summon limits, or battlefield layout, read `design/Revenant_死灵机制规范.md` completely.

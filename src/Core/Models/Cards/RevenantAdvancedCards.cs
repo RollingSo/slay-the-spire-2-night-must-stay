@@ -816,7 +816,6 @@ public sealed class GurranqBeastClaw : CardModel, IRevenantChargeCard
         if (cardPlay.Target == Owner.Creature)
         {
             await CompleteCharge(context);
-            await RevenantCardHelpers.ChargeResonance(this, context);
             return;
         }
 
@@ -825,8 +824,11 @@ public sealed class GurranqBeastClaw : CardModel, IRevenantChargeCard
             + (wasCharged ? DynamicVars["ChargeDamage"].BaseValue : 0m);
         ChargeComplete = false;
         await DamageCmd.Attack(damage).CompatFromCard(this).TargetingAllOpponents(CombatState).Execute(context);
-        if (wasCharged) await RevenantSummonManager.For(Owner).NotifyChargedCardPlayed(context);
-        await RevenantCardHelpers.ChargeResonance(this, context);
+        if (wasCharged)
+        {
+            await RevenantSummonManager.For(Owner).TriggerResonance(context);
+            await RevenantSummonManager.For(Owner).NotifyChargedCardPlayed(context);
+        }
     }
     public async Task CompleteCharge(PlayerChoiceContext context)
     {

@@ -20,6 +20,7 @@ $zhRecover = ConvertFrom-CodePoints @(0x56DE, 0x6536)
 $zhEthereal = ConvertFrom-CodePoints @(0x865A, 0x65E0)
 $zhExhaust = ConvertFrom-CodePoints @(0x6D88, 0x8017)
 $zhRetain = ConvertFrom-CodePoints @(0x4FDD, 0x7559)
+$zhColon = ConvertFrom-CodePoints @(0xFF1A)
 $zhApproachPlus = (ConvertFrom-CodePoints @(0x63A5, 0x8FD1)) + '+'
 $zhRetreatPlus = (ConvertFrom-CodePoints @(0x8FDC, 0x79BB)) + '+'
 $zhSentencePattern = [regex]::Escape($zhFullStop) + '(?!\r?\n|$)'
@@ -90,6 +91,84 @@ if ($lyreDescriptionPatchSource -notmatch 'HarmonyPatch\(typeof\(CardModel\),\s*
 if ($lyreDescriptionPatchSource -notmatch 'RevenantResonance\s*\{\s*IsUpgraded:\s*true\s*\}' -or
     $lyreDescriptionPatchSource -notmatch 'REVENANT_RESONANCE\.upgradeDescription') {
     $errors.Add('REVENANT_RESONANCE: upgraded cards must explicitly select the draw-pile discard upgrade description at runtime.')
+}
+
+# Concerto has no numeric or keyword delta on upgrade: the upgrade is entirely
+# implemented by an IsUpgraded branch. Without an explicit Description getter
+# override, the game keeps rendering the base three-line text even though the
+# upgraded card recovers a card when played.
+$revenantTextTablePath = Join-Path $root 'src\Core\Models\Cards\RevenantTextTableCards.cs'
+$revenantTextTableSource = Get-Content -LiteralPath $revenantTextTablePath -Raw -Encoding UTF8
+$concertoClassMatch = [regex]::Match(
+    $revenantTextTableSource,
+    'public sealed class Concerto\s*:[\s\S]*?(?=public sealed class FightForMe)'
+)
+$concertoClassSource = if ($concertoClassMatch.Success) { $concertoClassMatch.Value } else { '' }
+$zhResonance = ConvertFrom-CodePoints @(0x5171, 0x9E23)
+$zhConcertoBase = '[gold]' + $zhResonance + '[/gold]' + $zhFullStop + "`n[gold]" + $zhCall + '[/gold]' + $zhFullStop + "`n[gold]" + $zhResonance + '[/gold]' + $zhFullStop
+$zhConcertoUpgrade = $zhConcertoBase + "`n[gold]" + $zhRecover + '[/gold]1' + $zhCardCounter + $zhFullStop
+$concertoChecks = @(
+    @($zhs, 'CONCERTO.description', $zhConcertoBase, 'Chinese base text'),
+    @($zhs, 'CONCERTO.upgradeDescription', $zhConcertoUpgrade, 'Chinese upgraded text'),
+    @($eng, 'CONCERTO.description', "[gold]Resonance[/gold].`n[gold]Call[/gold].`n[gold]Resonance[/gold].", 'English base text'),
+    @($eng, 'CONCERTO.upgradeDescription', "[gold]Resonance[/gold].`n[gold]Call[/gold].`n[gold]Resonance[/gold].`n[gold]Recover[/gold] 1 card.", 'English upgraded text')
+)
+foreach ($check in $concertoChecks) {
+    $actual = (Get-CardText $check[0] $check[1]) -replace "`r`n", "`n"
+    if ($actual -cne $check[2]) {
+        $errors.Add("$($check[1]): $($check[3]) must stay synchronized with the Recover 1 upgrade.")
+    }
+}
+if (-not $concertoClassMatch.Success) {
+    $errors.Add('CONCERTO: implementation class could not be found.')
+}
+if ($concertoClassSource -notmatch 'TriggerResonance\(context\)[\s\S]*?ChooseFamilyAndCall\(context,\s*Owner\)[\s\S]*?TriggerResonance\(context\)') {
+    $errors.Add('CONCERTO: implementation must execute Resonance, Call, Resonance in that order.')
+}
+if ($concertoClassSource -notmatch 'if\s*\(IsUpgraded\)[\s\S]*?AddFromDiscard\(this,\s*context,\s*1,\s*false\)') {
+    $errors.Add('CONCERTO: upgraded implementation must Recover exactly 1 card.')
+}
+if ($concertoClassSource -match 'OnUpgrade\s*\(\)[\s\S]*?EnergyCost') {
+    $errors.Add('CONCERTO: upgrade must not reduce Energy cost.')
+}
+if ($lyreDescriptionPatchSource -notmatch 'Concerto\s*\{\s*IsUpgraded:\s*true\s*\}' -or
+    $lyreDescriptionPatchSource -notmatch 'CONCERTO\.upgradeDescription') {
+    $errors.Add('CONCERTO: upgraded cards must explicitly select the Recover 1 upgrade description at runtime.')
+}
+
+# Gurranq's Beast Claw only gains Resonance after Charge is complete. Directly
+# playing the uncharged card deals its base AoE damage without Resonance.
+$revenantAdvancedPath = Join-Path $root 'src\Core\Models\Cards\RevenantAdvancedCards.cs'
+$revenantAdvancedSource = Get-Content -LiteralPath $revenantAdvancedPath -Raw -Encoding UTF8
+$gurranqClassMatch = [regex]::Match(
+    $revenantAdvancedSource,
+    'public sealed class GurranqBeastClaw\s*:[\s\S]*\z'
+)
+$gurranqClassSource = if ($gurranqClassMatch.Success) { $gurranqClassMatch.Value } else { '' }
+if (-not $gurranqClassMatch.Success) {
+    $errors.Add('GURRANQ_BEAST_CLAW: implementation class could not be found.')
+}
+if ($gurranqClassSource -notmatch 'new DamageVar\(13m' -or
+    $gurranqClassSource -notmatch 'new DynamicVar\("ChargeDamage",\s*10m\)') {
+    $errors.Add('GURRANQ_BEAST_CLAW: base AoE damage must be 13 and Charge bonus must be 10.')
+}
+$gurranqSelfBranch = [regex]::Match(
+    $gurranqClassSource,
+    'if\s*\(cardPlay\.Target\s*==\s*Owner\.Creature\)\s*\{[\s\S]*?\}'
+).Value
+if ($gurranqSelfBranch -match 'TriggerResonance|ChargeResonance') {
+    $errors.Add('GURRANQ_BEAST_CLAW: charging the card must not trigger Resonance immediately.')
+}
+if ($gurranqClassSource -notmatch 'if\s*\(wasCharged\)\s*\{[\s\S]*?TriggerResonance\(context\)') {
+    $errors.Add('GURRANQ_BEAST_CLAW: Resonance must trigger only when the charged card is played.')
+}
+$gurranqZhText = Get-CardText $zhs 'GURRANQ_BEAST_CLAW.unchargedDescription'
+$gurranqEnText = Get-CardText $eng 'GURRANQ_BEAST_CLAW.unchargedDescription'
+if ($gurranqZhText -notmatch ('\[gold\]' + [regex]::Escape($zhCharge) + '\[/gold\]' + [regex]::Escape($zhColon) + '\[gold\]' + [regex]::Escape($zhResonance) + '\[/gold\]')) {
+    $errors.Add('GURRANQ_BEAST_CLAW: Chinese text must place Resonance inside the Charge effect.')
+}
+if ($gurranqEnText -notmatch '\[gold\]Charge\[/gold\]: \[gold\]Resonance\[/gold\]') {
+    $errors.Add('GURRANQ_BEAST_CLAW: English text must place Resonance inside the Charge effect.')
 }
 
 # Keep the localization tables aligned with the ModelId entries generated from
