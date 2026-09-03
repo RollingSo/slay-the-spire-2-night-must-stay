@@ -99,6 +99,7 @@ public sealed class RevenantCardPool : CardPoolModel
         ModelDb.Card<SoulChargingClaw>(),
         ModelDb.Card<GazeBeyond>(),
         ModelDb.Card<DeadRealmSpiritFire>(),
+        ModelDb.Card<StyxSpiritFire>(),
         ModelDb.Card<IceLightningSpear>(),
         ModelDb.Card<NecroDrive>(),
         ModelDb.Card<BoneCoin>(),

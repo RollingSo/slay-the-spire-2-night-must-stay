@@ -16,6 +16,7 @@ namespace NightMustStay
             // game's saved-property cache is initialized. Register every
             // Mod model that owns [SavedProperty] state so permanent card
             // growth and relic counters survive save/load and act transitions.
+            Core.Compatibility.Sts2BranchCompat.RegisterSavedPropertyType(typeof(ReturningWindArrow));
             Core.Compatibility.Sts2BranchCompat.RegisterSavedPropertyType(typeof(EvolutionWings));
             Core.Compatibility.Sts2BranchCompat.RegisterSavedPropertyType(typeof(FlyingFeatherHelm));
 

@@ -63,7 +63,6 @@ public sealed class ReturningWindArrow : CardModel, IMarkTriggerObserver
     private int _permanentDamage;
     private bool _triggeredMark;
 
-    [SavedProperty]
     public int CurrentDamage
     {
         get => _currentDamage;
@@ -83,9 +82,9 @@ public sealed class ReturningWindArrow : CardModel, IMarkTriggerObserver
         {
             AssertMutable();
             _permanentDamage = value;
-            // Also update CurrentDamage for saves made before CurrentDamage was
-            // serialized separately.  New saves restore the same value through
-            // both properties regardless of deserialization order.
+            // PermanentDamage is the sole persisted source of truth. Rebuild
+            // the displayed damage when a deck card is cloned for a new floor
+            // or restored from a run save.
             UpdateDamage();
         }
     }
