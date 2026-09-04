@@ -1,5 +1,6 @@
 param(
-    [string]$GodotPath = 'D:\Godot_v4.5.1-stable_mono_win64\Godot_v4.5.1-stable_mono_win64_console.exe',
+    [string]$GodotPath = 'D:\Godot_v4.5.1-stable_mono_win64\Godot_v4.5.1-stable_mono_win64.exe',
+    [string]$Sts2AssemblyDir = 'D:\Steam\steamapps\common\Slay the Spire 2\data_sts2_windows_x86_64',
     [string]$ModsDirectory = 'D:\SteamLibrary\steamapps\common\Slay the Spire 2\mods',
     [switch]$SkipInstall,
     [switch]$BetaTestInstall
@@ -16,6 +17,40 @@ $configPath = Join-Path $root 'config.json'
 $releaseDirectory = Join-Path $root '.godot\mono\temp\bin\CodexExport'
 $packPath = Join-Path $buildDirectory "$modId.pck"
 $installModId = if ($BetaTestInstall) { 'NightMustStayBetaTest' } else { $modId }
+
+$requiredSts2Assemblies = @('0Harmony.dll', 'GodotSharp.dll', 'sts2.dll')
+foreach ($assemblyName in $requiredSts2Assemblies) {
+    $assemblyPath = Join-Path $Sts2AssemblyDir $assemblyName
+    if (-not (Test-Path -LiteralPath $assemblyPath)) {
+        throw "Required Slay the Spire 2 assembly not found: $assemblyPath"
+    }
+}
+
+# Godot's C# export plugin starts its own dotnet process. Supplying the game
+# assembly directory through the environment keeps that nested build aligned
+# with the explicit MSBuild build below.
+$env:Sts2AssemblyDir = $Sts2AssemblyDir
+
+function Invoke-GodotAndWait {
+    param([string[]]$Arguments)
+
+    $escapedArguments = foreach ($argument in $Arguments) {
+        if ($argument -match '[\s"]') {
+            '"' + $argument.Replace('"', '\"') + '"'
+        }
+        else {
+            $argument
+        }
+    }
+
+    $process = Start-Process `
+        -FilePath $GodotPath `
+        -ArgumentList ($escapedArguments -join ' ') `
+        -WindowStyle Hidden `
+        -Wait `
+        -PassThru
+    return $process.ExitCode
+}
 
 New-Item -ItemType Directory -Path $buildDirectory -Force | Out-Null
 if (-not $SkipInstall) {
@@ -46,17 +81,18 @@ if ($LASTEXITCODE -ne 0) {
 
 # Import changed images completely before creating the PCK. `--import` waits for
 # the import queue to finish; `--editor --quit` may exit before new textures are ready.
-& $GodotPath --headless --path $root --import --quit
-if ($LASTEXITCODE -ne 0) {
-    throw "Godot asset import failed with exit code $LASTEXITCODE"
+$godotImportExitCode = Invoke-GodotAndWait @('--headless', '--path', $root, '--import', '--quit')
+if ($godotImportExitCode -ne 0) {
+    throw "Godot asset import failed with exit code $godotImportExitCode"
 }
 
-& $GodotPath --headless --path $root --export-pack 'Windows Desktop' $packPath
-if ($LASTEXITCODE -ne 0) {
-    throw "Godot PCK export failed with exit code $LASTEXITCODE"
+$godotExportExitCode = Invoke-GodotAndWait @('--headless', '--path', $root, '--export-pack', 'Windows Desktop', $packPath)
+if ($godotExportExitCode -ne 0) {
+    throw "Godot PCK export failed with exit code $godotExportExitCode"
 }
 
 dotnet build $projectPath -c Release --no-restore `
+    "-p:Sts2AssemblyDir=$Sts2AssemblyDir" `
     -p:IntermediateOutputPath=.godot\mono\temp\obj\CodexExport\ `
     -p:OutputPath=.godot\mono\temp\bin\CodexExport\
 if ($LASTEXITCODE -ne 0) {
