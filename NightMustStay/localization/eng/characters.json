@@ -40,5 +40,6 @@
   "REVENANT.description": "A spirit caller who fights beside family and the dead.",
   "REVENANT.aromaPrinciple": "[sine][purple]In life or death, we meet again.[/purple][/sine]",
   "REVENANT.eventDeathPrevention": "I cannot leave them yet.",
-  "REVENANT.goldMonologue": "[sine]Enough to prepare the family for the road ahead.[/sine]"
+  "REVENANT.goldMonologue": "[sine]Enough to prepare the family for the road ahead.[/sine]",
+  "RICH_PRESENCE.floor": "Floor {Floor}"
 }

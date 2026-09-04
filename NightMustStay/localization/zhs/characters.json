@@ -40,5 +40,6 @@
   "REVENANT.description": "与家人和死灵并肩作战的召魂者。",
   "REVENANT.aromaPrinciple": "[sine][purple]无论生死，我们仍会重逢。[/purple][/sine]",
   "REVENANT.eventDeathPrevention": "还不能谢幕——他们仍在等我",
-  "REVENANT.goldMonologue": "[sine]海伦会挑最亮的那枚，弗雷德利克则会假装自己毫不在意……[/sine]"
+  "REVENANT.goldMonologue": "[sine]海伦会挑最亮的那枚，弗雷德利克则会假装自己毫不在意……[/sine]",
+  "RICH_PRESENCE.floor": "第 {Floor} 层"
 }
