@@ -88,12 +88,7 @@ public sealed class Halo : CardModel
             .Targeting(cardPlay.Target)
             .Execute(context);
 
-        await PowerCmd.Apply<HaloReturnPower>(
-            context,
-            Owner.Creature,
-            1m,
-            Owner.Creature,
-            this);
+        await HaloReturnPower.Schedule(context, this);
     }
 
     public void IncreaseDamageForCurrentCombat() =>

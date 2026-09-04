@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -265,7 +266,7 @@ namespace NightMustStay.Core.Models.Power
         public override PowerStackType StackType => PowerStackType.Counter;
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            new[] { HoverTipFactory.FromPower<MarkPower>() };
+            new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
 
         public async Task Trigger(PlayerChoiceContext choiceContext)
         {
@@ -503,7 +504,7 @@ namespace NightMustStay.Core.Models.Power
         public override PowerStackType StackType => PowerStackType.Counter;
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            new[] { HoverTipFactory.FromPower<MarkPower>() };
+            new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
     }
 
     public sealed class DisorderlyArrowsPower : PowerModel
@@ -513,7 +514,7 @@ namespace NightMustStay.Core.Models.Power
         public override PowerStackType StackType => PowerStackType.Counter;
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            new[] { HoverTipFactory.FromPower<MarkPower>() };
+            new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
 
         public override async Task AfterPowerAmountChanged(
             PlayerChoiceContext choiceContext,
@@ -522,7 +523,7 @@ namespace NightMustStay.Core.Models.Power
             Creature applier,
             CardModel cardSource)
         {
-            if (power is not MarkPower
+            if (power is not NightMustStayMarkPower
                 || amount <= 0m
                 || applier != Owner
                 || !power.Owner.IsAlive)
@@ -572,6 +573,17 @@ namespace NightMustStay.Core.Models.Power
         public override PowerInstanceType InstanceType =>
             PowerInstanceType.Instanced;
 
+        public override LocString Description
+        {
+            get
+            {
+                LocString description = base.Description;
+                description.Add(ThresholdKey, DynamicVars[ThresholdKey].BaseValue);
+                description.Add("Amount", Amount);
+                return description;
+            }
+        }
+
         protected override IEnumerable<DynamicVar> CanonicalVars =>
             new[] { new DynamicVar(ThresholdKey, 4m) };
 
@@ -579,7 +591,7 @@ namespace NightMustStay.Core.Models.Power
             new IHoverTip[]
             {
                 HoverTipFactory.FromPower<DistancePower>(),
-                HoverTipFactory.FromPower<MarkPower>(),
+                HoverTipFactory.FromPower<NightMustStayMarkPower>(),
             };
 
         protected override object InitInternalData() => new Data();
@@ -628,7 +640,7 @@ namespace NightMustStay.Core.Models.Power
 
                 Creature target = Owner.Player.RunState.Rng.CombatTargets.NextItem(enemies);
                 Flash();
-                await PowerCmd.Apply<MarkPower>(
+                await PowerCmd.Apply<NightMustStayMarkPower>(
                     choiceContext,
                     target,
                     Amount,
@@ -640,7 +652,7 @@ namespace NightMustStay.Core.Models.Power
         }
     }
 
-    public sealed class MarkPower : PowerModel
+    public sealed class NightMustStayMarkPower : PowerModel
     {
         private const int TriggerInterval = 5;
         private const int BonusDamage = 10;

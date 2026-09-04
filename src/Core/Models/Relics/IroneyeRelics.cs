@@ -40,10 +40,10 @@ public sealed class CrackedSealingWax : IroneyeRelicModel
     public override RelicRarity Rarity => RelicRarity.Common;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new[] { new PowerVar<MarkPower>(2m) };
+        new[] { new PowerVar<NightMustStayMarkPower>(2m) };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        new[] { HoverTipFactory.FromPower<MarkPower>() };
+        new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
 
     public override async Task BeforeSideTurnStart(
         PlayerChoiceContext choiceContext,
@@ -58,10 +58,10 @@ public sealed class CrackedSealingWax : IroneyeRelicModel
         }
 
         Flash();
-        await PowerCmd.Apply<MarkPower>(
+        await PowerCmd.Apply<NightMustStayMarkPower>(
             choiceContext,
             combatState.HittableEnemies,
-            DynamicVars[nameof(MarkPower)].BaseValue,
+            DynamicVars[nameof(NightMustStayMarkPower)].BaseValue,
             Owner.Creature,
             null);
     }
@@ -113,7 +113,7 @@ public sealed class ProtectiveScaleArmor : IroneyeRelicModel
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         new IHoverTip[]
         {
-            HoverTipFactory.FromPower<MarkPower>(),
+            HoverTipFactory.FromPower<NightMustStayMarkPower>(),
             HoverTipFactory.Static(StaticHoverTip.Block),
         };
 
@@ -253,7 +253,7 @@ public sealed class SacredRhythmBlade : IroneyeRelicModel
         new[] { new DynamicVar(TriggerRangeKey, 1m) };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        new[] { HoverTipFactory.FromPower<MarkPower>() };
+        new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
 }
 
 public sealed class GlidingGarb : IroneyeRelicModel

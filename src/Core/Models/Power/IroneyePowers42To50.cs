@@ -167,7 +167,7 @@ public sealed class SharedIntelligencePower : PowerModel, IMarkTriggerPower
     protected override object InitInternalData() => new Data();
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        new[] { HoverTipFactory.FromPower<MarkPower>() };
+        new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
 
     public async Task AfterMarkTriggered(
         PlayerChoiceContext choiceContext,

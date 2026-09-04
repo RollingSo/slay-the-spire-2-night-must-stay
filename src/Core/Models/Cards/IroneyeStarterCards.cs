@@ -34,14 +34,14 @@ namespace NightMustStay.Core.Models.Cards
         {
             new BlockVar(4m, ValueProp.Move),
             new DynamicVar(DistanceKey, 1m),
-            new PowerVar<MarkPower>(MarkKey, 1m),
+            new PowerVar<NightMustStayMarkPower>(MarkKey, 1m),
         };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
         {
             HoverTipFactory.Static(StaticHoverTip.Block),
             HoverTipFactory.FromPower<DistancePower>(),
-            HoverTipFactory.FromPower<MarkPower>(),
+            HoverTipFactory.FromPower<NightMustStayMarkPower>(),
         }.Concat(IsUpgraded
             ? new[] { HoverTipFactory.FromKeyword(CardKeyword.Retain) }
             : Array.Empty<IHoverTip>());
@@ -65,7 +65,7 @@ namespace NightMustStay.Core.Models.Cards
                 this);
 
             NightreignHitVfx.PlayIroneyeKnife(cardPlay.Target);
-            await PowerCmd.Apply<MarkPower>(
+            await PowerCmd.Apply<NightMustStayMarkPower>(
                 choiceContext,
                 cardPlay.Target,
                 DynamicVars[MarkKey].BaseValue,

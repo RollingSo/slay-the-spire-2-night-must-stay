@@ -102,7 +102,7 @@ public sealed class ReturningWindArrow : CardModel, IMarkTriggerObserver
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         new IHoverTip[]
         {
-            HoverTipFactory.FromPower<MarkPower>(),
+            HoverTipFactory.FromPower<NightMustStayMarkPower>(),
             HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
         };
 
@@ -282,7 +282,7 @@ public sealed class SoulChasingVolley : CardModel, IMarkTriggerObserver
         };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        new[] { HoverTipFactory.FromPower<MarkPower>() };
+        new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
 
     public override string PortraitPath =>
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/soul_chasing_volley.png");

@@ -31,7 +31,7 @@ public sealed class DeathMark : CardModel
         new DynamicVar[]
         {
             new BlockVar(8m, ValueProp.Move),
-            new PowerVar<MarkPower>(MarkKey, 3m),
+            new PowerVar<NightMustStayMarkPower>(MarkKey, 3m),
             new DynamicVar(DistanceKey, 1m),
         };
 
@@ -39,7 +39,7 @@ public sealed class DeathMark : CardModel
         new IHoverTip[]
         {
             HoverTipFactory.Static(StaticHoverTip.Block),
-            HoverTipFactory.FromPower<MarkPower>(),
+            HoverTipFactory.FromPower<NightMustStayMarkPower>(),
             HoverTipFactory.FromPower<DistancePower>(),
         }.Concat(IsUpgraded
             ? new[] { HoverTipFactory.FromKeyword(CardKeyword.Retain) }
@@ -59,7 +59,7 @@ public sealed class DeathMark : CardModel
         Creature[] enemies = CombatState.HittableEnemies
             .Where(enemy => enemy.IsAlive)
             .ToArray();
-        await PowerCmd.Apply<MarkPower>(
+        await PowerCmd.Apply<NightMustStayMarkPower>(
             context,
             enemies,
             DynamicVars[MarkKey].BaseValue,
@@ -194,7 +194,7 @@ public sealed class Hunt : CardModel
         new[] { new PowerVar<HuntPower>(CardsKey, 2m) };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        new[] { HoverTipFactory.FromPower<MarkPower>() };
+        new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
 
     public override string PortraitPath =>
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/hunt.png");

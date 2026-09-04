@@ -8,7 +8,7 @@
   "POISON_GREASE.title": "中毒油脂",
   "POISON_GREASE.description": "给予{HiddenPoisonPower}层[gold]隐毒[/gold]。",
   "THROWN_ARROW_POTION.title": "投掷箭",
-  "THROWN_ARROW_POTION.description": "给予{MarkPower}层[gold]标记[/gold]。触发该名敌人的所有[gold]标记[/gold]。",
+  "THROWN_ARROW_POTION.description": "给予{NightMustStayMarkPower}层[gold]标记[/gold]。触发该名敌人的所有[gold]标记[/gold]。",
   "PICKLED_TURTLE_NECK_MEAT.title": "腌制龟颈肉",
   "PICKLED_TURTLE_NECK_MEAT.description": "将1张[gold]接近+[/gold]和1张[gold]远离+[/gold]加入你的[gold]手牌[/gold]。",
   "DUSTY_NOTE.title": "尘封音符",

@@ -126,12 +126,12 @@ public sealed class ImposingPresence : CardModel
     private const string MarkKey = "Mark";
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new[] { new PowerVar<MarkPower>(MarkKey, 1m) };
+        new[] { new PowerVar<NightMustStayMarkPower>(MarkKey, 1m) };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         new IHoverTip[]
         {
-            HoverTipFactory.FromPower<MarkPower>(),
+            HoverTipFactory.FromPower<NightMustStayMarkPower>(),
             HoverTipFactory.FromPower<StrengthPower>(),
         };
 
@@ -150,7 +150,7 @@ public sealed class ImposingPresence : CardModel
         Creature[] enemies = CombatState.HittableEnemies
             .Where(enemy => enemy.IsAlive)
             .ToArray();
-        await PowerCmd.Apply<MarkPower>(
+        await PowerCmd.Apply<NightMustStayMarkPower>(
             context,
             enemies,
             DynamicVars[MarkKey].BaseValue,
@@ -159,7 +159,7 @@ public sealed class ImposingPresence : CardModel
 
         foreach (Creature enemy in enemies.Where(enemy => enemy.IsAlive))
         {
-            decimal markAmount = enemy.GetPower<MarkPower>()?.Amount ?? 0m;
+            decimal markAmount = enemy.GetPower<NightMustStayMarkPower>()?.Amount ?? 0m;
             if (markAmount <= 0m)
                 continue;
 
@@ -188,14 +188,14 @@ public sealed class SeeThrough : CardModel
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         new DynamicVar[]
         {
-            new PowerVar<MarkPower>(MarkKey, 1m),
+            new PowerVar<NightMustStayMarkPower>(MarkKey, 1m),
             new BlockVar(4m, ValueProp.Move),
         };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         new IHoverTip[]
         {
-            HoverTipFactory.FromPower<MarkPower>(),
+            HoverTipFactory.FromPower<NightMustStayMarkPower>(),
             HoverTipFactory.Static(StaticHoverTip.Block),
         };
 
@@ -222,7 +222,7 @@ public sealed class SeeThrough : CardModel
         // Dexterity and other block modifiers.
         for (int i = 0; i < xValue; i++)
         {
-            await PowerCmd.Apply<MarkPower>(
+            await PowerCmd.Apply<NightMustStayMarkPower>(
                 context,
                 cardPlay.Target,
                 DynamicVars[MarkKey].BaseValue,

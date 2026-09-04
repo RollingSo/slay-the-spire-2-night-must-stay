@@ -28,14 +28,14 @@ public sealed class Calibration : CardModel
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         new DynamicVar[]
         {
-            new PowerVar<MarkPower>(MarkKey, 1m),
+            new PowerVar<NightMustStayMarkPower>(MarkKey, 1m),
             new CardsVar(1),
         };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         new IHoverTip[]
         {
-            HoverTipFactory.FromPower<MarkPower>(),
+            HoverTipFactory.FromPower<NightMustStayMarkPower>(),
             HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
         };
 
@@ -52,7 +52,7 @@ public sealed class Calibration : CardModel
         CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await PowerCmd.Apply<MarkPower>(
+        await PowerCmd.Apply<NightMustStayMarkPower>(
             choiceContext,
             cardPlay.Target,
             DynamicVars[MarkKey].BaseValue,
@@ -96,7 +96,7 @@ public sealed class CloudPiercingArrow : CardModel, ILongShotCard, IMarkTriggerO
         {
             HoverTipFactory.FromPower<LongShotPower>(),
             HoverTipFactory.FromPower<DistancePower>(),
-            HoverTipFactory.FromPower<MarkPower>(),
+            HoverTipFactory.FromPower<NightMustStayMarkPower>(),
             EnergyHoverTip,
         };
 
