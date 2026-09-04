@@ -24,9 +24,6 @@ public sealed class DeathMark : CardModel
 
     public override bool GainsBlock => true;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        IsUpgraded ? new[] { CardKeyword.Retain } : Array.Empty<CardKeyword>();
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         new DynamicVar[]
         {
@@ -41,9 +38,7 @@ public sealed class DeathMark : CardModel
             HoverTipFactory.Static(StaticHoverTip.Block),
             HoverTipFactory.FromPower<NightMustStayMarkPower>(),
             HoverTipFactory.FromPower<DistancePower>(),
-        }.Concat(IsUpgraded
-            ? new[] { HoverTipFactory.FromKeyword(CardKeyword.Retain) }
-            : Array.Empty<IHoverTip>());
+        };
 
     public override string PortraitPath =>
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/death_mark.png");
@@ -75,6 +70,7 @@ public sealed class DeathMark : CardModel
 
     protected override void OnUpgrade()
     {
+        DynamicVars[MarkKey].UpgradeValueBy(1m);
     }
 }
 

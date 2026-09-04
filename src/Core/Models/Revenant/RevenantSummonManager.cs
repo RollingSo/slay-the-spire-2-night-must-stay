@@ -434,7 +434,10 @@ public sealed class RevenantSummonManager
                     attacked = true;
                     await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, pumpkinTarget, 6m, ValueProp.Move, pet, null);
                     if (pumpkinTarget.IsAlive)
-                        await PowerCmd.Apply<VulnerablePower>(context, pumpkinTarget, 1m, pet, null);
+                        // Family actions are commanded by the Revenant. Attribute
+                        // their debuffs to her so player-owned hooks such as
+                        // Sleight of Flesh recognize the application.
+                        await PowerCmd.Apply<VulnerablePower>(context, pumpkinTarget, 1m, Owner.Creature, null);
                 }
                 else
                 {
@@ -448,7 +451,7 @@ public sealed class RevenantSummonManager
                 {
                     attacked = enemies.Length > 0;
                     await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, enemies, 3m, ValueProp.Move, pet, null);
-                    await PowerCmd.Apply<WeakPower>(context, enemies, 1m, pet, null);
+                    await PowerCmd.Apply<WeakPower>(context, enemies, 1m, Owner.Creature, null);
                 }
                 else
                 {

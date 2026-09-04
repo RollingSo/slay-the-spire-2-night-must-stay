@@ -656,7 +656,7 @@
   "FATAL_BLADE_EDGE.title": "致命刃芒",
   "FATAL_BLADE_EDGE.description": "[gold]距离[/gold]为-{Threshold:diff()}或以下时，所有攻击伤害都可以触发[gold]标记[/gold]。",
   "FATAL_BLADE_EDGE.upgradeDescription": "[gold]距离[/gold]为-{Threshold:diff()}或以下时，所有攻击伤害都可以触发[gold]标记[/gold]。",
-  "RELEASE.title": "解脱",
+  "RELEASE.title": "恩赐解脱",
   "RELEASE.description": "造成{Damage:diff()}点伤害。\n[gold]距离[/gold]为-{Threshold:diff()}或以下时，触发所有[gold]标记[/gold]。",
   "RELEASE.upgradeDescription": "造成{Damage:diff()}点伤害。\n[gold]距离[/gold]为-{Threshold:diff()}或以下时，触发所有[gold]标记[/gold]。",
   "EMERGENCY_NOCKING.title": "紧急上弦",

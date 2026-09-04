@@ -1,0 +1,21 @@
+{
+  "STALWART_SHIELD_GREASE.title": "堅牢な盾脂",
+  "STALWART_SHIELD_GREASE.description": "{FortifyPower} [gold]堅守[/gold]を得る。",
+  "KNIGHTLY_SPIRIT.title": "騎士の気概",
+  "KNIGHTLY_SPIRIT.description": "{GuardCounterPower} [gold]ガードカウンター[/gold]を得る。",
+  "FEARLESS_LIQUOR.title": "「恐れ知らず」の酒",
+  "FEARLESS_LIQUOR.description": "アップグレード済みの[gold]盾突き[/gold]を{Cards}枚[gold]手札[/gold]に加える。",
+  "POISON_GREASE.title": "毒脂",
+  "POISON_GREASE.description": "{HiddenPoisonPower} [gold]潜伏毒[/gold]を与える。",
+  "THROWN_ARROW_POTION.title": "投げ矢",
+  "THROWN_ARROW_POTION.description": "{NightMustStayMarkPower} [gold]マーク[/gold]を与える。その敵のすべての[gold]マーク[/gold]を発動させる。",
+  "PICKLED_TURTLE_NECK_MEAT.title": "亀首肉の酢漬け",
+  "PICKLED_TURTLE_NECK_MEAT.description": "アップグレード済みの[gold]接近[/gold]1枚と[gold]離脱[/gold]1枚を[gold]手札[/gold]に加える。",
+  "DUSTY_NOTE.title": "埃まみれの楽譜",
+  "DUSTY_NOTE.description": "[gold]召喚[/gold]する。",
+  "WRAITH_JAR.title": "死霊の壺",
+  "WRAITH_JAR.description": "ランダムな[gold]死霊[/gold]を1体召喚する。",
+  "STARLIGHT_SHARD.title": "星光の欠片",
+  "STARLIGHT_SHARD.description": "カードを3枚[gold]回収[/gold]する。",
+  "STARLIGHT_SHARD.selectionScreenPrompt": "[gold]回収[/gold]するカードを3枚選択。"
+}

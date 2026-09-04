@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -24,9 +23,6 @@ namespace NightMustStay.Core.Models.Cards
 
         public override bool GainsBlock => true;
 
-        public override IEnumerable<CardKeyword> CanonicalKeywords =>
-            IsUpgraded ? new[] { CardKeyword.Retain } : Array.Empty<CardKeyword>();
-
         public override string PortraitPath =>
             ImageHelper.GetImagePath("packed/card_portraits/ironeye/mark.png");
 
@@ -42,9 +38,7 @@ namespace NightMustStay.Core.Models.Cards
             HoverTipFactory.Static(StaticHoverTip.Block),
             HoverTipFactory.FromPower<DistancePower>(),
             HoverTipFactory.FromPower<NightMustStayMarkPower>(),
-        }.Concat(IsUpgraded
-            ? new[] { HoverTipFactory.FromKeyword(CardKeyword.Retain) }
-            : Array.Empty<IHoverTip>());
+        };
 
         public IroneyeMark()
             : base(0, CardType.Skill, CardRarity.Basic, TargetType.AnyEnemy)
@@ -75,7 +69,7 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override void OnUpgrade()
         {
-            AddKeyword(CardKeyword.Retain);
+            DynamicVars[MarkKey].UpgradeValueBy(1m);
         }
     }
 
