@@ -49,6 +49,73 @@ public sealed class DeadRealmSpiritFire : CardModel
     protected override void OnUpgrade() => DynamicVars["Freeze"].UpgradeValueBy(1m);
 }
 
+public sealed class StyxSpiritFire : CardModel
+{
+    private const string FreezeKey = "Freeze";
+    private const string DamageMultiplierKey = "DamageMultiplier";
+    private const string EnergyKey = "Energy";
+
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
+    {
+        new PowerVar<FreezePower>(FreezeKey, 3m),
+        new DynamicVar(DamageMultiplierKey, 3m),
+        new EnergyVar(EnergyKey, 1),
+    };
+
+    public override string PortraitPath =>
+        "res://revenant_assets/cards/styx_spirit_fire.png";
+
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
+    {
+        HoverTipFactory.FromPower<FreezePower>(),
+        EnergyHoverTip,
+    };
+
+    public StyxSpiritFire()
+        : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
+    {
+    }
+
+    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
+    {
+        Creature[] targets = CombatState.HittableEnemies.ToArray();
+        await PowerCmd.Apply<FreezePower>(
+            context,
+            targets,
+            DynamicVars[FreezeKey].BaseValue,
+            Owner.Creature,
+            this);
+
+        int enemiesKilled = 0;
+        foreach (Creature target in targets.Where(target => target.IsAlive))
+        {
+            decimal freeze = target.GetPower<FreezePower>()?.Amount ?? 0m;
+            var attack = await DamageCmd.Attack(
+                    freeze * DynamicVars[DamageMultiplierKey].BaseValue)
+                .CompatFromCard(this)
+                .Targeting(target)
+                .Execute(context);
+
+            if (attack.Results
+                .SelectMany(resultSet => resultSet)
+                .Any(result => result.WasTargetKilled))
+            {
+                enemiesKilled++;
+            }
+        }
+
+        if (enemiesKilled > 0)
+        {
+            await PlayerCmd.GainEnergy(
+                enemiesKilled * DynamicVars[EnergyKey].IntValue,
+                Owner);
+        }
+    }
+
+    protected override void OnUpgrade() =>
+        DynamicVars[DamageMultiplierKey].UpgradeValueBy(1m);
+}
+
 public sealed class IceLightningSpear : CardModel
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
