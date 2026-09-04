@@ -565,7 +565,7 @@ public sealed class Soulguard : CardModel
     public override string PortraitPath => "res://revenant_assets/cards/soulguard.png";
     public Soulguard() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) { }
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) => PowerCmd.Apply<SoulguardPower>(context, Owner.Creature, DynamicVars.Block.BaseValue, Owner.Creature, this);
-    protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(2m);
+    protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(1m);
 }
 
 public sealed class LightningSpear : CardModel, IRevenantChargeCard
@@ -762,7 +762,7 @@ public sealed class SpiritLink : CardModel
     public override string PortraitPath => "res://revenant_assets/cards/spirit_link.png";
     public SpiritLink() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) { }
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) => PowerCmd.Apply<SpiritLinkPower>(context, Owner.Creature, DynamicVars["MaxHp"].BaseValue, Owner.Creature, this);
-    protected override void OnUpgrade() => DynamicVars["MaxHp"].UpgradeValueBy(2m);
+    protected override void OnUpgrade() => DynamicVars["MaxHp"].UpgradeValueBy(1m);
 }
 
 public sealed class BlessingOfGrace : CardModel

@@ -107,7 +107,7 @@ namespace NightMustStay.Core.Models.Cards
                 .Execute(choiceContext);
         }
 
-        protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+        protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(5m);
     }
 
     public sealed class Approach : CardModel

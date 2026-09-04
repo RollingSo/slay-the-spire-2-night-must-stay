@@ -287,7 +287,7 @@ public sealed class HeavyEcho : CardModel
 
 public sealed class ChantingBlessing : CardModel
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new BlockVar(8m, ValueProp.Move) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new BlockVar(6m, ValueProp.Move) };
     public override string PortraitPath => "res://revenant_assets/cards/chanting_blessing.png";
     public ChantingBlessing() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) { }
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) => PowerCmd.Apply<ChantingBlessingPower>(context, Owner.Creature, DynamicVars.Block.BaseValue, Owner.Creature, this);
