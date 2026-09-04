@@ -47,9 +47,17 @@ function Invoke-GodotAndWait {
         -FilePath $GodotPath `
         -ArgumentList ($escapedArguments -join ' ') `
         -WindowStyle Hidden `
-        -Wait `
         -PassThru
-    return $process.ExitCode
+    try {
+        # Start-Process -Wait also waits for descendant processes on Windows.
+        # Godot's C# build can leave a reusable Roslyn compiler server alive,
+        # which would make the export script wait forever after Godot exits.
+        $process.WaitForExit()
+        return $process.ExitCode
+    }
+    finally {
+        $process.Dispose()
+    }
 }
 
 New-Item -ItemType Directory -Path $buildDirectory -Force | Out-Null

@@ -10,6 +10,12 @@
 - Before adding or revising card rules text, keywords, generated-card previews, or upgrade descriptions, read `design/卡牌文本与机制实现强制规范.md` completely.
 - Run `tools/validate_card_text_format.ps1` after card localization changes. Normal exports run this check automatically.
 
+## Character writing
+
+- Before adding or revising dialogue, event speech, remembrance narration, character flavor text, or character-voiced localization for any Nightfarer, read `design/Nightreign_十角色文本强制规范.md` completely.
+- Keep normal dialogue, combat barks, remembrance journals, quoted speech, alternate personas, and corrupted states distinct; do not infer a character's baseline voice from an exceptional state.
+- Use the source index in `design/Nightreign_十角色文本语料索引.md` to recheck character relationships, chapter timing, and official Simplified Chinese naming before finalizing text.
+
 ## Card artwork
 
 - Before generating or revising any card artwork, read `design/Slay_the_Spire_2_卡图生成强制规范.md` completely.
