@@ -57,20 +57,14 @@ internal static class RevenantCardHelpers
         decimal amount,
         int hits)
     {
-        for (int i = 0; i < hits; i++)
-        {
-            Creature[] enemies = card.CombatState.HittableEnemies.Where(enemy => enemy.IsAlive).ToArray();
-            if (enemies.Length == 0)
-                return;
-            Creature target = card.Owner.RunState.Rng.CombatTargets.NextItem(enemies);
-            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
-                context,
-                target,
-                amount,
-                ValueProp.Move,
-                card.Owner.Creature,
-                card);
-        }
+        if (hits <= 0)
+            return;
+
+        await DamageCmd.Attack(amount)
+            .WithHitCount(hits)
+            .CompatFromCard(card)
+            .TargetingRandomOpponents(card.CombatState)
+            .Execute(context);
     }
 
     public static async Task DamageFamily(CardModel card, PlayerChoiceContext context, decimal amount)

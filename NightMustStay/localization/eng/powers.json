@@ -186,7 +186,7 @@
   "SEBASTIAN_SLAM_POWER.title": "Slam",
   "SEBASTIAN_SLAM_POWER.description": "At the start of the Revenant's turn, [gold]Sebastian[/gold] deals 6 damage to ALL enemies.",
   "FREEZE_POWER.title": "Freeze",
-  "FREEZE_POWER.description": "Received damage is increased by {Amount}. Lose 1 stack at the end of each turn.",
+  "FREEZE_POWER.description": "Attack damage received is increased by {Amount}. Lose 1 stack at the end of each turn.",
   "WHITE_SHADOW_LURE_POWER.title": "White Shadow Lure",
   "WHITE_SHADOW_LURE_POWER.description": "Prevent the next {Amount} instances of HP loss dealt to your [gold]Family[/gold] member.",
   "SOULGUARD_POWER.title": "Soulguard",

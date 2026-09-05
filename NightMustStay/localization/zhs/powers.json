@@ -186,7 +186,7 @@
   "SEBASTIAN_SLAM_POWER.title": "拍击",
   "SEBASTIAN_SLAM_POWER.description": "[gold]塞巴斯蒂安[/gold]将在复仇者回合开始时，对所有敌人造成6点伤害。",
   "FREEZE_POWER.title": "冻伤",
-  "FREEZE_POWER.description": "受到的伤害增加{Amount}点。回合结束时层数减少1。",
+  "FREEZE_POWER.description": "受到的攻击伤害增加{Amount}点。回合结束时层数减少1。",
   "WHITE_SHADOW_LURE_POWER.title": "白影诱惑",
   "WHITE_SHADOW_LURE_POWER.description": "阻止[gold]家人[/gold]接下来{Amount}次受到的生命损伤。",
   "SOULGUARD_POWER.title": "咒魂护身",

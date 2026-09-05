@@ -4,6 +4,7 @@ using System.Reflection;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
 
 namespace NightMustStay.Core.Patches;
@@ -59,12 +60,16 @@ internal static class FreezeDamageBranchPatch
         PowerModel __instance,
         Creature target,
         decimal amount,
+        ValueProp props,
         ref decimal __result)
     {
         if (__instance is not FreezePower power)
             return true;
 
-        __result = target == power.Owner && amount > 0m && power.Owner.IsAlive
+        __result = target == power.Owner
+            && amount > 0m
+            && power.Owner.IsAlive
+            && props.HasFlag(ValueProp.Move)
             ? power.Amount
             : 0m;
         return false;

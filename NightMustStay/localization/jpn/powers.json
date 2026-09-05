@@ -186,7 +186,7 @@
   "SEBASTIAN_SLAM_POWER.title": "叩きつけ",
   "SEBASTIAN_SLAM_POWER.description": "復讐者のターン開始時、[gold]セバスチャン[/gold]が敵全体に6ダメージを与える。",
   "FREEZE_POWER.title": "凍傷",
-  "FREEZE_POWER.description": "受けるダメージが{Amount}増加する。各ターン終了時に1減少する。",
+  "FREEZE_POWER.description": "受けるアタックダメージが{Amount}増加する。各ターン終了時に1減少する。",
   "WHITE_SHADOW_LURE_POWER.title": "白影の囮",
   "WHITE_SHADOW_LURE_POWER.description": "[gold]家族[/gold]が次に受けるHP減少を{Amount}回防ぐ。",
   "SOULGUARD_POWER.title": "魂の守り",
