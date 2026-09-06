@@ -171,6 +171,8 @@
   "FATAL_BLADE_EDGE_POWER.description": "At -{Amount} [gold]Distance[/gold] or less, all Attack damage can trigger [gold]Mark[/gold].",
   "IMPOSING_PRESENCE_STRENGTH_DOWN_POWER.title": "Imposing Presence",
   "IMPOSING_PRESENCE_STRENGTH_DOWN_POWER.description": "Lose {Amount} [gold]Strength[/gold] this turn.",
+  "FRIGHTENED_BIRD_STRENGTH_DOWN_POWER.title": "Startled Bird",
+  "FRIGHTENED_BIRD_STRENGTH_DOWN_POWER.description": "Lose {Amount} [gold]Strength[/gold] this turn.",
   "REVENANT_SUMMON_CONTROLLER_POWER.title": "Necromancy",
   "REVENANT_SUMMON_CONTROLLER_POWER.description": "Manages [gold]Family[/gold] and [gold]Necros[/gold].",
   "DIE_FOR_YOU_POWER.title": "Die for You",

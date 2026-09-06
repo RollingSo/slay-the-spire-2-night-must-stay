@@ -17,7 +17,7 @@
 35 个 AttackCommand 调用点全部使用显式路由：11 个匕首，24 个弓箭。
 
 - 匕首：淬毒匕首（`VenomDagger`）、双吻毒蛾（`TwinKissPoisonMoth`）、猎步标记（`HunterStepMark`）、影袭（`IroneyeShadowAssault`）、刀锋滑行（`BladeGlide`）、凋零斩（`WitheringCut`）、恩赐解脱（`Release`）、攻势（`Offensive`）、斩乱麻（`CutThroughChaos`）、风华刃舞（`GracefulBladeDance`）、接近（`Approach`）。
-- 弓箭：连续射击（`ContinuousShooting`）、后跃射击（`BackstepShot`）、凋零箭（`PoisonBurst`）、对空射击（`AntiAirShot`）、宿灵射击（`SpiritShot`）、三箭齐射（`TripleVolley`）、爆头（`IroneyeHeadshot`）、箭雨（`IroneyeArrowRain`）、毒箭（`IroneyePoisonArrow`）、贯穿射击（`HeartpiercingArrow`）、散射（`StartledBird`）、毒雾箭阵（`PoisonMistArrowArray`）、弓斗术（`BowCombatArt`）、穿杨一箭（`WillowPiercingArrow`）、追踪箭（`TrackingArrow`）、谢幕（`CurtainCall`）、锐不可当（`AirRendingArrow`）、穿云箭（`CloudPiercingArrow`）、回风箭（`ReturningWindArrow`）、回身一箭（`TurningArrow`）、追魂连箭（`SoulChasingVolley`）、蚀尽（`CorrodeAll`）、拉满弓（`FullDraw`）、打击（`StrikeIroneye`）。
+- 弓箭：连续射击（`ContinuousShooting`）、后跃射击（`BackstepShot`）、凋零箭（`PoisonBurst`）、对空射击（`AntiAirShot`）、宿灵射击（`SpiritShot`）、三箭齐射（`TripleVolley`）、爆头（`IroneyeHeadshot`）、箭雨（`IroneyeArrowRain`）、毒箭（`IroneyePoisonArrow`）、贯穿射击（`HeartpiercingArrow`）、散射（`Scatter`）、毒雾箭阵（`PoisonMistArrowArray`）、弓斗术（`BowCombatArt`）、穿杨一箭（`WillowPiercingArrow`）、追踪箭（`TrackingArrow`）、谢幕（`CurtainCall`）、锐不可当（`AirRendingArrow`）、穿云箭（`CloudPiercingArrow`）、回风箭（`ReturningWindArrow`）、回身一箭（`TurningArrow`）、追魂连箭（`SoulChasingVolley`）、蚀尽（`CorrodeAll`）、拉满弓（`FullDraw`）、打击（`StrikeIroneye`）。
 - 基础“标记”保留施加状态前的匕首动作；“死亡标记”在每个目标上播放同类匕首划切。它们不会仅因施加标记就播放标记爆裂。
 - “闪身箭斩”对应 `EvasiveArrowSlashPower`，其距离变动追击通过兼容入口调用新匕首特效。
 - “雷电箭头” `LightningArrowheadPower` 和“乱箭” `DisorderlyArrowsPower` 的追加伤害改用箭矢，停止借用标记消耗特效。

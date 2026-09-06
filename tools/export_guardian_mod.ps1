@@ -96,6 +96,11 @@ if ($LASTEXITCODE -ne 0) {
 # Keep the compact icon and the large applied/triggered power flash in sync.
 & (Join-Path $PSScriptRoot 'validate_card_portraits.ps1')
 
+# These standalone Ironeye icons previously existed in the source tree but
+# were exported as raw PNGs without import metadata. Build a focused manifest
+# so the isolated PCK check below verifies actual Texture2D loading.
+& (Join-Path $PSScriptRoot 'validate_ironeye_power_icons.ps1')
+
 & (Join-Path $PSScriptRoot 'sync_guardian_power_icons.ps1')
 
 # Family action powers use the standard PowerModel big-icon lookup under
@@ -119,6 +124,11 @@ if ($godotExportExitCode -ne 0) {
 $portraitCheckExitCode = Invoke-GodotAndWait @('--headless', '--path', (Join-Path $PSScriptRoot 'card_portrait_validation'), '--log-file', (Join-Path $buildDirectory 'card_portrait_validation.log'), '--script', 'res://validate.gd', '--', $packPath, (Join-Path $buildDirectory 'card_portrait_paths.json'))
 if ($portraitCheckExitCode -ne 0) {
     throw "Exported card portrait validation failed with exit code $portraitCheckExitCode. See build/card_portrait_validation.log"
+}
+
+$powerIconCheckExitCode = Invoke-GodotAndWait @('--headless', '--path', (Join-Path $PSScriptRoot 'card_portrait_validation'), '--log-file', (Join-Path $buildDirectory 'ironeye_power_icon_validation.log'), '--script', 'res://validate.gd', '--', $packPath, (Join-Path $buildDirectory 'ironeye_power_icon_paths.json'))
+if ($powerIconCheckExitCode -ne 0) {
+    throw "Exported Ironeye power icon validation failed with exit code $powerIconCheckExitCode. See build/ironeye_power_icon_validation.log"
 }
 
 dotnet build $projectPath -c Release --no-restore `

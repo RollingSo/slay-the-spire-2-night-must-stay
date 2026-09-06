@@ -32,11 +32,11 @@ namespace NightMustStay.Core.Patches
         internal const string AirRendingArrowPowerIconPath =
             "res://images/atlases/power_atlas.sprites/air_rending_arrow_strength_down_power.tres";
         internal const string AirRendingArrowPowerBigIconPath =
-            "res://images/powers/air_rending_arrow_strength_down_power.png";
+            "res://ironeye_assets/powers/air_rending_arrow_strength_down_power.png";
         internal const string MarkPowerIconPath =
             "res://images/atlases/power_atlas.sprites/night_must_stay_mark_power.tres";
         internal const string MarkPowerBigIconPath =
-            "res://images/powers/night_must_stay_mark_power.png";
+            "res://ironeye_assets/powers/night_must_stay_mark_power.png";
 
         private static bool TryGetIroneyePowerIconPaths(
             PowerModel power,
@@ -459,10 +459,8 @@ namespace NightMustStay.Core.Patches
                 "res://images/packed/sprite_fonts/ironeye_energy_icon.png",
                 AirRendingArrowPowerIconPath,
                 AirRendingArrowPowerBigIconPath,
-                "res://powers/air_rending_arrow_strength_down_power.png",
                 MarkPowerIconPath,
                 MarkPowerBigIconPath,
-                "res://powers/night_must_stay_mark_power.png",
                 "res://ironeye_assets/relics/cursemark_signet.png",
                 RestSiteLayoutPath,
                 "res://ironeye_assets/rest_site/ironeye_rest_site.png",

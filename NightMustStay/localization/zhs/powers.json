@@ -171,6 +171,8 @@
   "FATAL_BLADE_EDGE_POWER.description": "[gold]距离[/gold]为-{Amount}或以下时，所有攻击伤害都可以触发[gold]标记[/gold]。",
   "IMPOSING_PRESENCE_STRENGTH_DOWN_POWER.title": "不怒自威",
   "IMPOSING_PRESENCE_STRENGTH_DOWN_POWER.description": "本回合失去{Amount}点[gold]力量[/gold]。",
+  "FRIGHTENED_BIRD_STRENGTH_DOWN_POWER.title": "惊弓之鸟",
+  "FRIGHTENED_BIRD_STRENGTH_DOWN_POWER.description": "本回合失去{Amount}点[gold]力量[/gold]。",
   "REVENANT_SUMMON_CONTROLLER_POWER.title": "死灵术",
   "REVENANT_SUMMON_CONTROLLER_POWER.description": "管理[gold]家人[/gold]与[gold]死灵[/gold]。",
   "DIE_FOR_YOU_POWER.title": "为你而死",

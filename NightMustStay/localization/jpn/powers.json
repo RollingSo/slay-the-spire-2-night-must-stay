@@ -171,6 +171,8 @@
   "FATAL_BLADE_EDGE_POWER.description": "[gold]距離[/gold]が-{Amount}以下なら、すべてのアタックダメージで[gold]マーク[/gold]を発動できる。",
   "IMPOSING_PRESENCE_STRENGTH_DOWN_POWER.title": "威圧",
   "IMPOSING_PRESENCE_STRENGTH_DOWN_POWER.description": "このターン、[gold]筋力[/gold]を{Amount}失う。",
+  "FRIGHTENED_BIRD_STRENGTH_DOWN_POWER.title": "驚弓の鳥",
+  "FRIGHTENED_BIRD_STRENGTH_DOWN_POWER.description": "このターン、[gold]筋力[/gold]を{Amount}失う。",
   "REVENANT_SUMMON_CONTROLLER_POWER.title": "死霊術",
   "REVENANT_SUMMON_CONTROLLER_POWER.description": "[gold]家族[/gold]と[gold]死霊[/gold]を管理する。",
   "DIE_FOR_YOU_POWER.title": "あなたのために",

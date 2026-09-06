@@ -662,6 +662,8 @@ namespace NightMustStay.Core.Models.Power
 
         public override PowerStackType StackType => PowerStackType.Counter;
 
+        public override int DisplayAmount => decimal.ToInt32(Amount);
+
         public override Task AfterApplied(Creature applier, CardModel cardSource)
         {
             IroneyeMarkStatusVfx.Ensure(Owner);

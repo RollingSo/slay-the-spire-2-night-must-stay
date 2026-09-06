@@ -144,7 +144,7 @@ namespace NightMustStay.Core.Models.Cards
     }
 
     // Card-table ID 24: 散射
-    public sealed class StartledBird : CardModel
+    public sealed class Scatter : CardModel
     {
         private const string DistanceKey = "Distance";
 
@@ -163,9 +163,9 @@ namespace NightMustStay.Core.Models.Cards
             };
 
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/ironeye/piercing_shot.png");
+            ImageHelper.GetImagePath("packed/card_portraits/ironeye/startled_bird.png");
 
-        public StartledBird()
+        public Scatter()
             : base(0, CardType.Attack, CardRarity.Common, TargetType.AllEnemies)
         {
         }
@@ -222,7 +222,7 @@ namespace NightMustStay.Core.Models.Cards
             };
 
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/ironeye/startled_bird.png");
+            ImageHelper.GetImagePath("packed/card_portraits/ironeye/piercing_shot.png");
 
         public FrightenedBird()
             : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)

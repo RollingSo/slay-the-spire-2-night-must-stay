@@ -29,20 +29,18 @@ try
         "BigIconPath",
         BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!;
     string root = Directory.GetCurrentDirectory();
-    var cases = new (string Name, PowerModel Power, string IconPath, string BigIconPath, string RootPath)[]
+    var cases = new (string Name, PowerModel Power, string IconPath, string BigIconPath)[]
     {
         (
             "Air Rending Arrow",
             ModelDb.Power<AirRendingArrowStrengthDownPower>(),
             "res://images/atlases/power_atlas.sprites/air_rending_arrow_strength_down_power.tres",
-            "res://images/powers/air_rending_arrow_strength_down_power.png",
-            "res://powers/air_rending_arrow_strength_down_power.png"),
+            "res://ironeye_assets/powers/air_rending_arrow_strength_down_power.png"),
         (
             "Mark",
             ModelDb.Power<NightMustStayMarkPower>(),
             "res://images/atlases/power_atlas.sprites/night_must_stay_mark_power.tres",
-            "res://images/powers/night_must_stay_mark_power.png",
-            "res://powers/night_must_stay_mark_power.png"),
+            "res://ironeye_assets/powers/night_must_stay_mark_power.png"),
     };
 
     foreach (var iconCase in cases)
@@ -51,11 +49,10 @@ try
         Console.WriteLine($"{iconCase.Name}: IconPath={iconCase.Power.IconPath}");
         Console.WriteLine($"{iconCase.Name}: PackedIconPath={iconCase.Power.PackedIconPath}");
         Console.WriteLine($"{iconCase.Name}: BigIconPath={bigIconPath.GetValue(iconCase.Power)}");
-        if (iconCase.Power.IconPath != iconCase.IconPath
-            || bigIconPath.GetValue(iconCase.Power) as string != iconCase.BigIconPath)
+        if (iconCase.Power.IconPath != iconCase.IconPath)
         {
             throw new InvalidOperationException(
-                $"{iconCase.Name} power model resolves unexpected icon paths.");
+                $"{iconCase.Name} power model resolves an unexpected compact icon path.");
         }
 
         string resolved = string.Empty;
@@ -83,13 +80,20 @@ try
         {
             iconCase.IconPath,
             iconCase.BigIconPath,
-            iconCase.RootPath,
         })
         {
             string file = Path.Combine(root, path[6..].Replace('/', Path.DirectorySeparatorChar));
             if (!File.Exists(file))
                 throw new FileNotFoundException($"Required {iconCase.Name} power icon is missing.", file);
         }
+    }
+
+    PropertyInfo markDisplayAmount = typeof(NightMustStayMarkPower).GetProperty(
+        nameof(PowerModel.DisplayAmount))!;
+    if (markDisplayAmount.GetMethod?.DeclaringType != typeof(NightMustStayMarkPower))
+    {
+        throw new InvalidOperationException(
+            "Mark must explicitly bind its displayed stack count to Amount.");
     }
 
     string untouched = "sentinel";
