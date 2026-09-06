@@ -27,7 +27,7 @@ namespace NightMustStay.Core.Models.Cards
             new[] { new PowerVar<PierceTheWillowPower>(RangeKey, 1m) };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            new[] { HoverTipFactory.FromPower<MarkPower>() };
+            new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
 
         public override string PortraitPath =>
             ImageHelper.GetImagePath("packed/card_portraits/ironeye/pierce_the_willow.png");
@@ -118,7 +118,7 @@ namespace NightMustStay.Core.Models.Cards
             new[] { new DamageVar(4m, ValueProp.Unpowered) };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            new[] { HoverTipFactory.FromPower<MarkPower>() };
+            new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
 
         public override string PortraitPath =>
             ImageHelper.GetImagePath("packed/card_portraits/ironeye/disorderly_arrows.png");
@@ -160,7 +160,7 @@ namespace NightMustStay.Core.Models.Cards
             new IHoverTip[]
             {
                 HoverTipFactory.FromPower<DistancePower>(),
-                HoverTipFactory.FromPower<MarkPower>(),
+                HoverTipFactory.FromPower<NightMustStayMarkPower>(),
             };
 
         public override string PortraitPath =>
@@ -176,7 +176,7 @@ namespace NightMustStay.Core.Models.Cards
             CardPlay cardPlay)
         {
             Creature[] markedTargets = CombatState.HittableEnemies
-                .Where(enemy => enemy.IsAlive && enemy.HasPower<MarkPower>())
+                .Where(enemy => enemy.IsAlive && enemy.HasPower<NightMustStayMarkPower>())
                 .ToArray();
             foreach (Creature target in markedTargets)
             {
@@ -277,7 +277,7 @@ namespace NightMustStay.Core.Models.Cards
             new IHoverTip[]
             {
                 HoverTipFactory.FromPower<DistancePower>(),
-                HoverTipFactory.FromPower<MarkPower>(),
+                HoverTipFactory.FromPower<NightMustStayMarkPower>(),
             };
 
         public override string PortraitPath =>

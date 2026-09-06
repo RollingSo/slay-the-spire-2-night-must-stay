@@ -111,7 +111,7 @@ namespace NightMustStay.Core.Nodes.Vfx
             if (_target == null || _target.IsDead)
                 return false;
 
-            MarkPower? mark = _target.GetPower<MarkPower>();
+            NightMustStayMarkPower? mark = _target.GetPower<NightMustStayMarkPower>();
             if (mark == null || mark.Amount <= 0)
                 return false;
 

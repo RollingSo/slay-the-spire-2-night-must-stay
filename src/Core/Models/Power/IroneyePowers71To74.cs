@@ -57,7 +57,7 @@ public sealed class FatalBladeEdgePower : PowerModel
         new IHoverTip[]
         {
             HoverTipFactory.FromPower<DistancePower>(),
-            HoverTipFactory.FromPower<MarkPower>(),
+            HoverTipFactory.FromPower<NightMustStayMarkPower>(),
         };
 
     public override bool TryModifyPowerAmountReceived(

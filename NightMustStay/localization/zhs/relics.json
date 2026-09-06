@@ -33,7 +33,7 @@
   "TACTICAL_COMPENDIUM.description": "战斗开始时，将1张[gold]盾戳+[/gold]加入你的[gold]抽牌堆[/gold]。",
   "TACTICAL_COMPENDIUM.flavor": "每一页都画着同一个动作，却没有两页完全相同。",
   "CRACKED_SEALING_WAX.title": "裂开的封蜡",
-  "CRACKED_SEALING_WAX.description": "战斗开始时，给予所有敌人{MarkPower}层[gold]标记[/gold]。",
+  "CRACKED_SEALING_WAX.description": "战斗开始时，给予所有敌人{NightMustStayMarkPower}层[gold]标记[/gold]。",
   "CRACKED_SEALING_WAX.flavor": "封口已经裂开，里面的名字却仍一个不少。",
   "WISDOMS_DARK_NIGHT.title": "智的黑夜",
   "WISDOMS_DARK_NIGHT.description": "战斗开始时，给予所有敌人{HiddenPoisonPower}层[gold]隐毒[/gold]。",

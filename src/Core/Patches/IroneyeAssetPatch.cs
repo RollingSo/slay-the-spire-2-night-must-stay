@@ -12,6 +12,7 @@ using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Screens.Shops;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using NightMustStay.Core.Models.Characters;
+using NightMustStay.Core.Models.Power;
 
 namespace NightMustStay.Core.Patches
 {
@@ -28,6 +29,38 @@ namespace NightMustStay.Core.Patches
             "res://ironeye_assets/multiplayer_hands";
         private const string IroneyeTrailPath =
             "res://ironeye_assets/card_trail_ironeye.tscn";
+        internal const string AirRendingArrowPowerIconPath =
+            "res://images/atlases/power_atlas.sprites/air_rending_arrow_strength_down_power.tres";
+        internal const string AirRendingArrowPowerBigIconPath =
+            "res://images/powers/air_rending_arrow_strength_down_power.png";
+        internal const string MarkPowerIconPath =
+            "res://images/atlases/power_atlas.sprites/night_must_stay_mark_power.tres";
+        internal const string MarkPowerBigIconPath =
+            "res://images/powers/night_must_stay_mark_power.png";
+
+        [HarmonyPatch(
+            typeof(PowerModel),
+            nameof(PowerModel.ResolvedBigIconPath),
+            MethodType.Getter)]
+        [HarmonyPrefix]
+        public static bool ResolveIroneyePowerBigIcon(
+            PowerModel __instance,
+            ref string __result)
+        {
+            string resolvedPath;
+            if (__instance is AirRendingArrowStrengthDownPower)
+                resolvedPath = AirRendingArrowPowerBigIconPath;
+            else if (__instance is NightMustStayMarkPower)
+                resolvedPath = MarkPowerBigIconPath;
+            else
+                return true;
+
+            // PowerModel permanently caches its missing-icon fallback after
+            // the first failed lookup. Return these verified mod resources
+            // directly so a transient lookup miss cannot poison an instance.
+            __result = resolvedPath;
+            return false;
+        }
 
         [HarmonyPatch(typeof(CharacterModel), nameof(CharacterModel.CharacterSelectBg), MethodType.Getter)]
         [HarmonyPostfix]
@@ -371,6 +404,12 @@ namespace NightMustStay.Core.Patches
                 "res://ironeye_assets/energy_icon/ironeye_energy_card_icon.png",
                 "res://images/atlases/ui_atlas.sprites/card/energy_ironeye.tres",
                 "res://images/packed/sprite_fonts/ironeye_energy_icon.png",
+                AirRendingArrowPowerIconPath,
+                AirRendingArrowPowerBigIconPath,
+                "res://powers/air_rending_arrow_strength_down_power.png",
+                MarkPowerIconPath,
+                MarkPowerBigIconPath,
+                "res://powers/night_must_stay_mark_power.png",
                 "res://ironeye_assets/relics/cursemark_signet.png",
                 RestSiteLayoutPath,
                 "res://ironeye_assets/rest_site/ironeye_rest_site.png",

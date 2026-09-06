@@ -33,7 +33,7 @@
   "TACTICAL_COMPENDIUM.description": "At the start of combat, add 1 upgraded [gold]Shield Poke[/gold] to your [gold]Draw Pile[/gold].",
   "TACTICAL_COMPENDIUM.flavor": "Every page depicts the same motion, yet no two pages are alike.",
   "CRACKED_SEALING_WAX.title": "Cracked Sealing Wax",
-  "CRACKED_SEALING_WAX.description": "At the start of combat, apply {MarkPower} [gold]Mark[/gold] to ALL enemies.",
+  "CRACKED_SEALING_WAX.description": "At the start of combat, apply {NightMustStayMarkPower} [gold]Mark[/gold] to ALL enemies.",
   "CRACKED_SEALING_WAX.flavor": "The seal has split, but every name within remains legible.",
   "WISDOMS_DARK_NIGHT.title": "Wisdom's Dark Night",
   "WISDOMS_DARK_NIGHT.description": "At the start of combat, apply {HiddenPoisonPower} [gold]Hidden Poison[/gold] to ALL enemies.",

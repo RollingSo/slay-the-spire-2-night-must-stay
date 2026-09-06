@@ -46,7 +46,7 @@ The default Godot and Mods paths are declared at the top of `tools/export_guardi
 | `src/Core/Patches` | Harmony integration with base-game scenes, events, UI and animation hooks. |
 | `src/Core/Nodes` | Godot UI/VFX nodes such as distance, mark and forecast overlays. |
 | `guardian_assets`, `ironeye_assets`, `revenant_assets` | Character-owned art, rigs, icons, scenes and transition assets. |
-| `NightMustStay/localization/{zhs,eng}` | Mod localization tables. |
+| `NightMustStay/localization/{zhs,eng,jpn}` | Mod localization tables. |
 | `images/atlases`, `materials`, `atlases`, `powers`, `packed` | Godot atlas/material resources and packaged card/power assets. |
 | `tools` | Export, icon-sync and localization validation scripts. |
 | `design` | Art specifications, character bibles, card table snapshot and approved previews. |

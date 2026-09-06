@@ -220,7 +220,7 @@ namespace NightMustStay.Core.Models.Cards
         protected override IEnumerable<DynamicVar> CanonicalVars =>
             new DynamicVar[]
             {
-                new PowerVar<MarkPower>(MarkKey, 1m),
+                new PowerVar<NightMustStayMarkPower>(MarkKey, 1m),
                 new PowerVar<HiddenPoisonPower>(HiddenPoisonKey, 2m),
             };
 
@@ -228,7 +228,7 @@ namespace NightMustStay.Core.Models.Cards
             new IHoverTip[]
             {
                 HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
-                HoverTipFactory.FromPower<MarkPower>(),
+                HoverTipFactory.FromPower<NightMustStayMarkPower>(),
                 HoverTipFactory.FromPower<HiddenPoisonPower>(),
             };
 
@@ -247,7 +247,7 @@ namespace NightMustStay.Core.Models.Cards
             Creature[] enemies = CombatState.HittableEnemies
                 .Where(enemy => enemy.IsAlive)
                 .ToArray();
-            await PowerCmd.Apply<MarkPower>(
+            await PowerCmd.Apply<NightMustStayMarkPower>(
                 context,
                 enemies,
                 DynamicVars[MarkKey].BaseValue,
@@ -624,14 +624,14 @@ namespace NightMustStay.Core.Models.Cards
             new DynamicVar[]
             {
                 new BlockVar(12m, ValueProp.Move),
-                new PowerVar<MarkPower>(MarkKey, 1m),
+                new PowerVar<NightMustStayMarkPower>(MarkKey, 1m),
             };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
             new IHoverTip[]
             {
                 HoverTipFactory.Static(StaticHoverTip.Block),
-                HoverTipFactory.FromPower<MarkPower>(),
+                HoverTipFactory.FromPower<NightMustStayMarkPower>(),
             };
 
         public override string PortraitPath =>
@@ -650,7 +650,7 @@ namespace NightMustStay.Core.Models.Cards
             Creature[] targets = CombatState.HittableEnemies
                 .Where(enemy => enemy.IsAlive)
                 .ToArray();
-            await PowerCmd.Apply<MarkPower>(
+            await PowerCmd.Apply<NightMustStayMarkPower>(
                 context,
                 targets,
                 DynamicVars[MarkKey].BaseValue,
@@ -708,12 +708,12 @@ namespace NightMustStay.Core.Models.Cards
         protected override IEnumerable<DynamicVar> CanonicalVars =>
             new DynamicVar[]
             {
-                new PowerVar<MarkPower>(MarkKey, 2m),
+                new PowerVar<NightMustStayMarkPower>(MarkKey, 2m),
                 new DynamicVar(CardsKey, 1m),
             };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            new[] { HoverTipFactory.FromPower<MarkPower>() };
+            new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
 
         public override string PortraitPath =>
             ImageHelper.GetImagePath("packed/card_portraits/ironeye/aim.png");
@@ -728,7 +728,7 @@ namespace NightMustStay.Core.Models.Cards
             CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
-            await PowerCmd.Apply<MarkPower>(
+            await PowerCmd.Apply<NightMustStayMarkPower>(
                 context,
                 cardPlay.Target,
                 DynamicVars[MarkKey].BaseValue,

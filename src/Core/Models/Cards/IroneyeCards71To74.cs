@@ -68,7 +68,7 @@ public sealed class FatalBladeEdge : CardModel
         {
             HoverTipFactory.FromPower<FatalBladeEdgePower>(),
             HoverTipFactory.FromPower<DistancePower>(),
-            HoverTipFactory.FromPower<MarkPower>(),
+            HoverTipFactory.FromPower<NightMustStayMarkPower>(),
         };
 
     public override string PortraitPath =>
@@ -114,7 +114,7 @@ public sealed class Release : CardModel
         new IHoverTip[]
         {
             HoverTipFactory.FromPower<DistancePower>(),
-            HoverTipFactory.FromPower<MarkPower>(),
+            HoverTipFactory.FromPower<NightMustStayMarkPower>(),
             HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
         };
 
@@ -144,7 +144,7 @@ public sealed class Release : CardModel
             return;
         }
 
-        MarkPower mark = cardPlay.Target.GetPower<MarkPower>();
+        NightMustStayMarkPower mark = cardPlay.Target.GetPower<NightMustStayMarkPower>();
         if (mark != null)
             await mark.TriggerAll(choiceContext, Owner.Creature, this);
     }

@@ -101,7 +101,7 @@ public sealed class AdvanceAndRetreat : CardModel
         {
             new DynamicVar(DistanceKey, 1m),
             new BlockVar(5m, ValueProp.Move),
-            new PowerVar<MarkPower>(MarkKey, 1m),
+            new PowerVar<NightMustStayMarkPower>(MarkKey, 1m),
         };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -109,7 +109,7 @@ public sealed class AdvanceAndRetreat : CardModel
         {
             HoverTipFactory.FromPower<DistancePower>(),
             HoverTipFactory.Static(StaticHoverTip.Block),
-            HoverTipFactory.FromPower<MarkPower>(),
+            HoverTipFactory.FromPower<NightMustStayMarkPower>(),
         };
 
     public override string PortraitPath =>
@@ -143,7 +143,7 @@ public sealed class AdvanceAndRetreat : CardModel
             this);
         if (cardPlay.Target.IsAlive)
         {
-            await PowerCmd.Apply<MarkPower>(
+            await PowerCmd.Apply<NightMustStayMarkPower>(
                 context,
                 cardPlay.Target,
                 DynamicVars[MarkKey].BaseValue,
@@ -291,7 +291,7 @@ public sealed class SharedIntelligence : CardModel
         new[] { new PowerVar<SharedIntelligencePower>(TriggersKey, 1m) };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        new[] { HoverTipFactory.FromPower<MarkPower>() };
+        new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
 
     public override string PortraitPath =>
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/shared_intelligence.png");

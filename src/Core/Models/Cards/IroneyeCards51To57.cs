@@ -24,14 +24,11 @@ public sealed class DeathMark : CardModel
 
     public override bool GainsBlock => true;
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        IsUpgraded ? new[] { CardKeyword.Retain } : Array.Empty<CardKeyword>();
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         new DynamicVar[]
         {
             new BlockVar(8m, ValueProp.Move),
-            new PowerVar<MarkPower>(MarkKey, 3m),
+            new PowerVar<NightMustStayMarkPower>(MarkKey, 3m),
             new DynamicVar(DistanceKey, 1m),
         };
 
@@ -39,11 +36,9 @@ public sealed class DeathMark : CardModel
         new IHoverTip[]
         {
             HoverTipFactory.Static(StaticHoverTip.Block),
-            HoverTipFactory.FromPower<MarkPower>(),
+            HoverTipFactory.FromPower<NightMustStayMarkPower>(),
             HoverTipFactory.FromPower<DistancePower>(),
-        }.Concat(IsUpgraded
-            ? new[] { HoverTipFactory.FromKeyword(CardKeyword.Retain) }
-            : Array.Empty<IHoverTip>());
+        };
 
     public override string PortraitPath =>
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/death_mark.png");
@@ -59,7 +54,7 @@ public sealed class DeathMark : CardModel
         Creature[] enemies = CombatState.HittableEnemies
             .Where(enemy => enemy.IsAlive)
             .ToArray();
-        await PowerCmd.Apply<MarkPower>(
+        await PowerCmd.Apply<NightMustStayMarkPower>(
             context,
             enemies,
             DynamicVars[MarkKey].BaseValue,
@@ -75,6 +70,7 @@ public sealed class DeathMark : CardModel
 
     protected override void OnUpgrade()
     {
+        DynamicVars[MarkKey].UpgradeValueBy(1m);
     }
 }
 
@@ -194,7 +190,7 @@ public sealed class Hunt : CardModel
         new[] { new PowerVar<HuntPower>(CardsKey, 2m) };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        new[] { HoverTipFactory.FromPower<MarkPower>() };
+        new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
 
     public override string PortraitPath =>
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/hunt.png");

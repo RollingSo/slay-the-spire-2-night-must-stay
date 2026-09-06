@@ -56,11 +56,32 @@ public sealed class HaloReturnPower : PowerModel
 
     protected override object InitInternalData() => new Data();
 
+    public static async Task Schedule(PlayerChoiceContext context, CardModel card)
+    {
+        Creature owner = card.Owner.Creature;
+        HaloReturnPower power = owner.GetPower<HaloReturnPower>();
+        if (power == null)
+        {
+            power = await PowerCmd.Apply<HaloReturnPower>(
+                context,
+                owner,
+                1m,
+                owner,
+                card);
+        }
+        power?.Remember(card);
+    }
+
     public override Task AfterApplied(Creature applier, CardModel cardSource)
     {
-        if (cardSource != null && !GetInternalData<Data>().Cards.Contains(cardSource))
-            GetInternalData<Data>().Cards.Add(cardSource);
+        Remember(cardSource);
         return Task.CompletedTask;
+    }
+
+    private void Remember(CardModel card)
+    {
+        if (card != null && !GetInternalData<Data>().Cards.Contains(card))
+            GetInternalData<Data>().Cards.Add(card);
     }
 
     public override async Task AfterSideTurnStart(

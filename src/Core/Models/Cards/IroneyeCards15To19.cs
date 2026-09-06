@@ -80,7 +80,7 @@ namespace NightMustStay.Core.Models.Cards
         protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
         {
             HoverTipFactory.FromKeyword(CardKeyword.Retain),
-            HoverTipFactory.FromPower<MarkPower>(),
+            HoverTipFactory.FromPower<NightMustStayMarkPower>(),
         };
 
         public override string PortraitPath =>
@@ -112,7 +112,7 @@ namespace NightMustStay.Core.Models.Cards
 
             if (_triggeredMark
                 && cardPlay.Target.IsAlive
-                && cardPlay.Target.GetPower<MarkPower>() is { } remainingMark)
+                && cardPlay.Target.GetPower<NightMustStayMarkPower>() is { } remainingMark)
                 await remainingMark.TriggerAll(context, Owner.Creature, this);
         }
 

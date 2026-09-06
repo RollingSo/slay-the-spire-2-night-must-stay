@@ -51,24 +51,24 @@ public sealed class ThrownArrowPotion : PotionModel
     public override TargetType TargetType => TargetType.AnyEnemy;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new[] { new PowerVar<MarkPower>(1m) };
+        new[] { new PowerVar<NightMustStayMarkPower>(1m) };
 
     public override IEnumerable<IHoverTip> ExtraHoverTips =>
-        new[] { HoverTipFactory.FromPower<MarkPower>() };
+        new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
 
     protected override async Task OnUse(
         PlayerChoiceContext choiceContext,
         Creature target)
     {
         AssertValidForTargetedPotion(target);
-        await PowerCmd.Apply<MarkPower>(
+        await PowerCmd.Apply<NightMustStayMarkPower>(
             choiceContext,
             target,
-            DynamicVars[nameof(MarkPower)].BaseValue,
+            DynamicVars[nameof(NightMustStayMarkPower)].BaseValue,
             Owner.Creature,
             null);
 
-        MarkPower mark = target.GetPower<MarkPower>();
+        NightMustStayMarkPower mark = target.GetPower<NightMustStayMarkPower>();
         if (mark != null)
             await mark.TriggerAll(choiceContext, Owner.Creature, null);
     }

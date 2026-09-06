@@ -57,20 +57,14 @@ internal static class RevenantCardHelpers
         decimal amount,
         int hits)
     {
-        for (int i = 0; i < hits; i++)
-        {
-            Creature[] enemies = card.CombatState.HittableEnemies.Where(enemy => enemy.IsAlive).ToArray();
-            if (enemies.Length == 0)
-                return;
-            Creature target = card.Owner.RunState.Rng.CombatTargets.NextItem(enemies);
-            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
-                context,
-                target,
-                amount,
-                ValueProp.Move,
-                card.Owner.Creature,
-                card);
-        }
+        if (hits <= 0)
+            return;
+
+        await DamageCmd.Attack(amount)
+            .WithHitCount(hits)
+            .CompatFromCard(card)
+            .TargetingRandomOpponents(card.CombatState)
+            .Execute(context);
     }
 
     public static async Task DamageFamily(CardModel card, PlayerChoiceContext context, decimal amount)
@@ -181,7 +175,6 @@ public sealed class EmergencyRestore : CardModel
 
 public sealed class PreciseLightningStrike : CardModel
 {
-    private bool _recoveredThisTurn;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
         new DamageVar(9m, ValueProp.Move),
@@ -198,29 +191,11 @@ public sealed class PreciseLightningStrike : CardModel
     }
     public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
     {
-        if (card == this
-            && !_recoveredThisTurn
-            && RevenantCardHelpers.WasMovedFromDiscardToHand(card, oldPileType))
-        {
-            _recoveredThisTurn = true;
-            DynamicVars.Damage.BaseValue *= 2m;
-        }
+        if (card == this && RevenantCardHelpers.WasMovedFromDiscardToHand(card, oldPileType))
+            EnergyCost.AddThisTurn(-1, true);
         return Task.CompletedTask;
     }
-    public override Task AfterSideTurnEnd(
-        PlayerChoiceContext context,
-        CombatSide side,
-        IEnumerable<Creature> creatures)
-    {
-        if (side == Owner.Creature.Side && _recoveredThisTurn)
-        {
-            DynamicVars.Damage.BaseValue /= 2m;
-            _recoveredThisTurn = false;
-        }
-        return Task.CompletedTask;
-    }
-    protected override void OnUpgrade() =>
-        DynamicVars.Damage.UpgradeValueBy(_recoveredThisTurn ? 6m : 3m);
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
 }
 
 public sealed class ThreefoldHalo : CardModel
@@ -234,7 +209,7 @@ public sealed class ThreefoldHalo : CardModel
     public override async Task AfterCardPlayedLate(PlayerChoiceContext context, CardPlay cardPlay)
     {
         if (cardPlay.Card != this) return;
-        await PowerCmd.Apply<HaloReturnPower>(context, Owner.Creature, 1m, Owner.Creature, this);
+        await HaloReturnPower.Schedule(context, this);
     }
     public void ReduceCostForCurrentCombat() => EnergyCost.AddThisCombat(-1, true);
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
@@ -249,7 +224,7 @@ public sealed class AncientDragonLightning : CardModel
     public AncientDragonLightning() : base(0, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        int hits = ResolveEnergyXValue() + (IsUpgraded ? 1 : 0) + (_recoveredThisTurn ? 2 : 0);
+        int hits = ResolveEnergyXValue() + (IsUpgraded ? 1 : 0) + (_recoveredThisTurn ? 1 : 0);
         await RevenantCardHelpers.DamageRandomEachHit(
             this,
             context,
@@ -292,18 +267,37 @@ public sealed class LansseaxBlade : CardModel
 
 public sealed class LightningStrike : CardModel
 {
+    private bool _recoveredThisTurn;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(12m, ValueProp.Move) };
     public override string PortraitPath => "res://revenant_assets/cards/lightning_strike.png";
     public LightningStrike() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     { ArgumentNullException.ThrowIfNull(cardPlay.Target); await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(cardPlay.Target).Execute(context); }
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);
     public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
     {
-        if (card == this && RevenantCardHelpers.WasMovedFromDiscardToHand(card, oldPileType))
-            EnergyCost.SetThisTurn(0, true);
+        if (card == this
+            && !_recoveredThisTurn
+            && RevenantCardHelpers.WasMovedFromDiscardToHand(card, oldPileType))
+        {
+            _recoveredThisTurn = true;
+            DynamicVars.Damage.BaseValue *= 2m;
+        }
         return Task.CompletedTask;
     }
+    public override Task AfterSideTurnEnd(
+        PlayerChoiceContext context,
+        CombatSide side,
+        IEnumerable<Creature> creatures)
+    {
+        if (side == Owner.Creature.Side && _recoveredThisTurn)
+        {
+            DynamicVars.Damage.BaseValue /= 2m;
+            _recoveredThisTurn = false;
+        }
+        return Task.CompletedTask;
+    }
+    protected override void OnUpgrade() =>
+        DynamicVars.Damage.UpgradeValueBy(_recoveredThisTurn ? 8m : 4m);
 }
 
 public sealed class AncientDragonSpear : CardModel
@@ -565,7 +559,7 @@ public sealed class Soulguard : CardModel
     public override string PortraitPath => "res://revenant_assets/cards/soulguard.png";
     public Soulguard() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) { }
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) => PowerCmd.Apply<SoulguardPower>(context, Owner.Creature, DynamicVars.Block.BaseValue, Owner.Creature, this);
-    protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(2m);
+    protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(1m);
 }
 
 public sealed class LightningSpear : CardModel, IRevenantChargeCard
@@ -678,7 +672,7 @@ public sealed class RadagonHalo : CardModel
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Ethereal };
     public override string PortraitPath => "res://revenant_assets/cards/radagon_halo.png";
     public RadagonHalo() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
-    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) { EnsureCombatValue(); ArgumentNullException.ThrowIfNull(cardPlay.Target); await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, cardPlay.Target, DynamicVars.Damage.BaseValue, ValueProp.Move, Owner.Creature, this); await PowerCmd.Apply<HaloReturnPower>(context, Owner.Creature, 1m, Owner.Creature, this); }
+    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) { EnsureCombatValue(); ArgumentNullException.ThrowIfNull(cardPlay.Target); await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, cardPlay.Target, DynamicVars.Damage.BaseValue, ValueProp.Move, Owner.Creature, this); await HaloReturnPower.Schedule(context, this); }
     private void EnsureCombatValue() { if (ReferenceEquals(_combatIdentity, CombatState)) return; _combatIdentity = CombatState; DynamicVars.Damage.BaseValue = IsUpgraded ? 15m : 12m; }
     public void DoubleDamageForCurrentCombat() { EnsureCombatValue(); DynamicVars.Damage.BaseValue *= 2m; }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
@@ -762,7 +756,7 @@ public sealed class SpiritLink : CardModel
     public override string PortraitPath => "res://revenant_assets/cards/spirit_link.png";
     public SpiritLink() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) { }
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) => PowerCmd.Apply<SpiritLinkPower>(context, Owner.Creature, DynamicVars["MaxHp"].BaseValue, Owner.Creature, this);
-    protected override void OnUpgrade() => DynamicVars["MaxHp"].UpgradeValueBy(2m);
+    protected override void OnUpgrade() => DynamicVars["MaxHp"].UpgradeValueBy(1m);
 }
 
 public sealed class BlessingOfGrace : CardModel

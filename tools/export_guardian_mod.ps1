@@ -47,9 +47,17 @@ function Invoke-GodotAndWait {
         -FilePath $GodotPath `
         -ArgumentList ($escapedArguments -join ' ') `
         -WindowStyle Hidden `
-        -Wait `
         -PassThru
-    return $process.ExitCode
+    try {
+        # Start-Process -Wait also waits for descendant processes on Windows.
+        # Godot's C# build can leave a reusable Roslyn compiler server alive,
+        # which would make the export script wait forever after Godot exits.
+        $process.WaitForExit()
+        return $process.ExitCode
+    }
+    finally {
+        $process.Dispose()
+    }
 }
 
 New-Item -ItemType Directory -Path $buildDirectory -Force | Out-Null
@@ -69,6 +77,13 @@ if ($LASTEXITCODE -ne 0) {
 powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'validate_card_text_format.ps1')
 if ($LASTEXITCODE -ne 0) {
     throw "Card text format validation failed with exit code $LASTEXITCODE"
+}
+
+# Every shipped locale must expose the same keys. The new Japanese locale also
+# preserves runtime placeholders and rich-text tags from the English reference.
+powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'validate_localization_parity.ps1')
+if ($LASTEXITCODE -ne 0) {
+    throw "Localization parity validation failed with exit code $LASTEXITCODE"
 }
 
 # Keep the compact icon and the large applied/triggered power flash in sync.

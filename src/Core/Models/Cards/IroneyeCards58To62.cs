@@ -75,7 +75,7 @@ public sealed class NowhereToHide : CardModel
         new[] { new PowerVar<NowhereToHidePower>(MarkKey, 2m) };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        new[] { HoverTipFactory.FromPower<MarkPower>() };
+        new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
 
     public override string PortraitPath =>
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/nowhere_to_hide.png");
@@ -112,7 +112,7 @@ public sealed class WillowPiercingArrow : CardModel
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         new IHoverTip[]
         {
-            HoverTipFactory.FromPower<MarkPower>(),
+            HoverTipFactory.FromPower<NightMustStayMarkPower>(),
             HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
         };
 
@@ -141,7 +141,7 @@ public sealed class WillowPiercingArrow : CardModel
 
         foreach (Creature enemy in enemies.Where(enemy => enemy.IsAlive))
         {
-            if (enemy.GetPower<MarkPower>() is { } mark)
+            if (enemy.GetPower<NightMustStayMarkPower>() is { } mark)
                 await mark.TriggerAll(context, Owner.Creature, this);
         }
     }
@@ -157,7 +157,7 @@ public sealed class VolatilePoison : CardModel
         new IHoverTip[]
         {
             HoverTipFactory.FromPower<PoisonBurstPower>(),
-            HoverTipFactory.FromPower<MarkPower>(),
+            HoverTipFactory.FromPower<NightMustStayMarkPower>(),
         };
 
     public override string PortraitPath =>
@@ -192,7 +192,7 @@ public sealed class TrackingArrow : CardModel, IMarkTriggerObserver
         new[] { new DamageVar(4m, ValueProp.Move) };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        new[] { HoverTipFactory.FromPower<MarkPower>() };
+        new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
 
     public override string PortraitPath =>
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/tracking_arrow.png");

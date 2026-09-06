@@ -84,18 +84,31 @@ internal static class AdvanceAndRetreatTargetValidationPatch
 internal static class RevenantDirectPlayFallbackPatch
 {
     [HarmonyPrefix]
-    private static void BeforeTryPlayCard(NCardPlay __instance, ref Creature target)
+    private static bool BeforeTryPlayCard(NCardPlay __instance, ref Creature target)
     {
-        if (target != null)
-            return;
-
         CardModel card = __instance.Holder?.CardModel;
+        if (ShouldCancelChargeDirectPlay(
+                card,
+                __instance is NMouseCardPlay,
+                Input.IsMouseButtonPressed(MouseButton.Right)))
+        {
+            // Target selection can finish synchronously on the same right-click
+            // event before NMouseCardPlay._Input receives it. Stop at the last
+            // local UI gate, before TryManualPlay creates a synchronized
+            // CardPlay, so cancellation cannot diverge between peers.
+            __instance.CancelPlayCard();
+            return false;
+        }
+
+        if (target != null)
+            return true;
+
         if (card is not BeastClaw { IsChargeComplete: false }
             && card is not DeathLightning { IsChargeComplete: false }
             && card is not GurranqBeastClaw { IsChargeComplete: false }
             && card is not Ensemble { IsChargeComplete: false }
             && card is not WatchfulWaiting { IsChargeComplete: false })
-            return;
+            return true;
 
         // This prefix runs in the local input/UI path, before the synchronized
         // CardPlay action is created. Advancing CombatTargets RNG here changes
@@ -103,7 +116,14 @@ internal static class RevenantDirectPlayFallbackPatch
         // do not use the fallback target for their actual effect, so use a
         // deterministic placeholder instead.
         target = card.CombatState.HittableEnemies.FirstOrDefault();
+        return true;
     }
+
+    internal static bool ShouldCancelChargeDirectPlay(
+        CardModel card,
+        bool isMousePlay,
+        bool rightMousePressed) =>
+        card is IRevenantChargeCard && isMousePlay && rightMousePressed;
 }
 
 [HarmonyPatch(typeof(NTargetManager), "AllowedToTargetCreature")]
@@ -130,26 +150,6 @@ internal static class AdvanceAndRetreatMouseStartPatch
     [HarmonyPrefix]
     private static void BeforeStart(NMouseCardPlay __instance) =>
         IroneyeHybridTargetState.Begin(__instance);
-}
-
-[HarmonyPatch(typeof(NMouseCardPlay), nameof(NMouseCardPlay._Input))]
-internal static class RevenantChargeRightClickCancelPatch
-{
-    [HarmonyPrefix]
-    private static bool BeforeInput(NMouseCardPlay __instance, InputEvent inputEvent)
-    {
-        if (__instance.Holder?.CardModel is not IRevenantChargeCard
-            || inputEvent is not InputEventMouseButton
-            {
-                ButtonIndex: MouseButton.Right,
-                Pressed: true,
-            })
-            return true;
-
-        __instance.CancelPlayCard();
-        __instance.GetViewport()?.SetInputAsHandled();
-        return false;
-    }
 }
 
 [HarmonyPatch(typeof(NMouseCardPlay), "_ExitTree")]

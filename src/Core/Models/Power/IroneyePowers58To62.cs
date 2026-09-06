@@ -26,7 +26,7 @@ public sealed class NowhereToHidePower : PowerModel
     protected override object InitInternalData() => new Data();
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        new[] { HoverTipFactory.FromPower<MarkPower>() };
+        new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
 
     public override async Task AfterSideTurnStart(
         CombatSide side,
@@ -46,7 +46,7 @@ public sealed class NowhereToHidePower : PowerModel
             return;
 
         Flash();
-        await PowerCmd.Apply<MarkPower>(
+        await PowerCmd.Apply<NightMustStayMarkPower>(
             new BlockingPlayerChoiceContext(),
             enemies,
             Amount,
@@ -72,7 +72,7 @@ public sealed class NowhereToHidePower : PowerModel
             .ToArray();
         foreach (Creature enemy in enemies)
         {
-            if (enemy.GetPower<MarkPower>() is { } mark)
+            if (enemy.GetPower<NightMustStayMarkPower>() is { } mark)
                 await mark.TriggerAll(context, Owner, cardPlay.Card);
         }
 
@@ -90,7 +90,7 @@ public sealed class VolatilePoisonPower : PowerModel, IPoisonBurstTriggerPower
         new IHoverTip[]
         {
             HoverTipFactory.FromPower<PoisonBurstPower>(),
-            HoverTipFactory.FromPower<MarkPower>(),
+            HoverTipFactory.FromPower<NightMustStayMarkPower>(),
         };
 
     public async Task AfterPoisonBurstTriggered(
@@ -98,7 +98,7 @@ public sealed class VolatilePoisonPower : PowerModel, IPoisonBurstTriggerPower
         Creature target,
         CardModel cardSource)
     {
-        if (!target.IsAlive || target.GetPower<MarkPower>() is not { } mark)
+        if (!target.IsAlive || target.GetPower<NightMustStayMarkPower>() is not { } mark)
             return;
 
         Flash();

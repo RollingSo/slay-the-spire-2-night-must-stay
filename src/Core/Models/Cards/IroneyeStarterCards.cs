@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -24,9 +23,6 @@ namespace NightMustStay.Core.Models.Cards
 
         public override bool GainsBlock => true;
 
-        public override IEnumerable<CardKeyword> CanonicalKeywords =>
-            IsUpgraded ? new[] { CardKeyword.Retain } : Array.Empty<CardKeyword>();
-
         public override string PortraitPath =>
             ImageHelper.GetImagePath("packed/card_portraits/ironeye/mark.png");
 
@@ -34,17 +30,15 @@ namespace NightMustStay.Core.Models.Cards
         {
             new BlockVar(4m, ValueProp.Move),
             new DynamicVar(DistanceKey, 1m),
-            new PowerVar<MarkPower>(MarkKey, 1m),
+            new PowerVar<NightMustStayMarkPower>(MarkKey, 1m),
         };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
         {
             HoverTipFactory.Static(StaticHoverTip.Block),
             HoverTipFactory.FromPower<DistancePower>(),
-            HoverTipFactory.FromPower<MarkPower>(),
-        }.Concat(IsUpgraded
-            ? new[] { HoverTipFactory.FromKeyword(CardKeyword.Retain) }
-            : Array.Empty<IHoverTip>());
+            HoverTipFactory.FromPower<NightMustStayMarkPower>(),
+        };
 
         public IroneyeMark()
             : base(0, CardType.Skill, CardRarity.Basic, TargetType.AnyEnemy)
@@ -65,7 +59,7 @@ namespace NightMustStay.Core.Models.Cards
                 this);
 
             NightreignHitVfx.PlayIroneyeKnife(cardPlay.Target);
-            await PowerCmd.Apply<MarkPower>(
+            await PowerCmd.Apply<NightMustStayMarkPower>(
                 choiceContext,
                 cardPlay.Target,
                 DynamicVars[MarkKey].BaseValue,
@@ -75,7 +69,7 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override void OnUpgrade()
         {
-            AddKeyword(CardKeyword.Retain);
+            DynamicVars[MarkKey].UpgradeValueBy(1m);
         }
     }
 
@@ -113,7 +107,7 @@ namespace NightMustStay.Core.Models.Cards
                 .Execute(choiceContext);
         }
 
-        protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+        protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(5m);
     }
 
     public sealed class Approach : CardModel

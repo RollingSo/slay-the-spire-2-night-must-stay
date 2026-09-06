@@ -46,7 +46,7 @@ public sealed class HuntPower : PowerModel, IMarkTriggerPower
     public override PowerStackType StackType => PowerStackType.Counter;
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        new[] { HoverTipFactory.FromPower<MarkPower>() };
+        new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
 
     public async Task AfterMarkTriggered(
         PlayerChoiceContext choiceContext,
