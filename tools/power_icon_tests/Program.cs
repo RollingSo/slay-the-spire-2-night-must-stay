@@ -13,7 +13,7 @@ try
     typeof(ModManager).GetMethod("ResetForTests", flags)!.Invoke(null, null);
     PropertyInfo modState = typeof(ModManager).GetProperty("State")!;
     modState.SetValue(null, Enum.Parse(modState.PropertyType, "Skipped"));
-    typeof(ModelDb).GetMethod("Init", flags)!.Invoke(null, null);
+    typeof(ModelDb).GetMethod("Init", flags)!.Invoke(null, new object[] { Type.EmptyTypes });
 
     Type[] models = typeof(AirRendingArrow).Assembly.GetTypes()
         .Where(type => !type.IsAbstract && typeof(AbstractModel).IsAssignableFrom(type))
@@ -67,6 +67,17 @@ try
                 $"{iconCase.Name} big-icon fallback was not bypassed.");
         }
 
+        MethodInfo iconPrefix = typeof(IroneyeAssetPatch).GetMethod(
+            nameof(IroneyeAssetPatch.ResolveIroneyePowerIcon))!;
+        MethodInfo bigIconPrefix = typeof(IroneyeAssetPatch).GetMethod(
+            nameof(IroneyeAssetPatch.ResolveIroneyePowerBigIconTexture))!;
+        if (iconPrefix.GetCustomAttributes(typeof(HarmonyLib.HarmonyPrefix), false).Length == 0
+            || bigIconPrefix.GetCustomAttributes(typeof(HarmonyLib.HarmonyPrefix), false).Length == 0)
+        {
+            throw new InvalidOperationException(
+                $"{iconCase.Name} icon texture getters are not protected by Harmony prefixes.");
+        }
+
         foreach (string path in new[]
         {
             iconCase.IconPath,
@@ -95,7 +106,7 @@ try
     var harmony = new HarmonyLib.Harmony("NightMustStay.PowerIcon.Tests");
     harmony.Patch(getter, prefix: new HarmonyLib.HarmonyMethod(prefix));
     harmony.UnpatchAll(harmony.Id);
-    Console.WriteLine("PASS: Ironeye power icon paths, assets, fallback overrides, and patch binding.");
+    Console.WriteLine("PASS: Ironeye power icon paths, assets, path/texture fallback overrides, and patch binding.");
     return 0;
 }
 catch (Exception error)

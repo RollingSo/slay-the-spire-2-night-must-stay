@@ -737,6 +737,11 @@ namespace NightMustStay.Core.Models.Power
 
             await PowerCmd.Decrement(this);
 
+            if (Amount <= 0m)
+                IroneyeMarkStatusVfx.Remove(Owner);
+            else
+                IroneyeMarkStatusVfx.Pulse(Owner);
+
             foreach (IMarkTriggerPower triggerPower in dealer.Powers
                          .OfType<IMarkTriggerPower>()
                          .ToArray())
@@ -755,7 +760,6 @@ namespace NightMustStay.Core.Models.Power
             if (!Owner.IsAlive)
                 return;
 
-            IroneyeMarkStatusVfx.Pulse(Owner);
             NightreignHitVfx.PlayIroneyeMarkTrigger(Owner);
             decimal hiddenPoison = Owner.GetPower<HiddenPoisonPower>()?.Amount ?? 0m;
             await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(

@@ -38,6 +38,30 @@ namespace NightMustStay.Core.Patches
         internal const string MarkPowerBigIconPath =
             "res://images/powers/night_must_stay_mark_power.png";
 
+        private static bool TryGetIroneyePowerIconPaths(
+            PowerModel power,
+            out string iconPath,
+            out string bigIconPath)
+        {
+            if (power is AirRendingArrowStrengthDownPower)
+            {
+                iconPath = AirRendingArrowPowerIconPath;
+                bigIconPath = AirRendingArrowPowerBigIconPath;
+                return true;
+            }
+
+            if (power is NightMustStayMarkPower)
+            {
+                iconPath = MarkPowerIconPath;
+                bigIconPath = MarkPowerBigIconPath;
+                return true;
+            }
+
+            iconPath = string.Empty;
+            bigIconPath = string.Empty;
+            return false;
+        }
+
         [HarmonyPatch(
             typeof(PowerModel),
             nameof(PowerModel.ResolvedBigIconPath),
@@ -47,18 +71,47 @@ namespace NightMustStay.Core.Patches
             PowerModel __instance,
             ref string __result)
         {
-            string resolvedPath;
-            if (__instance is AirRendingArrowStrengthDownPower)
-                resolvedPath = AirRendingArrowPowerBigIconPath;
-            else if (__instance is NightMustStayMarkPower)
-                resolvedPath = MarkPowerBigIconPath;
-            else
+            if (!TryGetIroneyePowerIconPaths(__instance, out _, out string resolvedPath))
                 return true;
 
             // PowerModel permanently caches its missing-icon fallback after
             // the first failed lookup. Return these verified mod resources
             // directly so a transient lookup miss cannot poison an instance.
             __result = resolvedPath;
+            return false;
+        }
+
+        [HarmonyPatch(typeof(PowerModel), nameof(PowerModel.Icon), MethodType.Getter)]
+        [HarmonyPrefix]
+        public static bool ResolveIroneyePowerIcon(
+            PowerModel __instance,
+            ref Texture2D __result)
+        {
+            if (!TryGetIroneyePowerIconPaths(__instance, out string iconPath, out _))
+                return true;
+
+            Texture2D texture = GD.Load<Texture2D>(iconPath);
+            if (texture == null)
+                return true;
+
+            __result = texture;
+            return false;
+        }
+
+        [HarmonyPatch(typeof(PowerModel), nameof(PowerModel.BigIcon), MethodType.Getter)]
+        [HarmonyPrefix]
+        public static bool ResolveIroneyePowerBigIconTexture(
+            PowerModel __instance,
+            ref Texture2D __result)
+        {
+            if (!TryGetIroneyePowerIconPaths(__instance, out _, out string bigIconPath))
+                return true;
+
+            Texture2D texture = GD.Load<Texture2D>(bigIconPath);
+            if (texture == null)
+                return true;
+
+            __result = texture;
             return false;
         }
 

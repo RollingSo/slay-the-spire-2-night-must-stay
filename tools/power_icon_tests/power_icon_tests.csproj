@@ -5,11 +5,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Sts2AssemblyDir Condition="'$(Sts2AssemblyDir)' == ''">D:/Steam/steamapps/common/Slay the Spire 2/data_sts2_windows_x86_64</Sts2AssemblyDir>
+    <NightMustStayAssemblyPath Condition="'$(NightMustStayAssemblyPath)' == ''">../../.godot/mono/temp/bin/Debug/NightMustStay.dll</NightMustStayAssemblyPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="sts2"><HintPath>$(Sts2AssemblyDir)/sts2.dll</HintPath></Reference>
     <Reference Include="GodotSharp"><HintPath>$(Sts2AssemblyDir)/GodotSharp.dll</HintPath></Reference>
     <Reference Include="0Harmony"><HintPath>$(Sts2AssemblyDir)/0Harmony.dll</HintPath></Reference>
-    <Reference Include="NightMustStay"><HintPath>../../.godot/mono/temp/bin/Debug/NightMustStay.dll</HintPath></Reference>
+    <Reference Include="NightMustStay"><HintPath>$(NightMustStayAssemblyPath)</HintPath></Reference>
   </ItemGroup>
 </Project>
