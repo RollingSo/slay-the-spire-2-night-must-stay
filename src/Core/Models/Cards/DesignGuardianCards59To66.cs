@@ -19,7 +19,7 @@ namespace NightMustStay.Core.Models.Cards
     // Card-table ID 59: 风暴障壁
     public sealed class StormBarrier : CardModel
     {
-        public override string PortraitPath => ImageHelper.GetImagePath("packed/card_portraits/guardian/storm_barrier.png");
+        public override string PortraitPath => "res://packed/card_portraits/guardian/storm_barrier.png";
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
@@ -54,7 +54,7 @@ namespace NightMustStay.Core.Models.Cards
     {
         private const string TotalGuardCounterKey = "TotalGuardCounter";
 
-        public override string PortraitPath => ImageHelper.GetImagePath("packed/card_portraits/guardian/bladewind_convergence.png");
+        public override string PortraitPath => "res://packed/card_portraits/guardian/bladewind_convergence.png";
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
@@ -96,7 +96,7 @@ namespace NightMustStay.Core.Models.Cards
     // Card-table ID 61: 磨枪
     public sealed class SpearGrinding : CardModel
     {
-        public override string PortraitPath => ImageHelper.GetImagePath("packed/card_portraits/guardian/spear_grinding.png");
+        public override string PortraitPath => "res://packed/card_portraits/guardian/spear_grinding.png";
 
         public SpearGrinding() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self) { }
 
@@ -109,7 +109,7 @@ namespace NightMustStay.Core.Models.Cards
     // Card-table ID 62: 进化之翼
     public sealed class EvolutionWings : CardModel
     {
-        public override string PortraitPath => ImageHelper.GetImagePath("packed/card_portraits/guardian/evolution_wings.png");
+        public override string PortraitPath => "res://packed/card_portraits/guardian/evolution_wings.png";
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
         {
@@ -138,7 +138,7 @@ namespace NightMustStay.Core.Models.Cards
     {
         private const string GuardCounterKey = "GuardCounter";
 
-        public override string PortraitPath => ImageHelper.GetImagePath("packed/card_portraits/guardian/desperate_blow.png");
+        public override string PortraitPath => "res://packed/card_portraits/guardian/desperate_blow.png";
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
         {
@@ -183,7 +183,7 @@ namespace NightMustStay.Core.Models.Cards
         public override IEnumerable<CardKeyword> CanonicalKeywords =>
             IsUpgraded ? new[] { CardKeyword.Innate } : Array.Empty<CardKeyword>();
 
-        public override string PortraitPath => ImageHelper.GetImagePath("packed/card_portraits/guardian/stalwart_shield.png");
+        public override string PortraitPath => "res://packed/card_portraits/guardian/stalwart_shield.png";
 
         public StalwartShield() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self) { }
 
@@ -196,7 +196,7 @@ namespace NightMustStay.Core.Models.Cards
     // Card-table ID 65: 山止（由达芙的先古魔典给予并升级）
     public sealed class CounterLikeTide : CardModel
     {
-        public override string PortraitPath => ImageHelper.GetImagePath("packed/card_portraits/guardian/counter_like_tide.png");
+        public override string PortraitPath => "res://packed/card_portraits/guardian/counter_like_tide.png";
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
         {
@@ -225,7 +225,7 @@ namespace NightMustStay.Core.Models.Cards
     // Card-table ID 66: 不破架势（由欧洛巴斯的古老牙齿将踏地架势转化）
     public sealed class UnbreakableStance : CardModel
     {
-        public override string PortraitPath => ImageHelper.GetImagePath("packed/card_portraits/guardian/unbreakable_stance.png");
+        public override string PortraitPath => "res://packed/card_portraits/guardian/unbreakable_stance.png";
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {

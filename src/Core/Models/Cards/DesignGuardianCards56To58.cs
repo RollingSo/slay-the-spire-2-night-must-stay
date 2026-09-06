@@ -17,7 +17,7 @@ namespace NightMustStay.Core.Models.Cards
     // Card-table ID 56: 风暴足
     public sealed class StormKick : GuardianConcealedEdgeCard
     {
-        public override string PortraitPath => ImageHelper.GetImagePath("packed/card_portraits/guardian/storm_kick.png");
+        public override string PortraitPath => "res://packed/card_portraits/guardian/storm_kick.png";
 
         private const string WeakKey = "Weak";
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
@@ -51,7 +51,7 @@ namespace NightMustStay.Core.Models.Cards
 
         public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
 
-        public override string PortraitPath => ImageHelper.GetImagePath("packed/card_portraits/guardian/giant_hunter.png");
+        public override string PortraitPath => "res://packed/card_portraits/guardian/giant_hunter.png";
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {

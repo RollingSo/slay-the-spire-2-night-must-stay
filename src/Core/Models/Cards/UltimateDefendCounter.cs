@@ -17,7 +17,7 @@ namespace NightMustStay.Core.Models.Cards
         private const string GuardCounterKey = "GuardCounter";
 
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/guardian/ultimate_defend_counter.png");
+            "res://packed/card_portraits/guardian/ultimate_defend_counter.png";
 
         public override bool GainsBlock => true;
 

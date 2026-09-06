@@ -12,7 +12,7 @@ namespace NightMustStay.Core.Models.Cards
     public sealed class SaviorForm : CardModel
     {
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/guardian/savior_form.png");
+            "res://packed/card_portraits/guardian/savior_form.png";
 
         public SaviorForm()
             : base(3, CardType.Power, CardRarity.Rare, TargetType.Self)

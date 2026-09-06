@@ -23,7 +23,7 @@ namespace NightMustStay.Core.Models.Cards
     public sealed class HeavyHalberd : GuardianConcealedEdgeCard
     {
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/guardian/heavy_halberd.png");
+            "res://packed/card_portraits/guardian/heavy_halberd.png";
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
@@ -51,7 +51,7 @@ namespace NightMustStay.Core.Models.Cards
     public sealed class Featherstep : CardModel
     {
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/guardian/featherstep.png");
+            "res://packed/card_portraits/guardian/featherstep.png";
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
@@ -79,7 +79,7 @@ namespace NightMustStay.Core.Models.Cards
         private const int StunnedDamageMultiplier = 3;
 
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/guardian/dust_return_slash.png");
+            "res://packed/card_portraits/guardian/dust_return_slash.png";
 
         public override IEnumerable<CardKeyword> CanonicalKeywords =>
             new[] { CardKeyword.Retain };
@@ -119,7 +119,7 @@ namespace NightMustStay.Core.Models.Cards
         private const string TotalGuardCounterKey = "TotalGuardCounter";
 
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/guardian/eve_of_counterattack.png");
+            "res://packed/card_portraits/guardian/eve_of_counterattack.png";
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
@@ -161,7 +161,7 @@ namespace NightMustStay.Core.Models.Cards
     public sealed class HideAndSeekStab : GuardianConcealedEdgeCard
     {
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/guardian/hide_and_seek_stab.png");
+            "res://packed/card_portraits/guardian/hide_and_seek_stab.png";
 
         public override IEnumerable<CardKeyword> CanonicalKeywords =>
             new[] { CardKeyword.Exhaust };

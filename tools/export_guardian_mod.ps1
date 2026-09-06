@@ -87,6 +87,8 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 # Keep the compact icon and the large applied/triggered power flash in sync.
+& (Join-Path $PSScriptRoot 'validate_card_portraits.ps1')
+
 & (Join-Path $PSScriptRoot 'sync_guardian_power_icons.ps1')
 
 # Family action powers use the standard PowerModel big-icon lookup under
@@ -104,6 +106,12 @@ if ($godotImportExitCode -ne 0) {
 $godotExportExitCode = Invoke-GodotAndWait @('--headless', '--path', $root, '--export-pack', 'Windows Desktop', $packPath)
 if ($godotExportExitCode -ne 0) {
     throw "Godot PCK export failed with exit code $godotExportExitCode"
+}
+
+# Check actual imported textures in a separate project with no source/cache fallback.
+$portraitCheckExitCode = Invoke-GodotAndWait @('--headless', '--path', (Join-Path $PSScriptRoot 'card_portrait_validation'), '--log-file', (Join-Path $buildDirectory 'card_portrait_validation.log'), '--script', 'res://validate.gd', '--', $packPath, (Join-Path $buildDirectory 'card_portrait_paths.json'))
+if ($portraitCheckExitCode -ne 0) {
+    throw "Exported card portrait validation failed with exit code $portraitCheckExitCode. See build/card_portrait_validation.log"
 }
 
 dotnet build $projectPath -c Release --no-restore `

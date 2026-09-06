@@ -19,7 +19,7 @@ namespace NightMustStay.Core.Models.Cards
         private const string GuardCounterKey = "GuardCounter";
 
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/guardian/step_forward_for_all.png");
+            "res://packed/card_portraits/guardian/step_forward_for_all.png";
 
         public override CardMultiplayerConstraint MultiplayerConstraint =>
             CardMultiplayerConstraint.MultiplayerOnly;
@@ -71,7 +71,7 @@ namespace NightMustStay.Core.Models.Cards
     public sealed class GuardianMultiplayerCard : CardModel
     {
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/guardian/guardian_multiplayer_card.png");
+            "res://packed/card_portraits/guardian/guardian_multiplayer_card.png";
 
         public override CardMultiplayerConstraint MultiplayerConstraint =>
             CardMultiplayerConstraint.MultiplayerOnly;
@@ -100,4 +100,3 @@ namespace NightMustStay.Core.Models.Cards
         protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     }
 }
-

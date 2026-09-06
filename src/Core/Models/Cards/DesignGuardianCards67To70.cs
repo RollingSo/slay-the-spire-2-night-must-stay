@@ -51,7 +51,7 @@ namespace NightMustStay.Core.Models.Cards
     public sealed class WardingGale : CardModel
     {
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/guardian/warding_gale.png");
+            "res://packed/card_portraits/guardian/warding_gale.png";
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
@@ -79,7 +79,7 @@ namespace NightMustStay.Core.Models.Cards
         private const string FortifyKey = "Fortify";
 
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/guardian/absolute_defense.png");
+            "res://packed/card_portraits/guardian/absolute_defense.png";
 
         public override bool GainsBlock => true;
 
@@ -124,7 +124,7 @@ namespace NightMustStay.Core.Models.Cards
         private const string WeakKey = "Weak";
 
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/guardian/guardian_whirlwind.png");
+            "res://packed/card_portraits/guardian/guardian_whirlwind.png";
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
@@ -185,7 +185,7 @@ namespace NightMustStay.Core.Models.Cards
         private const string CardsKey = "Cards";
 
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/guardian/sidestep.png");
+            "res://packed/card_portraits/guardian/sidestep.png";
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {

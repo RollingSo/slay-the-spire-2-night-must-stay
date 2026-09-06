@@ -24,7 +24,7 @@ namespace NightMustStay.Core.Models.Cards
         private const string WeakKey = "Weak";
 
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/guardian/cloud_rending_sweep.png");
+            "res://packed/card_portraits/guardian/cloud_rending_sweep.png";
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
@@ -84,7 +84,7 @@ namespace NightMustStay.Core.Models.Cards
     public sealed class CirclingGust : CardModel
     {
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/guardian/circling_gust.png");
+            "res://packed/card_portraits/guardian/circling_gust.png";
 
         public override bool GainsBlock => true;
 
@@ -138,7 +138,7 @@ namespace NightMustStay.Core.Models.Cards
     public sealed class WorldEndingWings : CardModel
     {
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/guardian/world_ending_wings.png");
+            "res://packed/card_portraits/guardian/world_ending_wings.png";
 
         public override IEnumerable<CardKeyword> CanonicalKeywords =>
             new[] { CardKeyword.Exhaust };

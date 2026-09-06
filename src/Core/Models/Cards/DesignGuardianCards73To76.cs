@@ -22,7 +22,7 @@ namespace NightMustStay.Core.Models.Cards
     public sealed class SwallowReturnWind : CardModel
     {
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/guardian/swallow_return_wind.png");
+            "res://packed/card_portraits/guardian/swallow_return_wind.png";
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
             new[] { HoverTipFactory.FromPower<GuardCounterPower>() };
@@ -46,7 +46,7 @@ namespace NightMustStay.Core.Models.Cards
     public sealed class Heavenfall : CardModel
     {
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/guardian/heavenfall.png");
+            "res://packed/card_portraits/guardian/heavenfall.png";
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
         {
@@ -73,7 +73,7 @@ namespace NightMustStay.Core.Models.Cards
     public sealed class RetreatingDefense : CardModel
     {
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/guardian/retreating_defense.png");
+            "res://packed/card_portraits/guardian/retreating_defense.png";
 
         public override bool GainsBlock => true;
 
@@ -107,7 +107,7 @@ namespace NightMustStay.Core.Models.Cards
         private const string StrengthKey = "Strength";
 
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/guardian/sky_sweeping_god.png");
+            "res://packed/card_portraits/guardian/sky_sweeping_god.png";
 
         public override IEnumerable<CardKeyword> CanonicalKeywords =>
             new[] { CardKeyword.Exhaust };

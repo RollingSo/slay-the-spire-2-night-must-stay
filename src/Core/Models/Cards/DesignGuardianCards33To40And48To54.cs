@@ -90,7 +90,7 @@ namespace NightMustStay.Core.Models.Cards
     // Card-table ID 34: 风旋戟
     public sealed class CycloneHalberd : CardModel
     {
-        public override string PortraitPath => ImageHelper.GetImagePath("packed/card_portraits/guardian/cyclone_halberd.png");
+        public override string PortraitPath => "res://packed/card_portraits/guardian/cyclone_halberd.png";
 
         private const string ImbalanceKey = "Imbalance";
         private const string WeakKey = "Weak";
@@ -390,7 +390,7 @@ namespace NightMustStay.Core.Models.Cards
 
     public sealed class StormBirth : CardModel
     {
-        public override string PortraitPath => ImageHelper.GetImagePath("packed/card_portraits/guardian/storm_birth.png");
+        public override string PortraitPath => "res://packed/card_portraits/guardian/storm_birth.png";
 
         private const string MultiplierKey = "Multiplier";
 
