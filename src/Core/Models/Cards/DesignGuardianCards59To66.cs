@@ -117,20 +117,12 @@ namespace NightMustStay.Core.Models.Cards
             HoverTipFactory.FromPower<GuardCounterPower>()
         };
 
-        protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        {
-            new PowerVar<DexterityPower>(1m)
-        };
+        public EvolutionWings() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self) { }
 
-        public EvolutionWings() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self) { }
-
-        protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
-        {
-            await PowerCmd.Apply<DexterityPower>(context, Owner.Creature, DynamicVars.Dexterity.BaseValue, Owner.Creature, this);
+        protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
             await PowerCmd.Apply<EvolutionWingsPower>(context, Owner.Creature, 1m, Owner.Creature, this);
-        }
 
-        protected override void OnUpgrade() => DynamicVars.Dexterity.UpgradeValueBy(1m);
+        protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     }
 
     // Card-table ID 63: 绝命一击
