@@ -12,20 +12,74 @@ using MegaCrit.Sts2.Core.TestSupport;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Cards;
 using NightMustStay.Core.Models.Power;
+using NightMustStay.Core.Models.Revenant;
 
 try
 {
     VerifyRandomHitsUseAttackCommand();
     VerifyFreezeDamageFiltering();
     VerifyChargeRightClickGuard();
+    VerifyUndyingMarchLifetime();
+    VerifyFamilyCallStats();
+    VerifySpiritFormStats();
     Console.WriteLine(
-        "PASS: Revenant attacks, Freeze filtering, and charge-card right-click cancellation are regression-covered.");
+        "PASS: Revenant attacks, Freeze filtering, charge-card cancellation, Undying March lifetime, Family Call HP, and Spirit Form HP are regression-covered.");
     return 0;
 }
+
 catch (Exception error)
 {
     Console.Error.WriteLine(error);
     return 1;
+}
+
+static void VerifyFamilyCallStats()
+{
+    Type manager = typeof(RevenantSummonManager);
+    MethodInfo initialHp = manager.GetMethod(
+        "GetInitialFamilyHp",
+        BindingFlags.Static | BindingFlags.NonPublic)!;
+    foreach (RevenantFamilyId family in Enum.GetValues<RevenantFamilyId>())
+    {
+        int hp = (int)initialHp.Invoke(null, new object[] { family })!;
+        if (hp != 6)
+            throw new InvalidOperationException($"{family} should start with 6 HP, but starts with {hp}.");
+    }
+
+    MethodInfo stackedHp = manager.GetMethod(
+        "CalculateFamilyHpIncrease",
+        BindingFlags.Static | BindingFlags.NonPublic)!;
+    object result = stackedHp.Invoke(null, new object[] { 12, 4, 6 })!;
+    int maxHp = (int)result.GetType().GetField("Item1")!.GetValue(result)!;
+    int currentHp = (int)result.GetType().GetField("Item2")!.GetValue(result)!;
+    if (maxHp != 18 || currentHp != 10)
+    {
+        throw new InvalidOperationException(
+            $"Calling with a Family present should add 6 Max HP and 6 current HP; got {maxHp}/{currentHp}.");
+    }
+}
+
+static void VerifySpiritFormStats()
+{
+    var power = new SpiritFormPower();
+    if (SpiritFormPower.FamilyHpGain != 6)
+        throw new InvalidOperationException("Spirit Form should grant 6 Family HP.");
+    if (power.StackType.ToString() != "Single")
+        throw new InvalidOperationException("Spirit Form should trigger once per turn rather than once per stack.");
+
+    MethodInfo trigger = typeof(SpiritFormPower).GetMethod(nameof(SpiritFormPower.AfterPlayerTurnStartLate))!;
+    Type stateMachine = trigger.GetCustomAttribute<AsyncStateMachineAttribute>()?.StateMachineType
+        ?? throw new InvalidOperationException("Spirit Form trigger is no longer asynchronous.");
+    MethodInfo moveNext = stateMachine.GetMethod(
+        "MoveNext",
+        BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!;
+    MethodBase[] calls = ReadCalledMethods(moveNext).ToArray();
+    if (!calls.Any(call => call.Name == nameof(RevenantSummonManager.IncreaseFamilyMaxAndCurrentHp))
+        || !calls.Any(call => call.Name == nameof(RevenantSummonManager.TriggerResonance)))
+    {
+        throw new InvalidOperationException(
+            "Spirit Form must increase both Family Max/current HP and then trigger Resonance.");
+    }
 }
 
 static void VerifyRandomHitsUseAttackCommand()
@@ -122,6 +176,33 @@ static void VerifyChargeRightClickGuard()
     var harmony = new HarmonyLib.Harmony("NightMustStay.ChargeInput.Tests");
     harmony.CreateClassProcessor(patch).Patch();
     harmony.UnpatchAll(harmony.Id);
+}
+
+static void VerifyUndyingMarchLifetime()
+{
+    Type powerType = typeof(UndyingMarchPower);
+    MethodInfo? turnStart = powerType.GetMethod(
+        "AfterSideTurnStart",
+        BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+    MethodInfo? turnEnd = powerType.GetMethod(
+        "AfterSideTurnEnd",
+        BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+
+    if (turnStart is null)
+        throw new InvalidOperationException("Undying March must expire at the next allied turn start.");
+    if (turnEnd is not null)
+        throw new InvalidOperationException("Undying March must not expire at the turn end when it is played.");
+
+    Type stateMachine = turnStart.GetCustomAttribute<AsyncStateMachineAttribute>()?.StateMachineType
+        ?? throw new InvalidOperationException("Undying March turn-start hook is no longer asynchronous.");
+    MethodInfo moveNext = stateMachine.GetMethod(
+        "MoveNext",
+        BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!;
+    if (!ReadCalledMethods(moveNext).Any(call =>
+            call.DeclaringType == typeof(PowerCmd) && call.Name == nameof(PowerCmd.Remove)))
+    {
+        throw new InvalidOperationException("Undying March turn-start hook no longer removes the power.");
+    }
 }
 
 static decimal InvokeFreezeModifier(

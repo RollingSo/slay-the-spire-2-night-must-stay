@@ -69,6 +69,8 @@ public sealed class RevenantNecro
 
 public sealed class RevenantSummonManager
 {
+    public const int FamilyInitialHp = 6;
+    public const int ExistingFamilyCallMaxHpBonus = 6;
     // Necro stat formula. "Base" is the fixed value and "Ratio" is the
     // percentage of the source monster's unmodified original stat. Keep these
     // meanings stable when balance values are changed later.
@@ -199,18 +201,20 @@ public sealed class RevenantSummonManager
             // stored state, otherwise switching silently loses the old maximum.
             int currentMaxHp = _familyCreature.MaxHp;
             int currentHp = _familyCreature.CurrentHp;
-            int selectedInitialHp = GetInitialFamilyHp(family);
             if (CurrentFamilyId != family)
                 await SwitchFamily(context, family);
             if (_familyCreature is { IsAlive: true })
             {
-                int stackedMaxHp = currentMaxHp + selectedInitialHp;
+                (int stackedMaxHp, int stackedCurrentHp) = CalculateFamilyHpIncrease(
+                    currentMaxHp,
+                    currentHp,
+                    ExistingFamilyCallMaxHpBonus);
                 await CreatureCmd.SetMaxHp(
                     _familyCreature,
                     stackedMaxHp);
                 await CreatureCmd.SetCurrentHp(
                     _familyCreature,
-                    Math.Min(stackedMaxHp, currentHp + selectedInitialHp));
+                    stackedCurrentHp);
             }
             SnapshotCurrentFamily();
             await ApplyCallBonuses(context);
@@ -268,13 +272,36 @@ public sealed class RevenantSummonManager
         SnapshotCurrentFamily();
     }
 
+    public async Task IncreaseFamilyMaxAndCurrentHp(int amount)
+    {
+        if (_familyCreature is not { IsAlive: true } || amount <= 0)
+            return;
+
+        (int maxHp, int currentHp) = CalculateFamilyHpIncrease(
+            _familyCreature.MaxHp,
+            _familyCreature.CurrentHp,
+            amount);
+        await CreatureCmd.SetMaxHp(_familyCreature, maxHp);
+        await CreatureCmd.SetCurrentHp(_familyCreature, currentHp);
+        SnapshotCurrentFamily();
+    }
+
     private static int GetInitialFamilyHp(RevenantFamilyId family) => family switch
     {
-        RevenantFamilyId.Helen => 7,
-        RevenantFamilyId.PumpkinHead => 8,
-        RevenantFamilyId.Skeleton => 9,
+        RevenantFamilyId.Helen => FamilyInitialHp,
+        RevenantFamilyId.PumpkinHead => FamilyInitialHp,
+        RevenantFamilyId.Skeleton => FamilyInitialHp,
         _ => throw new ArgumentOutOfRangeException(nameof(family), family, null),
     };
+
+    private static (int MaxHp, int CurrentHp) CalculateFamilyHpIncrease(
+        int currentMaxHp,
+        int currentHp,
+        int amount)
+    {
+        int maxHp = currentMaxHp + amount;
+        return (maxHp, Math.Min(maxHp, currentHp + amount));
+    }
 
     public async Task SwitchFamily(PlayerChoiceContext context, RevenantFamilyId family)
     {
@@ -410,7 +437,7 @@ public sealed class RevenantSummonManager
                     if (target != null)
                     {
                         attacked = true;
-                        await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, target, 4m, ValueProp.Move, pet, null);
+                        await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, target, 3m, ValueProp.Move, pet, null);
                     }
                     await CardPileCmd.Draw(context, 1m, Owner);
                 }
@@ -420,7 +447,7 @@ public sealed class RevenantSummonManager
                     if (target != null)
                     {
                         attacked = true;
-                        await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, target, 4m, ValueProp.Move, pet, null);
+                        await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, target, 3m, ValueProp.Move, pet, null);
                     }
                     await PlayerCmd.GainEnergy(1m, Owner);
                 }

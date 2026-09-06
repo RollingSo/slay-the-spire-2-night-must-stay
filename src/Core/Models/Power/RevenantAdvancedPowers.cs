@@ -56,8 +56,9 @@ public sealed class SoulguardPower : PowerModel
 
 public sealed class SpiritFormPower : PowerModel
 {
+    public const int FamilyHpGain = 6;
     public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
+    public override PowerStackType StackType => PowerStackType.Single;
 
     public override async Task AfterPlayerTurnStartLate(
         PlayerChoiceContext context,
@@ -66,11 +67,9 @@ public sealed class SpiritFormPower : PowerModel
         if (player != Owner.Player)
             return;
 
-        for (int i = 0; i < (int)Amount; i++)
-        {
-            await RevenantSummonManager.For(Owner.Player).IncreaseFamilyMaxHp(6m);
-            await RevenantSummonManager.For(Owner.Player).TriggerResonance(context);
-        }
+        RevenantSummonManager manager = RevenantSummonManager.For(Owner.Player);
+        await manager.IncreaseFamilyMaxAndCurrentHp(FamilyHpGain);
+        await manager.TriggerResonance(context);
     }
 }
 
@@ -100,15 +99,16 @@ public sealed class UndyingMarchPower : PowerModel
             await CreatureCmd.Heal(creature, 1m, playAnim: false);
     }
 
-    public override async Task AfterSideTurnEnd(
-        PlayerChoiceContext context,
+    public override async Task AfterSideTurnStart(
         CombatSide side,
-        IEnumerable<Creature> participants)
+        IReadOnlyList<Creature> creatures,
+        ICombatState combatState)
     {
-        // Pets are not guaranteed to be included in the side-turn participant
-        // collection. Requiring the Family owner to appear there caused this
-        // one-turn power to survive indefinitely. Its lifetime is tied to the
-        // allied side turn, so the side check alone is the correct boundary.
+        // The card is played during the allied turn, so removing this power at
+        // that turn's end leaves no enemy turn for it to protect. Keep it
+        // through the enemy turn and expire it at the next allied turn start.
+        // Do not require Owner to appear in creatures: Family pets are not
+        // guaranteed to be included in the side-turn participant collection.
         if (side == Owner.Side)
             await PowerCmd.Remove(this);
     }
