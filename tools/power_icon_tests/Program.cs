@@ -13,7 +13,8 @@ try
     typeof(ModManager).GetMethod("ResetForTests", flags)!.Invoke(null, null);
     PropertyInfo modState = typeof(ModManager).GetProperty("State")!;
     modState.SetValue(null, Enum.Parse(modState.PropertyType, "Skipped"));
-    typeof(ModelDb).GetMethod("Init", flags)!.Invoke(null, new object[] { Type.EmptyTypes });
+    MethodInfo init = typeof(ModelDb).GetMethod("Init", flags)!;
+    init.Invoke(null, init.GetParameters().Length == 0 ? null : new object[] { Type.EmptyTypes });
 
     Type[] models = typeof(AirRendingArrow).Assembly.GetTypes()
         .Where(type => !type.IsAbstract && typeof(AbstractModel).IsAssignableFrom(type))
