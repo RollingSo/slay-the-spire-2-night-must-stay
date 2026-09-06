@@ -120,8 +120,7 @@ public sealed class CloudPiercingArrow : CardModel, ILongShotCard, IMarkTriggerO
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .CompatFromCard(this)
             .Targeting(cardPlay.Target)
-            .WithHitVfxNode(target =>
-                NightreignHitVfx.CreateIroneyeShot(Owner.Creature, target))
+            .WithIroneyeShotFx(Owner.Creature)
             .Execute(choiceContext);
 
         if (_triggeredMark)

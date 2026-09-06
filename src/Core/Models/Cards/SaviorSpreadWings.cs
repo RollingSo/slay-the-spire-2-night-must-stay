@@ -1,3 +1,4 @@
+using NightMustStay.Core.Nodes.Vfx;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
@@ -32,9 +33,9 @@ namespace NightMustStay.Core.Models.Cards
             await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
                 .CompatFromCard(this)
                 .TargetingAllOpponents(base.CombatState)
-                .WithHitFx("vfx/vfx_attack_slash")
+                .WithGuardianWeaponFx()
                 .Execute(choiceContext);
-            await PowerCmd.Apply<IncomingDamageReductionThisTurnPower>(choiceContext, base.Owner.Creature, base.DynamicVars[DamageReductionKey].BaseValue, base.Owner.Creature, this);
+            await PowerCmd.Apply<SaviorSpreadWingsPower>(choiceContext, base.Owner.Creature, base.DynamicVars[DamageReductionKey].BaseValue, base.Owner.Creature, this);
         }
 
         protected override void OnUpgrade()

@@ -1,5 +1,5 @@
 param(
-    [string]$ModsDirectory = 'D:\SteamLibrary\steamapps\common\Slay the Spire 2\mods'
+    [string]$ModsDirectory = 'D:\Steam\steamapps\common\Slay the Spire 2\mods'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -23,16 +23,20 @@ foreach ($fileName in $requiredBuildFiles) {
 
 $stableManifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
 $betaManifest = [ordered]@{
-    id = $betaId
+    # The game discovers mod localization through the manifest ID. The PCK
+    # contains res://NightMustStay/localization, so a synthetic beta ID makes
+    # every mod localization key unavailable at runtime.
+    id = $stableId
     name = "$($stableManifest.name) [Beta Test]"
     author = $stableManifest.author
     description = "Local Beta Test build. Do not enable together with the Steam Workshop release. $($stableManifest.description)"
-    version = "$($stableManifest.version)-beta-test"
+    version = $stableManifest.version
     has_dll = $true
     has_pck = $true
+    min_game_version = $stableManifest.min_game_version
     affects_gameplay = $true
 }
-$betaManifestPath = Join-Path $buildDirectory "$betaId.json"
+$betaManifestPath = Join-Path $buildDirectory "$stableId.beta.json"
 $betaManifest | ConvertTo-Json | Set-Content -LiteralPath $betaManifestPath -Encoding utf8
 
 $legacyNames = @(
@@ -51,10 +55,10 @@ foreach ($legacyName in $legacyNames) {
 }
 
 $copies = [ordered]@{
-    "$betaId.pck" = Join-Path $buildDirectory "$stableId.pck"
-    "$betaId.dll" = Join-Path $buildDirectory "$stableId.dll"
-    "$betaId.pdb" = Join-Path $buildDirectory "$stableId.pdb"
-    "$betaId.json" = $betaManifestPath
+    "$stableId.pck" = Join-Path $buildDirectory "$stableId.pck"
+    "$stableId.dll" = Join-Path $buildDirectory "$stableId.dll"
+    "$stableId.pdb" = Join-Path $buildDirectory "$stableId.pdb"
+    "$stableId.json" = $betaManifestPath
 }
 foreach ($entry in $copies.GetEnumerator()) {
     $destination = Join-Path $resolvedModsDirectory $entry.Key

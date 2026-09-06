@@ -1,0 +1,1 @@
+# Standalone CLI regression fixture; never ship its build products in the mod PCK.

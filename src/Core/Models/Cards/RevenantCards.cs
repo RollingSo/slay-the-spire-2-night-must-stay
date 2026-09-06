@@ -16,6 +16,8 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
 
+using NightMustStay.Core.Nodes.Vfx;
+
 namespace NightMustStay.Core.Models.Cards;
 
 public sealed class CursedClawCombo : CardModel
@@ -37,7 +39,7 @@ public sealed class CursedClawCombo : CardModel
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .CompatFromCard(this)
+            .CompatFromCard(this).WithRevenantFx(this, cardPlay.Target)
             .Targeting(cardPlay.Target)
             .WithHitCount(2)
             .Execute(context);
@@ -84,7 +86,7 @@ public sealed class Halo : CardModel
 
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .CompatFromCard(this)
+            .CompatFromCard(this).WithRevenantFx(this, cardPlay.Target)
             .Targeting(cardPlay.Target)
             .Execute(context);
 

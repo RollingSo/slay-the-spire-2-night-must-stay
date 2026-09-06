@@ -17,6 +17,8 @@ using NightMustStay.Core.Models.Revenant;
 using NightMustStay.Core.Models.CardPools;
 using NightMustStay.Core.Models.Power;
 
+using NightMustStay.Core.Nodes.Vfx;
+
 namespace NightMustStay.Core.Models.Cards;
 
 public sealed class StrikeRevenant : CardModel
@@ -35,7 +37,7 @@ public sealed class StrikeRevenant : CardModel
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .CompatFromCard(this)
+            .CompatFromCard(this).WithRevenantFx(this, cardPlay.Target)
             .Targeting(cardPlay.Target)
             .Execute(context);
     }

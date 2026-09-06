@@ -1,3 +1,4 @@
+using NightMustStay.Core.Nodes.Vfx;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,7 +38,7 @@ namespace NightMustStay.Core.Models.Cards
                 await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
                     .CompatFromCard(this)
                     .Targeting(target)
-                    .WithHitFx("vfx/vfx_attack_slash")
+                    .WithGuardianWeaponFx()
                     .Execute(choiceContext);
             }
         }

@@ -22,8 +22,8 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new DamageVar(4m, ValueProp.Move),
-            new BlockVar(4m, ValueProp.Move),
+            new ShieldPokeDamageVar(4m),
+            new ShieldPokeBlockVar(4m),
             new CardsVar(1),
         };
 
@@ -32,21 +32,33 @@ namespace NightMustStay.Core.Models.Cards
         {
         }
 
+        // Used by both the card preview and the actual attack. Keep transient
+        // bonuses out of BaseValue so upgrades, redraws and turn changes cannot compound them.
+        internal decimal GetDamageBeforeHooks() => CalculateDamageBeforeHooks(
+            DynamicVars.Damage.BaseValue,
+            Fearless.GetShieldPokeDamageBonus(this),
+            Owner?.Creature.GetPower<SpearGrindingPower>()?.Amount ?? 0m);
+
+        internal static decimal CalculateDamageBeforeHooks(decimal baseDamage, decimal fearlessBonus, decimal grindingStacks)
+        {
+            decimal damage = baseDamage + fearlessBonus;
+            for (int i = 0; i < grindingStacks; i++)
+                damage *= 2m;
+            return damage;
+        }
+
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
 
             decimal fearlessBonus = Fearless.GetShieldPokeDamageBonus(this);
-            decimal damage = base.DynamicVars.Damage.BaseValue + fearlessBonus;
-            SpearGrindingPower grinding = base.Owner.Creature.GetPower<SpearGrindingPower>();
-            for (int i = 0; i < (grinding?.Amount ?? 0); i++)
-                damage *= 2m;
+            decimal damage = GetDamageBeforeHooks();
             if (fearlessBonus <= 0m)
                 await CreatureCmd.GainBlock(base.Owner.Creature, base.DynamicVars.Block, cardPlay);
             await DamageCmd.Attack(damage)
                 .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
-                .WithHitVfxNode(NightreignHitVfx.CreateGuardianShieldPoke)
+                .WithGuardianWeaponFx()
                 .Execute(choiceContext);
             await CardPileCmd.Draw(choiceContext, base.DynamicVars.Cards.IntValue, base.Owner);
         }

@@ -48,7 +48,7 @@ namespace NightMustStay.Core.Models.Cards
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
                 .CompatFromCard(this)
                 .TargetingAllOpponents(CombatState)
-                .WithHitVfxNode(NightreignHitVfx.CreateGuardianWhirlwind)
+                .WithGuardianWhirlwindFx()
                 .Execute(context);
 
             Creature[] targets = CombatState.HittableEnemies.Where(enemy => enemy.IsAlive).ToArray();
@@ -115,7 +115,7 @@ namespace NightMustStay.Core.Models.Cards
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
                 .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
-                .WithHitVfxNode(NightreignHitVfx.CreateGuardianWhirlwind)
+                .WithGuardianWhirlwindFx()
                 .Execute(context);
 
             if (block > 0m)
@@ -169,7 +169,7 @@ namespace NightMustStay.Core.Models.Cards
             await DamageCmd.Attack(damage)
                 .CompatFromCard(this)
                 .TargetingAllOpponents(CombatState)
-                .WithHitVfxNode(NightreignHitVfx.CreateGuardianWhirlwind)
+                .WithGuardianWhirlwindFx()
                 .Execute(context);
         }
 

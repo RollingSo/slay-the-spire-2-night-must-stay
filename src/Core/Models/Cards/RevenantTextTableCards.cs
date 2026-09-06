@@ -17,6 +17,8 @@ using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
 using NightMustStay.Core.Models.Revenant;
 
+using NightMustStay.Core.Nodes.Vfx;
+
 namespace NightMustStay.Core.Models.Cards;
 
 internal static class RevenantTextTableHelpers
@@ -59,9 +61,9 @@ internal static class RevenantTextTableHelpers
             if (enemies.Length == 0) break;
             attacked = true;
             if (all)
-                await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, enemies, amount, ValueProp.Move, family, source);
+                await RevenantAttackEffects.FamilyDamage(context, enemies, amount, ValueProp.Move, family, source, manager.CurrentFamilyId);
             else
-                await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, source.Owner.RunState.Rng.CombatTargets.NextItem(enemies), amount, ValueProp.Move, family, source);
+                await RevenantAttackEffects.FamilyDamage(context, source.Owner.RunState.Rng.CombatTargets.NextItem(enemies), amount, ValueProp.Move, family, source, manager.CurrentFamilyId);
         }
         if (attacked && vigor is not null && vigorToConsume > 0m)
             await PowerCmd.ModifyAmount(context, vigor, -vigorToConsume, family, source);

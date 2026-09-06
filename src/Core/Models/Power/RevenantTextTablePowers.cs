@@ -36,6 +36,8 @@ public sealed class FrenziedThreeFingersPower : PowerModel
             return;
 
         Creature random = Owner.Player.RunState.Rng.CombatTargets.NextItem(enemies);
+        NightMustStay.Core.Nodes.Vfx.RevenantAttackEffects.Play(random,
+            NightMustStay.Core.Nodes.Vfx.RevenantAttackVfx.Kind.Frenzy, Owner);
         await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
             context,
             random,

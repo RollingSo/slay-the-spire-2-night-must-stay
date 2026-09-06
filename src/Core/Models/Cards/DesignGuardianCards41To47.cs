@@ -53,7 +53,7 @@ namespace NightMustStay.Core.Models.Cards
             await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
                 .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
-                .WithHitVfxNode(NightreignHitVfx.CreateGuardianWhirlwind)
+                .WithGuardianWhirlwindFx()
                 .Execute(choiceContext);
 
             if (targetWasWeak)
@@ -97,7 +97,7 @@ namespace NightMustStay.Core.Models.Cards
                 .WithHitCount(xValue)
                 .CompatFromCard(this)
                 .TargetingAllOpponents(base.CombatState)
-                .WithHitVfxNode(NightreignHitVfx.CreateGuardianWhirlwind)
+                .WithGuardianWhirlwindFx()
                 .Execute(choiceContext);
 
             // Apply Weak once per point of X instead of as one stacked debuff.
@@ -147,7 +147,7 @@ namespace NightMustStay.Core.Models.Cards
             await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
                 .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
-                .WithHitFx("vfx/vfx_attack_slash")
+                .WithGuardianWeaponFx()
                 .Execute(choiceContext);
 
             await PowerCmd.Apply<PhantomImbalancePower>(
@@ -194,7 +194,7 @@ namespace NightMustStay.Core.Models.Cards
             await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
                 .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
-                .WithHitFx("vfx/vfx_attack_slash")
+                .WithGuardianWeaponFx()
                 .Execute(choiceContext);
 
             if (cardPlay.Target.IsAlive)
@@ -401,6 +401,7 @@ namespace NightMustStay.Core.Models.Power
             }
 
             Flash();
+            GuardianAttackEffects.Play(base.Owner, GuardianAttackVfx.Kind.Weapon);
             await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
                 new BlockingPlayerChoiceContext(),
                 base.Owner,

@@ -16,6 +16,8 @@ using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
 using NightMustStay.Core.Models.Revenant;
 
+using NightMustStay.Core.Nodes.Vfx;
+
 namespace NightMustStay.Core.Models.Cards;
 
 public sealed class BurnLife : CardModel
@@ -108,7 +110,7 @@ public sealed class SoulChargingClaw : CardModel, IRevenantChargeCard
             + (wasCharged ? DynamicVars["ChargeDamage"].BaseValue : 0m);
         ChargeComplete = false;
 
-        await DamageCmd.Attack(damage).CompatFromCard(this).Targeting(cardPlay.Target).Execute(context);
+        await DamageCmd.Attack(damage).CompatFromCard(this).WithRevenantFx(this, cardPlay.Target).Targeting(cardPlay.Target).Execute(context);
         if (wasCharged && cardPlay.Target.IsAlive)
         {
             await PowerCmd.Apply<WeakPower>(

@@ -99,7 +99,7 @@ public sealed class WitheringCut : CardModel
         var attack = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .CompatFromCard(this)
             .Targeting(cardPlay.Target)
-            .WithHitVfxNode(NightreignHitVfx.CreateIroneyeKnife)
+            .WithIroneyeKnifeFx(poisoned: true)
             .Execute(context);
 
         decimal damageDealt = attack.Results

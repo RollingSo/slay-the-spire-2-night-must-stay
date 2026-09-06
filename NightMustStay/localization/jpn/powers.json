@@ -28,6 +28,8 @@
   "SAVIOR_FORM_POWER.title": "救済の型",
   "SAVIOR_FORM_POWER.description": "ターン開始時、[gold]堅守[/gold]と同量の[gold]ブロック[/gold]を得る。",
   "INCOMING_DAMAGE_REDUCTION_THIS_TURN_POWER.title": "ダメージ軽減",
+  "SAVIOR_SPREAD_WINGS_POWER.title": "救世の翼",
+  "SAVIOR_SPREAD_WINGS_POWER.description": "このターン、敵が与える攻撃ダメージが{Amount}%減少する。",
   "INCOMING_DAMAGE_REDUCTION_THIS_TURN_POWER.description": "このターン、受けるダメージが{Amount}%減少する。",
   "COUNTER_STEP_POWER.title": "反撃の歩法",
   "COUNTER_STEP_POWER.description": "[gold]ガードカウンター[/gold]が成功するたび、{Amount}{energyPrefix:energyIcons(1)}を得る。",

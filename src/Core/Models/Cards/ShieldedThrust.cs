@@ -1,3 +1,4 @@
+using NightMustStay.Core.Nodes.Vfx;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -31,7 +32,7 @@ namespace NightMustStay.Core.Models.Cards
             ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
 
             await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(cardPlay.Target)
-                .WithHitFx("vfx/vfx_attack_slash")
+                .WithGuardianWeaponFx()
                 .Execute(choiceContext);
             await PowerCmd.Apply<FortifyPower>(choiceContext, base.Owner.Creature, base.DynamicVars[FortifyKey].BaseValue, base.Owner.Creature, this);
         }

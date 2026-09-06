@@ -35,8 +35,7 @@ namespace NightMustStay.Core.Models.Cards
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
                 .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
-                .WithHitVfxNode(target =>
-                    NightreignHitVfx.CreateIroneyeShot(Owner.Creature, target))
+                .WithIroneyeShotFx(Owner.Creature)
                 .Execute(choiceContext);
         }
 

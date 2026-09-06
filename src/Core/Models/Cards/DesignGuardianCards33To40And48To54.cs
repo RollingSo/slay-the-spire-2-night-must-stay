@@ -117,7 +117,7 @@ namespace NightMustStay.Core.Models.Cards
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
                 .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
-                .WithHitVfxNode(NightreignHitVfx.CreateGuardianWhirlwind)
+                .WithGuardianWhirlwindFx()
                 .Execute(context);
 
             await PowerCmd.Apply<PhantomImbalancePower>(
@@ -153,7 +153,7 @@ namespace NightMustStay.Core.Models.Cards
         protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(cardPlay.Target).WithHitFx("vfx/vfx_attack_slash").Execute(context);
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(cardPlay.Target).WithGuardianWeaponFx().Execute(context);
         }
 
         public async Task AfterGuardCounterSucceeded()
@@ -297,7 +297,7 @@ namespace NightMustStay.Core.Models.Cards
         protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(cardPlay.Target).WithHitFx("vfx/vfx_attack_slash").Execute(context);
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(cardPlay.Target).WithGuardianWeaponFx().Execute(context);
             await PowerCmd.Apply<NoAttacksNextTurnPower>(context, Owner.Creature, 1m, Owner.Creature, this);
         }
         protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(6m);
@@ -454,7 +454,7 @@ namespace NightMustStay.Core.Models.Power
                     .CompatFromCard(sourceCard)
                     .WithNoAttackerAnim()
                     .TargetingAllOpponents(CombatState)
-                    .WithHitVfxNode(NightreignHitVfx.CreateGuardianWhirlwind)
+                    .WithGuardianWhirlwindFx()
                     .Execute(context);
             }
             else

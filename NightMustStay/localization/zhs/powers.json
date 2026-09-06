@@ -28,6 +28,8 @@
   "SAVIOR_FORM_POWER.title": "救世形态",
   "SAVIOR_FORM_POWER.description": "在你的回合开始时，获得等同于[gold]固守[/gold]层数的[gold]格挡[/gold]。",
   "INCOMING_DAMAGE_REDUCTION_THIS_TURN_POWER.title": "伤害减免",
+  "SAVIOR_SPREAD_WINGS_POWER.title": "救世展翼",
+  "SAVIOR_SPREAD_WINGS_POWER.description": "本回合内敌人造成的攻击伤害减少{Amount}%。",
   "INCOMING_DAMAGE_REDUCTION_THIS_TURN_POWER.description": "本回合你受到的伤害减少{Amount}%。",
   "COUNTER_STEP_POWER.title": "反击步伐",
   "COUNTER_STEP_POWER.description": "[gold]防御反击[/gold]成功的回合，获得{Amount}{energyPrefix:energyIcons(1)}。",

@@ -134,7 +134,7 @@ public sealed class Release : CardModel
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .CompatFromCard(this)
             .Targeting(cardPlay.Target)
-            .WithHitVfxNode(NightreignHitVfx.CreateIroneyeKnife)
+            .WithIroneyeKnifeFx()
             .Execute(choiceContext);
 
         if (!cardPlay.Target.IsAlive

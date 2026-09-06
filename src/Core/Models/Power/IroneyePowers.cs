@@ -245,6 +245,7 @@ namespace NightMustStay.Core.Models.Power
             if (hiddenPoison == null || hiddenPoison.Amount <= 0m || !target.IsAlive)
                 return;
 
+            IroneyeAttackEffects.Play(target, IroneyeAttackVfx.Kind.PoisonBurst);
             await hiddenPoison.Trigger(choiceContext);
 
             foreach (IPoisonBurstTriggerPower triggerPower in applier.Powers
@@ -328,7 +329,7 @@ namespace NightMustStay.Core.Models.Power
 
             Creature target = Owner.Player.RunState.Rng.CombatTargets.NextItem(enemies);
             Flash();
-            NightreignHitVfx.PlayIroneyeMarkTrigger(target);
+            IroneyeAttackEffects.Play(target, IroneyeAttackVfx.Kind.Shot, Owner);
             await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
                 context,
                 target,
@@ -532,7 +533,7 @@ namespace NightMustStay.Core.Models.Power
             }
 
             Flash();
-            NightreignHitVfx.PlayIroneyeMarkTrigger(power.Owner);
+            IroneyeAttackEffects.Play(power.Owner, IroneyeAttackVfx.Kind.Shot, Owner);
             await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
                 choiceContext,
                 power.Owner,

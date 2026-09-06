@@ -1,7 +1,7 @@
 param(
     [string]$GodotPath = 'D:\Godot_v4.5.1-stable_mono_win64\Godot_v4.5.1-stable_mono_win64.exe',
     [string]$Sts2AssemblyDir = 'D:\Steam\steamapps\common\Slay the Spire 2\data_sts2_windows_x86_64',
-    [string]$ModsDirectory = 'D:\SteamLibrary\steamapps\common\Slay the Spire 2\mods',
+    [string]$ModsDirectory = '',
     [switch]$SkipInstall,
     [switch]$BetaTestInstall
 )
@@ -9,6 +9,10 @@ param(
 $ErrorActionPreference = 'Stop'
 
 $root = Split-Path -Parent $PSScriptRoot
+$gameDirectory = Split-Path -Parent $Sts2AssemblyDir
+if ([string]::IsNullOrWhiteSpace($ModsDirectory)) {
+    $ModsDirectory = Join-Path $gameDirectory 'mods'
+}
 $buildDirectory = Join-Path $root 'build'
 $modId = 'NightMustStay'
 $projectPath = Join-Path $root "$modId.csproj"
@@ -16,7 +20,10 @@ $manifestPath = Join-Path $root 'manifest.json'
 $configPath = Join-Path $root 'config.json'
 $releaseDirectory = Join-Path $root '.godot\mono\temp\bin\CodexExport'
 $packPath = Join-Path $buildDirectory "$modId.pck"
-$installModId = if ($BetaTestInstall) { 'NightMustStayBetaTest' } else { $modId }
+# The loader resolves both binaries and localization from the manifest ID.
+# Beta builds therefore keep the production file stem/ID and differ only in
+# their user-facing name. They must not be enabled with the Workshop build.
+$installModId = $modId
 
 $requiredSts2Assemblies = @('0Harmony.dll', 'GodotSharp.dll', 'sts2.dll')
 foreach ($assemblyName in $requiredSts2Assemblies) {
@@ -98,12 +105,12 @@ if ($LASTEXITCODE -ne 0) {
 
 # Import changed images completely before creating the PCK. `--import` waits for
 # the import queue to finish; `--editor --quit` may exit before new textures are ready.
-$godotImportExitCode = Invoke-GodotAndWait @('--headless', '--path', $root, '--import', '--quit')
+$godotImportExitCode = Invoke-GodotAndWait @('--headless', '--path', $root, '--log-file', (Join-Path $buildDirectory 'godot_import.log'), '--import', '--quit')
 if ($godotImportExitCode -ne 0) {
     throw "Godot asset import failed with exit code $godotImportExitCode"
 }
 
-$godotExportExitCode = Invoke-GodotAndWait @('--headless', '--path', $root, '--export-pack', 'Windows Desktop', $packPath)
+$godotExportExitCode = Invoke-GodotAndWait @('--headless', '--path', $root, '--log-file', (Join-Path $buildDirectory 'godot_export.log'), '--export-pack', 'Windows Desktop', $packPath)
 if ($godotExportExitCode -ne 0) {
     throw "Godot PCK export failed with exit code $godotExportExitCode"
 }
@@ -146,16 +153,20 @@ $installSources = [ordered]@{
 if ($BetaTestInstall) {
     $stableManifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
     $betaManifest = [ordered]@{
-        id = $installModId
+        # Localization discovery is keyed by the manifest ID. Keep the
+        # production ID so res://NightMustStay/localization is loaded; the
+        # distinct file stem and display name still identify this local build.
+        id = $modId
         name = "$($stableManifest.name) [Beta Test]"
         author = $stableManifest.author
         description = "Local Beta Test build. Do not enable together with the Steam Workshop release. $($stableManifest.description)"
-        version = "$($stableManifest.version)-beta-test"
+        version = $stableManifest.version
         has_dll = $true
         has_pck = $true
+        min_game_version = $stableManifest.min_game_version
         affects_gameplay = $true
     }
-    $betaManifestPath = Join-Path $buildDirectory "$installModId.json"
+    $betaManifestPath = Join-Path $buildDirectory "$installModId.beta.json"
     $betaManifest | ConvertTo-Json | Set-Content -LiteralPath $betaManifestPath -Encoding utf8
     $installSources["$installModId.json"] = $betaManifestPath
 }

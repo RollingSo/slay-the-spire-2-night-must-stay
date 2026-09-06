@@ -40,7 +40,7 @@ public sealed class Offensive : CardModel
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .CompatFromCard(this)
             .Targeting(cardPlay.Target)
-            .WithHitVfxNode(NightreignHitVfx.CreateIroneyeKnife)
+            .WithIroneyeKnifeFx()
             .Execute(context);
 
         CardModel approach = CombatState.CreateCard<Approach>(Owner);
@@ -123,8 +123,7 @@ public sealed class ReturningWindArrow : CardModel, IMarkTriggerObserver
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .CompatFromCard(this)
             .Targeting(cardPlay.Target)
-            .WithHitVfxNode(target =>
-                NightreignHitVfx.CreateIroneyeShot(Owner.Creature, target))
+            .WithIroneyeShotFx(Owner.Creature)
             .Execute(context);
 
         if (!_triggeredMark)
@@ -258,8 +257,7 @@ public sealed class TurningArrow : CardModel
         await DamageCmd.Attack(DynamicVars.CalculatedDamage)
             .CompatFromCard(this)
             .Targeting(cardPlay.Target)
-            .WithHitVfxNode(target =>
-                NightreignHitVfx.CreateIroneyeShot(Owner.Creature, target))
+            .WithIroneyeShotFx(Owner.Creature)
             .Execute(context);
     }
 
@@ -304,8 +302,7 @@ public sealed class SoulChasingVolley : CardModel, IMarkTriggerObserver
             await DamageCmd.Attack(hitDamage)
                 .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
-                .WithHitVfxNode(target =>
-                    NightreignHitVfx.CreateIroneyeShot(Owner.Creature, target))
+                .WithIroneyeShotFx(Owner.Creature)
                 .Execute(context);
             if (_triggeredMark)
                 hitDamage += DynamicVars[FollowupDamageKey].BaseValue;
@@ -348,8 +345,7 @@ public sealed class CorrodeAll : CardModel
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .CompatFromCard(this)
             .Targeting(cardPlay.Target)
-            .WithHitVfxNode(target =>
-                NightreignHitVfx.CreateIroneyeShot(Owner.Creature, target))
+            .WithIroneyeShotFx(Owner.Creature, poisoned: true)
             .Execute(context);
 
         int hiddenPoison = (int)(cardPlay.Target
@@ -451,7 +447,7 @@ public sealed class CutThroughChaos : CardModel
             .CompatFromCard(this)
             .Targeting(cardPlay.Target)
             .WithHitCount(hits)
-            .WithHitVfxNode(NightreignHitVfx.CreateIroneyeKnife)
+            .WithIroneyeKnifeFx()
             .Execute(context);
     }
 
@@ -484,7 +480,7 @@ public sealed class GracefulBladeDance : CardModel
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .CompatFromCard(this)
             .Targeting(cardPlay.Target)
-            .WithHitVfxNode(NightreignHitVfx.CreateIroneyeKnife)
+            .WithIroneyeKnifeFx()
             .Execute(context);
     }
 

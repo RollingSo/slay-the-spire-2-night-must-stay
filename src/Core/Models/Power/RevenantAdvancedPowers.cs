@@ -14,6 +14,8 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using NightMustStay.Core.Models.Revenant;
 using NightMustStay.Core.Models.Cards;
 
+using NightMustStay.Core.Nodes.Vfx;
+
 namespace NightMustStay.Core.Models.Power;
 
 public sealed class WhiteShadowLurePower : PowerModel
@@ -96,7 +98,7 @@ public sealed class UndyingMarchPower : PowerModel
     public override async Task AfterPreventingDeath(Creature creature)
     {
         if (creature == Owner && creature.CurrentHp < 1m)
-            await CreatureCmd.Heal(creature, 1m, playAnim: false);
+            await RevenantAttackEffects.Heal(creature, 1m, playAnim: false);
     }
 
     public override async Task AfterSideTurnStart(
@@ -188,6 +190,6 @@ public sealed class BlessingOfGracePower : PowerModel
     {
         if (side != Owner.Side || !creatures.Contains(Owner)) return;
         Creature family = Owner.Player.Osty;
-        if (family is { IsAlive: true }) await CreatureCmd.Heal(family, Amount);
+        if (family is { IsAlive: true }) await RevenantAttackEffects.Heal(family, Amount);
     }
 }

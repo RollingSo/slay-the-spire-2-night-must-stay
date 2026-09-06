@@ -104,7 +104,11 @@ public sealed class HaloReturnPower : PowerModel
                     radagonHalo.DoubleDamageForCurrentCombat();
 
                 if (card.Pile.Type != PileType.Hand)
+                {
                     await CardPileCmd.Add(card, PileType.Hand);
+                    if (card.Pile?.Type == PileType.Hand)
+                        NightMustStay.Core.Nodes.Vfx.RevenantAttackEffects.PlayHaloReturn(card);
+                }
             }
         }
 

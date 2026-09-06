@@ -37,7 +37,7 @@ namespace NightMustStay.Core.Models.Cards
                 .WithHitCount(defendCardsInHand)
                 .CompatFromCard(this)
                 .TargetingAllOpponents(base.CombatState)
-                .WithHitVfxNode(NightreignHitVfx.CreateGuardianWhirlwind)
+                .WithGuardianWhirlwindFx()
                 .Execute(choiceContext);
         }
 

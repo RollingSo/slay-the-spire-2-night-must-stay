@@ -28,6 +28,8 @@
   "SAVIOR_FORM_POWER.title": "Savior Form",
   "SAVIOR_FORM_POWER.description": "At the start of your turn, gain [gold]Block[/gold] equal to your [gold]Fortify[/gold].",
   "INCOMING_DAMAGE_REDUCTION_THIS_TURN_POWER.title": "Damage Reduction",
+  "SAVIOR_SPREAD_WINGS_POWER.title": "Savior Spread Wings",
+  "SAVIOR_SPREAD_WINGS_POWER.description": "Enemies deal {Amount}% less attack damage this turn.",
   "INCOMING_DAMAGE_REDUCTION_THIS_TURN_POWER.description": "This turn, damage you take is reduced by {Amount}%.",
   "COUNTER_STEP_POWER.title": "Counter Step",
   "COUNTER_STEP_POWER.description": "Whenever [gold]Guard Counter[/gold] succeeds, gain {Amount}{energyPrefix:energyIcons(1)}.",

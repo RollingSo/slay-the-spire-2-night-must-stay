@@ -18,6 +18,8 @@ using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
 using NightMustStay.Core.Models.Revenant;
 
+using NightMustStay.Core.Nodes.Vfx;
+
 namespace NightMustStay.Core.Models.Cards;
 
 public sealed class GurranqsRock : CardModel
@@ -71,7 +73,7 @@ public sealed class FrenziedFlame : CardModel
             return;
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(hpLost * DynamicVars["DamageMultiplier"].BaseValue)
-            .CompatFromCard(this)
+            .CompatFromCard(this).WithRevenantFx(this, cardPlay.Target)
             .Targeting(cardPlay.Target)
             .Execute(context);
     }
@@ -304,7 +306,7 @@ public sealed class KingsRecovery : CardModel
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         foreach (var player in CombatState.Players.Where(player => player.Creature.IsAlive))
-            await CreatureCmd.Heal(player.Creature, DynamicVars["Heal"].BaseValue);
+            await RevenantAttackEffects.Heal(player.Creature, DynamicVars["Heal"].BaseValue);
     }
 
     protected override void OnUpgrade() => DynamicVars["Heal"].UpgradeValueBy(2m);

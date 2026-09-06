@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
+using NightMustStay.Core.Nodes.Vfx;
 
 namespace NightMustStay.Core.Models.Cards;
 
@@ -54,6 +55,8 @@ public sealed class DeathMark : CardModel
         Creature[] enemies = CombatState.HittableEnemies
             .Where(enemy => enemy.IsAlive)
             .ToArray();
+        foreach (Creature enemy in enemies)
+            IroneyeAttackEffects.Play(enemy, IroneyeAttackVfx.Kind.Knife);
         await PowerCmd.Apply<NightMustStayMarkPower>(
             context,
             enemies,

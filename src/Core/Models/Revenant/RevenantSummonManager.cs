@@ -23,6 +23,8 @@ using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
 using NightMustStay.Core.Models.Relics;
 
+using NightMustStay.Core.Nodes.Vfx;
+
 namespace NightMustStay.Core.Models.Revenant;
 
 public enum RevenantFamilyId
@@ -437,7 +439,7 @@ public sealed class RevenantSummonManager
                     if (target != null)
                     {
                         attacked = true;
-                        await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, target, 3m, ValueProp.Move, pet, null);
+                        await RevenantAttackEffects.FamilyDamage(context, target, 3m, ValueProp.Move, pet, null, family);
                     }
                     await CardPileCmd.Draw(context, 1m, Owner);
                 }
@@ -447,7 +449,7 @@ public sealed class RevenantSummonManager
                     if (target != null)
                     {
                         attacked = true;
-                        await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, target, 3m, ValueProp.Move, pet, null);
+                        await RevenantAttackEffects.FamilyDamage(context, target, 3m, ValueProp.Move, pet, null, family);
                     }
                     await PlayerCmd.GainEnergy(1m, Owner);
                 }
@@ -459,7 +461,7 @@ public sealed class RevenantSummonManager
                 if (first)
                 {
                     attacked = true;
-                    await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, pumpkinTarget, 5m, ValueProp.Move, pet, null);
+                    await RevenantAttackEffects.FamilyDamage(context, pumpkinTarget, 5m, ValueProp.Move, pet, null, family);
                     if (pumpkinTarget.IsAlive)
                         // Family actions are commanded by the Revenant. Attribute
                         // their debuffs to her so player-owned hooks such as
@@ -470,20 +472,20 @@ public sealed class RevenantSummonManager
                 {
                     attacked = true;
                     for (int i = 0; i < 2 && pumpkinTarget.IsAlive; i++)
-                        await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, pumpkinTarget, 5m, ValueProp.Move, pet, null);
+                        await RevenantAttackEffects.FamilyDamage(context, pumpkinTarget, 5m, ValueProp.Move, pet, null, family);
                 }
                 break;
             case RevenantFamilyId.Skeleton:
                 if (first)
                 {
                     attacked = enemies.Length > 0;
-                    await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, enemies, 2m, ValueProp.Move, pet, null);
+                    await RevenantAttackEffects.FamilyDamage(context, enemies, 2m, ValueProp.Move, pet, null, family);
                     await PowerCmd.Apply<WeakPower>(context, enemies, 1m, Owner.Creature, null);
                 }
                 else
                 {
                     attacked = enemies.Length > 0;
-                    await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, enemies, 6m, ValueProp.Move, pet, null);
+                    await RevenantAttackEffects.FamilyDamage(context, enemies, 6m, ValueProp.Move, pet, null, family);
                 }
                 break;
         }

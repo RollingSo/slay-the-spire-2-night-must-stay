@@ -23,6 +23,18 @@ if (type is null)
 }
 
 Console.WriteLine(type.FullName);
+if (methodFilter == "constructors")
+{
+    foreach (var constructor in type.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
+        Console.WriteLine(constructor);
+    return 0;
+}
+if (methodFilter == "fields")
+{
+    foreach (var field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static))
+        Console.WriteLine(field);
+    return 0;
+}
 foreach (MethodInfo method in type
              .GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)
              .Where(method => string.IsNullOrEmpty(methodFilter) || method.Name.Contains(methodFilter, StringComparison.OrdinalIgnoreCase))

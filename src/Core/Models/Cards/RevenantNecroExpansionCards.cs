@@ -16,6 +16,8 @@ using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
 using NightMustStay.Core.Models.Revenant;
 
+using NightMustStay.Core.Nodes.Vfx;
+
 namespace NightMustStay.Core.Models.Cards;
 
 public sealed class DeadRealmSpiritFire : CardModel
@@ -136,7 +138,7 @@ public sealed class IceLightningSpear : CardModel
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .CompatFromCard(this)
+            .CompatFromCard(this).WithRevenantFx(this, cardPlay.Target)
             .Targeting(cardPlay.Target)
             .Execute(context);
         if (!cardPlay.Target.IsAlive)

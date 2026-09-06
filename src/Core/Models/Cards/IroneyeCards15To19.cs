@@ -53,7 +53,7 @@ namespace NightMustStay.Core.Models.Cards
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
                 .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
-                .WithHitVfxNode(NightreignHitVfx.CreateIroneyeKnife)
+                .WithIroneyeKnifeFx()
                 .Execute(context);
             await PowerCmd.Apply<DistancePower>(
                 context,
@@ -106,8 +106,7 @@ namespace NightMustStay.Core.Models.Cards
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
                 .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
-                .WithHitVfxNode(target =>
-                    NightreignHitVfx.CreateIroneyeShot(Owner.Creature, target))
+                .WithIroneyeShotFx(Owner.Creature)
                 .Execute(context);
 
             if (_triggeredMark
@@ -189,8 +188,7 @@ namespace NightMustStay.Core.Models.Cards
                 .WithHitCount(DynamicVars.Repeat.IntValue)
                 .CompatFromCard(this)
                 .TargetingAllOpponents(CombatState)
-                .WithHitVfxNode(target =>
-                    NightreignHitVfx.CreateIroneyeShot(Owner.Creature, target))
+                .WithIroneyeShotFx(Owner.Creature)
                 .Execute(context);
         }
 
@@ -234,8 +232,7 @@ namespace NightMustStay.Core.Models.Cards
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
                 .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
-                .WithHitVfxNode(target =>
-                    NightreignHitVfx.CreateIroneyeShot(Owner.Creature, target))
+                .WithIroneyeShotFx(Owner.Creature, poisoned: true)
                 .Execute(context);
 
             if (cardPlay.Target.IsAlive)

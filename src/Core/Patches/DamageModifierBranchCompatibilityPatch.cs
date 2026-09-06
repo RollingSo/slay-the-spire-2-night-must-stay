@@ -13,7 +13,7 @@ namespace NightMustStay.Core.Patches;
 /// The Public Beta added a CardPlay parameter to PowerModel's damage modifier
 /// hooks in v0.108. Resolving the current method by name keeps one mod DLL
 /// compatible with both the five-parameter release API and six-parameter Beta
-/// API without weakening any of the three power effects.
+/// API without weakening the power effects.
 /// </summary>
 internal static class DamageModifierBranchCompatibility
 {
@@ -45,6 +45,24 @@ internal static class IncomingDamageReductionBranchPatch
         __result = target == power.Owner
             ? (100m - power.Amount) / 100m
             : 1m;
+        return false;
+    }
+}
+
+[HarmonyPatch]
+internal static class SaviorSpreadWingsDamageBranchPatch
+{
+    private static MethodBase TargetMethod() =>
+        DamageModifierBranchCompatibility.Resolve("ModifyDamageMultiplicative");
+
+    [HarmonyPrefix]
+    private static bool BeforeModify(
+        PowerModel __instance, Creature dealer, ValueProp props, ref decimal __result)
+    {
+        if (__instance is not SaviorSpreadWingsPower power)
+            return true;
+
+        __result = power.GetAttackMultiplier(dealer, props);
         return false;
     }
 }

@@ -54,8 +54,7 @@ public sealed class CurtainCall : CardModel
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
                 .CompatFromCard(this)
                 .Targeting(target)
-                .WithHitVfxNode(hit =>
-                    NightreignHitVfx.CreateIroneyeShot(Owner.Creature, hit))
+                .WithIroneyeShotFx(Owner.Creature)
                 .Execute(context);
         }
 
@@ -98,8 +97,7 @@ public sealed class AirRendingArrow : CardModel
         AttackCommand attack = await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .CompatFromCard(this)
             .Targeting(cardPlay.Target)
-            .WithHitVfxNode(hit =>
-                NightreignHitVfx.CreateIroneyeShot(Owner.Creature, hit))
+            .WithIroneyeShotFx(Owner.Creature)
             .Execute(context);
 
         decimal damageDealt = attack.Results
