@@ -22,9 +22,6 @@ public sealed class Calibration : CardModel
 {
     private const string MarkKey = "Mark";
 
-    public override IEnumerable<CardKeyword> CanonicalKeywords =>
-        new[] { CardKeyword.Exhaust };
-
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         new DynamicVar[]
         {
@@ -36,14 +33,13 @@ public sealed class Calibration : CardModel
         new IHoverTip[]
         {
             HoverTipFactory.FromPower<NightMustStayMarkPower>(),
-            HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
         };
 
     public override string PortraitPath =>
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/calibration.png");
 
     public Calibration()
-        : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
+        : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy)
     {
     }
 
@@ -75,7 +71,7 @@ public sealed class Calibration : CardModel
     }
 
     protected override void OnUpgrade() =>
-        DynamicVars.Cards.UpgradeValueBy(1m);
+        DynamicVars[MarkKey].UpgradeValueBy(1m);
 }
 
 // Card-table ID 76: 穿云箭

@@ -711,12 +711,15 @@ namespace NightMustStay.Core.Models.Power
             bool fatalBladeTrigger = result.TotalDamage > 0m
                 && fatalBlade != null
                 && distance <= -fatalBlade.Amount;
+            bool heavenlyEyeTrigger = result.TotalDamage > 0m
+                && dealer?.GetPower<NowhereToHidePower>()
+                    ?.GuaranteesMarkTrigger(cardSource) == true;
             if (target != Owner
                 || dealer == null
                 || dealer.Side != CombatSide.Player
                 || cardSource?.Type != CardType.Attack
                 || !props.HasFlag(ValueProp.Move)
-                || (!standardTrigger && !fatalBladeTrigger))
+                || (!standardTrigger && !fatalBladeTrigger && !heavenlyEyeTrigger))
             {
                 return;
             }

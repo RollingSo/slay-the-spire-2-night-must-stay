@@ -17,6 +17,7 @@ public sealed class NowhereToHidePower : PowerModel
     private sealed class Data
     {
         public bool TriggeredAttackThisTurn;
+        public CardModel GuaranteedTriggerCard;
     }
 
     public override PowerType Type => PowerType.Buff;
@@ -34,7 +35,11 @@ public sealed class NowhereToHidePower : PowerModel
         ICombatState combatState)
     {
         if (side == Owner.Side)
-            GetInternalData<Data>().TriggeredAttackThisTurn = false;
+        {
+            Data data = GetInternalData<Data>();
+            data.TriggeredAttackThisTurn = false;
+            data.GuaranteedTriggerCard = null;
+        }
 
         if (side != Owner.Side || Amount <= 0m)
             return;
@@ -54,30 +59,25 @@ public sealed class NowhereToHidePower : PowerModel
             null);
     }
 
-    public override async Task AfterCardPlayed(
-        PlayerChoiceContext context,
-        CardPlay cardPlay)
+    public override Task BeforeCardPlayed(CardPlay cardPlay)
     {
+        Data data = GetInternalData<Data>();
         if (Amount <= 0m
             || cardPlay.Card.Owner.Creature != Owner
             || cardPlay.Card.Type != CardType.Attack
-            || GetInternalData<Data>().TriggeredAttackThisTurn)
+            || data.TriggeredAttackThisTurn)
         {
-            return;
+            return Task.CompletedTask;
         }
 
-        GetInternalData<Data>().TriggeredAttackThisTurn = true;
-        Creature[] enemies = CombatState.HittableEnemies
-            .Where(enemy => enemy.IsAlive)
-            .ToArray();
-        foreach (Creature enemy in enemies)
-        {
-            if (enemy.GetPower<NightMustStayMarkPower>() is { } mark)
-                await mark.TriggerAll(context, Owner, cardPlay.Card);
-        }
-
+        data.TriggeredAttackThisTurn = true;
+        data.GuaranteedTriggerCard = cardPlay.Card;
         Flash();
+        return Task.CompletedTask;
     }
+
+    public bool GuaranteesMarkTrigger(CardModel card) =>
+        card != null && ReferenceEquals(GetInternalData<Data>().GuaranteedTriggerCard, card);
 }
 
 public sealed class VolatilePoisonPower : PowerModel, IPoisonBurstTriggerPower

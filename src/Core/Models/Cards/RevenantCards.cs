@@ -24,7 +24,7 @@ public sealed class CursedClawCombo : CardModel
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(6m, ValueProp.Move),
+        new DamageVar(5m, ValueProp.Move),
     };
 
     public override string PortraitPath =>

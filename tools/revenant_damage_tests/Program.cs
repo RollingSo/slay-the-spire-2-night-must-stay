@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.TestSupport;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Cards;
@@ -22,8 +23,9 @@ try
     VerifyUndyingMarchLifetime();
     VerifyFamilyCallStats();
     VerifySpiritFormStats();
+    VerifyFamilyIntentDamage();
     Console.WriteLine(
-        "PASS: Revenant attacks, Freeze filtering, charge-card cancellation, Undying March lifetime, Family Call HP, and Spirit Form HP are regression-covered.");
+        "PASS: Revenant attacks, Freeze filtering, charge-card cancellation, Undying March lifetime, Family Call HP, Spirit Form HP, and Family intents are regression-covered.");
     return 0;
 }
 
@@ -31,6 +33,27 @@ catch (Exception error)
 {
     Console.Error.WriteLine(error);
     return 1;
+}
+
+static void VerifyFamilyIntentDamage()
+{
+    var helen = new RevenantFamilyAttackIntent(3);
+    var frederick = new RevenantFamilyAttackIntent(5, 2);
+    if (helen.GetTotalDamage(Array.Empty<Creature>(), null!) != 3)
+        throw new InvalidOperationException("Helen's family intent must show 3 damage.");
+    if (frederick.GetTotalDamage(Array.Empty<Creature>(), null!) != 10)
+        throw new InvalidOperationException("Multi-hit family intent total damage is incorrect.");
+
+    MethodInfo refresh = typeof(RevenantSummonManager).GetMethod(
+        "RefreshFamilyIntents",
+        BindingFlags.Instance | BindingFlags.NonPublic)!;
+    if (!ReadCalledMethods(refresh).Any(call =>
+            call.DeclaringType == typeof(RevenantFamilyAttackIntent)
+            && call.IsConstructor))
+    {
+        throw new InvalidOperationException(
+            "Family intent rendering no longer uses the Vulnerable-independent intent type.");
+    }
 }
 
 static void VerifyFamilyCallStats()

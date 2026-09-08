@@ -987,16 +987,16 @@ public sealed class RevenantSummonManager
         IReadOnlyList<AbstractIntent> intents = (family, action) switch
         {
             (RevenantFamilyId.Helen, RevenantFamilyAction.First) =>
-                new AbstractIntent[] { new SingleAttackIntent(4) },
+                new AbstractIntent[] { new RevenantFamilyAttackIntent(3) },
             (RevenantFamilyId.Helen, RevenantFamilyAction.Second) =>
-                new AbstractIntent[] { new SingleAttackIntent(4), new BuffIntent() },
+                new AbstractIntent[] { new RevenantFamilyAttackIntent(3), new BuffIntent() },
             (RevenantFamilyId.PumpkinHead, RevenantFamilyAction.First) =>
-                new AbstractIntent[] { new SingleAttackIntent(5), new DebuffIntent() },
+                new AbstractIntent[] { new RevenantFamilyAttackIntent(5), new DebuffIntent() },
             (RevenantFamilyId.PumpkinHead, RevenantFamilyAction.Second) =>
-                new AbstractIntent[] { new MultiAttackIntent(5, 2) },
+                new AbstractIntent[] { new RevenantFamilyAttackIntent(5, 2) },
             (RevenantFamilyId.Skeleton, RevenantFamilyAction.First) =>
-                new AbstractIntent[] { new SingleAttackIntent(2), new DebuffIntent() },
-            _ => new AbstractIntent[] { new SingleAttackIntent(6) },
+                new AbstractIntent[] { new RevenantFamilyAttackIntent(2), new DebuffIntent() },
+            _ => new AbstractIntent[] { new RevenantFamilyAttackIntent(6) },
         };
 
         float startTime = (float)GetHashCode() * 0.01f;

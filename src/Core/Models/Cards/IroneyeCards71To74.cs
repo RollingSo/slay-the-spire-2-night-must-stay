@@ -158,7 +158,7 @@ public sealed class EmergencyNocking : CardModel
     public override bool GainsBlock => true;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new[] { new BlockVar(5m, ValueProp.Move) };
+        new[] { new BlockVar(4m, ValueProp.Move) };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         new[] { HoverTipFactory.Static(StaticHoverTip.Block) };
@@ -178,8 +178,7 @@ public sealed class EmergencyNocking : CardModel
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
 
         CardPile discardPile = PileType.Discard.GetPile(Owner);
-        if (!discardPile.Cards.Any(static card =>
-                card.Type == CardType.Attack && card.EnergyCost.GetResolved() == 0))
+        if (!discardPile.Cards.Any(static card => card.Type == CardType.Attack))
             return;
 
         CardModel selected = (await CardSelectCmd.FromCombatPile(
@@ -187,8 +186,7 @@ public sealed class EmergencyNocking : CardModel
                 discardPile,
                 Owner,
                 new CardSelectorPrefs(SelectionScreenPrompt, 1),
-                static card =>
-                    card.Type == CardType.Attack && card.EnergyCost.GetResolved() == 0))
+                static card => card.Type == CardType.Attack))
             .FirstOrDefault();
         if (selected != null)
             await CardPileCmd.Add(selected, PileType.Hand);

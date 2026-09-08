@@ -120,12 +120,12 @@ public sealed class StyxSpiritFire : CardModel
 
 public sealed class IceLightningSpear : CardModel
 {
+    private bool _recoveredThisTurn;
+
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
         new DamageVar(8m, ValueProp.Move),
-        new PowerVar<FreezePower>("Freeze", 2m),
-        new DynamicVar("BonusFreeze", 2m),
-        new DynamicVar("CalculatedFreeze", 2m),
+        new PowerVar<FreezePower>("BonusFreeze", 3m),
     };
 
     public override string PortraitPath => "res://revenant_assets/cards/ice_lightning_spear.png";
@@ -143,17 +143,21 @@ public sealed class IceLightningSpear : CardModel
             .Execute(context);
         if (!cardPlay.Target.IsAlive)
             return;
-        decimal freeze = DynamicVars["CalculatedFreeze"].BaseValue;
-        await PowerCmd.Apply<FreezePower>(context, cardPlay.Target, freeze, Owner.Creature, this);
+        if (_recoveredThisTurn)
+        {
+            await PowerCmd.Apply<FreezePower>(
+                context,
+                cardPlay.Target,
+                DynamicVars["BonusFreeze"].BaseValue,
+                Owner.Creature,
+                this);
+        }
     }
 
     public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
     {
         if (card == this && RevenantCardHelpers.WasMovedFromDiscardToHand(card, oldPileType))
-        {
-            DynamicVars["CalculatedFreeze"].BaseValue =
-                DynamicVars["Freeze"].BaseValue + DynamicVars["BonusFreeze"].BaseValue;
-        }
+            _recoveredThisTurn = true;
         return Task.CompletedTask;
     }
 
@@ -163,16 +167,14 @@ public sealed class IceLightningSpear : CardModel
         IEnumerable<Creature> creatures)
     {
         if (side == Owner.Creature.Side)
-        {
-            DynamicVars["CalculatedFreeze"].BaseValue = DynamicVars["Freeze"].BaseValue;
-        }
+            _recoveredThisTurn = false;
         return Task.CompletedTask;
     }
 
     protected override void OnUpgrade()
     {
-        DynamicVars["Freeze"].UpgradeValueBy(1m);
-        DynamicVars["CalculatedFreeze"].UpgradeValueBy(1m);
+        DynamicVars.Damage.UpgradeValueBy(3m);
+        DynamicVars["BonusFreeze"].UpgradeValueBy(1m);
     }
 }
 

@@ -89,7 +89,7 @@ public sealed class FormationBreakerHammer : CardModel
         RevenantSummonManager manager = RevenantSummonManager.For(Owner);
         await manager.TriggerResonance(context);
         if (manager.CurrentFamilyId == RevenantFamilyId.PumpkinHead)
-            await RevenantTextTableHelpers.DamageAsFamily(this, context, 27m, false);
+            await RevenantTextTableHelpers.DamageAsFamily(this, context, 20m, false);
     }
     protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);
 }

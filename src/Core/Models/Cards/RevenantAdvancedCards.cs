@@ -202,7 +202,7 @@ public sealed class PreciseLightningStrike : CardModel
 
 public sealed class ThreefoldHalo : CardModel
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(12m, ValueProp.Move) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(9m, ValueProp.Move) };
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Ethereal };
     public override string PortraitPath => "res://revenant_assets/cards/threefold_halo.png";
     public ThreefoldHalo() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies) { }
@@ -670,12 +670,12 @@ public sealed class Beaststone : CardModel
 public sealed class RadagonHalo : CardModel
 {
     private object _combatIdentity;
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(12m, ValueProp.Move) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(9m, ValueProp.Move) };
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Ethereal };
     public override string PortraitPath => "res://revenant_assets/cards/radagon_halo.png";
     public RadagonHalo() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) { EnsureCombatValue(); ArgumentNullException.ThrowIfNull(cardPlay.Target); await RevenantAttackEffects.Damage(context, cardPlay.Target, DynamicVars.Damage.BaseValue, ValueProp.Move, Owner.Creature, this); await HaloReturnPower.Schedule(context, this); }
-    private void EnsureCombatValue() { if (ReferenceEquals(_combatIdentity, CombatState)) return; _combatIdentity = CombatState; DynamicVars.Damage.BaseValue = IsUpgraded ? 15m : 12m; }
+    private void EnsureCombatValue() { if (ReferenceEquals(_combatIdentity, CombatState)) return; _combatIdentity = CombatState; DynamicVars.Damage.BaseValue = IsUpgraded ? 12m : 9m; }
     public void DoubleDamageForCurrentCombat() { EnsureCombatValue(); DynamicVars.Damage.BaseValue *= 2m; }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
 }
