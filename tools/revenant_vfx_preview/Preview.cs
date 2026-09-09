@@ -14,6 +14,7 @@ public partial class Preview : Node2D
 
     public override void _Ready()
     {
+        ParticleVfxMaterials.AssetRoot=ProjectSettings.GlobalizePath("res://../../images/vfx/particle_remake/");
         _verify = Array.Exists(OS.GetCmdlineUserArgs(), x => x == "--verify");
         _capture = Array.Exists(OS.GetCmdlineUserArgs(), x => x == "--capture");
         for (int i = 0; i < 13; i++)

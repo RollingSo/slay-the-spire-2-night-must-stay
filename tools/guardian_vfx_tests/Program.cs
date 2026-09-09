@@ -14,6 +14,10 @@ foreach (var kind in Enum.GetValues<GuardianAttackVfx.Kind>())
 Assert(NightreignHitVfx.CreateGuardianCounter(null!) == null, "Counter facade must retain test-mode safety.");
 Assert(NightreignHitVfx.CreateGuardianWhirlwind(null!) == null, "Wind facade must retain test-mode safety.");
 Assert(NightreignHitVfx.CreateGuardianShieldPoke(null!) == null, "Shield-poke facade must retain test-mode safety.");
+NightreignHitVfx.PlayGuardianCounter(null!, null!, decimal.MaxValue);
+GuardianAttackEffects.PlayCounter(null!, null!, decimal.MinValue);
+Assert(GuardianAttackEffects.Create(null!, GuardianAttackVfx.Kind.Counter, decimal.MaxValue) == null,
+    "Damage-aware counter factory must remain headless-safe.");
 foreach (bool wind in new[] { false, true })
 {
     AttackCommand attack = DamageCmd.Attack(17m).WithHitCount(3).WithHitFx("old", "old_sfx");

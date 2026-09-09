@@ -38,6 +38,9 @@ foreach(var type in types)
     int hitFactories=((System.Collections.ICollection)Field("_customHitVfxNodes")).Count;
     int castFactories=((System.Collections.ICollection)Field("_customAttackerVfxNodes")).Count;
     Assert(kind==K.HaloOut ? castFactories==1 && hitFactories==0 : hitFactories==1 && castFactories==0,"Wrong cast/hit routing: "+type.Name);
+    if (kind == K.HaloOut)
+        foreach (var factory in (IEnumerable<Func<Godot.Node2D?>>)Field("_customAttackerVfxNodes"))
+            Assert(factory() == null, "Halo damage sampling must not run in TestMode.");
     count++;
 }
 var unchanged=DamageCmd.Attack(3m).WithHitFx("keep_me");

@@ -6,4 +6,4 @@
   <ItemGroup>
     <Compile Include="../../src/Core/Nodes/Vfx/IroneyeAttackVfx.cs" Link="IroneyeAttackVfx.cs" />
   </ItemGroup>
-</Project>
+<ItemGroup><Compile Include="../../src/Core/Nodes/Vfx/CombatVfxCanvas.cs" Link="CombatVfxCanvas.cs" /></ItemGroup><ItemGroup><Compile Include="../../src/Core/Nodes/Vfx/ParticleVfxMaterials.cs" Link="ParticleVfxMaterials.cs" /></ItemGroup><ItemGroup><Compile Include="../../src/Core/Nodes/Vfx/ParticleAttackVfx.cs" Link="ParticleAttackVfx.cs" /></ItemGroup><ItemGroup><Compile Include="../../src/Core/Nodes/Vfx/AttackVfxSizing.cs" Link="AttackVfxSizing.cs" /></ItemGroup></Project>

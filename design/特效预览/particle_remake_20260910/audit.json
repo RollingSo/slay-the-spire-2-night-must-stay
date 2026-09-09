@@ -1,0 +1,322 @@
+[
+  {
+    "name": "GUARDIAN / Weapon",
+    "width": 509,
+    "height": 503,
+    "pixels": 118616,
+    "readableSamples": 8,
+    "nativeEmitters": 2,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "GUARDIAN / Whirlwind",
+    "width": 693,
+    "height": 418,
+    "pixels": 124080,
+    "readableSamples": 8,
+    "nativeEmitters": 1,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "GUARDIAN / Counter",
+    "width": 646,
+    "height": 398,
+    "pixels": 123276,
+    "readableSamples": 8,
+    "nativeEmitters": 2,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "IRONEYE / Knife",
+    "width": 532,
+    "height": 480,
+    "pixels": 105981,
+    "readableSamples": 8,
+    "nativeEmitters": 2,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "IRONEYE / Shot",
+    "width": 524,
+    "height": 432,
+    "pixels": 90773,
+    "readableSamples": 7,
+    "nativeEmitters": 2,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "IRONEYE / MarkTrigger",
+    "width": 476,
+    "height": 495,
+    "pixels": 69553,
+    "readableSamples": 8,
+    "nativeEmitters": 1,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "IRONEYE / PoisonKnife",
+    "width": 532,
+    "height": 480,
+    "pixels": 108871,
+    "readableSamples": 8,
+    "nativeEmitters": 2,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "IRONEYE / PoisonShot",
+    "width": 524,
+    "height": 432,
+    "pixels": 90776,
+    "readableSamples": 7,
+    "nativeEmitters": 2,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "IRONEYE / PoisonBurst",
+    "width": 553,
+    "height": 540,
+    "pixels": 181091,
+    "readableSamples": 8,
+    "nativeEmitters": 2,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "REVENANT / HaloOut",
+    "width": 529,
+    "height": 424,
+    "pixels": 85402,
+    "readableSamples": 8,
+    "nativeEmitters": 1,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "REVENANT / HaloReturn",
+    "width": 529,
+    "height": 424,
+    "pixels": 85574,
+    "readableSamples": 8,
+    "nativeEmitters": 1,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "REVENANT / LightningRed",
+    "width": 575,
+    "height": 602,
+    "pixels": 196541,
+    "readableSamples": 7,
+    "nativeEmitters": 2,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "REVENANT / LightningYellow",
+    "width": 575,
+    "height": 600,
+    "pixels": 125763,
+    "readableSamples": 6,
+    "nativeEmitters": 2,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "REVENANT / LightningBlue",
+    "width": 575,
+    "height": 603,
+    "pixels": 169553,
+    "readableSamples": 8,
+    "nativeEmitters": 2,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "REVENANT / BeastRock",
+    "width": 562,
+    "height": 370,
+    "pixels": 111807,
+    "readableSamples": 9,
+    "nativeEmitters": 2,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "REVENANT / BeastClaw",
+    "width": 572,
+    "height": 566,
+    "pixels": 146243,
+    "readableSamples": 8,
+    "nativeEmitters": 1,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "REVENANT / Frenzy",
+    "width": 716,
+    "height": 337,
+    "pixels": 94421,
+    "readableSamples": 8,
+    "nativeEmitters": 1,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "REVENANT / CursedClaw",
+    "width": 395,
+    "height": 498,
+    "pixels": 110958,
+    "readableSamples": 8,
+    "nativeEmitters": 1,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "REVENANT / Helen",
+    "width": 580,
+    "height": 338,
+    "pixels": 72248,
+    "readableSamples": 8,
+    "nativeEmitters": 1,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "REVENANT / Frederick",
+    "width": 590,
+    "height": 344,
+    "pixels": 119749,
+    "readableSamples": 8,
+    "nativeEmitters": 2,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "REVENANT / Sebastian",
+    "width": 584,
+    "height": 581,
+    "pixels": 171928,
+    "readableSamples": 8,
+    "nativeEmitters": 1,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "REVENANT / Heal",
+    "width": 545,
+    "height": 533,
+    "pixels": 117989,
+    "readableSamples": 8,
+    "nativeEmitters": 1,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "COUNTER / 8 DAMAGE",
+    "width": 646,
+    "height": 398,
+    "pixels": 123276,
+    "readableSamples": 8,
+    "nativeEmitters": 2,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "COUNTER / 30 DAMAGE",
+    "width": 775,
+    "height": 491,
+    "pixels": 182466,
+    "readableSamples": 8,
+    "nativeEmitters": 2,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "COUNTER / 80 DAMAGE",
+    "width": 932,
+    "height": 599,
+    "pixels": 272068,
+    "readableSamples": 8,
+    "nativeEmitters": 2,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "COUNTER / 200 DAMAGE",
+    "width": 1027,
+    "height": 664,
+    "pixels": 335031,
+    "readableSamples": 8,
+    "nativeEmitters": 2,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "HALO / 8 DAMAGE",
+    "width": 529,
+    "height": 424,
+    "pixels": 85402,
+    "readableSamples": 8,
+    "nativeEmitters": 1,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "HALO / 30 DAMAGE",
+    "width": 698,
+    "height": 558,
+    "pixels": 152271,
+    "readableSamples": 8,
+    "nativeEmitters": 1,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "HALO / 80 DAMAGE",
+    "width": 904,
+    "height": 726,
+    "pixels": 261969,
+    "readableSamples": 8,
+    "nativeEmitters": 1,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "HALO / 200 DAMAGE",
+    "width": 1029,
+    "height": 835,
+    "pixels": 343765,
+    "readableSamples": 8,
+    "nativeEmitters": 1,
+    "particlesMoved": true,
+    "passed": true
+  },
+  {
+    "name": "MARK / ACQUISITION",
+    "width": 370,
+    "height": 366,
+    "pixels": 35818,
+    "readableSamples": 2,
+    "nativeEmitters": 0,
+    "particlesMoved": false,
+    "passed": true
+  },
+  {
+    "name": "MARK / PERSISTENT READOUT",
+    "width": 88,
+    "height": 88,
+    "pixels": 1223,
+    "readableSamples": 0,
+    "nativeEmitters": 0,
+    "particlesMoved": false,
+    "passed": true
+  }
+]

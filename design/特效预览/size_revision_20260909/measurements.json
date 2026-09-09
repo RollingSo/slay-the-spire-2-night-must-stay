@@ -1,0 +1,182 @@
+[
+  {
+    "Name": "GUARDIAN / Weapon",
+    "Width": 449,
+    "Height": 203,
+    "Pixels": 21726
+  },
+  {
+    "Name": "GUARDIAN / Whirlwind",
+    "Width": 510,
+    "Height": 243,
+    "Pixels": 27805
+  },
+  {
+    "Name": "GUARDIAN / Counter",
+    "Width": 367,
+    "Height": 333,
+    "Pixels": 39766
+  },
+  {
+    "Name": "IRONEYE / Knife",
+    "Width": 388,
+    "Height": 302,
+    "Pixels": 16431
+  },
+  {
+    "Name": "IRONEYE / Shot",
+    "Width": 509,
+    "Height": 104,
+    "Pixels": 9128
+  },
+  {
+    "Name": "IRONEYE / MarkTrigger",
+    "Width": 364,
+    "Height": 364,
+    "Pixels": 33012
+  },
+  {
+    "Name": "IRONEYE / PoisonKnife",
+    "Width": 388,
+    "Height": 302,
+    "Pixels": 18191
+  },
+  {
+    "Name": "IRONEYE / PoisonShot",
+    "Width": 509,
+    "Height": 127,
+    "Pixels": 13419
+  },
+  {
+    "Name": "IRONEYE / PoisonBurst",
+    "Width": 374,
+    "Height": 378,
+    "Pixels": 66994
+  },
+  {
+    "Name": "REVENANT / HaloOut",
+    "Width": 343,
+    "Height": 192,
+    "Pixels": 30234
+  },
+  {
+    "Name": "REVENANT / HaloReturn",
+    "Width": 343,
+    "Height": 191,
+    "Pixels": 30232
+  },
+  {
+    "Name": "REVENANT / LightningRed",
+    "Width": 148,
+    "Height": 427,
+    "Pixels": 21040
+  },
+  {
+    "Name": "REVENANT / LightningYellow",
+    "Width": 175,
+    "Height": 427,
+    "Pixels": 20549
+  },
+  {
+    "Name": "REVENANT / LightningBlue",
+    "Width": 203,
+    "Height": 476,
+    "Pixels": 21543
+  },
+  {
+    "Name": "REVENANT / BeastRock",
+    "Width": 448,
+    "Height": 290,
+    "Pixels": 23256
+  },
+  {
+    "Name": "REVENANT / BeastClaw",
+    "Width": 374,
+    "Height": 326,
+    "Pixels": 55265
+  },
+  {
+    "Name": "REVENANT / Frenzy",
+    "Width": 449,
+    "Height": 249,
+    "Pixels": 41888
+  },
+  {
+    "Name": "REVENANT / CursedClaw",
+    "Width": 301,
+    "Height": 368,
+    "Pixels": 58638
+  },
+  {
+    "Name": "REVENANT / Helen",
+    "Width": 493,
+    "Height": 116,
+    "Pixels": 12757
+  },
+  {
+    "Name": "REVENANT / Frederick",
+    "Width": 316,
+    "Height": 290,
+    "Pixels": 36917
+  },
+  {
+    "Name": "REVENANT / Sebastian",
+    "Width": 371,
+    "Height": 252,
+    "Pixels": 33571
+  },
+  {
+    "Name": "REVENANT / Heal",
+    "Width": 292,
+    "Height": 506,
+    "Pixels": 38516
+  },
+  {
+    "Name": "COUNTER / 8 DAMAGE",
+    "Width": 367,
+    "Height": 333,
+    "Pixels": 39766
+  },
+  {
+    "Name": "COUNTER / 30 DAMAGE",
+    "Width": 440,
+    "Height": 399,
+    "Pixels": 59465
+  },
+  {
+    "Name": "COUNTER / 80 DAMAGE",
+    "Width": 528,
+    "Height": 479,
+    "Pixels": 87335
+  },
+  {
+    "Name": "COUNTER / 200 DAMAGE",
+    "Width": 583,
+    "Height": 527,
+    "Pixels": 106567
+  },
+  {
+    "Name": "HALO / 8 DAMAGE",
+    "Width": 343,
+    "Height": 192,
+    "Pixels": 30234
+  },
+  {
+    "Name": "HALO / 30 DAMAGE",
+    "Width": 467,
+    "Height": 260,
+    "Pixels": 60110
+  },
+  {
+    "Name": "HALO / 80 DAMAGE",
+    "Width": 628,
+    "Height": 350,
+    "Pixels": 115394
+  },
+  {
+    "Name": "HALO / 200 DAMAGE",
+    "Width": 729,
+    "Height": 406,
+    "Pixels": 160119
+  }
+]

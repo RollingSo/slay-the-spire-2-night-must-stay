@@ -213,7 +213,7 @@ namespace NightMustStay.Core.Models.Power
             Flash();
             if (attacker.IsAlive)
             {
-                NightreignHitVfx.PlayGuardianCounter(attacker);
+                NightreignHitVfx.PlayGuardianCounter(attacker, base.Owner, base.Amount);
                 await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(choiceContext, attacker, base.Amount, CounterDamageProps, base.Owner, null);
                 EvolutionWingsPower evolutionWings = base.Owner.GetPower<EvolutionWingsPower>();
                 if (evolutionWings != null)

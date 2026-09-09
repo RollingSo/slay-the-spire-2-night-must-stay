@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.TestSupport;
+using MegaCrit.Sts2.Core.ValueProps;
 
 namespace NightMustStay.Core.Nodes.Vfx;
 
@@ -25,7 +26,7 @@ public static class GuardianAttackEffects
     public static AttackCommand WithGuardianWhirlwindFx(this AttackCommand command) =>
         command.WithHitFx().WithHitVfxNode(target => Create(target, GuardianAttackVfx.Kind.Whirlwind));
 
-    public static Node2D? Create(Creature target, GuardianAttackVfx.Kind kind)
+    public static Node2D? Create(Creature target, GuardianAttackVfx.Kind kind, decimal visualDamage = 8m)
     {
         if (TestMode.IsOn || target == null || target.IsDead) return null;
         var node = target.GetCreatureNode();
@@ -33,19 +34,27 @@ public static class GuardianAttackEffects
         return new GuardianAttackVfx
         {
             AttackKind = kind,
+            VisualDamage = visualDamage,
             GlobalPosition = node.VfxSpawnPosition,
             ZIndex = 20,
             OnStart = () => PlaySound(kind),
         };
     }
 
-    public static void Play(Creature target, GuardianAttackVfx.Kind kind)
+    public static void Play(Creature target, GuardianAttackVfx.Kind kind, decimal visualDamage = 8m)
     {
         if (TestMode.IsOn || target == null || target.IsDead) return;
         var container = target?.GetVfxContainer();
         if (container == null) return;
-        var effect = Create(target!, kind);
+        var effect = Create(target!, kind, visualDamage);
         if (effect != null) container.AddChildSafely(effect);
+    }
+
+    public static void PlayCounter(Creature target, Creature dealer, decimal amount)
+    {
+        if (TestMode.IsOn || NonInteractiveMode.IsActive || target == null || target.IsDead
+            || target.GetCreatureNode() == null || target.GetVfxContainer() == null) return;
+        Play(target, GuardianAttackVfx.Kind.Counter, AttackVfxDamage.Preview(target, dealer, amount, ValueProp.Unpowered));
     }
 
     private static void PlaySound(GuardianAttackVfx.Kind kind)

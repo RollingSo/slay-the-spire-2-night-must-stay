@@ -1,0 +1,19 @@
+config_version=5
+
+[application]
+config/name="Attack VFX Size Review"
+run/main_scene="res://preview.tscn"
+
+[display]
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/window_width_override=1440
+window/size/window_height_override=810
+
+[dotnet]
+project/assembly_name="AttackVfxScalePreview"
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.055, 0.06, 0.08, 1)
+shader_compiler/shader_cache/enabled=false

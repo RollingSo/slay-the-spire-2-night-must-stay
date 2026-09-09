@@ -1,0 +1,10 @@
+<Project Sdk="Godot.NET.Sdk/4.5.1">
+  <PropertyGroup><TargetFramework>net9.0</TargetFramework><EnableDynamicLoading>true</EnableDynamicLoading><Nullable>enable</Nullable></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../src/Core/Nodes/Vfx/AttackVfxSizing.cs" Link="AttackVfxSizing.cs" />
+    <Compile Include="../../src/Core/Nodes/Vfx/GuardianAttackVfx.cs" Link="GuardianAttackVfx.cs" />
+    <Compile Include="../../src/Core/Nodes/Vfx/IroneyeAttackVfx.cs" Link="IroneyeAttackVfx.cs" />
+    <Compile Include="../../src/Core/Nodes/Vfx/RevenantAttackVfx.cs" Link="RevenantAttackVfx.cs" />
+    <Compile Include="../../src/Core/Nodes/Vfx/IroneyeMarkGlyph.cs" Link="IroneyeMarkGlyph.cs" />
+  </ItemGroup>
+<ItemGroup><Compile Include="../../src/Core/Nodes/Vfx/CombatVfxCanvas.cs" Link="CombatVfxCanvas.cs" /></ItemGroup><ItemGroup><Compile Include="../../src/Core/Nodes/Vfx/ParticleVfxMaterials.cs" Link="ParticleVfxMaterials.cs" /></ItemGroup><ItemGroup><Compile Include="../../src/Core/Nodes/Vfx/ParticleAttackVfx.cs" Link="ParticleAttackVfx.cs" /></ItemGroup></Project>

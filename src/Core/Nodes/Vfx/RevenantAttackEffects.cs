@@ -27,7 +27,7 @@ namespace NightMustStay.Core.Nodes.Vfx;
 /// <summary>Presentation-only routing. No extra damage, targeting RNG, combat delays or saved state.</summary>
 public static class RevenantAttackEffects
 {
-    private sealed record HaloRoute(object Combat, Vector2 End);
+    private sealed record HaloRoute(object Combat, Vector2 End, decimal VisualDamage);
     private static readonly ConditionalWeakTable<CardModel, HaloRoute> HaloRoutes = new();
     private static readonly ulong[] LastSound = new ulong[13];
     private static readonly bool[] Played = new bool[13];
@@ -59,7 +59,7 @@ public static class RevenantAttackEffects
         if (kind == null) return command;
         // One outbound ring for the entire attack, rather than one ring per AOE target.
         if (kind == K.HaloOut)
-            return command.WithHitFx().WithAttackerFx(() => CreateHaloOut(card, target));
+            return command.WithHitFx().WithAttackerFx(() => CreateHaloOut(card, target, null, command.DamageProps));
         return command.WithHitFx().WithHitVfxNode(hit => Create(hit, kind.Value, card.Owner.Creature));
     }
 
@@ -73,9 +73,10 @@ public static class RevenantAttackEffects
         return NewEffect(kind, start, end);
     }
 
-    private static Node2D NewEffect(K kind, Vector2 start, Vector2 end) => new RevenantAttackVfx
+    private static Node2D NewEffect(K kind, Vector2 start, Vector2 end, decimal visualDamage = 8m) => new RevenantAttackVfx
     {
         AttackKind = kind, Source = start - end, GlobalPosition = end, ZIndex = 20,
+        VisualDamage = visualDamage,
         OnStart = () => PlaySound(kind)
     };
 
@@ -98,7 +99,7 @@ public static class RevenantAttackEffects
         return node?.VfxSpawnPosition ?? Vector2.Zero;
     }
 
-    private static Node2D? CreateHaloOut(CardModel card, Creature? target)
+    private static Node2D? CreateHaloOut(CardModel card, Creature? target, decimal? amount = null, ValueProp props = ValueProp.Move)
     {
         if (TestMode.IsOn || NonInteractiveMode.IsActive || card.Owner?.Creature == null) return null;
         Creature caster = card.Owner.Creature;
@@ -112,9 +113,15 @@ public static class RevenantAttackEffects
         Vector2 through = destination.VfxSpawnPosition;
         Vector2 direction = (through - start).Normalized();
         Vector2 end = through + direction * 130;
+        // Use the outgoing, pre-block damage at cast time. AOE size reflects the
+        // strongest individual hit, not enemy count. This only queries preview hooks.
+        decimal visualDamage = (target != null ? new[] { target } : combat.HittableEnemies)
+            .Where(e => e.IsAlive)
+            .Select(e => AttackVfxDamage.Preview(e, caster, amount ?? card.DynamicVars.Damage.BaseValue, props, card))
+            .DefaultIfEmpty(0m).Max();
         HaloRoutes.Remove(card);
-        HaloRoutes.Add(card, new HaloRoute(combat, end));
-        return NewEffect(K.HaloOut, start, end);
+        HaloRoutes.Add(card, new HaloRoute(combat, end, visualDamage));
+        return NewEffect(K.HaloOut, start, end, visualDamage);
     }
 
     public static void PlayHaloReturn(CardModel card)
@@ -125,10 +132,14 @@ public static class RevenantAttackEffects
         Vector2 end = HandPosition(caster);
         // Loading a combat does not serialize cosmetic routes: use the enemy side as fallback.
         Vector2 start = end + new Vector2(540, -20);
+        decimal visualDamage = card.DynamicVars.Damage.BaseValue;
         if (HaloRoutes.TryGetValue(card, out HaloRoute? route) && ReferenceEquals(route.Combat, card.CombatState))
+        {
             start = route.End;
+            visualDamage = route.VisualDamage;
+        }
         HaloRoutes.Remove(card);
-        container.AddChildSafely(NewEffect(K.HaloReturn, start, end));
+        container.AddChildSafely(NewEffect(K.HaloReturn, start, end, visualDamage));
     }
 
     public static Task Damage(PlayerChoiceContext context, Creature target, decimal amount,
@@ -141,7 +152,7 @@ public static class RevenantAttackEffects
             {
                 if (!TestMode.IsOn && !NonInteractiveMode.IsActive && target.GetVfxContainer() is { } container)
                 {
-                    var effect = CreateHaloOut(card, target);
+                    var effect = CreateHaloOut(card, target, amount, props);
                     if (effect != null) container.AddChildSafely(effect);
                 }
             }

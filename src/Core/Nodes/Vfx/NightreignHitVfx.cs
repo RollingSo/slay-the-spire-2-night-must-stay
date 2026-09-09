@@ -36,4 +36,7 @@ public partial class NightreignHitVfx : Node2D
 
     public static void PlayGuardianCounter(Creature target) =>
         GuardianAttackEffects.Play(target, GuardianAttackVfx.Kind.Counter);
+
+    public static void PlayGuardianCounter(Creature target, Creature dealer, decimal amount) =>
+        GuardianAttackEffects.PlayCounter(target, dealer, amount);
 }
