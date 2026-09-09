@@ -99,7 +99,8 @@ public abstract partial class ParticleAttackVfx : Node2D
         };
         var emitter=new GpuParticles2D{
             Texture=texture,Material=ParticleVfxMaterials.Material(tile,color,tile==Smoke?.025f:.005f),ProcessMaterial=process,
-            Amount=count,Lifetime=Math.Max(.25f,Duration-start-.08f),OneShot=true,Explosiveness=follow?0f:.94f,
+            // Sparse secondary accents; damage grows silhouettes, never a cloud of fine lines.
+            Amount=Math.Clamp(count/4,2,6),Lifetime=Math.Max(.25f,Duration-start-.08f),OneShot=true,Explosiveness=follow?0f:.94f,
             Randomness=.25f,Emitting=false,UseFixedSeed=true,Seed=(uint)(4400+EffectIndex*17+_emitters.Count),
             FixedFps=60,LocalCoords=false,Position=position*PowerScale,
             VisibilityRect=new Rect2(-1000,-900,2000,1800)
@@ -125,7 +126,7 @@ public abstract partial class ParticleAttackVfx : Node2D
             case 0: // Halberd: broad steel leading edge, weighty secondary wake.
                 Sweep(Silver,590,-.4f);Hit(Silver,390,.07f);Burst(Dust,Silver,7,130,110,new(0,70));break;
             case 1: // Guardian wing wind remains horizontal, never a tornado funnel.
-                for(int i=0;i<3;i++){int row=i;Layer(Slash,new Color(.62f,.82f,.88f,.72f),new(680-i*25,245),new(0,-85+i*78),i%2==0?-.1f:3.05f,
+                for(int i=0;i<2;i++){int row=i;Layer(Slash,new Color(.62f,.82f,.88f,.72f),new(680-i*25,320),new(0,-80+i*155),i%2==0?-.1f:3.05f,
                     flow:.035f,motion:(s,u)=>s.Position+=new Vector2(MathF.Sin(u*4+row)*50,0));}
                 Burst(Feather,new Color(.66f,.65f,.55f),10,85,160,Vector2.Zero);break;
             case 2:
@@ -142,28 +143,25 @@ public abstract partial class ParticleAttackVfx : Node2D
                     s.Rotation=forward.Angle();
                     s.Position=Route(u*arrival)-forward*(s.Texture.GetWidth()*s.Scale.X*.43f);
                 });
-                Hit(arrow,540,arrival);Layer(Ring,new Color(arrow.R,arrow.G,arrow.B,.48f),new(290,420),Vector2.Zero,0,arrival,1);
+                Hit(arrow,540,arrival);
                 Burst(EffectIndex==7?Smoke:Impact,arrow,14,EffectIndex==7?130:58,180,Vector2.Zero,.16f,spread:55,direction:new Vector3(1,0,0));break;
             case 5:
                 Layer(Fracture,Cyan,new(550,550),Vector2.Zero,start:.05f,flow:0);
-                Layer(Fracture,new Color(.75f,.87f,.24f,.55f),new(465,465),Vector2.Zero,.04f,.12f,.9f,0);
                 Burst(Ice,Poison,12,60,230,Vector2.Zero,.1f);break;
             case 8:
                 Layer(Smoke,new Color(.35f,.65f,.15f,.85f),new(600,570),Vector2.Zero,flow:.06f);
                 Layer(Smoke,Poison,new(450,430),new(-30,-10),.8f,0,.88f,.055f);
-                Layer(Impact,Poison,new(350,310),Vector2.Zero,start:.03f,end:.4f);
-                Burst(Smoke,Poison,18,200,190,Vector2.Zero);Burst(Flame,Poison,10,75,245,Vector2.Zero);break;
+                Burst(Smoke,Poison,18,170,190,Vector2.Zero);break;
             case 9:case 10:
-                Layer(Ring,new Color(1,.64f,.13f,.32f),new(560,440),Vector2.Zero,flow:.009f,motion:(s,u)=>{s.Position=Route(u);s.Rotation=u*.5f;});
-                Layer(Ring,Gold,new(485+power*28,400+power*25),Vector2.Zero,flow:.008f,motion:(s,u)=>{
+                Layer(Ring,Gold,new(560+power*28,440+power*25),Vector2.Zero,flow:.008f,motion:(s,u)=>{
                     s.Position=Route(u);s.Rotation=u*1.2f;if(EffectIndex==10)s.Scale*=1-.68f*Ease(.73f,1,u);
                 });
-                Burst(Impact,Gold,20+(int)(power*12),28+power*9,80,Origin,0,true);break;
+                Burst(Impact,Gold,20,28+power*9,80,Origin,0,true);break;
             case 11:case 12:case 13:
                 Color lightning=EffectIndex==11?new Color("#F36775"):EffectIndex==12?Gold:Cyan;
-                int branches=EffectIndex==11?3:EffectIndex==12?1:2;
+                int branches=EffectIndex==11?2:1;
                 for(int i=0;i<branches;i++){float x=(i-(branches-1)*.5f)*90;Layer(Bolt,lightning,new(EffectIndex==12?270:320,550),new(x,-105),x*.0015f,0,.83f,.012f);}
-                Hit(lightning,470,.035f);Layer(Ring,lightning,new(570,230),new(0,95),start:.02f,end:.8f);
+                Hit(lightning,560,.035f);
                 if(EffectIndex==13)Layer(Ice,Cyan,new(390,370),new(0,45),start:.12f);
                 Burst(EffectIndex==13?Ice:Impact,lightning,19,75,230,new(0,70));break;
             case 14:
@@ -174,7 +172,7 @@ public abstract partial class ParticleAttackVfx : Node2D
                 for(int i=0;i<3;i++)Layer(Slash,Earth,new(220,580),new(-120+i*120,0),-.3f, i*.025f,1,.013f);
                 Layer(Dust,Earth,new(600,260),new(0,130),start:.12f,flow:.05f);Burst(Rock,Earth,12,65,175,new(0,95));break;
             case 16:
-                for(int i=0;i<5;i++){int ray=i;Layer(Flame,i%2==0?Gold:Orange,new(190,560),new(-90+i*45,-65+i*30),1.05f+i*.15f,i*.025f,1,.045f,
+                for(int i=0;i<3;i++){int ray=i;Layer(Flame,i%2==0?Gold:Orange,new(260,610),new(-90+i*80,-65+i*60),1.05f+i*.25f,i*.025f,1,.045f,
                     (s,u)=>s.Position+=new Vector2(Ease(0,.5f,u)*120,MathF.Sin(u*5+ray)*17));}
                 Burst(Flame,Orange,20,110,200,Vector2.Zero,spread:45,direction:new Vector3(1,0,0));break;
             case 17:
@@ -182,7 +180,7 @@ public abstract partial class ParticleAttackVfx : Node2D
                 Burst(Smoke,Violet,9,135,120,Vector2.Zero);break;
             case 18:
                 Layer(Rapier,Silver,new(580,400),new(-60,0),start:0,end:.65f,flow:0,motion:(s,u)=>s.Position+=new Vector2(120*Ease(0,.28f,u),0));
-                Layer(Slash,Cyan,new(510,290),new(0,10),-.3f,.1f,1);Hit(Silver,355,.16f);break;
+                Hit(Silver,460,.16f);break;
             case 19:
                 Layer(Hammer,new Color(.82f,.86f,.81f),new(510,510),new(0,-50),start:0,end:.74f,flow:0,
                     motion:(s,u)=>{s.Rotation=-.75f+1.1f*Ease(0,.5f,u);s.Position+=new Vector2(0,110*Ease(0,.5f,u));});
@@ -191,9 +189,9 @@ public abstract partial class ParticleAttackVfx : Node2D
             case 20:
                 Layer(Smoke,new Color(.35f,.62f,.7f,.5f),new(510,490),new(0,0),flow:.06f);
                 Layer(Palm,Silver,new(490,540),Vector2.Zero,flow:0,motion:(s,u)=>{s.Rotation=-.28f+.5f*Ease(0,.5f,u);s.Scale*=.8f+.25f*Ease(0,.4f,u);});
-                Sweep(Cyan,535,.2f,.16f);Burst(Smoke,Cyan,11,125,140,Vector2.Zero,.1f);break;
+                Burst(Smoke,Cyan,11,125,140,Vector2.Zero,.1f);break;
             case 21:
-                for(int i=0;i<3;i++)Layer(Light,new Color(1,.84f,.4f,.65f),new(200,500),new(-100+i*100,0),start:i*.035f,flow:.008f,
+                Layer(Light,new Color(1,.84f,.4f,.65f),new(390,500),Vector2.Zero,flow:.008f,
                     motion:(s,u)=>s.Position-=new Vector2(0,80*Ease(0,.85f,u)));
                 Layer(Ring,Gold,new(540,220),new(0,105),start:.02f);
                 Burst(Impact,Gold,24,32,130,new(0,100),spread:25,direction:new Vector3(0,-1,0));break;

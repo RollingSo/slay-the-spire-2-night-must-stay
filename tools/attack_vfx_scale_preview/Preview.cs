@@ -31,9 +31,9 @@ public partial class Preview : Node2D
             if(!ProjectSettings.LoadResourcePack(pack.Substring(7),false))throw new Exception("Cannot load exported PCK.");
             ParticleVfxMaterials.AssetRoot="res://images/vfx/particle_remake/";
             for(int tile=0;tile<16;tile++)if(ParticleVfxMaterials.Texture(tile).GetWidth()<512)throw new Exception("Invalid packaged atlas.");
-            GD.Print("PASS: all four production atlases loaded from exported PCK.");
+            GD.Print("PASS: all 16 tiles of the production atlas loaded from exported PCK.");
         }
-        _output = ProjectSettings.GlobalizePath("res://../../design/特效预览/particle_remake_20260910");
+        _output = ProjectSettings.GlobalizePath("res://../../design/特效预览/simple_remake_20260910");
         Directory.CreateDirectory(_output);
         foreach (G k in Enum.GetValues<G>()) _cases.Add(("GUARDIAN / " + k, () => new GuardianSample { AttackKind = k }));
         foreach (I k in Enum.GetValues<I>()) _cases.Add(("IRONEYE / " + k, () => new IroneyeSample { AttackKind = k }));
@@ -106,6 +106,9 @@ public partial class Preview : Node2D
                 if (sample is IroneyeAttackVfx iv) iv.ShotOrigin = new Vector2(-380, 0);
                 viewport.AddChild(sample);
                 var emitters=sample.GetChildren().OfType<GpuParticles2D>().ToArray();
+                int particleCount=emitters.Sum(e=>e.Amount);
+                int silhouetteLayers=sample.GetChildren().OfType<Sprite2D>().Count();
+                if(particleCount>8 || silhouetteLayers>4)throw new Exception("VFX exceeds the simple style density budget: "+name);
                 (int Width,int Height,int Pixels) initialParticles=default;
                 bool particlesMoved=false;
                 Image? best = null;
@@ -137,7 +140,7 @@ public partial class Preview : Node2D
                 // Every attack is audited, not only the headline damage-scaled variants.
                 bool passed=name.StartsWith("MARK /") ? pixels>=500 : width>=330 && height>=245 && pixels>=30000 && readableSamples>=4;
                 if(!name.StartsWith("MARK /")&&(emitters.Length==0||!particlesMoved))throw new Exception("Native GPU particles did not move: "+name);
-                _audit.Add(new {name,width,height,pixels,readableSamples,nativeEmitters=emitters.Length,particlesMoved,passed});
+                _audit.Add(new {name,width,height,pixels,readableSamples,silhouetteLayers,particleCount,nativeEmitters=emitters.Length,particlesMoved,passed});
                 if(!passed)_failures.Add(name);
                 if (width >= 1590 || height >= 1190) throw new Exception("Clipped measurement: " + name);
                 _captures.Add((name, best, width, height, pixels));

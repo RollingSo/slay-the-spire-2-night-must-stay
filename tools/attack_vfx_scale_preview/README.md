@@ -17,10 +17,12 @@ python tools/attack_vfx_scale_preview/assemble_preview_gifs.py
 
 当前预览使用生成贴图、生产 Shader 与真实 `GpuParticles2D`。`Seek` 根据目标时间步长调整原生粒子速度，使用固定 seed，不会以静态图片代替粒子。验证时额外隐藏主体 Sprite，在三个时间点单独渲染原生粒子，检查至少两个有效帧的可见范围随时间改变，兼容投石等延迟爆发。本机 GLES 驱动不支持 `CaptureRect` 的 GPU 缓冲读取，因此采用实际像素检查。
 
-可在 `--verify` 或 `--movie` 后追加 `--pack=C:/absolute/path/NightMustStay.pck`，检查四张图集从导出包加载；不带该参数时读取工作区原图。每次应等待 Godot 进程完成再启动下一次录像/审查。
+可在 `--verify` 或 `--movie` 后追加 `--pack=C:/absolute/path/NightMustStay.pck`，检查简化图集的 16 个图块从导出包加载；不带该参数时读取工作区原图。每次应等待 Godot 进程完成再启动下一次录像/审查。
 
-输出 `design/特效预览/particle_remake_20260910`：全量对照 PNG、测量 JSON、逐项审查 JSON 和四段 GIF。PNG 每格严格同为 0.65 倍战斗画布尺寸；伤害对比增加格子宽高以容纳高伤害效果。灰色矩形仅为统一尺度标尺，不代表某个真实角色。GIF 为生产代码的实际渲染，飞行距离在预览中统一为 210 画布单位以适配分格。
+输出 `design/特效预览/simple_remake_20260910`：全量对照 PNG、测量 JSON、逐项审查 JSON 和四段 GIF。PNG 每格严格同为 0.65 倍战斗画布尺寸；伤害对比增加格子宽高以容纳高伤害效果。灰色矩形仅为统一尺度标尺，不代表某个真实角色。GIF 为生产代码的实际渲染，飞行距离在预览中统一为 210 画布单位以适配分格。
 
 原版施毒参照可使用 `measure_native_poison.gd`，在 `--` 后传本机游戏 PCK。脚本读取原版粒子，仅为隔离运行移除场景控制器，临时文件写入忽略目录 `.tmp`。原版测量使用固定粒子 seed；不要把原版资源加入 Mod。
 
 旧版几何特效审查：`design/三角色全量特效重制审查_20260910.md`。当前粒子与贴图版：`design/三角色贴图粒子特效重制_20260910.md`。图像生成方式及完整提示词：`images/vfx/particle_remake/GENERATION.md`。
+
+简化版限制每个特效最多 4 层主体、8 个粒子，随伤害放大时也保持此密度预算。生产材质使用 4×4 的 simple.png，两档平涂颜色、少量整体形变和淡出，取消颗粒溶解。记录见 design/三角色特效简化_20260910.md；提示词见 images/vfx/particle_remake/SIMPLE_GENERATION.md。
