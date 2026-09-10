@@ -3,7 +3,7 @@ from pathlib import Path
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
-OUTPUT = ROOT / "design/特效预览/simple_remake_20260910"
+OUTPUT = ROOT / "design/特效预览/refined_remake_20260911"
 for page in range(1, 5):
     paths = sorted((ROOT / f".tmp/vfx-scale/movie/page{page}").glob("frame_*.png"))
     assert len(paths) == 48, f"page {page}: expected 48 frames, found {len(paths)}"

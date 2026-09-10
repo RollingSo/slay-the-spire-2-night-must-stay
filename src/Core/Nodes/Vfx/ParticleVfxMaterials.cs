@@ -12,7 +12,7 @@ public static class ParticleVfxMaterials
     private static Shader? _shader;
     public static Texture2D Texture(int tile)
     {
-        string name = "simple.png";
+        string name = "refined.png";
         string path = AssetRoot + name;
         if (!Textures.TryGetValue(path, out var texture))
         {
@@ -50,9 +50,10 @@ void fragment() {
     vec2 edge=smoothstep(vec2(0.0),vec2(.025),p)*(1.0-smoothstep(vec2(.975),vec2(1.0),p));
     vec3 sample_color=texture(TEXTURE,tile_rect.xy+clamp(p,vec2(.001),vec2(.999))*tile_rect.zw).rgb;
     float value=max(sample_color.r,max(sample_color.g,sample_color.b));
-    float coverage=smoothstep(.12,.3,value);
-    float shade=smoothstep(.68,.76,value);
-    vec3 color=mix(tint.rgb*.64,tint.rgb,shade) * min(gain,1.15);
+    // Preserve the authored broad shading and bright core, without filament noise.
+    float coverage=smoothstep(.045,.3,value)*sqrt(max(value,0.0));
+    vec3 body=mix(tint.rgb*.48,tint.rgb,smoothstep(.15,.72,value));
+    vec3 color=mix(body,mix(tint.rgb,vec3(1.0),.3),smoothstep(.76,1.0,value))*min(gain,1.15);
     float fade=1.0-smoothstep(.1,1.0,dissolve);
     COLOR=vec4(color,coverage*.82*edge.x*edge.y*fade*tint.a)*vertex_color;
 }

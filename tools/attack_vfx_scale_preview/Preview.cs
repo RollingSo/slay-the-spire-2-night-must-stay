@@ -33,7 +33,7 @@ public partial class Preview : Node2D
             for(int tile=0;tile<16;tile++)if(ParticleVfxMaterials.Texture(tile).GetWidth()<512)throw new Exception("Invalid packaged atlas.");
             GD.Print("PASS: all 16 tiles of the production atlas loaded from exported PCK.");
         }
-        _output = ProjectSettings.GlobalizePath("res://../../design/特效预览/simple_remake_20260910");
+        _output = ProjectSettings.GlobalizePath("res://../../design/特效预览/refined_remake_20260911");
         Directory.CreateDirectory(_output);
         foreach (G k in Enum.GetValues<G>()) _cases.Add(("GUARDIAN / " + k, () => new GuardianSample { AttackKind = k }));
         foreach (I k in Enum.GetValues<I>()) _cases.Add(("IRONEYE / " + k, () => new IroneyeSample { AttackKind = k }));
@@ -57,7 +57,7 @@ public partial class Preview : Node2D
         foreach (decimal d in new[] { decimal.MinValue, -1m, 0m, 8m, 30m, 80m, 200m, decimal.MaxValue })
         {
             float c = AttackVfxSizing.CounterScale(d), h = AttackVfxSizing.HaloScale(d);
-            if (!float.IsFinite(c) || !float.IsFinite(h) || c < 1.65f || c > 2.65f || h < 1.6f || h > 3.13f)
+            if (!float.IsFinite(c) || !float.IsFinite(h) || c < 1.65f || c > 2.24f || h < 1.6f || h > 2.33f)
                 throw new Exception("Unsafe damage scale: " + d);
         }
         foreach (Vector2 origin in new[] { new Vector2(-500, 90), new Vector2(500, -90), Vector2.Zero })
@@ -128,7 +128,7 @@ public partial class Preview : Node2D
                     if (frame % 12 != 0 || frame == 0 || frame == 120) continue;
                     var img = viewport.GetTexture().GetImage();
                     var bounds = Bounds(img);
-                    if(bounds.Pixels>=12000)readableSamples++;
+                    if(bounds.Pixels>=3000)readableSamples++;
                     if (bounds.Pixels > pixels)
                     {
                         best?.Dispose(); best = img;
@@ -138,7 +138,10 @@ public partial class Preview : Node2D
                 }
                 if (best == null || pixels < 500) throw new Exception("Invisible effect: " + name);
                 // Every attack is audited, not only the headline damage-scaled variants.
-                bool passed=name.StartsWith("MARK /") ? pixels>=500 : width>=330 && height>=245 && pixels>=30000 && readableSamples>=4;
+                // Revised after user rejected oversized effects: include an upper size bound.
+                int maximum=name.Contains("DAMAGE")?650:520;
+                bool passed=name.StartsWith("MARK /") ? pixels>=500 && width<=300 && height<=300 :
+                    width>=180 && height>=140 && width<=maximum && height<=maximum && pixels>=6500 && readableSamples>=4;
                 if(!name.StartsWith("MARK /")&&(emitters.Length==0||!particlesMoved))throw new Exception("Native GPU particles did not move: "+name);
                 _audit.Add(new {name,width,height,pixels,readableSamples,silhouetteLayers,particleCount,nativeEmitters=emitters.Length,particlesMoved,passed});
                 if(!passed)_failures.Add(name);

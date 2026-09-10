@@ -16,7 +16,7 @@ public partial class IroneyeMarkGlyph : CombatVfxCanvas
     public void DrawMark(float time,float pulse)
     {
         pulse=Math.Clamp(pulse,0,1);
-        float settle=Ease(0,1,1-pulse),radius=52+122*(1-settle);
+        float settle=Ease(0,1,1-pulse),radius=52+70*(1-settle);
         float idle=.32f+.04f*MathF.Sin(time*2.4f);
         if(_arrival!=null)
         {
