@@ -4,4 +4,4 @@
 
 [resource]
 atlas = ExtResource("1_savior_form_power")
-region = Rect2(384, 384, 128, 128)
+region = Rect2(8, 1096, 256, 256)

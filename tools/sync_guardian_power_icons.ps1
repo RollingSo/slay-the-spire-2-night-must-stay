@@ -78,19 +78,33 @@ try {
             [System.Drawing.Imaging.PixelFormat]::Format32bppArgb
         )
         try {
-            $graphics = [System.Drawing.Graphics]::FromImage($icon)
-            try {
-                $graphics.Clear([System.Drawing.Color]::Transparent)
-                $graphics.CompositingQuality = [System.Drawing.Drawing2D.CompositingQuality]::HighQuality
-                $graphics.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
-                $graphics.PixelOffsetMode = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
-                $graphics.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::HighQuality
-                $source = New-Object System.Drawing.Rectangle($x, $y, $width, $height)
-                $destination = New-Object System.Drawing.Rectangle(0, 0, $OutputSize, $OutputSize)
-                $graphics.DrawImage($atlas, $destination, $source, [System.Drawing.GraphicsUnit]::Pixel)
+            # Isolate the cell before sampling: bicubic interpolation on the
+            # complete atlas can pick up a neighboring power's colored edge.
+            $cell = $atlas.Clone(
+                [System.Drawing.Rectangle]::new($x, $y, $width, $height),
+                [System.Drawing.Imaging.PixelFormat]::Format32bppArgb
+            )
+            if ($width -eq $OutputSize -and $height -eq $OutputSize) {
+                # Preserve straight RGBA pixels when no resize is necessary.
+                $icon.Dispose()
+                $icon = $cell
             }
-            finally {
-                $graphics.Dispose()
+            else {
+                $graphics = [System.Drawing.Graphics]::FromImage($icon)
+                try {
+                    $graphics.Clear([System.Drawing.Color]::Transparent)
+                    $graphics.CompositingQuality = [System.Drawing.Drawing2D.CompositingQuality]::HighQuality
+                    $graphics.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
+                    $graphics.PixelOffsetMode = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
+                    $graphics.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::HighQuality
+                    $source = New-Object System.Drawing.Rectangle(0, 0, $width, $height)
+                    $destination = New-Object System.Drawing.Rectangle(0, 0, $OutputSize, $OutputSize)
+                    $graphics.DrawImage($cell, $destination, $source, [System.Drawing.GraphicsUnit]::Pixel)
+                }
+                finally {
+                    $graphics.Dispose()
+                    $cell.Dispose()
+                }
             }
 
             $pngStream = New-Object System.IO.MemoryStream

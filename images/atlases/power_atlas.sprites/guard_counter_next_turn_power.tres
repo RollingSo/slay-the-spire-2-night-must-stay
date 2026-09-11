@@ -4,4 +4,4 @@
 
 [resource]
 atlas = ExtResource("1_guard_counter_next_turn_power")
-region = Rect2(512, 128, 128, 128)
+region = Rect2(1640, 280, 256, 256)

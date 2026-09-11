@@ -4,4 +4,4 @@
 
 [resource]
 atlas = ExtResource("1_fortify_power")
-region = Rect2(896, 0, 128, 128)
+region = Rect2(280, 280, 256, 256)

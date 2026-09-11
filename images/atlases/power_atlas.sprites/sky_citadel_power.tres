@@ -4,4 +4,4 @@
 
 [resource]
 atlas = ExtResource("1_icon")
-region = Rect2(640, 384, 128, 128)
+region = Rect2(1096, 1096, 256, 256)

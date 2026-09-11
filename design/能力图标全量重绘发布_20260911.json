@@ -1,0 +1,1719 @@
+{
+  "approved": true,
+  "date": "2026-09-11",
+  "scope": "Guardian, Ironeye, Revenant visible power/status/action icons; excludes Duchess and hidden controller",
+  "count": 114,
+  "guardianAtlas": 53,
+  "checks": [
+    {
+      "id": "aegis_form_power",
+      "title": "圣盾形态",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        8,
+        8,
+        256,
+        256
+      ],
+      "approvedPngSha256": "7c762509c7d6cc2fa6f956122a734de4ebb3836ab6855c5f92084b3c6aeb4c6e",
+      "visiblePixelHash": "f0104f9fbd4208af6abbcab0b7311ed054436ab6edf85502ed785b0089c66ea7",
+      "importStableHash": "392DC5BC31778E662107BDD756BAAED887568802C76D14753932A76C647B02CB"
+    },
+    {
+      "id": "air_rending_arrow_strength_down_power",
+      "title": "锐不可当",
+      "character": "ironeye",
+      "source": "images/powers/air_rending_arrow_strength_down_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "66b5d7237cc69184a63e4dd109ce663c0dd55b08d54725702d7432e807cb7836",
+      "visiblePixelHash": "81a10248e4b8d0c0261baa12e9bc4864b143036a012db90002db78845599d7f6",
+      "importStableHash": "6CB7325DF7922F4F410FEB613DC3EF7B09BA7C9272EFD1E4C20160B5071D35F9"
+    },
+    {
+      "id": "all_things_wither_power",
+      "title": "万物凋零",
+      "character": "ironeye",
+      "source": "images/powers/all_things_wither_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "df789c626e6720da49d856c57de4c8aa9cae2459e4b683330f8ae8fff74ed872",
+      "visiblePixelHash": "52960970ed51584411b24ace8a51faa6623480dfca1027508274873c9bf11db9",
+      "importStableHash": "D4E1F20B08D20E27B044ACC5758E9A5BEAA14D7F2D2ABC3D7F7B62C973D4136E"
+    },
+    {
+      "id": "ancient_dragon_faith_power",
+      "title": "古龙信仰",
+      "character": "revenant",
+      "source": "revenant_assets/powers/ancient_dragon_faith_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "202b443314b355859148341fb7f282a9747bdd21b7ebdd7d799e54ac027ceef6",
+      "visiblePixelHash": "b0557f1ffe9aa71e778ee654fa0d96a8723d147d1e6aad109e163e8c18bc2054",
+      "importStableHash": "9954DB18F9C428A189E91100CA697C277E0E1D0C6CB13A805B1DD429688726A6"
+    },
+    {
+      "id": "approaching_venom_fang_power",
+      "title": "迫近毒牙",
+      "character": "ironeye",
+      "source": "images/powers/approaching_venom_fang_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "87ea3cb359f392a2ab8380864ea7173b4fde9d8266172b3291ed5496896685cb",
+      "visiblePixelHash": "ab43787e8038d33c58ab8c6796bc29e9ac5deaf460fd1ee5f864c4fd631890e2",
+      "importStableHash": "FA41DD18406C377C2C9DB5BF43F7BB9C19920909343B567DBEC9423ACEF5A90B"
+    },
+    {
+      "id": "arrow_on_string_power",
+      "title": "弦上箭",
+      "character": "ironeye",
+      "source": "images/powers/arrow_on_string_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "b5790eeb0ddfb9ed0c6913d6688e8d65782cc27aecc0beb4c64db3636e366002",
+      "visiblePixelHash": "2d9f30581f67d8dd571c025114bd68b05b75ccb3340cd49805169692f4e4cc62",
+      "importStableHash": "699B67304A8C956E2695798AC444C8EF93180B3005536E0D71D56A05AEFB6C87"
+    },
+    {
+      "id": "beast_claw_mark_power",
+      "title": "野兽爪痕",
+      "character": "revenant",
+      "source": "revenant_assets/powers/beast_claw_mark_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "f89ef6e0a98f16fde8fd3d42e97cfc2795736b4c45983a6c679771763804a321",
+      "visiblePixelHash": "474ba25fb20cfa7577e6cd1362ef1a248cbe36f6cc39629a6fc19b93a14f2467",
+      "importStableHash": "58F7A0DD572F0088D11993A1D3C9EA48D677A86F8EC761AC08764CB0D01BBB27"
+    },
+    {
+      "id": "blade_shadow_unmatched_power",
+      "title": "刃影无双",
+      "character": "ironeye",
+      "source": "images/powers/blade_shadow_unmatched_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "7d1f7fab243e7eafe20e6e9774c37016d8e3a14a571ed26fe1d3f8a35cf610db",
+      "visiblePixelHash": "960c084d85821840b4ed2a3d6dfa7825beadd5ef7003119b333db72f8640f94c",
+      "importStableHash": "15D3723D9ABF4DD260CF3924907B1429CEDF79861A26CA4A95B637E1CAC9449D"
+    },
+    {
+      "id": "blessing_of_grace_power",
+      "title": "恩惠赐福",
+      "character": "revenant",
+      "source": "revenant_assets/powers/blessing_of_grace_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "f0229618dbfaa9441444a94e7392fc121f4e66a4cf47ba0d9f8b3d271cd5914a",
+      "visiblePixelHash": "f20cb171b037c57ac4ae5adfea11b031d11a6e7fb4ff5b66ed1a8e83b51171eb",
+      "importStableHash": "2391518B4CE26524DCAADCB109827D009E2C8EB7DAD0744F925860FF1AA7CDAB"
+    },
+    {
+      "id": "bow_like_full_moon_power",
+      "title": "弓如满月",
+      "character": "ironeye",
+      "source": "images/powers/bow_like_full_moon_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "915ec3b4323553a41284842596ebbd9a46fae89586439e64fa644671ace1c329",
+      "visiblePixelHash": "14de0b460c9d1adfcb8bfae9b1cd59f9133c4bf2bc84a8699ce8bdae1a3f967f",
+      "importStableHash": "C4FC954F6A85AD37230D1C5B57FA7BBED96BD4746222CCEBC1B05B6BCEEDD315"
+    },
+    {
+      "id": "change_hands_power",
+      "title": "换手",
+      "character": "revenant",
+      "source": "revenant_assets/powers/change_hands_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "86657e0cb2d257d6cdca2f92d8038d3bc97140dea9e61d6845650419376bde4b",
+      "visiblePixelHash": "1193e1fe9c7bccbef56607f108e5d82f1da5b1d97c9f016a6caec4f7b28ad863",
+      "importStableHash": "C4254DB5C6FEFD703F72A5A12579A19385E18FF3FF9EE9141121CE623D9C108D"
+    },
+    {
+      "id": "chanting_blessing_power",
+      "title": "咏唱庇佑",
+      "character": "revenant",
+      "source": "revenant_assets/powers/chanting_blessing_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "49ace631c6ec6a2e45ee37368a48bdcc3f0bc65e5daa4ac57b414d4ec96a94c1",
+      "visiblePixelHash": "03cda1d0efe9f105b013ea08e5d8603384935cfab8f09bb7ed9e3a2677d35290",
+      "importStableHash": "9B709312CA3A39855320AC6A13EF074BC829AE9A0E47EAE22A5D29DE7D7F0835"
+    },
+    {
+      "id": "cloud_rending_strength_restore_power",
+      "title": "卷残云",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        280,
+        8,
+        256,
+        256
+      ],
+      "approvedPngSha256": "218999d817d1ce69f6e41700c10c8faef8991e34a3a13259d87a1cb10a8d1314",
+      "visiblePixelHash": "7ce2acb2e48d55dbedc876734e6827a5297cda0273a1e07730c5da5e7df0205e",
+      "importStableHash": "D1CD1AA04641E469D80B86F001D7BB866AE70126B0B77CD37FE7B210C2D1D344"
+    },
+    {
+      "id": "counter_discipline_power",
+      "title": "反击纪律",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        552,
+        8,
+        256,
+        256
+      ],
+      "approvedPngSha256": "b55e53fda96a2ce0d35994100337aab841ed21b2e7c3b358fdd7c1c4641d53b9",
+      "visiblePixelHash": "aa07bb78dddb881829080c8c072f167d919e9177d3460c895ede4ab5823c50fd",
+      "importStableHash": "DE277A7A7F6C0495440F1D8B0FCF6D1C4FC86563D61364C426571FE38D51DF84"
+    },
+    {
+      "id": "counter_like_tide_power",
+      "title": "山止",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        824,
+        8,
+        256,
+        256
+      ],
+      "approvedPngSha256": "c6f9d4a6cf791ad527e08f56322c3f0dabb013c7a03ce8eb3579bb2206166391",
+      "visiblePixelHash": "55de3dbd4af7a7322353ea4a2e64a0ab3bd4e103491f2ca5a970e3b6e6c313ec",
+      "importStableHash": "475ABE27249064F4A0DB74EFAFEF5BA0ED9058736E9FFFAB4665785E86D8AFC7"
+    },
+    {
+      "id": "counter_step_power",
+      "title": "反击步伐",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1096,
+        8,
+        256,
+        256
+      ],
+      "approvedPngSha256": "f7859db35ef43d1d4e02cd7b80bbbf4865ebb12481f47f8513e043311860466e",
+      "visiblePixelHash": "65f1883b375518ffe6fc7963916cc3f31084c891b67859aeee27673f43b8906b",
+      "importStableHash": "34E5D50E414AC265D6BF1CE9CFD2E5E699A5E1FA6A962627D28E3C56D79BA3D8"
+    },
+    {
+      "id": "defensive_cadence_power",
+      "title": "防御节奏",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1368,
+        8,
+        256,
+        256
+      ],
+      "approvedPngSha256": "fe5442e27dddf35168d9b581264e2eb74cbb8bf90eca252a815b11836fcae187",
+      "visiblePixelHash": "9838db48f5e53d6565b29787870d2c8a9ac331a82f5b3ac69cd190defdf6f67b",
+      "importStableHash": "D7C7CFC81E70F55C09F899A5A490CFF96C3EBECB690077EA823C995B094E781B"
+    },
+    {
+      "id": "disorderly_arrows_power",
+      "title": "乱箭",
+      "character": "ironeye",
+      "source": "images/powers/disorderly_arrows_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "ca36a8f61a211513cfa70fc24925cb6bf090f6a1482ec15504a49b4e0500609b",
+      "visiblePixelHash": "890a6df3aa4915e3dca4997a0dbe6f9f364545cb83099b551b439712709a1646",
+      "importStableHash": "185572337F470E8B0F68075D9CE81908E2E5ACF777C020F36015BDD422DA69BE"
+    },
+    {
+      "id": "distance_power",
+      "title": "距离",
+      "character": "ironeye",
+      "source": "images/powers/distance_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "665d38f863bab6517c2ac737eefe6fbd9369069385315a164d4991772e00d045",
+      "visiblePixelHash": "42fdbb195bdfb73418587cadb10203f54a7092392d9028ea3e445c10353f8c73",
+      "importStableHash": "42FD2B79928306A85950A030ACABD192133940F738A6BF3469E237BBAF7ECC81"
+    },
+    {
+      "id": "eagle_eye_power",
+      "title": "鹰眼",
+      "character": "ironeye",
+      "source": "images/powers/eagle_eye_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "1c2a07f384fb99ec09f6fd2461ae75c21830f81fd308b6bd2dca8bfb5398d77c",
+      "visiblePixelHash": "e60ca32035d3bf616989fd04a4e1680a13c23a4776da607090ce1ba365206220",
+      "importStableHash": "7602D09FCCDBC1F69EB2E0402F18BD4671E0AF4AA0B5D1629EEAE2076B34D163"
+    },
+    {
+      "id": "evasive_arrow_slash_power",
+      "title": "闪身箭斩",
+      "character": "ironeye",
+      "source": "images/powers/evasive_arrow_slash_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "8b6fcf7e7836e6b945137f5d5e60902fe7d57974e22eaf5bc1dda97416cda8ff",
+      "visiblePixelHash": "90396accd9061cbe3651632a89bcb10a6f80cb06c72c7149f72842ea98ac815a",
+      "importStableHash": "A3299A841645D9378D3ADD5387783314A112CB73E4A5FA1E874747B21C7AD09F"
+    },
+    {
+      "id": "evolution_wings_power",
+      "title": "进化之翼",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1640,
+        8,
+        256,
+        256
+      ],
+      "approvedPngSha256": "e74bf86a24fad1e7720ab7b01f1973ec853ebdd2333cf4de7ed1ea4307f33568",
+      "visiblePixelHash": "54f2b4746c50f02e3246f7999558598e6e8ee2117662bf5e0d759fd38719a929",
+      "importStableHash": "9ADA87DBAFAE67E53ADA3DB375E7D0CACE7260CACC4A782E58E6FE58023155DF"
+    },
+    {
+      "id": "fatal_blade_edge_power",
+      "title": "致命刃芒",
+      "character": "ironeye",
+      "source": "images/powers/fatal_blade_edge_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "10f42863d6502abd05ab9dde1e54eedaaa2123a07cbd458af1cade4703f3ea6c",
+      "visiblePixelHash": "34e54343721b94c4dd03d74ebe048e15bb999c4a8d85c078ac774f070225fce3",
+      "importStableHash": "297AB8E2E700FD39DC9362E0F7C5CE3FA3898E732FD70D66F353E12040658EAA"
+    },
+    {
+      "id": "feather_sword_power",
+      "title": "羽毛剑",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1912,
+        8,
+        256,
+        256
+      ],
+      "approvedPngSha256": "d6e3a8428d850a947db6c66ba313f4d5b2acc3af08a102a191daf6f3aa2644ef",
+      "visiblePixelHash": "480df19b3c84b2915c6cb37e599781463c7c4c3014bd93b9b658756b59d416f0",
+      "importStableHash": "A323F48AB94EB0E10C2F182558B898B800CDA2F04B52CDCFAA0E0992B6CF83D4"
+    },
+    {
+      "id": "featherstep_power",
+      "title": "飞羽步",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        8,
+        280,
+        256,
+        256
+      ],
+      "approvedPngSha256": "a7e8997002e0ed4aa35bdde910ce0976902c9351efaa045f80f776b056c26d6f",
+      "visiblePixelHash": "476605fee2f50d0806ee92583b962005716495dd6eaa62024e77741c1872ee8a",
+      "importStableHash": "7588DE73AB8623F7F12896BBF278094E34ED3570D31DF3B111D4F1C68D20C0E7"
+    },
+    {
+      "id": "fight_for_me_power",
+      "title": "为我而战",
+      "character": "revenant",
+      "source": "revenant_assets/powers/fight_for_me_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "b3009d3dc5b255910db4d15d3bb12091b1d9cd1ebac18a834f335c01726b1c37",
+      "visiblePixelHash": "00f56085ca7f6c8240cc620a2901d90d0973c81cdbad70a0e7f1bf4d1c81daeb",
+      "importStableHash": "337E69E9505544E372F3EC9FCC1CF34A805A08B98971FAC301448E77C7A646E7"
+    },
+    {
+      "id": "final_battle_no_block_power",
+      "title": "终局一战",
+      "character": "ironeye",
+      "source": "images/powers/final_battle_no_block_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "8248bed849c4748b774a0954c9744038236b56f5c0ccc19202dd6892b143471f",
+      "visiblePixelHash": "7a13601bd05460cc5ca1613a16512ced9eae516c44b3b3db5c22ffb9d0d1604f",
+      "importStableHash": "4E5EF3EE117BDB14BCFF158F488914FFDD2399BEBF3D2B91628B7FF26B0797D2"
+    },
+    {
+      "id": "following_shadow_power",
+      "title": "如影随形",
+      "character": "revenant",
+      "source": "revenant_assets/powers/following_shadow_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "27c943c5e4f65bf469942784f0a981e3b32bd851915ab75de4b0a5a123bee0de",
+      "visiblePixelHash": "d13dfc4b94f0426a2ff45199e82e80097f56106cce9d0e069c7773e308f3d902",
+      "importStableHash": "F047690CAFFA45C6C8AB397AC2C8E13F8BA072D8F9C7BD7015AF6350CF55469F"
+    },
+    {
+      "id": "fortify_power",
+      "title": "固守",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        280,
+        280,
+        256,
+        256
+      ],
+      "approvedPngSha256": "f683d8713337fe7a3bea867e9e4c0b1a781d0bb9e9c90f28784d9b3ff9b95a4d",
+      "visiblePixelHash": "2e4e9259d52882a897ca8dcd985d56fe94d38d283e62847329629af9275db422",
+      "importStableHash": "30D83B2FE5E9CCC167B427D00F8EF5B4C859232582C8926528421E9AC48FCF63"
+    },
+    {
+      "id": "fortress_heart_power",
+      "title": "堡垒之心",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        552,
+        280,
+        256,
+        256
+      ],
+      "approvedPngSha256": "14d2c2a90ee440cee7f0ba2c65359b6c9ff0cb961ceee2934af2aa32fea9d51b",
+      "visiblePixelHash": "60f5fd8e6901d8af1aea7056be71bb74981d94d1f240d428d37b7ed53fba3596",
+      "importStableHash": "F12F9419706D6800142C489215524E04991819D5F093A388203CB39EC20EF3C5"
+    },
+    {
+      "id": "frederick_headbutt_power",
+      "title": "头槌",
+      "character": "revenant",
+      "source": "revenant_assets/powers/frederick_headbutt_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "8ae066fc7fc6ecf53a14c843f1e6e8c56a2e323cd6800234f696cc13e1c7e69b",
+      "visiblePixelHash": "da781a0d4dc720bb8998353d33e84ca4a376ff5fdc23337f0f5c354edb4be03a",
+      "importStableHash": "BA964DFBDEA9E03B0BAE4F0B54D2CFC77D69465DC39C7E1BC1A183AEAEFE5A2A"
+    },
+    {
+      "id": "frederick_heavy_hammer_power",
+      "title": "重锤",
+      "character": "revenant",
+      "source": "revenant_assets/powers/frederick_heavy_hammer_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "1309c2e6b9cfa2e0086134e9c9c11aea4932833e91f97aa57c8c45fdb6ea2897",
+      "visiblePixelHash": "547bf2e15ecb244acb039a59d9797b980d36d734124b5a59b47ce15d03a4be7e",
+      "importStableHash": "0174D993252406394EF6CE66F61CC11BA669B9491CA5A813302F14B2458A96E3"
+    },
+    {
+      "id": "freeze_power",
+      "title": "冻伤",
+      "character": "revenant",
+      "source": "revenant_assets/powers/freeze_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "bf9cac9c75be8d787415c2bfdceda9ad231aa60ec1b46ceaeded36d2aa5173e1",
+      "visiblePixelHash": "f06edf8dfccbeec46116822c1d447becb16d96a26731131e5b1c434f05277f48",
+      "importStableHash": "75BF679B77AA7CF8A0160A88473CBFAD9D29F5B049896C8128E611FA6EEE48DF"
+    },
+    {
+      "id": "frenzied_three_fingers_power",
+      "title": "癫狂叁指",
+      "character": "revenant",
+      "source": "revenant_assets/powers/frenzied_three_fingers_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "1d607e84019480e544c03765906af9be1708d1de374fb29749165129009c1532",
+      "visiblePixelHash": "ba9585894431619a20f1c483382ba8ffa92e18be21ff346c674ac9633b9d342d",
+      "importStableHash": "D2FCC8EB47443931F7FD53945F586B3A32BFA384160165C58E92685823F22017"
+    },
+    {
+      "id": "frightened_bird_strength_down_power",
+      "title": "惊弓之鸟（暂时减力）",
+      "character": "ironeye",
+      "source": "images/powers/frightened_bird_strength_down_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "25cb5fbde800fb5eb32eaf3c7f9090823873ddbc31dffb18e7e6125510131abc",
+      "visiblePixelHash": "1a9ba9f0faf18966cc226fb54e4ff16815a4a69bd63bb65081dd2ec4a6d202ca",
+      "importStableHash": "EA66135FB8965B42509EFD6556F7BFD5B67D63FFDADD52C1EC565284287DAB52"
+    },
+    {
+      "id": "ghostly_touch_power",
+      "title": "幽寒之触",
+      "character": "revenant",
+      "source": "revenant_assets/powers/ghostly_touch_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "a5df45c0a3d4d39d85ea032e90bd373d3d40da44612ca182e67856d4f006daa1",
+      "visiblePixelHash": "a9e5065d9a07931718a71744b23eb98bd7faf3aa5031b54ab5f955e753f9e36f",
+      "importStableHash": "CE409DCBB48439D6EBABB000F881299F6072768A6C643EDDAB26E0A4DBCE38C8"
+    },
+    {
+      "id": "golden_order_power",
+      "title": "黄金律法",
+      "character": "revenant",
+      "source": "revenant_assets/powers/golden_order_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "731f50f4ddf105db1d11360fe67b519370efe231b94f0b5a2d2032545b643c20",
+      "visiblePixelHash": "bd5bedc3a9483c93dcf4b8deb378b6691259d904a3e3132bd9f47ec5a115d0de",
+      "importStableHash": "658C7EA764A4A90E94483B31606DAA11DF3877C37FCEC59A313EC1E588D5CECD"
+    },
+    {
+      "id": "great_shield_shock_power",
+      "title": "巨盾震击",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        824,
+        280,
+        256,
+        256
+      ],
+      "approvedPngSha256": "18ef3ed6aa9ade55cc5ba1ae9133ca1b2f5ac9e7bbe078ca0d306436476e3100",
+      "visiblePixelHash": "3487b50ba6f2407ee826d6257f45589ddd140c17f78e5a0314522e5a7c234f44",
+      "importStableHash": "655964A5C45508B07CD973D7820407597BE12DFCA4D3789304487DB1B07DD92E"
+    },
+    {
+      "id": "great_tornado_power",
+      "title": "大龙卷",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1096,
+        280,
+        256,
+        256
+      ],
+      "approvedPngSha256": "92bc08301e70e43216a19bbcfac6e1c7fa848438c67ba251caffe9b7c772b01e",
+      "visiblePixelHash": "a5dda50fe949da115ef0ed3f0c0df32e840a29fc67ea0c3028cb7eb762bd8c05",
+      "importStableHash": "03302627F181849B58AA8CC3E6336DFF4D255248BFB25937411080D2AB57994E"
+    },
+    {
+      "id": "guard_counter_block_next_turn_power",
+      "title": "下回合格挡",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1368,
+        280,
+        256,
+        256
+      ],
+      "approvedPngSha256": "483b03ab036f13db07d63b35addd5d7cd71e27596d714937d015e274cbebb977",
+      "visiblePixelHash": "b5a931adf14b652ced62f2dd0142a01d9e8f616ea545e2d6f61d82e37bd6df2e",
+      "importStableHash": "D9C99AC7D16BD8F2F85207CA7C9B4B59DD233A977DE42BF0E3130AED5493595D"
+    },
+    {
+      "id": "guard_counter_next_turn_power",
+      "title": "下回合防御反击",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1640,
+        280,
+        256,
+        256
+      ],
+      "approvedPngSha256": "6401926440480ac46e240f3b26c2ed9eadec8d928a8368cb31fefc9c424e0d24",
+      "visiblePixelHash": "f2d31bc4367441cb3b0eb066d91b7238611be2c86a988ffdd845e031b7a86b6a",
+      "importStableHash": "458D816B899CA9F9C879142C0A09E370B34CC513CA61BB583E41592F40DE9FDA"
+    },
+    {
+      "id": "guard_counter_power",
+      "title": "防御反击",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1912,
+        280,
+        256,
+        256
+      ],
+      "approvedPngSha256": "3a7f3a617a35e42f8a4456dc28db4e5870a3448b0ffb553cdb6b55149f5960a2",
+      "visiblePixelHash": "312126711c036ddb05339e18e12619990c229ab51b48ab9a70b22955bd5d44ec",
+      "importStableHash": "E16060BFA082BEE530481A23A7617B5FA81D4C68D85B95AB4594777915FC7402"
+    },
+    {
+      "id": "guardian_multiplayer_power",
+      "title": "守护者",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        8,
+        552,
+        256,
+        256
+      ],
+      "approvedPngSha256": "4045d76a29f8baec5a8a2e54f9ba498f5735050a929a1829a2b6d53c7340fd2b",
+      "visiblePixelHash": "79507bc31bc5c69a91ee159c2528088cbeaf5e9687dd6e083e7545f663933e7a",
+      "importStableHash": "4235CF6DABBD289DFB77CC65623499BE0564D21BFF4A1BD8F7C352AD3C17A86D"
+    },
+    {
+      "id": "guardian_oath_power",
+      "title": "守护誓约",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        280,
+        552,
+        256,
+        256
+      ],
+      "approvedPngSha256": "929ecf5f698bc297dac94af16c608cec29c8ff33bd5cbd3bd1df52d2b3acb4e8",
+      "visiblePixelHash": "0b93888964005ff73909057596acbde367a2119aceb7845b258cc8421fbdd772",
+      "importStableHash": "68EBC5E0D1FA0C6C22D226CA83B97708983DFE438E050A0BB7C88F9B0C6079EE"
+    },
+    {
+      "id": "heavenfall_power",
+      "title": "天坠",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        552,
+        552,
+        256,
+        256
+      ],
+      "approvedPngSha256": "0b43a135d028360dec481cd25558284967904f4c7884b30740d10156143d2375",
+      "visiblePixelHash": "780fa75371ed706c8afd6a2d4ec6497e8a3c1abdab8e1d5b420ed77b5bf7a334",
+      "importStableHash": "9234B354E4613B15C3929FA412C25945D098E03709830E5D13A2AA7E552BD7AE"
+    },
+    {
+      "id": "heavenly_eye_form_power",
+      "title": "天眼形态",
+      "character": "ironeye",
+      "source": "images/powers/heavenly_eye_form_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "38e99cf595d984dcff082a4a940556327d738a21f0a8b6e0364a54c3e17edae7",
+      "visiblePixelHash": "95ef62db28a1a813c0780b3e62c509501c6351e78b1baf0f5ae96a6b0657cd4e",
+      "importStableHash": "E6C57CCD37E33508AEEAFC615F83340F25F494B87B4D84E9495622E376A4EFF6"
+    },
+    {
+      "id": "heavy_echo_power",
+      "title": "重音回响",
+      "character": "revenant",
+      "source": "revenant_assets/powers/heavy_echo_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "3df92030785ce7800e927446061382ab9dacad5113dd37d1192f9989c787b81d",
+      "visiblePixelHash": "c00de8562bc3949b074f87a42485414977f17521f9171131c338db8fb3da5f5a",
+      "importStableHash": "E8B3ECDC91B4DD29130307D063B49616E627CF3237B8DA7BB0180A0DDD01CB5A"
+    },
+    {
+      "id": "helen_retreat_power",
+      "title": "后撤",
+      "character": "revenant",
+      "source": "revenant_assets/powers/helen_retreat_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "13bf937d0695058bf010635837090bf885712a6133e411854ba939e95d20a375",
+      "visiblePixelHash": "7ec6d9afd671f5f4fa33089745ef3a8a44e3ee1478e57ebf2b3a6cd59a5b06c6",
+      "importStableHash": "643898F32CEDA26A404CB65F3E96D5DFC1788BCE4E6983E2E6D4A0DE6312B656"
+    },
+    {
+      "id": "helen_step_strike_power",
+      "title": "踏步刺击",
+      "character": "revenant",
+      "source": "revenant_assets/powers/helen_step_strike_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "8d10579f93d1981577bda9e4f8b3265b9fef956b317051f16d544ce873813c0f",
+      "visiblePixelHash": "1794f4c4fd7c73173fd785443933c560524d550e70008cd5e9cf2600cfef6a1f",
+      "importStableHash": "B720BFE27B92E025B5019EA4ACF3A4A2F5DB054FDA5702EF771389592A193CF1"
+    },
+    {
+      "id": "hidden_poison_power",
+      "title": "隐毒",
+      "character": "ironeye",
+      "source": "images/powers/hidden_poison_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "ba13133658cd79c03bfa9d9397874fd893133225b81dcd45fa407731d12c47fe",
+      "visiblePixelHash": "aa7274c5dbd13b1cc222e7b40570d7a04b943219a1a51084cbb3bd5befbbff2a",
+      "importStableHash": "62F730B173BF3950606464AB753BA54641AF92062A103A847094ADC10742BECE"
+    },
+    {
+      "id": "hunt_power",
+      "title": "猎获",
+      "character": "ironeye",
+      "source": "images/powers/hunt_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "0c67ee16476895c6310ca65c26130e3446a9c392f2c96af72da8772b205a0ca3",
+      "visiblePixelHash": "f07b65146934b66206ff0aad540dbbbcfa72729606c5e93c9b270edd58afd979",
+      "importStableHash": "C4721A8ABF059A139859B94075163AF54F3D7D5DBEC738848B037B3C34B51CC9"
+    },
+    {
+      "id": "immortal_watch_power",
+      "title": "不朽警戒",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        824,
+        552,
+        256,
+        256
+      ],
+      "approvedPngSha256": "7852cfef961836edfd277a547bc72fab9cdfdc9d624abe3e10656982bf12a20e",
+      "visiblePixelHash": "64520a8b25d7e221f43653ed19ea9020b121f8633130f63c33d64d9715c25aa6",
+      "importStableHash": "0E2D2E822C3FCAD6B5FC99F116783679AE0791A053225301E9246ED352D5D99C"
+    },
+    {
+      "id": "imposing_presence_strength_down_power",
+      "title": "不怒自威",
+      "character": "ironeye",
+      "source": "images/powers/imposing_presence_strength_down_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "4f9e7ea143b233220710da91bc8a90375f1c986fce674342cd5919be63596a8c",
+      "visiblePixelHash": "91b20fe350b7fac11988a4282830b17e62f30fcc25e54cb6a2b6d913253e016f",
+      "importStableHash": "B298BEC5C73063190250466193C6E4BC012EAACCD37CCE65DCBE57D4E7A4EF65"
+    },
+    {
+      "id": "incoming_damage_reduction_this_turn_power",
+      "title": "伤害减免",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1096,
+        552,
+        256,
+        256
+      ],
+      "approvedPngSha256": "f3705fe33eb731aa6aca63d4fa9e861bcd72656548f673ac1798a3e916ea97a8",
+      "visiblePixelHash": "3eef2ef74dd8efd655b9189b32edc7352848bb02ed92e1fee3a8d3975740f0c6",
+      "importStableHash": "7A58FEE20E4EADB2FF1FAA382AFC0DAB72456A0D74EE122F626906E9299E81EC"
+    },
+    {
+      "id": "invoke_storm_strength_down_power",
+      "title": "风暴反噬",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1368,
+        552,
+        256,
+        256
+      ],
+      "approvedPngSha256": "32bf24ea261927000d87d96dd5906032166f63047388d303bf5d2dfae6443df2",
+      "visiblePixelHash": "2e9be42c0c6f77a72f95e90843eff03445bfef74936d4b28dfd9db403a4d816d",
+      "importStableHash": "6EE2795ACE1537ED01ADD0C2BBC47CED86E40C761E0B336C4050A733137D245C"
+    },
+    {
+      "id": "iron_eye_power",
+      "title": "铁之眼",
+      "character": "ironeye",
+      "source": "images/powers/iron_eye_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "9320702c4e701a8b13f74444f7125f10d6df33a51a98e1ff842c183c53d81b0e",
+      "visiblePixelHash": "671eb3c5ad933da8c03c3afc801fa307df9e3bcee1aa5052a354e8c9e77b5f87",
+      "importStableHash": "8826556AB5BA9B35FF9B0974BBF79A89D0DC1A971C1DD0B80455FC9E4E0696CE"
+    },
+    {
+      "id": "iron_wall_defend_power",
+      "title": "铁壁盾防",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1640,
+        552,
+        256,
+        256
+      ],
+      "approvedPngSha256": "2fb7ed723b84a46a914b08493be0074b728f95f28db5de37eeaba9e1950d7245",
+      "visiblePixelHash": "b092e2ae1a73389233d967742c961ed767fa06e4ed8a3e033d3ed12e7aad9dce",
+      "importStableHash": "DD6BEA88923AB0FD3CF9A57A2CD740D31CDC0E58BE9BF989BE67C87C98C217E4"
+    },
+    {
+      "id": "lai_pi_power",
+      "title": "赖皮",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1912,
+        552,
+        256,
+        256
+      ],
+      "approvedPngSha256": "559fa8dc46c7582698b1043242e19c08af1f06c209810565e3de587cfeace75f",
+      "visiblePixelHash": "c22820bd737e4b2af1f0933f36e4f954ffa8acbc6d7456f18361dce3a21bb128",
+      "importStableHash": "4A326C92CE90269AE37F951AE3B262B1E35396B4372D628E50E20E6C847097D5"
+    },
+    {
+      "id": "last_stand_protocol_power",
+      "title": "背水协议",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        8,
+        824,
+        256,
+        256
+      ],
+      "approvedPngSha256": "86b1ed9b90db6d61fd25b9a6831d2dd07ee7c9ff936cb9562854eafd0f172f3a",
+      "visiblePixelHash": "c5a0ba09d976819a61d0dae91472c80161a5c85edd5053f88275af79881c1a8d",
+      "importStableHash": "230E10E55769DC276CFFC1A0AC0E001CB2245B2324AFDCAE02024EBD4A9CB869"
+    },
+    {
+      "id": "light_spirit_power",
+      "title": "轻灵",
+      "character": "revenant",
+      "source": "revenant_assets/powers/light_spirit_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "694bb398b66bc6cd9594649507f759af966a0d01b39a7774508cf783a11c223d",
+      "visiblePixelHash": "c022e325fdd1e3cefa7dcd6471bf1638cdb04b812628d0c68d10d0b462491a58",
+      "importStableHash": "19548A7118D06B207A369D419152E0328B4A73F139C9D01C622B8F7C148D1FB8"
+    },
+    {
+      "id": "lightning_arrowhead_power",
+      "title": "引雷箭头",
+      "character": "ironeye",
+      "source": "images/powers/lightning_arrowhead_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "fe18b13796bad54e0afce13d3594a1b448e3a0bf5460b27eae0cd51472dd8078",
+      "visiblePixelHash": "7b54d2e84d1b8b7198a1e375965e475df347302f9dda70553e8e4b27dbc31357",
+      "importStableHash": "CB919BA6D3C7CEC250E4219A4191C4BDE031C8451C78A42FC58651333CB1175F"
+    },
+    {
+      "id": "long_shot_power",
+      "title": "远射",
+      "character": "ironeye",
+      "source": "images/powers/long_shot_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "2ddab8123a3d8d89d37ee2dcf62820146baed87fb5889c4dd9858ace0c69526c",
+      "visiblePixelHash": "43c7bc36465fe5985ece047331dba6ae318aa0d0a129775e0235793e97c301f5",
+      "importStableHash": "ADC55025D49F169F1EDDAB68A8003C3530F78533C4EEBAD46BE5901192B30AB7"
+    },
+    {
+      "id": "mutual_understanding_power",
+      "title": "默契",
+      "character": "revenant",
+      "source": "revenant_assets/powers/mutual_understanding_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "c3345527066c043c25fb62e6119d615d1f5b7b1c5cf68e32395ceb5979f04ca7",
+      "visiblePixelHash": "a105a317fd22535e3b0aad0c9fec762e2325512f6b94a545b5bf7fa6af39ed96",
+      "importStableHash": "387D11083772BC846F30BA4B39BEF88F493A32B2D6899057F967EA8C61C39EE6"
+    },
+    {
+      "id": "necromancy_power",
+      "title": "死灵术",
+      "character": "revenant",
+      "source": "revenant_assets/powers/necromancy_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "dfc9c6b8345522706c1b6473574ae6ec40c2ad7cd5fd0028891ab5d6b033cd1d",
+      "visiblePixelHash": "fda6cff6a37b9385f3f483d036fc65c4bb8219926b77c95085ff15ee72cf27e7",
+      "importStableHash": "3C94EC94FE5C20FA46E3714114506F66C0457DEA87E483D0CDBA022F6B58EA62"
+    },
+    {
+      "id": "next_enemy_turn_damage_reduction_power",
+      "title": "坚盾",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        280,
+        824,
+        256,
+        256
+      ],
+      "approvedPngSha256": "22938b6bfe1cc544961a810653683e52d2c079494b707f02d7cd2ffb3dd7c9c5",
+      "visiblePixelHash": "9f428bcd78c93a3b571d96ab46b26ef5079fa07abc0bcf1e95d2bf6bcb230c8f",
+      "importStableHash": "8162FA60FA14B6296E8E62331BBD1E97D987C2FF5B0F2CE3EF8A0E1A02B1196A"
+    },
+    {
+      "id": "next_turn_distance_power",
+      "title": "回正距离",
+      "character": "ironeye",
+      "source": "images/powers/next_turn_distance_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "be9c5a507c31bded1161fb5d11ab93ee826e28549ca51dcc86200b90e173b2c4",
+      "visiblePixelHash": "59d3b2b2e94058bb5b2525a828e8aedd05e5ed4a25a8e7041e8d5b0f2aebdea7",
+      "importStableHash": "835A91E67E211988D0FAFDBDB98ADF5E64F746C61C0FEF365A2CE1C1A494BD9A"
+    },
+    {
+      "id": "night_must_stay_mark_power",
+      "title": "标记",
+      "character": "ironeye",
+      "source": "images/powers/night_must_stay_mark_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "71f957a860361e57a53d88a8d26220b2fa4f375515c1b19cbbb4e9c76872e262",
+      "visiblePixelHash": "6b580754cd18235be3cea1518b15a84104c0a1e085ec5a72c2b290c1a6aac517",
+      "importStableHash": "23CCEC6F6DD5CE092E748FFA068EB4E1630371C70E061F36AF07DA75B3BCC85A"
+    },
+    {
+      "id": "no_attacks_next_turn_power",
+      "title": "攻击耗能增加",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        552,
+        824,
+        256,
+        256
+      ],
+      "approvedPngSha256": "d8bf41bb4892f4a028577ce0f5965a50751fdae60749c2ee462a9f0641462256",
+      "visiblePixelHash": "494dd4f98dae055d230f91b598db51f058263821135f5da4beb80fa1e716c223",
+      "importStableHash": "81B2186F9EE7F434EF3E37A5CCAA350B0E72B6E258C711B3473CF86BBDCBFD77"
+    },
+    {
+      "id": "nowhere_to_hide_power",
+      "title": "无处可躲",
+      "character": "ironeye",
+      "source": "images/powers/nowhere_to_hide_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "73422ac973a7f2a1315c6ddf737d3d3a5d7c5135fbb4a94d1ebb62d8a0f3926f",
+      "visiblePixelHash": "1aebdcd24dc3361ed94f1b50e3da5a090a925c0b1329c73f38bec78e3b2f8359",
+      "importStableHash": "EA906BE62DB64E9C3ED148DC39BB8FF0284E575CA81F46BD93B39870DFA8EB75"
+    },
+    {
+      "id": "observation_power",
+      "title": "观察力",
+      "character": "ironeye",
+      "source": "images/powers/observation_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "292c649d61751a78fa21cc6e4afeb659e125a1f2e0f7a2f977d1fd63b61018ba",
+      "visiblePixelHash": "68207e115f1b61583389685972602e750cef507c7809dfefddfd3d97fabd7bfd",
+      "importStableHash": "AFCAB5E960C0DCC500F1888959E6E2EC7830A027AAB8054E8FA8BC49DE83AF27"
+    },
+    {
+      "id": "pack_up_power",
+      "title": "整理行装",
+      "character": "revenant",
+      "source": "revenant_assets/powers/pack_up_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "251439abc42c5b571f74ae2b21a0e84e610565229233bbce37f3aa7e875a2f43",
+      "visiblePixelHash": "3373820038ed460de05dd8d6f26568288bea657e9fa4116437d41fbafad1b87b",
+      "importStableHash": "976DDF79BCA0993E4AB340651EED7E3444EB5761B07EE7720DCB179EFAB9AC2D"
+    },
+    {
+      "id": "phantom_co_strike_power",
+      "title": "幻影共击",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        824,
+        824,
+        256,
+        256
+      ],
+      "approvedPngSha256": "025bb0b75386c8000fae54f596a2f43cf77dd875bd90cb1cab76408c04fda5d5",
+      "visiblePixelHash": "31e7537eece776a5a510574bd33d14677e7ba3d6c7a41e8d0e75646f8bc1d46c",
+      "importStableHash": "2AC9358872DD33AEBF5783E86D04C16A663092E20B1297331708A4CBB0BE5BF4"
+    },
+    {
+      "id": "phantom_imbalance_power",
+      "title": "失衡",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1096,
+        824,
+        256,
+        256
+      ],
+      "approvedPngSha256": "dd27b7807a601a8ca843c580d9d3d570bc455be2ff2dccc9d43e78f776584bf6",
+      "visiblePixelHash": "f0a7d9b1b275feacafa84dce646a5d27de7a884614d9440853f1479321b855fc",
+      "importStableHash": "02A4636C52D22E43434378F239BA612DCFFAB14BFF1332F0F8FAF481E210FA0E"
+    },
+    {
+      "id": "pierce_the_willow_power",
+      "title": "穿杨",
+      "character": "ironeye",
+      "source": "images/powers/pierce_the_willow_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "3e3c6536244f6a9ecf46804ee233344cf624c175951849e84671b1cbaf18e5f9",
+      "visiblePixelHash": "8cfe64708a27f96587bcba15e94110d297f3a9239434eb1d19246a490ccb9bd9",
+      "importStableHash": "29D993196EFC6FABCF3327AC082255624678431BA0486E705FE321E3792E183D"
+    },
+    {
+      "id": "poison_blade_power",
+      "title": "毒刃",
+      "character": "ironeye",
+      "source": "images/powers/poison_blade_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "fe1c90751ef866d150cb4f3205384648ddc247bdea3e635d9b4459437e39acf1",
+      "visiblePixelHash": "00af56aed318f18b81aead748e9ac252d061a05fe060d873f662f91778d866a9",
+      "importStableHash": "D3838C6039FFF5F628B29B43CD038C4561261FE8ACDD47C56BD4C569283A3E67"
+    },
+    {
+      "id": "poison_burst_power",
+      "title": "毒爆",
+      "character": "ironeye",
+      "source": "images/powers/poison_burst_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "a1928cd1583177cf781a99028f008749977606b15136ecd8aa48dd44cf483fc6",
+      "visiblePixelHash": "0c1a7bcf98b8a3b754203857b8235bce55a2008bc70033cb2830a6c222b07a9f",
+      "importStableHash": "1249862D0F1140A8202C5364B2DF8833D5341CA03652FC6698F6B4F394C480BE"
+    },
+    {
+      "id": "poison_scheme_power",
+      "title": "毒计",
+      "character": "ironeye",
+      "source": "images/powers/poison_scheme_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "f04b7f5eef19ce434bbf2ba79f9206966b515a44e2dab4de0ed236a6912660b9",
+      "visiblePixelHash": "28efabbad23112eb199e4ec7f33e982b59af1ddc467b2f30ceb3c86b5f5e0d4d",
+      "importStableHash": "307E34ADCE81AF45450B3EF4D66CE27DFA12EB99A85A8E8BDC78FF394AA74550"
+    },
+    {
+      "id": "relay_power",
+      "title": "接力",
+      "character": "revenant",
+      "source": "revenant_assets/powers/relay_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "0c69bed99a8557169092e622c54db4cc87c18dc838726501e23b561383d40501",
+      "visiblePixelHash": "23d5c6c70989e9bfeca31d550f050b417f3818e9feb1310f9eb1f7937c8c49d0",
+      "importStableHash": "964F1BA8F1F2D38EC04B40DA9A05B1D5CCF6FCC2EB902DB41AA4B12720511B5A"
+    },
+    {
+      "id": "retreating_defense_power",
+      "title": "后撤防御",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1368,
+        824,
+        256,
+        256
+      ],
+      "approvedPngSha256": "2b239f62012ee68f7d7d50c33059affb48e63145679c8605dd5bfdf2f8f755f9",
+      "visiblePixelHash": "b27558baecd2abda40616a3cc96e9cfd276ff9dd7c9ea996947a21607a746c76",
+      "importStableHash": "A60992FEEB57008F4909D95AE843F44ED531888CB7889D6478825011E70CDBDA"
+    },
+    {
+      "id": "road_already_traveled_power",
+      "title": "来时路",
+      "character": "ironeye",
+      "source": "images/powers/road_already_traveled_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "ff8e27086c142db3c945f0e0c76bc8604857d3f1a98c4c0b0d3f2d97b451fbea",
+      "visiblePixelHash": "f523cec5efae5b07aff985facce3997f13ee8bdbc319b45e44048dfb76d554cd",
+      "importStableHash": "CEDAE1AD9BDC93A6C25B02E91933B731E2209EBD8EB3E4B2AEF1F4B9E6357479"
+    },
+    {
+      "id": "sacred_counter_power",
+      "title": "神圣反击",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1640,
+        824,
+        256,
+        256
+      ],
+      "approvedPngSha256": "cb269464149f06f731f80ec4fbe69dcdabf23025806c8a981b8f44a15aa4f4b5",
+      "visiblePixelHash": "3d2fed679a5b6ecce2de741a13c61d1f030e2bf1142527d8195b2637550af124",
+      "importStableHash": "B4CAC9E2F2A2908FC9FF5714C43C6F0267EF095B5D633D79DBDAF9AAABC9B1EC"
+    },
+    {
+      "id": "sanctuary_watch_power",
+      "title": "圣域",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1912,
+        824,
+        256,
+        256
+      ],
+      "approvedPngSha256": "e50eb8454c597da91f62d1be9d4ff58d04fed83d2b0b71776c56c76d6c00f4c1",
+      "visiblePixelHash": "796145c7dc217e83fcf2a2be3c10321ab8b333834b3a05e181b9ab6938b152b0",
+      "importStableHash": "D8C95D2FC8378A6D4E231679CC3B33672499ED0C53471899131C5757B7570C8F"
+    },
+    {
+      "id": "savior_form_power",
+      "title": "救世形态",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        8,
+        1096,
+        256,
+        256
+      ],
+      "approvedPngSha256": "45f35c95429eaa372bd524d8199162100cb23b377767c39009a40a299c30a8e6",
+      "visiblePixelHash": "009473e4359cf8ef71fa56fe3255d5765d36c36d2f0bddc4d32c8409bd22cf40",
+      "importStableHash": "F061668953BCA9AE60CF44C836C579516968D2C6CAA753BCD1B253DD793D5216"
+    },
+    {
+      "id": "savior_spread_wings_power",
+      "title": "救世展翼",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        280,
+        1096,
+        256,
+        256
+      ],
+      "approvedPngSha256": "f9d08aafa5daddf16801660373b1119835de1cc968d6b565c27058a27bb38713",
+      "visiblePixelHash": "dde9df5c0a7ef38fed5d83fa07b2aef89e3d076fec3ba5eee6ada16dcf8d9951",
+      "importStableHash": "EE6C1D3884EDAFF61B1C77FDD9C2B9A4DB0D8EB63DB0C1C3652605D3AA3A29F5"
+    },
+    {
+      "id": "sebastian_roar_power",
+      "title": "吼叫",
+      "character": "revenant",
+      "source": "revenant_assets/powers/sebastian_roar_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "23e21663af680c57507c0d9129f58912f77058f8c7cd63035c7805fcd474c910",
+      "visiblePixelHash": "c88e8c18dd02939fb7e31a4898b0e52c6094d42defc597f3bed2f2df836c501b",
+      "importStableHash": "C1190E010BF51EA859386CC507E3635A2D01F887D25EB438A5957167C953B9F1"
+    },
+    {
+      "id": "sebastian_slam_power",
+      "title": "拍击",
+      "character": "revenant",
+      "source": "revenant_assets/powers/sebastian_slam_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "66c2a5122995b08fd15cdd9e9e77ac0dca0b7042cf609236bc1ca50a27abf2ff",
+      "visiblePixelHash": "c49e311e1b9fb1334798516a55a01cdcc2cc8ccb7174e01a790e329081c169ba",
+      "importStableHash": "D47CD51BC0D9CEE703A7FA38C50AC4CEAB2A091DFDD17C985C227B1CA1C8BDE8"
+    },
+    {
+      "id": "sentry_stance_power",
+      "title": "哨卫架势",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        552,
+        1096,
+        256,
+        256
+      ],
+      "approvedPngSha256": "88f84c3e2e191c87d78f0148859b018fb737114ddc2af85fc6e7f62c2a1b2fdd",
+      "visiblePixelHash": "186806b0f3acc3e582034e89c1625ef1b6214882d01c3e02e3202e3078c3a3a4",
+      "importStableHash": "9D064E6D9CBEEC14A88B5AC6D16E8FD299B1F3D222BE0155E13F0655A06A1D5B"
+    },
+    {
+      "id": "shared_intelligence_power",
+      "title": "共享情报",
+      "character": "ironeye",
+      "source": "images/powers/shared_intelligence_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "a095e4da1c1ba28c09f2c96ef371fa9474964e12f138744c5382f6ec5705a52f",
+      "visiblePixelHash": "0ed48411a9e8156b11f63beadd3713071538fe7494d95c3e48726a49caad6424",
+      "importStableHash": "81EB40B49061547BB05787ACB1DC11EADC59ECC6AA6AB32C71AF011E2E47913A"
+    },
+    {
+      "id": "sidestep_power",
+      "title": "垫步",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        824,
+        1096,
+        256,
+        256
+      ],
+      "approvedPngSha256": "a870be7a5d1b54f410f0af2d1249724933c02f2e572b2209f3699c252c9f0651",
+      "visiblePixelHash": "1167b3a66f00343939821794939317e0ae5933b1b98315b53de4e6982579dd15",
+      "importStableHash": "4A80B43CD1B834041976A1AD28336255FA7D93EDB82D48B595CE46A8F238827A"
+    },
+    {
+      "id": "sky_citadel_power",
+      "title": "天空城垒",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1096,
+        1096,
+        256,
+        256
+      ],
+      "approvedPngSha256": "47b11ee836267976a512f09805547a503e9fd5290af82eb864fab6f5e28f363b",
+      "visiblePixelHash": "2455b869f2b7e8438652ca494e100c4c1ef5114fc4a102f155fefbb75a4b3b2a",
+      "importStableHash": "31283BF1F112587374F89397051981EDEEDB9FD5E134821F6EC809D068662178"
+    },
+    {
+      "id": "skybreaker_power",
+      "title": "破空",
+      "character": "ironeye",
+      "source": "images/powers/skybreaker_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "703288f52fe7e471c7450776630e5477b9e71efd0483794911f23f8c99117f12",
+      "visiblePixelHash": "985552c48bf948c664ad38d5d204593c290f9a4baaae33cb7db316bafb3c3611",
+      "importStableHash": "E37F009A1432D04739C7422983C6919F99D532FC9A335DE89A4F860826D350A8"
+    },
+    {
+      "id": "soulguard_power",
+      "title": "咒魂护身",
+      "character": "revenant",
+      "source": "revenant_assets/powers/soulguard_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "846bcd9215e0f9d6597beca17c469c31b5ab7ca024598d80304b2821c07141a6",
+      "visiblePixelHash": "e01819b38797a979c27603c8f9e5da331c0434eb0ff70871ee035f03803d7a3e",
+      "importStableHash": "0501D24737B02979B01E034BF0D904B0C955AAB6B9DC9FC42ED0956C6C5E41C6"
+    },
+    {
+      "id": "spear_grinding_power",
+      "title": "磨枪",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1368,
+        1096,
+        256,
+        256
+      ],
+      "approvedPngSha256": "50c905db8a56d945a061fc8ca2ca3fafeced2aba32c4dc50868c7dccebb836c8",
+      "visiblePixelHash": "81f7f4315a04c6348f8bbb90f1cd5ed3ec077d3be9b714c0d11ac0f5f7c26ae6",
+      "importStableHash": "13A9D791FFFC1EFCCB780FF03D71B8542EBD7D19E260CB694AB10D75CB6ABE5B"
+    },
+    {
+      "id": "spear_polish_power",
+      "title": "风缠",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1640,
+        1096,
+        256,
+        256
+      ],
+      "approvedPngSha256": "dce80b52cdfc5c5f8fcc71096ce92ace22d60face0b4bc7ffc7b97dd385e1038",
+      "visiblePixelHash": "c884084ffe77447f84680bf73e56dff407b9e2f2187db30d742397fa42dfbac4",
+      "importStableHash": "3EB4A40DD0EFB55E3986A48DF599AA3D1BE2E93A3142A6733C4A121CAD7B0365"
+    },
+    {
+      "id": "spirit_form_power",
+      "title": "通灵形态",
+      "character": "revenant",
+      "source": "revenant_assets/powers/spirit_form_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "d11d5e2a9a8d1c0b73b0ed346ba51bd100b76ca2d4d2a536ddd4fbb43c7383f0",
+      "visiblePixelHash": "01a9380eddfcdecea2195b46491e3444bb86dac7233888b65b7ee7424185d02a",
+      "importStableHash": "CDEA9F1F19A19797D7F9ACBA6B956A095CB295E1A80EE0A493B86943F8B04731"
+    },
+    {
+      "id": "spirit_link_power",
+      "title": "灵界链接",
+      "character": "revenant",
+      "source": "revenant_assets/powers/spirit_link_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "bba8a698af019af3eb2bc9c9966feac625b87d24d205d097aa4da42f55b3006f",
+      "visiblePixelHash": "ad50645f9f1266ba464f33d55b3d92d28401e9a9f36d51ed3a4dec632dd7e883",
+      "importStableHash": "9D0E251BC41E549FFEC99839CB1A2D96EF5F2B097DD1D11643910CA4BCB92D95"
+    },
+    {
+      "id": "stalwart_shield_power",
+      "title": "坚盾",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1912,
+        1096,
+        256,
+        256
+      ],
+      "approvedPngSha256": "90a6eeb8880a4b88be6fb093469aec424eed7ba35fbcc1108a1d830b1dc10ce5",
+      "visiblePixelHash": "49db6bf663a16aca760276de6441816e1b44f4338b0a51cb2fae7495a621e954",
+      "importStableHash": "2A6EB2751E34AB01D865E81B47FB24D2E046E593433CFFFA0DAFC7BF9884F877"
+    },
+    {
+      "id": "stomp_stance_power",
+      "title": "踏地架势",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        8,
+        1368,
+        256,
+        256
+      ],
+      "approvedPngSha256": "20f9d76734a391598eafb2b5ef2976699a54db14f01cdd64ebc3066407c64e85",
+      "visiblePixelHash": "63d25d9c699923bc794a9cc6b326d83c6212234ab7f361d7a8b8c8150561c501",
+      "importStableHash": "C3F193AAD5DE884A3BAED1F34D1E20FD61257353F3D2E59180B05AD2970F8617"
+    },
+    {
+      "id": "storm_avatar_power",
+      "title": "风暴化身",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        280,
+        1368,
+        256,
+        256
+      ],
+      "approvedPngSha256": "92e7acf647b5d87d0b8b39d404d791320050bcc9a7a972c40606c7a9078909e9",
+      "visiblePixelHash": "32da49b49aedb4e4c50bd26acc2612d50e6072b2bf8e0a9ecb503bd5c22edf90",
+      "importStableHash": "A7C70D952CF186BA6BADDC9F2CBFB08486A04A08E4AD45C0C2866BD5C09A32CB"
+    },
+    {
+      "id": "storm_barrier_power",
+      "title": "风暴障壁",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        552,
+        1368,
+        256,
+        256
+      ],
+      "approvedPngSha256": "ad382b2aa1dea188f7b9614e15f2726232ec57c0057f47308cc721e36e247685",
+      "visiblePixelHash": "d385fe83c7afc05f4be53e8256513269d02b9406a371922bc0a613cee41b934a",
+      "importStableHash": "A0AE3DACEE3C023A46D4300A8DAC801BA0B3158CF7D6E78014097789A7E144CE"
+    },
+    {
+      "id": "storm_birth_power",
+      "title": "风暴降生",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        824,
+        1368,
+        256,
+        256
+      ],
+      "approvedPngSha256": "ed9b1e1cd49bc6551909d9d7cbb1229e7be4c6ec238de0fa2f7ed484577354f2",
+      "visiblePixelHash": "e5bde7e7cd4897c7e0050752cf50078bc5b2f79f3cce25f9208a54066b041b72",
+      "importStableHash": "30EF156CF7700987278D8353C521F1F709EBD6A90C59E7A8BC58C1EC43C6DF81"
+    },
+    {
+      "id": "swallow_return_wind_power",
+      "title": "燕返风",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1096,
+        1368,
+        256,
+        256
+      ],
+      "approvedPngSha256": "e13cb784b46bb40fd00081af684bb2952e13ca5b3961ff04b08a96573d2d7607",
+      "visiblePixelHash": "8d46b2fbee43a1d5685ca1cdff6df9f45c023ddbd569f26f3caa1ac7ea7b2453",
+      "importStableHash": "400A60487738554AE75222B8F2D438087B904366DD01BA55E202617B09261352"
+    },
+    {
+      "id": "thousand_weight_halberd_power",
+      "title": "千钧戟",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1368,
+        1368,
+        256,
+        256
+      ],
+      "approvedPngSha256": "d6ad67c5b965ee8e3e3a358a6c4f1cb92cb510a5cbba3aed4a6d75504100a792",
+      "visiblePixelHash": "99cddaf50082602de3f16176de96848e409a0e5461e330fade7bb3f348b42160",
+      "importStableHash": "AB8C5FC0639FFD62249B386BA59FD62F007332AA4F46C19ED720F9467DF2B74E"
+    },
+    {
+      "id": "unbreakable_stance_power",
+      "title": "不破架势",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1640,
+        1368,
+        256,
+        256
+      ],
+      "approvedPngSha256": "5f56d6d424e9fb265d357bc1e57b5cbf224cf7e90327c0aa8b476725d4f009c9",
+      "visiblePixelHash": "48be9478f050a4e68f226053851edcf7d8b7bdae0538b09a0dde5b14047eef33",
+      "importStableHash": "32B341E2CAC5040B2F2666DAB97D55E7A445E43988E5791C9F2DC56B3901505F"
+    },
+    {
+      "id": "unbroken_line_power",
+      "title": "不破防线",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1912,
+        1368,
+        256,
+        256
+      ],
+      "approvedPngSha256": "b32092110036c002d9b200ed9a24d514eeb728244989f0c06305683b0269a96b",
+      "visiblePixelHash": "750a3b156759ef5297824caad72ea2b376f558518f84d7ee2dd6676d5cc958a3",
+      "importStableHash": "BA8731AA0C55DF9D013FEEC95346DD7EF499917CEFA2F18C0969CC73B0101E61"
+    },
+    {
+      "id": "undying_march_power",
+      "title": "不死行军",
+      "character": "revenant",
+      "source": "revenant_assets/powers/undying_march_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "fbe5359a06cfc2003e9912eb6ad560e6d2de612fc5b6f2ec1a39e83ef473437a",
+      "visiblePixelHash": "4424e3d97a6cd01ae9cc5ef97f8ed5970c503c5fd46670bb4a67efc2f43eb550",
+      "importStableHash": "D3C5133C2CC86C072B618EA2DAF04AD6CFBA5FBFE0FAEF8663A4E20B1BC7E6C4"
+    },
+    {
+      "id": "volatile_poison_power",
+      "title": "烈性毒药",
+      "character": "ironeye",
+      "source": "images/powers/volatile_poison_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "490864729dbe5eba2a9e82a653fd0d6b1ec964e520b996d7bba122eb69a6873d",
+      "visiblePixelHash": "bc35df619cd47619782290f22a18be36bdeed27dadd2fb06fcb17471254bac98",
+      "importStableHash": "79CBDA433865A5BB9BB8DB6B9A6AC4F225A8420C67AD51066233785FBDD1C781"
+    },
+    {
+      "id": "wandering_spell_soul_power",
+      "title": "漫步咒魂",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        8,
+        1640,
+        256,
+        256
+      ],
+      "approvedPngSha256": "8e78bba5fe94b233a5b1899a015c726431c3a15326d2a3dfb41fdf7c0ecf75d0",
+      "visiblePixelHash": "ce16eede7f669722cf994531cb86aa033a285fa1a9c4b85048864f03ce62e76f",
+      "importStableHash": "937AADB71FFD0658987A6F0928442DB65F1F63C29AAE159031836DA4EC2B85A5"
+    },
+    {
+      "id": "warding_gale_power",
+      "title": "护身烈风",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        280,
+        1640,
+        256,
+        256
+      ],
+      "approvedPngSha256": "d208be5b37c320f3ef603e54205f8386b9dad1ab9ec6556c4b5d18085f4d841b",
+      "visiblePixelHash": "ef0b8b50d45f37995172d6aa185e935114f030673e8f5c6d0a8698ea862b405c",
+      "importStableHash": "DC23D1A9AD1A63B0A12D66F576543985716F633AE5DFE7598B0E11AD51181628"
+    },
+    {
+      "id": "wave_walking_power",
+      "title": "凌波微步",
+      "character": "ironeye",
+      "source": "images/powers/wave_walking_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "52a490ffbefb5c590deaa8ea04eb4764793896d3d43da0d09510cf3201a4c5f7",
+      "visiblePixelHash": "ffd259709d957a92edd3670197f4a80b62a94c1b37552566221182a284ff2283",
+      "importStableHash": "05CF8AA03ECDF641BC60C48EABCC7EC8157535B4B090347DAFA249ADA2CE9D7D"
+    },
+    {
+      "id": "white_shadow_lure_power",
+      "title": "白影诱惑",
+      "character": "revenant",
+      "source": "revenant_assets/powers/white_shadow_lure_power.png",
+      "region": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "approvedPngSha256": "75727697475bdeb0b0afc92cf9cf8c8c26458299d7b1a2d29b7b254d1102fc43",
+      "visiblePixelHash": "35bd98fb368ddf187792fdee34275faf8f5fc38e2fbf6ff7cbf8db9e3973a260",
+      "importStableHash": "A8E5375E26AD4671B6205939764A54DBCF328A8834BC3AECCE1A7F4F110707D0"
+    },
+    {
+      "id": "wing_flap_power",
+      "title": "振翅",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        552,
+        1640,
+        256,
+        256
+      ],
+      "approvedPngSha256": "45b279731fe2ddd2a148375a1fc6b9fded1791c22f4687e0c63c249cd21be102",
+      "visiblePixelHash": "2688f28a1496ae8a58940afbf506d0a45d5f0fe4879bb57614d5f2303b11cdbe",
+      "importStableHash": "0D0EE7CD3B9E2A086ADFFFD298E0ADBBD554B3C375E5D373086F39F8B456698D"
+    },
+    {
+      "id": "winged_bulwark_power",
+      "title": "翼盾壁垒",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        824,
+        1640,
+        256,
+        256
+      ],
+      "approvedPngSha256": "441362f8d6a0276aeea663936d52c7c978bbca38b61a22c73f808eda1802938e",
+      "visiblePixelHash": "a432d7814279e4ae26b6563bf770757bda227dca8d459d2e0256d469f5df0311",
+      "importStableHash": "02123EE1BB0CDF8EDDFA026DE7AEB22DA645503527194D0646A4440D051DDF67"
+    },
+    {
+      "id": "zephyr_doctrine_power",
+      "title": "翔风教义",
+      "character": "guardian",
+      "source": "guardian_assets/guardian_power_atlas.png",
+      "region": [
+        1096,
+        1640,
+        256,
+        256
+      ],
+      "approvedPngSha256": "d486c33d5755911564e0844bee506b7a9e4d066993b4ec3e6b900f72e2f132a3",
+      "visiblePixelHash": "efdc14477d9f3383dc8bc87e22ffb28d2447dfdfc2af8d1a0fea58746ff7b2eb",
+      "importStableHash": "A52EF8FA693E214D8C0ACB1B11B40797D190D71AC69E9D75CF89EB00CC60D454"
+    }
+  ]
+}

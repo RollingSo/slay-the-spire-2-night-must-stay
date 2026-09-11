@@ -4,4 +4,4 @@
 
 [resource]
 atlas = ExtResource("1_savior_spread_wings_power")
-region = Rect2(0, 256, 128, 128)
+region = Rect2(280, 1096, 256, 256)
