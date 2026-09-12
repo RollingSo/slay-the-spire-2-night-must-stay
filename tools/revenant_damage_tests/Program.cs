@@ -6,6 +6,7 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
@@ -24,8 +25,9 @@ try
     VerifyFamilyCallStats();
     VerifySpiritFormStats();
     VerifyFamilyIntentDamage();
+    VerifyCardDamageUsesDynamicVars();
     Console.WriteLine(
-        "PASS: Revenant attacks, Freeze filtering, charge-card cancellation, Undying March lifetime, Family Call HP, Spirit Form HP, and Family intents are regression-covered.");
+        "PASS: Revenant attacks, dynamic damage values, Freeze filtering, charge-card cancellation, Undying March lifetime, Family Call HP, Spirit Form HP, and Family intents are regression-covered.");
     return 0;
 }
 
@@ -53,6 +55,34 @@ static void VerifyFamilyIntentDamage()
     {
         throw new InvalidOperationException(
             "Family intent rendering no longer uses the Vulnerable-independent intent type.");
+    }
+}
+
+static void VerifyCardDamageUsesDynamicVars()
+{
+    var lansseaxBlade = new LansseaxBlade();
+    if (lansseaxBlade.DynamicVars.Damage.BaseValue != 63m)
+        throw new InvalidOperationException("Lansseax Blade must expose its 63 damage through DamageVar.");
+
+    var formationBreakerHammer = new FormationBreakerHammer();
+    DynamicVar frederickDamage = formationBreakerHammer.DynamicVars["FamilyDamage"];
+    if (frederickDamage.BaseValue != 20m
+        || frederickDamage is not DamageVar { Props: ValueProp.Move }
+        || frederickDamage.GetType().Name != "RevenantFamilyDamageVar")
+    {
+        throw new InvalidOperationException(
+            "Formation Breaker Hammer must expose Frederick's 20 damage dynamically.");
+    }
+
+    var giantSkeletonWrath = new GiantSkeletonWrath();
+    DynamicVar sebastianDamage = giantSkeletonWrath.DynamicVars["FamilyDamage"];
+    if (sebastianDamage.BaseValue != 4m
+        || sebastianDamage is not DamageVar { Props: ValueProp.Move }
+        || sebastianDamage.GetType().Name != "RevenantFamilyDamageVar"
+        || giantSkeletonWrath.DynamicVars.Repeat.IntValue != 3)
+    {
+        throw new InvalidOperationException(
+            "Giant Skeleton Wrath must expose Sebastian's damage and hit count dynamically.");
     }
 }
 

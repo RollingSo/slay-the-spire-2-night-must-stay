@@ -8,18 +8,56 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
+using NightMustStay.Core.Compatibility;
 using NightMustStay.Core.Models.Power;
 using NightMustStay.Core.Models.Revenant;
 
 using NightMustStay.Core.Nodes.Vfx;
 
 namespace NightMustStay.Core.Models.Cards;
+
+internal sealed class RevenantFamilyDamageVar(decimal damage)
+    : DamageVar("FamilyDamage", damage, ValueProp.Move)
+{
+    public override void UpdateCardPreview(
+        CardModel card,
+        CardPreviewMode previewMode,
+        Creature target,
+        bool runGlobalHooks)
+    {
+        // Let DamageVar resolve upgrades and enchantments first, then rerun
+        // combat modifiers with the Family member as the actual damage dealer.
+        base.UpdateCardPreview(card, previewMode, target, runGlobalHooks: false);
+        if (!runGlobalHooks || card.CombatState == null)
+            return;
+
+        Creature family = RevenantSummonManager.For(card.Owner).CurrentFamilyCreature;
+        if (family == null)
+            return;
+
+        Creature enemyTarget = target != null && target.Side != family.Side
+            ? target
+            : null;
+        PreviewValue = Sts2BranchCompat.ModifyDamage(
+            card.Owner.RunState,
+            card.CombatState,
+            enemyTarget,
+            family,
+            PreviewValue,
+            Props,
+            card,
+            ModifyDamageHookType.All,
+            previewMode,
+            out IEnumerable<AbstractModel> _);
+    }
+}
 
 internal static class RevenantTextTableHelpers
 {
@@ -81,6 +119,9 @@ public sealed class FrenziedThreeFingers : CardModel
 
 public sealed class FormationBreakerHammer : CardModel
 {
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        new DynamicVar[] { new RevenantFamilyDamageVar(20m) };
+
     public override IEnumerable<CardKeyword> CanonicalKeywords => IsUpgraded ? new[] { CardKeyword.Retain } : Array.Empty<CardKeyword>();
     public override string PortraitPath => "res://revenant_assets/cards/formation_breaker_hammer.png";
     public FormationBreakerHammer() : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
@@ -89,7 +130,11 @@ public sealed class FormationBreakerHammer : CardModel
         RevenantSummonManager manager = RevenantSummonManager.For(Owner);
         await manager.TriggerResonance(context);
         if (manager.CurrentFamilyId == RevenantFamilyId.PumpkinHead)
-            await RevenantTextTableHelpers.DamageAsFamily(this, context, 20m, false);
+            await RevenantTextTableHelpers.DamageAsFamily(
+                this,
+                context,
+                DynamicVars["FamilyDamage"].BaseValue,
+                false);
     }
     protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);
 }
@@ -111,7 +156,12 @@ public sealed class LifeAndDeath : CardModel
 
 public sealed class GiantSkeletonWrath : CardModel
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new DamageVar(13m, ValueProp.Move) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
+    {
+        new DamageVar(13m, ValueProp.Move),
+        new RevenantFamilyDamageVar(4m),
+        new RepeatVar(3),
+    };
     public override string PortraitPath => "res://revenant_assets/cards/giant_skeleton_wrath.png";
     public GiantSkeletonWrath() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
@@ -120,7 +170,12 @@ public sealed class GiantSkeletonWrath : CardModel
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(cardPlay.Target).Execute(context);
         RevenantSummonManager manager = RevenantSummonManager.For(Owner);
         if (manager.CurrentFamilyId == RevenantFamilyId.Skeleton)
-            await RevenantTextTableHelpers.DamageAsFamily(this, context, 4m, true, 3);
+            await RevenantTextTableHelpers.DamageAsFamily(
+                this,
+                context,
+                DynamicVars["FamilyDamage"].BaseValue,
+                true,
+                DynamicVars.Repeat.IntValue);
     }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);
 }

@@ -3,8 +3,10 @@ $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $PSScriptRoot
 $zhsPath = Join-Path $root 'NightMustStay\localization\zhs\cards.json'
 $engPath = Join-Path $root 'NightMustStay\localization\eng\cards.json'
+$jpnPath = Join-Path $root 'NightMustStay\localization\jpn\cards.json'
 $zhs = Get-Content -LiteralPath $zhsPath -Raw -Encoding UTF8 | ConvertFrom-Json
 $eng = Get-Content -LiteralPath $engPath -Raw -Encoding UTF8 | ConvertFrom-Json
+$jpn = Get-Content -LiteralPath $jpnPath -Raw -Encoding UTF8 | ConvertFrom-Json
 
 function ConvertFrom-CodePoints([int[]]$CodePoints) {
     return -join ($CodePoints | ForEach-Object { [char]$_ })
@@ -12,6 +14,18 @@ function ConvertFrom-CodePoints([int[]]$CodePoints) {
 
 function Get-CardText($Table, [string]$Key) {
     return [string]$Table.PSObject.Properties[$Key].Value
+}
+
+function ConvertTo-CardId([string]$ClassName) {
+    return (($ClassName -creplace '([a-z0-9])([A-Z])', '$1_$2') `
+        -creplace '([A-Z]+)([A-Z][a-z])', '$1_$2').ToUpperInvariant()
+}
+
+function Get-RegisteredCardIds([string]$PoolPath) {
+    $poolSource = Get-Content -LiteralPath $PoolPath -Raw -Encoding UTF8
+    return [regex]::Matches($poolSource, 'ModelDb\.Card<([A-Za-z0-9_]+)>') |
+        ForEach-Object { ConvertTo-CardId $_.Groups[1].Value } |
+        Select-Object -Unique
 }
 
 $zhFullStop = ConvertFrom-CodePoints @(0x3002)
@@ -41,6 +55,33 @@ $revenantIds = @(
 )
 
 $errors = [System.Collections.Generic.List[string]]::new()
+
+# Live card descriptions must not bake in dealt-damage amounts. A literal
+# number bypasses DamageVar preview hooks, so Strength, Weak, Vulnerable and
+# other combat modifiers cannot update the number shown on the card. Audit all
+# registered Guardian, Ironeye and Revenant cards, including charged variants.
+$threeCharacterCardIds = @(
+    Get-RegisteredCardIds (Join-Path $root 'src\Core\Models\CardPools\GuardianCardPool.cs')
+    Get-RegisteredCardIds (Join-Path $root 'src\Core\Models\CardPools\IroneyeCardPool.cs')
+    Get-RegisteredCardIds (Join-Path $root 'src\Core\Models\CardPools\RevenantCardPool.cs')
+) | Select-Object -Unique
+$liveDescriptionSuffixes = @('description', 'unchargedDescription', 'chargedDescription')
+$literalDamageChecks = @(
+    @($zhs, '\d+(?:\.\d+)?\s*点伤害', 'Chinese'),
+    @($eng, '\b\d+(?:\.\d+)?\s+damage\b', 'English'),
+    @($jpn, '\d+(?:\.\d+)?\s*ダメージ', 'Japanese')
+)
+foreach ($id in $threeCharacterCardIds) {
+    foreach ($suffix in $liveDescriptionSuffixes) {
+        $key = "$id.$suffix"
+        foreach ($check in $literalDamageChecks) {
+            $text = Get-CardText $check[0] $key
+            if ($text -and $text -match $check[1]) {
+                $errors.Add("${key}: $($check[2]) dealt-damage amounts must use a dynamic variable.")
+            }
+        }
+    }
+}
 
 # Starter Lyre has repeatedly regressed by changing only its upgrade behavior
 # or only its displayed text. Keep the implementation and both localization
@@ -182,8 +223,7 @@ $registeredCardClassNames = [regex]::Matches(
 ) | ForEach-Object { $_.Groups[1].Value } | Select-Object -Unique
 
 foreach ($className in $registeredCardClassNames) {
-    $cardId = (($className -creplace '([a-z0-9])([A-Z])', '$1_$2') `
-        -creplace '([A-Z]+)([A-Z][a-z])', '$1_$2').ToUpperInvariant()
+    $cardId = ConvertTo-CardId $className
     foreach ($suffix in @('title', 'description', 'upgradeDescription')) {
         $key = "$cardId.$suffix"
         if (-not $zhs.PSObject.Properties[$key]) {
