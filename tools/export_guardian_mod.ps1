@@ -71,24 +71,25 @@ New-Item -ItemType Directory -Path $buildDirectory -Force | Out-Null
 if (-not $SkipInstall) {
     New-Item -ItemType Directory -Path $ModsDirectory -Force | Out-Null
 }
+$currentPowerShell = (Get-Process -Id $PID).Path
 
 # Keep Guardian glossary terms highlighted in every card description. The
 # explicit policy bypass also handles freshly-created local validation scripts.
-powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'validate_guardian_card_localization.ps1')
+& $currentPowerShell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'validate_guardian_card_localization.ps1')
 if ($LASTEXITCODE -ne 0) {
     throw "Guardian card localization validation failed with exit code $LASTEXITCODE"
 }
 
 # Enforce shared card-text rules: one source for canonical keywords, sentence
 # line breaks, highlighted mechanics, and upgraded generated-card previews.
-powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'validate_card_text_format.ps1')
+& $currentPowerShell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'validate_card_text_format.ps1')
 if ($LASTEXITCODE -ne 0) {
     throw "Card text format validation failed with exit code $LASTEXITCODE"
 }
 
 # Every shipped locale must expose the same keys. The new Japanese locale also
 # preserves runtime placeholders and rich-text tags from the English reference.
-powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'validate_localization_parity.ps1')
+& $currentPowerShell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'validate_localization_parity.ps1')
 if ($LASTEXITCODE -ne 0) {
     throw "Localization parity validation failed with exit code $LASTEXITCODE"
 }
