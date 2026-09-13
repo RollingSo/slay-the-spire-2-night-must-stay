@@ -4,9 +4,11 @@ $root = Split-Path -Parent $PSScriptRoot
 $zhsPath = Join-Path $root 'NightMustStay\localization\zhs\cards.json'
 $engPath = Join-Path $root 'NightMustStay\localization\eng\cards.json'
 $jpnPath = Join-Path $root 'NightMustStay\localization\jpn\cards.json'
+$korPath = Join-Path $root 'NightMustStay\localization\kor\cards.json'
 $zhs = Get-Content -LiteralPath $zhsPath -Raw -Encoding UTF8 | ConvertFrom-Json
 $eng = Get-Content -LiteralPath $engPath -Raw -Encoding UTF8 | ConvertFrom-Json
 $jpn = Get-Content -LiteralPath $jpnPath -Raw -Encoding UTF8 | ConvertFrom-Json
+$kor = Get-Content -LiteralPath $korPath -Raw -Encoding UTF8 | ConvertFrom-Json
 
 function ConvertFrom-CodePoints([int[]]$CodePoints) {
     return -join ($CodePoints | ForEach-Object { [char]$_ })
@@ -69,7 +71,8 @@ $liveDescriptionSuffixes = @('description', 'unchargedDescription', 'chargedDesc
 $literalDamageChecks = @(
     @($zhs, '\d+(?:\.\d+)?\s*点伤害', 'Chinese'),
     @($eng, '\b\d+(?:\.\d+)?\s+damage\b', 'English'),
-    @($jpn, '\d+(?:\.\d+)?\s*ダメージ', 'Japanese')
+    @($jpn, '\d+(?:\.\d+)?\s*ダメージ', 'Japanese'),
+    @($kor, '(?:피해를\s*\d+(?:\.\d+)?(?:씩)?\s*(?:줍|주|입힙)|\d+(?:\.\d+)?\s*(?:의\s*)?피해)', 'Korean')
 )
 foreach ($id in $threeCharacterCardIds) {
     foreach ($suffix in $liveDescriptionSuffixes) {

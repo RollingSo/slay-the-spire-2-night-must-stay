@@ -1,0 +1,21 @@
+{
+  "STALWART_SHIELD_GREASE.title": "견고한 방패 기름",
+  "STALWART_SHIELD_GREASE.description": "[gold]철벽[/gold]을 {FortifyPower} 얻습니다.",
+  "KNIGHTLY_SPIRIT.title": "기사의 기백",
+  "KNIGHTLY_SPIRIT.description": "[gold]가드 카운터[/gold]를 {GuardCounterPower} 얻습니다.",
+  "FEARLESS_LIQUOR.title": "'두려움 없는' 술",
+  "FEARLESS_LIQUOR.description": "강화된 [gold]방패 콕 찌르기[/gold]를 {Cards}장 [gold]손[/gold]으로 가져옵니다.",
+  "POISON_GREASE.title": "독기름",
+  "POISON_GREASE.description": "[gold]잠복독[/gold]을 {HiddenPoisonPower} 부여합니다.",
+  "THROWN_ARROW_POTION.title": "투척 화살",
+  "THROWN_ARROW_POTION.description": "[gold]표식[/gold]을 {NightMustStayMarkPower} 부여합니다. 그 적의 [gold]표식[/gold]을 모두 발동합니다.",
+  "PICKLED_TURTLE_NECK_MEAT.title": "거북 목 절임",
+  "PICKLED_TURTLE_NECK_MEAT.description": "강화된 [gold]접근[/gold]과 강화된 [gold]후퇴[/gold]를 1장씩 [gold]손[/gold]으로 가져옵니다.",
+  "DUSTY_NOTE.title": "먼지 쌓인 쪽지",
+  "DUSTY_NOTE.description": "[gold]부름[/gold].",
+  "WRAITH_JAR.title": "망령 항아리",
+  "WRAITH_JAR.description": "무작위 [gold]사령[/gold]을 하나 소환합니다.",
+  "STARLIGHT_SHARD.title": "별빛 조각",
+  "STARLIGHT_SHARD.description": "카드를 3장 [gold]회수[/gold]합니다.",
+  "STARLIGHT_SHARD.selectionScreenPrompt": "[gold]회수[/gold]할 카드를 3장 선택하세요."
+}

@@ -1,4 +1,6 @@
 {
+  "DISTANCE_POWER.maximumReached": "距離はすでに最大です。",
+  "DISTANCE_POWER.minimumReached": "距離はすでに最小です。",
   "DISTANCE_POWER.title": "距離",
   "DISTANCE_POWER.description": "[gold]距離[/gold]と同量の[gold]敏捷性[/gold]を得て、同量の[gold]筋力[/gold]を失う。[gold]距離[/gold]の最大値は5、最小値は-5。",
   "LONG_SHOT_POWER.title": "遠射",

@@ -3,7 +3,7 @@ $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $PSScriptRoot
 $localizationRoot = Join-Path $root 'NightMustStay\localization'
 $referenceLocale = 'eng'
-$locales = @('zhs', 'jpn')
+$locales = @('zhs', 'jpn', 'kor')
 $files = @('ancients.json', 'card_library.json', 'cards.json', 'characters.json', 'events.json', 'potions.json', 'powers.json', 'relics.json')
 $errors = [System.Collections.Generic.List[string]]::new()
 
@@ -45,18 +45,28 @@ foreach ($file in $files) {
 
         # English contains plural selectors that Chinese does not, while a few
         # newer Chinese previews contain dynamic selectors not yet present in
-        # English. Japanese must preserve the union of their runtime token names.
-        if ($locale -ne 'jpn') { continue }
+        # English. Japanese and Korean preserve the union of runtime token names.
+        if ($locale -notin @('jpn', 'kor')) { continue }
         foreach ($key in @($referenceKeys | Where-Object { $_ -in $keys })) {
             $referenceText = [string]$reference.PSObject.Properties[$key].Value
             $chineseText = [string]$chinese.PSObject.Properties[$key].Value
             $localizedText = [string]$table.PSObject.Properties[$key].Value
+            # Korean upgrades display complete rules, not the legacy numeric
+            # delta summaries. Their dynamic variables come from the base
+            # description (which the engine formats with upgraded values).
+            if ($locale -eq 'kor' -and $file -eq 'cards.json' -and
+                $key.EndsWith('.upgradeDescription') -and
+                ($referenceText.Contains([string][char]0x2192) -or $referenceText -eq 'Add [gold]Retain[/gold]')) {
+                $baseKey = $key.Replace('.upgradeDescription', '.description')
+                $referenceText = [string]$reference.PSObject.Properties[$baseKey].Value
+                $chineseText = [string]$chinese.PSObject.Properties[$baseKey].Value
+            }
             $referenceTokens = @(@(Get-TokenNames $referenceText) + @(Get-TokenNames $chineseText) | Sort-Object -Unique) -join "`n"
             $localizedTokens = @(Get-TokenNames $localizedText) -join "`n"
             if ($referenceTokens -cne $localizedTokens) {
                 $errors.Add("$locale/${file}: placeholder mismatch at $key")
             }
-            foreach ($tag in @('gold', 'purple', 'blue', 'sine', 'thinky_dots', 'b', 'i')) {
+            foreach ($tag in @('gold', 'purple', 'blue', 'green', 'sine', 'thinky_dots', 'b', 'i', 'jitter', 'font_size')) {
                 $openCount = [regex]::Matches($localizedText, "\[$tag(?:=[^\]]+)?\]").Count
                 $closeCount = [regex]::Matches($localizedText, "\[/$tag\]").Count
                 if ($openCount -ne $closeCount) {

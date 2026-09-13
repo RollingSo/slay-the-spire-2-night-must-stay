@@ -86,9 +86,9 @@ namespace NightMustStay.Core.Models.Power
                 && appliedAmount == 0m
                 && target.Player?.Character is Ironeye)
             {
-                string message = amount > 0m
-                    ? "距离已达最大限制。"
-                    : "距离已达最小限制。";
+                string message = new LocString("powers", amount > 0m
+                    ? "DISTANCE_POWER.maximumReached"
+                    : "DISTANCE_POWER.minimumReached").GetFormattedText();
                 NThoughtBubbleVfx.Create(message, target, 1.6);
             }
 

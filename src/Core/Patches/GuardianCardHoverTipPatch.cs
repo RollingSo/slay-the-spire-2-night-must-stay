@@ -25,56 +25,56 @@ namespace NightMustStay.Core.Patches
             var tips = new List<IHoverTip>(__result);
 
             AddIfMentioned(tips, text, GuardianCardHoverTips.Synthesis,
-                "[gold]合成[/gold]", "[gold]Synthesize[/gold]", "[gold]Synthesis[/gold]");
+                "[gold]合成[/gold]", "[gold]Synthesize[/gold]", "[gold]Synthesis[/gold]", "[gold]합성[/gold]");
             AddIfMentioned(tips, text, GuardianCardHoverTips.ConcealedEdge,
-                "[gold]\u85cf\u950b[/gold]", "[gold]Concealed Edge[/gold]");
+                "[gold]\u85cf\u950b[/gold]", "[gold]Concealed Edge[/gold]", "[gold]숨긴 칼날[/gold]");
             AddIfMentioned(tips, text, HoverTipFactory.FromPower<FortifyPower>(),
-                "[gold]固守[/gold]", "[gold]Fortify[/gold]");
+                "[gold]固守[/gold]", "[gold]Fortify[/gold]", "[gold]철벽[/gold]");
             AddIfMentioned(tips, text, HoverTipFactory.FromPower<GuardCounterPower>(),
-                "[gold]防御反击[/gold]", "[gold]Guard Counter[/gold]");
+                "[gold]防御反击[/gold]", "[gold]Guard Counter[/gold]", "[gold]가드 카운터[/gold]");
             AddIfMentioned(tips, text, HoverTipFactory.FromCard<ShieldPoke>(),
-                "[gold]盾戳[/gold]", "[gold]Shield Poke[/gold]");
+                "[gold]盾戳[/gold]", "[gold]Shield Poke[/gold]", "[gold]방패 콕 찌르기[/gold]");
             AddIfMentioned(tips, text, HoverTipFactory.FromPower<PhantomImbalancePower>(),
-                "[gold]失衡[/gold]", "[gold]Imbalance[/gold]");
+                "[gold]失衡[/gold]", "[gold]Imbalance[/gold]", "[gold]균형 붕괴[/gold]");
             AddIfMentioned(tips, text, HoverTipFactory.Static(StaticHoverTip.Stun),
-                "[gold]失衡[/gold]", "[gold]Imbalance[/gold]");
+                "[gold]失衡[/gold]", "[gold]Imbalance[/gold]", "[gold]균형 붕괴[/gold]");
             AddIfMentioned(tips, text, GuardianCardHoverTips.RevenantCharge,
-                "[gold]蓄力[/gold]", "[gold]Charge[/gold]");
+                "[gold]蓄力[/gold]", "[gold]Charge[/gold]", "[gold]충전[/gold]");
             AddIfMentioned(tips, text, GuardianCardHoverTips.RevenantRecover,
-                "[gold]回收[/gold]", "[gold]Recover[/gold]", "[gold]Recovered[/gold]");
+                "[gold]回收[/gold]", "[gold]Recover[/gold]", "[gold]Recovered[/gold]", "[gold]회수[/gold]");
             AddIfMentioned(tips, text, GuardianCardHoverTips.RevenantCall,
-                "[gold]呼唤[/gold]", "[gold]Call[/gold]");
+                "[gold]呼唤[/gold]", "[gold]Call[/gold]", "[gold]부름[/gold]");
             AddIfMentioned(tips, text, GuardianCardHoverTips.RevenantResonance,
-                "[gold]共鸣[/gold]", "[gold]Resonance[/gold]");
+                "[gold]共鸣[/gold]", "[gold]Resonance[/gold]", "[gold]공명[/gold]");
             AddIfMentioned(tips, text, GuardianCardHoverTips.RevenantFamily,
-                "[gold]家人[/gold]", "[gold]Family[/gold]", "[gold]family member[/gold]");
+                "[gold]家人[/gold]", "[gold]Family[/gold]", "[gold]family member[/gold]", "[gold]가족[/gold]");
             AddIfMentioned(tips, text, GuardianCardHoverTips.RevenantNecro,
-                "[gold]死灵[/gold]", "[gold]Necro[/gold]", "[gold]Necros[/gold]");
+                "[gold]死灵[/gold]", "[gold]Necro[/gold]", "[gold]Necros[/gold]", "[gold]사령[/gold]");
             AddAllIfMentioned(tips, text, GuardianCardHoverTips.HelenActions,
-                "[gold]海伦[/gold]", "[gold]Helen[/gold]");
+                "[gold]海伦[/gold]", "[gold]Helen[/gold]", "[gold]헬렌[/gold]");
             AddAllIfMentioned(tips, text, GuardianCardHoverTips.FrederickActions,
-                "[gold]弗雷德利克[/gold]", "[gold]Frederick[/gold]");
+                "[gold]弗雷德利克[/gold]", "[gold]Frederick[/gold]", "[gold]프레드릭[/gold]");
             AddAllIfMentioned(tips, text, GuardianCardHoverTips.SebastianActions,
-                "[gold]塞巴斯蒂安[/gold]", "[gold]Sebastian[/gold]");
+                "[gold]塞巴斯蒂安[/gold]", "[gold]Sebastian[/gold]", "[gold]세바스찬[/gold]");
 
             AddIfMentioned(tips, text, HoverTipFactory.FromPower<WeakPower>(),
-                "[gold]虚弱[/gold]", "[gold]Weak[/gold]");
+                "[gold]虚弱[/gold]", "[gold]Weak[/gold]", "[gold]약화[/gold]");
             AddIfMentioned(tips, text, HoverTipFactory.FromPower<VulnerablePower>(),
-                "[gold]易伤[/gold]", "[gold]Vulnerable[/gold]");
+                "[gold]易伤[/gold]", "[gold]Vulnerable[/gold]", "[gold]취약[/gold]");
             AddIfMentioned(tips, text, HoverTipFactory.Static(StaticHoverTip.Block),
-                "[gold]格挡[/gold]", "[gold]Block[/gold]");
+                "[gold]格挡[/gold]", "[gold]Block[/gold]", "[gold]방어도[/gold]", "[gold]방어[/gold]");
             AddIfMentioned(tips, text, HoverTipFactory.FromPower<StrengthPower>(),
-                "[gold]力量[/gold]", "[gold]Strength[/gold]");
+                "[gold]力量[/gold]", "[gold]Strength[/gold]", "[gold]힘[/gold]");
             AddIfMentioned(tips, text, HoverTipFactory.FromPower<DexterityPower>(),
-                "[gold]敏捷[/gold]", "[gold]Dexterity[/gold]");
+                "[gold]敏捷[/gold]", "[gold]Dexterity[/gold]", "[gold]민첩[/gold]");
             AddIfMentioned(tips, text, HoverTipFactory.Static(StaticHoverTip.Stun),
-                "[gold]击晕[/gold]", "[gold]Stun[/gold]");
+                "[gold]击晕[/gold]", "[gold]Stun[/gold]", "[gold]기절[/gold]");
             AddIfMentioned(tips, text, HoverTipFactory.FromKeyword(CardKeyword.Retain),
-                "[gold]保留[/gold]", "[gold]Retain[/gold]");
+                "[gold]保留[/gold]", "[gold]Retain[/gold]", "[gold]보존[/gold]");
             AddIfMentioned(tips, text, HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
-                "[gold]消耗[/gold]", "[gold]Exhaust[/gold]", "[gold]Exhausted[/gold]");
+                "[gold]消耗[/gold]", "[gold]Exhaust[/gold]", "[gold]Exhausted[/gold]", "[gold]소멸[/gold]");
             AddIfMentioned(tips, text, HoverTipFactory.FromKeyword(CardKeyword.Ethereal),
-                "[gold]虚无[/gold]", "[gold]Ethereal[/gold]");
+                "[gold]虚无[/gold]", "[gold]Ethereal[/gold]", "[gold]휘발성[/gold]");
 
             if (text.Contains("energyIcons", StringComparison.Ordinal))
                 tips.MegaTryAddingTip(HoverTipFactory.ForEnergy(__instance));
@@ -146,15 +146,15 @@ namespace NightMustStay.Core.Patches
             var tips = new List<IHoverTip>(__result);
 
             AddIfMentioned(tips, text, GuardianCardHoverTips.RevenantFamily,
-                "[gold]家人[/gold]", "[gold]Family[/gold]", "[gold]family member[/gold]");
+                "[gold]家人[/gold]", "[gold]Family[/gold]", "[gold]family member[/gold]", "[gold]가족[/gold]");
             AddIfMentioned(tips, text, GuardianCardHoverTips.RevenantNecro,
-                "[gold]死灵[/gold]", "[gold]Necro[/gold]", "[gold]Necros[/gold]");
+                "[gold]死灵[/gold]", "[gold]Necro[/gold]", "[gold]Necros[/gold]", "[gold]사령[/gold]");
             AddAllIfMentioned(tips, text, GuardianCardHoverTips.HelenActions,
-                "[gold]海伦[/gold]", "[gold]Helen[/gold]");
+                "[gold]海伦[/gold]", "[gold]Helen[/gold]", "[gold]헬렌[/gold]");
             AddAllIfMentioned(tips, text, GuardianCardHoverTips.FrederickActions,
-                "[gold]弗雷德利克[/gold]", "[gold]Frederick[/gold]");
+                "[gold]弗雷德利克[/gold]", "[gold]Frederick[/gold]", "[gold]프레드릭[/gold]");
             AddAllIfMentioned(tips, text, GuardianCardHoverTips.SebastianActions,
-                "[gold]塞巴斯蒂安[/gold]", "[gold]Sebastian[/gold]");
+                "[gold]塞巴斯蒂安[/gold]", "[gold]Sebastian[/gold]", "[gold]세바스찬[/gold]");
 
             __result = tips;
         }

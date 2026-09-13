@@ -87,11 +87,16 @@ if ($LASTEXITCODE -ne 0) {
     throw "Card text format validation failed with exit code $LASTEXITCODE"
 }
 
-# Every shipped locale must expose the same keys. The new Japanese locale also
-# preserves runtime placeholders and rich-text tags from the English reference.
+# Every shipped locale must expose the same keys. Japanese and Korean also
+# preserve runtime placeholders and rich-text tags from the reference tables.
 & $currentPowerShell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'validate_localization_parity.ps1')
 if ($LASTEXITCODE -ne 0) {
     throw "Localization parity validation failed with exit code $LASTEXITCODE"
+}
+
+& $currentPowerShell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'validate_korean_localization.ps1')
+if ($LASTEXITCODE -ne 0) {
+    throw "Korean localization validation failed with exit code $LASTEXITCODE"
 }
 
 # Keep the compact icon and the large applied/triggered power flash in sync.

@@ -10,7 +10,8 @@ namespace NightMustStay.Core.Models
             string title = card.Title;
             return title.Contains("防御", StringComparison.OrdinalIgnoreCase)
                 || title.Contains("Defend", StringComparison.OrdinalIgnoreCase)
-                || title.Contains("Defense", StringComparison.OrdinalIgnoreCase);
+                || title.Contains("Defense", StringComparison.OrdinalIgnoreCase)
+                || title.Contains("수비", StringComparison.OrdinalIgnoreCase);
         }
     }
 }

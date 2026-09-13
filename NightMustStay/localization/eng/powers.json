@@ -1,4 +1,6 @@
 {
+  "DISTANCE_POWER.maximumReached": "Distance is already at its maximum.",
+  "DISTANCE_POWER.minimumReached": "Distance is already at its minimum.",
   "DISTANCE_POWER.title": "Distance",
   "DISTANCE_POWER.description": "Gain [gold]Dexterity[/gold] equal to [gold]Distance[/gold] and lose [gold]Strength[/gold] equal to [gold]Distance[/gold]. Maximum [gold]Distance[/gold] is 5 and minimum is -5.",
   "LONG_SHOT_POWER.title": "Long Shot",
