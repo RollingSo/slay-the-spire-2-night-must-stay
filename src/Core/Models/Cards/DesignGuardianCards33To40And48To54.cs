@@ -139,7 +139,7 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override void OnUpgrade()
         {
-            DynamicVars[ImbalanceKey].UpgradeValueBy(1m);
+            DynamicVars.Damage.UpgradeValueBy(4m);
             DynamicVars[WeakKey].UpgradeValueBy(1m);
         }
     }
@@ -291,14 +291,30 @@ namespace NightMustStay.Core.Models.Cards
     // Card-table ID 49: 突击
     public sealed class GuardianAssault : CardModel
     {
+        private const string ImbalanceKey = "Imbalance";
+
         public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Retain };
-        protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(24m, ValueProp.Move) };
+        protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
+        {
+            new DamageVar(24m, ValueProp.Move),
+            new PowerVar<PhantomImbalancePower>(ImbalanceKey, 1m)
+        };
+        protected override IEnumerable<IHoverTip> ExtraHoverTips => new[]
+        {
+            HoverTipFactory.FromPower<PhantomImbalancePower>()
+        };
         public GuardianAssault() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
         protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(cardPlay.Target).WithGuardianWeaponFx().Execute(context);
-            await PowerCmd.Apply<NoAttacksNextTurnPower>(context, Owner.Creature, 1m, Owner.Creature, this);
+            await PowerCmd.Apply<PhantomImbalancePower>(
+                context,
+                cardPlay.Target,
+                DynamicVars[ImbalanceKey].BaseValue,
+                Owner.Creature,
+                this);
+            await PhantomImbalancePower.ResolveThreshold(context, cardPlay.Target);
         }
         protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(6m);
     }
@@ -414,7 +430,7 @@ namespace NightMustStay.Core.Models.Cards
                 Owner.Creature,
                 this);
 
-        protected override void OnUpgrade() => DynamicVars[MultiplierKey].UpgradeValueBy(2m);
+        protected override void OnUpgrade() => DynamicVars[MultiplierKey].UpgradeValueBy(1m);
     }
 }
 
