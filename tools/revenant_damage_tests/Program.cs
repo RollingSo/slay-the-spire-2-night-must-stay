@@ -26,8 +26,9 @@ try
     VerifySpiritFormStats();
     VerifyFamilyIntentDamage();
     VerifyCardDamageUsesDynamicVars();
+    VerifyWhiteShadowLureProtection();
     Console.WriteLine(
-        "PASS: Revenant attacks, dynamic damage values, Freeze filtering, charge-card cancellation, Undying March lifetime, Family Call HP, Spirit Form HP, and Family intents are regression-covered.");
+        "PASS: Revenant attacks, dynamic damage values, Freeze filtering, charge-card cancellation, Undying March lifetime, Family Call HP, Spirit Form HP, Family intents, and White Shadow Lure protection are regression-covered.");
     return 0;
 }
 
@@ -255,6 +256,32 @@ static void VerifyUndyingMarchLifetime()
             call.DeclaringType == typeof(PowerCmd) && call.Name == nameof(PowerCmd.Remove)))
     {
         throw new InvalidOperationException("Undying March turn-start hook no longer removes the power.");
+    }
+}
+
+static void VerifyWhiteShadowLureProtection()
+{
+    var card = new WhiteShadowLure();
+    if (card.EnergyCost.GetResolved() != 0)
+        throw new InvalidOperationException("White Shadow Lure must cost 0 Energy.");
+    if (!card.CanonicalKeywords.Contains(MegaCrit.Sts2.Core.Entities.Cards.CardKeyword.Exhaust))
+        throw new InvalidOperationException("White Shadow Lure must Exhaust after use.");
+
+    MethodInfo routeDamage = typeof(RevenantSummonControllerPower).GetMethod(
+        "AfterModifyingHpLostBeforeOsty",
+        BindingFlags.Instance | BindingFlags.Public)!;
+    Type stateMachine = routeDamage.GetCustomAttribute<AsyncStateMachineAttribute>()?.StateMachineType
+        ?? throw new InvalidOperationException("Revenant damage routing is no longer an async state machine.");
+    MethodInfo moveNext = stateMachine.GetMethod(
+        "MoveNext",
+        BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!;
+    MethodBase[] calls = ReadCalledMethods(moveNext).ToArray();
+    if (!calls.Any(call => call.Name == "HasPower"
+            && call.IsGenericMethod
+            && call.GetGenericArguments().SingleOrDefault() == typeof(MegaCrit.Sts2.Core.Models.Powers.BufferPower)))
+    {
+        throw new InvalidOperationException(
+            "Revenant damage routing must recognize Buffer before allowing damage to overflow to the Revenant.");
     }
 }
 
