@@ -26,6 +26,7 @@ try
     VerifySpiritFormStats();
     VerifyFamilyIntentDamage();
     VerifyCardDamageUsesDynamicVars();
+    VerifySpaceRendingFrenzyTargeting();
     VerifyWhiteShadowLureProtection();
     Console.WriteLine(
         "PASS: Revenant attacks, dynamic damage values, Freeze filtering, charge-card cancellation, Undying March lifetime, Family Call HP, Spirit Form HP, Family intents, and White Shadow Lure protection are regression-covered.");
@@ -257,6 +258,36 @@ static void VerifyUndyingMarchLifetime()
     {
         throw new InvalidOperationException("Undying March turn-start hook no longer removes the power.");
     }
+}
+
+static void VerifySpaceRendingFrenzyTargeting()
+{
+    var card = new SpaceRendingFrenzy();
+    if (card.TargetType != MegaCrit.Sts2.Core.Entities.Cards.TargetType.AnyEnemy
+        || card.DynamicVars.Damage.BaseValue != 16m
+        || card.DynamicVars["FamilyDamage"].BaseValue != 5m)
+        throw new InvalidOperationException("Space-Rending Frenzy must keep its selected-enemy target and 16 damage / 5 family HP cost.");
+
+    MethodInfo onPlay = typeof(SpaceRendingFrenzy).GetMethod(
+        "OnPlay", BindingFlags.Instance | BindingFlags.NonPublic)!;
+    Type stateMachine = onPlay.GetCustomAttribute<AsyncStateMachineAttribute>()!.StateMachineType;
+    MethodInfo moveNext = stateMachine.GetMethod(
+        "MoveNext", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!;
+    MethodBase[] calls = ReadCalledMethods(moveNext).ToArray();
+    if (!calls.Any(call => call.Name == "get_Target")
+        || !calls.Any(call => call.Name == "DamageFamily")
+        || !calls.Any(call => call.Name == "Damage"
+            && call.DeclaringType?.Name == "RevenantAttackEffects")
+        || calls.Any(call => call.Name is "NextItem" or "get_CombatTargets" or "get_HittableEnemies"))
+        throw new InvalidOperationException("Space-Rending Frenzy must use CardPlay.Target, not select a random enemy.");
+
+    typeof(AbstractModel).GetMethod("NeverEverCallThisOutsideOfTests_SetIsMutable",
+        BindingFlags.Instance | BindingFlags.NonPublic)!.Invoke(card, new object[] { true });
+    typeof(SpaceRendingFrenzy).GetMethod("OnUpgrade",
+        BindingFlags.Instance | BindingFlags.NonPublic)!.Invoke(card, null);
+    if (card.DynamicVars.Damage.BaseValue != 20m
+        || card.DynamicVars["FamilyDamage"].BaseValue != 5m)
+        throw new InvalidOperationException("Upgraded Space-Rending Frenzy must keep 20 damage / 5 family HP cost.");
 }
 
 static void VerifyWhiteShadowLureProtection()
