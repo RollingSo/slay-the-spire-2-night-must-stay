@@ -19,6 +19,8 @@ using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
 using NightMustStay.Core.Models.Revenant;
 
+using NightMustStay.Core.Nodes.Vfx;
+
 namespace NightMustStay.Core.Models.Cards;
 
 public interface IRevenantChargeCard
@@ -533,7 +535,17 @@ public sealed class SpaceRendingFrenzy : CardModel
     public override string PortraitPath => "res://revenant_assets/cards/space_rending_frenzy.png";
     protected override bool IsPlayable => RevenantSummonManager.For(Owner).HasLivingFamily;
     public SpaceRendingFrenzy() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
-    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) { await RevenantCardHelpers.DamageFamily(this, context, DynamicVars["FamilyDamage"].BaseValue); Creature[] enemies = CombatState.HittableEnemies.Where(e => e.IsAlive).ToArray(); if (enemies.Length == 0) return; Creature target = Owner.RunState.Rng.CombatTargets.NextItem(enemies); await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, target, DynamicVars.Damage.BaseValue, ValueProp.Move, Owner.Creature, this); }
+    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
+    {
+        ArgumentNullException.ThrowIfNull(cardPlay.Target);
+        Creature target = cardPlay.Target;
+        await RevenantCardHelpers.DamageFamily(this, context, DynamicVars["FamilyDamage"].BaseValue);
+        if (!target.IsAlive)
+            return;
+
+        await RevenantAttackEffects.Damage(
+            context, target, DynamicVars.Damage.BaseValue, ValueProp.Move, Owner.Creature, this);
+    }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);
 }
 
