@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Cards;
@@ -70,7 +71,8 @@ public sealed class RevenantSummonControllerPower : PowerModel
         if (family is { IsAlive: true } && remaining > 0m)
         {
             bool cannotDieThisTurn = family.HasPower<UndyingMarchPower>();
-            decimal familyDamage = cannotDieThisTurn
+            bool preventsThisHit = family.HasPower<BufferPower>();
+            decimal familyDamage = cannotDieThisTurn || preventsThisHit
                 ? remaining
                 : decimal.Min(remaining, family.CurrentHp);
             await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
@@ -80,7 +82,7 @@ public sealed class RevenantSummonControllerPower : PowerModel
                 routedProps,
                 pending.Dealer,
                 pending.CardSource);
-            remaining = cannotDieThisTurn ? 0m : remaining - familyDamage;
+            remaining = cannotDieThisTurn || preventsThisHit ? 0m : remaining - familyDamage;
         }
 
         Creature necro = manager
@@ -89,7 +91,10 @@ public sealed class RevenantSummonControllerPower : PowerModel
             .FirstOrDefault(creature => creature is { IsAlive: true });
         if (necro is { IsAlive: true } && remaining > 0m)
         {
-            decimal necroDamage = decimal.Min(remaining, necro.CurrentHp);
+            bool preventsThisHit = necro.HasPower<BufferPower>();
+            decimal necroDamage = preventsThisHit
+                ? remaining
+                : decimal.Min(remaining, necro.CurrentHp);
             await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
                 new BlockingPlayerChoiceContext(),
                 necro,
@@ -97,7 +102,7 @@ public sealed class RevenantSummonControllerPower : PowerModel
                 routedProps,
                 pending.Dealer,
                 pending.CardSource);
-            remaining -= necroDamage;
+            remaining = preventsThisHit ? 0m : remaining - necroDamage;
         }
 
         if (remaining > 0m && Owner.IsAlive)

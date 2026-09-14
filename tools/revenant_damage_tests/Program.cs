@@ -6,6 +6,7 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.TestSupport;
@@ -18,8 +19,11 @@ try
     VerifyRandomHitsUseAttackCommand();
     VerifyFreezeDamageFiltering();
     VerifyChargeRightClickGuard();
+    VerifyCardDamageUsesDynamicVars();
+    VerifySpaceRendingFrenzyTargeting();
+    VerifyWhiteShadowLureProtection();
     Console.WriteLine(
-        "PASS: Revenant attacks, Freeze filtering, and charge-card right-click cancellation are regression-covered.");
+        "PASS: Revenant attacks, dynamic damage values, Freeze filtering, charge-card right-click cancellation, Space-Rending Frenzy targeting, and White Shadow Lure protection are regression-covered.");
     return 0;
 }
 catch (Exception error)
@@ -122,6 +126,87 @@ static void VerifyChargeRightClickGuard()
     var harmony = new HarmonyLib.Harmony("NightMustStay.ChargeInput.Tests");
     harmony.CreateClassProcessor(patch).Patch();
     harmony.UnpatchAll(harmony.Id);
+}
+
+static void VerifyCardDamageUsesDynamicVars()
+{
+    var lansseaxBlade = new LansseaxBlade();
+    if (lansseaxBlade.DynamicVars.Damage.BaseValue != 63m)
+        throw new InvalidOperationException("Lansseax Blade must expose its 63 damage through DamageVar.");
+
+    var formationBreakerHammer = new FormationBreakerHammer();
+    DynamicVar frederickDamage = formationBreakerHammer.DynamicVars["FamilyDamage"];
+    if (frederickDamage.BaseValue != 20m
+        || frederickDamage is not DamageVar { Props: ValueProp.Move }
+        || frederickDamage.GetType().Name != "RevenantFamilyDamageVar")
+        throw new InvalidOperationException("Formation Breaker Hammer must expose Frederick's damage dynamically.");
+
+    var giantSkeletonWrath = new GiantSkeletonWrath();
+    DynamicVar sebastianDamage = giantSkeletonWrath.DynamicVars["FamilyDamage"];
+    if (sebastianDamage.BaseValue != 4m
+        || sebastianDamage is not DamageVar { Props: ValueProp.Move }
+        || sebastianDamage.GetType().Name != "RevenantFamilyDamageVar"
+        || giantSkeletonWrath.DynamicVars.Repeat.IntValue != 3)
+    {
+        throw new InvalidOperationException(
+            "Giant Skeleton Wrath must expose Sebastian's damage and hit count dynamically.");
+    }
+}
+
+static void VerifySpaceRendingFrenzyTargeting()
+{
+    var card = new SpaceRendingFrenzy();
+    if (card.TargetType != MegaCrit.Sts2.Core.Entities.Cards.TargetType.AnyEnemy
+        || card.DynamicVars.Damage.BaseValue != 16m
+        || card.DynamicVars["FamilyDamage"].BaseValue != 5m)
+        throw new InvalidOperationException("Space-Rending Frenzy must keep its selected-enemy target and 16 damage / 5 family HP cost.");
+
+    MethodInfo onPlay = typeof(SpaceRendingFrenzy).GetMethod(
+        "OnPlay", BindingFlags.Instance | BindingFlags.NonPublic)!;
+    Type stateMachine = onPlay.GetCustomAttribute<AsyncStateMachineAttribute>()!.StateMachineType;
+    MethodInfo moveNext = stateMachine.GetMethod(
+        "MoveNext", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!;
+    MethodBase[] calls = ReadCalledMethods(moveNext).ToArray();
+    if (!calls.Any(call => call.Name == "get_Target")
+        || !calls.Any(call => call.Name == "DamageFamily")
+        || !calls.Any(call => call.Name == "Damage"
+            && call.DeclaringType?.Name == "RevenantAttackEffects")
+        || calls.Any(call => call.Name is "NextItem" or "get_CombatTargets" or "get_HittableEnemies"))
+        throw new InvalidOperationException("Space-Rending Frenzy must use CardPlay.Target, not select a random enemy.");
+
+    typeof(AbstractModel).GetMethod("NeverEverCallThisOutsideOfTests_SetIsMutable",
+        BindingFlags.Instance | BindingFlags.NonPublic)!.Invoke(card, new object[] { true });
+    typeof(SpaceRendingFrenzy).GetMethod("OnUpgrade",
+        BindingFlags.Instance | BindingFlags.NonPublic)!.Invoke(card, null);
+    if (card.DynamicVars.Damage.BaseValue != 20m
+        || card.DynamicVars["FamilyDamage"].BaseValue != 5m)
+        throw new InvalidOperationException("Upgraded Space-Rending Frenzy must keep 20 damage / 5 family HP cost.");
+}
+
+static void VerifyWhiteShadowLureProtection()
+{
+    var card = new WhiteShadowLure();
+    if (card.EnergyCost.BaseValue != 0m)
+        throw new InvalidOperationException("White Shadow Lure must cost 0 Energy.");
+    if (!card.CanonicalKeywords.Contains(MegaCrit.Sts2.Core.Entities.Cards.CardKeyword.Exhaust))
+        throw new InvalidOperationException("White Shadow Lure must Exhaust after use.");
+
+    MethodInfo routeDamage = typeof(RevenantSummonControllerPower).GetMethod(
+        "AfterModifyingHpLostBeforeOsty",
+        BindingFlags.Instance | BindingFlags.Public)!;
+    Type stateMachine = routeDamage.GetCustomAttribute<AsyncStateMachineAttribute>()?.StateMachineType
+        ?? throw new InvalidOperationException("Revenant damage routing is no longer an async state machine.");
+    MethodInfo moveNext = stateMachine.GetMethod(
+        "MoveNext",
+        BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!;
+    MethodBase[] calls = ReadCalledMethods(moveNext).ToArray();
+    if (!calls.Any(call => call.Name == "HasPower"
+            && call.IsGenericMethod
+            && call.GetGenericArguments().SingleOrDefault() == typeof(MegaCrit.Sts2.Core.Models.Powers.BufferPower)))
+    {
+        throw new InvalidOperationException(
+            "Revenant damage routing must recognize Buffer before allowing damage to overflow to the Revenant.");
+    }
 }
 
 static decimal InvokeFreezeModifier(

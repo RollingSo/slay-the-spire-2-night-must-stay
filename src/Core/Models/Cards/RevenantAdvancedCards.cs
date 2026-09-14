@@ -540,8 +540,9 @@ public sealed class SpaceRendingFrenzy : CardModel
 public sealed class WhiteShadowLure : CardModel
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DynamicVar("Prevent", 1m) };
+    public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
     public override string PortraitPath => "res://revenant_assets/cards/white_shadow_lure.png";
-    public WhiteShadowLure() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
+    public WhiteShadowLure() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         RevenantSummonManager manager = RevenantSummonManager.For(Owner);
