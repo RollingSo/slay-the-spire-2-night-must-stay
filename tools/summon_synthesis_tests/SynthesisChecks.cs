@@ -32,7 +32,8 @@ public static class SynthesisChecks
         AccessTools.Method(typeof(ModManager), "ResetForTests").Invoke(null, null);
         var state = AccessTools.Property(typeof(ModManager), "State");
         state.SetValue(null, Enum.Parse(state.PropertyType, "Skipped"));
-        AccessTools.Method(typeof(ModelDb), "Init").Invoke(null, null);
+        MethodInfo init = AccessTools.Method(typeof(ModelDb), "Init");
+        init.Invoke(null, init.GetParameters().Length == 0 ? null : new object[] { Type.EmptyTypes });
         foreach (Type type in new[] { typeof(DefendGuardian), typeof(StrikeGuardian), typeof(EvolvedDefend),
             typeof(SpearAndShield), typeof(UltimateDefend), typeof(ShieldPoke) })
             if (!ModelDb.Contains(type)) AccessTools.Method(typeof(ModelDb), "Inject").Invoke(null, [type]);
