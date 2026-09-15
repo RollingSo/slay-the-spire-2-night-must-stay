@@ -16,7 +16,7 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new BlockVar(8m, ValueProp.Move)
+            new BlockVar(6m, ValueProp.Move)
         };
 
         public EmergencyDefend()

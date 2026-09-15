@@ -98,7 +98,7 @@
   "SPEAR_POLISH_POWER.title": "风缠",
   "SPEAR_POLISH_POWER.description": "所有[gold]盾戳[/gold]（包括[gold]盾戳+[/gold]）拥有[purple]墨影[/purple]，之后生成的[gold]盾戳[/gold]也会获得[purple]墨影[/purple]。",
   "EVOLUTION_WINGS_POWER.title": "进化之翼",
-  "EVOLUTION_WINGS_POWER.description": "[gold]防御反击[/gold]成功时，获得{Amount}点[gold]敏捷[/gold]。",
+  "EVOLUTION_WINGS_POWER.description": "每回合第一次[gold]防御反击[/gold]成功时，获得{Amount}点[gold]敏捷[/gold]。",
   "STALWART_SHIELD_POWER.title": "坚盾",
   "STALWART_SHIELD_POWER.description": "完全[gold]格挡[/gold]攻击后，下回合受到的伤害降低25%。",
   "WARDING_GALE_POWER.title": "护身烈风",

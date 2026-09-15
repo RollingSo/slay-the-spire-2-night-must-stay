@@ -20,7 +20,7 @@ namespace NightMustStay.Core.Models.Cards
         };
 
         public BreathingRoom()
-            : base(3, CardRarity.Uncommon)
+            : base(4, CardRarity.Uncommon)
         {
         }
 
@@ -29,6 +29,6 @@ namespace NightMustStay.Core.Models.Cards
             await PlayerCmd.GainEnergy(base.DynamicVars.Energy.IntValue, base.Owner);
         }
 
-        protected override void OnUpgrade() => base.DynamicVars.Energy.UpgradeValueBy(1m);
+        protected override void OnUpgrade() => base.EnergyCost.UpgradeBy(-1);
     }
 }

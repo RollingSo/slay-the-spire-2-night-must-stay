@@ -189,7 +189,7 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new CardsVar(2)
+            new CardsVar(1)
         };
 
         public NightMustStaySidestep() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
@@ -204,7 +204,7 @@ namespace NightMustStay.Core.Models.Cards
                 Owner.Creature,
                 this);
 
-        protected override void OnUpgrade() => DynamicVars[CardsKey].UpgradeValueBy(1m);
+        protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     }
 }
 

@@ -96,7 +96,7 @@
   "SPEAR_POLISH_POWER.title": "바람을 두르고",
   "SPEAR_POLISH_POWER.description": "모든 [gold]방패 찌르기[/gold]([gold]방패 찌르기+[/gold] 포함)에 [purple]잉크투성이[/purple]를 부여합니다.\n이후 생성되는 [gold]방패 찌르기[/gold]에도 [purple]잉크투성이[/purple]를 부여합니다.",
   "EVOLUTION_WINGS_POWER.title": "진화의 날개",
-  "EVOLUTION_WINGS_POWER.description": "[gold]가드 카운터[/gold]에 성공할 때마다 [gold]민첩[/gold]을 {Amount} 얻습니다.",
+  "EVOLUTION_WINGS_POWER.description": "매 턴 처음으로 [gold]가드 카운터[/gold]에 성공하면 [gold]민첩[/gold]을 {Amount} 얻습니다.",
   "STALWART_SHIELD_POWER.title": "견고한 방패",
   "STALWART_SHIELD_POWER.description": "내 턴 시작 시, [gold]뽑을 카드 더미[/gold]에서 이름에 \"수비\"가 들어가는 카드를 1장 [gold]손[/gold]으로 가져옵니다.",
   "WARDING_GALE_POWER.title": "수호의 질풍",

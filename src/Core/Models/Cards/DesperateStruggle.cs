@@ -17,7 +17,6 @@ namespace NightMustStay.Core.Models.Cards
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
             new EnergyVar(2),
-            new CardsVar(2),
         };
 
         public DesperateStruggle()
@@ -29,7 +28,6 @@ namespace NightMustStay.Core.Models.Cards
         {
             await PowerCmd.Apply<NoAttacksNextTurnPower>(choiceContext, base.Owner.Creature, 1m, base.Owner.Creature, this);
             await PlayerCmd.GainEnergy(base.DynamicVars.Energy.IntValue, base.Owner);
-            await CardPileCmd.Draw(choiceContext, base.DynamicVars.Cards.BaseValue, base.Owner);
         }
 
         protected override void OnUpgrade()

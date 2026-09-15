@@ -98,7 +98,7 @@
   "SPEAR_POLISH_POWER.title": "Wind-Wreathed",
   "SPEAR_POLISH_POWER.description": "All [gold]Shield Pokes[/gold] (including [gold]Shield Poke+[/gold]) have [purple]Inky[/purple].\n[gold]Shield Pokes[/gold] generated later also gain [purple]Inky[/purple].",
   "EVOLUTION_WINGS_POWER.title": "Evolution Wings",
-  "EVOLUTION_WINGS_POWER.description": "Whenever [gold]Guard Counter[/gold] succeeds, gain {Amount} [gold]Dexterity[/gold].",
+  "EVOLUTION_WINGS_POWER.description": "The first time [gold]Guard Counter[/gold] succeeds each turn, gain {Amount} [gold]Dexterity[/gold].",
   "STALWART_SHIELD_POWER.title": "Stalwart Shield",
   "STALWART_SHIELD_POWER.description": "At the start of your turn, put 1 card with \"Defend\" or \"Defense\" in its name from your [gold]Draw Pile[/gold] into your [gold]Hand[/gold].",
   "WARDING_GALE_POWER.title": "Warding Gale",

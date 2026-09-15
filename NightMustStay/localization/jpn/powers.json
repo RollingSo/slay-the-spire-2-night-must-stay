@@ -98,7 +98,7 @@
   "SPEAR_POLISH_POWER.title": "風纏い",
   "SPEAR_POLISH_POWER.description": "すべての[gold]盾突き[/gold]（[gold]盾突き+[/gold]を含む）が[purple]墨塗り[/purple]を持つ。\n以後生成される[gold]盾突き[/gold]も[purple]墨塗り[/purple]を得る。",
   "EVOLUTION_WINGS_POWER.title": "進化の翼",
-  "EVOLUTION_WINGS_POWER.description": "[gold]ガードカウンター[/gold]が成功するたび、[gold]敏捷[/gold]{Amount}を得る。",
+  "EVOLUTION_WINGS_POWER.description": "各ターン最初に[gold]ガードカウンター[/gold]が成功した時、[gold]敏捷[/gold]{Amount}を得る。",
   "STALWART_SHIELD_POWER.title": "堅牢な盾",
   "STALWART_SHIELD_POWER.description": "ターン開始時、[gold]山札[/gold]から名前に「防御」を含むカードを1枚[gold]手札[/gold]に加える。",
   "WARDING_GALE_POWER.title": "護りの烈風",

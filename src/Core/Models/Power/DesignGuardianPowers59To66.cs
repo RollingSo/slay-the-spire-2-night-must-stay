@@ -98,11 +98,28 @@ namespace NightMustStay.Core.Models.Power
 
     public sealed class EvolutionWingsPower : PowerModel
     {
+        private sealed class Data
+        {
+            public int LastTriggeredRound = -1;
+            public CombatSide? LastTriggeredSide;
+        }
+
         public override PowerType Type => PowerType.Buff;
         public override PowerStackType StackType => PowerStackType.Counter;
 
+        protected override object InitInternalData() => new Data();
+
         public async Task AfterGuardCounterSucceeded(PlayerChoiceContext context)
         {
+            Data data = GetInternalData<Data>();
+            if (data.LastTriggeredRound == CombatState.RoundNumber
+                && data.LastTriggeredSide == CombatState.CurrentSide)
+            {
+                return;
+            }
+
+            data.LastTriggeredRound = CombatState.RoundNumber;
+            data.LastTriggeredSide = CombatState.CurrentSide;
             Flash();
             await PowerCmd.Apply<DexterityPower>(
                 context,

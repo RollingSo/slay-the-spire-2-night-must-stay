@@ -18,7 +18,7 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new DamageVar(9m, ValueProp.Move),
+            new DamageVar(6m, ValueProp.Move),
             new DynamicVar(FortifyKey, 3m),
         };
 

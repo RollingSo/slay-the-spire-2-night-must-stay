@@ -11,14 +11,22 @@ typeof(TestMode).GetProperty("IsOn")!.SetValue(null, true);
 typeof(ModManager).GetMethod("ResetForTests", flags)!.Invoke(null, null);
 var state = typeof(ModManager).GetProperty("State")!;
 state.SetValue(null, Enum.Parse(state.PropertyType, "Skipped"));
-typeof(ModelDb).GetMethod("Init", flags)!.Invoke(null, null);
+MethodInfo initModelDb = typeof(ModelDb).GetMethod("Init", flags)!;
+object?[] initArgs = initModelDb.GetParameters()
+    .Select(parameter => parameter.HasDefaultValue
+        ? parameter.DefaultValue
+        : parameter.ParameterType.IsValueType
+            ? Activator.CreateInstance(parameter.ParameterType)
+            : null)
+    .ToArray();
+initModelDb.Invoke(null, initArgs);
 foreach (var type in new[] { typeof(ShieldPoke), typeof(Fearless) })
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, [type]);
 
 void Assert(bool value, string message) { if (!value) throw new Exception(message); }
 var formula = typeof(ShieldPoke).GetMethod("CalculateDamageBeforeHooks", flags)!;
 foreach (var (baseDamage, bonus, stacks, expected) in new (decimal,decimal,decimal,decimal)[]
-    { (4,0,0,4),(4,6,0,10),(6,6,0,12),(4,12,0,16),(4,6,1,20),(6,6,2,48),(4,0,1,8) })
+    { (3,0,0,3),(3,6,0,9),(5,6,0,11),(3,12,0,15),(3,6,1,18),(5,6,2,44),(3,0,1,6) })
     Assert((decimal)formula.Invoke(null,[baseDamage,bonus,stacks])! == expected,"Raw damage formula mismatch.");
 
 var harmony = new HarmonyLib.Harmony("NightMustStay.ShieldPoke.Preview.Tests");
@@ -38,20 +46,20 @@ try
         Assert((decimal)typeof(ShieldPoke).GetMethod("GetDamageBeforeHooks", BindingFlags.Instance|BindingFlags.NonPublic)!.Invoke(poke,null)! == damage,
             "Preview and actual raw attack diverge.");
     }
-    Preview(card,4,4);
+    Preview(card,3,3);
     BonusFixture.Bonus=6;
-    Preview(card,10,0);
-    Preview(card,10,0); // Repeated redraws must not compound transient damage.
-    Assert(card.DynamicVars.Damage.BaseValue==4 && card.DynamicVars.Block.BaseValue==4,"Preview mutated base values.");
+    Preview(card,9,0);
+    Preview(card,9,0); // Repeated redraws must not compound transient damage.
+    Assert(card.DynamicVars.Damage.BaseValue==3 && card.DynamicVars.Block.BaseValue==3,"Preview mutated base values.");
     var generated=(ShieldPoke)ModelDb.Card<ShieldPoke>().MutableClone();
-    Preview(generated,10,0);
+    Preview(generated,9,0);
     BonusFixture.Bonus=12;
-    Preview(card,16,0);
+    Preview(card,15,0);
     typeof(ShieldPoke).GetMethod("OnUpgrade",BindingFlags.Instance|BindingFlags.NonPublic)!.Invoke(card,null);
-    Preview(card,18,0);
+    Preview(card,17,0);
     BonusFixture.Bonus=0; // Next turn: no permanent bonus remains.
-    Preview(card,6,6);
-    Preview(generated,4,4);
+    Preview(card,5,5);
+    Preview(generated,3,3);
     Assert(card.DynamicVars.Damage.Name=="Damage" && card.DynamicVars.Block.Name=="Block","Localization placeholders changed.");
 }
 finally { harmony.UnpatchAll(harmony.Id); }

@@ -22,8 +22,8 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new ShieldPokeDamageVar(4m),
-            new ShieldPokeBlockVar(4m),
+            new ShieldPokeDamageVar(3m),
+            new ShieldPokeBlockVar(3m),
             new CardsVar(1),
         };
 

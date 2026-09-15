@@ -23,8 +23,8 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new DynamicVar(GuardCounterKey, 22m),
-            new BlockVar(BlockNextTurnKey, 16m, ValueProp.Move),
+            new DynamicVar(GuardCounterKey, 18m),
+            new BlockVar(BlockNextTurnKey, 13m, ValueProp.Move),
         };
 
         public PowerfulGuardCounter()
@@ -46,7 +46,7 @@ namespace NightMustStay.Core.Models.Cards
         protected override void OnUpgrade()
         {
             base.DynamicVars[GuardCounterKey].UpgradeValueBy(6m);
-            base.DynamicVars[BlockNextTurnKey].UpgradeValueBy(6m);
+            base.DynamicVars[BlockNextTurnKey].UpgradeValueBy(2m);
         }
     }
 }

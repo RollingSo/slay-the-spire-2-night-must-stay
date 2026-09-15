@@ -202,7 +202,7 @@ public sealed class PreciseLightningStrike : CardModel
 
 public sealed class ThreefoldHalo : CardModel
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(9m, ValueProp.Move) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(8m, ValueProp.Move) };
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Ethereal };
     public override string PortraitPath => "res://revenant_assets/cards/threefold_halo.png";
     public ThreefoldHalo() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies) { }
@@ -666,7 +666,7 @@ public sealed class Beaststone : CardModel
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(5m, ValueProp.Move), new DynamicVar("Strength", 1m) };
     public override string PortraitPath => "res://revenant_assets/cards/beaststone.png";
-    public Beaststone() : base(0, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
+    public Beaststone() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
@@ -703,7 +703,7 @@ public sealed class SoulSummon : CardModel
         if (discard.Cards.Count == 0) return;
         IEnumerable<CardModel> selected = await CardSelectCmd.FromCombatPile(
             context, discard, Owner,
-            new CardSelectorPrefs(new LocString("cards", "REVENANT_RECOVER_CARDS"), Math.Min(2, discard.Cards.Count)));
+            new CardSelectorPrefs(new LocString("cards", "REVENANT_RECOVER_CARDS"), Math.Min(DynamicVars.Cards.IntValue, discard.Cards.Count)));
         foreach (CardModel selectedCard in selected)
         {
             await CardPileCmd.Add(selectedCard, PileType.Hand);

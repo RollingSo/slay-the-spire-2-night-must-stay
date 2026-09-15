@@ -210,7 +210,7 @@ public sealed class SubstituteDoll : CardModel
 
 public sealed class SpiritGathering : CardModel
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new EnergyVar(1), new CardsVar(3) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new EnergyVar(1), new CardsVar(2) };
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
     public override string PortraitPath => "res://revenant_assets/cards/spirit_gathering.png";
     public SpiritGathering() : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
