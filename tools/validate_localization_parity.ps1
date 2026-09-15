@@ -51,15 +51,16 @@ foreach ($file in $files) {
             $referenceText = [string]$reference.PSObject.Properties[$key].Value
             $chineseText = [string]$chinese.PSObject.Properties[$key].Value
             $localizedText = [string]$table.PSObject.Properties[$key].Value
-            # Korean upgrades display complete rules, not the legacy numeric
-            # delta summaries. Their dynamic variables come from the base
-            # description (which the engine formats with upgraded values).
-            if ($locale -eq 'kor' -and $file -eq 'cards.json' -and
-                $key.EndsWith('.upgradeDescription') -and
-                ($referenceText.Contains([string][char]0x2192) -or $referenceText -eq 'Add [gold]Retain[/gold]')) {
+            # Copy-edited locales display complete upgrade rules. Normalize
+            # legacy delta-only sources independently to their base variables.
+            if ($file -eq 'cards.json' -and $key.EndsWith('.upgradeDescription')) {
                 $baseKey = $key.Replace('.upgradeDescription', '.description')
-                $referenceText = [string]$reference.PSObject.Properties[$baseKey].Value
-                $chineseText = [string]$chinese.PSObject.Properties[$baseKey].Value
+                if ($referenceText.Contains([string][char]0x2192) -or $referenceText -eq 'Add [gold]Retain[/gold]') {
+                    $referenceText = [string]$reference.PSObject.Properties[$baseKey].Value
+                }
+                if ($chineseText.Contains([string][char]0x2192)) {
+                    $chineseText = [string]$chinese.PSObject.Properties[$baseKey].Value
+                }
             }
             $referenceTokens = @(@(Get-TokenNames $referenceText) + @(Get-TokenNames $chineseText) | Sort-Object -Unique) -join "`n"
             $localizedTokens = @(Get-TokenNames $localizedText) -join "`n"

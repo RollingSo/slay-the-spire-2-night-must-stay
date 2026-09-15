@@ -69,10 +69,10 @@ $threeCharacterCardIds = @(
 ) | Select-Object -Unique
 $liveDescriptionSuffixes = @('description', 'unchargedDescription', 'chargedDescription')
 $literalDamageChecks = @(
-    @($zhs, '\d+(?:\.\d+)?\s*点伤害', 'Chinese'),
+    @($zhs, '\d+(?:\.\d+)?\s*\u70B9\u4F24\u5BB3', 'Chinese'),
     @($eng, '\b\d+(?:\.\d+)?\s+damage\b', 'English'),
-    @($jpn, '\d+(?:\.\d+)?\s*ダメージ', 'Japanese'),
-    @($kor, '(?:피해를\s*\d+(?:\.\d+)?(?:씩)?\s*(?:줍|주|입힙)|\d+(?:\.\d+)?\s*(?:의\s*)?피해)', 'Korean')
+    @($jpn, '\d+(?:\.\d+)?\s*\u30C0\u30E1\u30FC\u30B8', 'Japanese'),
+    @($kor, '(?:\uD53C\uD574\uB97C\s*\d+(?:\.\d+)?(?:\uC529)?\s*(?:\uC90D|\uC8FC|\uC785\uD799)|\d+(?:\.\d+)?\s*(?:\uC758\s*)?\uD53C\uD574)', 'Korean')
 )
 foreach ($id in $threeCharacterCardIds) {
     foreach ($suffix in $liveDescriptionSuffixes) {
