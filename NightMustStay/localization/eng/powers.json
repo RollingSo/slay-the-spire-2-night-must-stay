@@ -28,7 +28,7 @@
   "FORTIFY_POWER.title": "Fortify",
   "FORTIFY_POWER.description": "At the start of your turn, retain [gold]Block[/gold] up to {Amount}, then [gold]Fortify[/gold] decreases by 1.",
   "SAVIOR_FORM_POWER.title": "Savior Form",
-  "SAVIOR_FORM_POWER.description": "At the start of your turn, gain [gold]Block[/gold] equal to your [gold]Fortify[/gold].",
+  "SAVIOR_FORM_POWER.description": "At the start of your turn, gain 1 [gold]Block[/gold] for every 2 [gold]Fortify[/gold].",
   "INCOMING_DAMAGE_REDUCTION_THIS_TURN_POWER.title": "Damage Reduction",
   "SAVIOR_SPREAD_WINGS_POWER.title": "Savior Spread Wings",
   "SAVIOR_SPREAD_WINGS_POWER.description": "Enemies deal {Amount}% less attack damage this turn.",

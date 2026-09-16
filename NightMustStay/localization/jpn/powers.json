@@ -28,7 +28,7 @@
   "FORTIFY_POWER.title": "堅守",
   "FORTIFY_POWER.description": "ターン開始時、最大{Amount}の[gold]ブロック[/gold]を維持し、その後[gold]堅守[/gold]が1減少する。",
   "SAVIOR_FORM_POWER.title": "救済の型",
-  "SAVIOR_FORM_POWER.description": "ターン開始時、[gold]堅守[/gold]と同量の[gold]ブロック[/gold]を得る。",
+  "SAVIOR_FORM_POWER.description": "ターン開始時、[gold]堅守[/gold]2につき1[gold]ブロック[/gold]を得る。",
   "INCOMING_DAMAGE_REDUCTION_THIS_TURN_POWER.title": "ダメージ軽減",
   "SAVIOR_SPREAD_WINGS_POWER.title": "救世の翼",
   "SAVIOR_SPREAD_WINGS_POWER.description": "このターン、敵が与える攻撃ダメージが{Amount}%減少する。",

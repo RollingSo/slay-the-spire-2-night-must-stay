@@ -162,7 +162,7 @@ public sealed class ReversalStep : CardModel
         new DynamicVar[]
         {
             new CalculationBaseVar(0m),
-            new CalculationExtraVar(3m),
+            new CalculationExtraVar(2m),
             new PostDistanceCalculatedBlockVar(
                 ValueProp.Move,
                 static (card, _) =>
@@ -369,8 +369,8 @@ public sealed class CorrodeAll : CardModel
 public sealed class HundredSchemes : CardModel
 {
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        HoverTipFactory.FromCardWithCardHoverTips<Approach>()
-            .Concat(HoverTipFactory.FromCardWithCardHoverTips<Retreat>());
+        HoverTipFactory.FromCardWithCardHoverTips<Approach>(IsUpgraded)
+            .Concat(HoverTipFactory.FromCardWithCardHoverTips<Retreat>(IsUpgraded));
 
     public override string PortraitPath =>
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/hundred_schemes.png");

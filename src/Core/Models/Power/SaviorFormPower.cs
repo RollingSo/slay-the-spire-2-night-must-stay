@@ -24,8 +24,12 @@ namespace NightMustStay.Core.Models.Power
             if (fortify == null || fortify.Amount <= 0)
                 return;
 
+            decimal block = decimal.Floor(fortify.Amount / 2m) * base.Amount;
+            if (block <= 0m)
+                return;
+
             Flash();
-            await CreatureCmd.GainBlock(base.Owner, fortify.Amount * base.Amount, ValueProp.Unpowered, null);
+            await CreatureCmd.GainBlock(base.Owner, block, ValueProp.Unpowered, null);
         }
     }
 }

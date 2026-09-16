@@ -26,7 +26,7 @@
   "FORTIFY_POWER.title": "철벽",
   "FORTIFY_POWER.description": "내 턴 시작 시 [gold]방어도[/gold]를 최대 {Amount} 유지한 후, [gold]철벽[/gold]이 1 감소합니다.",
   "SAVIOR_FORM_POWER.title": "구원자의 형상",
-  "SAVIOR_FORM_POWER.description": "내 턴 시작 시 [gold]철벽[/gold]만큼 [gold]방어도[/gold]를 얻습니다.",
+  "SAVIOR_FORM_POWER.description": "내 턴 시작 시 [gold]철벽[/gold] 2당 [gold]방어도[/gold]를 1 얻습니다.",
   "INCOMING_DAMAGE_REDUCTION_THIS_TURN_POWER.title": "피해 감소",
   "SAVIOR_SPREAD_WINGS_POWER.title": "구세의 날개",
   "SAVIOR_SPREAD_WINGS_POWER.description": "이번 턴에 적의 공격 피해가 {Amount}% 감소합니다.",
