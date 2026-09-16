@@ -17,7 +17,17 @@ object[] distanceArgs = { new DistancePower(), 2m };
 postfix.Invoke(null, distanceArgs);
 Check((decimal)distanceArgs[1] == 1m, "Unsettling Lamp still doubles Distance.");
 
-Console.WriteLine("PASS: Hundred Schemes previews upgraded outputs; Unsettling Lamp cannot double Distance-derived stat changes.");
+var harmony = new Harmony("NightMustStay.IroneyeBugTests");
+try
+{
+    harmony.CreateClassProcessor(typeof(IroneyeUnsettlingLampPatch)).Patch();
+}
+finally
+{
+    harmony.UnpatchAll(harmony.Id);
+}
+
+Console.WriteLine("PASS: Hundred Schemes previews upgraded outputs; Unsettling Lamp cannot double Distance-derived stat changes; Harmony patch installs successfully.");
 
 static void Check(bool condition, string message)
 {

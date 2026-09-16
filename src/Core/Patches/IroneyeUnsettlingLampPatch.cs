@@ -17,10 +17,10 @@ public static class IroneyeUnsettlingLampPatch
 {
     [HarmonyPostfix]
     private static void KeepDistanceAtNormalMultiplier(
-        PowerModel canonicalPower,
+        PowerModel power,
         ref decimal __result)
     {
-        if (canonicalPower is DistancePower)
+        if (power is DistancePower)
             __result = 1m;
     }
 }
