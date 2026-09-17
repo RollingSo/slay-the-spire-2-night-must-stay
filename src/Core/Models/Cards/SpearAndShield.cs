@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using NightMustStay.Core.Compatibility;
 
 namespace NightMustStay.Core.Models.Cards
 {
@@ -69,8 +70,8 @@ namespace NightMustStay.Core.Models.Cards
             if (other == null)
                 return;
 
-            await CardCmd.Exhaust(choiceContext, defend);
-            await CardCmd.Exhaust(choiceContext, other);
+            await Sts2BranchCompat.Exhaust(choiceContext, defend);
+            await Sts2BranchCompat.Exhaust(choiceContext, other);
 
             CardModel shieldPoke = base.CombatState.CreateCard<ShieldPoke>(base.Owner);
             if (IsUpgraded)

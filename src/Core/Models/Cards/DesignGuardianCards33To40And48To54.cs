@@ -20,6 +20,7 @@ using MegaCrit.Sts2.Core.Models.Enchantments;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
+using NightMustStay.Core.Compatibility;
 using NightMustStay.Core.Models.Power;
 using NightMustStay.Core.Nodes.Vfx;
 
@@ -64,7 +65,7 @@ namespace NightMustStay.Core.Models.Cards
         public static async Task Consume(PlayerChoiceContext context, params CardModel[] cards)
         {
             foreach (CardModel card in cards.Where(card => card != null).Distinct())
-                await CardCmd.Exhaust(context, card);
+                await Sts2BranchCompat.Exhaust(context, card);
         }
     }
 
