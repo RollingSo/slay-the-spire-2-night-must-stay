@@ -10,6 +10,8 @@
     <Reference Include="sts2"><HintPath>$(Sts2AssemblyDir)/sts2.dll</HintPath></Reference>
     <Reference Include="GodotSharp"><HintPath>$(Sts2AssemblyDir)/GodotSharp.dll</HintPath></Reference>
     <Reference Include="0Harmony"><HintPath>$(Sts2AssemblyDir)/0Harmony.dll</HintPath></Reference>
+    <Reference Include="Sentry" Condition="Exists('$(Sts2AssemblyDir)/Sentry.dll')"><HintPath>$(Sts2AssemblyDir)/Sentry.dll</HintPath></Reference>
+    <Reference Include="Sentry.Godot" Condition="Exists('$(Sts2AssemblyDir)/Sentry.Godot.dll')"><HintPath>$(Sts2AssemblyDir)/Sentry.Godot.dll</HintPath></Reference>
     <Reference Include="NightMustStay"><HintPath>../../.godot/mono/temp/bin/Debug/NightMustStay.dll</HintPath></Reference>
   </ItemGroup>
 </Project>
