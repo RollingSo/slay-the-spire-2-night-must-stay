@@ -40,5 +40,19 @@
   "REVENANT.description": "家族と死者を従え、共に戦う招魂者。",
   "REVENANT.aromaPrinciple": "[sine][purple]生でも死でも、私たちはまた巡り会う。[/purple][/sine]",
   "REVENANT.eventDeathPrevention": "まだ、あの者たちを置いてはいけない。",
-  "REVENANT.goldMonologue": "[sine]この先の旅に備え、家族を整えるには十分ね。[/sine]"
+  "REVENANT.goldMonologue": "[sine]この先の旅に備え、家族を整えるには十分ね。[/sine]",
+  "DUCHESS.title": "レディ",
+  "DUCHESS.titleObject": "レディ",
+  "DUCHESS.banter.alive.endTurnPing": "準備ができたら、お願いします。",
+  "DUCHESS.banter.dead.endTurnPing": "どうか……私に構わず進んでください。",
+  "DUCHESS.pronounObject": "彼女",
+  "DUCHESS.possessiveAdjective": "彼女の",
+  "DUCHESS.pronounPossessive": "彼女の",
+  "DUCHESS.pronounSubject": "彼女",
+  "DUCHESS.cardsModifierTitle": "レディのカード",
+  "DUCHESS.cardsModifierDescription": "レディのカード。",
+  "DUCHESS.description": "懐中時計の時刻を操り、回避とリアクションで山札を巡り、完璧な瞬間に致命の一撃を放つ。",
+  "DUCHESS.aromaPrinciple": "[sine]皆さんの助けになるのなら、試してみましょう。[/sine]",
+  "DUCHESS.eventDeathPrevention": "まだ、待っている人がいます。ここで終わるわけにはいきません。",
+  "DUCHESS.goldMonologue": "[sine]これで次の旅支度ができます。皆さんの分も残しておきましょう。[/sine]"
 }

@@ -37,7 +37,8 @@ namespace NightMustStay.Core.Patches
         {
             if (localPlayer.Character is not Guardian
                 && localPlayer.Character is not Ironeye
-                && localPlayer.Character is not Revenant)
+                && localPlayer.Character is not Revenant
+                && localPlayer.Character is not Duchess)
                 return true;
 
             ProgressState progress = SaveManager.Instance.Progress;
@@ -110,6 +111,7 @@ namespace NightMustStay.Core.Patches
                 ModelDb.Character<Guardian>(),
                 ModelDb.Character<Ironeye>(),
                 ModelDb.Character<Revenant>(),
+                ModelDb.Character<Duchess>(),
             };
             foreach (CharacterModel character in modCharacters)
             {
@@ -464,6 +466,7 @@ namespace NightMustStay.Core.Patches
                 ModelDb.Character<Guardian>(),
                 ModelDb.Character<Ironeye>(),
                 ModelDb.Character<Revenant>(),
+                ModelDb.Character<Duchess>(),
             };
             foreach (CharacterModel character in modCharacters)
             {

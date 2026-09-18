@@ -86,6 +86,11 @@ if ($LASTEXITCODE -ne 0) {
     throw "Localization parity validation failed with exit code $LASTEXITCODE"
 }
 
+# Validate Duchess runtime images before exporting.
+if (Test-Path -LiteralPath (Join-Path $root 'src/Core/Models/Characters/Duchess.cs')) {
+    & (Join-Path $PSScriptRoot 'validate_duchess_assets.ps1')
+}
+
 # Keep the compact icon and the large applied/triggered power flash in sync.
 & (Join-Path $PSScriptRoot 'sync_guardian_power_icons.ps1')
 

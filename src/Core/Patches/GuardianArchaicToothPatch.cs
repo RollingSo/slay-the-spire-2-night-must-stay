@@ -23,6 +23,10 @@ namespace NightMustStay.Core.Patches
                 ModelDb.Card<DeathMark>();
             __result[ModelDb.Card<RevenantCall>().Id] =
                 ModelDb.Card<Concerto>();
+            __result[ModelDb.Card<DuchessRestage>().Id] =
+                ModelDb.Card<DuchessEternalRestage>();
+            __result[ModelDb.Card<DuchessElegantBearing>().Id] =
+                ModelDb.Card<DuchessFirstLight>();
         }
     }
 }

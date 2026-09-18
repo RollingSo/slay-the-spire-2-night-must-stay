@@ -1,0 +1,1640 @@
+{
+  "images/packed/card_portraits/duchess/duchess_strike.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_defend.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_restage.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_quickstep.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_stiletto.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_twin_fangs.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_passing_cut.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_low_sweep.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_needlework.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_opening_thrust.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_follow_through.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_blind_spot.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_serrated_edge.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_glintstone_knife.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_parting_cut.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_measured_step.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_silken_guard.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_pivot.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_veiled_step.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_feint.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_read_the_room.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_take_a_breath.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_hidden_pocket.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_soft_landing.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_reverberation.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_poised.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_curtain_tug.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_distraction.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_triple_waltz.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_dagger_fan.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_perfect_angle.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_masked_assault.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_dance_partner.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_cut_and_fade.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_pale_moonblade.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_no_witness.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_second_thought.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_thread_the_gap.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_silver_flash.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_understudy.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_encore.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_held_breath.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_invitation.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_turn_aside.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_backstage.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_quiet_signal.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_moonlit_veil.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_dress_rehearsal.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_quick_hands.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_stolen_moment.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_sway.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_elegance.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_composure.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_afterglow.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_hidden_rhythm.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_unseen_resolve.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_finale.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_grand_reprise.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_midnight_waltz.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_last_word.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_vanishing_act.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_silver_storm.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_both_paths.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_dawn_promise.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_steady_hand.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_light_as_silk.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_borrowed_time.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_thiefs_arsenal.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_perfect_rehearsal.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_nightfall.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_shared_stage.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_unbroken_poise.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_eternal_restage.png": {
+    "size": [
+      606,
+      852
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      606,
+      852
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_first_light.png": {
+    "size": [
+      606,
+      852
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      606,
+      852
+    ]
+  },
+  "images/packed/card_portraits/duchess/duchess_fleeting_blade.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ]
+  },
+  "duchess_assets/relics/duchess_blue_ribbon.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      12,
+      29,
+      244,
+      226
+    ]
+  },
+  "duchess_assets/relics/duchess_dance_shoes.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      23,
+      12,
+      232,
+      244
+    ]
+  },
+  "duchess_assets/relics/duchess_lace_cuff.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      21,
+      12,
+      235,
+      244
+    ]
+  },
+  "duchess_assets/potions/duchess_memory_draught.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      66,
+      12,
+      190,
+      244
+    ]
+  },
+  "duchess_assets/relics/duchess_mended_pocketwatch.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      51,
+      12,
+      205,
+      244
+    ]
+  },
+  "duchess_assets/relics/duchess_old_pocketwatch.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      52,
+      12,
+      203,
+      244
+    ]
+  },
+  "duchess_assets/potions/duchess_silver_perfume.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      37,
+      12,
+      218,
+      244
+    ]
+  },
+  "duchess_assets/relics/duchess_silver_thimble.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      26,
+      12,
+      229,
+      244
+    ]
+  },
+  "duchess_assets/relics/duchess_unsent_letter.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      28,
+      12,
+      228,
+      244
+    ]
+  },
+  "duchess_assets/potions/duchess_veil_vial.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      44,
+      12,
+      211,
+      244
+    ]
+  },
+  "duchess_assets/combat_rig/duchess_combat_character.png": {
+    "size": [
+      1600,
+      1280
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      444,
+      40,
+      1156,
+      1240
+    ]
+  },
+  "duchess_assets/combat_rig/duchess_attack.png": {
+    "size": [
+      1600,
+      1280
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      228,
+      310,
+      1372,
+      1240
+    ]
+  },
+  "duchess_assets/combat_rig/duchess_hit.png": {
+    "size": [
+      1600,
+      1280
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      459,
+      140,
+      1140,
+      1240
+    ]
+  },
+  "duchess_assets/rest_site/duchess_rest_site.png": {
+    "size": [
+      1400,
+      1280
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      200,
+      40,
+      1199,
+      1240
+    ]
+  },
+  "duchess_assets/merchant/duchess_merchant.png": {
+    "size": [
+      1400,
+      1280
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      480,
+      40,
+      919,
+      1240
+    ]
+  },
+  "duchess_assets/multiplayer_hands/multiplayer_hand_duchess_rock.png": {
+    "size": [
+      627,
+      627
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      50,
+      12,
+      577,
+      615
+    ]
+  },
+  "duchess_assets/multiplayer_hands/multiplayer_hand_duchess_paper.png": {
+    "size": [
+      627,
+      627
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      21,
+      12,
+      606,
+      615
+    ]
+  },
+  "duchess_assets/multiplayer_hands/multiplayer_hand_duchess_scissors.png": {
+    "size": [
+      627,
+      627
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      54,
+      12,
+      572,
+      615
+    ]
+  },
+  "duchess_assets/multiplayer_hands/multiplayer_hand_duchess_point.png": {
+    "size": [
+      422,
+      1200
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      86,
+      8,
+      336,
+      1192
+    ]
+  },
+  "duchess_assets/character_icon_duchess.png": {
+    "size": [
+      64,
+      64
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      3,
+      3,
+      61,
+      61
+    ]
+  },
+  "duchess_assets/character_icon_duchess_outline.png": {
+    "size": [
+      64,
+      64
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      2,
+      2,
+      62,
+      62
+    ]
+  },
+  "duchess_assets/map_marker_duchess.png": {
+    "size": [
+      49,
+      64
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      3,
+      10,
+      46,
+      53
+    ]
+  },
+  "duchess_assets/char_select_duchess.png": {
+    "size": [
+      132,
+      195
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      3,
+      6,
+      129,
+      188
+    ]
+  },
+  "duchess_assets/char_select_duchess_locked.png": {
+    "size": [
+      132,
+      195
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      3,
+      6,
+      129,
+      188
+    ]
+  },
+  "duchess_assets/energy_icon/duchess_energy_card_icon.png": {
+    "size": [
+      74,
+      74
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      2,
+      1,
+      72,
+      73
+    ]
+  },
+  "duchess_assets/energy_icon/duchess_energy_font_icon.png": {
+    "size": [
+      24,
+      24
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      0,
+      0,
+      24,
+      24
+    ]
+  },
+  "images/packed/sprite_fonts/duchess_energy_icon.png": {
+    "size": [
+      24,
+      24
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      0,
+      0,
+      24,
+      24
+    ]
+  },
+  "duchess_assets/energy_counter/duchess_orb_layer_1.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      68,
+      68,
+      188,
+      188
+    ]
+  },
+  "duchess_assets/energy_counter/duchess_orb_layer_2.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      48,
+      48,
+      208,
+      208
+    ]
+  },
+  "duchess_assets/energy_counter/duchess_orb_layer_3.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      32,
+      32,
+      224,
+      224
+    ]
+  },
+  "duchess_assets/energy_counter/duchess_orb_layer_4.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      16,
+      16,
+      240,
+      240
+    ]
+  },
+  "duchess_assets/energy_counter/duchess_orb_layer_5.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      16,
+      12,
+      240,
+      244
+    ]
+  },
+  "duchess_assets/character_select_duchess_bg.png": {
+    "size": [
+      2560,
+      1200
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      2560,
+      1200
+    ]
+  },
+  "images/powers/duchess_moment_description_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      43,
+      12,
+      212,
+      244
+    ]
+  },
+  "powers/duchess_moment_description_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      43,
+      12,
+      212,
+      244
+    ]
+  },
+  "images/powers/duchess_moment_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      43,
+      12,
+      212,
+      244
+    ]
+  },
+  "powers/duchess_moment_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      43,
+      12,
+      212,
+      244
+    ]
+  },
+  "images/powers/duchess_reaction_description_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      14,
+      12,
+      242,
+      244
+    ]
+  },
+  "powers/duchess_reaction_description_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      14,
+      12,
+      242,
+      244
+    ]
+  },
+  "images/powers/duchess_dodge_at_turn_start_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      53,
+      12,
+      203,
+      244
+    ]
+  },
+  "powers/duchess_dodge_at_turn_start_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      53,
+      12,
+      203,
+      244
+    ]
+  },
+  "images/powers/duchess_reaction_block_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      37,
+      12,
+      219,
+      244
+    ]
+  },
+  "powers/duchess_reaction_block_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      37,
+      12,
+      219,
+      244
+    ]
+  },
+  "images/powers/duchess_moment_five_block_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      12,
+      12,
+      243,
+      244
+    ]
+  },
+  "powers/duchess_moment_five_block_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      12,
+      12,
+      243,
+      244
+    ]
+  },
+  "images/powers/duchess_moment_five_draw_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      12,
+      26,
+      244,
+      229
+    ]
+  },
+  "powers/duchess_moment_five_draw_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      12,
+      26,
+      244,
+      229
+    ]
+  },
+  "images/powers/duchess_dodge_moment_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      37,
+      12,
+      219,
+      244
+    ]
+  },
+  "powers/duchess_dodge_moment_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      37,
+      12,
+      219,
+      244
+    ]
+  },
+  "images/powers/duchess_shuffle_block_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      20,
+      12,
+      235,
+      244
+    ]
+  },
+  "powers/duchess_shuffle_block_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      20,
+      12,
+      235,
+      244
+    ]
+  }
+}

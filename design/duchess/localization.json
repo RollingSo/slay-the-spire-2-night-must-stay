@@ -1,0 +1,846 @@
+{
+  "powers": {
+    "DUCHESS_MOMENT_DESCRIPTION_POWER.title": [
+      "时刻",
+      "Moment",
+      "時刻"
+    ],
+    "DUCHESS_MOMENT_DESCRIPTION_POWER.description": [
+      "每回合开始时时刻为1。\n每打出一张牌，时刻增加1。\n在对应时刻打出卡牌会触发其时刻效果。",
+      "Moment is 1 at the start of each turn.\nWhenever you play a card, Moment increases by 1.\nPlay cards at their listed Moment to trigger their Moment effects.",
+      "毎ターン開始時、時刻は1になる。\nカードをプレイするたび、時刻が1増加する。\n指定された時刻にカードをプレイすると、時刻効果が発動する。"
+    ],
+    "DUCHESS_REACTION_DESCRIPTION_POWER.title": [
+      "反应",
+      "Reaction",
+      "リアクション"
+    ],
+    "DUCHESS_REACTION_DESCRIPTION_POWER.description": [
+      "在回合进行中抽到此牌时，其耗能减少1直到打出。",
+      "When drawn during your turn, this card costs 1 less until played.",
+      "自分のターン中に引いた時、プレイするまでコストが1減少する。"
+    ],
+    "DUCHESS_MOMENT_POWER.title": [
+      "时刻",
+      "Moment",
+      "時刻"
+    ],
+    "DUCHESS_MOMENT_POWER.description": [
+      "记录当前时刻。",
+      "Tracks the current Moment.",
+      "現在の時刻を記録する。"
+    ],
+    "DUCHESS_DODGE_AT_TURN_START_POWER.title": [
+      "从容准备",
+      "Poised Preparation",
+      "優雅な備え"
+    ],
+    "DUCHESS_DODGE_AT_TURN_START_POWER.description": [
+      "每回合开始时，将{Amount}张[gold]闪避[/gold]洗入抽牌堆。",
+      "At the start of each turn, shuffle {Amount} [gold]Dodge[/gold] cards into your draw pile.",
+      "毎ターン開始時、[gold]回避[/gold]を{Amount}枚山札に加えてシャッフルする。"
+    ],
+    "DUCHESS_REACTION_BLOCK_POWER.title": [
+      "镇定",
+      "Composure",
+      "平静"
+    ],
+    "DUCHESS_REACTION_BLOCK_POWER.description": [
+      "每触发一次[gold]反应[/gold]，获得{Amount}点[gold]格挡[/gold]。",
+      "Whenever [gold]Reaction[/gold] triggers, gain {Amount} [gold]Block[/gold].",
+      "[gold]リアクション[/gold]が発動するたび、[gold]ブロック[/gold]{Amount}を得る。"
+    ],
+    "DUCHESS_MOMENT_FIVE_BLOCK_POWER.title": [
+      "余晖护身",
+      "Afterglow",
+      "残光の護り"
+    ],
+    "DUCHESS_MOMENT_FIVE_BLOCK_POWER.description": [
+      "每当[gold]时刻[/gold]到达5，获得{Amount}点[gold]格挡[/gold]。",
+      "Whenever [gold]Moment[/gold] reaches 5, gain {Amount} [gold]Block[/gold].",
+      "[gold]時刻[/gold]が5に到達するたび、[gold]ブロック[/gold]{Amount}を得る。"
+    ],
+    "DUCHESS_MOMENT_FIVE_DRAW_POWER.title": [
+      "暗中节拍",
+      "Hidden Rhythm",
+      "秘めた拍子"
+    ],
+    "DUCHESS_MOMENT_FIVE_DRAW_POWER.description": [
+      "每当[gold]时刻[/gold]到达5，抽{Amount}张牌。",
+      "Whenever [gold]Moment[/gold] reaches 5, draw {Amount} cards.",
+      "[gold]時刻[/gold]が5に到達するたび、カードを{Amount}枚引く。"
+    ],
+    "DUCHESS_DODGE_MOMENT_POWER.title": [
+      "不露声色",
+      "Unseen Resolve",
+      "密かな決意"
+    ],
+    "DUCHESS_DODGE_MOMENT_POWER.description": [
+      "每打出一张[gold]闪避[/gold]，[gold]时刻[/gold]额外增加{Amount}。",
+      "Whenever you play [gold]Dodge[/gold], advance [gold]Moment[/gold] by an additional {Amount}.",
+      "[gold]回避[/gold]をプレイするたび、[gold]時刻[/gold]を追加で{Amount}進める。"
+    ],
+    "DUCHESS_SHUFFLE_BLOCK_POWER.title": [
+      "不坠的从容",
+      "Unbroken Poise",
+      "崩れぬ余裕"
+    ],
+    "DUCHESS_SHUFFLE_BLOCK_POWER.description": [
+      "每将一张手牌或弃牌洗入抽牌堆，获得{Amount}点[gold]格挡[/gold]。",
+      "Whenever you shuffle a card from your hand or discard pile into your draw pile, gain {Amount} [gold]Block[/gold].",
+      "手札か捨て札からカードを山札に加えてシャッフルするたび、[gold]ブロック[/gold]{Amount}を得る。"
+    ]
+  },
+  "relics": {
+    "SEA_GLASS.DUCHESS.title": [
+      "女爵的海玻璃",
+      "Duchess's Sea Glass",
+      "レディのシーグラス"
+    ],
+    "DUCHESS_OLD_POCKETWATCH.title": [
+      "旧怀表",
+      "Old Pocketwatch",
+      "古びた懐中時計"
+    ],
+    "DUCHESS_OLD_POCKETWATCH.description": [
+      "每当[gold]时刻[/gold]到达5，抽1张牌。",
+      "Whenever [gold]Moment[/gold] reaches 5, draw 1 card.",
+      "[gold]時刻[/gold]が5に到達するたび、カードを1枚引く。"
+    ],
+    "DUCHESS_OLD_POCKETWATCH.flavor": [
+      "指针依旧前行。有些约定，却留在了原处。",
+      "The hands move on. Some promises remain where they were made.",
+      "針は進み続ける。それでも、約束はあの日に残る。"
+    ],
+    "DUCHESS_MENDED_POCKETWATCH.title": [
+      "修复的怀表",
+      "Mended Pocketwatch",
+      "修復された懐中時計"
+    ],
+    "DUCHESS_MENDED_POCKETWATCH.description": [
+      "每当[gold]时刻[/gold]到达5，抽2张牌。",
+      "Whenever [gold]Moment[/gold] reaches 5, draw 2 cards.",
+      "[gold]時刻[/gold]が5に到達するたび、カードを2枚引く。"
+    ],
+    "DUCHESS_MENDED_POCKETWATCH.flavor": [
+      "修好的不仅是齿轮。",
+      "More than the gears has been restored.",
+      "直ったのは、歯車だけではない。"
+    ],
+    "DUCHESS_LACE_CUFF.title": [
+      "蕾丝袖口",
+      "Lace Cuff",
+      "レースの袖口"
+    ],
+    "DUCHESS_LACE_CUFF.description": [
+      "战斗开始时，将1张[gold]闪避[/gold]洗入抽牌堆。",
+      "At the start of combat, shuffle 1 [gold]Dodge[/gold] into your draw pile.",
+      "戦闘開始時、[gold]回避[/gold]1枚を山札に加えてシャッフルする。"
+    ],
+    "DUCHESS_LACE_CUFF.flavor": [
+      "抬手之间，刀光已从视线中消失。",
+      "A raised hand, and the blade is gone from sight.",
+      "手を上げると、刃は視界から消えていた。"
+    ],
+    "DUCHESS_SILVER_THIMBLE.title": [
+      "银顶针",
+      "Silver Thimble",
+      "銀の指ぬき"
+    ],
+    "DUCHESS_SILVER_THIMBLE.description": [
+      "每回合第一次触发[gold]反应[/gold]时，抽1张牌。",
+      "The first time [gold]Reaction[/gold] triggers each turn, draw 1 card.",
+      "毎ターン最初に[gold]リアクション[/gold]が発動した時、カードを1枚引く。"
+    ],
+    "DUCHESS_SILVER_THIMBLE.flavor": [
+      "每一道缝线，都为下一次归来留下余地。",
+      "Every stitch leaves room for another return.",
+      "縫い目の一つひとつが、次の帰還を待っている。"
+    ],
+    "DUCHESS_DANCE_SHOES.title": [
+      "轻舞靴",
+      "Dance Shoes",
+      "舞踏の靴"
+    ],
+    "DUCHESS_DANCE_SHOES.description": [
+      "每回合开始时，[gold]时刻[/gold]额外增加1。",
+      "At the start of each turn, advance [gold]Moment[/gold] by an additional 1.",
+      "毎ターン開始時、[gold]時刻[/gold]を追加で1進める。"
+    ],
+    "DUCHESS_DANCE_SHOES.flavor": [
+      "从容不在于走得慢，而在于知道何时落脚。",
+      "Poise is knowing when to place your foot.",
+      "優雅さとは、足を下ろす時を知ること。"
+    ],
+    "DUCHESS_UNSENT_LETTER.title": [
+      "未寄出的信",
+      "Unsent Letter",
+      "出されなかった手紙"
+    ],
+    "DUCHESS_UNSENT_LETTER.description": [
+      "第一回合开始时，额外抽2张牌。",
+      "At the start of your first turn, draw 2 additional cards.",
+      "最初のターン開始時、カードを追加で2枚引く。"
+    ],
+    "DUCHESS_UNSENT_LETTER.flavor": [
+      "折痕已被抚平许多次，信封却始终没有封口。",
+      "The creases have been smoothed many times. The envelope remains unsealed.",
+      "折り目は何度も伸ばされている。封だけは、まだ閉じられていない。"
+    ],
+    "DUCHESS_BLUE_RIBBON.title": [
+      "蓝绸带",
+      "Blue Ribbon",
+      "青いリボン"
+    ],
+    "DUCHESS_BLUE_RIBBON.description": [
+      "第一回合开始时，获得6点[gold]格挡[/gold]。",
+      "At the start of your first turn, gain 6 [gold]Block[/gold].",
+      "最初のターン開始時、[gold]ブロック[/gold]6を得る。"
+    ],
+    "DUCHESS_BLUE_RIBBON.flavor": [
+      "出发前，总要把衣襟整理妥当。",
+      "There is always time to straighten one's collar before leaving.",
+      "旅立つ前には、襟を正しておきたい。"
+    ]
+  },
+  "potions": {
+    "DUCHESS_SILVER_PERFUME.title": [
+      "银雾香露",
+      "Silver Perfume",
+      "銀霧の香水"
+    ],
+    "DUCHESS_SILVER_PERFUME.description": [
+      "[gold]时刻[/gold]增加3。",
+      "Advance [gold]Moment[/gold] by 3.",
+      "[gold]時刻[/gold]を3進める。"
+    ],
+    "DUCHESS_VEIL_VIAL.title": [
+      "闪避小瓶",
+      "Dodge Vial",
+      "回避の小瓶"
+    ],
+    "DUCHESS_VEIL_VIAL.description": [
+      "将2张[gold]闪避[/gold]加入手牌。",
+      "Add 2 [gold]Dodge[/gold] cards to your hand.",
+      "[gold]回避[/gold]2枚を手札に加える。"
+    ],
+    "DUCHESS_MEMORY_DRAUGHT.title": [
+      "定时饮剂",
+      "Timing Draught",
+      "時刻の霊薬"
+    ],
+    "DUCHESS_MEMORY_DRAUGHT.description": [
+      "使[gold]时刻[/gold]变为5。\n抽1张牌。",
+      "Set [gold]Moment[/gold] to 5.\nDraw 1 card.",
+      "[gold]時刻[/gold]を5にする。\nカードを1枚引く。"
+    ]
+  },
+  "characters": {
+    "DUCHESS.title": [
+      "女爵",
+      "Duchess",
+      "レディ"
+    ],
+    "DUCHESS.titleObject": [
+      "女爵",
+      "the Duchess",
+      "レディ"
+    ],
+    "DUCHESS.banter.alive.endTurnPing": [
+      "准备好了就请行动。",
+      "Please act when you are ready.",
+      "準備ができたら、お願いします。"
+    ],
+    "DUCHESS.banter.dead.endTurnPing": [
+      "请继续……不要为我停下。",
+      "Please... do not stop for me.",
+      "どうか……私に構わず進んでください。"
+    ],
+    "DUCHESS.pronounObject": [
+      "她",
+      "her",
+      "彼女"
+    ],
+    "DUCHESS.possessiveAdjective": [
+      "她的",
+      "her",
+      "彼女の"
+    ],
+    "DUCHESS.pronounPossessive": [
+      "她的",
+      "hers",
+      "彼女の"
+    ],
+    "DUCHESS.pronounSubject": [
+      "她",
+      "she",
+      "彼女"
+    ],
+    "DUCHESS.cardsModifierTitle": [
+      "女爵卡牌",
+      "Duchess cards",
+      "レディのカード"
+    ],
+    "DUCHESS.cardsModifierDescription": [
+      "女爵的卡牌。",
+      "Cards for the Duchess.",
+      "レディのカード。"
+    ],
+    "DUCHESS.description": [
+      "拨动怀表的时刻，以闪避与反应穿行于牌堆，在精准的节拍中给予致命一击。",
+      "She turns the hands of her pocketwatch, weaving Dodge and Reaction through her deck before striking at the perfect Moment.",
+      "懐中時計の時刻を操り、回避とリアクションで山札を巡り、完璧な瞬間に致命の一撃を放つ。"
+    ],
+    "DUCHESS.aromaPrinciple": [
+      "[sine]如果这能帮助各位，我愿意一试。[/sine]",
+      "[sine]If it will help everyone, I am willing to try.[/sine]",
+      "[sine]皆さんの助けになるのなら、試してみましょう。[/sine]"
+    ],
+    "DUCHESS.eventDeathPrevention": [
+      "还有人在等我。我不能停在这里。",
+      "Someone is still waiting. I cannot stop here.",
+      "まだ、待っている人がいます。ここで終わるわけにはいきません。"
+    ],
+    "DUCHESS.goldMonologue": [
+      "[sine]足够准备下一段路了。也该为各位留一些。[/sine]",
+      "[sine]Enough for the road ahead. I should set some aside for the others.[/sine]",
+      "[sine]これで次の旅支度ができます。皆さんの分も残しておきましょう。[/sine]"
+    ]
+  },
+  "card_library": {
+    "POOL_DUCHESS_TIP": [
+      "女爵",
+      "Duchess",
+      "レディ"
+    ]
+  },
+  "ancients": {
+    "NEOW.talk.DUCHESS.0-0.ancient": [
+      "……又一位……藏起面容的旅人……",
+      "...another traveler...hiding her face...",
+      "……またひとり……顔を隠す旅人……"
+    ],
+    "NEOW.talk.DUCHESS.0-0.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "NEOW.talk.DUCHESS.0-1.char": [
+      "面具并不是为了躲开这条路。请让我继续。",
+      "The mask is not meant to hide from this road. Please let me continue.",
+      "この仮面は、道から逃れるためのものではありません。どうか、先へ。"
+    ],
+    "NEOW.talk.DUCHESS.1-0r.ancient": [
+      "……又一位……藏起面容的旅人……",
+      "...another traveler...hiding her face...",
+      "……またひとり……顔を隠す旅人……"
+    ],
+    "NEOW.talk.DUCHESS.1-0r.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "NEOW.talk.DUCHESS.1-1r.char": [
+      "面具并不是为了躲开这条路。请让我继续。",
+      "The mask is not meant to hide from this road. Please let me continue.",
+      "この仮面は、道から逃れるためのものではありません。どうか、先へ。"
+    ],
+    "NEOW.talk.DUCHESS.2-0r.ancient": [
+      "又回来了。你还没有放下那份牵挂。",
+      "Back again. You have not set that burden down.",
+      "また来たか。まだ、その思いを手放していないのだな。"
+    ],
+    "NEOW.talk.DUCHESS.2-0r.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "NEOW.talk.DUCHESS.2-1r.char": [
+      "是的。我答应过要继续前进，也答应过会回来。",
+      "No. I promised to go on, and I promised to return.",
+      "はい。前に進むと約束しました。そして、帰るとも。"
+    ],
+    "NEOW.talk.DUCHESS.2-1r.next": [
+      "继续",
+      "Continue",
+      "続ける"
+    ],
+    "NEOW.talk.DUCHESS.2-2r.ancient": [
+      "那就带上你需要的东西，继续走吧。",
+      "Then take what you need, and go on.",
+      "ならば、必要なものを持って進め。"
+    ],
+    "DARV.talk.DUCHESS.0-0.ancient": [
+      "小刀、怀表、精巧的玩意儿！来看看，你会喜欢的！",
+      "Knives, watches, clever little things! Come look—you'll like these!",
+      "小刀に時計、洒落た品々だ！見ていけ、気に入るぞ！"
+    ],
+    "DARV.talk.DUCHESS.0-0.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "DARV.talk.DUCHESS.0-1.char": [
+      "请让我看看那些轻便的物件。路上还有人需要我的帮助。",
+      "May I see the lighter pieces? There are others who will need my help on the road.",
+      "軽い品を見せていただけますか。道中では、皆さんを助けなければ。"
+    ],
+    "DARV.talk.DUCHESS.1-0r.ancient": [
+      "小刀、怀表、精巧的玩意儿！来看看，你会喜欢的！",
+      "Knives, watches, clever little things! Come look—you'll like these!",
+      "小刀に時計、洒落た品々だ！見ていけ、気に入るぞ！"
+    ],
+    "DARV.talk.DUCHESS.1-0r.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "DARV.talk.DUCHESS.1-1r.char": [
+      "请让我看看那些轻便的物件。路上还有人需要我的帮助。",
+      "May I see the lighter pieces? There are others who will need my help on the road.",
+      "軽い品を見せていただけますか。道中では、皆さんを助けなければ。"
+    ],
+    "DARV.talk.DUCHESS.2-0r.ancient": [
+      "又回来了。你还没有放下那份牵挂。",
+      "Back again. You have not set that burden down.",
+      "また来たか。まだ、その思いを手放していないのだな。"
+    ],
+    "DARV.talk.DUCHESS.2-0r.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "DARV.talk.DUCHESS.2-1r.char": [
+      "是的。我答应过要继续前进，也答应过会回来。",
+      "No. I promised to go on, and I promised to return.",
+      "はい。前に進むと約束しました。そして、帰るとも。"
+    ],
+    "DARV.talk.DUCHESS.2-1r.next": [
+      "继续",
+      "Continue",
+      "続ける"
+    ],
+    "DARV.talk.DUCHESS.2-2r.ancient": [
+      "那就带上你需要的东西，继续走吧。",
+      "Then take what you need, and go on.",
+      "ならば、必要なものを持って進め。"
+    ],
+    "NONUPEIPE.talk.DUCHESS.0-0.ancient": [
+      "优雅的来客，你想用这份力量守住什么？",
+      "Graceful visitor, what would you preserve with this power?",
+      "優雅なる客人よ。この力で何を守る？"
+    ],
+    "NONUPEIPE.talk.DUCHESS.0-0.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "NONUPEIPE.talk.DUCHESS.0-1.char": [
+      "守住选择的余地。为我自己，也为同行的人。",
+      "The chance to choose. For myself, and for those who travel with me.",
+      "選べる余地を。私自身のためにも、共に歩く人のためにも。"
+    ],
+    "NONUPEIPE.talk.DUCHESS.1-0r.ancient": [
+      "优雅的来客，你想用这份力量守住什么？",
+      "Graceful visitor, what would you preserve with this power?",
+      "優雅なる客人よ。この力で何を守る？"
+    ],
+    "NONUPEIPE.talk.DUCHESS.1-0r.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "NONUPEIPE.talk.DUCHESS.1-1r.char": [
+      "守住选择的余地。为我自己，也为同行的人。",
+      "The chance to choose. For myself, and for those who travel with me.",
+      "選べる余地を。私自身のためにも、共に歩く人のためにも。"
+    ],
+    "NONUPEIPE.talk.DUCHESS.2-0r.ancient": [
+      "又回来了。你还没有放下那份牵挂。",
+      "Back again. You have not set that burden down.",
+      "また来たか。まだ、その思いを手放していないのだな。"
+    ],
+    "NONUPEIPE.talk.DUCHESS.2-0r.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "NONUPEIPE.talk.DUCHESS.2-1r.char": [
+      "是的。我答应过要继续前进，也答应过会回来。",
+      "No. I promised to go on, and I promised to return.",
+      "はい。前に進むと約束しました。そして、帰るとも。"
+    ],
+    "NONUPEIPE.talk.DUCHESS.2-1r.next": [
+      "继续",
+      "Continue",
+      "続ける"
+    ],
+    "NONUPEIPE.talk.DUCHESS.2-2r.ancient": [
+      "那就带上你需要的东西，继续走吧。",
+      "Then take what you need, and go on.",
+      "ならば、必要なものを持って進め。"
+    ],
+    "OROBAS.talk.DUCHESS.0-0.ancient": [
+      "把那件旧物交来。我能让它再次焕发力量。",
+      "Give me that old keepsake. I can awaken its strength again.",
+      "その古い品を渡せ。再び力を宿してやろう。"
+    ],
+    "OROBAS.talk.DUCHESS.0-0.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "OROBAS.talk.DUCHESS.0-1.char": [
+      "如果可以，请保留它原来的模样。那对我很重要。",
+      "If possible, please preserve its shape. That matters to me.",
+      "できれば、元の姿を残してください。私には大切なものですから。"
+    ],
+    "OROBAS.talk.DUCHESS.1-0r.ancient": [
+      "把那件旧物交来。我能让它再次焕发力量。",
+      "Give me that old keepsake. I can awaken its strength again.",
+      "その古い品を渡せ。再び力を宿してやろう。"
+    ],
+    "OROBAS.talk.DUCHESS.1-0r.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "OROBAS.talk.DUCHESS.1-1r.char": [
+      "如果可以，请保留它原来的模样。那对我很重要。",
+      "If possible, please preserve its shape. That matters to me.",
+      "できれば、元の姿を残してください。私には大切なものですから。"
+    ],
+    "OROBAS.talk.DUCHESS.2-0r.ancient": [
+      "又回来了。你还没有放下那份牵挂。",
+      "Back again. You have not set that burden down.",
+      "また来たか。まだ、その思いを手放していないのだな。"
+    ],
+    "OROBAS.talk.DUCHESS.2-0r.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "OROBAS.talk.DUCHESS.2-1r.char": [
+      "是的。我答应过要继续前进，也答应过会回来。",
+      "No. I promised to go on, and I promised to return.",
+      "はい。前に進むと約束しました。そして、帰るとも。"
+    ],
+    "OROBAS.talk.DUCHESS.2-1r.next": [
+      "继续",
+      "Continue",
+      "続ける"
+    ],
+    "OROBAS.talk.DUCHESS.2-2r.ancient": [
+      "那就带上你需要的东西，继续走吧。",
+      "Then take what you need, and go on.",
+      "ならば、必要なものを持って進め。"
+    ],
+    "PAEL.talk.DUCHESS.0-0.ancient": [
+      "闭上眼吧。在梦里，你不必再为任何人操心。",
+      "Close your eyes. In dreams, no one needs you to worry for them.",
+      "目を閉じて。夢の中なら、誰の心配もしなくていい。"
+    ],
+    "PAEL.talk.DUCHESS.0-0.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "PAEL.talk.DUCHESS.0-1.char": [
+      "听起来很温柔。可我还不能把醒来的事交给别人。",
+      "That sounds kind. But I cannot leave the waking to someone else.",
+      "優しいお誘いですね。けれど、目覚めることまで人任せにはできません。"
+    ],
+    "PAEL.talk.DUCHESS.1-0r.ancient": [
+      "闭上眼吧。在梦里，你不必再为任何人操心。",
+      "Close your eyes. In dreams, no one needs you to worry for them.",
+      "目を閉じて。夢の中なら、誰の心配もしなくていい。"
+    ],
+    "PAEL.talk.DUCHESS.1-0r.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "PAEL.talk.DUCHESS.1-1r.char": [
+      "听起来很温柔。可我还不能把醒来的事交给别人。",
+      "That sounds kind. But I cannot leave the waking to someone else.",
+      "優しいお誘いですね。けれど、目覚めることまで人任せにはできません。"
+    ],
+    "PAEL.talk.DUCHESS.2-0r.ancient": [
+      "又回来了。你还没有放下那份牵挂。",
+      "Back again. You have not set that burden down.",
+      "また来たか。まだ、その思いを手放していないのだな。"
+    ],
+    "PAEL.talk.DUCHESS.2-0r.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "PAEL.talk.DUCHESS.2-1r.char": [
+      "是的。我答应过要继续前进，也答应过会回来。",
+      "No. I promised to go on, and I promised to return.",
+      "はい。前に進むと約束しました。そして、帰るとも。"
+    ],
+    "PAEL.talk.DUCHESS.2-1r.next": [
+      "继续",
+      "Continue",
+      "続ける"
+    ],
+    "PAEL.talk.DUCHESS.2-2r.ancient": [
+      "那就带上你需要的东西，继续走吧。",
+      "Then take what you need, and go on.",
+      "ならば、必要なものを持って進め。"
+    ],
+    "TANX.talk.DUCHESS.0-0.ancient": [
+      "坐下！先吃饱，才有力气继续赶路！",
+      "Sit down! Fill your belly before the next stretch!",
+      "座れ！先に腹を満たせ、旅はそれからだ！"
+    ],
+    "TANX.talk.DUCHESS.0-0.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "TANX.talk.DUCHESS.0-1.char": [
+      "谢谢。若有余下的食物，我想为同伴带一些。",
+      "Thank you. If there is food to spare, I would like to take some for my companions.",
+      "ありがとうございます。余りがあれば、仲間にも少し持っていきたいのですが。"
+    ],
+    "TANX.talk.DUCHESS.1-0r.ancient": [
+      "坐下！先吃饱，才有力气继续赶路！",
+      "Sit down! Fill your belly before the next stretch!",
+      "座れ！先に腹を満たせ、旅はそれからだ！"
+    ],
+    "TANX.talk.DUCHESS.1-0r.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "TANX.talk.DUCHESS.1-1r.char": [
+      "谢谢。若有余下的食物，我想为同伴带一些。",
+      "Thank you. If there is food to spare, I would like to take some for my companions.",
+      "ありがとうございます。余りがあれば、仲間にも少し持っていきたいのですが。"
+    ],
+    "TANX.talk.DUCHESS.2-0r.ancient": [
+      "又回来了。你还没有放下那份牵挂。",
+      "Back again. You have not set that burden down.",
+      "また来たか。まだ、その思いを手放していないのだな。"
+    ],
+    "TANX.talk.DUCHESS.2-0r.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "TANX.talk.DUCHESS.2-1r.char": [
+      "是的。我答应过要继续前进，也答应过会回来。",
+      "No. I promised to go on, and I promised to return.",
+      "はい。前に進むと約束しました。そして、帰るとも。"
+    ],
+    "TANX.talk.DUCHESS.2-1r.next": [
+      "继续",
+      "Continue",
+      "続ける"
+    ],
+    "TANX.talk.DUCHESS.2-2r.ancient": [
+      "那就带上你需要的东西，继续走吧。",
+      "Then take what you need, and go on.",
+      "ならば、必要なものを持って進め。"
+    ],
+    "TEZCATARA.talk.DUCHESS.0-0.ancient": [
+      "躲闪可赢不了所有战斗。你敢靠近吗？",
+      "Dodging cannot win every battle. Do you dare come closer?",
+      "避けるだけでは勝てぬ戦もある。踏み込む勇気はあるか？"
+    ],
+    "TEZCATARA.talk.DUCHESS.0-0.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "TEZCATARA.talk.DUCHESS.0-1.char": [
+      "我一直在等合适的时机。现在，正好。",
+      "I have been waiting for the right moment. This will do.",
+      "ふさわしい時を待っていました。今なら、ちょうどよさそうです。"
+    ],
+    "TEZCATARA.talk.DUCHESS.1-0r.ancient": [
+      "躲闪可赢不了所有战斗。你敢靠近吗？",
+      "Dodging cannot win every battle. Do you dare come closer?",
+      "避けるだけでは勝てぬ戦もある。踏み込む勇気はあるか？"
+    ],
+    "TEZCATARA.talk.DUCHESS.1-0r.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "TEZCATARA.talk.DUCHESS.1-1r.char": [
+      "我一直在等合适的时机。现在，正好。",
+      "I have been waiting for the right moment. This will do.",
+      "ふさわしい時を待っていました。今なら、ちょうどよさそうです。"
+    ],
+    "TEZCATARA.talk.DUCHESS.2-0r.ancient": [
+      "又回来了。你还没有放下那份牵挂。",
+      "Back again. You have not set that burden down.",
+      "また来たか。まだ、その思いを手放していないのだな。"
+    ],
+    "TEZCATARA.talk.DUCHESS.2-0r.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "TEZCATARA.talk.DUCHESS.2-1r.char": [
+      "是的。我答应过要继续前进，也答应过会回来。",
+      "No. I promised to go on, and I promised to return.",
+      "はい。前に進むと約束しました。そして、帰るとも。"
+    ],
+    "TEZCATARA.talk.DUCHESS.2-1r.next": [
+      "继续",
+      "Continue",
+      "続ける"
+    ],
+    "TEZCATARA.talk.DUCHESS.2-2r.ancient": [
+      "那就带上你需要的东西，继续走吧。",
+      "Then take what you need, and go on.",
+      "ならば、必要なものを持って進め。"
+    ],
+    "VAKUU.talk.DUCHESS.0-0.ancient": [
+      "你看起来总在替别人打算。自己的代价呢？",
+      "You seem to plan for everyone else. What of your own price?",
+      "他人のことばかり考えているな。自分の代償はどうする？"
+    ],
+    "VAKUU.talk.DUCHESS.0-0.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "VAKUU.talk.DUCHESS.0-1.char": [
+      "我会承担。但请先把条件说清楚。",
+      "I will bear it. But please state the terms first.",
+      "引き受けます。ですが、まず条件をはっきりさせてください。"
+    ],
+    "VAKUU.talk.DUCHESS.1-0r.ancient": [
+      "你看起来总在替别人打算。自己的代价呢？",
+      "You seem to plan for everyone else. What of your own price?",
+      "他人のことばかり考えているな。自分の代償はどうする？"
+    ],
+    "VAKUU.talk.DUCHESS.1-0r.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "VAKUU.talk.DUCHESS.1-1r.char": [
+      "我会承担。但请先把条件说清楚。",
+      "I will bear it. But please state the terms first.",
+      "引き受けます。ですが、まず条件をはっきりさせてください。"
+    ],
+    "VAKUU.talk.DUCHESS.2-0r.ancient": [
+      "又回来了。你还没有放下那份牵挂。",
+      "Back again. You have not set that burden down.",
+      "また来たか。まだ、その思いを手放していないのだな。"
+    ],
+    "VAKUU.talk.DUCHESS.2-0r.next": [
+      "回应",
+      "Answer",
+      "答える"
+    ],
+    "VAKUU.talk.DUCHESS.2-1r.char": [
+      "是的。我答应过要继续前进，也答应过会回来。",
+      "No. I promised to go on, and I promised to return.",
+      "はい。前に進むと約束しました。そして、帰るとも。"
+    ],
+    "VAKUU.talk.DUCHESS.2-1r.next": [
+      "继续",
+      "Continue",
+      "続ける"
+    ],
+    "VAKUU.talk.DUCHESS.2-2r.ancient": [
+      "那就带上你需要的东西，继续走吧。",
+      "Then take what you need, and go on.",
+      "ならば、必要なものを持って進め。"
+    ],
+    "THE_ARCHITECT.talk.DUCHESS.0-0.ancient": [
+      "你能重演一击，能否重演胜利？",
+      "You can repeat a blow. Can you repeat a victory?",
+      "一撃を再演できるなら、勝利も再演できるか？"
+    ],
+    "THE_ARCHITECT.talk.DUCHESS.0-0.next": [
+      "继续",
+      "Continue",
+      "続ける"
+    ],
+    "THE_ARCHITECT.talk.DUCHESS.0-1.char": [
+      "胜利不是靠重复得来的。我会看清眼前这一击。",
+      "Victory is not earned by repetition. I will judge the blow before me.",
+      "繰り返すだけでは勝てません。今、目の前の一撃を見極めます。"
+    ],
+    "THE_ARCHITECT.talk.DUCHESS.1-0r.ancient": [
+      "再来一次。别让过去替你决定。",
+      "Again. Do not let the past decide for you.",
+      "もう一度だ。過去に判断を委ねるな。"
+    ],
+    "THE_ARCHITECT.talk.DUCHESS.1-0r.next": [
+      "继续",
+      "Continue",
+      "続ける"
+    ],
+    "THE_ARCHITECT.talk.DUCHESS.1-1r.char": [
+      "我明白。记住过去，是为了选择下一步。",
+      "I understand. I remember the past so I can choose the next step.",
+      "分かっています。次の一歩を選ぶために、過去を覚えているのです。"
+    ],
+    "THE_ARCHITECT.talk.DUCHESS.1-2r.ancient": [
+      "那就动手。",
+      "Then act.",
+      "ならば、動け。"
+    ],
+    "THE_ARCHITECT.talk.DUCHESS.1-2r.next": [
+      "继续",
+      "Continue",
+      "続ける"
+    ],
+    "THE_ARCHITECT.talk.DUCHESS.2-0r.ancient": [
+      "你还打算保护所有人？",
+      "Still planning to protect everyone?",
+      "まだ、全員を守るつもりか？"
+    ],
+    "THE_ARCHITECT.talk.DUCHESS.2-0r.next": [
+      "继续",
+      "Continue",
+      "続ける"
+    ],
+    "THE_ARCHITECT.talk.DUCHESS.2-1r.char": [
+      "我不能保证做到。但我不会因此省去准备。",
+      "I cannot promise success. That is no reason to neglect preparation.",
+      "できると断言はしません。だからこそ、備えを怠れないのです。"
+    ],
+    "THE_ARCHITECT.talk.DUCHESS.2-2r.ancient": [
+      "让我看看你的准备。",
+      "Show me your preparation.",
+      "その備えを見せてもらおう。"
+    ],
+    "THE_ARCHITECT.talk.DUCHESS.2-2r.next": [
+      "继续",
+      "Continue",
+      "続ける"
+    ],
+    "THE_ARCHITECT.talk.DUCHESS.3-0r.ancient": [
+      "幕还没有落下。",
+      "The curtain has not fallen yet.",
+      "まだ幕は下りていない。"
+    ],
+    "THE_ARCHITECT.talk.DUCHESS.3-0r.next": [
+      "继续",
+      "Continue",
+      "続ける"
+    ],
+    "THE_ARCHITECT.talk.DUCHESS.3-1r.char": [
+      "那么，就请继续。",
+      "Then please, continue.",
+      "それでは、続けましょう。"
+    ]
+  },
+  "cards": {
+    "DUCHESS_SELECT_TO_SHUFFLE": [
+      "选择要洗入抽牌堆的牌。",
+      "Choose cards to shuffle into your draw pile.",
+      "山札に加えてシャッフルするカードを選択。"
+    ]
+  }
+}

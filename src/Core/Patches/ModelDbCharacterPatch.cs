@@ -21,6 +21,7 @@ namespace NightMustStay.Core.Patches
                 ModelDb.CardPool<GuardianCardPool>(),
                 ModelDb.CardPool<IroneyeCardPool>(),
                 ModelDb.CardPool<RevenantCardPool>(),
+                ModelDb.CardPool<DuchessCardPool>(),
             };
 
             foreach (CardPoolModel modPool in modPools)
@@ -44,6 +45,7 @@ namespace NightMustStay.Core.Patches
                 ModelDb.Character<Guardian>(),
                 ModelDb.Character<Ironeye>(),
                 ModelDb.Character<Revenant>(),
+                ModelDb.Character<Duchess>(),
             };
 
             foreach (CharacterModel modCharacter in modCharacters)
@@ -67,6 +69,7 @@ namespace NightMustStay.Core.Patches
                 ModelDb.CardPool<GuardianCardPool>(),
                 ModelDb.CardPool<IroneyeCardPool>(),
                 ModelDb.CardPool<RevenantCardPool>(),
+                ModelDb.CardPool<DuchessCardPool>(),
             };
 
             foreach (CardPoolModel modPool in modPools)
@@ -81,6 +84,7 @@ namespace NightMustStay.Core.Patches
             CardModel[] tokenCards =
             {
                 ModelDb.Card<ShieldPoke>(),
+                ModelDb.Card<DuchessDodge>(),
                 ModelDb.Card<Approach>(),
                 ModelDb.Card<Retreat>(),
                 ModelDb.Card<RevenantFamilyHelenChoice>(),
@@ -108,6 +112,7 @@ namespace NightMustStay.Core.Patches
             CardModel[] tokenCards =
             {
                 ModelDb.Card<ShieldPoke>(),
+                ModelDb.Card<DuchessDodge>(),
                 ModelDb.Card<Approach>(),
                 ModelDb.Card<Retreat>(),
                 ModelDb.Card<RevenantFamilyHelenChoice>(),

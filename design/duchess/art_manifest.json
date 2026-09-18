@@ -1,0 +1,733 @@
+{
+  "cards": [
+    {
+      "key": "Strike",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-9ebbcbb3-c350-4a5a-8b63-f5de5ea221f9.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Defend",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-a4740ee6-52ac-49af-a717-b04288a76026.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Quickstep",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-496beaff-d158-4748-89e3-53e19e8a50f5.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Restage",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-d356af17-965a-42ca-869b-d288d627b1e9.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Finale",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-74b27e08-fae2-42e4-b330-f2d6aabe2349.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "GrandReprise",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-c0034f38-d709-4550-80e2-f23d8b5b0495.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "EternalRestage",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-65bb3ba7-829f-4ad3-b9db-63ef823782de.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "FirstLight",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-65a9df43-6a88-4db7-bd24-97554713b8f6.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "FleetingBlade",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-97dacc53-db1f-4a23-becc-d6d7b41c42ae.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Stiletto",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-2b5b93da-3b7a-49c3-ba7c-e2fab6e36439.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "LowSweep",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-115462ea-f97f-4cef-af17-cec7e7fe784a.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "TwinFangs",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-aee7827f-e127-4d25-b295-2629e82d2651.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "PassingCut",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-8f8ed8f6-73a6-4700-b050-7c5e9e86cb7a.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Needlework",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-bb4544d3-b1bd-451d-840a-7824f8562b67.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "OpeningThrust",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-c62dd0a1-c120-4c03-98ac-d236281be9e4.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "FollowThrough",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-a1f15c92-85e7-4663-b4c9-63f1eab340e6.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "BlindSpot",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-a14922ce-20a6-4cf0-9ee6-1f636c6f280b.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "PartingCut",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-fe927700-3097-4720-b8f1-57a699c661a2.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "SerratedEdge",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-fd7f1663-8c3a-4626-bbf2-d43801b22088.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "MeasuredStep",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-6dcb652c-f20b-4583-a495-e7a69baacaac.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "GlintstoneKnife",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-54ffbde9-42b8-46d0-b17f-324534660092.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "SilkenGuard",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-b04d710a-b6a9-48de-a04c-f2acb5644757.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Pivot",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-66b973f2-6c63-49d1-b1ac-aff37d60c67b.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Feint",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-31968ba6-49c7-4afd-be2d-11089f4eedbb.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "ReadTheRoom",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-e36df155-a648-4221-b3ae-5b7a9a4ce6f2.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "VeiledStep",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-f894bb3e-3101-47c8-b7f7-2888c9b0d1a9.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "TakeABreath",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-5ececdf0-832f-4e81-905a-e0809dbe866a.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "HiddenPocket",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-57bf1147-41c4-48f9-aff4-8700d3ff17d7.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "SoftLanding",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-c84b4c3d-b8cd-4003-bffd-75fb588df85d.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Poised",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-9fe5c7de-ade6-4d09-afe3-40db7230b3db.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Reverberation",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-39469c5c-5071-44d9-af1f-ecbaf7aa6638.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "CurtainTug",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-52bdecfa-c4fb-4e73-ae26-c84e043eb5c5.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Distraction",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-e3f38675-bc45-4ac5-84a3-6817c28eb407.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "TripleWaltz",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-797a3586-2ace-4887-831c-0d9f20f26798.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "DaggerFan",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-dcc9f448-5757-40ef-a380-03a4c5d8c9c0.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "DancePartner",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-f3f797d9-44b8-4523-ad93-77ebfc246546.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "PerfectAngle",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-0729222a-89e4-4631-88ed-792f0412ec84.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "MaskedAssault",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-99922972-ed05-4b94-b16c-a979a21e2aad.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "CutAndFade",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-e6aff330-e851-4fa3-8132-0734e70ff177.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "PaleMoonblade",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-03250497-c8d5-4423-b25d-e5522e7fd85f.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "NoWitness",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-386637c8-9349-457e-977e-deb330070904.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "SecondThought",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-f72d5deb-1b9a-44c9-b4d0-9aee53ba4bd5.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "SilverFlash",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-cc13c679-b9af-47f8-ad07-19ab2be63746.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Understudy",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-43487e11-d635-4885-bd6d-8a3681bd9da8.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "ThreadTheGap",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-8bdc484a-f4a0-4044-a977-110cbb9c7cd2.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Encore",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-ea2a9248-e4e9-4c90-b70b-dd028d8e0568.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "HeldBreath",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-6cbad591-a2bb-4c6c-832b-bc19887c9c64.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Invitation",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-5e1ad2fd-bf1a-46d0-9e57-88027bdaf9e3.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "TurnAside",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-11817d35-d383-4456-a282-2af3687be6b2.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "QuietSignal",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-fe976576-caf6-407c-8382-f50a55b5a7bf.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Backstage",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-1da52c07-8011-4c1c-8335-1f4266f9a88f.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "MoonlitVeil",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-08ecb336-fcca-48ac-bbc5-4e1a397bdaaa.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "QuickHands",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-a86e0a66-0547-469c-82bb-1716ad2071af.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "DressRehearsal",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-8d4c16e3-4701-4102-951c-2c2da43ff6b5.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "StolenMoment",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-4b98d4dd-f814-4ca5-8f11-34fefa042cf6.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Sway",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-837c8f35-23e5-484c-9f09-884b3b168280.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Elegance",
+      "error": "image generation failed: http 400 Bad Request: Some(\"{\\n  \\\"error\\\": {\\n    \\\"message\\\": \\\"Your request was rejected by the safety system. If you believe this is an error, contact us at help.openai.com and include the request ID 39d23bc6-e591-427f-ba44-a40a37eacd23.\\\",\\n    \\\"type\\\": \\\"image_generation_user_error\\\",\\n    \\\"param\\\": null,\\n    \\\"code\\\": \\\"moderation_blocked\\\",\\n    \\\"moderation_details\\\": {\\n      \\\"moderation_stage\\\": \\\"output\\\",\\n      \\\"categories\\\": [\\n        \\\"other\\\"\\n      ]\\n    }\\n  }\\n}\")"
+    },
+    {
+      "key": "HiddenRhythm",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-e94dc028-d1cd-490b-91b4-57ece50458aa.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "UnseenResolve",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-2828d686-f8d7-4778-92fc-84af45eb7dee.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Composure",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-2862fdb1-2732-4e8d-9077-cf8750e0d600.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Afterglow",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-75c9533a-0dda-40c4-a5cf-ed88eac6c60d.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "MidnightWaltz",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-341cca3d-a168-4b41-86a0-f4a461fbb1b7.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "VanishingAct",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-aad8dc6a-8e65-423c-93f1-f3d9777ae2a2.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "SilverStorm",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-5a23b192-e80d-4746-bb4e-556351957964.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "LastWord",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-59ee62a4-c991-4636-93ed-e9f93d21f881.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "DawnPromise",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-a46164da-0696-4c08-a9d1-0ed2de54f9eb.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "SteadyHand",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-2eaceb07-6aff-430b-80e5-6ee68a2f2de8.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "BothPaths",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-a8d09f1d-7cb3-4f67-abe8-91598ea00277.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "BorrowedTime",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-84dbfc28-956e-4eb3-aa14-65f4f9b9a2d2.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "LightAsSilk",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-1bb5918c-d58d-4e5f-a19d-b47d48a2ce2a.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "ThiefsArsenal",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-b36f72f9-299c-4822-815d-83cca8c5124c.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "PerfectRehearsal",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-c20989ef-de4b-4731-bc3f-08b6f8e7babd.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Nightfall",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-b520b3ef-1db6-43d8-93f6-ac4996b49f7f.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "UnbrokenPoise",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-dda853d7-a2c4-4470-a3ae-cc36d4005d47.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "SharedStage",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-30b31945-996e-465a-8d6d-8f15e677ce28.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Elegance",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-ad8c0dc6-e75d-45ca-a0e4-30286b4d562d.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+      "retry": true
+    }
+  ],
+  "sprite": {
+    "key": "idle",
+    "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-758d2850-6be6-4a65-85dd-e9f60082ef73.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+  },
+  "prompts": {
+    "cards": [
+      {
+        "key": "Strike",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Strike. Single visual event: A huge short silver stiletto held by an ivory gloved hand stabs diagonally across deep burgundy speed shapes. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Defend",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Defend. Single visual event: A dark navy tailcoat sleeve sweeps upward deflecting a single angular incoming blade. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Restage",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Restage. Single visual event: Two overlapping silver dagger slash silhouettes mirrored across a bright blue finger snap star; past wound and its reprise. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Quickstep",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Quickstep. Single visual event: Close-up black knee boots and ivory fitted trousers sidestep one white arrow; broad cyan motion arc. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Stiletto",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Stiletto. Single visual event: Stiletto: one decisive short-dagger combat gesture, represented through a silver blade impact star. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "TwinFangs",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Twin Fangs. Single visual event: Twin Fangs: one decisive short-dagger combat gesture, represented through a silver blade impact star. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "PassingCut",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Passing Cut. Single visual event: Passing Cut: one decisive short-dagger combat gesture, represented through a silver blade impact star and a broad cloak barrier. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "LowSweep",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Low Sweep. Single visual event: Low Sweep: one decisive short-dagger combat gesture, represented through a silver blade impact star. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Needlework",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Needlework. Single visual event: Needlework: one decisive short-dagger combat gesture, represented through a silver blade impact star and a bent enemy blade. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "OpeningThrust",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Opening Thrust. Single visual event: Opening Thrust: one decisive short-dagger combat gesture, represented through a silver blade impact star and converging luminous motes. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "FollowThrough",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Follow Through. Single visual event: Follow Through: one decisive short-dagger combat gesture, represented through a silver blade impact star and converging luminous motes. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "BlindSpot",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Blind Spot. Single visual event: Blind Spot: one decisive short-dagger combat gesture, represented through a silver blade impact star and a glowing opening in black armor. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "SerratedEdge",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Serrated Edge. Single visual event: Serrated Edge: one decisive short-dagger combat gesture, represented through a silver blade impact star and a glowing opening in black armor. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "GlintstoneKnife",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Glintstone Knife. Single visual event: Glintstone Knife: one decisive short-dagger combat gesture, represented through a silver blade impact star and a short floating dagger. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "PartingCut",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Parting Cut. Single visual event: Parting Cut: one decisive short-dagger combat gesture, represented through a silver blade impact star and a broad cloak barrier. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "MeasuredStep",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Measured Step. Single visual event: Measured Step: one readable preparation or protective gesture, represented through a broad cloak barrier. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "SilkenGuard",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Silken Guard. Single visual event: Silken Guard: one readable preparation or protective gesture, represented through a broad cloak barrier and converging luminous motes. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Pivot",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Pivot. Single visual event: Pivot: one readable preparation or protective gesture, represented through a broad cloak barrier and a curved boot-step arc. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "VeiledStep",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Veiled Step. Single visual event: Veiled Step: one readable preparation or protective gesture, represented through a broad cloak barrier and a disappearing navy silhouette. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Feint",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Feint. Single visual event: Feint: one readable preparation or protective gesture, represented through a curved boot-step arc. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "ReadTheRoom",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Read the Room. Single visual event: Read the Room: one readable preparation or protective gesture, represented through converging luminous motes. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "TakeABreath",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Take a Breath. Single visual event: Take a Breath: one readable preparation or protective gesture, represented through a bright silver pocketwatch and converging luminous motes. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "HiddenPocket",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Hidden Pocket. Single visual event: Hidden Pocket: one readable preparation or protective gesture, represented through a short floating dagger. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "SoftLanding",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Soft Landing. Single visual event: Soft Landing: one readable preparation or protective gesture, represented through a broad cloak barrier and a curved boot-step arc. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Reverberation",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Reverberation. Single visual event: Reverberation: one readable preparation or protective gesture, represented through a repeated cyan slash and a broad cloak barrier. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Poised",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Poised. Single visual event: Poised: one readable preparation or protective gesture, represented through a broad cloak barrier and a curved boot-step arc. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "CurtainTug",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Curtain Tug. Single visual event: Curtain Tug: one readable preparation or protective gesture, represented through a bent enemy blade. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Distraction",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Distraction. Single visual event: Distraction: one readable preparation or protective gesture, represented through a bent enemy blade and a broad cloak barrier. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "TripleWaltz",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Triple Waltz. Single visual event: Triple Waltz: one decisive short-dagger combat gesture, represented through a silver blade impact star. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "DaggerFan",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Dagger Fan. Single visual event: Dagger Fan: one decisive short-dagger combat gesture, represented through a silver blade impact star. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "PerfectAngle",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Perfect Angle. Single visual event: Perfect Angle: one decisive short-dagger combat gesture, represented through a silver blade impact star. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "MaskedAssault",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Masked Assault. Single visual event: Masked Assault: one decisive short-dagger combat gesture, represented through a silver blade impact star and converging luminous motes. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "DancePartner",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Dance Partner. Single visual event: Dance Partner: one decisive short-dagger combat gesture, represented through a silver blade impact star and a glowing opening in black armor. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "CutAndFade",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Cut and Fade. Single visual event: Cut and Fade: one decisive short-dagger combat gesture, represented through a silver blade impact star and a disappearing navy silhouette. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "PaleMoonblade",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Pale Moonblade. Single visual event: Pale Moonblade: one decisive short-dagger combat gesture, represented through a silver blade impact star. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "NoWitness",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: No Witness. Single visual event: No Witness: one decisive short-dagger combat gesture, represented through a silver blade impact star. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "SecondThought",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Second Thought. Single visual event: Second Thought: one decisive short-dagger combat gesture, represented through a silver blade impact star and converging luminous motes. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "ThreadTheGap",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Thread the Gap. Single visual event: Thread the Gap: one decisive short-dagger combat gesture, represented through a silver blade impact star and a bright silver pocketwatch. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "SilverFlash",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Silver Flash. Single visual event: Silver Flash: one decisive short-dagger combat gesture, represented through a silver blade impact star and a short floating dagger. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Understudy",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Understudy. Single visual event: Understudy: one readable preparation or protective gesture, represented through a disappearing navy silhouette. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Encore",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Encore. Single visual event: Encore: one readable preparation or protective gesture, represented through a repeated cyan slash. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "HeldBreath",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Held Breath. Single visual event: Held Breath: one readable preparation or protective gesture, represented through a disappearing navy silhouette. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Invitation",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Invitation. Single visual event: Invitation: one readable preparation or protective gesture, represented through a curved boot-step arc and converging luminous motes. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "TurnAside",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Turn Aside. Single visual event: Turn Aside: one readable preparation or protective gesture, represented through a broad cloak barrier and a disappearing navy silhouette. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Backstage",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Backstage. Single visual event: Backstage: one readable preparation or protective gesture, represented through converging luminous motes. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "QuietSignal",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Quiet Signal. Single visual event: Quiet Signal: one readable preparation or protective gesture, represented through one cloak protecting allied silhouettes and a curved boot-step arc. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "MoonlitVeil",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Moonlit Veil. Single visual event: Moonlit Veil: one readable preparation or protective gesture, represented through allied silhouettes dissolving behind a curtain and a broad cloak barrier. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "DressRehearsal",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Dress Rehearsal. Single visual event: Dress Rehearsal: one readable preparation or protective gesture, represented through a repeated cyan slash and converging luminous motes. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "QuickHands",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Quick Hands. Single visual event: Quick Hands: one readable preparation or protective gesture, represented through a short floating dagger. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "StolenMoment",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Stolen Moment. Single visual event: Stolen Moment: one readable preparation or protective gesture, represented through a broad cloak barrier and converging luminous motes. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Sway",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Sway. Single visual event: Sway: one readable preparation or protective gesture, represented through a curved boot-step arc and a disappearing navy silhouette. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Elegance",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Elegance. Single visual event: Elegance: one readable preparation or protective gesture, represented through one sustained blue halo. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Composure",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Composure. Single visual event: Composure: one readable preparation or protective gesture, represented through one sustained blue halo. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Afterglow",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Afterglow. Single visual event: Afterglow: one readable preparation or protective gesture, represented through one sustained blue halo. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "HiddenRhythm",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Hidden Rhythm. Single visual event: Hidden Rhythm: one readable preparation or protective gesture, represented through one sustained blue halo. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "UnseenResolve",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Unseen Resolve. Single visual event: Unseen Resolve: one readable preparation or protective gesture, represented through one sustained blue halo. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Finale",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Finale. Single visual event: A masked silver-haired Duchess draws one dark navy cloak across herself and two simple allied silhouettes; all dissolve into blue cutout shapes. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "GrandReprise",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Grand Reprise. Single visual event: A giant silver gloved snapping hand commands a pair of repeated dagger wounds rendered as cyan stars. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "MidnightWaltz",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Midnight Waltz. Single visual event: Midnight Waltz: one decisive short-dagger combat gesture, represented through a silver blade impact star. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "LastWord",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Last Word. Single visual event: Last Word: one decisive short-dagger combat gesture, represented through a silver blade impact star. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "VanishingAct",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Vanishing Act. Single visual event: Vanishing Act: one readable preparation or protective gesture, represented through a broad cloak barrier and a disappearing navy silhouette. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "SilverStorm",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Silver Storm. Single visual event: Silver Storm: one decisive short-dagger combat gesture, represented through a silver blade impact star. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "BothPaths",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Both Paths. Single visual event: Both Paths: one readable preparation or protective gesture, represented through a repeated cyan slash and one cloak protecting allied silhouettes. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "DawnPromise",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Dawn Promise. Single visual event: Dawn Promise: one readable preparation or protective gesture, represented through one sustained blue halo. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "SteadyHand",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Steady Hand. Single visual event: Steady Hand: one readable preparation or protective gesture, represented through one sustained blue halo. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "LightAsSilk",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Light as Silk. Single visual event: Light as Silk: one readable preparation or protective gesture, represented through one sustained blue halo. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "BorrowedTime",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Borrowed Time. Single visual event: Borrowed Time: one readable preparation or protective gesture, represented through a bright silver pocketwatch. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "ThiefsArsenal",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Thief's Arsenal. Single visual event: Thief's Arsenal: one readable preparation or protective gesture, represented through a short floating dagger. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "PerfectRehearsal",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Perfect Rehearsal. Single visual event: Perfect Rehearsal: one readable preparation or protective gesture, represented through a repeated cyan slash. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Nightfall",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Nightfall. Single visual event: Nightfall: one readable preparation or protective gesture, represented through a bent enemy blade and a glowing opening in black armor. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "SharedStage",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Shared Stage. Single visual event: Shared Stage: one readable preparation or protective gesture, represented through one cloak protecting allied silhouettes and allied silhouettes dissolving behind a curtain. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "UnbrokenPoise",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Unbroken Poise. Single visual event: Unbroken Poise: one readable preparation or protective gesture, represented through one sustained blue halo. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "EternalRestage",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 606x852 PORTRAIT, composition natively vertical and filled edge-to-edge. Card concept: Eternal Restage. Single visual event: A silver pocketwatch suspended above a dagger wound repeated within two concentric blue rings; native vertical portrait composition. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "FirstLight",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 606x852 PORTRAIT, composition natively vertical and filled edge-to-edge. Card concept: First Light. Single visual event: A dark navy cloaked silver-haired masked Duchess shields two companions within a single pale dawn circle; native vertical portrait composition. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "FleetingBlade",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Fleeting Blade. Single visual event: A small silver stiletto breaks into three luminous cyan shards, on deep navy abstract background. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      }
+    ]
+  },
+  "icons": [
+    {
+      "key": "duchess_step_power",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-3dd79f03-113d-4a30-9f1f-dd5cd133c013.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_veil_power",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-63af21b5-04a4-48ba-b7b7-877f162e1f1a.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_echo_description_power",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-01b8cb79-0b69-47b9-b33e-40306444689d.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_memory_power",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-8235f7b5-1fb8-494b-9c95-8991a5f14cd4.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_measured_breath_power",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-e4c3ec49-4be2-425f-940c-04fc4621d97e.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_opening_dance_power",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-cc8bc7ea-d83a-45a0-93a7-049c8f322130.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_reprise_guard_power",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-a3200f29-ff38-486e-978b-26353ffa8b79.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_reprise_step_power",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-b3e39af2-47ea-4644-b4cd-3a0965af57df.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_veil_reward_power",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-8193dab5-a8bc-4849-b742-40fbb40efb22.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_old_pocketwatch",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-8d10fb12-b692-4cfb-bd70-44136195e093.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_mended_pocketwatch",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-a10b6832-fcee-4c24-9096-9797c73cf300.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_lace_cuff",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-1d0ebb05-3c12-4b90-a394-885a7a133046.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_silver_thimble",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-d428025a-e582-4718-b03a-8d44f6ab2bc7.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_unsent_letter",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-5825d7ae-2efc-4480-87bd-16ab6992fad1.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_blue_ribbon",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-0b904320-100b-421b-9104-f64149aedec7.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_silver_perfume",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-1dbd7328-abfc-4443-b157-a2654e6a52d8.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_dance_shoes",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-d56a8d80-6b0e-443d-87a2-bd87b6fc9bb8.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_veil_vial",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-ffa803c7-148e-4ad5-818c-3aa00c649285.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_memory_draught",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-8719a8c6-9dc4-48d0-9268-41e253bbac45.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_energy",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-7eb4c516-c474-4c53-94d3-545e8b06f67e.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    }
+  ],
+  "scenes": [
+    {
+      "key": "background",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-f1c996c3-7f16-4409-aada-92b7ad4c4053.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "attack",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-acf2d158-8c9c-4089-a294-272b00067913.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "rest",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-de35870c-75a2-4e61-bfd9-b406b940d03a.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "hit",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-dc4fefee-ce62-433a-a532-ed13a1dbb957.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "merchant",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-b001fe09-0619-441f-9990-acc936090669.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "rock",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-caba466d-2ca0-418d-8fbe-d23b0c6112e2.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "scissors",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-d7571796-5b52-4a45-8ef3-c6dab5387f9f.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "paper",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-d8823b3f-e5ef-49e1-88f8-b9399a8c0a25.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    }
+  ]
+}

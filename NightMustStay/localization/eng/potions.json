@@ -17,5 +17,11 @@
   "WRAITH_JAR.description": "Summon 1 random [gold]Necro[/gold].",
   "STARLIGHT_SHARD.title": "Starlight Shard",
   "STARLIGHT_SHARD.description": "[gold]Recover[/gold] 3 cards.",
-  "STARLIGHT_SHARD.selectionScreenPrompt": "Choose 3 cards to [gold]Recover[/gold]."
+  "STARLIGHT_SHARD.selectionScreenPrompt": "Choose 3 cards to [gold]Recover[/gold].",
+  "DUCHESS_SILVER_PERFUME.title": "Silver Perfume",
+  "DUCHESS_SILVER_PERFUME.description": "Advance [gold]Moment[/gold] by 3.",
+  "DUCHESS_VEIL_VIAL.title": "Dodge Vial",
+  "DUCHESS_VEIL_VIAL.description": "Add 2 [gold]Dodge[/gold] cards to your hand.",
+  "DUCHESS_MEMORY_DRAUGHT.title": "Timing Draught",
+  "DUCHESS_MEMORY_DRAUGHT.description": "Set [gold]Moment[/gold] to 5.\nDraw 1 card."
 }

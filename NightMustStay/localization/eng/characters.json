@@ -40,5 +40,19 @@
   "REVENANT.description": "A spirit caller who fights beside family and the dead.",
   "REVENANT.aromaPrinciple": "[sine][purple]In life or death, we meet again.[/purple][/sine]",
   "REVENANT.eventDeathPrevention": "I cannot leave them yet.",
-  "REVENANT.goldMonologue": "[sine]Enough to prepare the family for the road ahead.[/sine]"
+  "REVENANT.goldMonologue": "[sine]Enough to prepare the family for the road ahead.[/sine]",
+  "DUCHESS.title": "Duchess",
+  "DUCHESS.titleObject": "the Duchess",
+  "DUCHESS.banter.alive.endTurnPing": "Please act when you are ready.",
+  "DUCHESS.banter.dead.endTurnPing": "Please... do not stop for me.",
+  "DUCHESS.pronounObject": "her",
+  "DUCHESS.possessiveAdjective": "her",
+  "DUCHESS.pronounPossessive": "hers",
+  "DUCHESS.pronounSubject": "she",
+  "DUCHESS.cardsModifierTitle": "Duchess cards",
+  "DUCHESS.cardsModifierDescription": "Cards for the Duchess.",
+  "DUCHESS.description": "She turns the hands of her pocketwatch, weaving Dodge and Reaction through her deck before striking at the perfect Moment.",
+  "DUCHESS.aromaPrinciple": "[sine]If it will help everyone, I am willing to try.[/sine]",
+  "DUCHESS.eventDeathPrevention": "Someone is still waiting. I cannot stop here.",
+  "DUCHESS.goldMonologue": "[sine]Enough for the road ahead. I should set some aside for the others.[/sine]"
 }

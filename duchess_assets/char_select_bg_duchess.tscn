@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://duchess_assets/character_select_duchess_bg.png" id="1_bg"]
+[ext_resource type="Shader" path="res://materials/character_select_idle.gdshader" id="2_idle"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_idle"]
+shader = ExtResource("2_idle")
+shader_parameter/body_center = Vector2(0.66, 0.54)
+shader_parameter/body_radius = Vector2(0.17, 0.43)
+shader_parameter/secondary_center = Vector2(0.70, 0.69)
+shader_parameter/secondary_radius = Vector2(0.14, 0.28)
+shader_parameter/breath_amount = 0.002
+shader_parameter/secondary_amount = 0.003
+shader_parameter/idle_speed = 0.65
+
+[node name="DuchessBg" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1280.0
+offset_top = -600.0
+offset_right = 1280.0
+offset_bottom = 600.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(1280, 600)
+
+[node name="Artwork" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_idle")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_bg")
+expand_mode = 1
+stretch_mode = 0

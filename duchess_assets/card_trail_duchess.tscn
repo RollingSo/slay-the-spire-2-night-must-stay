@@ -1,0 +1,5 @@
+[gd_scene format=3]
+
+; Runtime construction uses the native card-trail scene and applies Duchess
+; colors/textures in DuchessAssetPatch. This path is a preloadable identity.
+[node name="CardTrailDuchess" type="Node2D"]

@@ -24,6 +24,8 @@ namespace NightMustStay.Core.Patches
                 ModelDb.Relic<RunemarkSignet>();
             __result[ModelDb.Relic<SmallMakeupBrush>().Id] =
                 ModelDb.Relic<TreasuredMakeupBrush>();
+            __result[ModelDb.Relic<DuchessOldPocketwatch>().Id] =
+                ModelDb.Relic<DuchessMendedPocketwatch>();
         }
     }
 
@@ -44,7 +46,7 @@ namespace NightMustStay.Core.Patches
 
             RelicModel starterRelic =
                 SaveUtil.RelicOrDeprecated(__instance.StarterRelic);
-            if (starterRelic is CursemarkSignet or SingleWingGreatshield or SmallMakeupBrush)
+            if (starterRelic is CursemarkSignet or SingleWingGreatshield or SmallMakeupBrush or DuchessOldPocketwatch)
             {
                 value = __instance
                     .GetUpgradedStarterRelic(starterRelic)

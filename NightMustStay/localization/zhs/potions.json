@@ -17,5 +17,11 @@
   "WRAITH_JAR.description": "召唤1个随机[gold]死灵[/gold]。",
   "STARLIGHT_SHARD.title": "星光碎片",
   "STARLIGHT_SHARD.description": "[gold]回收[/gold]3张牌。",
-  "STARLIGHT_SHARD.selectionScreenPrompt": "选择并[gold]回收[/gold]3张牌。"
+  "STARLIGHT_SHARD.selectionScreenPrompt": "选择并[gold]回收[/gold]3张牌。",
+  "DUCHESS_SILVER_PERFUME.title": "银雾香露",
+  "DUCHESS_SILVER_PERFUME.description": "[gold]时刻[/gold]增加3。",
+  "DUCHESS_VEIL_VIAL.title": "闪避小瓶",
+  "DUCHESS_VEIL_VIAL.description": "将2张[gold]闪避[/gold]加入手牌。",
+  "DUCHESS_MEMORY_DRAUGHT.title": "定时饮剂",
+  "DUCHESS_MEMORY_DRAUGHT.description": "使[gold]时刻[/gold]变为5。\n抽1张牌。"
 }
