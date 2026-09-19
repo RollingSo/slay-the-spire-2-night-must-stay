@@ -31,12 +31,14 @@ func play_trigger(trigger: String) -> void:
 			_play_one_shot("attack")
 		"GuardCounter":
 			_play_one_shot("counter_attack")
-		"Cast", "Hit":
+		"Cast":
 			_play_one_shot("guard")
+		"Hit":
+			_play_one_shot("hit")
 		"Dead":
 			_return_to_idle = false
-			animation_player.speed_scale = 0.7
-			animation_player.play("guard")
+			animation_player.speed_scale = 1.0
+			animation_player.play("death")
 		"Idle", "Relaxed", "Revive":
 			_play_idle()
 
@@ -54,7 +56,7 @@ func _play_idle() -> void:
 
 
 func _on_animation_finished(animation_name: StringName) -> void:
-	if _return_to_idle and animation_name in [&"attack", &"counter_attack", &"guard"]:
+	if _return_to_idle and animation_name in [&"attack", &"counter_attack", &"guard", &"hit"]:
 		_play_idle()
 
 
@@ -69,6 +71,8 @@ func _run_demo_loop() -> void:
 		await animation_player.animation_finished
 		animation_player.play("attack")
 		await animation_player.animation_finished
+		animation_player.play("hit")
+		await animation_player.animation_finished
 		animation_player.play("counter_attack")
 		await animation_player.animation_finished
 		await get_tree().create_timer(0.4).timeout
@@ -80,6 +84,8 @@ func _capture_pose(animation_name: String) -> void:
 		"guard": 0.5,
 		"attack": 0.45,
 		"counter_attack": 0.48,
+		"hit": 0.1,
+		"death": 0.9,
 	}
 	if not animation_player.has_animation(animation_name):
 		push_error("Unknown Guardian rig animation: %s" % animation_name)

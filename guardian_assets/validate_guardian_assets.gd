@@ -105,7 +105,7 @@ func _initialize() -> void:
 				push_error("Guardian rig is missing AnimationPlayer")
 				failures += 1
 			else:
-				for animation_name in ["idle_loop", "guard", "attack", "counter_attack"]:
+				for animation_name in ["idle_loop", "guard", "attack", "counter_attack", "hit", "death"]:
 					if not animation_player.has_animation(animation_name):
 						push_error("Guardian rig is missing animation: " + animation_name)
 						failures += 1
