@@ -678,7 +678,7 @@
   "IMPOSING_PRESENCE.upgradeDescription": "Apply {Mark:diff()} [gold]Mark[/gold] to ALL enemies.\nThis turn, reduce each enemy's [gold]Strength[/gold] by its [gold]Mark[/gold].",
   "SEE_THROUGH.title": "See Through",
   "SEE_THROUGH.description": "Apply 1 [gold]Mark[/gold] X times.\nGain {Block:diff()} [gold]Block[/gold] X times.",
-  "SEE_THROUGH.upgradeDescription": "Apply 1 [gold]Mark[/gold] X{IfUpgraded:show:+1} times.\nGain {Block:diff()} [gold]Block[/gold] X{IfUpgraded:show:+1} times.",
+  "SEE_THROUGH.upgradeDescription": "Apply 1 [gold]Mark[/gold] X+1 times.\nGain {Block:diff()} [gold]Block[/gold] X+1 times.",
   "OFFENSIVE.title": "Offensive",
   "OFFENSIVE.description": "Deal {Damage:diff()} damage.\nAdd 1 [gold]{IfUpgraded:show:Approach+|Approach}[/gold] to your [gold]Hand[/gold].",
   "OFFENSIVE.upgradeDescription": "Deal {Damage:diff()} damage.\nAdd 1 [gold]{IfUpgraded:show:Approach+|Approach}[/gold] to your [gold]Hand[/gold].",

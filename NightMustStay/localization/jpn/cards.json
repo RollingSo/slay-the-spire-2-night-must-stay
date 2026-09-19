@@ -678,7 +678,7 @@
   "IMPOSING_PRESENCE.upgradeDescription": "敵全体に[gold]マーク[/gold]{Mark:diff()}を付与する。\nこのターン、その敵の[gold]マーク[/gold]と同量の[gold]筋力[/gold]を失わせる。",
   "SEE_THROUGH.title": "見切り",
   "SEE_THROUGH.description": "[gold]マーク[/gold]を1ずつX{IfUpgraded:show:+1}回付与する。\n{Block:diff()}[gold]ブロック[/gold]とX{IfUpgraded:show:+1}回得る。",
-  "SEE_THROUGH.upgradeDescription": "[gold]マーク[/gold]を1ずつX{IfUpgraded:show:+1}回付与する。\n{Block:diff()}[gold]ブロック[/gold]とX{IfUpgraded:show:+1}回得る。",
+  "SEE_THROUGH.upgradeDescription": "[gold]マーク[/gold]を1ずつX+1回付与する。\n{Block:diff()}[gold]ブロック[/gold]をX+1回得る。",
   "OFFENSIVE.title": "攻勢",
   "OFFENSIVE.description": "{Damage:diff()}ダメージを与える。\n[gold]{IfUpgraded:show:接近+|接近}[/gold]を1枚[gold]手札[/gold]に加える。",
   "OFFENSIVE.upgradeDescription": "{Damage:diff()}ダメージを与える。\n[gold]{IfUpgraded:show:接近+|接近}[/gold]を1枚[gold]手札[/gold]に加える。",

@@ -678,7 +678,7 @@
   "IMPOSING_PRESENCE.upgradeDescription": "모든 적에게 [gold]표식[/gold]을 {Mark:diff()} 부여합니다.\n이번 턴에 각 적의 [gold]표식[/gold]만큼 해당 적의 [gold]힘[/gold]을 감소시킵니다.",
   "SEE_THROUGH.title": "간파",
   "SEE_THROUGH.description": "[gold]표식[/gold]을 1씩 X{IfUpgraded:show:+1}번 부여합니다.\n[gold]방어도[/gold]를 {Block:diff()}씩 X{IfUpgraded:show:+1}번 얻습니다.",
-  "SEE_THROUGH.upgradeDescription": "[gold]표식[/gold]을 1씩 X{IfUpgraded:show:+1}번 부여합니다.\n[gold]방어도[/gold]를 {Block:diff()}씩 X{IfUpgraded:show:+1}번 얻습니다.",
+  "SEE_THROUGH.upgradeDescription": "[gold]표식[/gold]을 1씩 X+1번 부여합니다.\n[gold]방어도[/gold]를 {Block:diff()}씩 X+1번 얻습니다.",
   "OFFENSIVE.title": "공세",
   "OFFENSIVE.description": "피해를 {Damage:diff()} 줍니다.\n[gold]{IfUpgraded:show:접근+|접근}[/gold] 1장을 [gold]손[/gold]으로 가져옵니다.",
   "OFFENSIVE.upgradeDescription": "피해를 {Damage:diff()} 줍니다.\n[gold]{IfUpgraded:show:접근+|접근}[/gold] 1장을 [gold]손[/gold]으로 가져옵니다.",

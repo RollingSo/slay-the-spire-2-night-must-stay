@@ -678,7 +678,7 @@
   "IMPOSING_PRESENCE.upgradeDescription": "给予所有敌人{Mark:diff()}层[gold]标记[/gold]。\n在本回合内使敌人降低等同于[gold]标记[/gold]层数的[gold]力量[/gold]。",
   "SEE_THROUGH.title": "看破",
   "SEE_THROUGH.description": "给予X{IfUpgraded:show:+1}次1层[gold]标记[/gold]。\n获得X{IfUpgraded:show:+1}次{Block:diff()}点[gold]格挡[/gold]。",
-  "SEE_THROUGH.upgradeDescription": "给予X{IfUpgraded:show:+1}次1层[gold]标记[/gold]。\n获得X{IfUpgraded:show:+1}次{Block:diff()}点[gold]格挡[/gold]。",
+  "SEE_THROUGH.upgradeDescription": "给予X+1次1层[gold]标记[/gold]。\n获得X+1次{Block:diff()}点[gold]格挡[/gold]。",
   "OFFENSIVE.title": "攻势",
   "OFFENSIVE.description": "造成{Damage:diff()}点伤害。\n将1张[gold]{IfUpgraded:show:接近+|接近}[/gold]加入你的[gold]手牌[/gold]。",
   "OFFENSIVE.upgradeDescription": "造成{Damage:diff()}点伤害。\n将1张[gold]{IfUpgraded:show:接近+|接近}[/gold]加入你的[gold]手牌[/gold]。",
