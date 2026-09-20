@@ -31,7 +31,7 @@ public sealed class CurtainCall : CardModel
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/curtain_call.png");
 
     public CurtainCall()
-        : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
+        : base(1, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
     {
     }
 
