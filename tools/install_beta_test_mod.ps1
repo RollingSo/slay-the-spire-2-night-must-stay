@@ -23,11 +23,14 @@ foreach ($fileName in $requiredBuildFiles) {
 
 $stableManifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
 $betaManifest = [ordered]@{
-    id = $betaId
+    # The packaged localization tables live below res://NightMustStay.
+    # Preserve that runtime id while keeping beta-specific artifact names.
+    id = $stableManifest.id
     name = "$($stableManifest.name) [Beta Test]"
     author = $stableManifest.author
     description = "Local Beta Test build. Do not enable together with the Steam Workshop release. $($stableManifest.description)"
-    version = "$($stableManifest.version)-beta-test"
+    version = "$($stableManifest.version)-beta.1"
+    min_game_version = $stableManifest.min_game_version
     has_dll = $true
     has_pck = $true
     affects_gameplay = $true
@@ -51,10 +54,10 @@ foreach ($legacyName in $legacyNames) {
 }
 
 $copies = [ordered]@{
-    "$betaId.pck" = Join-Path $buildDirectory "$stableId.pck"
-    "$betaId.dll" = Join-Path $buildDirectory "$stableId.dll"
-    "$betaId.pdb" = Join-Path $buildDirectory "$stableId.pdb"
-    "$betaId.json" = $betaManifestPath
+    "$stableId.pck" = Join-Path $buildDirectory "$stableId.pck"
+    "$stableId.dll" = Join-Path $buildDirectory "$stableId.dll"
+    "$stableId.pdb" = Join-Path $buildDirectory "$stableId.pdb"
+    "$stableId.json" = $betaManifestPath
 }
 foreach ($entry in $copies.GetEnumerator()) {
     $destination = Join-Path $resolvedModsDirectory $entry.Key

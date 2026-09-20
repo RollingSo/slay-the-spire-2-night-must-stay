@@ -24,17 +24,21 @@ public record DuchessEffect(string Kind, decimal Amount, decimal Upgraded, strin
 public record DuchessCardSpec(int Cost, CardType Type, CardRarity Rarity,
     DuchessEffect[] Effects, int Hits = 1, bool All = false, bool Exhaust = false,
     bool Retain = false, bool UpgradeTokens = false, bool Reaction = false,
-    int Moment = 0, int RestageDivisor = 0);
+    bool ShuffleSelf = false, bool UpgradeRetain = false, bool UpgradeInnate = false,
+    bool UpgradeRemoveExhaust = false, int Moment = -1, int UpgradedMoment = -1,
+    int UpgradeCost = -1, int MomentCostReduction = 0, bool TargetSelf = false,
+    int RestageDivisor = 0);
 
 public abstract class DuchessCard : CardModel
 {
-    protected DuchessCardSpec Spec => DuchessCardCatalog.All[GetType().Name];
+    internal DuchessCardSpec Spec => DuchessCardCatalog.All[GetType().Name];
     protected DuchessCard(string key) : base(DuchessCardCatalog.All[key].Cost,
         DuchessCardCatalog.All[key].Type, DuchessCardCatalog.All[key].Rarity, TargetFor(key)) { }
 
     private static TargetType TargetFor(string key)
     {
         DuchessCardSpec spec = DuchessCardCatalog.All[key];
+        if (spec.TargetSelf) return TargetType.Self;
         if (spec.All) return TargetType.AllEnemies;
         return spec.Type == CardType.Attack || spec.Effects.Any(e => e.Kind is "Weak" or "Vulnerable")
             ? TargetType.AnyEnemy : TargetType.Self;
@@ -62,13 +66,15 @@ public abstract class DuchessCard : CardModel
         get
         {
             var result = new HashSet<CardKeyword>();
-            if (Spec.Exhaust) result.Add(CardKeyword.Exhaust);
-            if (Spec.Retain) result.Add(CardKeyword.Retain);
+            if (Spec.Exhaust && !(IsUpgraded && Spec.UpgradeRemoveExhaust)) result.Add(CardKeyword.Exhaust);
+            if (Spec.Retain || (IsUpgraded && Spec.UpgradeRetain)) result.Add(CardKeyword.Retain);
+            if (IsUpgraded && Spec.UpgradeInnate) result.Add(CardKeyword.Innate);
             return result;
         }
     }
 
-    protected bool IsMomentActive => Spec.Moment > 0 && DuchessMomentPower.Current(Owner) == Spec.Moment;
+    internal int RequiredMoment => IsUpgraded && Spec.UpgradedMoment >= 0 ? Spec.UpgradedMoment : Spec.Moment;
+    internal bool IsMomentActive => RequiredMoment >= 0 && DuchessMomentPower.Current(Owner) == RequiredMoment;
     public bool HasReaction => Spec.Reaction;
     protected override bool ShouldGlowGoldInternal => IsMomentActive;
 
@@ -83,12 +89,12 @@ public abstract class DuchessCard : CardModel
                     yield return new CalculationBaseVar(effect.Amount);
                     yield return new ExtraDamageVar(1m);
                     yield return new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
-                        (card, _) => card is DuchessCard duchessCard && duchessCard.IsMomentActive
-                            ? decimal.Floor(DuchessMomentPower.DamageDealtThisTurn(card) / duchessCard.Spec.RestageDivisor)
+                        static (card, _) => card is DuchessCard { Spec.RestageDivisor: > 0 } duchess
+                            && duchess.IsMomentActive
+                            ? decimal.Floor(DuchessMomentPower.DamageDealtThisTurn(card) / duchess.Spec.RestageDivisor)
                             : 0m);
                     continue;
                 }
-
                 yield return effect.Kind switch
                 {
                     "Damage" => new DamageVar(effect.Amount, ValueProp.Move),
@@ -96,7 +102,11 @@ public abstract class DuchessCard : CardModel
                     "Weak" => new PowerVar<WeakPower>(effect.Kind, effect.Amount),
                     "Vulnerable" => new PowerVar<VulnerablePower>(effect.Kind, effect.Amount),
                     "Strength" => new PowerVar<StrengthPower>(effect.Kind, effect.Amount),
+                    "TemporaryStrength" => new PowerVar<StrengthPower>(effect.Kind, effect.Amount),
+                    "Intangible" => new PowerVar<IntangiblePower>(effect.Kind, effect.Amount),
                     "Dexterity" => new PowerVar<DexterityPower>(effect.Kind, effect.Amount),
+                    "Energy" or "NextTurnEnergy" or "FutureMomentEnergy" =>
+                        new EnergyVar(effect.Kind, (int)effect.Amount),
                     "DodgeAtTurnStart" => new PowerVar<DuchessDodgeAtTurnStartPower>(effect.Kind, effect.Amount),
                     "ReactionBlock" => new PowerVar<DuchessReactionBlockPower>(effect.Kind, effect.Amount),
                     "MomentFiveBlock" => new PowerVar<DuchessMomentFiveBlockPower>(effect.Kind, effect.Amount),
@@ -114,7 +124,7 @@ public abstract class DuchessCard : CardModel
         get
         {
             if (Spec.Reaction) yield return HoverTipFactory.FromPower<DuchessReactionDescriptionPower>();
-            if (Spec.Moment > 0) yield return HoverTipFactory.FromPower<DuchessMomentDescriptionPower>();
+            if (Spec.Moment >= 0) yield return HoverTipFactory.FromPower<DuchessMomentDescriptionPower>();
             foreach (DuchessEffect effect in Spec.Effects)
             {
                 if (effect.Kind is "DodgeToDraw" or "DodgeToHand" or "AllyDodge" or "DodgeAtTurnStart")
@@ -123,6 +133,8 @@ public abstract class DuchessCard : CardModel
                 if (effect.Kind == "Weak") yield return HoverTipFactory.FromPower<WeakPower>();
                 if (effect.Kind == "Vulnerable") yield return HoverTipFactory.FromPower<VulnerablePower>();
                 if (effect.Kind == "Strength") yield return HoverTipFactory.FromPower<StrengthPower>();
+                if (effect.Kind == "TemporaryStrength") yield return HoverTipFactory.FromPower<StrengthPower>();
+                if (effect.Kind == "Intangible") yield return HoverTipFactory.FromPower<IntangiblePower>();
                 if (effect.Kind == "Dexterity") yield return HoverTipFactory.FromPower<DexterityPower>();
                 if (effect.Kind == "DodgeAtTurnStart") yield return HoverTipFactory.FromPower<DuchessDodgeAtTurnStartPower>();
                 if (effect.Kind == "ReactionBlock") yield return HoverTipFactory.FromPower<DuchessReactionBlockPower>();
@@ -136,16 +148,17 @@ public abstract class DuchessCard : CardModel
 
     protected override void OnUpgrade()
     {
+        if (Spec.UpgradeRetain) AddKeyword(CardKeyword.Retain);
+        if (Spec.UpgradeInnate) AddKeyword(CardKeyword.Innate);
+        if (Spec.UpgradeRemoveExhaust) RemoveKeyword(CardKeyword.Exhaust);
         foreach (DuchessEffect effect in Spec.Effects)
         {
-            string key = effect.Kind switch
-            {
-                "AllyBlock" => "Block",
-                "Damage" when Spec.RestageDivisor > 0 => "CalculationBase",
-                _ => effect.Kind,
-            };
-            DynamicVars[key].UpgradeValueBy(effect.Upgraded - effect.Amount);
+            string key = effect.Kind == "Damage" && Spec.RestageDivisor > 0
+                ? "CalculationBase" : effect.Kind == "AllyBlock" ? "Block" : effect.Kind;
+            if (DynamicVars.TryGetValue(key, out DynamicVar variable))
+                variable.UpgradeValueBy(effect.Upgraded - effect.Amount);
         }
+        if (Spec.UpgradeCost >= 0) EnergyCost.UpgradeBy(Spec.UpgradeCost - Spec.Cost);
     }
 
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
@@ -153,9 +166,9 @@ public abstract class DuchessCard : CardModel
         if (!Spec.Reaction || card != this || oldPileType != PileType.Draw
             || card.Pile?.Type != PileType.Hand || Owner?.PlayerCombatState?.Phase != PlayerTurnPhase.Play)
             return;
-        EnergyCost.AddUntilPlayed(-1, true);
         foreach (DuchessReactionBlockPower power in Owner.Creature.Powers.OfType<DuchessReactionBlockPower>().ToArray())
             await power.OnReactionTriggered();
+        await CardCmd.AutoPlay(new BlockingPlayerChoiceContext(), this, null);
     }
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
@@ -174,14 +187,10 @@ public abstract class DuchessCard : CardModel
         foreach (DuchessEffect effect in Spec.Effects)
         {
             if (!conditions.TryGetValue(effect.Condition, out bool met) || !met) continue;
-            string key = effect.Kind switch
-            {
-                "AllyBlock" => "Block",
-                "Damage" when Spec.RestageDivisor > 0 => "CalculatedDamage",
-                _ => effect.Kind,
-            };
+            string key = effect.Kind == "AllyBlock" ? "Block" : effect.Kind;
             decimal amount = effect.Kind == "Damage" && Spec.RestageDivisor > 0
-                ? DynamicVars.CalculatedDamage.Calculate(play.Target) : DynamicVars[key].BaseValue;
+                ? DynamicVars.CalculatedDamage.Calculate(play.Target)
+                : DynamicVars.TryGetValue(key, out DynamicVar variable) ? variable.BaseValue : effect.Amount;
             Creature[] enemies = Spec.All
                 ? CombatState.HittableEnemies.Where(e => e.IsAlive).ToArray()
                 : play.Target is { IsAlive: true } target && target.Side != Owner.Creature.Side
@@ -205,6 +214,11 @@ public abstract class DuchessCard : CardModel
                 case "Weak": foreach (Creature enemy in enemies) await Apply<WeakPower>(context, enemy, amount); break;
                 case "Vulnerable": foreach (Creature enemy in enemies) await Apply<VulnerablePower>(context, enemy, amount); break;
                 case "Strength": await Apply<StrengthPower>(context, Owner.Creature, amount); break;
+                case "TemporaryStrength":
+                    await Apply<StrengthPower>(context, Owner.Creature, amount);
+                    await Apply<DuchessTemporaryStrengthDownPower>(context, Owner.Creature, amount);
+                    break;
+                case "Intangible": await Apply<IntangiblePower>(context, Owner.Creature, amount); break;
                 case "Dexterity": await Apply<DexterityPower>(context, Owner.Creature, amount); break;
                 case "DodgeToDraw": await AddDodges(Owner, amount, PileType.Draw); break;
                 case "DodgeToHand": await AddDodges(Owner, amount, PileType.Hand); break;
@@ -213,7 +227,10 @@ public abstract class DuchessCard : CardModel
                         await AddDodges(ally, amount, PileType.Hand);
                     break;
                 case "AdvanceMoment": await DuchessMomentPower.Advance(context, Owner.Creature, (int)amount, this); break;
-                case "SetMoment": (await DuchessMomentPower.Ensure(context, Owner.Creature)).SetAfterCurrentCard((int)amount); break;
+                case "SetMoment":
+                case "ReturnMoment":
+                    (await DuchessMomentPower.Ensure(context, Owner.Creature)).SetAfterCurrentCard((int)amount);
+                    break;
                 case "ShuffleHand": await ShuffleSelected(context, PileType.Hand.GetPile(Owner), (int)amount); break;
                 case "ShuffleDiscard": await ShuffleSelected(context, PileType.Discard.GetPile(Owner), (int)amount); break;
                 case "ShuffleDiscardAll": await CardPileCmd.Shuffle(context, Owner); break;
@@ -224,9 +241,26 @@ public abstract class DuchessCard : CardModel
                 case "MomentFiveDraw": await Apply<DuchessMomentFiveDrawPower>(context, Owner.Creature, amount); break;
                 case "DodgeMoment": await Apply<DuchessDodgeMomentPower>(context, Owner.Creature, amount); break;
                 case "ShuffleBlock": await Apply<DuchessShuffleBlockPower>(context, Owner.Creature, amount); break;
+                case "RestageAoe":
+                    decimal repeats = decimal.Floor(DuchessMomentPower.DamageDealtThisTurn(this) / amount);
+                    if (repeats > 0)
+                        await DamageCmd.Attack(repeats).CompatFromCard(this).TargetingAllOpponents(CombatState).Execute(context);
+                    break;
+                case "NextTurnEnergy": await Apply<DuchessNextTurnEnergyPower>(context, Owner.Creature, amount); break;
+                case "NextTurnDraw": await Apply<DuchessNextTurnDrawPower>(context, Owner.Creature, amount); break;
+                case "FutureMomentEnergy": await Apply<DuchessFutureMomentEnergyPower>(context, Owner.Creature, amount); break;
+                case "DodgeCurrentMoment": await AddDodges(Owner, DuchessMomentPower.Current(Owner), PileType.Draw); break;
+                case "DrawCurrentMoment": await CardPileCmd.Draw(context, DuchessMomentPower.Current(Owner), Owner); break;
+                // Replay is a declarative marker consumed by
+                // DuchessMomentPower.ModifyCardPlayCount. The engine then
+                // creates each replay as its own native CardPlay.
+                case "Replay": break;
                 default: throw new InvalidOperationException($"Unknown Duchess effect: {effect.Kind}");
             }
         }
+
+        if (Spec.ShuffleSelf)
+            await CardPileCmd.Add(this, PileType.Draw, CardPilePosition.Random, this);
     }
 
     private async Task AddDodges(MegaCrit.Sts2.Core.Entities.Players.Player player, decimal amount, PileType destination)
@@ -234,7 +268,7 @@ public abstract class DuchessCard : CardModel
         for (int i = 0; i < amount; i++)
         {
             DuchessDodge dodge = CombatState.CreateCard<DuchessDodge>(player);
-            if (Spec.UpgradeTokens) CardCmd.Upgrade(dodge);
+            if (IsUpgraded && Spec.UpgradeTokens) CardCmd.Upgrade(dodge);
             CardPileAddResult result = await CardPileCmd.AddGeneratedCardToCombat(dodge, destination, player,
                 destination == PileType.Draw ? CardPilePosition.Random : CardPilePosition.Top);
             CardCmd.PreviewCardPileAdd(result);

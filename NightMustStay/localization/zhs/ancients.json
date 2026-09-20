@@ -10,7 +10,6 @@
   "NEOW.talk.GUARDIAN.2-1r.char": "失去并不会使誓言失去意义。",
   "NEOW.talk.GUARDIAN.2-1r.next": "继续",
   "NEOW.talk.GUARDIAN.2-2r.ancient": "[sine]...那么...再去守护吧...[/sine]",
-
   "DARV.talk.GUARDIAN.0-0.ancient": "大盾配长戟，眼光不错！我收藏里正好有几件经得住撞击的老物件，来挑一件吧！",
   "DARV.talk.GUARDIAN.0-0.next": "查看收藏",
   "DARV.talk.GUARDIAN.0-1.char": "若它能守住同伴，我会让它重新派上用场。",
@@ -22,7 +21,6 @@
   "DARV.talk.GUARDIAN.2-1r.char": "[i][font_size=22]守护者将徽章收进胸甲内侧。[/font_size][/i]",
   "DARV.talk.GUARDIAN.2-1r.next": "继续",
   "DARV.talk.GUARDIAN.2-2r.ancient": "好好留着吧。宝物本来就是为了记住不该忘记的东西！",
-
   "NONUPEIPE.talk.GUARDIAN.0-0.ancient": "羽民的骑士，你越过长夜来到我面前。接受力量吧，它会让你的盾更加坚固。",
   "NONUPEIPE.talk.GUARDIAN.0-0.next": "回应",
   "NONUPEIPE.talk.GUARDIAN.0-1.char": "力量若不能庇护他人，便只是另一种重负。",
@@ -34,7 +32,6 @@
   "NONUPEIPE.talk.GUARDIAN.2-1r.char": "或许。但我不能用猜想替死者改写结局。",
   "NONUPEIPE.talk.GUARDIAN.2-1r.next": "继续",
   "NONUPEIPE.talk.GUARDIAN.2-2r.ancient": "那么便选择能守住当下的力量吧。",
-
   "OROBAS.talk.GUARDIAN.0-0.ancient": "鸟！盾！戟！少了一边翅膀？奇怪，真奇怪！还能飞吗！？",
   "OROBAS.talk.GUARDIAN.0-0.next": "回答",
   "OROBAS.talk.GUARDIAN.0-1.char": "不能像从前那样。但我仍能站立。",
@@ -46,7 +43,6 @@
   "OROBAS.talk.GUARDIAN.2-1r.char": "他们从来不是彼此的替代。他们共同构成我的誓言。",
   "OROBAS.talk.GUARDIAN.2-1r.next": "继续",
   "OROBAS.talk.GUARDIAN.2-2r.ancient": "对！眼睛记得！盾也记得！拿着这个，继续记得！",
-
   "PAEL.talk.GUARDIAN.0-0.ancient": "[thinky_dots]折翼的朋友……放下盾，休息一会儿吧……[/thinky_dots]",
   "PAEL.talk.GUARDIAN.0-0.next": "回应",
   "PAEL.talk.GUARDIAN.0-1.char": "休息可以。放下盾不行。",
@@ -58,7 +54,6 @@
   "PAEL.talk.GUARDIAN.2-1r.char": "那不是负担。那是他们的名字。",
   "PAEL.talk.GUARDIAN.2-1r.next": "继续",
   "PAEL.talk.GUARDIAN.2-2r.ancient": "[thinky_dots]那么睡吧……让名字也在此歇息片刻……[/thinky_dots]",
-
   "TANX.talk.GUARDIAN.0-0.ancient": "[b]大鸟骑士！巨盾配长戟！好武器就该拿来战斗！！[/b]",
   "TANX.talk.GUARDIAN.0-0.next": "应战",
   "TANX.talk.GUARDIAN.0-1.char": "若交手能证明兵器可靠，我接受。",
@@ -70,7 +65,6 @@
   "TANX.talk.GUARDIAN.2-1r.char": "[i][font_size=22]长戟与利爪数度相撞，巨盾始终未退半步。[/font_size][/i]",
   "TANX.talk.GUARDIAN.2-1r.next": "继续",
   "TANX.talk.GUARDIAN.2-2r.ancient": "[b]痛快！你连自己的戟都防得滴水不漏！拿上武器，下次继续！！[/b]",
-
   "TEZCATARA.talk.GUARDIAN.0-0.ancient": "哦，多么漂亮的旧伤。来吧，小鸟，让我把折翼上的诅咒[jitter][b]烧掉[/b][/jitter]。",
   "TEZCATARA.talk.GUARDIAN.0-0.next": "拒绝",
   "TEZCATARA.talk.GUARDIAN.0-1.char": "伤痕提醒我为何举盾。请把火焰留给兵刃。",
@@ -82,7 +76,6 @@
   "TEZCATARA.talk.GUARDIAN.2-1r.char": "我选择守护仍然活着的同伴。宽恕比复仇更需要勇气。",
   "TEZCATARA.talk.GUARDIAN.2-1r.next": "继续",
   "TEZCATARA.talk.GUARDIAN.2-2r.ancient": "说得好，亲爱的。火不只会毁灭，也可以替归巢者照亮道路。",
-
   "VAKUU.talk.GUARDIAN.0-0.ancient": "最后一根羽毛，背着整个覆灭的群落。想不想做笔交易，让他们重新飞起来？",
   "VAKUU.talk.GUARDIAN.0-0.next": "拒绝",
   "VAKUU.talk.GUARDIAN.0-1.char": "我不会拿活人的安危与恶魔交易。",
@@ -94,7 +87,6 @@
   "VAKUU.talk.GUARDIAN.2-1r.char": "是。我不逃避失败，也不会让你利用它。",
   "VAKUU.talk.GUARDIAN.2-1r.next": "继续",
   "VAKUU.talk.GUARDIAN.2-2r.ancient": "真无趣。去找建筑师吧，让我看看你的盾还能撑多久。",
-
   "THE_ARCHITECT.talk.GUARDIAN.0-0.ancient": "最后的羽民骑士。是那面巨盾把你带到了塔顶么？",
   "THE_ARCHITECT.talk.GUARDIAN.0-0.next": "回答",
   "THE_ARCHITECT.talk.GUARDIAN.0-1.char": "不是盾。是我身后的同伴。",
@@ -111,7 +103,6 @@
   "THE_ARCHITECT.talk.GUARDIAN.3-0r.ancient": "盾终会破碎。届时你还剩下什么？",
   "THE_ARCHITECT.talk.GUARDIAN.3-0r.next": "回答",
   "THE_ARCHITECT.talk.GUARDIAN.3-1r.char": "盾后仍有羽翼。羽翼之后，仍有誓言。",
-
   "NEOW.talk.IRONEYE.0-0.ancient": "[sine]...你盯着每一道脚印...可有哪一道...属于你要找的人...[/sine]",
   "NEOW.talk.IRONEYE.0-0.next": "回答",
   "NEOW.talk.IRONEYE.0-1.char": "痕迹被处理过。先查是谁动的手。",
@@ -123,7 +114,6 @@
   "NEOW.talk.IRONEYE.2-1r.char": "先确认。该射的时候，不必再问。",
   "NEOW.talk.IRONEYE.2-1r.next": "继续",
   "NEOW.talk.IRONEYE.2-2r.ancient": "[sine]...很好...手...比嘴诚实...[/sine]",
-
   "DARV.talk.IRONEYE.0-0.ancient": "弓手！来看看这几件旧货。扣环都牢，刀口也没卷，我亲手验过！",
   "DARV.talk.IRONEYE.0-0.next": "查看收藏",
   "DARV.talk.IRONEYE.0-1.char": "先报来源。那件封蜡还没拆。",
@@ -135,7 +125,6 @@
   "DARV.talk.IRONEYE.2-1r.char": "[i][font_size=22]铁之眼拂去尘土，依次确认刻痕、缺口与锈迹。[/font_size][/i]",
   "DARV.talk.IRONEYE.2-1r.next": "继续",
   "DARV.talk.IRONEYE.2-2r.ancient": "果然没交错人。下回来时，记得告诉我那道刻痕怎么用。",
-
   "NONUPEIPE.talk.IRONEYE.0-0.ancient": "弓手，接下这份力量。它能让你的箭更快。",
   "NONUPEIPE.talk.IRONEYE.0-0.next": "回答",
   "NONUPEIPE.talk.IRONEYE.0-1.char": "先试射。速度不等于命中。",
@@ -147,7 +136,6 @@
   "NONUPEIPE.talk.IRONEYE.2-1r.char": "先清点箭矢，再查脚印。顺序不能乱。",
   "NONUPEIPE.talk.IRONEYE.2-1r.next": "继续",
   "NONUPEIPE.talk.IRONEYE.2-2r.ancient": "很好。拿着这份力量，别让它替你省掉那一步。",
-
   "OROBAS.talk.IRONEYE.0-0.ancient": "兜帽！白头发！蓝眼睛！还有一整架箭！你数得出我有几只眼睛吗！？",
   "OROBAS.talk.IRONEYE.0-0.next": "观察",
   "OROBAS.talk.IRONEYE.0-1.char": "十二只。左起第三只刚眨过。",
@@ -159,7 +147,6 @@
   "OROBAS.talk.IRONEYE.2-1r.char": "找痕迹。看不见，不代表不存在。",
   "OROBAS.talk.IRONEYE.2-1r.next": "继续",
   "OROBAS.talk.IRONEYE.2-2r.ancient": "好眼睛！拿着这个，让藏起来的东西自己露出破绽！",
-
   "PAEL.talk.IRONEYE.0-0.ancient": "[thinky_dots]安静的弓手……把弦松一点……梦里没有脚步……也没有需要提防的背影……[/thinky_dots]",
   "PAEL.talk.IRONEYE.0-0.next": "回答",
   "PAEL.talk.IRONEYE.0-1.char": "弦可以松。弓留在手边。",
@@ -171,7 +158,6 @@
   "PAEL.talk.IRONEYE.2-1r.char": "今晚到此为止。天亮继续。",
   "PAEL.talk.IRONEYE.2-1r.next": "继续",
   "PAEL.talk.IRONEYE.2-2r.ancient": "[thinky_dots]那么先闭上眼睛吧……最清醒的目光……也要在黑暗里休息……[/thinky_dots]",
-
   "TANX.talk.IRONEYE.0-0.ancient": "[b]躲在远处算什么本事！放下长弓，拿弯刀来！！[/b]",
   "TANX.talk.IRONEYE.0-0.next": "应战",
   "TANX.talk.IRONEYE.0-1.char": "可以。别以为收起弓，你就有机会。",
@@ -183,7 +169,6 @@
   "TANX.talk.IRONEYE.2-1r.char": "[i][font_size=22]前两箭封住退路。第三箭落在坦克斯唯一能踏出的那一步。[/font_size][/i]",
   "TANX.talk.IRONEYE.2-1r.next": "继续",
   "TANX.talk.IRONEYE.2-2r.ancient": "[b]好箭！好陷阱！拿上武器，下次由我先选战场！！[/b]",
-
   "TEZCATARA.talk.IRONEYE.0-0.ancient": "多么冷静的目光。让我点一把火，把你心底那些碍事的[jitter][b]疑问[/b][/jitter]烧成一条清晰的路吧。",
   "TEZCATARA.talk.IRONEYE.0-0.next": "拒绝",
   "TEZCATARA.talk.IRONEYE.0-1.char": "不必。疑问也是线索。",
@@ -195,7 +180,6 @@
   "TEZCATARA.talk.IRONEYE.2-1r.char": "愤怒不能替我选择目标。",
   "TEZCATARA.talk.IRONEYE.2-1r.next": "继续",
   "TEZCATARA.talk.IRONEYE.2-2r.ancient": "很好。那就让我的火照亮箭路，别让它替你选中目标。",
-
   "VAKUU.talk.IRONEYE.0-0.ancient": "我知道谁背叛了你。一个名字，换你箭袋里最不起眼的一支箭。听起来很划算，不是吗？",
   "VAKUU.talk.IRONEYE.0-0.next": "拒绝",
   "VAKUU.talk.IRONEYE.0-1.char": "未经核实的名字，不值一支箭。",
@@ -207,7 +191,6 @@
   "VAKUU.talk.IRONEYE.2-1r.char": "先确认。该死的人，开口也改变不了结果。",
   "VAKUU.talk.IRONEYE.2-1r.next": "继续",
   "VAKUU.talk.IRONEYE.2-2r.ancient": "谨慎得令人讨厌。去问建筑师吧，看看它的答案值不值得你浪费一支箭。",
-
   "THE_ARCHITECT.talk.IRONEYE.0-0.ancient": "你一路都在量墙缝、数守卫。找到什么了？",
   "THE_ARCHITECT.talk.IRONEYE.0-0.next": "回答",
   "THE_ARCHITECT.talk.IRONEYE.0-1.char": "四条退路。你只封了三条。",
@@ -224,7 +207,6 @@
   "THE_ARCHITECT.talk.IRONEYE.3-0r.ancient": "你一次次回到这里。还在寻找新证据，还是只想确认旧答案？",
   "THE_ARCHITECT.talk.IRONEYE.3-0r.next": "回答",
   "THE_ARCHITECT.talk.IRONEYE.3-1r.char": "确认路径。上次的守卫向左挪了半步。",
-
   "NEOW.talk.REVENANT.0-0.ancient": "[sine]...一个灵魂...带着三个影子...谁在引领谁...[/sine]",
   "NEOW.talk.REVENANT.0-0.next": "回答",
   "NEOW.talk.REVENANT.0-1.char": "我发号施令。家人选择是否回应。别混为一谈。",
@@ -236,7 +218,6 @@
   "NEOW.talk.REVENANT.2-1r.char": "会。复仇只是其中一曲。",
   "NEOW.talk.REVENANT.2-1r.next": "继续",
   "NEOW.talk.REVENANT.2-2r.ancient": "[sine]...那么...别让她等太久...[/sine]",
-
   "DARV.talk.REVENANT.0-0.ancient": "一把老琴！让我看看——弦轴松了，木框倒还结实。我这儿正好有合适的小零件。",
   "DARV.talk.REVENANT.0-0.next": "递出古里拉琴",
   "DARV.talk.REVENANT.0-1.char": "只准修弦轴。第三根弦维持原样。",
@@ -248,7 +229,6 @@
   "DARV.talk.REVENANT.2-1r.char": "[i][font_size=22]节拍器触到她的掌心便停止摆动。海伦的笑声从身后传来。[/font_size][/i]",
   "DARV.talk.REVENANT.2-1r.next": "继续",
   "DARV.talk.REVENANT.2-2r.ancient": "原来它是在等她！那就更该交给你了。",
-
   "NONUPEIPE.talk.REVENANT.0-0.ancient": "苍白的奏者，接受我的力量。它能让你的亡者更加凶猛。",
   "NONUPEIPE.talk.REVENANT.0-0.next": "回应",
   "NONUPEIPE.talk.REVENANT.0-1.char": "先给弗雷德利克。他懂得让力量服从。",
@@ -260,7 +240,6 @@
   "NONUPEIPE.talk.REVENANT.2-1r.char": "把死者囚在身边，不叫挽回。",
   "NONUPEIPE.talk.REVENANT.2-1r.next": "继续",
   "NONUPEIPE.talk.REVENANT.2-2r.ancient": "很好。那便替他们选择用得上的力量。",
-
   "OROBAS.talk.REVENANT.0-0.ancient": "一、二、三、四！不对，后面还有！你到底带了多少人！？",
   "OROBAS.talk.REVENANT.0-0.next": "回答",
   "OROBAS.talk.REVENANT.0-1.char": "家人只有三位。其余的，只是暂借的亡魂。",
@@ -272,7 +251,6 @@
   "OROBAS.talk.REVENANT.2-1r.char": "琴弦只会放出我需要的。足够了。",
   "OROBAS.talk.REVENANT.2-1r.next": "继续",
   "OROBAS.talk.REVENANT.2-2r.ancient": "聪明！那拿着这个，让下一个出来得快一点！",
-
   "PAEL.talk.REVENANT.0-0.ancient": "[thinky_dots]没有呼吸的姑娘……你的家人还会做梦吗……[/thinky_dots]",
   "PAEL.talk.REVENANT.0-0.next": "回答",
   "PAEL.talk.REVENANT.0-1.char": "海伦还会。她从不肯说梦见了什么。",
@@ -284,7 +262,6 @@
   "PAEL.talk.REVENANT.2-1r.char": "那就留一盏灯。别惊动他们。",
   "PAEL.talk.REVENANT.2-1r.next": "休息",
   "PAEL.talk.REVENANT.2-2r.ancient": "[thinky_dots]好……灯会亮着……门也会关好……[/thinky_dots]",
-
   "TANX.talk.REVENANT.0-0.ancient": "[b]奏者！把那个大南瓜叫出来！我要试试他的锤子！！[/b]",
   "TANX.talk.REVENANT.0-0.next": "呼唤弗雷德利克",
   "TANX.talk.REVENANT.0-1.char": "注意你的称呼。弗雷德利克若愿意，会亲自回答。",
@@ -296,7 +273,6 @@
   "TANX.talk.REVENANT.2-1r.char": "[i][font_size=22]复仇者拨响琴弦。三道灵影同时逼近，坦克斯被按回原地。[/font_size][/i]",
   "TANX.talk.REVENANT.2-1r.next": "继续",
   "TANX.talk.REVENANT.2-2r.ancient": "[b]四个打一个！好！下次我也带帮手！！[/b]",
-
   "TEZCATARA.talk.REVENANT.0-0.ancient": "亲爱的，你的琴弦冷得像坟土。让我添一点[jitter][b]火[/b][/jitter]，亡者会跳得更快。",
   "TEZCATARA.talk.REVENANT.0-0.next": "拒绝",
   "TEZCATARA.talk.REVENANT.0-1.char": "把手拿开。古里拉琴不需要你的火。",
@@ -308,7 +284,6 @@
   "TEZCATARA.talk.REVENANT.2-1r.char": "火只该认得仇人的名字。多烧一寸，都是无能。",
   "TEZCATARA.talk.REVENANT.2-1r.next": "继续",
   "TEZCATARA.talk.REVENANT.2-2r.ancient": "真克制。好吧，我把火收小些。",
-
   "VAKUU.talk.REVENANT.0-0.ancient": "我能让一个灵魂真正回来。会呼吸，会变老。只要你把另外三个交给我。",
   "VAKUU.talk.REVENANT.0-0.next": "拒绝",
   "VAKUU.talk.REVENANT.0-1.char": "你把我的家人当成筹码。这桩交易结束了。",
@@ -320,7 +295,6 @@
   "VAKUU.talk.REVENANT.2-1r.char": "等仇人死尽，我自会决定这具身体该去哪里。",
   "VAKUU.talk.REVENANT.2-1r.next": "继续",
   "VAKUU.talk.REVENANT.2-2r.ancient": "……你们一家真让人做不成生意。",
-
   "THE_ARCHITECT.talk.REVENANT.0-0.ancient": "你把我的死者带到了塔顶。它们服从你吗？",
   "THE_ARCHITECT.talk.REVENANT.0-0.next": "回答",
   "THE_ARCHITECT.talk.REVENANT.0-1.char": "死灵服从琴弦。家人只回应他们认可的呼唤。",

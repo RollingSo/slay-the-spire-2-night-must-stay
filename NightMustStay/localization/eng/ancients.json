@@ -10,7 +10,6 @@
   "NEOW.talk.GUARDIAN.2-1r.char": "Loss does not make an oath meaningless.",
   "NEOW.talk.GUARDIAN.2-1r.next": "Continue",
   "NEOW.talk.GUARDIAN.2-2r.ancient": "[sine]...then...go protect them...again...[/sine]",
-
   "DARV.talk.GUARDIAN.0-0.ancient": "A greatshield and a halberd—good taste! I've got a few old pieces in my collection that can take a beating. Come pick one!",
   "DARV.talk.GUARDIAN.0-0.next": "Browse the collection",
   "DARV.talk.GUARDIAN.0-1.char": "If it can protect a companion, I will put it to use again.",
@@ -22,7 +21,6 @@
   "DARV.talk.GUARDIAN.2-1r.char": "[i][font_size=22]The Guardian tucks the crest inside his cuirass.[/font_size][/i]",
   "DARV.talk.GUARDIAN.2-1r.next": "Continue",
   "DARV.talk.GUARDIAN.2-2r.ancient": "Keep it safe. Treasure is for remembering what must not be forgotten!",
-
   "NONUPEIPE.talk.GUARDIAN.0-0.ancient": "Knight of the Pinionfolk, you have crossed the long night to stand before me. Accept power, and let your shield grow stronger.",
   "NONUPEIPE.talk.GUARDIAN.0-0.next": "Answer",
   "NONUPEIPE.talk.GUARDIAN.0-1.char": "Power that cannot shelter another is merely another burden.",
@@ -34,7 +32,6 @@
   "NONUPEIPE.talk.GUARDIAN.2-1r.char": "Perhaps. But conjecture cannot rewrite the fate of the dead.",
   "NONUPEIPE.talk.GUARDIAN.2-1r.next": "Continue",
   "NONUPEIPE.talk.GUARDIAN.2-2r.ancient": "Then choose the power that can protect the present.",
-
   "OROBAS.talk.GUARDIAN.0-0.ancient": "Bird! Shield! Halberd! One wing missing? Strange, very strange! Can you still fly!?",
   "OROBAS.talk.GUARDIAN.0-0.next": "Answer",
   "OROBAS.talk.GUARDIAN.0-1.char": "Not as I once did. But I can still stand.",
@@ -46,7 +43,6 @@
   "OROBAS.talk.GUARDIAN.2-1r.char": "They were never replacements for one another. Together, they shape my oath.",
   "OROBAS.talk.GUARDIAN.2-1r.next": "Continue",
   "OROBAS.talk.GUARDIAN.2-2r.ancient": "Yes! The eye remembers! The shield remembers! Take this, and keep remembering!",
-
   "PAEL.talk.GUARDIAN.0-0.ancient": "[thinky_dots]Broken-winged friend...put down your shield and rest a while...[/thinky_dots]",
   "PAEL.talk.GUARDIAN.0-0.next": "Answer",
   "PAEL.talk.GUARDIAN.0-1.char": "I can rest. I cannot put down the shield.",
@@ -58,7 +54,6 @@
   "PAEL.talk.GUARDIAN.2-1r.char": "They are not a burden. They are names.",
   "PAEL.talk.GUARDIAN.2-1r.next": "Continue",
   "PAEL.talk.GUARDIAN.2-2r.ancient": "[thinky_dots]Then sleep...and let those names rest here for a moment too...[/thinky_dots]",
-
   "TANX.talk.GUARDIAN.0-0.ancient": "[b]A great bird-knight! A huge shield and a long halberd! Fine weapons should be used in battle!![/b]",
   "TANX.talk.GUARDIAN.0-0.next": "Accept the challenge",
   "TANX.talk.GUARDIAN.0-1.char": "If a contest can prove the weapons reliable, I accept.",
@@ -70,7 +65,6 @@
   "TANX.talk.GUARDIAN.2-1r.char": "[i][font_size=22]Halberd and claw clash again and again. The great shield never retreats half a step.[/font_size][/i]",
   "TANX.talk.GUARDIAN.2-1r.next": "Continue",
   "TANX.talk.GUARDIAN.2-2r.ancient": "[b]Excellent! You even protect your own halberd perfectly! Take the weapon. We continue next time!![/b]",
-
   "TEZCATARA.talk.GUARDIAN.0-0.ancient": "Oh, what lovely old wounds. Come, little bird. Let me [jitter][b]burn away[/b][/jitter] the curse upon that broken wing.",
   "TEZCATARA.talk.GUARDIAN.0-0.next": "Refuse",
   "TEZCATARA.talk.GUARDIAN.0-1.char": "The scars remind me why I raise my shield. Save your flame for the blade.",
@@ -82,7 +76,6 @@
   "TEZCATARA.talk.GUARDIAN.2-1r.char": "I chose to protect the companion who still lives. Forgiveness demanded more courage than vengeance.",
   "TEZCATARA.talk.GUARDIAN.2-1r.next": "Continue",
   "TEZCATARA.talk.GUARDIAN.2-2r.ancient": "Well said, dear. Fire need not only destroy. It can light a road for the lost.",
-
   "VAKUU.talk.GUARDIAN.0-0.ancient": "The last feather, carrying an entire fallen flock. Want to bargain, and see them fly again?",
   "VAKUU.talk.GUARDIAN.0-0.next": "Refuse",
   "VAKUU.talk.GUARDIAN.0-1.char": "I will not wager the living's safety in a bargain with a demon.",
@@ -94,7 +87,6 @@
   "VAKUU.talk.GUARDIAN.2-1r.char": "I did. I neither flee that failure nor permit you to exploit it.",
   "VAKUU.talk.GUARDIAN.2-1r.next": "Continue",
   "VAKUU.talk.GUARDIAN.2-2r.ancient": "How dull. Go find the Architect, then. Let me see how long that shield holds.",
-
   "THE_ARCHITECT.talk.GUARDIAN.0-0.ancient": "Last knight of the Pinionfolk. Was it that great shield which carried you to the summit?",
   "THE_ARCHITECT.talk.GUARDIAN.0-0.next": "Answer",
   "THE_ARCHITECT.talk.GUARDIAN.0-1.char": "Not the shield. The companions behind it.",
@@ -111,7 +103,6 @@
   "THE_ARCHITECT.talk.GUARDIAN.3-0r.ancient": "Every shield will break. What remains when yours does?",
   "THE_ARCHITECT.talk.GUARDIAN.3-0r.next": "Answer",
   "THE_ARCHITECT.talk.GUARDIAN.3-1r.char": "Wings remain behind the shield. Beyond the wings, the oath remains.",
-
   "NEOW.talk.IRONEYE.0-0.ancient": "[sine]...you study every footprint...does any one...belong to the one you seek...[/sine]",
   "NEOW.talk.IRONEYE.0-0.next": "Answer",
   "NEOW.talk.IRONEYE.0-1.char": "The trail was cleaned. First, I find who did it.",
@@ -123,7 +114,6 @@
   "NEOW.talk.IRONEYE.2-1r.char": "Verify first. When it is time to shoot, no question is needed.",
   "NEOW.talk.IRONEYE.2-1r.next": "Continue",
   "NEOW.talk.IRONEYE.2-2r.ancient": "[sine]...good...hands...are more honest than mouths...[/sine]",
-
   "DARV.talk.IRONEYE.0-0.ancient": "Archer! Look at these old pieces. Buckles hold, edges are straight—I checked them myself!",
   "DARV.talk.IRONEYE.0-0.next": "Browse the collection",
   "DARV.talk.IRONEYE.0-1.char": "State their provenance first. That wax seal is still intact.",
@@ -135,7 +125,6 @@
   "DARV.talk.IRONEYE.2-1r.char": "[i][font_size=22]Ironeye clears the dust, checking each groove, chip, and patch of rust in turn.[/font_size][/i]",
   "DARV.talk.IRONEYE.2-1r.next": "Continue",
   "DARV.talk.IRONEYE.2-2r.ancient": "Knew I saved it for the right one! Next time, tell me what that mark does.",
-
   "NONUPEIPE.talk.IRONEYE.0-0.ancient": "Archer, take this power. It will make your arrows faster.",
   "NONUPEIPE.talk.IRONEYE.0-0.next": "Answer",
   "NONUPEIPE.talk.IRONEYE.0-1.char": "A test shot first. Speed does not guarantee a hit.",
@@ -147,7 +136,6 @@
   "NONUPEIPE.talk.IRONEYE.2-1r.char": "Count the arrows, then check the tracks. Keep the order.",
   "NONUPEIPE.talk.IRONEYE.2-1r.next": "Continue",
   "NONUPEIPE.talk.IRONEYE.2-2r.ancient": "Good. Take this power, but do not let it skip that step for you.",
-
   "OROBAS.talk.IRONEYE.0-0.ancient": "Hood! White hair! Blue eyes! So many arrows behind you! How many eyes do you see on me!?",
   "OROBAS.talk.IRONEYE.0-0.next": "Observe",
   "OROBAS.talk.IRONEYE.0-1.char": "Twelve. The third from the left just blinked.",
@@ -159,7 +147,6 @@
   "OROBAS.talk.IRONEYE.2-1r.char": "Follow the trail. Unseen does not mean absent.",
   "OROBAS.talk.IRONEYE.2-1r.next": "Continue",
   "OROBAS.talk.IRONEYE.2-2r.ancient": "Good eye! Take this, and make hiding harder!",
-
   "PAEL.talk.IRONEYE.0-0.ancient": "[thinky_dots]Quiet archer...ease the string...no one can approach from behind in a dream...[/thinky_dots]",
   "PAEL.talk.IRONEYE.0-0.next": "Answer",
   "PAEL.talk.IRONEYE.0-1.char": "The string can rest. The bow stays within reach.",
@@ -171,7 +158,6 @@
   "PAEL.talk.IRONEYE.2-1r.char": "Enough for tonight. I resume at dawn.",
   "PAEL.talk.IRONEYE.2-1r.next": "Continue",
   "PAEL.talk.IRONEYE.2-2r.ancient": "[thinky_dots]Then close your eyes for now...even a wakeful gaze needs a moment of darkness...[/thinky_dots]",
-
   "TANX.talk.IRONEYE.0-0.ancient": "[b]Hiding at a distance is no fight! Drop the longbow and bring me that curved blade!![/b]",
   "TANX.talk.IRONEYE.0-0.next": "Accept the challenge",
   "TANX.talk.IRONEYE.0-1.char": "Fine. Do not mistake a lowered bow for an opportunity.",
@@ -183,7 +169,6 @@
   "TANX.talk.IRONEYE.2-1r.char": "[i][font_size=22]The first two arrows seal the exits. The third lands on the only step left to Tanx.[/font_size][/i]",
   "TANX.talk.IRONEYE.2-1r.next": "Continue",
   "TANX.talk.IRONEYE.2-2r.ancient": "[b]Good shot! Better trap! Take the weapon. Next time, I choose the battlefield!![/b]",
-
   "TEZCATARA.talk.IRONEYE.0-0.ancient": "Such a calm gaze. Let me light a fire and burn away those troublesome [jitter][b]questions[/b][/jitter] inside you.",
   "TEZCATARA.talk.IRONEYE.0-0.next": "Refuse",
   "TEZCATARA.talk.IRONEYE.0-1.char": "No need. Questions are evidence too.",
@@ -195,7 +180,6 @@
   "TEZCATARA.talk.IRONEYE.2-1r.char": "Anger does not choose my target.",
   "TEZCATARA.talk.IRONEYE.2-1r.next": "Continue",
   "TEZCATARA.talk.IRONEYE.2-2r.ancient": "Good. Then let my fire illuminate the arrow's path, not choose it for you.",
-
   "VAKUU.talk.IRONEYE.0-0.ancient": "I know who betrayed you. One name for the least remarkable arrow in your quiver. Cheap, yes?",
   "VAKUU.talk.IRONEYE.0-0.next": "Refuse",
   "VAKUU.talk.IRONEYE.0-1.char": "An unverified name is not worth one arrow.",
@@ -207,7 +191,6 @@
   "VAKUU.talk.IRONEYE.2-1r.char": "First, I verify. If he deserves death, speaking will not change that.",
   "VAKUU.talk.IRONEYE.2-1r.next": "Continue",
   "VAKUU.talk.IRONEYE.2-2r.ancient": "Infuriatingly careful. Ask the Architect, then, and see whether its answer deserves an arrow.",
-
   "THE_ARCHITECT.talk.IRONEYE.0-0.ancient": "You measured every crack and counted every guard. What did you find?",
   "THE_ARCHITECT.talk.IRONEYE.0-0.next": "Answer",
   "THE_ARCHITECT.talk.IRONEYE.0-1.char": "Four exits. You sealed only three.",
@@ -224,7 +207,6 @@
   "THE_ARCHITECT.talk.IRONEYE.3-0r.ancient": "You return again and again. Still searching for new evidence?",
   "THE_ARCHITECT.talk.IRONEYE.3-0r.next": "Answer",
   "THE_ARCHITECT.talk.IRONEYE.3-1r.char": "Checking the route. That guard moved half a step left.",
-
   "NEOW.talk.REVENANT.0-0.ancient": "[sine]...one soul...and three shadows...which leads the others...[/sine]",
   "NEOW.talk.REVENANT.0-0.next": "Answer",
   "NEOW.talk.REVENANT.0-1.char": "I give the order. My family chooses whether to answer. Do not confuse the two.",
@@ -236,7 +218,6 @@
   "NEOW.talk.REVENANT.2-1r.char": "It will. Vengeance is only one song.",
   "NEOW.talk.REVENANT.2-1r.next": "Continue",
   "NEOW.talk.REVENANT.2-2r.ancient": "[sine]...then...do not keep her waiting...[/sine]",
-
   "DARV.talk.REVENANT.0-0.ancient": "An old lyre! Let me see—the pegs are loose, but the frame is sound. I have just the parts for it.",
   "DARV.talk.REVENANT.0-0.next": "Offer the lyre",
   "DARV.talk.REVENANT.0-1.char": "Touch only the pegs. Leave the third string as it is.",
@@ -248,7 +229,6 @@
   "DARV.talk.REVENANT.2-1r.char": "[i][font_size=22]The metronome stops the moment it touches her palm. Helen's laugh sounds behind her.[/font_size][/i]",
   "DARV.talk.REVENANT.2-1r.next": "Continue",
   "DARV.talk.REVENANT.2-2r.ancient": "It was waiting for her! All the more reason you should have it.",
-
   "NONUPEIPE.talk.REVENANT.0-0.ancient": "Pale musician, accept my power. It will make your dead more fearsome.",
   "NONUPEIPE.talk.REVENANT.0-0.next": "Answer",
   "NONUPEIPE.talk.REVENANT.0-1.char": "Give it to Frederick first. He knows how to make power obey.",
@@ -260,7 +240,6 @@
   "NONUPEIPE.talk.REVENANT.2-1r.char": "Keeping the dead captive is not restoration.",
   "NONUPEIPE.talk.REVENANT.2-1r.next": "Continue",
   "NONUPEIPE.talk.REVENANT.2-2r.ancient": "Good. Then choose a power they can use.",
-
   "OROBAS.talk.REVENANT.0-0.ancient": "One, two, three, four! No, there are more behind you! How many people did you bring!?",
   "OROBAS.talk.REVENANT.0-0.next": "Answer",
   "OROBAS.talk.REVENANT.0-1.char": "Three family members. The rest are merely borrowed dead.",
@@ -272,7 +251,6 @@
   "OROBAS.talk.REVENANT.2-1r.char": "The strings release only what I need. Enough.",
   "OROBAS.talk.REVENANT.2-1r.next": "Continue",
   "OROBAS.talk.REVENANT.2-2r.ancient": "Clever! Take this and let the next one out faster!",
-
   "PAEL.talk.REVENANT.0-0.ancient": "[thinky_dots]Breathless girl...does your family still dream...[/thinky_dots]",
   "PAEL.talk.REVENANT.0-0.next": "Answer",
   "PAEL.talk.REVENANT.0-1.char": "Helen does. She refuses to say what she dreams.",
@@ -284,7 +262,6 @@
   "PAEL.talk.REVENANT.2-1r.char": "Leave one lamp. Do not wake them.",
   "PAEL.talk.REVENANT.2-1r.next": "Rest",
   "PAEL.talk.REVENANT.2-2r.ancient": "[thinky_dots]All right...the lamp will stay lit...and the door shut...[/thinky_dots]",
-
   "TANX.talk.REVENANT.0-0.ancient": "[b]Musician! Call the big pumpkin! I want to test his hammer!![/b]",
   "TANX.talk.REVENANT.0-0.next": "Call Frederick",
   "TANX.talk.REVENANT.0-1.char": "Mind your words. If Frederick wishes, he will answer you himself.",
@@ -296,7 +273,6 @@
   "TANX.talk.REVENANT.2-1r.char": "[i][font_size=22]The Revenant plucks a string. Three spirits close in at once, forcing Tanx back into place.[/font_size][/i]",
   "TANX.talk.REVENANT.2-1r.next": "Continue",
   "TANX.talk.REVENANT.2-2r.ancient": "[b]Four against one! Good! Next time I bring help too!![/b]",
-
   "TEZCATARA.talk.REVENANT.0-0.ancient": "Dear, your strings are cold as grave soil. Let me add a little [jitter][b]fire[/b][/jitter]. The dead will dance faster.",
   "TEZCATARA.talk.REVENANT.0-0.next": "Refuse",
   "TEZCATARA.talk.REVENANT.0-1.char": "Take your hands from the lyre. It has no need of your fire.",
@@ -308,7 +284,6 @@
   "TEZCATARA.talk.REVENANT.2-1r.char": "Fire need only know my enemy's name. Burning an inch more would be incompetence.",
   "TEZCATARA.talk.REVENANT.2-1r.next": "Continue",
   "TEZCATARA.talk.REVENANT.2-2r.ancient": "Such restraint. Very well, I will keep the flame low.",
-
   "VAKUU.talk.REVENANT.0-0.ancient": "I can return one spirit to life. Breath, age, everything. Give me the other three.",
   "VAKUU.talk.REVENANT.0-0.next": "Refuse",
   "VAKUU.talk.REVENANT.0-1.char": "You made my family the price. This bargain is over.",
@@ -320,7 +295,6 @@
   "VAKUU.talk.REVENANT.2-1r.char": "When my enemies are dead, I decide where this body goes.",
   "VAKUU.talk.REVENANT.2-1r.next": "Continue",
   "VAKUU.talk.REVENANT.2-2r.ancient": "...Your family makes business impossible.",
-
   "THE_ARCHITECT.talk.REVENANT.0-0.ancient": "You brought my dead to the summit. Do they obey you?",
   "THE_ARCHITECT.talk.REVENANT.0-0.next": "Answer",
   "THE_ARCHITECT.talk.REVENANT.0-1.char": "Necros obey the strings. My family answers only the summons they accept.",

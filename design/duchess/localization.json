@@ -6,9 +6,9 @@
       "時刻"
     ],
     "DUCHESS_MOMENT_DESCRIPTION_POWER.description": [
-      "每回合开始时时刻为1。\n每打出一张牌，时刻增加1。\n在对应时刻打出卡牌会触发其时刻效果。",
-      "Moment is 1 at the start of each turn.\nWhenever you play a card, Moment increases by 1.\nPlay cards at their listed Moment to trigger their Moment effects.",
-      "毎ターン開始時、時刻は1になる。\nカードをプレイするたび、時刻が1増加する。\n指定された時刻にカードをプレイすると、時刻効果が発動する。"
+      "每回合开始时，时刻重置为0。\n每打出1张牌，时刻+1。\n在对应时刻打出特定卡牌，可触发其时刻效果。\n时刻12之后会回到时刻0。",
+      "At the start of each turn, reset Moment to 0.\nWhenever you play a card, Moment increases by 1.\nPlay cards at their listed Moment to trigger their Moment effects.\nAfter Moment 12, it returns to Moment 0.",
+      "各ターン開始時、時刻を0に戻す。\nカードをプレイするたび、時刻が1増加する。\n指定された時刻にカードをプレイすると、時刻効果が発動する。\n時刻12の次は時刻0に戻る。"
     ],
     "DUCHESS_REACTION_DESCRIPTION_POWER.title": [
       "反应",
@@ -16,9 +16,9 @@
       "リアクション"
     ],
     "DUCHESS_REACTION_DESCRIPTION_POWER.description": [
-      "在回合进行中抽到此牌时，其耗能减少1直到打出。",
-      "When drawn during your turn, this card costs 1 less until played.",
-      "自分のターン中に引いた時、プレイするまでコストが1減少する。"
+      "反应：当你在回合进行中抽到这张牌时，将其直接打出。",
+      "Reaction: When you draw this card during your turn, play it immediately.",
+      "リアクション：自分のターン中にこのカードを引いた時、直ちにプレイする。"
     ],
     "DUCHESS_MOMENT_POWER.title": [
       "时刻",
@@ -103,9 +103,9 @@
       "古びた懐中時計"
     ],
     "DUCHESS_OLD_POCKETWATCH.description": [
-      "每当[gold]时刻[/gold]到达5，抽1张牌。",
-      "Whenever [gold]Moment[/gold] reaches 5, draw 1 card.",
-      "[gold]時刻[/gold]が5に到達するたび、カードを1枚引く。"
+      "每当[gold]时刻[/gold]到达4，抽1张牌。",
+      "Whenever [gold]Moment[/gold] reaches 4, draw 1 card.",
+      "[gold]時刻[/gold]が4に到達するたび、カードを1枚引く。"
     ],
     "DUCHESS_OLD_POCKETWATCH.flavor": [
       "指针依旧前行。有些约定，却留在了原处。",
@@ -118,9 +118,9 @@
       "修復された懐中時計"
     ],
     "DUCHESS_MENDED_POCKETWATCH.description": [
-      "每当[gold]时刻[/gold]到达5，抽2张牌。",
-      "Whenever [gold]Moment[/gold] reaches 5, draw 2 cards.",
-      "[gold]時刻[/gold]が5に到達するたび、カードを2枚引く。"
+      "每当[gold]时刻[/gold]到达4，抽2张牌。",
+      "Whenever [gold]Moment[/gold] reaches 4, draw 2 cards.",
+      "[gold]時刻[/gold]が4に到達するたび、カードを2枚引く。"
     ],
     "DUCHESS_MENDED_POCKETWATCH.flavor": [
       "修好的不仅是齿轮。",

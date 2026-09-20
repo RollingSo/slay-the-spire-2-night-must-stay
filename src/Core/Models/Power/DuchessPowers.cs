@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Cards;
 using NightMustStay.Core.Models.Relics;
@@ -38,6 +39,7 @@ public sealed class DuchessMomentPower : PowerModel
     {
         public readonly Dictionary<CardModel, CardSnapshot> TurnStart = new();
         public int? PendingMoment;
+        public int TurnStartEnergy;
     }
 
     protected override object InitInternalData() => new Data();
@@ -53,23 +55,23 @@ public sealed class DuchessMomentPower : PowerModel
     }
 
     public static int Current(Player player) => player?.Creature?.GetPower<DuchessMomentPower>() is { } power
-        ? decimal.ToInt32(power.Amount)
+        ? Math.Clamp(decimal.ToInt32(power.Amount) - 1, 0, 12)
         : 0;
 
     public static async Task Advance(PlayerChoiceContext context, Creature owner, int amount, AbstractModel source)
     {
         if (amount == 0) return;
         DuchessMomentPower power = await Ensure(context, owner);
-        int before = decimal.ToInt32(power.Amount);
-        await PowerCmd.Apply<DuchessMomentPower>(context, owner, amount, owner, null);
-        await NotifyMomentChanged(context, owner.Player, before, Current(owner.Player));
+        int before = Current(owner.Player);
+        int target = ((before + amount) % 13 + 13) % 13;
+        await Set(context, owner, target, source);
     }
 
     public static async Task Set(PlayerChoiceContext context, Creature owner, int moment, AbstractModel source)
     {
         DuchessMomentPower power = await Ensure(context, owner);
-        int before = decimal.ToInt32(power.Amount);
-        int target = Math.Max(1, moment);
+        int before = Current(owner.Player);
+        int target = Math.Clamp(moment, 0, 12);
         int delta = target - before;
         if (delta != 0)
             await PowerCmd.Apply<DuchessMomentPower>(context, owner, delta, owner, null);
@@ -78,27 +80,32 @@ public sealed class DuchessMomentPower : PowerModel
 
     private static async Task NotifyMomentChanged(PlayerChoiceContext context, Player player, int before, int after)
     {
-        if (before == 5 || after != 5) return;
-        foreach (DuchessOldPocketwatch relic in player.Relics.OfType<DuchessOldPocketwatch>().ToArray())
-            await relic.OnMomentFive(context);
-        foreach (DuchessMomentFiveRewardPower power in player.Creature.Powers
-                     .OfType<DuchessMomentFiveRewardPower>().ToArray())
-            await power.OnMomentFive(context);
+        if (before != 4 && after == 4)
+        {
+            foreach (DuchessOldPocketwatch relic in player.Relics.OfType<DuchessOldPocketwatch>().ToArray())
+                await relic.OnMomentFour(context);
+        }
+        if (before != 5 && after == 5)
+        {
+            foreach (DuchessMomentFiveRewardPower power in player.Creature.Powers
+                         .OfType<DuchessMomentFiveRewardPower>().ToArray())
+                await power.OnMomentFive(context);
+        }
+        if (before != 6 && after == 6)
+            foreach (DuchessFutureMomentEnergyPower power in player.Creature.Powers
+                         .OfType<DuchessFutureMomentEnergyPower>().ToArray())
+                await power.OnMomentSix(context);
     }
 
-    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext context, ICombatState combatState)
-    {
-        if (player == Owner.Player)
-            await Set(context, Owner, 1, this);
-    }
-
-    public override Task AfterPlayerTurnStartLate(PlayerChoiceContext context, Player player)
+    public override async Task AfterPlayerTurnStartLate(PlayerChoiceContext context, Player player)
     {
         if (player != Owner.Player)
-            return Task.CompletedTask;
+            return;
 
         Data data = GetInternalData<Data>();
         data.PendingMoment = null;
+        await Set(context, Owner, 0, this);
+        data.TurnStartEnergy = player.PlayerCombatState.Energy;
         data.TurnStart.Clear();
         foreach (CardPile pile in player.PlayerCombatState.AllPiles)
         {
@@ -108,7 +115,6 @@ public sealed class DuchessMomentPower : PowerModel
                 data.TurnStart[card] = new CardSnapshot(pile.Type, i, card.EnergyCost.GetResolved());
             }
         }
-        return Task.CompletedTask;
     }
 
     public override async Task AfterCardPlayedLate(PlayerChoiceContext context, CardPlay play)
@@ -124,11 +130,36 @@ public sealed class DuchessMomentPower : PowerModel
         }
         else
         {
+            // The engine dispatches this hook once per CardPlay, including
+            // each native Replay instance, so every actual play advances once.
             await Advance(context, Owner, 1, this);
         }
     }
 
-    public void SetAfterCurrentCard(int moment) => GetInternalData<Data>().PendingMoment = Math.Max(1, moment);
+    // Let the engine's native CardPlay loop execute Replay. This hook only
+    // contributes the replay count; the card's OnPlay runs through the normal
+    // native replay path, including history, targets, and moment accounting.
+    public override int ModifyCardPlayCount(CardModel card, Creature target, int playCount)
+    {
+        if (card.Owner?.Creature == Owner && card is DuchessCard duchessCard
+            && duchessCard.IsMomentActive
+            && duchessCard.Spec.Effects.Any(effect => effect.Kind == "Replay"))
+            return playCount + 1;
+
+        return playCount;
+    }
+
+    public void SetAfterCurrentCard(int moment) => GetInternalData<Data>().PendingMoment = Math.Clamp(moment, 0, 12);
+
+    public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)
+    {
+        modifiedCost = originalCost;
+        if (card is not DuchessCard duchessCard || card.Owner?.Creature != Owner
+            || duchessCard.Spec.MomentCostReduction <= 0 || !duchessCard.IsMomentActive)
+            return false;
+        modifiedCost = Math.Max(0m, originalCost - duchessCard.Spec.MomentCostReduction);
+        return modifiedCost != originalCost;
+    }
 
     public async Task RestoreTurnStart(PlayerChoiceContext context, CardModel source)
     {
@@ -152,6 +183,7 @@ public sealed class DuchessMomentPower : PowerModel
                 pair.Key.EnergyCost.SetThisTurn(pair.Value.Cost, true);
             }
         }
+        await PlayerCmd.SetEnergy(data.TurnStartEnergy, Owner.Player);
     }
 
     public static decimal DamageDealtThisTurn(CardModel card)
@@ -183,6 +215,56 @@ public sealed class DuchessDodgeAtTurnStartPower : PowerModel
                 dodge, PileType.Draw, player, CardPilePosition.Random);
             CardCmd.PreviewCardPileAdd(result);
         }
+    }
+}
+
+public sealed class DuchessTemporaryStrengthDownPower : TemporaryStrengthPower
+{
+    public override AbstractModel OriginModel => ModelDb.Card<DuchessMagicDagger>();
+    protected override bool IsPositive => false;
+}
+
+public sealed class DuchessNextTurnEnergyPower : PowerModel
+{
+    public override PowerType Type => PowerType.Buff;
+    public override PowerStackType StackType => PowerStackType.Counter;
+    protected override bool IsVisibleInternal => false;
+
+    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext context, ICombatState combatState)
+    {
+        if (player != Owner.Player) return;
+        Flash();
+        await PlayerCmd.GainEnergy(Amount, player);
+        await PowerCmd.Remove(this);
+    }
+}
+
+public sealed class DuchessNextTurnDrawPower : PowerModel
+{
+    public override PowerType Type => PowerType.Buff;
+    public override PowerStackType StackType => PowerStackType.Counter;
+    protected override bool IsVisibleInternal => false;
+
+    public override async Task BeforeHandDraw(Player player, PlayerChoiceContext context, ICombatState combatState)
+    {
+        if (player != Owner.Player) return;
+        Flash();
+        await CardPileCmd.Draw(context, Amount, player);
+        await PowerCmd.Remove(this);
+    }
+}
+
+public sealed class DuchessFutureMomentEnergyPower : PowerModel
+{
+    public override PowerType Type => PowerType.Buff;
+    public override PowerStackType StackType => PowerStackType.Counter;
+    protected override bool IsVisibleInternal => false;
+
+    public async Task OnMomentSix(PlayerChoiceContext context)
+    {
+        Flash();
+        await PlayerCmd.GainEnergy(Amount, Owner.Player);
+        await PowerCmd.Remove(this);
     }
 }
 

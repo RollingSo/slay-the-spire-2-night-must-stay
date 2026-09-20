@@ -24,7 +24,7 @@ public class DuchessOldPocketwatch : DuchessRelic
     public override RelicRarity Rarity => RelicRarity.Starter;
     protected virtual decimal CardsToDraw => 1m;
 
-    public async Task OnMomentFive(PlayerChoiceContext context)
+    public async Task OnMomentFour(PlayerChoiceContext context)
     {
         Flash();
         await CardPileCmd.Draw(context, CardsToDraw, Owner);

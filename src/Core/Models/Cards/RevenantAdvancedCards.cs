@@ -543,7 +543,7 @@ public sealed class SpaceRendingFrenzy : CardModel
         if (!target.IsAlive)
             return;
 
-        await RevenantAttackEffects.Damage(
+        await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
             context, target, DynamicVars.Damage.BaseValue, ValueProp.Move, Owner.Creature, this);
     }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);

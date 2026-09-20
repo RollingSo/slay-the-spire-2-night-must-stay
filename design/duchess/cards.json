@@ -33,9 +33,9 @@
   ],
   [
     "Restage",
-    "重演",
-    "Restage",
-    "リステージ",
+    "短剑重演",
+    "Dagger Restage",
+    "短剣のリステージ",
     0,
     "Attack",
     "Basic",
@@ -43,13 +43,14 @@
       [
         "Damage",
         4,
-        6
+        4
       ]
     ],
     {
-      "retain": true,
-      "moment": 5,
-      "restageDivisor": 3
+      "moment": 4,
+      "restageDivisor": 3,
+      "upgradeRetain": true,
+      "targetSelf": false
     }
   ],
   [
@@ -75,6 +76,135 @@
     {
       "upgradeTokens": true
     }
+  ],
+  [
+    "CarianSlicer",
+    "卡利亚迅剑",
+    "Carian Slicer",
+    "カーリアの速剣",
+    1,
+    "Attack",
+    "Common",
+    [["Damage", 9, 12]],
+    {"reaction": true, "shuffleSelf": true}
+  ],
+  [
+    "MagicDagger",
+    "魔力之短剑",
+    "Magic Dagger",
+    "魔力の短剣",
+    0,
+    "Attack",
+    "Common",
+    [["Damage", 4, 5], ["TemporaryStrength", 2, 3, "moment"]],
+    {"moment": 0}
+  ],
+  [
+    "ReturningCrosscut",
+    "往复横斩",
+    "Returning Crosscut",
+    "往復横薙ぎ",
+    1,
+    "Attack",
+    "Common",
+    [["Damage", 7, 9], ["Replay", 1, 1, "moment"]],
+    {"moment": 2}
+  ],
+  [
+    "WaitAMoment",
+    "稍等片刻",
+    "Wait a Moment",
+    "しばし待て",
+    1,
+    "Skill",
+    "Common",
+    [["NextTurnEnergy", 1, 1], ["NextTurnDraw", 1, 2]],
+    {"moment": 3, "momentCostReduction": 1}
+  ],
+  [
+    "OpeningMoment",
+    "开场时刻",
+    "Opening Moment",
+    "開幕の時",
+    1,
+    "Attack",
+    "Common",
+    [["Damage", 10, 10, "moment"]],
+    {"moment": 0, "all": true, "upgradeInnate": true}
+  ],
+  [
+    "Ephemeral",
+    "虚无缥缈",
+    "Ephemeral",
+    "虚ろなる身",
+    1,
+    "Skill",
+    "Uncommon",
+    [["Intangible", 1, 1, "moment"]],
+    {"moment": 6, "upgradedMoment": 5}
+  ],
+  [
+    "Overdraw",
+    "透支",
+    "Overdraw",
+    "前借り",
+    1,
+    "Skill",
+    "Common",
+    [["ShuffleHand", 2, 2], ["Block", 10, 13]]
+  ],
+  [
+    "ForeseeFuture",
+    "预知未来",
+    "Foresee the Future",
+    "未来予知",
+    1,
+    "Skill",
+    "Uncommon",
+    [["FutureMomentEnergy", 2, 2]],
+    {"upgradeCost": 0}
+  ],
+  [
+    "BackToPast",
+    "回到过去",
+    "Back to the Past",
+    "過去への回帰",
+    1,
+    "Skill",
+    "Uncommon",
+    [["Block", 8, 11], ["SetMoment", 0, 0]]
+  ],
+  [
+    "UndecidedFate",
+    "未决命运",
+    "Undecided Fate",
+    "定まらぬ運命",
+    1,
+    "Skill",
+    "Rare",
+    [["DodgeCurrentMoment", 0, 0], ["DrawCurrentMoment", 0, 0]],
+    {"upgradeTokens": true}
+  ],
+  [
+    "ReverseTime",
+    "逆转时空",
+    "Reverse Time",
+    "時空逆転",
+    0,
+    "Skill",
+    "Rare",
+    [["RewindTurn", 0, 0, "moment"]],
+    {"moment": 12, "retain": true, "exhaust": true, "upgradeRemoveExhaust": true}
+  ],
+  [
+    "Reveal",
+    "揭晓",
+    "Reveal",
+    "種明かし",
+    1,
+    "Skill",
+    "Uncommon",
+    [["ShuffleHand", 1, 1], ["Draw", 3, 4]]
   ],
   [
     "Stiletto",
@@ -395,20 +525,14 @@
   ],
   [
     "Feint",
-    "佯攻",
+    "假动作",
     "Feint",
     "陽動",
     0,
     "Skill",
     "Common",
-    [
-      [
-        "AdvanceMoment",
-        2,
-        3
-      ]
-    ],
-    {}
+    [["Draw", 1, 1], ["AdvanceMoment", 1, 1]],
+    {"upgradeRetain": true}
   ],
   [
     "ReadTheRoom",
@@ -900,18 +1024,7 @@
     1,
     "Skill",
     "Uncommon",
-    [
-      [
-        "AdvanceMoment",
-        2,
-        3
-      ],
-      [
-        "Draw",
-        1,
-        1
-      ]
-    ],
+    [["Block", 9, 12], ["ReturnMoment", 2, 2]],
     {}
   ],
   [
@@ -1199,7 +1312,7 @@
     "盛大返场",
     "Grand Reprise",
     "盛大な再登場",
-    2,
+    0,
     "Skill",
     "Rare",
     [
@@ -1208,11 +1321,7 @@
         0,
         0
       ],
-      [
-        "Draw",
-        3,
-        4
-      ]
+      ["Draw", 3, 3]
     ],
     {
       "exhaust": true

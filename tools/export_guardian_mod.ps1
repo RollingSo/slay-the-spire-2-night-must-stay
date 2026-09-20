@@ -16,7 +16,10 @@ $manifestPath = Join-Path $root 'manifest.json'
 $configPath = Join-Path $root 'config.json'
 $releaseDirectory = Join-Path $root '.godot\mono\temp\bin\CodexExport'
 $packPath = Join-Path $buildDirectory "$modId.pck"
-$installModId = if ($BetaTestInstall) { 'NightMustStayBetaTest' } else { $modId }
+# The game resolves the DLL, PCK and localization root from the manifest id.
+# Beta installs therefore keep the stable runtime id/file stem and differ only
+# in their display name and prerelease version.
+$installModId = $modId
 
 $requiredSts2Assemblies = @('0Harmony.dll', 'GodotSharp.dll', 'sts2.dll')
 foreach ($assemblyName in $requiredSts2Assemblies) {
@@ -143,11 +146,15 @@ $installSources = [ordered]@{
 if ($BetaTestInstall) {
     $stableManifest = Get-Content -LiteralPath $manifestPath -Raw | ConvertFrom-Json
     $betaManifest = [ordered]@{
-        id = $installModId
+        # Localization is discovered under res://<manifest id>/localization.
+        # Keep the runtime id aligned with the packaged NightMustStay folder;
+        # only the local artifact names and display name identify this build as beta.
+        id = $stableManifest.id
         name = "$($stableManifest.name) [Beta Test]"
         author = $stableManifest.author
         description = "Local Beta Test build. Do not enable together with the Steam Workshop release. $($stableManifest.description)"
-        version = "$($stableManifest.version)-beta-test"
+        version = "$($stableManifest.version)-beta.1"
+        min_game_version = $stableManifest.min_game_version
         has_dll = $true
         has_pck = $true
         affects_gameplay = $true
