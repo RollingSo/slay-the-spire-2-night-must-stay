@@ -63,6 +63,12 @@ string cards=Read("src/Core/Models/Cards/RevenantAdvancedCards.cs");
 Assert(cards.Contains(".CompatFromCard(card).WithRevenantFx(card)"),"Random-per-hit helper lacks FX.");
 Assert(cards.Contains("Sts2BranchCompat.Damage(\n".Replace("\n",Environment.NewLine)) || cards.Contains("Sts2BranchCompat.Damage(\n"),"Family sacrifice must remain a native damage call.");
 string manager=Read("src/Core/Models/Revenant/RevenantSummonManager.cs");
+string animationPatch=Read("src/Core/Patches/RevenantAnimationPatch.cs");
+Assert(animationPatch.Contains("nameof(NCreature._Ready)") &&
+    animationPatch.Contains("RevenantSummonManager.NotifyCreatureNodeReady(__instance)"),
+    "Family visuals are not retried when the backing Osty node becomes ready.");
+Assert(manager.Contains("_familyVisual.GetParent() != petNode"),
+    "Family visuals are not rebound after the backing combat node is rebuilt.");
 string actions=manager[manager.IndexOf("private async Task PerformFamilyAction(")..manager.IndexOf("public IReadOnlyList<RevenantNecro> GetNecros()")];
 Assert(Regex.Matches(actions,"RevenantAttackEffects.FamilyDamage").Count==6,"Not all 6 family actions connected.");
 Assert(!actions.Contains("Sts2BranchCompat.Damage"),"Family action bypasses FX routing.");

@@ -9,6 +9,13 @@ namespace NightMustStay.Core.Patches;
 [HarmonyPatch]
 public static class RevenantAnimationPatch
 {
+    [HarmonyPatch(typeof(NCreature), nameof(NCreature._Ready))]
+    [HarmonyPostfix]
+    public static void CreatureReady(NCreature __instance)
+    {
+        RevenantSummonManager.NotifyCreatureNodeReady(__instance);
+    }
+
     [HarmonyPatch(typeof(NCreature), nameof(NCreature.SetAnimationTrigger))]
     [HarmonyPostfix]
     public static void SetAnimationTrigger(NCreature __instance, string trigger)

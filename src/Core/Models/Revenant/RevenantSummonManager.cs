@@ -169,6 +169,29 @@ public sealed class RevenantSummonManager
         }
     }
 
+    public static void NotifyCreatureNodeReady(NCreature creatureNode)
+    {
+        Creature creature = creatureNode?.Entity;
+        if (creature == null)
+            return;
+
+        foreach (RevenantSummonManager manager in Managers.Values)
+        {
+            if (manager.IsFamilyCreature(creature) &&
+                manager.CurrentFamilyId is RevenantFamilyId family)
+            {
+                // Osty is the backing combat entity for every family member.
+                // Summoning and NCreature creation can complete in either
+                // order, so retry the visual replacement when the node itself
+                // becomes ready instead of leaving Osty's body visible.
+                manager.RefreshFamilyVisual(family);
+                manager.PositionCurrentNecro();
+                manager.RefreshScheduledFamilyIntent();
+                return;
+            }
+        }
+    }
+
     public RevenantFamilyState GetCurrentFamily()
     {
         SnapshotCurrentFamily();
@@ -832,6 +855,13 @@ public sealed class RevenantSummonManager
             return;
         if (petNode.Body != null)
             petNode.Body.Visible = false;
+        if (_familyVisual != null && GodotObject.IsInstanceValid(_familyVisual) &&
+            _familyVisual.GetParent() != petNode)
+        {
+            StopFamilyTweens();
+            _familyVisual.QueueFree();
+            _familyVisual = null;
+        }
         if (_familyVisual == null || !GodotObject.IsInstanceValid(_familyVisual))
         {
             _familyVisual = new Sprite2D
