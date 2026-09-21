@@ -698,7 +698,7 @@
   "CORRODE_ALL.description": "{Damage:diff()}ダメージを与える。\n[gold]毒爆[/gold]。\n敵の[gold]潜伏毒[/gold]{Threshold:diff()}につき、追加で[gold]毒爆[/gold]を1回発動させる。",
   "CORRODE_ALL.upgradeDescription": "{Damage:diff()}ダメージを与える。\n[gold]毒爆[/gold]。\n敵の[gold]潜伏毒[/gold]{Threshold:diff()}につき、追加で[gold]毒爆[/gold]を1回発動させる。",
   "HUNDRED_SCHEMES.title": "百の策",
-  "HUNDRED_SCHEMES.description": "[gold]手札[/gold]のカード1枚を変化させる。\nアタックなら[gold]接近[/gold]、それ以外なら[gold]離脱[/gold]に変化させる。",
+  "HUNDRED_SCHEMES.description": "[gold]手札[/gold]のカード1枚を変化させる。\nアタックなら[gold]{IfUpgraded:show:接近+|接近}[/gold]、それ以外なら[gold]{IfUpgraded:show:離脱+|離脱}[/gold]に変化させる。",
   "HUNDRED_SCHEMES.upgradeDescription": "[gold]手札[/gold]のカード1枚を変化させる。\nアタックなら[gold]接近+[/gold]、それ以外なら[gold]離脱+[/gold]に変化させる。",
   "HUNDRED_SCHEMES.selectionScreenPrompt": "変化させる[gold]手札[/gold]を1枚選択。",
   "CUT_THROUGH_CHAOS.title": "快刀乱麻",

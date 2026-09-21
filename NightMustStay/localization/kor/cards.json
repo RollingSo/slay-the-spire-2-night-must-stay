@@ -698,7 +698,7 @@
   "CORRODE_ALL.description": "피해를 {Damage:diff()} 줍니다.\n[gold]독폭발[/gold].\n적의 [gold]잠복독[/gold] {Threshold:diff()}당 [gold]독폭발[/gold]을 1번 추가로 발동합니다.",
   "CORRODE_ALL.upgradeDescription": "피해를 {Damage:diff()} 줍니다.\n[gold]독폭발[/gold].\n적의 [gold]잠복독[/gold] {Threshold:diff()}당 [gold]독폭발[/gold]을 1번 추가로 발동합니다.",
   "HUNDRED_SCHEMES.title": "백 가지 계략",
-  "HUNDRED_SCHEMES.description": "[gold]손[/gold]의 카드 1장을 변화시킵니다.\n공격 카드는 [gold]접근[/gold]으로, 그 외의 카드는 [gold]후퇴[/gold]로 변합니다.",
+  "HUNDRED_SCHEMES.description": "[gold]손[/gold]의 카드 1장을 변화시킵니다.\n공격 카드는 [gold]{IfUpgraded:show:접근+|접근}[/gold]으로, 그 외의 카드는 [gold]{IfUpgraded:show:후퇴+|후퇴}[/gold]로 변합니다.",
   "HUNDRED_SCHEMES.upgradeDescription": "[gold]손[/gold]의 카드 1장을 변화시킵니다.\n공격 카드는 [gold]접근+[/gold]로, 그 외의 카드는 [gold]후퇴+[/gold]로 변합니다.",
   "HUNDRED_SCHEMES.selectionScreenPrompt": "손에서 변화시킬 카드를 1장 선택하세요.",
   "CUT_THROUGH_CHAOS.title": "혼돈 베기",

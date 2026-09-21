@@ -9,6 +9,13 @@ Check(
     cardSource.Contains("FromCardWithCardHoverTips<Approach>(IsUpgraded)")
     && cardSource.Contains("FromCardWithCardHoverTips<Retreat>(IsUpgraded)"),
     "Hundred Schemes previews are not tied to its upgrade state.");
+string zhsCards = File.ReadAllText(Path.Combine(
+    Directory.GetCurrentDirectory(),
+    "NightMustStay", "localization", "zhs", "cards.json"));
+Check(
+    zhsCards.Contains("{IfUpgraded:show:接近+|接近}")
+    && zhsCards.Contains("{IfUpgraded:show:远离+|远离}"),
+    "Hundred Schemes card text is not tied to its upgrade state.");
 
 var postfix = AccessTools.Method(
     typeof(IroneyeUnsettlingLampPatch),
@@ -27,7 +34,7 @@ finally
     harmony.UnpatchAll(harmony.Id);
 }
 
-Console.WriteLine("PASS: Hundred Schemes previews upgraded outputs; Unsettling Lamp cannot double Distance-derived stat changes; Harmony patch installs successfully.");
+Console.WriteLine("PASS: Hundred Schemes text and previews show upgraded outputs; Unsettling Lamp cannot double Distance-derived stat changes; Harmony patch installs successfully.");
 
 static void Check(bool condition, string message)
 {

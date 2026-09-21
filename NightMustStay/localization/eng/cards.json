@@ -698,7 +698,7 @@
   "CORRODE_ALL.description": "Deal {Damage:diff()} damage.\n[gold]Poison Burst[/gold].\nFor every {Threshold:diff()} [gold]Hidden Poison[/gold] on the enemy, trigger [gold]Poison Burst[/gold] 1 additional time.",
   "CORRODE_ALL.upgradeDescription": "Deal {Damage:diff()} damage.\n[gold]Poison Burst[/gold].\nFor every {Threshold:diff()} [gold]Hidden Poison[/gold] on the enemy, trigger [gold]Poison Burst[/gold] 1 additional time.",
   "HUNDRED_SCHEMES.title": "Hundred Schemes",
-  "HUNDRED_SCHEMES.description": "Transform 1 card in your [gold]Hand[/gold].\nAn Attack becomes [gold]Approach[/gold]; a non-Attack becomes [gold]Retreat[/gold].",
+  "HUNDRED_SCHEMES.description": "Transform 1 card in your [gold]Hand[/gold].\nAn Attack becomes [gold]{IfUpgraded:show:Approach+|Approach}[/gold]; a non-Attack becomes [gold]{IfUpgraded:show:Retreat+|Retreat}[/gold].",
   "HUNDRED_SCHEMES.upgradeDescription": "Transform 1 card in your [gold]Hand[/gold].\nAn Attack becomes [gold]Approach+[/gold]; a non-Attack becomes [gold]Retreat+[/gold].",
   "HUNDRED_SCHEMES.selectionScreenPrompt": "Choose 1 card in your Hand to transform.",
   "CUT_THROUGH_CHAOS.title": "Cut Through Chaos",

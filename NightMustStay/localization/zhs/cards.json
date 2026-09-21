@@ -698,7 +698,7 @@
   "CORRODE_ALL.description": "造成{Damage:diff()}点伤害。[gold]毒爆[/gold]。\n敌人每有{Threshold:diff()}层[gold]隐毒[/gold]，就额外[gold]毒爆[/gold]1次。",
   "CORRODE_ALL.upgradeDescription": "造成{Damage:diff()}点伤害。[gold]毒爆[/gold]。\n敌人每有{Threshold:diff()}层[gold]隐毒[/gold]，就额外[gold]毒爆[/gold]1次。",
   "HUNDRED_SCHEMES.title": "百谋",
-  "HUNDRED_SCHEMES.description": "变化[gold]手牌[/gold]中1张牌。选择攻击牌时变化为[gold]接近[/gold]，选择非攻击牌时变化为[gold]远离[/gold]。",
+  "HUNDRED_SCHEMES.description": "变化[gold]手牌[/gold]中1张牌。选择攻击牌时变化为[gold]{IfUpgraded:show:接近+|接近}[/gold]，选择非攻击牌时变化为[gold]{IfUpgraded:show:远离+|远离}[/gold]。",
   "HUNDRED_SCHEMES.upgradeDescription": "变化[gold]手牌[/gold]中1张牌。选择攻击牌时变化为[gold]接近+[/gold]，选择非攻击牌时变化为[gold]远离+[/gold]。",
   "HUNDRED_SCHEMES.selectionScreenPrompt": "选择1张手牌进行变化。",
   "CUT_THROUGH_CHAOS.title": "斩乱麻",
