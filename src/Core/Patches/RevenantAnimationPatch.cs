@@ -1,6 +1,7 @@
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Models;
 using NightMustStay.Core.Models.Characters;
 using NightMustStay.Core.Models.Revenant;
 
@@ -39,6 +40,18 @@ public static class RevenantAnimationPatch
     {
         if (TryGetRig(__instance, out Node rig))
             rig.Call("play_trigger", "Revive");
+    }
+
+    public static void PlayCardMotion(CardModel card, string motion)
+    {
+        if (card.Owner?.Creature == null)
+            return;
+        NCreature? creature = NCombatRoom.Instance?.GetCreatureNode(card.Owner.Creature);
+        if (creature != null && TryGetRig(creature, out Node rig))
+        {
+            rig.Call("queue_attack_motion", motion);
+            rig.Call("play_trigger", motion);
+        }
     }
 
     private static bool TryGetRig(NCreature creature, out Node rig)

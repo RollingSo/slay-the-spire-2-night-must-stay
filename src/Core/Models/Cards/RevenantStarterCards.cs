@@ -18,6 +18,7 @@ using NightMustStay.Core.Models.CardPools;
 using NightMustStay.Core.Models.Power;
 
 using NightMustStay.Core.Nodes.Vfx;
+using NightMustStay.Core.Patches;
 
 namespace NightMustStay.Core.Models.Cards;
 
@@ -87,6 +88,7 @@ public sealed class RevenantCall : CardModel
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
+        RevenantAnimationPatch.PlayCardMotion(this, "Call");
         await ChooseFamilyAndCall(context, Owner);
         if (IsUpgraded)
             await RevenantCardHelpers.AddFromDiscard(this, context, 1, false);
@@ -141,6 +143,7 @@ public sealed class RevenantResonance : CardModel
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
+        RevenantAnimationPatch.PlayCardMotion(this, "Resonance");
         await RevenantSummonManager.For(Owner).TriggerResonance(context);
         if (!IsUpgraded)
             return;

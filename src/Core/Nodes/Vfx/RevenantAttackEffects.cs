@@ -20,6 +20,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Compatibility;
 using NightMustStay.Core.Models.Cards;
 using NightMustStay.Core.Models.Revenant;
+using NightMustStay.Core.Patches;
 using K = NightMustStay.Core.Nodes.Vfx.RevenantAttackVfx.Kind;
 
 namespace NightMustStay.Core.Nodes.Vfx;
@@ -57,6 +58,8 @@ public static class RevenantAttackEffects
     {
         K? kind = KindFor(card);
         if (kind == null) return command;
+        RevenantAnimationPatch.PlayCardMotion(card,
+            kind is K.CursedClaw or K.BeastClaw ? "Attack" : "Prayer");
         // One outbound ring for the entire attack, rather than one ring per AOE target.
         if (kind == K.HaloOut)
             return command.WithHitFx().WithAttackerFx(() => CreateHaloOut(card, target, null, command.DamageProps));
