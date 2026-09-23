@@ -91,6 +91,7 @@ if ($LASTEXITCODE -ne 0) {
 
 # Validate Duchess runtime images before exporting.
 if (Test-Path -LiteralPath (Join-Path $root 'src/Core/Models/Characters/Duchess.cs')) {
+    & (Join-Path $PSScriptRoot 'validate_duchess_upgrade_text.ps1') -Sts2AssemblyDir $Sts2AssemblyDir
     & (Join-Path $PSScriptRoot 'validate_duchess_assets.ps1')
 }
 

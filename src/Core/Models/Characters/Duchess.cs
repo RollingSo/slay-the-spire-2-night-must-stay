@@ -31,7 +31,7 @@ public sealed class Duchess : CharacterModel
         ModelDb.Card<DuchessStrike>(), ModelDb.Card<DuchessStrike>(),
         ModelDb.Card<DuchessDefend>(), ModelDb.Card<DuchessDefend>(),
         ModelDb.Card<DuchessDefend>(), ModelDb.Card<DuchessDefend>(),
-        ModelDb.Card<DuchessElegantBearing>(), ModelDb.Card<DuchessRestage>(),
+        ModelDb.Card<DuchessElegantBearing>(), ModelDb.Card<DuchessBladeRevealMoment>(),
     };
     public override IReadOnlyList<RelicModel> StartingRelics => new[] { ModelDb.Relic<DuchessOldPocketwatch>() };
     public override string CharacterSelectSfx => "event:/sfx/ui/clicks/ui_click";

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
@@ -10,6 +11,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
@@ -90,11 +92,17 @@ public sealed class DuchessMomentPower : PowerModel
             foreach (DuchessMomentFiveRewardPower power in player.Creature.Powers
                          .OfType<DuchessMomentFiveRewardPower>().ToArray())
                 await power.OnMomentFive(context);
+            foreach (DuchessBeatPower power in player.Creature.Powers.OfType<DuchessBeatPower>().ToArray())
+                await power.OnMomentFive(context);
         }
         if (before != 6 && after == 6)
             foreach (DuchessFutureMomentEnergyPower power in player.Creature.Powers
                          .OfType<DuchessFutureMomentEnergyPower>().ToArray())
                 await power.OnMomentSix(context);
+        if (before != 12 && after == 12)
+            foreach (DuchessEternalRestagePower power in player.Creature.Powers
+                         .OfType<DuchessEternalRestagePower>().ToArray())
+                await power.OnMomentTwelve(context);
     }
 
     public override async Task AfterPlayerTurnStartLate(PlayerChoiceContext context, Player player)
@@ -154,10 +162,17 @@ public sealed class DuchessMomentPower : PowerModel
     public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost)
     {
         modifiedCost = originalCost;
-        if (card is not DuchessCard duchessCard || card.Owner?.Creature != Owner
-            || duchessCard.Spec.MomentCostReduction <= 0 || !duchessCard.IsMomentActive)
+        if (card is not DuchessCard duchessCard || card.Owner?.Creature != Owner)
             return false;
-        modifiedCost = Math.Max(0m, originalCost - duchessCard.Spec.MomentCostReduction);
+        int discount = 0;
+        if (duchessCard.IsMomentActive)
+            discount += duchessCard.Spec.MomentCostReduction;
+        if (duchessCard.Spec.MomentCostReductionDynamic)
+            discount += Current(Owner.Player);
+        if (duchessCard.Spec.ConcealedCostReduction > 0
+            && Owner.HasPower<DuchessConcealmentPower>())
+            discount += duchessCard.Spec.ConcealedCostReduction;
+        modifiedCost = Math.Max(0m, originalCost - discount);
         return modifiedCost != originalCost;
     }
 
@@ -199,22 +214,23 @@ public sealed class DuchessMomentPower : PowerModel
     }
 }
 
-public sealed class DuchessDodgeAtTurnStartPower : PowerModel
+public sealed class DuchessRadiantBladeTurnsPower : PowerModel
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
+    protected override bool IsVisibleInternal => false;
 
     public override async Task BeforeHandDraw(Player player, PlayerChoiceContext context, ICombatState combatState)
     {
         if (player != Owner.Player)
             return;
-        for (int i = 0; i < Amount; i++)
-        {
-            DuchessDodge dodge = combatState.CreateCard<DuchessDodge>(player);
-            CardPileAddResult result = await CardPileCmd.AddGeneratedCardToCombat(
-                dodge, PileType.Draw, player, CardPilePosition.Random);
-            CardCmd.PreviewCardPileAdd(result);
-        }
+        DuchessRadiantBlade blade = combatState.CreateCard<DuchessRadiantBlade>(player);
+        if (player.Creature.HasPower<DuchessRadiantBladeGrowthPower>())
+            blade.DynamicVars.Damage.BaseValue += player.Creature.GetPower<DuchessRadiantBladeGrowthPower>().TotalGrowth;
+        CardPileAddResult result = await CardPileCmd.AddGeneratedCardToCombat(
+            blade, PileType.Hand, player, CardPilePosition.Top);
+        CardCmd.PreviewCardPileAdd(result);
+        await PowerCmd.Decrement(this);
     }
 }
 
@@ -222,6 +238,31 @@ public sealed class DuchessTemporaryStrengthDownPower : TemporaryStrengthPower
 {
     public override AbstractModel OriginModel => ModelDb.Card<DuchessMagicDagger>();
     protected override bool IsPositive => false;
+}
+
+public sealed class DuchessTurnStartSwapPower : PowerModel
+{
+    public override PowerType Type => PowerType.Buff;
+    public override PowerStackType StackType => PowerStackType.Counter;
+
+    public override async Task AfterSideTurnStartLate(
+        CombatSide side, IReadOnlyList<Creature> creatures, ICombatState combatState)
+    {
+        if (side != Owner.Side || !creatures.Contains(Owner)) return;
+        Player player = Owner.Player;
+        CardPile hand = PileType.Hand.GetPile(player);
+        for (int i = 0; i < decimal.ToInt32(Amount) && hand.Cards.Count > 0; i++)
+        {
+            CardModel selected = (await CardSelectCmd.FromCombatPile(
+                new BlockingPlayerChoiceContext(), hand, player,
+                new CardSelectorPrefs(new LocString("cards", "DUCHESS_SELECT_TURN_START_SWAP"), 1)))
+                .FirstOrDefault();
+            if (selected == null) return;
+            Flash();
+            await CardPileCmd.Add(selected, PileType.Draw, CardPilePosition.Random, this);
+            await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), 1m, player);
+        }
+    }
 }
 
 public sealed class DuchessNextTurnEnergyPower : PowerModel
@@ -262,9 +303,33 @@ public sealed class DuchessFutureMomentEnergyPower : PowerModel
 
     public async Task OnMomentSix(PlayerChoiceContext context)
     {
+        // Remove first: gaining energy can dispatch more hooks before this
+        // callback returns, and this reward is strictly one-shot.
+        decimal reward = Amount;
         Flash();
-        await PlayerCmd.GainEnergy(Amount, Owner.Player);
         await PowerCmd.Remove(this);
+        await PlayerCmd.GainEnergy(reward, Owner.Player);
+    }
+
+    public override async Task BeforeSideTurnEnd(PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> participants)
+    {
+        if (participants.Contains(Owner))
+            await PowerCmd.Remove(this);
+    }
+}
+
+public sealed class DuchessEndTurnMomentBlockPower : PowerModel
+{
+    public override PowerType Type => PowerType.Buff;
+    public override PowerStackType StackType => PowerStackType.Counter;
+
+    public override async Task BeforeSideTurnEnd(PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> participants)
+    {
+        if (!participants.Contains(Owner)) return;
+        int moment = DuchessMomentPower.Current(Owner.Player);
+        if (moment <= 0) return;
+        Flash();
+        await CreatureCmd.GainBlock(Owner, Amount * moment, ValueProp.Unpowered, null);
     }
 }
 
@@ -273,10 +338,26 @@ public sealed class DuchessReactionBlockPower : PowerModel
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public async Task OnReactionTriggered()
+    public override async Task AfterCardPlayedLate(PlayerChoiceContext context, CardPlay play)
     {
+        if (play.Card.Owner?.Creature != Owner || play.Card is not DuchessCard { HasReaction: true }) return;
         Flash();
         await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Unpowered, null);
+    }
+}
+
+public sealed class DuchessReactionDrawPower : PowerModel
+{
+    public override PowerType Type => PowerType.Buff;
+    public override PowerStackType StackType => PowerStackType.Counter;
+
+    public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
+    {
+        if (card.Owner?.Creature != Owner || oldPileType != PileType.Draw
+            || card.Pile?.Type != PileType.Hand || card is not DuchessCard { HasReaction: true })
+            return;
+        Flash();
+        await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), Amount, Owner.Player);
     }
 }
 
@@ -292,12 +373,6 @@ public abstract class DuchessMomentFiveRewardPower : PowerModel
     }
 
     protected abstract Task ResolveMomentFive(PlayerChoiceContext context);
-}
-
-public sealed class DuchessMomentFiveBlockPower : DuchessMomentFiveRewardPower
-{
-    protected override Task ResolveMomentFive(PlayerChoiceContext context) =>
-        CreatureCmd.GainBlock(Owner, Amount, ValueProp.Unpowered, null);
 }
 
 public sealed class DuchessMomentFiveDrawPower : DuchessMomentFiveRewardPower

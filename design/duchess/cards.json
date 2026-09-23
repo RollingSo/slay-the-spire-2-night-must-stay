@@ -38,7 +38,7 @@
     "短剣のリステージ",
     0,
     "Attack",
-    "Basic",
+    "Uncommon",
     [
       [
         "Damage",
@@ -58,23 +58,43 @@
     "优雅身段",
     "Elegant Bearing",
     "優雅な身ごなし",
-    1,
+    0,
     "Skill",
     "Basic",
     [
       [
         "DodgeToDraw",
-        3,
-        3
-      ],
-      [
-        "Draw",
         2,
         2
       ]
     ],
     {
       "upgradeTokens": true
+    }
+  ],
+  [
+    "BladeRevealMoment",
+    "亮剑时刻",
+    "Blade Reveal Moment",
+    "抜剣の時刻",
+    1,
+    "Attack",
+    "Basic",
+    [
+      [
+        "Damage",
+        7,
+        10
+      ],
+      [
+        "Draw",
+        2,
+        2,
+        "moment"
+      ]
+    ],
+    {
+      "moment": 3
     }
   ],
   [
@@ -85,8 +105,80 @@
     1,
     "Attack",
     "Common",
-    [["Damage", 9, 12]],
-    {"reaction": true, "shuffleSelf": true}
+    [
+      [
+        "Damage",
+        9,
+        12
+      ]
+    ],
+    {
+      "reaction": true,
+      "shuffleSelf": true
+    }
+  ],
+  [
+    "GreatswordPhalanx",
+    "巨剑阵",
+    "Greatsword Phalanx",
+    "大剣の円陣",
+    2,
+    "Attack",
+    "Rare",
+    [
+      [
+        "InstinctRadiantBladesToDraw",
+        3,
+        3
+      ]
+    ],
+    {
+      "upgradeTokens": true,
+      "targetSelf": true
+    }
+  ],
+  [
+    "MiquellasHalo",
+    "米凯拉的光环",
+    "Miquella's Halo",
+    "ミケラの光輪",
+    1,
+    "Attack",
+    "Rare",
+    [
+      [
+        "MomentDamage",
+        0,
+        0
+      ],
+      [
+        "ReturnSelfToDrawTop",
+        0,
+        0
+      ]
+    ],
+    {
+      "upgradeCost": 0
+    }
+  ],
+  [
+    "CarianSwordsmanship",
+    "卡利亚剑术",
+    "Carian Swordsmanship",
+    "カーリアの剣術",
+    2,
+    "Power",
+    "Rare",
+    [
+      [
+        "TransformStrike",
+        1,
+        1
+      ]
+    ],
+    {
+      "upgradeCost": 1
+    }
   ],
   [
     "MagicDagger",
@@ -96,8 +188,22 @@
     0,
     "Attack",
     "Common",
-    [["Damage", 4, 5], ["TemporaryStrength", 2, 3, "moment"]],
-    {"moment": 0}
+    [
+      [
+        "Damage",
+        4,
+        5
+      ],
+      [
+        "TemporaryStrength",
+        2,
+        3,
+        "moment"
+      ]
+    ],
+    {
+      "moment": 0
+    }
   ],
   [
     "ReturningCrosscut",
@@ -107,8 +213,22 @@
     1,
     "Attack",
     "Common",
-    [["Damage", 7, 9], ["Replay", 1, 1, "moment"]],
-    {"moment": 2}
+    [
+      [
+        "Damage",
+        7,
+        9
+      ],
+      [
+        "Replay",
+        1,
+        1,
+        "moment"
+      ]
+    ],
+    {
+      "moment": 2
+    }
   ],
   [
     "WaitAMoment",
@@ -118,8 +238,18 @@
     1,
     "Skill",
     "Common",
-    [["NextTurnEnergy", 1, 1], ["NextTurnDraw", 1, 2]],
-    {"moment": 3, "momentCostReduction": 1}
+    [
+      [
+        "NextTurnEnergyAndDraw",
+        1,
+        2
+      ]
+    ],
+    {
+      "moment": 3,
+      "momentCostReduction": 1,
+      "compactMomentCostText": true
+    }
   ],
   [
     "OpeningMoment",
@@ -129,8 +259,19 @@
     1,
     "Attack",
     "Common",
-    [["Damage", 10, 10, "moment"]],
-    {"moment": 0, "all": true, "upgradeInnate": true}
+    [
+      [
+        "Damage",
+        10,
+        10,
+        "moment"
+      ]
+    ],
+    {
+      "moment": 0,
+      "all": true,
+      "upgradeInnate": true
+    }
   ],
   [
     "Ephemeral",
@@ -140,8 +281,18 @@
     1,
     "Skill",
     "Uncommon",
-    [["Intangible", 1, 1, "moment"]],
-    {"moment": 6, "upgradedMoment": 5}
+    [
+      [
+        "Intangible",
+        1,
+        1,
+        "moment"
+      ]
+    ],
+    {
+      "moment": 6,
+      "upgradedMoment": 5
+    }
   ],
   [
     "Overdraw",
@@ -151,7 +302,18 @@
     1,
     "Skill",
     "Common",
-    [["ShuffleHand", 2, 2], ["Block", 10, 13]]
+    [
+      [
+        "ShuffleHand",
+        2,
+        2
+      ],
+      [
+        "Block",
+        10,
+        13
+      ]
+    ]
   ],
   [
     "ForeseeFuture",
@@ -161,8 +323,16 @@
     1,
     "Skill",
     "Uncommon",
-    [["FutureMomentEnergy", 2, 2]],
-    {"upgradeCost": 0}
+    [
+      [
+        "FutureMomentEnergy",
+        2,
+        2
+      ]
+    ],
+    {
+      "upgradeCost": 0
+    }
   ],
   [
     "BackToPast",
@@ -172,7 +342,18 @@
     1,
     "Skill",
     "Uncommon",
-    [["Block", 8, 11], ["SetMoment", 0, 0]]
+    [
+      [
+        "Block",
+        8,
+        11
+      ],
+      [
+        "SetMoment",
+        0,
+        0
+      ]
+    ]
   ],
   [
     "UndecidedFate",
@@ -182,8 +363,21 @@
     1,
     "Skill",
     "Rare",
-    [["DodgeCurrentMoment", 0, 0], ["DrawCurrentMoment", 0, 0]],
-    {"upgradeTokens": true}
+    [
+      [
+        "DodgeCurrentMoment",
+        0,
+        0
+      ],
+      [
+        "DrawCurrentMoment",
+        0,
+        0
+      ]
+    ],
+    {
+      "upgradeTokens": true
+    }
   ],
   [
     "ReverseTime",
@@ -193,8 +387,20 @@
     0,
     "Skill",
     "Rare",
-    [["RewindTurn", 0, 0, "moment"]],
-    {"moment": 12, "retain": true, "exhaust": true, "upgradeRemoveExhaust": true}
+    [
+      [
+        "RewindTurn",
+        0,
+        0,
+        "moment"
+      ]
+    ],
+    {
+      "moment": 12,
+      "retain": true,
+      "exhaust": true,
+      "upgradeRemoveExhaust": true
+    }
   ],
   [
     "Reveal",
@@ -204,153 +410,42 @@
     1,
     "Skill",
     "Uncommon",
-    [["ShuffleHand", 1, 1], ["Draw", 3, 4]]
-  ],
-  [
-    "Stiletto",
-    "细刃",
-    "Stiletto",
-    "細刃",
-    1,
-    "Attack",
-    "Common",
     [
       [
-        "Damage",
-        6,
-        9
-      ]
-    ],
-    {
-      "reaction": true
-    }
-  ],
-  [
-    "TwinFangs",
-    "双刃刺",
-    "Twin Fangs",
-    "双刃突き",
-    1,
-    "Attack",
-    "Common",
-    [
+        "ShuffleHand",
+        1,
+        1
+      ],
       [
-        "Damage",
-        4,
-        5
+        "Draw",
+        3,
+        4
       ]
-    ],
-    {
-      "hits": 2
-    }
+    ]
   ],
   [
     "PassingCut",
     "擦身斩",
     "Passing Cut",
     "すれ違い斬り",
-    1,
+    2,
     "Attack",
     "Common",
     [
       [
         "Damage",
         7,
-        10
+        9
       ],
       [
         "Block",
-        3,
-        4
+        7,
+        9
       ]
     ],
     {
       "reaction": true
     }
-  ],
-  [
-    "LowSweep",
-    "低身横扫",
-    "Low Sweep",
-    "低空薙ぎ",
-    1,
-    "Attack",
-    "Common",
-    [
-      [
-        "Damage",
-        6,
-        8
-      ]
-    ],
-    {
-      "all": true
-    }
-  ],
-  [
-    "Needlework",
-    "穿针",
-    "Needlework",
-    "針通し",
-    1,
-    "Attack",
-    "Common",
-    [
-      [
-        "Damage",
-        7,
-        10
-      ],
-      [
-        "Weak",
-        1,
-        1
-      ]
-    ]
-  ],
-  [
-    "OpeningThrust",
-    "开场突刺",
-    "Opening Thrust",
-    "開幕の刺突",
-    1,
-    "Attack",
-    "Common",
-    [
-      [
-        "Damage",
-        9,
-        12
-      ],
-      [
-        "Draw",
-        1,
-        1,
-        "first"
-      ]
-    ]
-  ],
-  [
-    "FollowThrough",
-    "衔接",
-    "Follow Through",
-    "つなぎの刃",
-    1,
-    "Attack",
-    "Common",
-    [
-      [
-        "Damage",
-        8,
-        11
-      ],
-      [
-        "Draw",
-        1,
-        1,
-        "afterSkill"
-      ]
-    ]
   ],
   [
     "BlindSpot",
@@ -363,121 +458,85 @@
     [
       [
         "Damage",
-        9,
-        12
+        8,
+        8
       ],
       [
         "Vulnerable",
-        1,
         2,
-        "moment"
-      ]
-    ],
-    {
-      "moment": 4
-    }
-  ],
-  [
-    "SerratedEdge",
-    "锯齿刃",
-    "Serrated Edge",
-    "鋸刃",
-    2,
-    "Attack",
-    "Common",
-    [
-      [
-        "Damage",
-        16,
-        21
-      ],
-      [
-        "Vulnerable",
-        1,
-        1
-      ]
-    ]
-  ],
-  [
-    "GlintstoneKnife",
-    "辉石小刀",
-    "Glintstone Knife",
-    "輝石の小刀",
-    1,
-    "Attack",
-    "Common",
-    [
-      [
-        "Damage",
-        7,
-        9
-      ],
-      [
-        "DodgeToDraw",
-        1,
-        1
+        3,
+        "concealed"
       ]
     ],
     {}
   ],
   [
-    "PartingCut",
-    "临别一刀",
-    "Parting Cut",
-    "別れの一太刀",
+    "PoisedExit",
+    "从容退场",
+    "Poised Exit",
+    "優雅な退場",
     1,
-    "Attack",
+    "Skill",
     "Common",
+    [
+      [
+        "Block",
+        7,
+        7
+      ],
+      [
+        "WeakAll",
+        2,
+        3,
+        "moment"
+      ]
+    ],
+    {
+      "moment": 3,
+      "targetSelf": true
+    }
+  ],
+  [
+    "GlintstoneHail",
+    "辉石慧砾",
+    "Glintstone Hail",
+    "輝石のつぶて",
+    0,
+    "Attack",
+    "Uncommon",
     [
       [
         "Damage",
-        10,
-        13
+        4,
+        4
       ],
       [
-        "Block",
-        4,
-        4,
-        "afterAttack"
-      ]
-    ]
-  ],
-  [
-    "MeasuredStep",
-    "从容退步",
-    "Measured Step",
-    "静かな後退",
-    1,
-    "Skill",
-    "Common",
-    [
-      [
-        "Block",
-        8,
-        11
-      ]
-    ]
-  ],
-  [
-    "SilkenGuard",
-    "绸幕",
-    "Silken Guard",
-    "絹の幕",
-    1,
-    "Skill",
-    "Common",
-    [
-      [
-        "Block",
+        "ReturnHandDamageBoost",
         6,
-        8
-      ],
+        9,
+        "moment"
+      ]
+    ],
+    {
+      "moment": 5
+    }
+  ],
+  [
+    "GlintstoneKnife",
+    "调包",
+    "Switcheroo",
+    "すり替え",
+    1,
+    "Power",
+    "Rare",
+    [
       [
-        "Draw",
+        "TurnStartSwap",
         1,
         1
       ]
-    ]
+    ],
+    {"upgradeCost": 0, "targetSelf": true}
   ],
   [
     "Pivot",
@@ -490,8 +549,8 @@
     [
       [
         "Block",
-        3,
-        5
+        4,
+        6
       ],
       [
         "AdvanceMoment",
@@ -509,19 +568,8 @@
     1,
     "Skill",
     "Common",
-    [
-      [
-        "DodgeToDraw",
-        1,
-        2
-      ],
-      [
-        "Draw",
-        1,
-        1
-      ]
-    ],
-    {}
+    [["Concealment", 1, 2]],
+    {"reaction": true}
   ],
   [
     "Feint",
@@ -531,65 +579,75 @@
     0,
     "Skill",
     "Common",
-    [["Draw", 1, 1], ["AdvanceMoment", 1, 1]],
-    {"upgradeRetain": true}
-  ],
-  [
-    "ReadTheRoom",
-    "察言观色",
-    "Read the Room",
-    "気配を読む",
-    1,
-    "Skill",
-    "Common",
     [
       [
         "Draw",
-        2,
-        3
-      ]
-    ]
-  ],
-  [
-    "TakeABreath",
-    "换息",
-    "Take a Breath",
-    "息継ぎ",
-    0,
-    "Skill",
-    "Common",
-    [
-      [
-        "Energy",
         1,
         1
       ],
       [
-        "Draw",
+        "AdvanceMoment",
         1,
-        2
+        1
       ]
     ],
     {
-      "exhaust": true
+      "upgradeRetain": true
     }
   ],
   [
-    "HiddenPocket",
-    "暗袋",
-    "Hidden Pocket",
-    "隠しポケット",
+    "SwayingStep",
+    "摇曳步",
+    "Swaying Step",
+    "揺らめく歩み",
     1,
     "Skill",
     "Common",
     [
       [
         "DodgeToDraw",
-        2,
+        3,
         3
       ]
     ],
-    {}
+    {"upgradeTokens": true}
+  ],
+  [
+    "RadiantBladeArray",
+    "辉剑圆阵",
+    "Radiant Blade Array",
+    "輝剣円陣",
+    1,
+    "Attack",
+    "Common",
+    [
+      [
+        "RadiantBladeToDraw",
+        3,
+        3
+      ]
+    ],
+    {
+      "upgradeTokens": true,
+      "targetSelf": true
+    }
+  ],
+  [
+    "HiddenPocket",
+    "隐藏口袋",
+    "Hidden Pocket",
+    "隠しポケット",
+    1,
+    "Skill",
+    "Uncommon",
+    [
+      [
+        "HandToDrawTopBlock",
+        3,
+        4
+      ]
+    ],
+    {"targetSelf": true}
   ],
   [
     "SoftLanding",
@@ -598,22 +656,22 @@
     "静かな着地",
     1,
     "Skill",
-    "Common",
+    "Uncommon",
     [
       [
         "Block",
-        7,
-        10
+        6,
+        6
       ],
       [
-        "DodgeToDraw",
+        "Concealment",
         1,
-        1,
+        2,
         "moment"
       ]
     ],
     {
-      "moment": 4
+      "moment": 1
     }
   ],
   [
@@ -623,284 +681,43 @@
     "残響",
     1,
     "Skill",
-    "Common",
+    "Uncommon",
     [
       [
         "ShuffleDiscard",
-        1,
+        2,
         2
       ],
       [
         "Draw",
-        1,
-        2
-      ],
-      [
-        "Block",
-        4,
-        6
-      ]
-    ],
-    {}
-  ],
-  [
-    "Poised",
-    "整顿衣襟",
-    "Poised",
-    "襟を正す",
-    1,
-    "Skill",
-    "Common",
-    [
-      [
-        "Block",
-        5,
-        8
-      ],
-      [
-        "SetMoment",
-        3,
-        3
-      ]
-    ],
-    {}
-  ],
-  [
-    "CurtainTug",
-    "牵幕",
-    "Curtain Tug",
-    "幕引きの手",
-    1,
-    "Skill",
-    "Common",
-    [
-      [
-        "Weak",
         2,
         3
       ]
-    ]
+    ],
+    {}
   ],
   [
     "Distraction",
     "引开目光",
     "Distraction",
     "目くらまし",
-    1,
-    "Skill",
+    0,
+    "Attack",
     "Common",
-    [
-      [
-        "Weak",
-        1,
-        2
-      ],
-      [
-        "Block",
-        5,
-        7
-      ]
-    ],
-    {
-      "all": true
-    }
-  ],
-  [
-    "TripleWaltz",
-    "三拍华尔兹",
-    "Triple Waltz",
-    "三拍子",
-    1,
-    "Attack",
-    "Uncommon",
-    [
-      [
-        "Damage",
-        3,
-        4
-      ]
-    ],
-    {
-      "hits": 3
-    }
-  ],
-  [
-    "DaggerFan",
-    "扇刃",
-    "Dagger Fan",
-    "扇刃",
-    1,
-    "Attack",
-    "Uncommon",
     [
       [
         "Damage",
         4,
-        5
-      ]
-    ],
-    {
-      "hits": 2,
-      "all": true
-    }
-  ],
-  [
-    "PerfectAngle",
-    "绝佳角度",
-    "Perfect Angle",
-    "完璧な角度",
-    2,
-    "Attack",
-    "Uncommon",
-    [
-      [
-        "Damage",
-        19,
-        25
+        4
       ],
       [
-        "Vulnerable",
-        2,
-        3,
-        "moment"
-      ]
-    ],
-    {
-      "moment": 6
-    }
-  ],
-  [
-    "MaskedAssault",
-    "假面突袭",
-    "Masked Assault",
-    "仮面の急襲",
-    1,
-    "Attack",
-    "Uncommon",
-    [
-      [
-        "Damage",
-        11,
-        15
-      ],
-      [
-        "Draw",
+        "Concealment",
         1,
         2,
         "moment"
       ]
     ],
     {
-      "reaction": true,
-      "moment": 5
-    }
-  ],
-  [
-    "DancePartner",
-    "舞伴",
-    "Dance Partner",
-    "舞の相手",
-    1,
-    "Attack",
-    "Uncommon",
-    [
-      [
-        "Damage",
-        8,
-        11
-      ],
-      [
-        "Vulnerable",
-        2,
-        2,
-        "afterSkill"
-      ]
-    ]
-  ],
-  [
-    "CutAndFade",
-    "斩后隐去",
-    "Cut and Fade",
-    "斬って消える",
-    2,
-    "Attack",
-    "Uncommon",
-    [
-      [
-        "Damage",
-        13,
-        17
-      ],
-      [
-        "DodgeToDraw",
-        1,
-        2
-      ]
-    ],
-    {}
-  ],
-  [
-    "PaleMoonblade",
-    "苍月刃",
-    "Pale Moonblade",
-    "蒼月の刃",
-    2,
-    "Attack",
-    "Uncommon",
-    [
-      [
-        "Damage",
-        12,
-        16
-      ]
-    ],
-    {
-      "all": true
-    }
-  ],
-  [
-    "NoWitness",
-    "无人目击",
-    "No Witness",
-    "目撃者なし",
-    1,
-    "Attack",
-    "Uncommon",
-    [
-      [
-        "Damage",
-        12,
-        16
-      ]
-    ],
-    {
-      "exhaust": true,
-      "retain": true
-    }
-  ],
-  [
-    "SecondThought",
-    "补上一刀",
-    "Second Thought",
-    "念押し",
-    1,
-    "Attack",
-    "Uncommon",
-    [
-      [
-        "Damage",
-        8,
-        11
-      ],
-      [
-        "Draw",
-        1,
-        1,
-        "moment"
-      ]
-    ],
-    {
-      "reaction": true,
       "moment": 3
     }
   ],
@@ -909,24 +726,19 @@
     "穿隙",
     "Thread the Gap",
     "隙を縫う",
-    1,
-    "Attack",
+    2,
+    "Power",
     "Uncommon",
     [
       [
-        "Damage",
-        9,
-        12
-      ],
-      [
-        "Energy",
+        "EndTurnMomentBlock",
         1,
-        1,
-        "afterSkill"
+        1
       ]
     ],
     {
-      "exhaust": true
+      "upgradeCost": 1,
+      "targetSelf": true
     }
   ],
   [
@@ -934,86 +746,53 @@
     "银光一闪",
     "Silver Flash",
     "銀の閃き",
-    2,
+    1,
     "Attack",
     "Uncommon",
     [
       [
         "Damage",
-        12,
-        16
+        8,
+        8
       ],
       [
-        "DodgeToDraw",
-        2,
-        2
+        "ConcealedBonusDamage",
+        8,
+        12
       ]
     ],
-    {
-      "reaction": true
-    }
+    {}
   ],
   [
-    "Understudy",
-    "替身",
-    "Understudy",
-    "身代わり",
+    "GapMoonshadow",
+    "隙间月影",
+    "Gap Moonshadow",
+    "間隙の月影",
     1,
-    "Skill",
+    "Attack",
     "Uncommon",
     [
       [
-        "DodgeToHand",
-        2,
-        3
-      ]
-    ],
-    {
-      "exhaust": true
-    }
-  ],
-  [
-    "Encore",
-    "再来一次",
-    "Encore",
-    "もう一度",
-    1,
-    "Skill",
-    "Uncommon",
-    [
-      [
-        "ShuffleDiscard",
-        2,
-        3
+        "Damage",
+        7,
+        7
       ],
       [
-        "Draw",
-        2,
-        3
-      ]
-    ],
-    {
-      "exhaust": true
-    }
-  ],
-  [
-    "HeldBreath",
-    "屏息",
-    "Held Breath",
-    "息を潜める",
-    1,
-    "Skill",
-    "Uncommon",
-    [
+        "AoeDamage",
+        7,
+        9,
+        "moment2"
+      ],
       [
-        "DodgeToHand",
-        1,
-        2
+        "ExtraDamage",
+        14,
+        18,
+        "moment4"
       ]
     ],
     {
-      "exhaust": true,
-      "reaction": true
+      "moment": 2,
+      "secondaryMoment": 4
     }
   ],
   [
@@ -1021,199 +800,43 @@
     "邀舞",
     "Invitation",
     "舞への誘い",
-    1,
-    "Skill",
-    "Uncommon",
-    [["Block", 9, 12], ["ReturnMoment", 2, 2]],
-    {}
-  ],
-  [
-    "TurnAside",
-    "侧身避让",
-    "Turn Aside",
-    "身をかわす",
-    1,
+    0,
     "Skill",
     "Uncommon",
     [
       [
-        "Block",
-        9,
-        12
+        "ChooseDrawToTop",
+        1,
+        1
       ],
       [
-        "DodgeToDraw",
-        1,
-        2,
-        "moment"
+        "SetMoment",
+        0,
+        0
       ]
     ],
     {
-      "moment": 4
+      "exhaust": true,
+      "upgradeRemoveExhaust": true,
+      "targetSelf": true
     }
-  ],
-  [
-    "Backstage",
-    "幕后",
-    "Backstage",
-    "舞台裏",
-    1,
-    "Skill",
-    "Uncommon",
-    [
-      [
-        "Draw",
-        3,
-        4
-      ]
-    ],
-    {
-      "exhaust": true
-    }
-  ],
-  [
-    "QuietSignal",
-    "无声暗号",
-    "Quiet Signal",
-    "無言の合図",
-    1,
-    "Skill",
-    "Uncommon",
-    [
-      [
-        "AllyBlock",
-        6,
-        9
-      ],
-      [
-        "AdvanceMoment",
-        1,
-        2
-      ]
-    ],
-    {}
-  ],
-  [
-    "MoonlitVeil",
-    "月下帷幕",
-    "Moonlit Veil",
-    "月下の帳",
-    2,
-    "Skill",
-    "Uncommon",
-    [
-      [
-        "AllyDodge",
-        1,
-        2
-      ],
-      [
-        "Block",
-        7,
-        11
-      ]
-    ],
-    {}
-  ],
-  [
-    "DressRehearsal",
-    "预演",
-    "Dress Rehearsal",
-    "予行",
-    1,
-    "Skill",
-    "Uncommon",
-    [
-      [
-        "ShuffleHand",
-        1,
-        2
-      ],
-      [
-        "Draw",
-        2,
-        3
-      ]
-    ],
-    {}
   ],
   [
     "QuickHands",
     "巧手",
     "Quick Hands",
     "早業",
-    0,
-    "Skill",
-    "Uncommon",
-    [
-      [
-        "DodgeToHand",
-        1,
-        2
-      ]
-    ],
-    {}
-  ],
-  [
-    "StolenMoment",
-    "偷来的片刻",
-    "Stolen Moment",
-    "盗んだひととき",
     1,
     "Skill",
     "Uncommon",
     [
       [
-        "Block",
-        10,
-        14
-      ],
-      [
-        "SetMoment",
-        3,
-        3
-      ]
-    ],
-    {}
-  ],
-  [
-    "Sway",
-    "摇曳",
-    "Sway",
-    "ゆらめき",
-    1,
-    "Skill",
-    "Uncommon",
-    [
-      [
-        "DodgeToDraw",
+        "DrawReactionFromPile",
         1,
-        2
-      ],
-      [
-        "AdvanceMoment",
-        2,
-        3
+        1
       ]
     ],
-    {}
-  ],
-  [
-    "Elegance",
-    "沉着身段",
-    "Measured Poise",
-    "静かな身ごなし",
-    1,
-    "Power",
-    "Uncommon",
-    [
-      [
-        "DodgeAtTurnStart",
-        1,
-        2
-      ]
-    ],
-    {}
+    {"exhaust": true, "upgradeRemoveExhaust": true}
   ],
   [
     "Composure",
@@ -1225,86 +848,51 @@
     "Uncommon",
     [
       [
-        "ReactionBlock",
-        3,
-        4
+        "ReactionDrawBlock",
+        2,
+        3
       ]
     ],
     {}
   ],
   [
-    "Afterglow",
-    "余晖护身",
-    "Afterglow",
-    "残光の護り",
-    1,
+    "LightningNerves",
+    "闪电神经",
+    "Lightning Nerves",
+    "稲妻の神経",
+    2,
     "Power",
-    "Uncommon",
+    "Rare",
     [
       [
-        "MomentFiveBlock",
-        5,
-        8
-      ]
-    ],
-    {}
-  ],
-  [
-    "HiddenRhythm",
-    "暗中节拍",
-    "Hidden Rhythm",
-    "秘めた拍子",
-    1,
-    "Power",
-    "Uncommon",
-    [
-      [
-        "MomentFiveDraw",
+        "ReactionDraw",
         1,
-        2
+        1
       ]
     ],
-    {}
-  ],
-  [
-    "UnseenResolve",
-    "不露声色",
-    "Unseen Resolve",
-    "密かな決意",
-    1,
-    "Power",
-    "Uncommon",
-    [
-      [
-        "DodgeMoment",
-        1,
-        2
-      ]
-    ],
-    {}
+    {
+      "upgradeCost": 1
+    }
   ],
   [
     "Finale",
-    "落幕",
-    "Finale",
-    "終幕",
+    "落幕终章",
+    "Final Curtain",
+    "終幕の最終章",
     2,
     "Skill",
     "Rare",
     [
       [
-        "AllyDodge",
-        2,
-        3
-      ],
-      [
-        "Draw",
-        2,
-        3
+        "AllyIntangible",
+        1,
+        1
       ]
     ],
     {
-      "exhaust": true
+      "exhaust": true,
+      "upgradeCost": 1,
+      "targetSelf": true
     }
   ],
   [
@@ -1321,7 +909,11 @@
         0,
         0
       ],
-      ["Draw", 3, 3]
+      [
+        "Draw",
+        3,
+        4
+      ]
     ],
     {
       "exhaust": true
@@ -1332,74 +924,21 @@
     "午夜圆舞曲",
     "Midnight Waltz",
     "真夜中のワルツ",
-    2,
+    0,
     "Attack",
     "Rare",
     [
       [
         "Damage",
-        5,
-        6
-      ],
-      [
-        "Draw",
-        2,
-        3,
+        60,
+        75,
         "moment"
       ]
     ],
     {
-      "hits": 4,
-      "moment": 6
-    }
-  ],
-  [
-    "LastWord",
-    "最后一语",
-    "Last Word",
-    "最後の一言",
-    3,
-    "Attack",
-    "Rare",
-    [
-      [
-        "Damage",
-        32,
-        40
-      ],
-      [
-        "Draw",
-        3,
-        4,
-        "moment"
-      ]
-    ],
-    {
-      "moment": 7
-    }
-  ],
-  [
-    "VanishingAct",
-    "凭空消失",
-    "Vanishing Act",
-    "忽然と消える",
-    2,
-    "Skill",
-    "Rare",
-    [
-      [
-        "Block",
-        18,
-        24
-      ],
-      [
-        "DodgeToHand",
-        2,
-        3
-      ]
-    ],
-    {
-      "exhaust": true
+      "all": true,
+      "moment": 12,
+      "targetSelf": true
     }
   ],
   [
@@ -1407,116 +946,105 @@
     "银刃骤雨",
     "Silver Storm",
     "銀刃の雨",
+    3,
+    "Attack",
+    "Rare",
+    [
+      [
+        "Damage",
+        13,
+        13
+      ]
+    ],
+    {
+      "hits": 2,
+      "upgradeHits": 3,
+      "all": true,
+      "concealedCostReduction": 2
+    }
+  ],
+  [
+    "MagicRadiantBlade",
+    "魔法辉剑",
+    "Magic Radiant Blade",
+    "魔法の輝剣",
+    0,
+    "Attack",
+    "Uncommon",
+    [
+      [
+        "RadiantBladeTurns",
+        0,
+        0
+      ]
+    ],
+    {
+      "xCost": true,
+      "upgradeX": true,
+      "targetSelf": true
+    }
+  ],
+  [
+    "CariaPhalanx",
+    "卡利亚剑阵",
+    "Caria Phalanx",
+    "カーリアの円陣",
+    2,
+    "Attack",
+    "Uncommon",
+    [
+      [
+        "RadiantBladeToHand",
+        3,
+        3
+      ]
+    ],
+    {
+      "reaction": true,
+      "upgradeTokens": true,
+      "targetSelf": true
+    }
+  ],
+  [
+    "AngelWings",
+    "天使羽翼",
+    "Angel Wings",
+    "天使の翼",
     2,
     "Attack",
     "Rare",
     [
       [
         "Damage",
-        5,
-        7
-      ]
-    ],
-    {
-      "hits": 3,
-      "all": true
-    }
-  ],
-  [
-    "BothPaths",
-    "兼顾两路",
-    "Both Paths",
-    "二つの道",
-    2,
-    "Skill",
-    "Rare",
-    [
-      [
-        "ShuffleHand",
-        2,
-        3
+        10,
+        10
       ],
       [
-        "AllyBlock",
-        8,
-        11
-      ],
-      [
-        "Draw",
-        2,
-        3
-      ]
-    ],
-    {
-      "exhaust": true
-    }
-  ],
-  [
-    "DawnPromise",
-    "破晓之约",
-    "Dawn Promise",
-    "暁の約束",
-    2,
-    "Power",
-    "Rare",
-    [
-      [
-        "DodgeAtTurnStart",
-        2,
-        3
+        "ShuffleGrowth",
+        6,
+        9
       ]
     ],
     {}
   ],
   [
-    "SteadyHand",
-    "稳握刀刃",
-    "Steady Hand",
-    "揺るがぬ刃",
-    1,
-    "Power",
-    "Rare",
-    [
-      [
-        "Strength",
-        2,
-        3
-      ]
-    ]
-  ],
-  [
-    "LightAsSilk",
-    "身轻如绸",
-    "Light as Silk",
-    "絹のように軽く",
-    1,
-    "Power",
-    "Rare",
-    [
-      [
-        "Dexterity",
-        2,
-        3
-      ]
-    ]
-  ],
-  [
-    "BorrowedTime",
-    "借来的时间",
-    "Borrowed Time",
-    "借りた時間",
+    "FallingMagic",
+    "天降魔力",
+    "Falling Magic",
+    "降り注ぐ魔力",
     0,
     "Skill",
     "Rare",
     [
       [
-        "Energy",
-        2,
-        3
+        "ShuffleRandomDamage",
+        6,
+        9
       ]
     ],
     {
-      "exhaust": true
+      "retain": true,
+      "unplayable": true
     }
   ],
   [
@@ -1524,19 +1052,20 @@
     "盗贼的武库",
     "Thief's Arsenal",
     "盗賊の武器庫",
-    2,
+    1,
     "Skill",
     "Rare",
     [
       [
-        "DodgeToHand",
-        3,
-        3
+        "DrawUntilReaction",
+        1,
+        1
       ]
     ],
     {
       "exhaust": true,
-      "upgradeTokens": true
+      "upgradeCost": 0,
+      "targetSelf": true
     }
   ],
   [
@@ -1544,130 +1073,81 @@
     "完美预演",
     "Perfect Rehearsal",
     "完璧な予行",
-    3,
+    1,
     "Skill",
-    "Rare",
+    "Uncommon",
     [
       [
-        "RewindTurn",
-        0,
-        0
-      ],
-      [
-        "SetMoment",
-        3,
-        3
-      ]
-    ],
-    {
-      "exhaust": true
-    }
-  ],
-  [
-    "Nightfall",
-    "夜幕降临",
-    "Nightfall",
-    "夜の帳",
-    2,
-    "Skill",
-    "Rare",
-    [
-      [
-        "Weak",
-        3,
-        4
-      ],
-      [
-        "Vulnerable",
-        2,
-        3
-      ]
-    ],
-    {
-      "all": true,
-      "exhaust": true
-    }
-  ],
-  [
-    "SharedStage",
-    "同台",
-    "Shared Stage",
-    "同じ舞台",
-    2,
-    "Skill",
-    "Rare",
-    [
-      [
-        "AllyBlock",
-        12,
-        16
-      ],
-      [
-        "AllyDodge",
+        "ReplayMomentThree",
         1,
-        2
+        1
       ]
     ],
-    {
-      "exhaust": true
-    }
-  ],
-  [
-    "UnbrokenPoise",
-    "不坠的从容",
-    "Unbroken Poise",
-    "崩れぬ余裕",
-    2,
-    "Power",
-    "Rare",
-    [
-      [
-        "ShuffleBlock",
-        3,
-        4
-      ]
-    ],
-    {}
+    {"upgradeCost": 0}
   ],
   [
     "EternalRestage",
     "永不落幕的重演",
     "Eternal Restage",
     "終わらぬリステージ",
-    0,
-    "Attack",
+    1,
+    "Power",
     "Ancient",
     [
       [
-        "Damage",
-        6,
-        8
+        "MomentTwelveEndTurn",
+        1,
+        1
+      ],
+      [
+        "RestageEndTurnAoe",
+        3,
+        3
       ]
     ],
     {
-      "retain": true,
-      "moment": 5,
-      "restageDivisor": 2
+      "upgradeCost": 0,
+      "targetSelf": true
     }
   ],
+  ["Reenactment", "重演", "Reenactment", "再演", 1, "Skill", "Uncommon", [["RestageAoe", 2, 2]], {"upgradeCost": 0, "targetSelf": true}],
+  ["SideSomersault", "侧空翻", "Side Somersault", "側転", 1, "Skill", "Common", [["Block", 8, 8], ["DodgeToDraw", 2, 2, "moment"]], {"moment": 2, "upgradeTokens": true}],
+  ["Initiative", "先机", "Initiative", "先手", 1, "Attack", "Common", [["Damage", 8, 8], ["Vulnerable", 2, 3, "moment"]], {"moment": 0}],
+  ["GoldenBlade", "黄金刀刃", "Golden Blade", "黄金の刃", 1, "Attack", "Rare", [["Damage", 8, 8], ["MomentBonusDamage", 15, 15, "moment"]], {"moment": 9, "upgradedMoment": 7}],
+  ["CarianGreatsword", "卡利亚大剑", "Carian Greatsword", "カーリアの大剣", 2, "Attack", "Uncommon", [["Damage", 6, 9]], {"reaction": true, "all": true, "hits": 2}],
+  ["CarianPiercer", "卡利亚贯刺", "Carian Piercer", "カーリアの貫き", 2, "Attack", "Uncommon", [["Damage", 11, 11], ["DrawReactionDamageBoost", 4, 6]], {"reaction": true}],
+  ["RadiantBladeMagic", "辉剑魔法", "Radiant Blade Magic", "輝剣の魔術", 1, "Power", "Rare", [["RadiantBladeGrowth", 1, 1]], {"upgradeInnate": true}],
+  ["DeathBlade", "死亡刀刃", "Death Blade", "死の刃", 1, "Attack", "Rare", [["Damage", 8, 8], ["Weak", 5, 5, "moment"], ["Vulnerable", 5, 5, "moment"]], {"moment": 9, "upgradedMoment": 7}],
+  ["CarianRetaliation", "卡利亚式奉还", "Carian Retaliation", "カーリアの返報", 1, "Skill", "Uncommon", [["Block", 7, 10], ["FullBlockRadiantBlade", 2, 2]], {"targetSelf": true}],
+  ["CalmComposure", "沉着冷静", "Calm Composure", "冷静沈着", 1, "Power", "Uncommon", [["EndTurnDodge", 1, 1]], {"upgradeTokens": true}],
+  ["TidyCollar", "整理衣襟", "Tidy Collar", "襟を整える", 0, "Skill", "Uncommon", [["EndTurnRetain", 2, 3]], {"targetSelf": true}],
+  ["Beat", "节拍", "Beat", "拍子", 1, "Power", "Uncommon", [["MomentFiveFirstEnergy", 1, 2]], {"targetSelf": true}],
+  ["Silence", "噤声", "Silence", "静寂", 2, "Attack", "Rare", [["Damage", 11, 15]], {"retain": true, "concealedTripleDamage": true}],
+  ["Duchess", "女爵", "Duchess", "公爵夫人", 0, "Skill", "Uncommon", [["AllyDodgeDrawX", 0, 0]], {"xCost": true, "upgradeX": true, "targetSelf": true, "multiplayerOnly": true}],
+  ["GrandBearing", "华丽身段", "Grand Bearing", "華麗な身ごなし", 0, "Skill", "Ancient", [["DodgeToDraw", 3, 3], ["Draw", 1, 1]], {"upgradeTokens": true}],
+  ["GoldenMoment", "黄金时刻", "Golden Moment", "黄金の時刻", 1, "Power", "Uncommon", [["MomentFiveBlock", 4, 6]], {"targetSelf": true}],
+  ["LorettaMastery", "罗蕾塔的绝招", "Loretta's Mastery", "ローレッタの絶技", 12, "Attack", "Rare", [["Damage", 15, 18]], {"hits": 3, "momentCostReductionDynamic": true}],
+  ["LorettaGreatbow", "罗蕾塔的大弓", "Loretta's Greatbow", "ローレッタの大弓", 6, "Attack", "Uncommon", [["Damage", 12, 16]], {"momentCostReductionDynamic": true}],
+  ["SleightOfHand", "戏法", "Sleight of Hand", "手品", 0, "Skill", "Uncommon", [["ShuffleHand", 3, 3], ["Weak", 2, 3], ["Vulnerable", 2, 3]], {"targetSelf": true, "all": true}],
+  ["BecomeInvisible", "化为无形", "Become Invisible", "姿を消す", 0, "Skill", "Uncommon", [["Concealment", 2, 3]], {"exhaust": true, "targetSelf": true}],
   [
-    "FirstLight",
-    "初光",
-    "First Light",
-    "初光",
-    1,
-    "Skill",
-    "Ancient",
+    "RadiantBlade",
+    "辉剑",
+    "Radiant Blade",
+    "輝剣",
+    0,
+    "Attack",
+    "Token",
     [
       [
-        "AllyDodge",
-        2,
-        3
+        "Damage",
+        4,
+        6
       ],
       [
-        "AllyBlock",
-        8,
-        12
+        "Draw",
+        1,
+        1
       ]
     ],
     {

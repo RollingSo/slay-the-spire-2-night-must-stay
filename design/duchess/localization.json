@@ -1,5 +1,29 @@
 {
   "powers": {
+    "DUCHESS_CONCEALMENT_POWER.title": ["隐匿", "Concealment", "隠密"],
+    "DUCHESS_CONCEALMENT_POWER.description": ["从卡牌中获得的格挡增加25%。回合结束或打出攻击牌时失去1层隐匿。", "Gain 25% more Block from cards. Lose 1 Concealment at end of turn or after playing an Attack.", "カードから得るブロックが25%増える。ターン終了時またはアタックをプレイした時、隠密を1失う。"],
+    "DUCHESS_REACTION_DRAW_BLOCK_POWER.title": ["镇定", "Composure", "平静"],
+    "DUCHESS_REACTION_DRAW_BLOCK_POWER.description": ["回合中抽到反应牌时，获得{Amount}点格挡。", "Whenever you draw a Reaction card during your turn, gain {Amount} Block.", "自分のターン中にリアクションのカードを引くたび、ブロックを{Amount}得る。"],
+    "DUCHESS_RADIANT_BLADE_GROWTH_POWER.title": ["辉剑魔法", "Radiant Blade Magic", "輝剣の魔術"],
+    "DUCHESS_RADIANT_BLADE_GROWTH_POWER.description": ["每打出1张辉剑，本场战斗中所有辉剑的伤害增加{Amount}。", "Each Radiant Blade played gives all Radiant Blades {Amount} damage for this combat.", "輝剣をプレイするたび、この戦闘中すべての輝剣のダメージが{Amount}増える。"],
+    "DUCHESS_FULL_BLOCK_RADIANT_BLADE_POWER.title": ["卡利亚式奉还", "Carian Retaliation", "カーリアの返報"],
+    "DUCHESS_FULL_BLOCK_RADIANT_BLADE_POWER.description": ["完全格挡攻击时，将{Amount}张辉剑加入手牌。", "Whenever you fully block an attack, add {Amount} Radiant Blades to your hand.", "攻撃を完全に防いだとき、輝剣を{Amount}枚手札に加える。"],
+    "DUCHESS_END_TURN_DODGE_POWER.title": ["沉着冷静", "Calm Composure", "冷静沈着"],
+    "DUCHESS_END_TURN_DODGE_POWER.description": ["回合结束时，将{Amount}张闪避洗入抽牌堆。", "At end of turn, shuffle {Amount} Dodges into your draw pile.", "ターン終了時、回避を{Amount}枚山札に加えてシャッフルする。"],
+    "DUCHESS_END_TURN_RETAIN_POWER.title": ["整理衣襟", "Tidy Collar", "襟を整える"],
+    "DUCHESS_END_TURN_RETAIN_POWER.description": ["本回合结束时，保留最多{Amount}张手牌。", "At end of this turn, retain up to {Amount} cards in hand.", "このターン終了時、手札から最大{Amount}枚保留する。"],
+    "DUCHESS_BEAT_POWER.title": ["节拍", "Beat", "拍子"],
+    "DUCHESS_BEAT_POWER.description": ["每回合时刻首次到达5时，获得{Amount}能量。", "The first time Moment reaches 5 each turn, gain {Amount} Energy.", "各ターン初めて時刻が5に到達したとき、エナジーを{Amount}得る。"],
+    "DUCHESS_MOMENT_FIVE_BLOCK_POWER.title": ["黄金时刻", "Golden Moment", "黄金の時刻"],
+    "DUCHESS_MOMENT_FIVE_BLOCK_POWER.description": ["时刻到达5时，获得{Amount}点格挡。", "When Moment reaches 5, gain {Amount} Block.", "時刻が5に到達したとき、ブロックを{Amount}得る。"],
+    "DUCHESS_ETERNAL_RESTAGE_POWER.title": ["永不落幕的重演", "Eternal Restage", "終わらぬリステージ"],
+    "DUCHESS_ETERNAL_RESTAGE_POWER.description": ["到达时刻12时结束你的回合；每回合结束时，本回合每造成过3点伤害，对所有敌人造成1点伤害。", "End your turn on reaching Moment 12; at end of turn, deal 1 damage to all enemies per 3 damage dealt this turn.", "時刻12に到達したときターンを終了する。ターン終了時、このターン与えたダメージ3につき敵全体に1ダメージを与える。"],
+    "DUCHESS_REPLAY_MOMENT_THREE_POWER.title": ["完美预演", "Perfect Rehearsal", "完璧な予行"],
+    "DUCHESS_REPLAY_MOMENT_THREE_POWER.description": ["本回合时刻3打出的牌会重放。", "Cards played at Moment 3 this turn replay.", "このターン時刻3でプレイしたカードはリプレイする。"],
+    "DUCHESS_TURN_START_SWAP_POWER.title": ["调包", "Switcheroo", "すり替え"],
+    "DUCHESS_TURN_START_SWAP_POWER.description": ["每回合开始时，选择1张手牌洗入抽牌堆，抽1张牌。", "At the start of each turn, choose 1 card in your hand, shuffle it into your draw pile, then draw 1 card.", "毎ターン開始時、手札から1枚選んで山札に加えてシャッフルし、カードを1枚引く。"],
+    "DUCHESS_TEMPORARY_STRENGTH_DOWN_POWER.title": ["短剑魔力消退", "Dagger Magic Fades", "短剣の魔力消滅"],
+    "DUCHESS_TEMPORARY_STRENGTH_DOWN_POWER.description": ["回合结束时，失去等量力量。", "At the end of this turn, lose the same amount of Strength.", "ターン終了時、同量の筋力を失う。"],
     "DUCHESS_MOMENT_DESCRIPTION_POWER.title": [
       "时刻",
       "Moment",
@@ -16,9 +40,9 @@
       "リアクション"
     ],
     "DUCHESS_REACTION_DESCRIPTION_POWER.description": [
-      "反应：当你在回合进行中抽到这张牌时，将其直接打出。",
-      "Reaction: When you draw this card during your turn, play it immediately.",
-      "リアクション：自分のターン中にこのカードを引いた時、直ちにプレイする。"
+      "反应：当你在回合进行中抽到这张牌时，其在下次打出前耗能-1。",
+      "Reaction: When you draw this card during your turn, it costs 1 less until played.",
+      "リアクション：自分のターン中にこのカードを引いた時、次にプレイするまでコストが1減る。"
     ],
     "DUCHESS_MOMENT_POWER.title": [
       "时刻",
@@ -30,35 +54,35 @@
       "Tracks the current Moment.",
       "現在の時刻を記録する。"
     ],
-    "DUCHESS_DODGE_AT_TURN_START_POWER.title": [
-      "从容准备",
-      "Poised Preparation",
-      "優雅な備え"
-    ],
-    "DUCHESS_DODGE_AT_TURN_START_POWER.description": [
-      "每回合开始时，将{Amount}张[gold]闪避[/gold]洗入抽牌堆。",
-      "At the start of each turn, shuffle {Amount} [gold]Dodge[/gold] cards into your draw pile.",
-      "毎ターン開始時、[gold]回避[/gold]を{Amount}枚山札に加えてシャッフルする。"
-    ],
     "DUCHESS_REACTION_BLOCK_POWER.title": [
       "镇定",
       "Composure",
       "平静"
     ],
     "DUCHESS_REACTION_BLOCK_POWER.description": [
-      "每触发一次[gold]反应[/gold]，获得{Amount}点[gold]格挡[/gold]。",
-      "Whenever [gold]Reaction[/gold] triggers, gain {Amount} [gold]Block[/gold].",
-      "[gold]リアクション[/gold]が発動するたび、[gold]ブロック[/gold]{Amount}を得る。"
+      "每打出一张[gold]反应[/gold]牌，获得{Amount}点[gold]格挡[/gold]。",
+      "Whenever you play a [gold]Reaction[/gold] card, gain {Amount} [gold]Block[/gold].",
+      "[gold]リアクション[/gold]のカードをプレイするたび、[gold]ブロック[/gold]{Amount}を得る。"
     ],
-    "DUCHESS_MOMENT_FIVE_BLOCK_POWER.title": [
-      "余晖护身",
-      "Afterglow",
-      "残光の護り"
+    "DUCHESS_REACTION_DRAW_POWER.title": [
+      "闪电神经",
+      "Lightning Nerves",
+      "稲妻の神経"
     ],
-    "DUCHESS_MOMENT_FIVE_BLOCK_POWER.description": [
-      "每当[gold]时刻[/gold]到达5，获得{Amount}点[gold]格挡[/gold]。",
-      "Whenever [gold]Moment[/gold] reaches 5, gain {Amount} [gold]Block[/gold].",
-      "[gold]時刻[/gold]が5に到達するたび、[gold]ブロック[/gold]{Amount}を得る。"
+    "DUCHESS_REACTION_DRAW_POWER.description": [
+      "抽到[gold]反应[/gold]牌时，额外抽{Amount}张牌。",
+      "Whenever you draw a [gold]Reaction[/gold] card, draw {Amount} additional card.",
+      "[gold]リアクション[/gold]のカードを引くたび、追加で{Amount}枚引く。"
+    ],
+    "DUCHESS_END_TURN_MOMENT_BLOCK_POWER.title": [
+      "穿隙",
+      "Thread the Gap",
+      "隙を縫う"
+    ],
+    "DUCHESS_END_TURN_MOMENT_BLOCK_POWER.description": [
+      "回合结束时，每层获得等同于当前[gold]时刻[/gold]的[gold]格挡[/gold]。",
+      "At the end of your turn, gain [gold]Block[/gold] equal to your current [gold]Moment[/gold] for each stack.",
+      "ターン終了時、1スタックごとに現在の[gold]時刻[/gold]に等しい[gold]ブロック[/gold]を得る。"
     ],
     "DUCHESS_MOMENT_FIVE_DRAW_POWER.title": [
       "暗中节拍",
@@ -837,6 +861,14 @@
     ]
   },
   "cards": {
+    "DUCHESS_SELECT_TO_RETAIN": ["选择本回合结束时要保留的手牌。", "Choose cards in hand to retain this turn.", "このターン保留する手札を選択。"],
+    "DUCHESS_SELECT_HAND_TO_TOP": ["选择任意张手牌放到抽牌堆顶部。", "Choose any number of cards in your hand to put on top of your draw pile.", "山札の一番上に置く手札を好きな枚数選択。"],
+    "DUCHESS_SELECT_TURN_START_SWAP": ["选择1张手牌洗入抽牌堆。", "Choose 1 card in your hand to shuffle into your draw pile.", "山札に加えてシャッフルする手札を1枚選択。"],
+    "DUCHESS_SELECT_DRAW_TO_TOP": [
+      "选择要放到抽牌堆顶部的牌。",
+      "Choose a card to put on top of your draw pile.",
+      "山札の一番上に置くカードを選択。"
+    ],
     "DUCHESS_SELECT_TO_SHUFFLE": [
       "选择要洗入抽牌堆的牌。",
       "Choose cards to shuffle into your draw pile.",

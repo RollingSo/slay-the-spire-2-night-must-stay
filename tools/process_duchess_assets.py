@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "design/卡图预览/duchess"
 REVIEW = SOURCE / "processed_review"
 REPORT = {}
-CARD_ART_REUSE = {'ElegantBearing': 'Elegance', 'Dodge': 'TurnAside'}
+CARD_ART_REUSE = {}
 POWER_OUTPUTS = {
     'duchess_echo_description_power': ['duchess_reaction_description_power'],
     'duchess_measured_breath_power': ['duchess_reaction_block_power'],

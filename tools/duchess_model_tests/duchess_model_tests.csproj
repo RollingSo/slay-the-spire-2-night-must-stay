@@ -10,6 +10,7 @@
     <Reference Include="0Harmony"><HintPath>$(Sts2AssemblyDir)/0Harmony.dll</HintPath></Reference>
     <Reference Include="Sentry.Godot"><HintPath>$(Sts2AssemblyDir)/Sentry.Godot.dll</HintPath></Reference>
     <Reference Include="Sentry"><HintPath>$(Sts2AssemblyDir)/Sentry.dll</HintPath></Reference>
+    <Reference Include="SmartFormat"><HintPath>$(Sts2AssemblyDir)/SmartFormat.dll</HintPath></Reference>
     <Reference Include="NightMustStay"><HintPath>$(NightMustStayAssemblyDir)/NightMustStay.dll</HintPath></Reference>
   </ItemGroup>
 </Project>

@@ -32,8 +32,8 @@ function Test-DuchessImage([string]$RelativePath, [int]$Width, [int]$Height, [bo
 $rows = Get-Content -Raw -Encoding UTF8 (Join-Path $root 'design/duchess/cards.json') | ConvertFrom-Json
 foreach ($row in $rows) {
     $id = [regex]::Replace(('Duchess' + $row[0]), '(?<!^)(?=[A-Z])', '_').ToLowerInvariant()
-    if ($row[0] -eq 'ElegantBearing') { $id = 'duchess_elegance' }
-    if ($row[0] -eq 'Dodge') { $id = 'duchess_turn_aside' }
+    if ($row[0] -eq 'ElegantBearing') { $id = 'duchess_elegant_bearing' }
+    if ($row[0] -eq 'Dodge') { $id = 'duchess_dodge' }
     if ($row[6] -eq 'Ancient') { Test-DuchessImage "images/packed/card_portraits/duchess/$id.png" 606 852 $false }
     else { Test-DuchessImage "images/packed/card_portraits/duchess/$id.png" 1000 760 $false }
 }

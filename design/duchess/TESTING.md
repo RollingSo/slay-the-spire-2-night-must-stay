@@ -4,7 +4,7 @@
 
 ## 自动化证据
 
-- `tools/duchess_model_tests`：本机原版API下75牌实例化、基础/升级变量、初始牌组、核心规格、移除旧机制和全部女爵Harmony补丁绑定。
+- `tools/duchess_model_tests`：本机原版API下64牌实例化、基础/升级变量、初始牌组、核心规格、移除旧机制和全部女爵Harmony补丁绑定。
 - 源码检查：时刻只由 `DuchessMomentPower` 管理，不调用辉星的获得、设置或消费接口。
 - `validate_duchess_assets.ps1`：正式PNG尺寸、Alpha与场景依赖检查。
 - `validate_duchess_resources.gd`：源资源与导出PCK加载检查。
