@@ -34,6 +34,10 @@ var init = typeof(ModelDb).GetMethod("Init", flags)!;
 init.Invoke(null, init.GetParameters().Length == 0 ? null : new object[] { models });
 foreach (var type in models)
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
+// The standalone fixture only discovers mod models; token cards also resolve
+// the game's built-in token and colorless pools at runtime.
+foreach (var type in new[] { typeof(TokenCardPool), typeof(ColorlessCardPool) })
+    if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
 if (duchess.Id.Entry != "DUCHESS"
