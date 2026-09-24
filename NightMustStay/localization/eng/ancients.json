@@ -414,5 +414,7 @@
   "THE_ARCHITECT.talk.DUCHESS.2-2r.next": "Continue",
   "THE_ARCHITECT.talk.DUCHESS.3-0r.ancient": "The curtain has not fallen yet.",
   "THE_ARCHITECT.talk.DUCHESS.3-0r.next": "Continue",
-  "THE_ARCHITECT.talk.DUCHESS.3-1r.char": "Then please, continue."
+  "THE_ARCHITECT.talk.DUCHESS.3-1r.char": "Then please, continue.",
+  "THE_ARCHITECT.talk.DUCHESS.1-1r.next": "Continue",
+  "THE_ARCHITECT.talk.DUCHESS.2-1r.next": "Continue"
 }

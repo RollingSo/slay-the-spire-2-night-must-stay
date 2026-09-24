@@ -193,32 +193,33 @@ namespace NightMustStay.Core.Patches
             DisableCharacterVfx(__result.GetNodeOrNull<CanvasItem>("%EnergyVfxFront"));
         }
 
-        [HarmonyPatch(typeof(NStarCounter), nameof(NStarCounter.Initialize))]
+        // NCombatUi.Activate reparents the original StarCounter into the energy
+        // counter *after* Initialize. Clone only after that move, otherwise the
+        // Duchess counter remains behind in the old combat UI container.
+        [HarmonyPatch(typeof(NCombatUi), nameof(NCombatUi.Activate))]
         [HarmonyPostfix]
-        public static void InitializeDuchessMomentCounter(NStarCounter __instance, Player player)
+        public static void InitializeDuchessMomentCounter(NCombatUi __instance)
         {
+            NStarCounter starCounter =
+                AccessTools.Field(typeof(NCombatUi), "_starCounter")?.GetValue(__instance) as NStarCounter;
+            if (starCounter == null)
+                return;
+            Player player = AccessTools.Field(typeof(NStarCounter), "_player")?.GetValue(starCounter) as Player;
             if (player?.Character is not Duchess)
                 return;
 
-            if (__instance.HasMeta(MomentCounterMeta))
-            {
-                ApplyMomentCounterVisuals(__instance);
-                __instance.Visible = true;
-                return;
-            }
-
-            Node parent = __instance.GetParent();
+            Node parent = starCounter.GetParent();
             if (parent == null || parent.GetNodeOrNull<NStarCounter>(MomentCounterName) != null)
                 return;
 
-            if (__instance.Duplicate() is not NStarCounter momentCounter)
+            if (starCounter.Duplicate() is not NStarCounter momentCounter)
                 return;
 
             momentCounter.Name = MomentCounterName;
             momentCounter.SetMeta(MomentCounterMeta, true);
-            __instance.AddSibling(momentCounter);
+            starCounter.AddSibling(momentCounter);
             momentCounter.Initialize(player);
-            momentCounter.Position = __instance.Position + new Vector2(88f, 0f);
+            momentCounter.Position = starCounter.Position + new Vector2(88f, 0f);
             ApplyMomentCounterVisuals(momentCounter);
             momentCounter.Visible = true;
         }

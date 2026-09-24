@@ -20,23 +20,24 @@ namespace NightMustStay.Core.Models.Power;
 
 public sealed class DuchessConcealmentPower : PowerModel
 {
+    public const decimal AttackDamageMultiplier = 1.25m;
+    public const decimal CardBlockMultiplier = 1.25m;
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override decimal ModifyBlockMultiplicative(
         Creature target, decimal block, ValueProp props, CardModel cardSource, CardPlay cardPlay) =>
-        target == Owner && cardSource != null ? 1.25m : 1m;
+        target == Owner && cardSource != null ? CardBlockMultiplier : 1m;
 
-    public override async Task AfterCardPlayedLate(PlayerChoiceContext context, CardPlay play)
-    {
-        if (play.Card.Owner?.Creature == Owner && play.Card.Type == CardType.Attack)
-            await PowerCmd.Decrement(this);
-    }
+    public override decimal ModifyDamageMultiplicative(
+        Creature target, decimal amount, ValueProp props, Creature dealer, CardModel cardSource, CardPlay cardPlay) =>
+        dealer == Owner && props.IsPoweredAttack() ? AttackDamageMultiplier : 1m;
 
     public override async Task BeforeSideTurnEnd(
         PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (participants.Contains(Owner)) await PowerCmd.Decrement(this);
+        if (participants.Contains(Owner))
+            await PowerCmd.Decrement(this);
     }
 }
 
@@ -45,11 +46,11 @@ public sealed class DuchessReactionDrawBlockPower : PowerModel
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
+    public override async Task AfterCardDrawn(PlayerChoiceContext context, CardModel card, bool fromHandDraw)
     {
-        if (card.Owner?.Creature != Owner || oldPileType != PileType.Draw
-            || card.Pile?.Type != PileType.Hand || card is not DuchessCard { HasReaction: true }
-            || Owner.Player.PlayerCombatState.Phase != PlayerTurnPhase.Play)
+        if (!DuchessReactionRules.IsEligibleDraw(fromHandDraw, card.Pile?.Type ?? PileType.None)
+            || card.Owner?.Creature != Owner
+            || card is not DuchessCard { HasReaction: true })
             return;
         Flash();
         await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Unpowered, null);
@@ -82,14 +83,12 @@ public sealed class DuchessFullBlockRadiantBladePower : PowerModel
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override async Task AfterDamageReceived(
-        PlayerChoiceContext context, Creature target, DamageResult result,
-        ValueProp props, Creature dealer, CardModel card)
+    public async Task AfterFullyBlockedAttack(PlayerChoiceContext context)
     {
-        if (target != Owner || dealer?.Side == Owner.Side || !props.IsPoweredAttack()
-            || result.UnblockedDamage > 0) return;
+        int bladeCount = Amount;
         Flash();
-        for (int i = 0; i < Amount; i++)
+        await PowerCmd.Remove(this);
+        for (int i = 0; i < bladeCount; i++)
         {
             DuchessRadiantBlade blade = Owner.Player.PlayerCombatState.AllCards.First().CombatState
                 .CreateCard<DuchessRadiantBlade>(Owner.Player);

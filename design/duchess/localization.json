@@ -1,13 +1,13 @@
 {
   "powers": {
     "DUCHESS_CONCEALMENT_POWER.title": ["隐匿", "Concealment", "隠密"],
-    "DUCHESS_CONCEALMENT_POWER.description": ["从卡牌中获得的格挡增加25%。回合结束或打出攻击牌时失去1层隐匿。", "Gain 25% more Block from cards. Lose 1 Concealment at end of turn or after playing an Attack.", "カードから得るブロックが25%増える。ターン終了時またはアタックをプレイした時、隠密を1失う。"],
+    "DUCHESS_CONCEALMENT_POWER.description": ["攻击伤害和从卡牌中获得的格挡增加25%，回合结束时失去1层隐匿。", "Attack damage and Block gained from cards are increased by 25%. Lose 1 Concealment at the end of your turn.", "アタックのダメージとカードから得るブロックが25%増える。ターン終了時、隠密を1失う。"],
     "DUCHESS_REACTION_DRAW_BLOCK_POWER.title": ["镇定", "Composure", "平静"],
     "DUCHESS_REACTION_DRAW_BLOCK_POWER.description": ["回合中抽到反应牌时，获得{Amount}点格挡。", "Whenever you draw a Reaction card during your turn, gain {Amount} Block.", "自分のターン中にリアクションのカードを引くたび、ブロックを{Amount}得る。"],
     "DUCHESS_RADIANT_BLADE_GROWTH_POWER.title": ["辉剑魔法", "Radiant Blade Magic", "輝剣の魔術"],
     "DUCHESS_RADIANT_BLADE_GROWTH_POWER.description": ["每打出1张辉剑，本场战斗中所有辉剑的伤害增加{Amount}。", "Each Radiant Blade played gives all Radiant Blades {Amount} damage for this combat.", "輝剣をプレイするたび、この戦闘中すべての輝剣のダメージが{Amount}増える。"],
     "DUCHESS_FULL_BLOCK_RADIANT_BLADE_POWER.title": ["卡利亚式奉还", "Carian Retaliation", "カーリアの返報"],
-    "DUCHESS_FULL_BLOCK_RADIANT_BLADE_POWER.description": ["完全格挡攻击时，将{Amount}张辉剑加入手牌。", "Whenever you fully block an attack, add {Amount} Radiant Blades to your hand.", "攻撃を完全に防いだとき、輝剣を{Amount}枚手札に加える。"],
+    "DUCHESS_FULL_BLOCK_RADIANT_BLADE_POWER.description": ["本回合首次完全格挡住一次完整攻击时，将{Amount}张辉剑加入手牌。", "The first time you fully block an entire attack this turn, add {Amount} Radiant Blades to your hand.", "このターン初めて攻撃全体を完全に防いだとき、輝剣を{Amount}枚手札に加える。"],
     "DUCHESS_END_TURN_DODGE_POWER.title": ["沉着冷静", "Calm Composure", "冷静沈着"],
     "DUCHESS_END_TURN_DODGE_POWER.description": ["回合结束时，将{Amount}张闪避洗入抽牌堆。", "At end of turn, shuffle {Amount} Dodges into your draw pile.", "ターン終了時、回避を{Amount}枚山札に加えてシャッフルする。"],
     "DUCHESS_END_TURN_RETAIN_POWER.title": ["整理衣襟", "Tidy Collar", "襟を整える"],
@@ -40,9 +40,9 @@
       "リアクション"
     ],
     "DUCHESS_REACTION_DESCRIPTION_POWER.description": [
-      "反应：当你在回合进行中抽到这张牌时，其在下次打出前耗能-1。",
-      "Reaction: When you draw this card during your turn, it costs 1 less until played.",
-      "リアクション：自分のターン中にこのカードを引いた時、次にプレイするまでコストが1減る。"
+      "反应：除每回合固定的起手抽牌外，抽到这张牌时，其在下次打出前耗能-1。",
+      "Reaction: When you draw this card outside your normal start-of-turn hand draw, it costs 1 less until played.",
+      "リアクション：毎ターンの通常の初手ドロー以外でこのカードを引いた時、次にプレイするまでコストが1減る。"
     ],
     "DUCHESS_MOMENT_POWER.title": [
       "时刻",
@@ -127,9 +127,9 @@
       "古びた懐中時計"
     ],
     "DUCHESS_OLD_POCKETWATCH.description": [
-      "每当[gold]时刻[/gold]到达4，抽1张牌。",
-      "Whenever [gold]Moment[/gold] reaches 4, draw 1 card.",
-      "[gold]時刻[/gold]が4に到達するたび、カードを1枚引く。"
+      "每当[gold]时刻[/gold]到达2，抽1张牌。",
+      "Whenever [gold]Moment[/gold] reaches 2, draw 1 card.",
+      "[gold]時刻[/gold]が2に到達するたび、カードを1枚引く。"
     ],
     "DUCHESS_OLD_POCKETWATCH.flavor": [
       "指针依旧前行。有些约定，却留在了原处。",
@@ -142,9 +142,9 @@
       "修復された懐中時計"
     ],
     "DUCHESS_MENDED_POCKETWATCH.description": [
-      "每当[gold]时刻[/gold]到达4，抽2张牌。",
-      "Whenever [gold]Moment[/gold] reaches 4, draw 2 cards.",
-      "[gold]時刻[/gold]が4に到達するたび、カードを2枚引く。"
+      "每当[gold]时刻[/gold]到达2，抽2张牌。",
+      "Whenever [gold]Moment[/gold] reaches 2, draw 2 cards.",
+      "[gold]時刻[/gold]が2に到達するたび、カードを2枚引く。"
     ],
     "DUCHESS_MENDED_POCKETWATCH.flavor": [
       "修好的不仅是齿轮。",
@@ -809,6 +809,11 @@
       "I understand. I remember the past so I can choose the next step.",
       "分かっています。次の一歩を選ぶために、過去を覚えているのです。"
     ],
+    "THE_ARCHITECT.talk.DUCHESS.1-1r.next": [
+      "继续",
+      "Continue",
+      "続ける"
+    ],
     "THE_ARCHITECT.talk.DUCHESS.1-2r.ancient": [
       "那就动手。",
       "Then act.",
@@ -833,6 +838,11 @@
       "我不能保证做到。但我不会因此省去准备。",
       "I cannot promise success. That is no reason to neglect preparation.",
       "できると断言はしません。だからこそ、備えを怠れないのです。"
+    ],
+    "THE_ARCHITECT.talk.DUCHESS.2-1r.next": [
+      "继续",
+      "Continue",
+      "続ける"
     ],
     "THE_ARCHITECT.talk.DUCHESS.2-2r.ancient": [
       "让我看看你的准备。",

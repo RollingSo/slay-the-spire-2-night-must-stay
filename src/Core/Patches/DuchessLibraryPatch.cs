@@ -15,6 +15,9 @@ namespace NightMustStay.Core.Patches;
 [HarmonyPatch]
 public static class DuchessLibraryPatch
 {
+    internal static readonly string[] ModFilterOrder =
+        { "GuardianPool", "IroneyePool", "RevenantPool", "DuchessPool" };
+
     [HarmonyPatch(typeof(NCardLibrary), nameof(NCardLibrary._Ready))]
     [HarmonyPostfix]
     public static void Ready(NCardLibrary __instance) => EnsureFilter(__instance);
@@ -23,6 +26,7 @@ public static class DuchessLibraryPatch
     public static void Open(NCardLibrary __instance) => EnsureFilter(__instance);
     private static void EnsureFilter(NCardLibrary __instance)
     {
+        GuardianCardLibraryPatch.EnsureGuardianCardLibraryFilter(__instance);
         var template = AccessTools.Field(typeof(NCardLibrary), "_ironcladFilter")?.GetValue(__instance) as NCardPoolFilter;
         var filters = AccessTools.Field(typeof(NCardLibrary), "_poolFilters")?.GetValue(__instance) as IDictionary<NCardPoolFilter, Func<CardModel, bool>>;
         if (template?.GetParent() is not Node parent || filters == null) return;
@@ -54,6 +58,11 @@ public static class DuchessLibraryPatch
         filters[filter] = card => ModelDb.CardPool<DuchessCardPool>().AllCardIds.Contains(card.Id);
         var characters = AccessTools.Field(typeof(NCardLibrary), "_cardPoolFilters")?.GetValue(__instance) as IDictionary<CharacterModel, NCardPoolFilter>;
         if (characters != null) characters[ModelDb.Character<Duchess>()] = filter;
+        NCardPoolFilter[] orderedFilters = ModFilterOrder
+            .Select(name => parent.GetNodeOrNull<NCardPoolFilter>(name)).ToArray();
+        if (orderedFilters.Any(item => item == null)) return;
+        for (int index = 0; index < orderedFilters.Length; index++)
+            parent.MoveChild(orderedFilters[index], index);
     }
     [HarmonyPatch(typeof(NCardLibrary), nameof(NCardLibrary.AssetPaths), MethodType.Getter)]
     [HarmonyPostfix]

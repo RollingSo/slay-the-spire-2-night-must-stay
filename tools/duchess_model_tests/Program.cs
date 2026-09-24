@@ -13,6 +13,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.Formatters;
+using MegaCrit.Sts2.Core.Nodes.Combat;
 using SmartFormat;
 using SmartFormat.Extensions;
 using NightMustStay.Core.Models.Characters;
@@ -174,7 +175,7 @@ if (bearing.Cost != 0 || bearing.Effects.Length != 1 || bearing.Effects[0].Kind 
     throw new Exception("Elegant Bearing core specification is wrong.");
 var bladeReveal = DuchessCardCatalog.All[nameof(DuchessBladeRevealMoment)];
 if (bladeReveal.Cost != 1 || bladeReveal.Type != CardType.Attack || bladeReveal.Rarity != CardRarity.Basic
-    || bladeReveal.Moment != 3 || bladeReveal.Effects.Length != 2
+    || bladeReveal.Moment != 1 || bladeReveal.Effects.Length != 2
     || bladeReveal.Effects[0] != new DuchessEffect("Damage", 7, 10)
     || bladeReveal.Effects[1] != new DuchessEffect("Draw", 2, 2, "moment"))
     throw new Exception("Blade Reveal Moment specification is wrong.");
@@ -216,8 +217,10 @@ if (composure.Effects.Length != 1 || composure.Effects[0] != new DuchessEffect("
 var fallingMagic = DuchessCardCatalog.All[nameof(DuchessFallingMagic)];
 if (fallingMagic.Type != CardType.Skill || fallingMagic.Rarity != CardRarity.Rare
     || !fallingMagic.Retain || fallingMagic.Effects.Length != 1
-    || fallingMagic.Effects[0] != new DuchessEffect("ShuffleRandomDamage", 6, 9))
+    || fallingMagic.Effects[0] != new DuchessEffect("ShuffleAoeDamage", 6, 9))
     throw new Exception("Falling Magic specification is wrong.");
+if (DuchessCardCatalog.All[nameof(DuchessOpeningMoment)].Cost != 0)
+    throw new Exception("Opening Moment must cost 0 Energy.");
 
 foreach (var (name, expectedEffect) in new[]
 {
@@ -453,14 +456,47 @@ if (DuchessCardCatalog.All[nameof(DuchessOpeningMoment)].Moment != 0
 if (ModelDb.Power<DuchessMomentPower>().StackType
     != MegaCrit.Sts2.Core.Entities.Powers.PowerStackType.Counter)
     throw new Exception("Moment must use an independently stackable counter power.");
+if (DuchessMomentPower.PocketwatchMoment != 2
+    || DuchessConcealmentPower.CardBlockMultiplier != 1.25m
+    || DuchessConcealmentPower.AttackDamageMultiplier != 1.25m)
+    throw new Exception("Pocketwatch must trigger at Moment 2 and Concealment must add 25% attack damage and card Block.");
+if (typeof(DuchessConcealmentPower).GetMethod("ModifyDamageMultiplicative")?.DeclaringType != typeof(DuchessConcealmentPower))
+    throw new Exception("Concealment must modify powered attack damage.");
+if (typeof(DuchessConcealmentPower).GetMethod("BeforeCardPlayed")?.DeclaringType == typeof(DuchessConcealmentPower)
+    || typeof(DuchessConcealmentPower).GetMethod("AfterCardPlayedLate")?.DeclaringType == typeof(DuchessConcealmentPower)
+    || typeof(DuchessConcealmentPower).GetMethod("BeforeSideTurnEnd")?.DeclaringType != typeof(DuchessConcealmentPower))
+    throw new Exception("Concealment must lose one stack at the end of its owner's turn, not after card plays.");
+if (typeof(DuchessFullBlockRadiantBladePower).GetMethod("AfterDamageReceived")?.DeclaringType == typeof(DuchessFullBlockRadiantBladePower)
+    || typeof(DuchessFullBlockRadiantBladePower).GetMethod("AfterFullyBlockedAttack")?.DeclaringType != typeof(DuchessFullBlockRadiantBladePower))
+    throw new Exception("Carian Retaliation must resolve once after the entire attack, not once per hit.");
+var filterOrder = (string[])typeof(NightMustStay.Core.Patches.DuchessLibraryPatch)
+    .GetField("ModFilterOrder", BindingFlags.Static | BindingFlags.NonPublic)!.GetValue(null)!;
+if (!filterOrder.SequenceEqual(new[] { "GuardianPool", "IroneyePool", "RevenantPool", "DuchessPool" }))
+    throw new Exception("The four mod characters must occupy the first four card-library filters in order.");
 
 if (typeof(DuchessMomentPower).GetMethods(flags).Any(method => method.Name.Contains("Star", StringComparison.Ordinal)))
     throw new Exception("Moment must not reuse or mutate Regent Stars.");
+
+if (DuchessReactionRules.IsEligibleDraw(true, PileType.Hand)
+    || !DuchessReactionRules.IsEligibleDraw(false, PileType.Hand)
+    || DuchessReactionRules.IsEligibleDraw(false, PileType.Draw))
+    throw new Exception("Reaction must exclude only the native opening hand draw, not other draws.");
+foreach (Type type in new[] { typeof(DuchessCard), typeof(DuchessReactionDrawPower),
+             typeof(DuchessReactionDrawBlockPower), typeof(DuchessSilverThimble) })
+{
+    if (type.GetMethod("AfterCardDrawn")?.DeclaringType != type)
+        throw new Exception($"{type.Name} must use the native draw hook for Reaction effects.");
+}
 
 var harmony = new HarmonyLib.Harmony("NightMustStay.Duchess.Tests");
 foreach (var patch in typeof(NightMustStay.Core.Patches.DuchessMomentPatch).Assembly.GetTypes()
     .Where(t => t.Namespace == "NightMustStay.Core.Patches" && t.Name.StartsWith("Duchess")))
     harmony.CreateClassProcessor(patch).Patch();
+var activate = HarmonyLib.AccessTools.Method(typeof(NCombatUi), nameof(NCombatUi.Activate));
+var momentCounterPatch = typeof(NightMustStay.Core.Patches.DuchessAssetPatch)
+    .GetMethod(nameof(NightMustStay.Core.Patches.DuchessAssetPatch.InitializeDuchessMomentCounter))!;
+if (HarmonyLib.Harmony.GetPatchInfo(activate)?.Postfixes.Any(p => p.PatchMethod == momentCounterPatch) != true)
+    throw new Exception("Duchess Moment UI must be attached after combat UI reparents the star counter.");
 harmony.UnpatchAll(harmony.Id);
 Console.WriteLine("PASS: independent Moment, Reaction/Dodge core, starter loadout, and all Duchess patch bindings.");
 return 0;

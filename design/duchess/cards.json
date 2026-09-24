@@ -94,7 +94,7 @@
       ]
     ],
     {
-      "moment": 3
+      "moment": 1
     }
   ],
   [
@@ -256,7 +256,7 @@
     "开场时刻",
     "Opening Moment",
     "開幕の時",
-    1,
+    0,
     "Attack",
     "Common",
     [
@@ -1042,7 +1042,7 @@
     "Rare",
     [
       [
-        "ShuffleRandomDamage",
+        "ShuffleAoeDamage",
         6,
         9
       ]

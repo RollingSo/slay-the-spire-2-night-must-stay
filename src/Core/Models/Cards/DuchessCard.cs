@@ -23,6 +23,12 @@ using NightMustStay.Core.Models.Power;
 
 namespace NightMustStay.Core.Models.Cards;
 
+public static class DuchessReactionRules
+{
+    public static bool IsEligibleDraw(bool fromHandDraw, PileType currentPile) =>
+        !fromHandDraw && currentPile == PileType.Hand;
+}
+
 public record DuchessEffect(string Kind, decimal Amount, decimal Upgraded, string Condition = "");
 public record DuchessCardSpec(int Cost, CardType Type, CardRarity Rarity,
     DuchessEffect[] Effects, int Hits = 1, bool All = false, bool Exhaust = false,
@@ -245,23 +251,30 @@ public abstract class DuchessCard : CardModel
             var growth = Spec.Effects.FirstOrDefault(effect => effect.Kind == "ShuffleGrowth");
             if (growth != null)
                 DynamicVars.Damage.BaseValue += DynamicVars["ShuffleGrowth"].BaseValue;
-            var falling = Spec.Effects.FirstOrDefault(effect => effect.Kind == "ShuffleRandomDamage");
+            var falling = Spec.Effects.FirstOrDefault(effect => effect.Kind == "ShuffleAoeDamage");
             if (falling != null && CombatState.HittableEnemies.Any(enemy => enemy.IsAlive))
-                await DamageCmd.Attack(DynamicVars["ShuffleRandomDamage"].BaseValue)
-                    .CompatFromCard(this).TargetingRandomOpponents(CombatState)
+                await DamageCmd.Attack(DynamicVars["ShuffleAoeDamage"].BaseValue)
+                    .CompatFromCard(this).TargetingAllOpponents(CombatState)
                     .Execute(new BlockingPlayerChoiceContext());
         }
-        if (card == this && this is DuchessCarianPiercer && oldPileType == PileType.Draw
-            && card.Pile?.Type == PileType.Hand)
+    }
+
+    public override Task AfterCardDrawn(PlayerChoiceContext context, CardModel card, bool fromHandDraw)
+    {
+        // The native draw hook distinguishes the fixed turn-opening hand from
+        // all other draws, including draws made during turn-start effects.
+        if (card != this || !DuchessReactionRules.IsEligibleDraw(
+                fromHandDraw, card.Pile?.Type ?? PileType.None))
+            return Task.CompletedTask;
+        if (this is DuchessCarianPiercer)
         {
             int boost = decimal.ToInt32(DynamicVars["DrawReactionDamageBoost"].BaseValue);
             PendingPiercerDamage += boost;
             DynamicVars.Damage.BaseValue += boost;
         }
-        if (!Spec.Reaction || card != this || oldPileType != PileType.Draw
-            || card.Pile?.Type != PileType.Hand || Owner?.PlayerCombatState?.Phase != PlayerTurnPhase.Play)
-            return;
-        EnergyCost.AddUntilPlayed(-1, true);
+        if (Spec.Reaction)
+            EnergyCost.AddUntilPlayed(-1, true);
+        return Task.CompletedTask;
     }
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
@@ -434,7 +447,7 @@ public abstract class DuchessCard : CardModel
                 // creates each replay as its own native CardPlay.
                 case "Replay": break;
                 case "ShuffleGrowth": break;
-                case "ShuffleRandomDamage": break;
+                case "ShuffleAoeDamage": break;
                 case "ReturnSelfToDrawTop":
                     await CardPileCmd.Add(this, PileType.Draw, CardPilePosition.Top, this);
                     break;

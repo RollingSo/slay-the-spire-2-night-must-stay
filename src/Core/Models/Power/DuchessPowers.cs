@@ -35,6 +35,7 @@ public sealed class DuchessReactionDescriptionPower : PowerModel
 
 public sealed class DuchessMomentPower : PowerModel
 {
+    public const int PocketwatchMoment = 2;
     private sealed record CardSnapshot(PileType Pile, int Index, int Cost);
 
     private sealed class Data
@@ -82,10 +83,10 @@ public sealed class DuchessMomentPower : PowerModel
 
     private static async Task NotifyMomentChanged(PlayerChoiceContext context, Player player, int before, int after)
     {
-        if (before != 4 && after == 4)
+        if (before != PocketwatchMoment && after == PocketwatchMoment)
         {
             foreach (DuchessOldPocketwatch relic in player.Relics.OfType<DuchessOldPocketwatch>().ToArray())
-                await relic.OnMomentFour(context);
+                await relic.OnMomentTwo(context);
         }
         if (before != 5 && after == 5)
         {
@@ -351,10 +352,11 @@ public sealed class DuchessReactionDrawPower : PowerModel
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
+    public override async Task AfterCardDrawn(PlayerChoiceContext context, CardModel card, bool fromHandDraw)
     {
-        if (card.Owner?.Creature != Owner || oldPileType != PileType.Draw
-            || card.Pile?.Type != PileType.Hand || card is not DuchessCard { HasReaction: true })
+        if (!DuchessReactionRules.IsEligibleDraw(fromHandDraw, card.Pile?.Type ?? PileType.None)
+            || card.Owner?.Creature != Owner
+            || card is not DuchessCard { HasReaction: true })
             return;
         Flash();
         await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), Amount, Owner.Player);

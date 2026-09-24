@@ -32,6 +32,21 @@ foreach ($file in $files) {
     if ($null -eq $reference) { continue }
     $referenceKeys = @($reference.PSObject.Properties | ForEach-Object { $_.Name } | Where-Object { $_ })
 
+    if ($file -eq 'ancients.json') {
+        $keySet = [System.Collections.Generic.HashSet[string]]::new([string[]]$referenceKeys)
+        foreach ($key in $referenceKeys) {
+            if ($key -notmatch '^(?<stem>.+\.\d+-)(?<index>\d+)(?<repeat>r?)\.(?:ancient|char)$') { continue }
+            $stem = $Matches.stem
+            $index = [int]$Matches.index
+            $repeat = $Matches.repeat
+            if (($keySet.Contains("$stem$($index + 1)$repeat.ancient") -or
+                 $keySet.Contains("$stem$($index + 1)$repeat.char")) -and
+                -not $keySet.Contains("$stem$index$repeat.next")) {
+                $errors.Add("eng/${file}: missing dialogue button $stem$index$repeat.next")
+            }
+        }
+    }
+
     foreach ($locale in $locales) {
         $table = Read-Table $locale $file
         if ($null -eq $table) { continue }

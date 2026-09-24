@@ -24,7 +24,7 @@ public class DuchessOldPocketwatch : DuchessRelic
     public override RelicRarity Rarity => RelicRarity.Starter;
     protected virtual decimal CardsToDraw => 1m;
 
-    public async Task OnMomentFour(PlayerChoiceContext context)
+    public async Task OnMomentTwo(PlayerChoiceContext context)
     {
         Flash();
         await CardPileCmd.Draw(context, CardsToDraw, Owner);
@@ -52,11 +52,10 @@ public sealed class DuchessSilverThimble : DuchessRelic
     private int _lastTurnTriggered = -1;
     public override RelicRarity Rarity => RelicRarity.Uncommon;
 
-    public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
+    public override async Task AfterCardDrawn(PlayerChoiceContext context, CardModel card, bool fromHandDraw)
     {
-        if (card.Owner != Owner || card is not DuchessCard { HasReaction: true }
-            || oldPileType != PileType.Draw || card.Pile?.Type != PileType.Hand
-            || Owner.PlayerCombatState.Phase != PlayerTurnPhase.Play
+        if (!DuchessReactionRules.IsEligibleDraw(fromHandDraw, card.Pile?.Type ?? PileType.None)
+            || card.Owner != Owner || card is not DuchessCard { HasReaction: true }
             || _lastTurnTriggered == Owner.PlayerCombatState.TurnNumber)
             return;
         _lastTurnTriggered = Owner.PlayerCombatState.TurnNumber;
