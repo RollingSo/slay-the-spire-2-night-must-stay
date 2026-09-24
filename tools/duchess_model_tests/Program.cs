@@ -166,7 +166,7 @@ DuchessCardSpec restage = DuchessCardCatalog.All[nameof(DuchessRestage)];
 DuchessCardSpec bearing = DuchessCardCatalog.All[nameof(DuchessElegantBearing)];
 DuchessCardSpec dodge = DuchessCardCatalog.All[nameof(DuchessDodge)];
 if (restage.Cost != 0 || restage.Type != CardType.Attack || restage.Rarity != CardRarity.Uncommon || !restage.UpgradeRetain || restage.TargetSelf
-    || restage.Moment != 4 || restage.RestageDivisor != 3 || restage.Effects.Length != 1
+    || restage.Moment != 6 || restage.RestageDivisor != 3 || restage.Effects.Length != 1
     || restage.Effects[0].Kind != "Damage" || restage.Effects[0].Amount != 4)
     throw new Exception("Restage core specification is wrong.");
 if (bearing.Cost != 0 || bearing.Effects.Length != 1 || bearing.Effects[0].Kind != "DodgeToDraw"
@@ -186,8 +186,8 @@ if (passingCut.Cost != 2 || !passingCut.Reaction
     throw new Exception("Passing Cut specification is wrong.");
 
 var blindSpot = DuchessCardCatalog.All[nameof(DuchessBlindSpot)];
-if (blindSpot.Cost != 1 || blindSpot.Moment != -1
-    || blindSpot.Effects[0].Kind != "Damage" || blindSpot.Effects[0].Amount != 8 || blindSpot.Effects[0].Upgraded != 8
+if (blindSpot.Cost != 1 || blindSpot.Moment != -1 || blindSpot.Rarity != CardRarity.Uncommon
+    || blindSpot.Effects[0].Kind != "Damage" || blindSpot.Effects[0].Amount != 8 || blindSpot.Effects[0].Upgraded != 11
     || blindSpot.Effects[1].Kind != "Vulnerable" || blindSpot.Effects[1].Amount != 2 || blindSpot.Effects[1].Upgraded != 3
     || blindSpot.Effects[1].Condition != "concealed")
     throw new Exception("Blind Spot specification is wrong.");
@@ -206,9 +206,9 @@ if (pivot.Cost != 0 || pivot.Type != CardType.Skill || pivot.Rarity != CardRarit
     || pivot.Effects[1] != new DuchessEffect("AdvanceMoment", 1, 1))
     throw new Exception("Pivot specification is wrong.");
 var reverberation = DuchessCardCatalog.All[nameof(DuchessReverberation)];
-if (reverberation.Rarity != CardRarity.Uncommon || reverberation.Effects.Length != 2
+if (reverberation.Rarity != CardRarity.Uncommon || reverberation.Effects.Length != 2 || reverberation.UpgradeCost != 0
     || reverberation.Effects[0] != new DuchessEffect("ShuffleDiscard", 2, 2)
-    || reverberation.Effects[1] != new DuchessEffect("Draw", 2, 3))
+    || reverberation.Effects[1] != new DuchessEffect("Draw", 1, 1))
     throw new Exception("Reverberation specification is wrong.");
 var composure = DuchessCardCatalog.All[nameof(DuchessComposure)];
 if (composure.Effects.Length != 1 || composure.Effects[0] != new DuchessEffect("ReactionDrawBlock", 2, 3))
@@ -253,9 +253,10 @@ foreach (bool upgradedStrike in new[] { false, true })
 }
 
 var swayingStep = DuchessCardCatalog.All[nameof(DuchessSwayingStep)];
-if (swayingStep.Type != CardType.Skill || swayingStep.Cost != 1
-    || swayingStep.Effects.Length != 1 || swayingStep.Effects[0].Kind != "DodgeToDraw"
-    || swayingStep.Effects[0].Amount != 3 || swayingStep.Effects[0].Upgraded != 3)
+if (swayingStep.Type != CardType.Skill || swayingStep.Cost != 1 || swayingStep.Rarity != CardRarity.Uncommon
+    || swayingStep.Effects.Length != 2 || swayingStep.Effects[0].Kind != "DodgeToDraw"
+    || swayingStep.Effects[0].Amount != 3 || swayingStep.Effects[0].Upgraded != 3
+    || swayingStep.Effects[1] != new DuchessEffect("Draw", 1, 1))
     throw new Exception("Swaying Step specification is wrong.");
 
 var gapMoonshadow = DuchessCardCatalog.All[nameof(DuchessGapMoonshadow)];
@@ -301,8 +302,8 @@ var foreseeFutureCard = ModelDb.Card<DuchessForeseeFuture>().ToMutable();
 var waitAMoment = DuchessCardCatalog.All[nameof(DuchessWaitAMoment)];
 if (waitAMoment.Effects.Length != 1 || waitAMoment.Effects[0].Kind != "NextTurnEnergyAndDraw"
     || waitAMoment.Effects[0].Amount != 1 || waitAMoment.Effects[0].Upgraded != 2
-    || waitAMoment.Moment != 3 || waitAMoment.MomentCostReduction != 1)
-    throw new Exception("Wait a Moment must grant 1 Energy and draw 1/2 cards next turn, with Moment 3 cost reduction.");
+    || waitAMoment.Moment != 1 || waitAMoment.MomentCostReduction != 1)
+    throw new Exception("Wait a Moment must grant 1 Energy and draw 1/2 cards next turn, with Moment 1 cost reduction.");
 if (foreseeFutureCard.DynamicVars["FutureMomentEnergy"] is not EnergyVar)
     throw new Exception("Future Moment Energy localization must use EnergyVar for energyIcons formatting.");
 
@@ -426,8 +427,9 @@ using (JsonDocument cards = JsonDocument.Parse(File.ReadAllText(Path.Combine(
         new Dictionary<string, object> { ["CalculatedDamage"] = halo.DynamicVars.CalculatedDamage, ["IfUpgraded"] = new IfUpgradedVar(UpgradeDisplay.Normal) });
     string haloPreview = formatter.Format(System.Globalization.CultureInfo.InvariantCulture, haloText,
         new Dictionary<string, object> { ["CalculatedDamage"] = halo.DynamicVars.CalculatedDamage, ["IfUpgraded"] = new IfUpgradedVar(UpgradeDisplay.UpgradePreview) });
-    if (haloBase.Contains("升级后耗能") || !haloPreview.Contains("升级后耗能变为0"))
-        throw new Exception("Cost-only upgrades must change the game's rendered card text.");
+    if (haloBase.Contains("升级后耗能") || haloPreview.Contains("升级后耗能") || haloBase != haloPreview
+        || DuchessCardCatalog.All[nameof(DuchessMiquellasHalo)].UpgradeCost != 0)
+        throw new Exception("Cost-only upgrades must change the energy badge without redundant rules text.");
     string phalanxBase = cards.RootElement.GetProperty("DUCHESS_CARIA_PHALANX.description").GetString()!;
     string phalanxUpgrade = cards.RootElement.GetProperty("DUCHESS_CARIA_PHALANX.upgradeDescription").GetString()!;
     if (!phalanxBase.Contains("辉剑") || phalanxBase.Contains("辉剑+") || !phalanxUpgrade.Contains("辉剑+"))

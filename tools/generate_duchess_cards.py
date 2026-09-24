@@ -19,7 +19,8 @@ def validate_upgrade_contracts():
     for row in ROWS:
         opt = row[8] if len(row) > 8 else {}
         value_change = any(effect[1] != effect[2] for effect in row[7])
-        text_rule_change = bool(opt.get('upgradeTokens')) or bool(opt.get('upgradeX')) or opt.get('upgradedMoment', -1) >= 0 or opt.get('upgradeCost', -1) >= 0 or opt.get('upgradeHits', -1) >= 0
+        # Cost upgrades are shown by the card's energy badge, not duplicated in rules text.
+        text_rule_change = bool(opt.get('upgradeTokens')) or bool(opt.get('upgradeX')) or opt.get('upgradedMoment', -1) >= 0 or opt.get('upgradeHits', -1) >= 0
         keyword_change = any(opt.get(key) for key in keyword_flags)
         # The game reads only .description, not .upgradeDescription. Any textual
         # upgrade must therefore be encoded with its native IfUpgraded formatter.
@@ -126,7 +127,7 @@ def effects_text(row, language, upgraded=False):
                 'RestageEndTurnAoe': [f'本回合每造成过{var}点伤害，回合结束时对所有敌人造成1点伤害。', f'At end of turn, deal 1 damage to ALL enemies for every {var} damage you dealt this turn.', f'このターン与えたダメージ{var}につき、ターン終了時に敵全体へ1ダメージを与える。'],
                 'ReplayMomentThree': ['本回合内，重放你在[gold]时刻3[/gold]打出的卡牌。', 'This turn, replay cards you play at [gold]Moment 3[/gold].', 'このターン、[gold]時刻3[/gold]でプレイしたカードをリプレイする。'],
                 'AllyDodgeDrawX': [f'将X{ "+1" if upgraded and opt.get("upgradeX") else ""}张[gold]闪避[/gold]洗入其他玩家的牌堆，其他玩家抽取相同数量的牌。', f'Shuffle X{ "+1" if upgraded and opt.get("upgradeX") else ""} [gold]Dodge[/gold] into each other player’s deck. They draw that many cards.', f'ほかのプレイヤーの山札に[gold]回避[/gold]をX{ "+1" if upgraded and opt.get("upgradeX") else ""}枚加えてシャッフルし、同じ枚数引く。'],
-                'TransformStrike': [f'选择[gold]抽牌堆[/gold]中的{var}张[gold]打击[/gold]，将其永久变化为[gold]卡利亚迅剑[/gold]。\n升级过的[gold]打击[/gold]会变化为[gold]卡利亚迅剑+[/gold]。', f'Choose {var} [gold]Strike[/gold] in your [gold]draw pile[/gold] and permanently transform it into [gold]Carian Slicer[/gold].\nAn upgraded [gold]Strike[/gold] becomes [gold]Carian Slicer+[/gold].', f'[gold]山札[/gold]の[gold]ストライク[/gold]を{var}枚選び、恒久的に[gold]カーリアの速剣[/gold]に変化させる。\n強化済みの[gold]ストライク[/gold]は[gold]カーリアの速剣+[/gold]になる。'],
+                'TransformStrike': [f'选择[gold]抽牌堆[/gold]中的{var}张[gold]打击[/gold]，将其永久变化为[gold]卡利亚迅剑[/gold]。', f'Choose {var} [gold]Strike[/gold] in your [gold]draw pile[/gold] and permanently transform it into [gold]Carian Slicer[/gold].', f'[gold]山札[/gold]の[gold]ストライク[/gold]を{var}枚選び、恒久的に[gold]カーリアの速剣[/gold]に変化させる。'],
                 'ChooseDrawToTop': ['选择[gold]抽牌堆[/gold]中的1张牌放到[gold]抽牌堆[/gold]顶部。', 'Choose 1 card in your [gold]draw pile[/gold] and put it on top of your [gold]draw pile[/gold].', '[gold]山札[/gold]からカードを1枚選び、[gold]山札[/gold]の一番上に置く。'],
                 'EndTurnMomentBlock': ['回合结束时，获得等同于当前[gold]时刻[/gold]的[gold]格挡[/gold]。', 'At the end of your turn, gain [gold]Block[/gold] equal to your current [gold]Moment[/gold].', 'ターン終了時、現在の[gold]時刻[/gold]に等しい[gold]ブロック[/gold]を得る。'],
                 'ReturnHandDamageBoost': [f'将这张牌放回[gold]手牌[/gold]，在下次打出前伤害+{var}。', f'Return this card to your [gold]hand[/gold]. Until it is next played, its damage increases by {var}.', f'このカードを[gold]手札[/gold]に戻す。次にプレイするまでダメージが{var}増加する。'],
@@ -170,6 +171,22 @@ def effects_text(row, language, upgraded=False):
                 'ShuffleBlock': [f'每将一张[gold]手牌[/gold]或[gold]弃牌堆[/gold]中的牌洗入[gold]抽牌堆[/gold]，获得{var}点[gold]格挡[/gold]。', f'Whenever you shuffle a card from your [gold]hand[/gold] or [gold]discard pile[/gold] into your [gold]draw pile[/gold], gain {var} [gold]Block[/gold].', f'[gold]手札[/gold]か[gold]捨て札[/gold]からカードを[gold]山札[/gold]に加えてシャッフルするたび、[gold]ブロック[/gold]{var}を得る。'],
             }
             text = templates[kind][language]
+            if row[0] in ('SleightOfHand', 'DeathBlade'):
+                weak = next((e for e in row[7] if e[0] == 'Weak'), None)
+                vulnerable = next((e for e in row[7] if e[0] == 'Vulnerable'), None)
+                if weak is None or vulnerable is None or weak[1:3] != vulnerable[1:3]:
+                    raise ValueError(f'{row[0]} requires matching Weak and Vulnerable amounts')
+                if kind == 'Vulnerable':
+                    continue
+                if kind == 'Weak':
+                    all_enemies = row[0] == 'SleightOfHand'
+                    text = [f'给予{"所有敌人" if all_enemies else ""}{var}层[gold]虚弱[/gold]和[gold]易伤[/gold]。',
+                            f'Apply {var} [gold]Weak[/gold] and [gold]Vulnerable[/gold]' + (' to ALL enemies.' if all_enemies else '.'),
+                            ('敵全体に' if all_enemies else '敵1体に') + f'[gold]脱力[/gold]と[gold]弱体[/gold]を{var}付与する。'][language]
+                if row[0] == 'SleightOfHand' and kind == 'ShuffleHand':
+                    text = [f'将{var}张[gold]手牌[/gold]洗入[gold]抽牌堆[/gold]。',
+                            f'Shuffle {var} cards from your [gold]hand[/gold] into your [gold]draw pile[/gold].',
+                            f'[gold]手札[/gold]を{var}枚[gold]山札[/gold]に加えてシャッフルする。'][language]
         if len(effect) > 3:
             prefix = {
                 'first': ['若此牌是你本回合打出的第一张牌，', 'If this is your first card this turn, ', 'このターン最初にプレイしたカードなら、'],
@@ -211,10 +228,6 @@ def effects_text(row, language, upgraded=False):
         out.append([f'[gold]隐匿[/gold]时耗能-{reduction}。', f'Costs {reduction} less Energy while [gold]Concealed[/gold].', f'[gold]隠密[/gold]中はコスト-{reduction}。'][language])
     if opt.get('momentCostReductionDynamic'):
         out.append(['这张牌的耗能减少等同于当前[gold]时刻[/gold]的数量。', 'Costs less Energy equal to your current [gold]Moment[/gold].', '現在の[gold]時刻[/gold]に等しいだけコストが減少する。'][language])
-    if upgraded and opt.get('upgradeCost', -1) >= 0 and opt['upgradeCost'] != row[4]:
-        out.append([f'升级后耗能变为{opt["upgradeCost"]}。',
-                    f'Upgraded cost: {opt["upgradeCost"]}.',
-                    f'強化後のコストは{opt["upgradeCost"]}。'][language])
     return '\n'.join(out)
 
 def chinese_card_table():

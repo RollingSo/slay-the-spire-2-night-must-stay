@@ -47,7 +47,7 @@
       ]
     ],
     {
-      "moment": 4,
+      "moment": 6,
       "restageDivisor": 3,
       "upgradeRetain": true,
       "targetSelf": false
@@ -246,7 +246,7 @@
       ]
     ],
     {
-      "moment": 3,
+      "moment": 1,
       "momentCostReduction": 1,
       "compactMomentCostText": true
     }
@@ -454,12 +454,12 @@
     "死角",
     1,
     "Attack",
-    "Common",
+    "Uncommon",
     [
       [
         "Damage",
         8,
-        8
+        11
       ],
       [
         "Vulnerable",
@@ -568,7 +568,7 @@
     1,
     "Skill",
     "Common",
-    [["Concealment", 1, 2]],
+    [["Concealment", 2, 3]],
     {"reaction": true}
   ],
   [
@@ -602,12 +602,17 @@
     "揺らめく歩み",
     1,
     "Skill",
-    "Common",
+    "Uncommon",
     [
       [
         "DodgeToDraw",
         3,
         3
+      ],
+      [
+        "Draw",
+        1,
+        1
       ]
     ],
     {"upgradeTokens": true}
@@ -690,11 +695,11 @@
       ],
       [
         "Draw",
-        2,
-        3
+        1,
+        1
       ]
     ],
-    {}
+    {"upgradeCost": 0}
   ],
   [
     "Distraction",
@@ -1126,7 +1131,7 @@
   ["Duchess", "女爵", "Duchess", "公爵夫人", 0, "Skill", "Uncommon", [["AllyDodgeDrawX", 0, 0]], {"xCost": true, "upgradeX": true, "targetSelf": true, "multiplayerOnly": true}],
   ["GrandBearing", "华丽身段", "Grand Bearing", "華麗な身ごなし", 0, "Skill", "Ancient", [["DodgeToDraw", 3, 3], ["Draw", 1, 1]], {"upgradeTokens": true}],
   ["GoldenMoment", "黄金时刻", "Golden Moment", "黄金の時刻", 1, "Power", "Uncommon", [["MomentFiveBlock", 4, 6]], {"targetSelf": true}],
-  ["LorettaMastery", "罗蕾塔的绝招", "Loretta's Mastery", "ローレッタの絶技", 12, "Attack", "Rare", [["Damage", 15, 18]], {"hits": 3, "momentCostReductionDynamic": true}],
+  ["LorettaMastery", "罗蕾塔的绝招", "Loretta's Mastery", "ローレッタの絶技", 12, "Attack", "Rare", [["Damage", 15, 20]], {"hits": 3, "momentCostReductionDynamic": true}],
   ["LorettaGreatbow", "罗蕾塔的大弓", "Loretta's Greatbow", "ローレッタの大弓", 6, "Attack", "Uncommon", [["Damage", 12, 16]], {"momentCostReductionDynamic": true}],
   ["SleightOfHand", "戏法", "Sleight of Hand", "手品", 0, "Skill", "Uncommon", [["ShuffleHand", 3, 3], ["Weak", 2, 3], ["Vulnerable", 2, 3]], {"targetSelf": true, "all": true}],
   ["BecomeInvisible", "化为无形", "Become Invisible", "姿を消す", 0, "Skill", "Uncommon", [["Concealment", 2, 3]], {"exhaust": true, "targetSelf": true}],
