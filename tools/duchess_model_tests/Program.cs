@@ -296,6 +296,8 @@ if (magicDagger.Cost != 0 || magicDagger.Moment != 0
     || magicDagger.Effects[0].Amount != 4 || magicDagger.Effects[0].Upgraded != 5
     || magicDagger.Effects[1].Amount != 2 || magicDagger.Effects[1].Upgraded != 3)
     throw new Exception("Magic Dagger specification is wrong.");
+if (ModelDb.Power<DuchessTemporaryStrengthDownPower>().Type != MegaCrit.Sts2.Core.Entities.Powers.PowerType.Buff)
+    throw new Exception("Magic Dagger's temporary Strength must be a positive buff, not immediate Strength loss.");
 var returningCrosscut = DuchessCardCatalog.All[nameof(DuchessReturningCrosscut)];
 if (returningCrosscut.Moment != 2 || returningCrosscut.Effects[0].Amount != 7
     || returningCrosscut.Effects[1].Kind != "Replay")

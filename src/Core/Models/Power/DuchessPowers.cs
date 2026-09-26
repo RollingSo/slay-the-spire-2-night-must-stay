@@ -238,7 +238,6 @@ public sealed class DuchessRadiantBladeTurnsPower : PowerModel
 public sealed class DuchessTemporaryStrengthDownPower : TemporaryStrengthPower
 {
     public override AbstractModel OriginModel => ModelDb.Card<DuchessMagicDagger>();
-    protected override bool IsPositive => false;
 }
 
 public sealed class DuchessTurnStartSwapPower : PowerModel

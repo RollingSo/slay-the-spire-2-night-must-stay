@@ -354,7 +354,6 @@ public abstract class DuchessCard : CardModel
                 case "Vulnerable": foreach (Creature enemy in enemies) await Apply<VulnerablePower>(context, enemy, amount); break;
                 case "Strength": await Apply<StrengthPower>(context, Owner.Creature, amount); break;
                 case "TemporaryStrength":
-                    await Apply<StrengthPower>(context, Owner.Creature, amount);
                     await Apply<DuchessTemporaryStrengthDownPower>(context, Owner.Creature, amount);
                     break;
                 case "Intangible": await Apply<IntangiblePower>(context, Owner.Creature, amount); break;
