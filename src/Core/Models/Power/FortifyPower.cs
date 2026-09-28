@@ -36,7 +36,7 @@ namespace NightMustStay.Core.Models.Power
                 System.Math.Max(0, blockBeforeRetention - clampAllowance));
             GuardianMultiplayerPower guardianPower = base.Owner.GetPower<GuardianMultiplayerPower>();
             if (guardianPower != null && retainedByFortify > 0)
-                await guardianPower.GiveRetainedBlockToTeammates(retainedByFortify);
+                guardianPower.QueueRetainedBlockForTeammates(retainedByFortify);
             int blockToLose = base.Owner.Block - retainedBlock;
             if (blockToLose > 0)
                 await NightMustStay.Core.Compatibility.Sts2BranchCompat.LoseBlock(base.Owner, blockToLose);

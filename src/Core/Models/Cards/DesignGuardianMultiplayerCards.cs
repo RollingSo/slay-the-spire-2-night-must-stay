@@ -16,7 +16,7 @@ namespace NightMustStay.Core.Models.Cards
 {
     public sealed class StepForwardForAll : CardModel
     {
-        private const string GuardCounterKey = "GuardCounter";
+        private const string FortifyKey = "Fortify";
 
         public override string PortraitPath =>
             "res://packed/card_portraits/guardian/step_forward_for_all.png";
@@ -29,13 +29,13 @@ namespace NightMustStay.Core.Models.Cards
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
             new BlockVar(12m, ValueProp.Move),
-            new PowerVar<GuardCounterPower>(GuardCounterKey, 8m)
+            new PowerVar<FortifyPower>(FortifyKey, 5m)
         };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
         {
             HoverTipFactory.Static(StaticHoverTip.Block),
-            HoverTipFactory.FromPower<GuardCounterPower>()
+            HoverTipFactory.FromPower<FortifyPower>()
         };
 
         public StepForwardForAll()
@@ -48,10 +48,10 @@ namespace NightMustStay.Core.Models.Cards
             foreach (Player teammate in LivingTeammates())
             {
                 await CreatureCmd.GainBlock(teammate.Creature, DynamicVars.Block, cardPlay);
-                await PowerCmd.Apply<GuardCounterPower>(
+                await PowerCmd.Apply<FortifyPower>(
                     context,
                     teammate.Creature,
-                    DynamicVars[GuardCounterKey].BaseValue,
+                    DynamicVars[FortifyKey].BaseValue,
                     Owner.Creature,
                     this);
             }
@@ -60,7 +60,7 @@ namespace NightMustStay.Core.Models.Cards
         protected override void OnUpgrade()
         {
             DynamicVars.Block.UpgradeValueBy(4m);
-            DynamicVars[GuardCounterKey].UpgradeValueBy(4m);
+            DynamicVars[FortifyKey].UpgradeValueBy(2m);
         }
 
         private IEnumerable<Player> LivingTeammates() =>
