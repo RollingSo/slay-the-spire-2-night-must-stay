@@ -16,7 +16,8 @@ namespace NightMustStay.Core.Patches
         {
             if (__instance.Owner?.Character is not Guardian
                 && __instance.Owner?.Character is not Ironeye
-                && __instance.Owner?.Character is not Revenant)
+                && __instance.Owner?.Character is not Revenant
+                && __instance.Owner?.Character is not Duchess)
                 return true;
 
             ModelId characterId = __instance.Owner.Character.Id;

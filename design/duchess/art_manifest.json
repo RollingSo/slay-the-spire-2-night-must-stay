@@ -1,0 +1,480 @@
+{
+  "cards": [
+    {
+      "key": "InsightFuture",
+      "hint": "Approved second preview on 2026-09-28: images/packed/card_portraits/duchess/duchess_insight_future.png"
+    },
+    {
+      "key": "GreatswordPhalanx",
+      "hint": "Approved artwork: images/packed/card_portraits/duchess/duchess_greatsword_phalanx.png"
+    },
+    {
+      "key": "MiquellasHalo",
+      "hint": "Approved artwork: images/packed/card_portraits/duchess/duchess_miquellas_halo.png; Duchess wields the reference scythe"
+    },
+    {
+      "key": "CarianSlicer",
+      "hint": "Approved artwork: images/packed/card_portraits/duchess/duchess_carian_slicer.png"
+    },
+    {
+      "key": "CarianSwordsmanship",
+      "hint": "Approved artwork: images/packed/card_portraits/duchess/duchess_carian_swordsmanship.png"
+    },
+    {
+      "key": "LightningNerves",
+      "hint": "Approved artwork: images/packed/card_portraits/duchess/duchess_lightning_nerves.png"
+    },
+    {
+      "key": "FallingMagic",
+      "hint": "Approved artwork: images/packed/card_portraits/duchess/duchess_falling_magic.png"
+    },
+    {
+      "key": "BladeRevealMoment",
+      "hint": "Approved close-up promoted 2026-09-29: images/packed/card_portraits/duchess/duchess_blade_reveal_moment.png; source: design/卡图预览/女爵_2026-09-28_聊天协作/BladeRevealMoment.png"
+    },
+    {
+      "key": "Strike",
+      "hint": "Approved artwork: images/packed/card_portraits/duchess/duchess_strike.png; repurposed from Short Dagger Restage preview per user request"
+    },
+    {
+      "key": "Defend",
+      "hint": "Approved close-up promoted 2026-09-29: images/packed/card_portraits/duchess/duchess_defend.png; source: design/卡图预览/女爵_2026-09-28_聊天协作/Defend.png"
+    },
+    {
+      "key": "Restage",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-d356af17-965a-42ca-869b-d288d627b1e9.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Finale",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-74b27e08-fae2-42e4-b330-f2d6aabe2349.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "GrandReprise",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-c0034f38-d709-4550-80e2-f23d8b5b0495.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "EternalRestage",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-65bb3ba7-829f-4ad3-b9db-63ef823782de.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "PassingCut",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-8f8ed8f6-73a6-4700-b050-7c5e9e86cb7a.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "BlindSpot",
+      "hint": "Approved project artwork: images/packed/card_portraits/duchess/duchess_blind_spot.png"
+    },
+    {
+      "key": "GlintstoneKnife",
+      "hint": "2026-09-28: user-supplied Switcheroo replacement codex-clipboard-5147a962-7078-47fc-b808-8b93ce345d04.png. Approved and normalized to images/packed/card_portraits/duchess/duchess_glintstone_knife.png at 1000x760."
+    },
+    {
+      "key": "Pivot",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-66b973f2-6c63-49d1-b1ac-aff37d60c67b.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Feint",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-31968ba6-49c7-4afd-be2d-11089f4eedbb.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "VeiledStep",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-f894bb3e-3101-47c8-b7f7-2888c9b0d1a9.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "HiddenPocket",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-57bf1147-41c4-48f9-aff4-8700d3ff17d7.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "SoftLanding",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-c84b4c3d-b8cd-4003-bffd-75fb588df85d.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Reverberation",
+      "hint": "Approved swinging-pocketwatch close-up on 2026-09-29: images/packed/card_portraits/duchess/duchess_reverberation.png"
+    },
+    {
+      "key": "Distraction",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-e3f38675-bc45-4ac5-84a3-6817c28eb407.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "SilverFlash",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-cc13c679-b9af-47f8-ad07-19ab2be63746.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "ThreadTheGap",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-8bdc484a-f4a0-4044-a977-110cbb9c7cd2.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "Invitation",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-5e1ad2fd-bf1a-46d0-9e57-88027bdaf9e3.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "QuickHands",
+      "hint": "Approved revision promoted 2026-09-29: images/packed/card_portraits/duchess/duchess_quick_hands.png; source: design/卡图预览/女爵_2026-09-29_修订/QuickHands.png"
+    },
+    {
+      "key": "Composure",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-2862fdb1-2732-4e8d-9077-cf8750e0d600.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "MidnightWaltz",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-341cca3d-a168-4b41-86a0-f4a461fbb1b7.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "SilverStorm",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-5a23b192-e80d-4746-bb4e-556351957964.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "ThiefsArsenal",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-b36f72f9-299c-4822-815d-83cca8c5124c.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "PerfectRehearsal",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-c20989ef-de4b-4731-bc3f-08b6f8e7babd.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "PoisedExit",
+      "hint": "Approved project artwork: images/packed/card_portraits/duchess/duchess_poised_exit.png"
+    },
+    {
+      "key": "SwayingStep",
+      "hint": "Approved project artwork: images/packed/card_portraits/duchess/duchess_swaying_step.png"
+    },
+    {
+      "key": "GapMoonshadow",
+      "hint": "Approved project artwork: images/packed/card_portraits/duchess/duchess_gap_moonshadow.png"
+    },
+    {
+      "key": "TidyCollar",
+      "hint": "Approved close-up promoted 2026-09-29: images/packed/card_portraits/duchess/duchess_tidy_collar.png; source: design/卡图预览/女爵_2026-09-28_聊天协作/TidyCollar.png"
+    },
+    {
+      "key": "BackToPast",
+      "hint": "Approved revision promoted 2026-09-29: images/packed/card_portraits/duchess/duchess_back_to_past.png; source: design/卡图预览/女爵_2026-09-29_修订/BackToPast.png"
+    },
+    {
+      "key": "ParallelTime",
+      "hint": "Approved 2026-09-29; promoted to images/packed/card_portraits/duchess/duchess_parallel_time.png; source design/卡图预览/女爵_2026-09-29_寂静平行时空/ParallelTime.png"
+    },
+    {
+      "key": "Quietude",
+      "hint": "Approved 2026-09-29; source design/卡图预览/女爵_2026-09-29_寂静重绘/Quietude.png; formal images/packed/card_portraits/duchess/duchess_quietude.png"
+    },
+    {
+      "key": "MomentAndEternity",
+      "hint": "Approved 2026-09-29; source design/卡图预览/女爵_2026-09-29_四张新牌/MomentAndEternity.png; formal images/packed/card_portraits/duchess/duchess_moment_and_eternity.png"
+    },
+    {
+      "key": "FleetingInstant",
+      "hint": "Approved 2026-09-29; source design/卡图预览/女爵_2026-09-29_三张重绘/FleetingInstant.png; formal images/packed/card_portraits/duchess/duchess_fleeting_instant.png"
+    },
+    {
+      "key": "EternalForm",
+      "hint": "Approved 2026-09-29; source design/卡图预览/女爵_2026-09-29_三张重绘/EternalForm.png; formal images/packed/card_portraits/duchess/duchess_eternal_form.png"
+    },
+    {
+      "key": "ShadowSword",
+      "hint": "Approved 2026-09-29; source design/卡图预览/女爵_2026-09-29_三张重绘/ShadowSword.png; formal images/packed/card_portraits/duchess/duchess_shadow_sword.png"
+    },
+    {
+      "key": "Memory",
+      "hint": "Approved 2026-09-30; formal images/packed/card_portraits/duchess/duchess_memory.png"
+    },
+    {
+      "key": "InchVictory",
+      "hint": "Approved 2026-09-30; formal images/packed/card_portraits/duchess/duchess_inch_victory.png"
+    },
+    {
+      "key": "LorettaSlash",
+      "hint": "Approved 2026-09-30 after matching Loretta's polearm; formal images/packed/card_portraits/duchess/duchess_loretta_slash.png"
+    },
+    {
+      "key": "SacredHalo",
+      "hint": "Approved 2026-09-30; formal images/packed/card_portraits/duchess/duchess_sacred_halo.png"
+    },
+    {
+      "key": "GracefulSwordDance",
+      "hint": "Approved 2026-09-30; formal images/packed/card_portraits/duchess/duchess_graceful_sword_dance.png"
+    },
+    {
+      "key": "MemoryFragment",
+      "hint": "Approved 2026-09-30; formal images/packed/card_portraits/duchess/duchess_memory_fragment.png"
+    },
+    {
+      "key": "PhantomKiller",
+      "hint": "Approved 2026-09-30 using the previous full-body version; formal images/packed/card_portraits/duchess/duchess_phantom_killer.png"
+    },
+    {
+      "key": "GreatCaria",
+      "hint": "Approved 2026-09-30; formal images/packed/card_portraits/duchess/duchess_great_caria.png"
+    },
+    {
+      "key": "Fate",
+      "hint": "Approved 2026-09-30; formal images/packed/card_portraits/duchess/duchess_fate.png"
+    }
+  ],
+  "sprite": {
+    "key": "idle",
+    "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-758d2850-6be6-4a65-85dd-e9f60082ef73.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+  },
+  "prompts": {
+    "cards": [
+      {
+        "key": "Strike",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Strike. Single visual event: A huge short silver stiletto held by an ivory gloved hand stabs diagonally across deep burgundy speed shapes. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Defend",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Defend. Single visual event: A dark navy tailcoat sleeve sweeps upward deflecting a single angular incoming blade. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Restage",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Restage. Single visual event: Two overlapping silver dagger slash silhouettes mirrored across a bright blue finger snap star; past wound and its reprise. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "PassingCut",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Passing Cut. Single visual event: Passing Cut: one decisive short-dagger combat gesture, represented through a silver blade impact star and a broad cloak barrier. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "BlindSpot",
+        "prompt": "1000x760 graphic flat card art: Duchess presses a finger to her lips while fading invisible behind an unaware enemy, poised for a backstab; preserve approved identity; no text or UI."
+      },
+      {
+        "key": "GlintstoneKnife",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Glintstone Knife. Single visual event: Glintstone Knife: one decisive short-dagger combat gesture, represented through a silver blade impact star and a short floating dagger. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Pivot",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Pivot. Single visual event: Pivot: one readable preparation or protective gesture, represented through a broad cloak barrier and a curved boot-step arc. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "VeiledStep",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Veiled Step. Single visual event: Veiled Step: one readable preparation or protective gesture, represented through a broad cloak barrier and a disappearing navy silhouette. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Feint",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Feint. Single visual event: Feint: one readable preparation or protective gesture, represented through a curved boot-step arc. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "HiddenPocket",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Hidden Pocket. Single visual event: Hidden Pocket: one readable preparation or protective gesture, represented through a short floating dagger. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "SoftLanding",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Soft Landing. Single visual event: Soft Landing: one readable preparation or protective gesture, represented through a broad cloak barrier and a curved boot-step arc. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Reverberation",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Reverberation. Single visual event: Reverberation: one readable preparation or protective gesture, represented through a repeated cyan slash and a broad cloak barrier. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Distraction",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Distraction. Single visual event: Distraction: one readable preparation or protective gesture, represented through a bent enemy blade and a broad cloak barrier. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "ThreadTheGap",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Thread the Gap. Single visual event: Thread the Gap: one decisive short-dagger combat gesture, represented through a silver blade impact star and a bright silver pocketwatch. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "SilverFlash",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Silver Flash. Single visual event: Silver Flash: one decisive short-dagger combat gesture, represented through a silver blade impact star and a short floating dagger. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Invitation",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Invitation. Single visual event: Invitation: one readable preparation or protective gesture, represented through a curved boot-step arc and converging luminous motes. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "QuickHands",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Quick Hands. Single visual event: Quick Hands: one readable preparation or protective gesture, represented through a short floating dagger. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Composure",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Composure. Single visual event: Composure: one readable preparation or protective gesture, represented through one sustained blue halo. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "Finale",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Finale. Single visual event: A masked silver-haired Duchess draws one dark navy cloak across herself and two simple allied silhouettes; all dissolve into blue cutout shapes. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "GrandReprise",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Grand Reprise. Single visual event: A giant silver gloved snapping hand commands a pair of repeated dagger wounds rendered as cyan stars. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "MidnightWaltz",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Midnight Waltz. Single visual event: Midnight Waltz: one decisive short-dagger combat gesture, represented through a silver blade impact star. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "SilverStorm",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Silver Storm. Single visual event: Silver Storm: one decisive short-dagger combat gesture, represented through a silver blade impact star. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "ThiefsArsenal",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Thief's Arsenal. Single visual event: Thief's Arsenal: one readable preparation or protective gesture, represented through a short floating dagger. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "PerfectRehearsal",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 1000x760 landscape. Card concept: Perfect Rehearsal. Single visual event: Perfect Rehearsal: one readable preparation or protective gesture, represented through a repeated cyan slash. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "EternalRestage",
+        "prompt": "Use case: illustration-story. Production game card ART ONLY. 606x852 PORTRAIT, composition natively vertical and filled edge-to-edge. Card concept: Eternal Restage. Single visual event: A silver pocketwatch suspended above a dagger wound repeated within two concentric blue rings; native vertical portrait composition. If character appears, use Duchess identity from first reference: silver SHORT bob, filigree eye mask covering eyes, navy fitted tailcoat, white cravat and ivory TROUSERS, dark boots, short silver dagger; not a gown or mage. Other references are ORIGINAL Spire card art, follow their graphic flat simplified shapes, 2–4 hard-edged color planes, chunky irregular black shadows and exaggerated close-up perspective. Limit to deep navy, ivory silver, one bright cyan OR burgundy accent. One dominant silhouette filling frame, minimal abstract background. No text, card frame, card objects, UI, small decorations, realistic texture, cinematic or painterly rendering. Distinct composition for this named card."
+      },
+      {
+        "key": "PoisedExit",
+        "prompt": "1000x760 graphic flat card art: Duchess makes a poised exit after a restrained short-blade cut; one enemy silhouette; no text or UI."
+      },
+      {
+        "key": "SwayingStep",
+        "prompt": "1000x760 graphic flat card art: Duchess performs one elegant swaying step with three abstract crescent motion arcs; no weapons, card objects, text or UI."
+      },
+      {
+        "key": "GapMoonshadow",
+        "prompt": "1000x760 graphic flat card art: approved Duchess performs a wide airborne short-blade moon arc striking multiple enemy silhouettes; no text or UI."
+      }
+    ]
+  },
+  "icons": [
+    {
+      "key": "duchess_step_power",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-3dd79f03-113d-4a30-9f1f-dd5cd133c013.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_veil_power",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-63af21b5-04a4-48ba-b7b7-877f162e1f1a.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_echo_description_power",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-01b8cb79-0b69-47b9-b33e-40306444689d.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_memory_power",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-8235f7b5-1fb8-494b-9c95-8991a5f14cd4.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_measured_breath_power",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-e4c3ec49-4be2-425f-940c-04fc4621d97e.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_opening_dance_power",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-cc8bc7ea-d83a-45a0-93a7-049c8f322130.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_reprise_guard_power",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-a3200f29-ff38-486e-978b-26353ffa8b79.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_reprise_step_power",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-b3e39af2-47ea-4644-b4cd-3a0965af57df.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_veil_reward_power",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-8193dab5-a8bc-4849-b742-40fbb40efb22.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_old_pocketwatch",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-8d10fb12-b692-4cfb-bd70-44136195e093.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_energy",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-7eb4c516-c474-4c53-94d3-545e8b06f67e.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_eternal_form_power",
+      "hint": "2026-09-29 icon used for approved card export; source design/卡图预览/女爵_2026-09-29_四张新牌/EternalFormPower.png; images/powers and powers share artwork"
+    },
+    {
+      "key": "duchess_shadow_sword_power",
+      "hint": "2026-09-29 icon used for approved card export; source design/卡图预览/女爵_2026-09-29_四张新牌/ShadowSwordPower.png; images/powers and powers share artwork"
+    },
+    {
+      "key": "duchess_reverse_pocketwatch",
+      "hint": "Approved 2026-09-30: duchess_assets/relics/duchess_reverse_pocketwatch.png"
+    },
+    {
+      "key": "duchess_crown_badge",
+      "hint": "Approved 2026-09-30: duchess_assets/relics/duchess_crown_badge.png"
+    },
+    {
+      "key": "duchess_golden_dewdrop",
+      "hint": "Approved 2026-09-30: duchess_assets/relics/duchess_golden_dewdrop.png"
+    },
+    {
+      "key": "duchess_primal_glintstone_blade",
+      "hint": "Approved 2026-09-30: duchess_assets/relics/duchess_primal_glintstone_blade.png"
+    },
+    {
+      "key": "duchess_blessed_iron_coin",
+      "hint": "Approved 2026-09-30: duchess_assets/relics/duchess_blessed_iron_coin.png"
+    },
+    {
+      "key": "duchess_night_of_wisdom",
+      "hint": "Approved 2026-09-30: duchess_assets/relics/duchess_night_of_wisdom.png"
+    },
+    {
+      "key": "duchess_blue_stained_blade",
+      "hint": "Approved 2026-09-30: duchess_assets/relics/duchess_blue_stained_blade.png"
+    },
+    {
+      "key": "duchess_carian_badge",
+      "hint": "Approved 2026-09-30: duchess_assets/relics/duchess_carian_badge.png"
+    },
+    {
+      "key": "duchess_smoke_bottle",
+      "hint": "Approved 2026-09-30: duchess_assets/potions/duchess_smoke_bottle.png"
+    },
+    {
+      "key": "duchess_radiant_blade_crystal",
+      "hint": "Approved 2026-09-30: duchess_assets/potions/duchess_radiant_blade_crystal.png"
+    },
+    {
+      "key": "duchess_regret_potion",
+      "hint": "Approved 2026-09-30: duchess_assets/potions/duchess_regret_potion.png"
+    },
+    {
+      "key": "duchess_zero_cost_attack_power",
+      "hint": "2026-09-30: images/powers/duchess_zero_cost_attack_power.png"
+    },
+    {
+      "key": "duchess_graceful_sword_dance_power",
+      "hint": "2026-09-30: images/powers/duchess_graceful_sword_dance_power.png"
+    },
+    {
+      "key": "duchess_phantom_killer_power",
+      "hint": "2026-09-30: images/powers/duchess_phantom_killer_power.png"
+    }
+  ],
+  "scenes": [
+    {
+      "key": "background",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-f1c996c3-7f16-4409-aada-92b7ad4c4053.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "attack",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-acf2d158-8c9c-4089-a294-272b00067913.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "rest",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-de35870c-75a2-4e61-bfd9-b406b940d03a.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "hit",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-dc4fefee-ce62-433a-a532-ed13a1dbb957.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "merchant",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-b001fe09-0619-441f-9990-acc936090669.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "rock",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-caba466d-2ca0-418d-8fbe-d23b0c6112e2.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "scissors",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-d7571796-5b52-4a45-8ef3-c6dab5387f9f.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "paper",
+      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-d8823b3f-e5ef-49e1-88f8-b9399a8c0a25.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    }
+  ]
+}

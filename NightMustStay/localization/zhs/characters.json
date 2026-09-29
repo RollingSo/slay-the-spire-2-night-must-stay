@@ -40,5 +40,19 @@
   "REVENANT.description": "与家人和死灵并肩作战的召魂者。",
   "REVENANT.aromaPrinciple": "[sine][purple]无论生死，我们仍会重逢。[/purple][/sine]",
   "REVENANT.eventDeathPrevention": "还不能谢幕——他们仍在等我",
-  "REVENANT.goldMonologue": "[sine]海伦会挑最亮的那枚，弗雷德利克则会假装自己毫不在意……[/sine]"
+  "REVENANT.goldMonologue": "[sine]海伦会挑最亮的那枚，弗雷德利克则会假装自己毫不在意……[/sine]",
+  "DUCHESS.title": "女爵",
+  "DUCHESS.titleObject": "女爵",
+  "DUCHESS.banter.alive.endTurnPing": "准备好了就请行动。",
+  "DUCHESS.banter.dead.endTurnPing": "请继续……不要为我停下。",
+  "DUCHESS.pronounObject": "她",
+  "DUCHESS.possessiveAdjective": "她的",
+  "DUCHESS.pronounPossessive": "她的",
+  "DUCHESS.pronounSubject": "她",
+  "DUCHESS.cardsModifierTitle": "女爵卡牌",
+  "DUCHESS.cardsModifierDescription": "女爵的卡牌。",
+  "DUCHESS.description": "拨动怀表的时刻，以闪避与反应穿行于牌堆，在精准的节拍中给予致命一击。",
+  "DUCHESS.aromaPrinciple": "[sine]如果这能帮助各位，我愿意一试。[/sine]",
+  "DUCHESS.eventDeathPrevention": "还有人在等我。我不能停在这里。",
+  "DUCHESS.goldMonologue": "[sine]足够准备下一段路了。也该为各位留一些。[/sine]"
 }

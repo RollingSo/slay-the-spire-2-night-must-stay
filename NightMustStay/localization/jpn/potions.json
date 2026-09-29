@@ -17,5 +17,17 @@
   "WRAITH_JAR.description": "ランダムな[gold]死霊[/gold]を1体召喚する。",
   "STARLIGHT_SHARD.title": "星光の欠片",
   "STARLIGHT_SHARD.description": "カードを3枚[gold]回収[/gold]する。",
-  "STARLIGHT_SHARD.selectionScreenPrompt": "[gold]回収[/gold]するカードを3枚選択。"
+  "STARLIGHT_SHARD.selectionScreenPrompt": "[gold]回収[/gold]するカードを3枚選択。",
+  "DUCHESS_SMOKE_BOTTLE.title": "煙の小瓶",
+  "DUCHESS_SMOKE_BOTTLE.description": "[gold]隠密[/gold]3を得る。",
+  "DUCHESS_RADIANT_BLADE_CRYSTAL.title": "輝剣の結晶",
+  "DUCHESS_RADIANT_BLADE_CRYSTAL.description": "[gold]輝剣+[/gold]2枚を手札に加える。",
+  "DUCHESS_REGRET_POTION.title": "後悔の薬",
+  "DUCHESS_REGRET_POTION.description": "エナジーを2得る。\nカードを2枚引く。\n[gold]時刻[/gold]を0にする。",
+  "DUCHESS_SILVER_PERFUME.title": "銀霧の香水",
+  "DUCHESS_SILVER_PERFUME.description": "[gold]時刻[/gold]を3進める。",
+  "DUCHESS_VEIL_VIAL.title": "回避の小瓶",
+  "DUCHESS_VEIL_VIAL.description": "[gold]回避[/gold]2枚を手札に加える。",
+  "DUCHESS_MEMORY_DRAUGHT.title": "時刻の霊薬",
+  "DUCHESS_MEMORY_DRAUGHT.description": "[gold]時刻[/gold]を5にする。\nカードを1枚引く。"
 }

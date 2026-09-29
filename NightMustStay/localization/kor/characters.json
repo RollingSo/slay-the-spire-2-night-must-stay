@@ -40,5 +40,19 @@
   "REVENANT.description": "가족과 망자를 곁에 두고 싸우는 영혼의 소환사.",
   "REVENANT.aromaPrinciple": "[sine][purple]살아서든 죽어서든, 우린 다시 만날 거야.[/purple][/sine]",
   "REVENANT.eventDeathPrevention": "아직 그들을 두고 갈 수 없어.",
-  "REVENANT.goldMonologue": "[sine]이 정도면 가족의 여장을 꾸릴 수 있겠어.[/sine]"
+  "REVENANT.goldMonologue": "[sine]이 정도면 가족의 여장을 꾸릴 수 있겠어.[/sine]",
+  "DUCHESS.title": "Duchess",
+  "DUCHESS.titleObject": "the Duchess",
+  "DUCHESS.banter.alive.endTurnPing": "Please act when you are ready.",
+  "DUCHESS.banter.dead.endTurnPing": "Please... do not stop for me.",
+  "DUCHESS.pronounObject": "her",
+  "DUCHESS.possessiveAdjective": "her",
+  "DUCHESS.pronounPossessive": "hers",
+  "DUCHESS.pronounSubject": "she",
+  "DUCHESS.cardsModifierTitle": "Duchess cards",
+  "DUCHESS.cardsModifierDescription": "Cards for the Duchess.",
+  "DUCHESS.description": "She turns the hands of her pocketwatch, weaving Dodge and Reaction through her deck before striking at the perfect Moment.",
+  "DUCHESS.aromaPrinciple": "[sine]If it will help everyone, I am willing to try.[/sine]",
+  "DUCHESS.eventDeathPrevention": "Someone is still waiting. I cannot stop here.",
+  "DUCHESS.goldMonologue": "[sine]Enough for the road ahead. I should set some aside for the others.[/sine]"
 }

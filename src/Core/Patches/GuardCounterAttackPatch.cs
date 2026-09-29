@@ -60,6 +60,10 @@ public static class GuardCounterAttackPatch
             if (retreatingDefense != null)
                 retreatingDefense.AfterFullyBlockedAttack();
 
+            DuchessFullBlockRadiantBladePower carianRetaliation = playerCreature.GetPower<DuchessFullBlockRadiantBladePower>();
+            if (carianRetaliation != null)
+                await carianRetaliation.AfterFullyBlockedAttack(context);
+
         }
 
         return command;

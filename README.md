@@ -1,6 +1,6 @@
 # Slay the Spire 2 : Night Must Stay
 
-`Night Must Stay` is a Godot/.NET mod for *Slay the Spire 2*. It adds three custom characters—Guardian, Ironeye, and Revenant—with independent card pools, relics, potions, powers, combat visuals, character-select scenes, localization, and multiplayer assets.
+`Night Must Stay` is a Godot/.NET mod for *Slay the Spire 2*. It adds Guardian, Ironeye, Revenant, and a new Duchess test implementation, with independent card pools, relics, potions, powers, combat visuals, character-select scenes, localization, and multiplayer assets. Duchess has 75 cards, 7 relics and 3 potions; see [development status](design/duchess/STATUS.md) for the distinction between automated checks and pending in-game acceptance.
 
 The project is a mod source tree, not a copy of the base game. The game assemblies and base assets are supplied by a local Slay the Spire 2 installation and are intentionally not committed here.
 
@@ -45,7 +45,7 @@ The default Godot and Mods paths are declared at the top of `tools/export_guardi
 | `src/Core/Models/CardPools`, `RelicPools`, `PotionPools` | Character-specific acquisition pools. |
 | `src/Core/Patches` | Harmony integration with base-game scenes, events, UI and animation hooks. |
 | `src/Core/Nodes` | Godot UI/VFX nodes such as distance, mark and forecast overlays. |
-| `guardian_assets`, `ironeye_assets`, `revenant_assets` | Character-owned art, rigs, icons, scenes and transition assets. |
+| `guardian_assets`, `ironeye_assets`, `revenant_assets`, `duchess_assets` | Character-owned art, rigs, icons, scenes and transition assets. |
 | `NightMustStay/localization/{zhs,eng,jpn}` | Mod localization tables. |
 | `images/atlases`, `materials`, `atlases`, `powers`, `packed` | Godot atlas/material resources and packaged card/power assets. |
 | `tools` | Export, icon-sync and localization validation scripts. |
@@ -54,6 +54,8 @@ The default Godot and Mods paths are declared at the top of `tools/export_guardi
 ## Development rules
 
 The authoritative card list is the Feishu card table referenced by `AGENTS.md`. Do not invent a parallel card list or modify that table unless explicitly authorized. Before creating or revising card art, read the mandatory art specifications in `design/` and use the original portraits under `D:\STS2\images\packed\card_portraits` for style comparison.
+
+The Duchess implementation snapshot and integration notes are in `design/duchess/HANDOFF.md`. Check the Feishu card table designated by `AGENTS.md` before revising cards. Local Duchess data files record the current implementation state.
 
 Guardian power icons are atlas-backed. `guardian_assets/guardian_power_atlas.png` and `images/atlases/power_atlas.sprites` are the source of truth; run `tools/sync_guardian_power_icons.ps1` whenever a Guardian power region changes. The normal export script already runs this step.
 
