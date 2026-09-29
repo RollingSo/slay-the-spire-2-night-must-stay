@@ -9,8 +9,10 @@ public sealed class DuchessRelicPool : RelicPoolModel
     public override Color LabOutlineColor => new("809CC8");
     protected override IEnumerable<RelicModel> GenerateAllRelics() => new RelicModel[]
     {
-        ModelDb.Relic<DuchessOldPocketwatch>(), ModelDb.Relic<DuchessMendedPocketwatch>(),
-        ModelDb.Relic<DuchessLaceCuff>(), ModelDb.Relic<DuchessSilverThimble>(),
-        ModelDb.Relic<DuchessDanceShoes>(), ModelDb.Relic<DuchessUnsentLetter>(), ModelDb.Relic<DuchessBlueRibbon>(),
+        ModelDb.Relic<DuchessOldPocketwatch>(), ModelDb.Relic<DuchessReversePocketwatch>(),
+        ModelDb.Relic<DuchessCrownBadge>(), ModelDb.Relic<DuchessGoldenDewdrop>(),
+        ModelDb.Relic<DuchessPrimalGlintstoneBlade>(), ModelDb.Relic<DuchessBlessedIronCoin>(),
+        ModelDb.Relic<DuchessNightOfWisdom>(), ModelDb.Relic<DuchessBlueStainedBlade>(),
+        ModelDb.Relic<DuchessCarianBadge>(),
     };
 }

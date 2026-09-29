@@ -350,71 +350,6 @@
       760
     ]
   },
-  "duchess_assets/relics/duchess_blue_ribbon.png": {
-    "size": [
-      256,
-      256
-    ],
-    "mode": "RGBA",
-    "bounds": [
-      12,
-      29,
-      244,
-      226
-    ]
-  },
-  "duchess_assets/relics/duchess_dance_shoes.png": {
-    "size": [
-      256,
-      256
-    ],
-    "mode": "RGBA",
-    "bounds": [
-      23,
-      12,
-      232,
-      244
-    ]
-  },
-  "duchess_assets/relics/duchess_lace_cuff.png": {
-    "size": [
-      256,
-      256
-    ],
-    "mode": "RGBA",
-    "bounds": [
-      21,
-      12,
-      235,
-      244
-    ]
-  },
-  "duchess_assets/potions/duchess_memory_draught.png": {
-    "size": [
-      256,
-      256
-    ],
-    "mode": "RGBA",
-    "bounds": [
-      66,
-      12,
-      190,
-      244
-    ]
-  },
-  "duchess_assets/relics/duchess_mended_pocketwatch.png": {
-    "size": [
-      256,
-      256
-    ],
-    "mode": "RGBA",
-    "bounds": [
-      51,
-      12,
-      205,
-      244
-    ]
-  },
   "duchess_assets/relics/duchess_old_pocketwatch.png": {
     "size": [
       256,
@@ -425,58 +360,6 @@
       52,
       12,
       203,
-      244
-    ]
-  },
-  "duchess_assets/potions/duchess_silver_perfume.png": {
-    "size": [
-      256,
-      256
-    ],
-    "mode": "RGBA",
-    "bounds": [
-      37,
-      12,
-      218,
-      244
-    ]
-  },
-  "duchess_assets/relics/duchess_silver_thimble.png": {
-    "size": [
-      256,
-      256
-    ],
-    "mode": "RGBA",
-    "bounds": [
-      26,
-      12,
-      229,
-      244
-    ]
-  },
-  "duchess_assets/relics/duchess_unsent_letter.png": {
-    "size": [
-      256,
-      256
-    ],
-    "mode": "RGBA",
-    "bounds": [
-      28,
-      12,
-      228,
-      244
-    ]
-  },
-  "duchess_assets/potions/duchess_veil_vial.png": {
-    "size": [
-      256,
-      256
-    ],
-    "mode": "RGBA",
-    "bounds": [
-      44,
-      12,
-      211,
       244
     ]
   },
@@ -972,6 +855,227 @@
       0,
       1000,
       760
+    ]
+  },
+  "duchess_assets/relics/duchess_reverse_pocketwatch.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      59,
+      24,
+      200,
+      234
+    ]
+  },
+  "duchess_assets/relics/duchess_crown_badge.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      43,
+      34,
+      220,
+      226
+    ]
+  },
+  "duchess_assets/relics/duchess_golden_dewdrop.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      38,
+      14,
+      210,
+      238
+    ]
+  },
+  "duchess_assets/relics/duchess_primal_glintstone_blade.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      78,
+      18,
+      175,
+      232
+    ]
+  },
+  "duchess_assets/relics/duchess_blessed_iron_coin.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      31,
+      16,
+      227,
+      245
+    ]
+  },
+  "duchess_assets/relics/duchess_night_of_wisdom.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      33,
+      34,
+      224,
+      226
+    ]
+  },
+  "duchess_assets/relics/duchess_blue_stained_blade.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      43,
+      15,
+      224,
+      241
+    ]
+  },
+  "duchess_assets/relics/duchess_carian_badge.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      51,
+      11,
+      217,
+      240
+    ]
+  },
+  "duchess_assets/potions/duchess_smoke_bottle.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      54,
+      26,
+      203,
+      216
+    ]
+  },
+  "duchess_assets/potions/duchess_radiant_blade_crystal.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      72,
+      25,
+      185,
+      226
+    ]
+  },
+  "duchess_assets/potions/duchess_regret_potion.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      81,
+      29,
+      176,
+      225
+    ]
+  },
+  "images/powers/duchess_zero_cost_attack_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      15,
+      11,
+      238,
+      235
+    ]
+  },
+  "powers/duchess_zero_cost_attack_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      15,
+      11,
+      238,
+      235
+    ]
+  },
+  "images/powers/duchess_graceful_sword_dance_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      26,
+      22,
+      231,
+      237
+    ]
+  },
+  "powers/duchess_graceful_sword_dance_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      26,
+      22,
+      231,
+      237
+    ]
+  },
+  "images/powers/duchess_phantom_killer_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      24,
+      12,
+      244,
+      246
+    ]
+  },
+  "powers/duchess_phantom_killer_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      24,
+      12,
+      244,
+      246
     ]
   }
 }

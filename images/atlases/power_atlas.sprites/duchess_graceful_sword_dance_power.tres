@@ -1,6 +1,6 @@
 [gd_resource type="AtlasTexture" load_steps=2 format=3]
 
-[ext_resource type="Texture2D" path="res://duchess_assets/potions/duchess_veil_vial.png" id="1"]
+[ext_resource type="Texture2D" path="res://images/powers/duchess_graceful_sword_dance_power.png" id="1"]
 
 [resource]
 atlas = ExtResource("1")

@@ -53,10 +53,10 @@ foreach ($name in @('duchess_combat_character','duchess_attack','duchess_hit')) 
 foreach ($name in @('character_icon_duchess','character_icon_duchess_outline','char_select_duchess','char_select_duchess_locked','map_marker_duchess')) {
     Test-DuchessImage "duchess_assets/$name.png" 0 0 $true
 }
-foreach ($name in @('old_pocketwatch','mended_pocketwatch','lace_cuff','silver_thimble','dance_shoes','unsent_letter','blue_ribbon')) {
+foreach ($name in @('old_pocketwatch','reverse_pocketwatch','crown_badge','golden_dewdrop','primal_glintstone_blade','blessed_iron_coin','night_of_wisdom','blue_stained_blade','carian_badge')) {
     Test-DuchessImage "duchess_assets/relics/duchess_$name.png" 256 256 $true
 }
-foreach ($name in @('silver_perfume','veil_vial','memory_draught')) {
+foreach ($name in @('smoke_bottle','radiant_blade_crystal','regret_potion')) {
     Test-DuchessImage "duchess_assets/potions/duchess_$name.png" 256 256 $true
     if (-not (Test-Path (Join-Path $root "images/atlases/potion_atlas.sprites/duchess_$name.tres")) -and -not $AllowMissing) {
         $errors.Add("Missing potion atlas mapping: $name")

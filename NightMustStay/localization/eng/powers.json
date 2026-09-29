@@ -270,5 +270,15 @@
   "DUCHESS_ETERNAL_RESTAGE_POWER.title": "Eternal Restage",
   "DUCHESS_ETERNAL_RESTAGE_POWER.description": "End your turn on reaching Moment 12; at end of turn, deal 1 damage to all enemies per 3 damage dealt this turn.",
   "DUCHESS_REPLAY_MOMENT_THREE_POWER.title": "Perfect Rehearsal",
-  "DUCHESS_REPLAY_MOMENT_THREE_POWER.description": "Cards played at Moment 3 this turn replay."
+  "DUCHESS_REPLAY_MOMENT_THREE_POWER.description": "Cards played at Moment 3 this turn replay.",
+  "DUCHESS_ETERNAL_FORM_POWER.title": "Eternal Form",
+  "DUCHESS_ETERNAL_FORM_POWER.description": "Whenever you trigger a card's Moment effect, gain {Amount} Energy.",
+  "DUCHESS_SHADOW_SWORD_POWER.title": "Sword in Shadow",
+  "DUCHESS_SHADOW_SWORD_POWER.description": "Gain {Amount} Strength while Concealed. Lose that Strength when Concealment ends.",
+  "DUCHESS_ZERO_COST_ATTACK_POWER.title": "Every Inch Counts",
+  "DUCHESS_ZERO_COST_ATTACK_POWER.description": "Attacks that cost 0 deal {Amount} more damage.",
+  "DUCHESS_GRACEFUL_SWORD_DANCE_POWER.title": "Graceful Sword Dance",
+  "DUCHESS_GRACEFUL_SWORD_DANCE_POWER.description": "When you play Dodge consecutively, deal {Amount} damage to ALL enemies.",
+  "DUCHESS_PHANTOM_KILLER_POWER.title": "Phantom Killer",
+  "DUCHESS_PHANTOM_KILLER_POWER.description": "After killing an enemy while Concealed this combat, gain {Amount} Strength at the start of the next combat."
 }

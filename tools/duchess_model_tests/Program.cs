@@ -19,6 +19,8 @@ using SmartFormat.Extensions;
 using NightMustStay.Core.Models.Characters;
 using NightMustStay.Core.Models.Power;
 using NightMustStay.Core.Models.Relics;
+using NightMustStay.Core.Models.Potions;
+using NightMustStay.Core.Patches;
 using System.Text.Json;
 
 try
@@ -48,6 +50,30 @@ if (duchess.Id.Entry != "DUCHESS"
 {
     throw new Exception("Duchess character-select identity or starting loadout is incomplete.");
 }
+if (ModelDb.Relic<DuchessReversePocketwatch>().Rarity != MegaCrit.Sts2.Core.Entities.Relics.RelicRarity.Ancient
+    || ModelDb.Relic<DuchessCrownBadge>().Rarity != MegaCrit.Sts2.Core.Entities.Relics.RelicRarity.Common
+    || ModelDb.Relic<DuchessGoldenDewdrop>().Rarity != MegaCrit.Sts2.Core.Entities.Relics.RelicRarity.Uncommon
+    || ModelDb.Relic<DuchessPrimalGlintstoneBlade>().Rarity != MegaCrit.Sts2.Core.Entities.Relics.RelicRarity.Uncommon
+    || ModelDb.Relic<DuchessBlessedIronCoin>().Rarity != MegaCrit.Sts2.Core.Entities.Relics.RelicRarity.Rare
+    || ModelDb.Relic<DuchessNightOfWisdom>().Rarity != MegaCrit.Sts2.Core.Entities.Relics.RelicRarity.Rare
+    || ModelDb.Relic<DuchessBlueStainedBlade>().Rarity != MegaCrit.Sts2.Core.Entities.Relics.RelicRarity.Shop
+    || ModelDb.Relic<DuchessCarianBadge>().Rarity != MegaCrit.Sts2.Core.Entities.Relics.RelicRarity.Rare
+    || ModelDb.Potion<DuchessSmokeBottle>().Rarity != MegaCrit.Sts2.Core.Entities.Potions.PotionRarity.Common
+    || ModelDb.Potion<DuchessRadiantBladeCrystal>().Rarity != MegaCrit.Sts2.Core.Entities.Potions.PotionRarity.Uncommon
+    || ModelDb.Potion<DuchessRegretPotion>().Rarity != MegaCrit.Sts2.Core.Entities.Potions.PotionRarity.Rare)
+    throw new Exception("The new Duchess relic and potion rarities must match the approved list.");
+var refinement = new Dictionary<ModelId, RelicModel>();
+typeof(GuardianTouchOfOrobasPatch).GetMethod("AddNightreignRefinements", flags)!
+    .Invoke(null, new object[] { refinement });
+if (!refinement.TryGetValue(ModelDb.Relic<DuchessOldPocketwatch>().Id, out var improvedWatch)
+    || improvedWatch.Id != ModelDb.Relic<DuchessReversePocketwatch>().Id)
+    throw new Exception("Orobas must upgrade the old pocketwatch into the reverse pocketwatch.");
+foreach (string obsolete in new[] { "DuchessMendedPocketwatch", "DuchessLaceCuff", "DuchessSilverThimble",
+    "DuchessDanceShoes", "DuchessUnsentLetter", "DuchessBlueRibbon", "DuchessSilverPerfume",
+    "DuchessVeilVial", "DuchessMemoryDraught" })
+    if (typeof(Duchess).Assembly.GetType("NightMustStay.Core.Models.Relics." + obsolete) != null
+        || typeof(Duchess).Assembly.GetType("NightMustStay.Core.Models.Potions." + obsolete) != null)
+        throw new Exception("Obsolete Duchess item model remains: " + obsolete);
 
 foreach (string locale in new[] { "zhs", "eng", "jpn" })
 {
@@ -91,6 +117,7 @@ foreach (var entry in DuchessCardCatalog.All)
                 || entry.Value.Effects.Any(e => e.Kind is "ConcealedBonusDamage" or "MomentBonusDamage") => "CalculationBase",
             "ConcealedBonusDamage" or "MomentBonusDamage" => "ExtraDamage",
             "MomentDamage" => "CalculationBase",
+            "RewindDamage" => "ExtraDamage",
             _ => effect.Kind,
         };
         if (card.DynamicVars[key].BaseValue != effect.Amount)
@@ -107,6 +134,7 @@ foreach (var entry in DuchessCardCatalog.All)
                 || entry.Value.Effects.Any(e => e.Kind is "ConcealedBonusDamage" or "MomentBonusDamage") => "CalculationBase",
             "ConcealedBonusDamage" or "MomentBonusDamage" => "ExtraDamage",
             "MomentDamage" => "CalculationBase",
+            "RewindDamage" => "ExtraDamage",
             _ => effect.Kind,
         };
         if (card.DynamicVars[key].BaseValue != effect.Upgraded)
@@ -120,20 +148,94 @@ Console.WriteLine($"PASS: instantiated and upgraded all {count} Duchess card mod
 string[] tableIds = (
     "ElegantBearing BladeRevealMoment CarianSlicer MagicDagger ReturningCrosscut WaitAMoment OpeningMoment " +
     "Reenactment Ephemeral Overdraw ForeseeFuture BackToPast UndecidedFate ReverseTime Reveal SideSomersault " +
-    "LightningNerves CarianSwordsmanship GrandReprise Feint SwayingStep Invitation PassingCut Initiative " +
+    "LightningNerves CarianSwordsmanship GrandReprise Feint SwayingStep Invitation InsightFuture PassingCut Initiative " +
     "PoisedExit GapMoonshadow MagicRadiantBlade RadiantBladeArray AngelWings CariaPhalanx GreatswordPhalanx " +
     "MiquellasHalo GoldenBlade CarianGreatsword CarianPiercer RadiantBladeMagic DeathBlade GlintstoneHail " +
     "CarianRetaliation FallingMagic Pivot Restage Reverberation ThreadTheGap QuickHands PerfectRehearsal " +
     "CalmComposure TidyCollar SoftLanding Distraction VeiledStep SilverFlash Beat Composure Silence " +
     "MidnightWaltz SilverStorm ThiefsArsenal Finale Duchess GlintstoneKnife HiddenPocket EternalRestage " +
-    "GrandBearing GoldenMoment LorettaMastery LorettaGreatbow SleightOfHand BecomeInvisible BlindSpot")
+    "GrandBearing GoldenMoment LorettaMastery LorettaGreatbow SleightOfHand BecomeInvisible BlindSpot " +
+    "FleetingInstant MomentAndEternity EternalForm ShadowSword Quietude ParallelTime " +
+    "Memory InchVictory LorettaSlash SacredHalo GracefulSwordDance MemoryFragment PhantomKiller GreatCaria Fate")
     .Split(' ', StringSplitOptions.RemoveEmptyEntries);
 var expectedIds = tableIds.Select(id => "Duchess" + id)
     .Concat(new[] { nameof(DuchessStrike), nameof(DuchessDefend),
         nameof(DuchessRadiantBlade), nameof(DuchessDodge) }).ToHashSet();
-if (tableIds.Length != 70 || !expectedIds.SetEquals(DuchessCardCatalog.All.Keys))
-    throw new Exception("Duchess card IDs differ from the supplied 70-card table plus Strike, Defend, Dodge, and Radiant Blade.");
-foreach (string name in new[] { nameof(DuchessRestage), nameof(DuchessGoldenBlade), nameof(DuchessSilverFlash), nameof(DuchessSilence) })
+if (tableIds.Length != 86 || !expectedIds.SetEquals(DuchessCardCatalog.All.Keys))
+    throw new Exception("Duchess card IDs differ from the user-approved table and additions.");
+var instant = ModelDb.Card<DuchessFleetingInstant>().ToMutable();
+var transcendence = new Dictionary<ModelId, CardModel>();
+typeof(GuardianArchaicToothPatch).GetMethod("AddGuardianTranscendence", flags)!
+    .Invoke(null, new object[] { transcendence });
+if (!transcendence.TryGetValue(ModelDb.Card<DuchessElegantBearing>().Id, out var transformed)
+    || transformed.Id != ModelDb.Card<DuchessGrandBearing>().Id
+    || transcendence.ContainsKey(ModelDb.Card<DuchessBladeRevealMoment>().Id))
+    throw new Exception("Orobas must transform Elegant Bearing into Grand Bearing, not Eternal Restage.");
+var ancientDuchessCards = DuchessCardCatalog.All
+    .Where(entry => entry.Value.Rarity == CardRarity.Ancient).Select(entry => entry.Key).ToHashSet();
+if (!ancientDuchessCards.SetEquals(new[] { nameof(DuchessGrandBearing), nameof(DuchessEternalRestage) })
+    || transcendence.ContainsKey(ModelDb.Card<DuchessEternalRestage>().Id))
+    throw new Exception("Eternal Restage must remain eligible for Dusty Tome.");
+foreach (string id in new[] { nameof(DuchessSoftLanding), nameof(DuchessDistraction) })
+{
+    var conceal = DuchessCardCatalog.All[id].Effects.Single(e => e.Kind == "Concealment");
+    if (conceal.Amount != 2 || conceal.Upgraded != 3)
+        throw new Exception(id + " must grant 2/3 Concealment.");
+}
+var trick = DuchessCardCatalog.All[nameof(DuchessSleightOfHand)];
+if (!trick.All || trick.Effects.Single(e => e.Kind == "ShuffleHand") != new DuchessEffect("ShuffleHand", 1, 1)
+    || trick.Effects.Single(e => e.Kind == "Weak").Amount != 1 || trick.Effects.Single(e => e.Kind == "Weak").Upgraded != 2
+    || trick.Effects.Single(e => e.Kind == "Vulnerable").Amount != 1 || trick.Effects.Single(e => e.Kind == "Vulnerable").Upgraded != 2)
+    throw new Exception("Sleight of Hand must shuffle 1 and apply 1/2 Weak and Vulnerable to ALL enemies.");
+var quiet = DuchessCardCatalog.All[nameof(DuchessQuietude)];
+var parallel = DuchessCardCatalog.All[nameof(DuchessParallelTime)];
+if (quiet.Cost != 0 || quiet.Rarity != CardRarity.Common || quiet.Type != CardType.Skill
+    || quiet.Effects[0] != new DuchessEffect("ShuffleHand", 1, 1) || quiet.Effects[1] != new DuchessEffect("Concealment", 1, 2)
+    || parallel.Cost != 0 || parallel.Rarity != CardRarity.Common || parallel.Type != CardType.Skill || parallel.Moment != 3
+    || parallel.Effects[0] != new DuchessEffect("SetMoment", 0, 0) || parallel.Effects[1] != new DuchessEffect("Draw", 1, 2, "moment"))
+    throw new Exception("Quietude or Parallel Time specification differs from the supplied table.");
+if (ModelDb.Card<DuchessQuietude>().TargetType != TargetType.Self || ModelDb.Card<DuchessParallelTime>().TargetType != TargetType.Self)
+    throw new Exception("Both new skills must not require an enemy target.");
+var newCards = new[] { nameof(DuchessMemory), nameof(DuchessInchVictory), nameof(DuchessLorettaSlash),
+    nameof(DuchessSacredHalo), nameof(DuchessGracefulSwordDance), nameof(DuchessMemoryFragment),
+    nameof(DuchessPhantomKiller), nameof(DuchessGreatCaria), nameof(DuchessFate) };
+if (newCards.Any(id => !DuchessCardCatalog.All.ContainsKey(id)))
+    throw new Exception("A card from the new nine-card table is missing.");
+var lorettaSlash = DuchessCardCatalog.All[nameof(DuchessLorettaSlash)];
+if (lorettaSlash.Cost != 5 || !lorettaSlash.All || !lorettaSlash.MomentCostReductionDynamic
+    || lorettaSlash.Effects[0] != new DuchessEffect("Damage", 11, 14))
+    throw new Exception("Loretta's Slash must use native AOE and Moment-based energy reduction.");
+var greatCaria = DuchessCardCatalog.All[nameof(DuchessGreatCaria)];
+if (!greatCaria.All || !greatCaria.Reaction || greatCaria.Effects[0] != new DuchessEffect("Damage", 24, 32))
+    throw new Exception("Great Caria must be Reaction AOE for 24/32 damage.");
+var sacredHalo = ModelDb.Card<DuchessSacredHalo>().ToMutable();
+if (sacredHalo.Keywords.Contains(CardKeyword.Retain)) throw new Exception("Sacred Halo must not retain before upgrade.");
+sacredHalo.UpgradeInternal();
+if (!sacredHalo.Keywords.Contains(CardKeyword.Retain)) throw new Exception("Sacred Halo upgrade must add Retain.");
+var fate = ModelDb.Card<DuchessFate>().ToMutable();
+if (!fate.Keywords.Contains(CardKeyword.Exhaust)) throw new Exception("Fate must exhaust before upgrade.");
+fate.UpgradeInternal();
+if (fate.Keywords.Contains(CardKeyword.Exhaust)) throw new Exception("Fate upgrade must remove Exhaust.");
+if (DuchessCardCatalog.All[nameof(DuchessMemoryFragment)].Moment != 5
+    || DuchessCardCatalog.All[nameof(DuchessMemoryFragment)].Effects[1].Kind != "ReturnSelfToHand")
+    throw new Exception("Memory Fragment must return to hand at Moment 5.");
+if (instant.TargetType != TargetType.AnyEnemy || instant.DynamicVars["ExtraDamage"].BaseValue != 3
+    || !instant.DynamicVars.ContainsKey("CalculatedDamage"))
+    throw new Exception("Fleeting Instant must target an enemy and preview one accumulated attack.");
+instant.UpgradeInternal();
+if (instant.DynamicVars["ExtraDamage"].BaseValue != 4)
+    throw new Exception("Fleeting Instant upgrade must accumulate 4 damage per step.");
+foreach (var retainCard in new CardModel[] { ModelDb.Card<DuchessMomentAndEternity>().ToMutable(), ModelDb.Card<DuchessEternalForm>().ToMutable() })
+{
+    if (retainCard.Keywords.Contains(CardKeyword.Retain)) throw new Exception("Base new card must not Retain.");
+    retainCard.UpgradeInternal();
+    if (!retainCard.Keywords.Contains(CardKeyword.Retain)) throw new Exception("New card upgrade must add Retain.");
+}
+var shadow = ModelDb.Card<DuchessShadowSword>().ToMutable();
+if (shadow.DynamicVars["ConcealedStrength"].BaseValue != 2) throw new Exception("Shadow Sword base Strength must be 2.");
+shadow.UpgradeInternal();
+if (shadow.DynamicVars["ConcealedStrength"].BaseValue != 3) throw new Exception("Shadow Sword upgraded Strength must be 3.");
+foreach (string name in new[] { nameof(DuchessRestage), nameof(DuchessReenactment), nameof(DuchessFleetingInstant), nameof(DuchessGoldenBlade), nameof(DuchessSilverFlash), nameof(DuchessSilence) })
 {
     var card = (DuchessCard)typeof(ModelDb).GetMethod("Get", flags, null, new[] { typeof(Type) }, null)!
         .Invoke(null, new object[] { typeof(DuchessStrike).Assembly.GetType("NightMustStay.Core.Models.Cards." + name)! })!;
@@ -176,8 +278,8 @@ if (bearing.Cost != 0 || bearing.Effects.Length != 1 || bearing.Effects[0].Kind 
 var bladeReveal = DuchessCardCatalog.All[nameof(DuchessBladeRevealMoment)];
 if (bladeReveal.Cost != 1 || bladeReveal.Type != CardType.Attack || bladeReveal.Rarity != CardRarity.Basic
     || bladeReveal.Moment != 1 || bladeReveal.Effects.Length != 2
-    || bladeReveal.Effects[0] != new DuchessEffect("Damage", 7, 10)
-    || bladeReveal.Effects[1] != new DuchessEffect("Draw", 2, 2, "moment"))
+    || bladeReveal.Effects[0] != new DuchessEffect("Damage", 8, 11)
+    || bladeReveal.Effects[1] != new DuchessEffect("Draw", 1, 2, "moment"))
     throw new Exception("Blade Reveal Moment specification is wrong.");
 
 var passingCut = DuchessCardCatalog.All[nameof(DuchessPassingCut)];
@@ -257,10 +359,16 @@ foreach (bool upgradedStrike in new[] { false, true })
 
 var swayingStep = DuchessCardCatalog.All[nameof(DuchessSwayingStep)];
 if (swayingStep.Type != CardType.Skill || swayingStep.Cost != 1 || swayingStep.Rarity != CardRarity.Uncommon
-    || swayingStep.Effects.Length != 2 || swayingStep.Effects[0].Kind != "DodgeToDraw"
-    || swayingStep.Effects[0].Amount != 3 || swayingStep.Effects[0].Upgraded != 3
-    || swayingStep.Effects[1] != new DuchessEffect("Draw", 1, 1))
+    || swayingStep.Effects.Length != 1 || swayingStep.Effects[0] != new DuchessEffect("DodgeToDrawTop", 2, 2)
+    || !swayingStep.UpgradeTokens)
     throw new Exception("Swaying Step specification is wrong.");
+var insightFuture = DuchessCardCatalog.All[nameof(DuchessInsightFuture)];
+if (insightFuture.Cost != 1 || insightFuture.Type != CardType.Skill || insightFuture.Rarity != CardRarity.Common
+    || insightFuture.Effects.Length != 2 || insightFuture.Effects[0] != new DuchessEffect("Block", 4, 4)
+    || insightFuture.Effects[1] != new DuchessEffect("ChooseDrawToTop", 1, 1)
+    || !insightFuture.Exhaust || !insightFuture.UpgradeRemoveExhaust
+    || ModelDb.Card<DuchessInsightFuture>().ToMutable().TargetType != TargetType.Self)
+    throw new Exception("Insight Future specification is wrong.");
 
 var gapMoonshadow = DuchessCardCatalog.All[nameof(DuchessGapMoonshadow)];
 if (gapMoonshadow.Type != CardType.Attack || gapMoonshadow.Rarity != CardRarity.Uncommon
@@ -394,8 +502,11 @@ if (finale.Type != CardType.Skill || finale.Rarity != CardRarity.Rare
     throw new Exception("Final Curtain specification is wrong.");
 var arsenal = DuchessCardCatalog.All[nameof(DuchessThiefsArsenal)];
 if (arsenal.Cost != 1 || arsenal.UpgradeCost != 0 || !arsenal.Exhaust
-    || arsenal.Effects.Length != 1 || arsenal.Effects[0].Kind != "DrawUntilReaction")
+    || arsenal.Effects.Length != 1 || arsenal.Effects[0].Kind != "DrawUntilMomentHandSize")
     throw new Exception("Thief's Arsenal specification is wrong.");
+if (DuchessCardCatalog.All[nameof(DuchessMomentAndEternity)].Effects.Single().Kind != "RememberMoment"
+    || typeof(DuchessMomentPower).GetProperty(nameof(DuchessMomentPower.SkipNextTurnReset)) == null)
+    throw new Exception("Moment and Eternity must skip the next turn's Moment reset.");
 var waltz = DuchessCardCatalog.All[nameof(DuchessMidnightWaltz)];
 if (waltz.Cost != 0 || waltz.Moment != 12 || !waltz.All
     || waltz.Effects.Length != 1 || waltz.Effects[0] != new DuchessEffect("Damage", 60, 75, "moment"))
@@ -424,26 +535,40 @@ using (JsonDocument cards = JsonDocument.Parse(File.ReadAllText(Path.Combine(
     if (renderedBase.Contains("闪避+") || !renderedPreview.Contains("闪避[green]+[/green]"))
         throw new Exception("The game's formatter must visibly change Elegant Bearing's generated Dodge on upgrade preview.");
     string haloText = cards.RootElement.GetProperty("DUCHESS_MIQUELLAS_HALO.description").GetString()!;
-    if (!haloText.Contains("造成等同于当前[gold]时刻[/gold]的伤害({CalculatedDamage:diff()}点)。")
-        || !haloText.Contains("将这张牌放到[gold]抽牌堆[/gold]顶部。"))
-        throw new Exception("Miquella's Halo must describe Moment damage and bind its battle preview to CalculatedDamage.");
+    if (!haloText.Contains("造成等同于当前[gold]时刻[/gold]的伤害（{CalculatedDamage:diff()}点）X{IfUpgraded:show:+1|}次。")
+        || haloText.Contains("抽牌堆") || haloText.Contains("时刻7"))
+        throw new Exception("Miquella's Halo must preview Moment damage with X/X+1 hits.");
     var halo = ModelDb.Card<DuchessMiquellasHalo>().ToMutable();
+    if (!DuchessCardCatalog.All[nameof(DuchessMiquellasHalo)].XCost
+        || !DuchessCardCatalog.All[nameof(DuchessMiquellasHalo)].UpgradeX
+        || DuchessCardCatalog.All[nameof(DuchessMiquellasHalo)].Cost != 0
+        || !halo.DynamicVars.ContainsKey("CalculatedDamage"))
+        throw new Exception("Miquella's Halo must be an X-cost attack with X+1 hit upgrade.");
+    _ = halo.DynamicVars.CalculatedDamage.Calculate(null);
     string haloBase = formatter.Format(System.Globalization.CultureInfo.InvariantCulture, haloText,
         new Dictionary<string, object> { ["CalculatedDamage"] = halo.DynamicVars.CalculatedDamage, ["IfUpgraded"] = new IfUpgradedVar(UpgradeDisplay.Normal) });
     string haloPreview = formatter.Format(System.Globalization.CultureInfo.InvariantCulture, haloText,
         new Dictionary<string, object> { ["CalculatedDamage"] = halo.DynamicVars.CalculatedDamage, ["IfUpgraded"] = new IfUpgradedVar(UpgradeDisplay.UpgradePreview) });
-    if (haloBase.Contains("升级后耗能") || haloPreview.Contains("升级后耗能") || haloBase != haloPreview
-        || DuchessCardCatalog.All[nameof(DuchessMiquellasHalo)].UpgradeCost != 0)
-        throw new Exception("Cost-only upgrades must change the energy badge without redundant rules text.");
+    if (!haloBase.Contains("X次") || !haloPreview.Contains("X[green]+1[/green]次") || haloBase == haloPreview)
+        throw new Exception("Miquella's Halo upgrade preview must visibly change X to X+1.");
     string phalanxBase = cards.RootElement.GetProperty("DUCHESS_CARIA_PHALANX.description").GetString()!;
     string phalanxUpgrade = cards.RootElement.GetProperty("DUCHESS_CARIA_PHALANX.upgradeDescription").GetString()!;
     if (!phalanxBase.Contains("辉剑") || phalanxBase.Contains("辉剑+") || !phalanxUpgrade.Contains("辉剑+"))
         throw new Exception("Caria Phalanx must preview Radiant Blade before upgrade and Radiant Blade+ after upgrade.");
     string angelBase = cards.RootElement.GetProperty("DUCHESS_ANGEL_WINGS.description").GetString()!;
     string angelUpgrade = cards.RootElement.GetProperty("DUCHESS_ANGEL_WINGS.upgradeDescription").GetString()!;
-    if (!angelBase.Contains("伤害+{ShuffleGrowth:diff()}")
-        || !angelUpgrade.Contains("伤害+{ShuffleGrowth:diff()}"))
+    if (!angelBase.Contains("伤害增加{ShuffleGrowth:diff()}")
+        || !angelUpgrade.Contains("伤害增加{ShuffleGrowth:diff()}"))
         throw new Exception("Angel Wings must bind its visible shuffle-growth amount to the upgraded dynamic variable.");
+    foreach (string cardId in new[] { "ANGEL_WINGS", "GOLDEN_BLADE", "CARIAN_PIERCER", "GLINTSTONE_HAIL" })
+    {
+        foreach (string suffix in new[] { "description", "upgradeDescription" })
+        {
+            string description = cards.RootElement.GetProperty($"DUCHESS_{cardId}.{suffix}").GetString()!;
+            if (description.Contains("伤害+") || !description.Contains("伤害增加"))
+                throw new Exception($"{cardId} {suffix} must write damage increases in words.");
+        }
+    }
 }
 if (dodge.Cost != 1 || !dodge.Reaction || !dodge.Exhaust
     || dodge.Effects[0].Amount != 6 || dodge.Effects[0].Upgraded != 9 || dodge.Effects[1].Amount != 1)
@@ -484,7 +609,7 @@ if (DuchessReactionRules.IsEligibleDraw(true, PileType.Hand)
     || DuchessReactionRules.IsEligibleDraw(false, PileType.Draw))
     throw new Exception("Reaction must exclude only the native opening hand draw, not other draws.");
 foreach (Type type in new[] { typeof(DuchessCard), typeof(DuchessReactionDrawPower),
-             typeof(DuchessReactionDrawBlockPower), typeof(DuchessSilverThimble) })
+             typeof(DuchessReactionDrawBlockPower) })
 {
     if (type.GetMethod("AfterCardDrawn")?.DeclaringType != type)
         throw new Exception($"{type.Name} must use the native draw hook for Reaction effects.");

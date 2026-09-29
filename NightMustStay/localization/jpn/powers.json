@@ -270,5 +270,15 @@
   "DUCHESS_ETERNAL_RESTAGE_POWER.title": "終わらぬリステージ",
   "DUCHESS_ETERNAL_RESTAGE_POWER.description": "時刻12に到達したときターンを終了する。ターン終了時、このターン与えたダメージ3につき敵全体に1ダメージを与える。",
   "DUCHESS_REPLAY_MOMENT_THREE_POWER.title": "完璧な予行",
-  "DUCHESS_REPLAY_MOMENT_THREE_POWER.description": "このターン時刻3でプレイしたカードはリプレイする。"
+  "DUCHESS_REPLAY_MOMENT_THREE_POWER.description": "このターン時刻3でプレイしたカードはリプレイする。",
+  "DUCHESS_ETERNAL_FORM_POWER.title": "永遠の姿",
+  "DUCHESS_ETERNAL_FORM_POWER.description": "カードの時刻効果を発動するたび、エナジーを{Amount}得る。",
+  "DUCHESS_SHADOW_SWORD_POWER.title": "影の剣",
+  "DUCHESS_SHADOW_SWORD_POWER.description": "隠密中、筋力を{Amount}得る。隠密が終了するとその筋力を失う。",
+  "DUCHESS_ZERO_COST_ATTACK_POWER.title": "寸短寸利",
+  "DUCHESS_ZERO_COST_ATTACK_POWER.description": "コスト0のアタックはダメージが{Amount}増加する。",
+  "DUCHESS_GRACEFUL_SWORD_DANCE_POWER.title": "優雅な剣舞",
+  "DUCHESS_GRACEFUL_SWORD_DANCE_POWER.description": "回避を連続してプレイしたとき、敵全体に{Amount}ダメージを与える。",
+  "DUCHESS_PHANTOM_KILLER_POWER.title": "幻影の殺意",
+  "DUCHESS_PHANTOM_KILLER_POWER.description": "この戦闘中に隠密状態で敵を倒したなら、次の戦闘開始時に筋力を{Amount}得る。"
 }

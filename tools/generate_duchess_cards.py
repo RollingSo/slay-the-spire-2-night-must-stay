@@ -101,11 +101,20 @@ def effects_text(row, language, upgraded=False):
                 text = f'{target}造成{damage_var}点伤害' + (f'，共{hits}次' if hits > 1 else '') + '。'
         else:
             templates = {
+                'RewindDamage': [f'使[gold]时刻[/gold]逐点逆转至0，每回退1点累积{{ExtraDamage:diff()}}点伤害。\n最后对敌人造成一次{{CalculatedDamage:diff()}}点伤害。', f'Rewind [gold]Moment[/gold] to 0, one step at a time, accumulating {{ExtraDamage:diff()}} damage per step.\nDeal the total {{CalculatedDamage:diff()}} damage in one hit.', f'[gold]時刻[/gold]を1ずつ0まで巻き戻し、1ごとに{{ExtraDamage:diff()}}ダメージを蓄積する。\n最後に合計{{CalculatedDamage:diff()}}ダメージを1回与える。'],
+                'RememberMoment': ['下个回合开始时，[gold]时刻[/gold]不会重置为0。', 'At the start of your next turn, [gold]Moment[/gold] will not reset to 0.', '次のターン開始時、[gold]時刻[/gold]は0にリセットされない。'],
+                'MomentEffectEnergy': [f'触发[gold]时刻[/gold]效果时，获得{var}点能量。', f'Whenever you trigger a [gold]Moment[/gold] effect, gain {var} Energy.', f'[gold]時刻[/gold]効果を発動するたび、エナジーを{var}得る。'],
+                'ConcealedStrength': [f'[gold]隐匿[/gold]时，获得{var}点[gold]力量[/gold]。', f'While [gold]Concealed[/gold], gain {var} [gold]Strength[/gold].', f'[gold]隠密[/gold]中、[gold]筋力[/gold]{var}を得る。'],
+                'ZeroCostAttackBonus': [f'耗能为0的牌攻击伤害增加{var}。', f'Attacks that cost 0 deal {var} more damage.', f'コスト0のアタックはダメージが{var}増加する。'],
+                'DodgePlayAoe': [f'连续打出[gold]闪避[/gold]时，对所有敌人造成{var}点伤害。', f'When you play [gold]Dodge[/gold] consecutively, deal {var} damage to ALL enemies.', f'[gold]回避[/gold]を連続してプレイしたとき、敵全体に{var}ダメージを与える。'],
+                'ConcealedKillNextCombatStrength': [f'若本场战斗中在[gold]隐匿[/gold]状态下斩杀敌人，在下场战斗开始时获得{var}点[gold]力量[/gold]。', f'If you kill an enemy while [gold]Concealed[/gold] this combat, gain {var} [gold]Strength[/gold] at the start of the next combat.', f'この戦闘中に[gold]隠密[/gold]状態で敵を倒したなら、次の戦闘開始時に[gold]筋力[/gold]{var}を得る。'],
+                'ReturnSelfToHand': ['将这张牌加入[gold]手牌[/gold]。', 'Return this card to your [gold]hand[/gold].', 'このカードを[gold]手札[/gold]に戻す。'],
+                'ShuffleHandAllDraw': ['将所有[gold]手牌[/gold]洗入[gold]抽牌堆[/gold]，抽等同于洗入数量的牌。', 'Shuffle your entire [gold]hand[/gold] into your [gold]draw pile[/gold], then draw that many cards.', '[gold]手札[/gold]をすべて[gold]山札[/gold]に加えてシャッフルし、同じ枚数引く。'],
                 'Block': [f'获得{var}点[gold]格挡[/gold]。', f'Gain {var} [gold]Block[/gold].', f'[gold]ブロック[/gold]{var}を得る。'],
                 'TurnStartSwap': ['每回合开始时，选择1张[gold]手牌[/gold]洗入[gold]抽牌堆[/gold]，抽1张牌。', 'At the start of each turn, choose 1 card in your [gold]hand[/gold], shuffle it into your [gold]draw pile[/gold], then draw 1 card.', '毎ターン開始時、[gold]手札[/gold]から1枚選んで[gold]山札[/gold]に加えてシャッフルし、カードを1枚引く。'],
                 'HandToDrawTopBlock': [f'将[gold]手牌[/gold]中任意张牌放到[gold]抽牌堆[/gold]顶部。\n每放回1张，获得{var}点[gold]格挡[/gold]。', f'Put any number of cards from your [gold]hand[/gold] on top of your [gold]draw pile[/gold].\nGain {var} [gold]Block[/gold] for each card returned.', f'[gold]手札[/gold]から好きな枚数を[gold]山札[/gold]の一番上に置く。\n戻したカード1枚につき[gold]ブロック[/gold]{var}を得る。'],
                 'AllyIntangible': [f'所有玩家获得{var}层[gold]无实体[/gold]。', f'ALL players gain {var} [gold]Intangible[/gold].', f'プレイヤー全員が[gold]無形[/gold]{var}を得る。'],
-                'DrawUntilReaction': ['抽牌，直到抽到1张[gold]反应[/gold]牌。', 'Draw cards until you draw a [gold]Reaction[/gold] card.', '[gold]リアクション[/gold]のカードを引くまでカードを引く。'],
+                'DrawUntilMomentHandSize': ['抽取卡牌，直至[gold]手牌[/gold]数等同于当前[gold]时刻[/gold]。', 'Draw cards until the number of cards in your [gold]hand[/gold] equals your current [gold]Moment[/gold].', '[gold]手札[/gold]の枚数が現在の[gold]時刻[/gold]と等しくなるまでカードを引く。'],
                 'AoeDamage': [f'对所有敌人额外造成{var}点伤害。', f'Deal {var} additional damage to ALL enemies.', f'敵全体に追加で{var}ダメージを与える。'],
                 'ExtraDamage': [f'额外造成{var}点伤害。', f'Deal {var} additional damage.', f'追加で{var}ダメージを与える。'],
                 'AllyBlock': [f'所有玩家获得{var}点[gold]格挡[/gold]。', f'ALL players gain {var} [gold]Block[/gold].', f'プレイヤー全員が[gold]ブロック[/gold]{var}を得る。'],
@@ -114,8 +123,8 @@ def effects_text(row, language, upgraded=False):
                 'ReactionDrawBlock': [f'回合中抽到[gold]反应[/gold]牌时，获得{var}点[gold]格挡[/gold]。', f'Whenever you draw a [gold]Reaction[/gold] card during your turn, gain {var} [gold]Block[/gold].', f'自分のターン中に[gold]リアクション[/gold]のカードを引くたび、[gold]ブロック[/gold]{var}を得る。'],
                 'Concealment': [f'获得{var}层[gold]隐匿[/gold]。', f'Gain {var} [gold]Concealment[/gold].', f'[gold]隠密[/gold]{var}を得る。'],
                 'ConcealedBonusDamage': [f'[gold]隐匿[/gold]时打出，伤害额外加{var}。', f'If played while [gold]Concealed[/gold], deal {var} additional damage.', f'[gold]隠密[/gold]中にプレイすると、追加で{var}ダメージを与える。'],
-                'MomentBonusDamage': [f'伤害+{var}。', f'Damage +{var}.', f'ダメージ+{var}。'],
-                'DrawReactionDamageBoost': [f'抽到这张牌时，使其在下次打出前伤害+{var}。', f'When drawn, this card deals {var} more damage until it is next played.', f'このカードを引いたとき、次にプレイするまでダメージが{var}増加する。'],
+                'MomentBonusDamage': [f'伤害增加{var}。', f'Increase damage by {var}.', f'ダメージが{var}増加する。'],
+                'DrawReactionDamageBoost': [f'抽到这张牌时，使其在下次打出前伤害增加{var}。', f'When drawn, this card deals {var} more damage until it is next played.', f'このカードを引いたとき、次にプレイするまでダメージが{var}増加する。'],
                 'DrawReactionFromPile': ['从[gold]抽牌堆[/gold]中随机抽取1张[gold]反应[/gold]牌。', 'Draw 1 random [gold]Reaction[/gold] card from your [gold]draw pile[/gold].', '[gold]山札[/gold]からランダムな[gold]リアクション[/gold]のカードを1枚引く。'],
                 'RadiantBladeGrowth': [f'每打出1张[gold]辉剑[/gold]，本场战斗中所有[gold]辉剑[/gold]的伤害+{var}。', f'Whenever you play a [gold]Radiant Blade[/gold], all [gold]Radiant Blades[/gold] gain {var} damage for this combat.', f'[gold]輝剣[/gold]をプレイするたび、この戦闘中すべての[gold]輝剣[/gold]のダメージが{var}増加する。'],
                 'FullBlockRadiantBlade': [f'本回合首次完全[gold]格挡[/gold]住一次完整攻击时，将{var}张[gold]辉剑[/gold]加入[gold]手牌[/gold]。', f'The first time you fully [gold]block[/gold] an entire attack this turn, add {var} [gold]Radiant Blades[/gold] to your [gold]hand[/gold].', f'このターン初めて攻撃全体を完全に防いだとき、[gold]輝剣[/gold]を{var}枚[gold]手札[/gold]に加える。'],
@@ -130,7 +139,7 @@ def effects_text(row, language, upgraded=False):
                 'TransformStrike': [f'选择[gold]抽牌堆[/gold]中的{var}张[gold]打击[/gold]，将其永久变化为[gold]卡利亚迅剑[/gold]。', f'Choose {var} [gold]Strike[/gold] in your [gold]draw pile[/gold] and permanently transform it into [gold]Carian Slicer[/gold].', f'[gold]山札[/gold]の[gold]ストライク[/gold]を{var}枚選び、恒久的に[gold]カーリアの速剣[/gold]に変化させる。'],
                 'ChooseDrawToTop': ['选择[gold]抽牌堆[/gold]中的1张牌放到[gold]抽牌堆[/gold]顶部。', 'Choose 1 card in your [gold]draw pile[/gold] and put it on top of your [gold]draw pile[/gold].', '[gold]山札[/gold]からカードを1枚選び、[gold]山札[/gold]の一番上に置く。'],
                 'EndTurnMomentBlock': ['回合结束时，获得等同于当前[gold]时刻[/gold]的[gold]格挡[/gold]。', 'At the end of your turn, gain [gold]Block[/gold] equal to your current [gold]Moment[/gold].', 'ターン終了時、現在の[gold]時刻[/gold]に等しい[gold]ブロック[/gold]を得る。'],
-                'ReturnHandDamageBoost': [f'将这张牌放回[gold]手牌[/gold]，在下次打出前伤害+{var}。', f'Return this card to your [gold]hand[/gold]. Until it is next played, its damage increases by {var}.', f'このカードを[gold]手札[/gold]に戻す。次にプレイするまでダメージが{var}増加する。'],
+                'ReturnHandDamageBoost': [f'将这张牌放回[gold]手牌[/gold]，在下次打出前伤害增加{var}。', f'Return this card to your [gold]hand[/gold]. Until it is next played, its damage increases by {var}.', f'このカードを[gold]手札[/gold]に戻す。次にプレイするまでダメージが{var}増加する。'],
                 'Energy': [('获得' + '[E]' * int(effect[2] if upgraded else effect[1]) + '。'), ('Gain ' + '[E]' * int(effect[2] if upgraded else effect[1]) + '.'), ('[E]' * int(effect[2] if upgraded else effect[1]) + 'を得る。')],
                 'Weak': [(f'对所有敌人施加' if opt.get('all') else '施加') + f'{var}层[gold]虚弱[/gold]。', f'Apply {var} [gold]Weak[/gold]' + (' to ALL enemies' if opt.get('all') else '') + '.', ('敵全体に' if opt.get('all') else '敵1体に') + f'[gold]脱力[/gold]{var}を付与する。'],
                 'WeakAll': [f'给予所有敌人{var}层[gold]虚弱[/gold]。', f'Apply {var} [gold]Weak[/gold] to ALL enemies.', f'敵全体に[gold]脱力[/gold]{var}を付与する。'],
@@ -139,6 +148,7 @@ def effects_text(row, language, upgraded=False):
                 'TemporaryStrength': [f'本回合内获得{var}点[gold]力量[/gold]。', f'Gain {var} [gold]Strength[/gold] this turn.', f'このターン、[gold]筋力[/gold]{var}を得る。'],
                 'Dexterity': [f'获得{var}点[gold]敏捷[/gold]。', f'Gain {var} [gold]Dexterity[/gold].', f'[gold]敏捷性[/gold]{var}を得る。'],
                 'DodgeToDraw': [f'将{var}张[gold]{dodge}[/gold]洗入[gold]抽牌堆[/gold]。', f'Shuffle {var} [gold]{dodge}[/gold] cards into your [gold]draw pile[/gold].', f'[gold]{dodge}[/gold]を{var}枚[gold]山札[/gold]に加えてシャッフルする。'],
+                'DodgeToDrawTop': [f'将{var}张[gold]{dodge}[/gold]放到[gold]抽牌堆[/gold]顶部。', f'Put {var} [gold]{dodge}[/gold] cards on top of your [gold]draw pile[/gold].', f'[gold]{dodge}[/gold]を{var}枚[gold]山札[/gold]の一番上に置く。'],
                 'DodgeToHand': [f'将{var}张[gold]{dodge}[/gold]加入[gold]手牌[/gold]。', f'Add {var} [gold]{dodge}[/gold] cards to your [gold]hand[/gold].', f'[gold]{dodge}[/gold]を{var}枚[gold]手札[/gold]に加える。'],
                 'AllyDodge': [f'所有玩家将{var}张[gold]{dodge}[/gold]加入[gold]手牌[/gold]。', f'ALL players add {var} [gold]{dodge}[/gold] cards to their [gold]hands[/gold].', f'プレイヤー全員が[gold]{dodge}[/gold]を{var}枚[gold]手札[/gold]に加える。'],
                 'AdvanceMoment': [f'[gold]时刻[/gold]额外增加{var}。', f'Advance [gold]Moment[/gold] by an additional {var}.', f'[gold]時刻[/gold]を追加で{var}進める。'],
@@ -148,18 +158,19 @@ def effects_text(row, language, upgraded=False):
                 'ShuffleDiscard': [f'选择{var}张[gold]弃牌堆[/gold]中的牌洗入[gold]抽牌堆[/gold]。', f'Choose {var} cards in your [gold]discard pile[/gold] and shuffle them into your [gold]draw pile[/gold].', f'[gold]捨て札[/gold]から{var}枚選び、[gold]山札[/gold]に加えてシャッフルする。'],
                 'ShuffleDiscardAll': ['将[gold]弃牌堆[/gold]中的所有牌洗入[gold]抽牌堆[/gold]。', 'Shuffle all cards in your [gold]discard pile[/gold] into your [gold]draw pile[/gold].', '[gold]捨て札[/gold]のすべてのカードを[gold]山札[/gold]に加えてシャッフルする。'],
                 'RewindTurn': ['使你的牌堆和能量回到回合开始时的状态。', 'Restore your piles and Energy to their state at the start of this turn.', 'カードの山とエナジーをこのターン開始時の状態に戻す。'],
-                'RestageAoe': [f'本回合每造成过{var}点伤害，对所有敌人造成1点伤害。', f'For every {var} damage dealt this turn, deal 1 damage to ALL enemies.', f'このターンに与えたダメージ{var}につき、敵全体に1ダメージを与える。'],
+                'RestageAoe': [f'本回合每造成过{var}点伤害，对所有敌人造成1点伤害（当前共{{CalculatedDamage:diff()}}点）。', f'Deal 1 damage to ALL enemies for every {var} damage dealt this turn (currently {{CalculatedDamage:diff()}} total).', f'このターンに与えたダメージ{var}につき、敵全体に1ダメージを与える（現在合計{{CalculatedDamage:diff()}}）。'],
                 'Replay': [f'[gold]重放[/gold]{var}。', f'[gold]Replay[/gold] {var}.', f'[gold]リプレイ[/gold]{var}。'],
                 'NextTurnEnergy': ['下回合开始时，获得{NextTurnEnergy:energyIcons()}。', 'At the start of next turn, gain {NextTurnEnergy:energyIcons()}.', '次のターン開始時、{NextTurnEnergy:energyIcons()}を得る。'],
                 'NextTurnDraw': [f'下回合开始时，抽{var}张牌。', f'At the start of next turn, draw {var} cards.', f'次のターン開始時、カードを{var}枚引く。'],
                 'NextTurnEnergyAndDraw': [f'下回合开始时，获得1能量并抽{var}张牌。', f'At the start of next turn, gain 1 Energy and draw {var} card(s).', f'次のターン開始時、エナジーを1得て、カードを{var}枚引く。'],
                 'RadiantBladeToDraw': [f'将{var}张[gold]{["辉剑", "Radiant Blade", "輝剣"][language] + ("+" if upgraded and opt.get("upgradeTokens") else "")}[/gold]洗入[gold]抽牌堆[/gold]。', f'Shuffle {var} [gold]{"Radiant Blade+" if upgraded and opt.get("upgradeTokens") else "Radiant Blade"}[/gold] cards into your [gold]draw pile[/gold].', f'[gold]{"輝剣+" if upgraded and opt.get("upgradeTokens") else "輝剣"}[/gold]を{var}枚[gold]山札[/gold]に加えてシャッフルする。'],
                 'InstinctRadiantBladesToDraw': [f'将{var}张带有[gold]本能[/gold]的[gold]{"辉剑+" if upgraded and opt.get("upgradeTokens") else "辉剑"}[/gold]洗入[gold]抽牌堆[/gold]。', f'Shuffle {var} [gold]{"Radiant Blade+" if upgraded and opt.get("upgradeTokens") else "Radiant Blade"}[/gold] cards with [gold]Instinct[/gold] into your [gold]draw pile[/gold].', f'[gold]本能[/gold]を付与した[gold]{"輝剣+" if upgraded and opt.get("upgradeTokens") else "輝剣"}[/gold]を{var}枚[gold]山札[/gold]に加えてシャッフルする。'],
-                'MomentDamage': ['造成等同于当前[gold]时刻[/gold]的伤害({CalculatedDamage:diff()}点)。', 'Deal damage equal to your current [gold]Moment[/gold] ({CalculatedDamage:diff()}).', '現在の[gold]時刻[/gold]に等しいダメージ({CalculatedDamage:diff()})を与える。'],
+                'MomentDamage': [f'造成等同于当前[gold]时刻[/gold]的伤害（{{CalculatedDamage:diff()}}点）{("X+1" if upgraded and opt.get("upgradeX") else "X") if opt.get("xCost") else ""}次。', f'Deal damage equal to your current [gold]Moment[/gold] ({{CalculatedDamage:diff()}}) {("X+1" if upgraded and opt.get("upgradeX") else "X") if opt.get("xCost") else "once"}.', f'現在の[gold]時刻[/gold]に等しいダメージ（{{CalculatedDamage:diff()}}）を{("X+1" if upgraded and opt.get("upgradeX") else "X") if opt.get("xCost") else "1"}回与える。'],
+                'MomentExtraHits': [f'伤害次数+{var}。', f'Hit {var} additional times.', f'攻撃回数+{var}。'],
                 'ReturnSelfToDrawTop': ['将这张牌放到[gold]抽牌堆[/gold]顶部。', 'Put this card on top of your [gold]draw pile[/gold].', 'このカードを[gold]山札[/gold]の一番上に置く。'],
                 'RadiantBladeToHand': [f'将{var}张[gold]{["辉剑", "Radiant Blade", "輝剣"][language] + ("+" if upgraded and opt.get("upgradeTokens") else "")}[/gold]加入[gold]手牌[/gold]。', f'Add {var} [gold]{"Radiant Blade+" if upgraded and opt.get("upgradeTokens") else "Radiant Blade"}[/gold] cards to your [gold]hand[/gold].', f'[gold]{"輝剣+" if upgraded and opt.get("upgradeTokens") else "輝剣"}[/gold]を{var}枚[gold]手札[/gold]に加える。'],
                 'RadiantBladeTurns': [f'接下来X{"+1" if upgraded and opt.get("upgradeX") else ""}个回合，在回合开始时将1张[gold]辉剑[/gold]加入[gold]手牌[/gold]。', f'For the next X{"+1" if upgraded and opt.get("upgradeX") else ""} turns, add 1 [gold]Radiant Blade[/gold] to your [gold]hand[/gold] at the start of your turn.', f'次のX{"+1" if upgraded and opt.get("upgradeX") else ""}ターンの間、ターン開始時に[gold]輝剣[/gold]1枚を[gold]手札[/gold]に加える。'],
-                'ShuffleGrowth': [f'每次被洗入[gold]抽牌堆[/gold]后，伤害+{var}。', f'Whenever this is shuffled into your [gold]draw pile[/gold], increase its damage by {var}.', f'[gold]山札[/gold]に加えてシャッフルされるたび、ダメージが{var}増加する。'],
+                'ShuffleGrowth': [f'每次被洗入[gold]抽牌堆[/gold]后，伤害增加{var}。', f'Whenever this is shuffled into your [gold]draw pile[/gold], increase its damage by {var}.', f'[gold]山札[/gold]に加えてシャッフルされるたび、ダメージが{var}増加する。'],
                 'Intangible': [f'获得{var}层[gold]无实体[/gold]。', f'Gain {var} [gold]Intangible[/gold].', f'[gold]無形[/gold]{var}を得る。'],
                 'FutureMomentEnergy': ['本回合到达[gold]时刻6[/gold]时，获得{FutureMomentEnergy:energyIcons()}。', 'When you reach [gold]Moment 6[/gold] this turn, gain {FutureMomentEnergy:energyIcons()}.', 'このターン[gold]時刻6[/gold]に到達した時、{FutureMomentEnergy:energyIcons()}を得る。'],
                 'DodgeCurrentMoment': [f'将等同于当前[gold]时刻[/gold]数量的[gold]{dodge}[/gold]洗入[gold]抽牌堆[/gold]。', f'Shuffle [gold]{dodge}[/gold] cards equal to your current [gold]Moment[/gold] into your [gold]draw pile[/gold].', f'現在の[gold]時刻[/gold]に等しい枚数の[gold]{dodge}[/gold]を[gold]山札[/gold]に加えてシャッフルする。'],
@@ -248,12 +259,13 @@ def chinese_card_table():
         for upgraded in (False, True):
             text = effects_text(row, 0, upgraded)
             for effect in row[7]:
-                key = 'Block' if effect[0] == 'AllyBlock' else 'ExtraDamage' if effect[0] in ('ConcealedBonusDamage', 'MomentBonusDamage') else effect[0]
+                key = 'Block' if effect[0] == 'AllyBlock' else 'ExtraDamage' if effect[0] in ('ConcealedBonusDamage', 'MomentBonusDamage', 'RewindDamage') else effect[0]
                 if effect[0] == 'Damage' and (opt.get('restageDivisor') or opt.get('concealedTripleDamage') or any(e[0] in ('ConcealedBonusDamage', 'MomentBonusDamage') for e in row[7])):
                     key = 'CalculatedDamage'
                 value = effect[2] if upgraded else effect[1]
                 value_text = str(int(value)) if int(value) == value else str(value)
                 text = text.replace('{' + key + ':diff()}', value_text)
+            text = text.replace('{CalculatedDamage:diff()}', '动态伤害')
             rendered.append(text.replace('[gold]', '').replace('[/gold]', '')
                             .replace('\n', '<br>').replace('|', '\\|'))
         category = rarity_names[row[6]] + type_names[row[5]]

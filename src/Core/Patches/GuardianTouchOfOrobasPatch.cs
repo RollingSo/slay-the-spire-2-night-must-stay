@@ -25,7 +25,7 @@ namespace NightMustStay.Core.Patches
             __result[ModelDb.Relic<SmallMakeupBrush>().Id] =
                 ModelDb.Relic<TreasuredMakeupBrush>();
             __result[ModelDb.Relic<DuchessOldPocketwatch>().Id] =
-                ModelDb.Relic<DuchessMendedPocketwatch>();
+                ModelDb.Relic<DuchessReversePocketwatch>();
         }
     }
 

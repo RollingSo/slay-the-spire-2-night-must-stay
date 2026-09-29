@@ -47,6 +47,8 @@ public abstract class DuchessCard : CardModel
     public int PendingGlintstoneDamage { get; set; }
     [SavedProperty]
     public int PendingPiercerDamage { get; set; }
+    [SavedProperty]
+    public int PendingNextCombatStrength { get; set; }
     internal DuchessCardSpec Spec => DuchessCardCatalog.All[GetType().Name];
     protected DuchessCard(string key) : base(DuchessCardCatalog.All[key].Cost,
         DuchessCardCatalog.All[key].Type, DuchessCardCatalog.All[key].Rarity, TargetFor(key)) { }
@@ -78,6 +80,16 @@ public abstract class DuchessCard : CardModel
     public override CardPoolModel VisualCardPool => this is DuchessDodge or DuchessRadiantBlade
         ? ModelDb.CardPool<ColorlessCardPool>() : base.VisualCardPool;
     public override bool GainsBlock => Spec.Effects.Any(e => e.Kind is "Block" or "AllyBlock" or "HandToDrawTopBlock");
+
+    public override async Task BeforeCombatStart()
+    {
+        if (this is not DuchessPhantomKiller || Pile?.Type != PileType.Deck || PendingNextCombatStrength <= 0)
+            return;
+        int strength = PendingNextCombatStrength;
+        PendingNextCombatStrength = 0;
+        await PowerCmd.Apply<StrengthPower>(new BlockingPlayerChoiceContext(), Owner.Creature,
+            strength, Owner.Creature, this);
+    }
     public override CardMultiplayerConstraint MultiplayerConstraint => Spec.MultiplayerOnly || this is DuchessFinale
         ? CardMultiplayerConstraint.MultiplayerOnly : base.MultiplayerConstraint;
     protected override HashSet<CardTag> CanonicalTags => GetType() == typeof(DuchessStrike)
@@ -145,6 +157,24 @@ public abstract class DuchessCard : CardModel
                         static (card, _) => DuchessMomentPower.Current(card.Owner));
                     continue;
                 }
+                if (effect.Kind == "RewindDamage")
+                {
+                    yield return new CalculationBaseVar(0m);
+                    yield return new ExtraDamageVar(effect.Amount);
+                    yield return new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
+                        static (card, _) => DuchessMomentPower.Current(card.Owner));
+                    continue;
+                }
+                if (effect.Kind == "RestageAoe")
+                {
+                    yield return new DynamicVar("RestageAoe", effect.Amount);
+                    yield return new CalculationBaseVar(0m);
+                    yield return new ExtraDamageVar(1m);
+                    yield return new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
+                        static (card, _) => decimal.Floor(DuchessMomentPower.DamageDealtThisTurn(card)
+                            / card.DynamicVars["RestageAoe"].BaseValue));
+                    continue;
+                }
                 yield return effect.Kind switch
                 {
                     "Damage" => new DamageVar(effect.Amount, ValueProp.Move),
@@ -171,6 +201,9 @@ public abstract class DuchessCard : CardModel
                     "MomentFiveDraw" => new PowerVar<DuchessMomentFiveDrawPower>(effect.Kind, effect.Amount),
                     "DodgeMoment" => new PowerVar<DuchessDodgeMomentPower>(effect.Kind, effect.Amount),
                     "ShuffleBlock" => new PowerVar<DuchessShuffleBlockPower>(effect.Kind, effect.Amount),
+                    "ZeroCostAttackBonus" => new PowerVar<DuchessZeroCostAttackPower>(effect.Kind, effect.Amount),
+                    "DodgePlayAoe" => new PowerVar<DuchessGracefulSwordDancePower>(effect.Kind, effect.Amount),
+                    "ConcealedKillNextCombatStrength" => new PowerVar<DuchessPhantomKillerPower>(effect.Kind, effect.Amount),
                     _ => new DynamicVar(effect.Kind, effect.Amount),
                 };
             }
@@ -185,7 +218,7 @@ public abstract class DuchessCard : CardModel
             if (Spec.Moment >= 0) yield return HoverTipFactory.FromPower<DuchessMomentDescriptionPower>();
             foreach (DuchessEffect effect in Spec.Effects)
             {
-                if (effect.Kind is "DodgeToDraw" or "DodgeToHand" or "AllyDodge"
+                if (effect.Kind is "DodgeToDraw" or "DodgeToDrawTop" or "DodgeToHand" or "AllyDodge"
                     or "EndTurnDodge" or "AllyDodgeDrawX")
                     foreach (IHoverTip tip in HoverTipFactory.FromCardWithCardHoverTips<DuchessDodge>(IsUpgraded && Spec.UpgradeTokens))
                         yield return tip;
@@ -200,6 +233,15 @@ public abstract class DuchessCard : CardModel
                 if (effect.Kind is "Weak" or "WeakAll") yield return HoverTipFactory.FromPower<WeakPower>();
                 if (effect.Kind == "Vulnerable") yield return HoverTipFactory.FromPower<VulnerablePower>();
                 if (effect.Kind == "Strength") yield return HoverTipFactory.FromPower<StrengthPower>();
+                if (effect.Kind is "RewindDamage" or "RememberMoment" or "MomentEffectEnergy")
+                    yield return HoverTipFactory.FromPower<DuchessMomentDescriptionPower>();
+                if (effect.Kind == "MomentEffectEnergy") yield return HoverTipFactory.FromPower<DuchessEternalFormPower>();
+                if (effect.Kind == "ConcealedStrength")
+                {
+                    yield return HoverTipFactory.FromPower<DuchessConcealmentPower>();
+                    yield return HoverTipFactory.FromPower<StrengthPower>();
+                    yield return HoverTipFactory.FromPower<DuchessShadowSwordPower>();
+                }
                 if (effect.Kind == "TemporaryStrength") yield return HoverTipFactory.FromPower<StrengthPower>();
                 if (effect.Kind == "Intangible") yield return HoverTipFactory.FromPower<IntangiblePower>();
                 if (effect.Kind == "AllyIntangible") yield return HoverTipFactory.FromPower<IntangiblePower>();
@@ -221,6 +263,9 @@ public abstract class DuchessCard : CardModel
                 if (effect.Kind == "EndTurnMomentBlock") yield return HoverTipFactory.FromPower<DuchessEndTurnMomentBlockPower>();
                 if (effect.Kind == "DodgeMoment") yield return HoverTipFactory.FromPower<DuchessDodgeMomentPower>();
                 if (effect.Kind == "ShuffleBlock") yield return HoverTipFactory.FromPower<DuchessShuffleBlockPower>();
+                if (effect.Kind == "ZeroCostAttackBonus") yield return HoverTipFactory.FromPower<DuchessZeroCostAttackPower>();
+                if (effect.Kind == "DodgePlayAoe") yield return HoverTipFactory.FromPower<DuchessGracefulSwordDancePower>();
+                if (effect.Kind == "ConcealedKillNextCombatStrength") yield return HoverTipFactory.FromPower<DuchessPhantomKillerPower>();
             }
         }
     }
@@ -236,6 +281,7 @@ public abstract class DuchessCard : CardModel
             string key = effect.Kind == "Damage" && (Spec.RestageDivisor > 0
                     || Spec.ConcealedTripleDamage || Spec.Effects.Any(e => e.Kind is "ConcealedBonusDamage" or "MomentBonusDamage"))
                 ? "CalculationBase" : effect.Kind is "ConcealedBonusDamage" or "MomentBonusDamage" ? "ExtraDamage"
+                : effect.Kind == "RewindDamage" ? "ExtraDamage"
                 : effect.Kind == "AllyBlock" ? "Block" : effect.Kind;
             if (DynamicVars.TryGetValue(key, out DynamicVar variable))
                 variable.UpgradeValueBy(effect.Upgraded - effect.Amount);
@@ -300,7 +346,7 @@ public abstract class DuchessCard : CardModel
             decimal amount = effect.Kind == "Damage" && (Spec.RestageDivisor > 0
                     || Spec.ConcealedTripleDamage || Spec.Effects.Any(e => e.Kind is "ConcealedBonusDamage" or "MomentBonusDamage"))
                 ? DynamicVars.CalculatedDamage.Calculate(play.Target)
-                : effect.Kind == "MomentDamage" ? DynamicVars.CalculatedDamage.Calculate(play.Target)
+                : effect.Kind is "MomentDamage" or "RewindDamage" ? DynamicVars.CalculatedDamage.Calculate(play.Target)
                 : DynamicVars.TryGetValue(key, out DynamicVar variable) ? variable.BaseValue : effect.Amount;
             Creature[] enemies = Spec.All
                 ? CombatState.HittableEnemies.Where(e => e.IsAlive).ToArray()
@@ -310,10 +356,22 @@ public abstract class DuchessCard : CardModel
             switch (effect.Kind)
             {
                 case "Damage":
-                    for (int i = 0; i < (IsUpgraded && Spec.UpgradeHits > 0 ? Spec.UpgradeHits : Spec.Hits); i++)
-                        foreach (Creature enemy in enemies.Where(e => e.IsAlive))
-                            await DamageCmd.Attack(amount).CompatFromCard(this).Targeting(enemy)
-                                .WithHitVfxNode(NightMustStay.Core.Nodes.Vfx.DuchessSlashVfx.Create).Execute(context);
+                    int hits = IsUpgraded && Spec.UpgradeHits > 0 ? Spec.UpgradeHits : Spec.Hits;
+                    if (Spec.All)
+                    {
+                        // Match native DaggerSpray: one AOE attack owns every hit,
+                        // so targeting and attack-completion hooks retain their semantics.
+                        await DamageCmd.Attack(amount).WithHitCount(hits).CompatFromCard(this)
+                            .TargetingAllOpponents(CombatState)
+                            .WithHitVfxNode(NightMustStay.Core.Nodes.Vfx.DuchessSlashVfx.Create).Execute(context);
+                    }
+                    else
+                    {
+                        for (int i = 0; i < hits; i++)
+                            foreach (Creature enemy in enemies.Where(e => e.IsAlive))
+                                await DamageCmd.Attack(amount).CompatFromCard(this).Targeting(enemy)
+                                    .WithHitVfxNode(NightMustStay.Core.Nodes.Vfx.DuchessSlashVfx.Create).Execute(context);
+                    }
                     if (this is DuchessGlintstoneHail && PendingGlintstoneDamage > 0)
                     {
                         DynamicVars.Damage.BaseValue -= PendingGlintstoneDamage;
@@ -326,10 +384,15 @@ public abstract class DuchessCard : CardModel
                     }
                     break;
                 case "MomentDamage":
+                    int momentHits = Spec.XCost
+                        ? ResolveEnergyXValue() + (IsUpgraded && Spec.UpgradeX ? 1 : 0)
+                        : 1 + (conditions["moment"] && DynamicVars.TryGetValue("MomentExtraHits", out DynamicVar extraHits)
+                            ? (int)extraHits.BaseValue : 0);
                     foreach (Creature enemy in enemies.Where(e => e.IsAlive))
-                        await DamageCmd.Attack(amount).CompatFromCard(this).Targeting(enemy)
+                        await DamageCmd.Attack(amount).WithHitCount(momentHits).CompatFromCard(this).Targeting(enemy)
                             .WithHitVfxNode(NightMustStay.Core.Nodes.Vfx.DuchessSlashVfx.Create).Execute(context);
                     break;
+                case "MomentExtraHits": break; // Applied to the single native multi-hit attack above.
                 case "AoeDamage":
                     await DamageCmd.Attack(amount).CompatFromCard(this)
                         .TargetingAllOpponents(CombatState).Execute(context);
@@ -363,12 +426,26 @@ public abstract class DuchessCard : CardModel
                     break;
                 case "Dexterity": await Apply<DexterityPower>(context, Owner.Creature, amount); break;
                 case "DodgeToDraw": await AddDodges(Owner, amount, PileType.Draw); break;
+                case "DodgeToDrawTop": await AddDodges(Owner, amount, PileType.Draw, CardPilePosition.Top); break;
                 case "DodgeToHand": await AddDodges(Owner, amount, PileType.Hand); break;
                 case "AllyDodge":
                     foreach (var ally in CombatState.Players.Where(p => p.Creature.IsAlive))
                         await AddDodges(ally, amount, PileType.Hand);
                     break;
                 case "AdvanceMoment": await DuchessMomentPower.Advance(context, Owner.Creature, (int)amount, this); break;
+                case "RewindDamage":
+                    int rewindSteps = DuchessMomentPower.Current(Owner);
+                    for (int step = rewindSteps - 1; step >= 0; step--)
+                        await DuchessMomentPower.Set(context, Owner.Creature, step, this);
+                    if (play.Target is { IsAlive: true } rewindTarget)
+                        await DamageCmd.Attack(amount).CompatFromCard(this).Targeting(rewindTarget).Execute(context);
+                    (await DuchessMomentPower.Ensure(context, Owner.Creature)).SetAfterCurrentCard(0);
+                    break;
+                case "RememberMoment":
+                    (await DuchessMomentPower.Ensure(context, Owner.Creature)).SkipNextTurnReset = true;
+                    break;
+                case "MomentEffectEnergy": await Apply<DuchessEternalFormPower>(context, Owner.Creature, amount); break;
+                case "ConcealedStrength": await Apply<DuchessShadowSwordPower>(context, Owner.Creature, amount); break;
                 case "SetMoment":
                 case "ReturnMoment":
                     (await DuchessMomentPower.Ensure(context, Owner.Creature)).SetAfterCurrentCard((int)amount);
@@ -393,21 +470,36 @@ public abstract class DuchessCard : CardModel
                 case "RestageEndTurnAoe": await Apply<DuchessEternalRestagePower>(context, Owner.Creature, amount); break;
                 case "ReplayMomentThree": await Apply<DuchessReplayMomentThreePower>(context, Owner.Creature, amount); break;
                 case "AllyDodgeDrawX": await AllyDodgeDrawX(context); break;
-                case "DrawReactionFromPile": await DrawReactionFromPile(); break;
+                case "DrawReactionFromPile": await DrawReactionFromPile(context); break;
                 case "MomentTwelveEndTurn": break;
                 case "ConcealedBonusDamage": break;
                 case "MomentBonusDamage": break;
                 case "DrawReactionDamageBoost": break;
                 case "HandToDrawTopBlock": await HandToDrawTopBlock(context, amount); break;
-                case "DrawUntilReaction":
-                    while (PileType.Hand.GetPile(Owner).Cards.Count < CardPile.MaxCardsInHand)
+                case "DrawUntilMomentHandSize":
+                    while (PileType.Hand.GetPile(Owner).Cards.Count < DuchessMomentPower.Current(Owner)
+                        && PileType.Hand.GetPile(Owner).Cards.Count < CardPile.MaxCardsInHand)
                     {
                         CardModel drawn = await CardPileCmd.Draw(context, Owner);
-                        if (drawn == null || drawn is DuchessCard { HasReaction: true }) break;
+                        if (drawn == null) break;
                     }
                     break;
                 case "ReactionBlock": await Apply<DuchessReactionBlockPower>(context, Owner.Creature, amount); break;
                 case "ReactionDraw": await Apply<DuchessReactionDrawPower>(context, Owner.Creature, amount); break;
+                case "ZeroCostAttackBonus": await Apply<DuchessZeroCostAttackPower>(context, Owner.Creature, amount); break;
+                case "DodgePlayAoe": await Apply<DuchessGracefulSwordDancePower>(context, Owner.Creature, amount); break;
+                case "ConcealedKillNextCombatStrength": await Apply<DuchessPhantomKillerPower>(context, Owner.Creature, amount); break;
+                case "ReturnSelfToHand":
+                    await CardPileCmd.Add(this, PileType.Hand, CardPilePosition.Top, this);
+                    break;
+                case "ShuffleHandAllDraw":
+                    CardModel[] handToShuffle = PileType.Hand.GetPile(Owner).Cards.Where(card => card != this).ToArray();
+                    if (handToShuffle.Length > 0)
+                    {
+                        await CardPileCmd.Add(handToShuffle, PileType.Draw, CardPilePosition.Random, this);
+                        await CardPileCmd.Draw(context, handToShuffle.Length, Owner);
+                    }
+                    break;
                 case "TransformStrike": await TransformStrikeInDraw(context); break;
                 case "ChooseDrawToTop": await ChooseDrawToTop(context); break;
                 case "EndTurnMomentBlock": await Apply<DuchessEndTurnMomentBlockPower>(context, Owner.Creature, amount); break;
@@ -415,9 +507,9 @@ public abstract class DuchessCard : CardModel
                 case "DodgeMoment": await Apply<DuchessDodgeMomentPower>(context, Owner.Creature, amount); break;
                 case "ShuffleBlock": await Apply<DuchessShuffleBlockPower>(context, Owner.Creature, amount); break;
                 case "RestageAoe":
-                    decimal repeats = decimal.Floor(DuchessMomentPower.DamageDealtThisTurn(this) / amount);
-                    if (repeats > 0)
-                        await DamageCmd.Attack(repeats).CompatFromCard(this).TargetingAllOpponents(CombatState).Execute(context);
+                    decimal restageDamage = DynamicVars.CalculatedDamage.Calculate(null);
+                    if (restageDamage > 0)
+                        await DamageCmd.Attack(restageDamage).CompatFromCard(this).TargetingAllOpponents(CombatState).Execute(context);
                     break;
                 case "NextTurnEnergy": await Apply<DuchessNextTurnEnergyPower>(context, Owner.Creature, amount); break;
                 case "NextTurnDraw": await Apply<DuchessNextTurnDrawPower>(context, Owner.Creature, amount); break;
@@ -458,6 +550,18 @@ public abstract class DuchessCard : CardModel
                 default: throw new InvalidOperationException($"Unknown Duchess effect: {effect.Kind}");
             }
         }
+
+        // One reward per successful card's Moment condition, not per effect line.
+        bool triggeredMoment = Spec.Effects.Any(e => e.Condition.StartsWith("moment", StringComparison.Ordinal)
+            && conditions.TryGetValue(e.Condition, out bool active) && active)
+            || conditions["moment"] && (Spec.MomentCostReduction > 0 || Spec.RestageDivisor > 0);
+        if (triggeredMoment && Owner.Creature.GetPower<DuchessEternalFormPower>() is { } eternalForm)
+            await eternalForm.OnMomentEffect();
+        if (triggeredMoment)
+            foreach (NightMustStay.Core.Models.Relics.DuchessCarianBadge badge in
+                     Owner.Relics.OfType<NightMustStay.Core.Models.Relics.DuchessCarianBadge>().ToArray())
+                await badge.OnMomentEffect(context);
+
 
         if (Spec.ShuffleSelf)
             await CardPileCmd.Add(this, PileType.Draw, CardPilePosition.Random, this);
@@ -521,14 +625,15 @@ public abstract class DuchessCard : CardModel
         CardCmd.Upgrade(combatSlicer);
     }
 
-    private async Task AddDodges(MegaCrit.Sts2.Core.Entities.Players.Player player, decimal amount, PileType destination)
+    private async Task AddDodges(MegaCrit.Sts2.Core.Entities.Players.Player player, decimal amount, PileType destination,
+        CardPilePosition? position = null)
     {
         for (int i = 0; i < amount; i++)
         {
             DuchessDodge dodge = CombatState.CreateCard<DuchessDodge>(player);
             if (IsUpgraded && Spec.UpgradeTokens) CardCmd.Upgrade(dodge);
             CardPileAddResult result = await CardPileCmd.AddGeneratedCardToCombat(dodge, destination, player,
-                destination == PileType.Draw ? CardPilePosition.Random : CardPilePosition.Top);
+                position ?? (destination == PileType.Draw ? CardPilePosition.Random : CardPilePosition.Top));
             CardCmd.PreviewCardPileAdd(result);
         }
     }
@@ -543,13 +648,24 @@ public abstract class DuchessCard : CardModel
         }
     }
 
-    private async Task DrawReactionFromPile()
+    private async Task DrawReactionFromPile(PlayerChoiceContext context)
     {
-        CardModel[] choices = PileType.Draw.GetPile(Owner).Cards
+        CardPile drawPile = PileType.Draw.GetPile(Owner);
+        CardModel[] originalOrder = drawPile.Cards.ToArray();
+        CardModel[] choices = originalOrder
             .Where(card => card is DuchessCard { HasReaction: true }).ToArray();
         if (choices.Length == 0) return;
         CardModel selected = Owner.RunState.Rng.Niche.NextItem(choices);
-        await CardPileCmd.Add(selected, PileType.Hand, CardPilePosition.Top, this);
+        // Native Draw owns prevention, hand limits, history and all AfterCardDrawn
+        // hooks (Reaction, Lightning Nerves, Composure, etc.). This is not a hand draw.
+        drawPile.MoveToTopInternal(selected);
+        CardModel drawn = await CardPileCmd.Draw(context, Owner);
+        if (drawn == null)
+        {
+            // A prevented draw must not silently change the draw-pile order.
+            foreach (CardModel card in originalOrder.Reverse())
+                if (card.Pile == drawPile) drawPile.MoveToTopInternal(card);
+        }
     }
 
     private async Task AddRadiantBlades(MegaCrit.Sts2.Core.Entities.Players.Player player, decimal amount, PileType destination)

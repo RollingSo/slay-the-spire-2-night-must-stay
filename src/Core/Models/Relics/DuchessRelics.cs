@@ -1,11 +1,19 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Relics;
+using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Rooms;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Cards;
 using NightMustStay.Core.Models.Power;
@@ -22,75 +30,143 @@ public abstract class DuchessRelic : RelicModel
 public class DuchessOldPocketwatch : DuchessRelic
 {
     public override RelicRarity Rarity => RelicRarity.Starter;
-    protected virtual decimal CardsToDraw => 1m;
 
-    public async Task OnMomentTwo(PlayerChoiceContext context)
+    public virtual async Task OnMomentTwo(PlayerChoiceContext context)
     {
         Flash();
-        await CardPileCmd.Draw(context, CardsToDraw, Owner);
+        await CardPileCmd.Draw(context, 1m, Owner);
     }
 }
 
-public sealed class DuchessMendedPocketwatch : DuchessOldPocketwatch
+public sealed class DuchessReversePocketwatch : DuchessOldPocketwatch
 {
     public override RelicRarity Rarity => RelicRarity.Ancient;
-    protected override decimal CardsToDraw => 2m;
+
+    public override async Task OnMomentTwo(PlayerChoiceContext context)
+    {
+        Flash();
+        await CardPileCmd.Draw(context, 1m, Owner);
+        await PlayerCmd.GainEnergy(1m, Owner);
+    }
 }
 
-public sealed class DuchessLaceCuff : DuchessRelic
+public sealed class DuchessCrownBadge : DuchessRelic
 {
     public override RelicRarity Rarity => RelicRarity.Common;
-    public override async Task BeforeCombatStart()
+
+    public async Task OnMomentFive(PlayerChoiceContext context)
     {
-        DuchessDodge dodge = Owner.Creature.CombatState.CreateCard<DuchessDodge>(Owner);
-        await CardPileCmd.AddGeneratedCardToCombat(dodge, PileType.Draw, Owner, CardPilePosition.Random);
+        Creature[] enemies = Owner.Creature.CombatState.HittableEnemies.Where(enemy => enemy.IsAlive).ToArray();
+        if (enemies.Length == 0) return;
+        Flash();
+        await CreatureCmd.Damage(context, enemies, 5m, ValueProp.Unpowered, Owner.Creature);
     }
 }
 
-public sealed class DuchessSilverThimble : DuchessRelic
+public sealed class DuchessGoldenDewdrop : DuchessRelic
 {
-    private int _lastTurnTriggered = -1;
     public override RelicRarity Rarity => RelicRarity.Uncommon;
 
-    public override async Task AfterCardDrawn(PlayerChoiceContext context, CardModel card, bool fromHandDraw)
+    public override async Task BeforeSideTurnEnd(PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (!DuchessReactionRules.IsEligibleDraw(fromHandDraw, card.Pile?.Type ?? PileType.None)
-            || card.Owner != Owner || card is not DuchessCard { HasReaction: true }
-            || _lastTurnTriggered == Owner.PlayerCombatState.TurnNumber)
-            return;
-        _lastTurnTriggered = Owner.PlayerCombatState.TurnNumber;
+        if (!participants.Contains(Owner.Creature)) return;
+        int moment = DuchessMomentPower.Current(Owner);
+        if (moment == 0) return;
+        Creature enemy = Owner.RunState.Rng.CombatTargets.NextItem(
+            Owner.Creature.CombatState.HittableEnemies.Where(target => target.IsAlive).ToArray());
+        if (enemy == null) return;
         Flash();
-        await CardPileCmd.Draw(new BlockingPlayerChoiceContext(), 1m, Owner);
+        await CreatureCmd.Damage(context, enemy, moment, ValueProp.Unpowered, Owner.Creature);
     }
 }
 
-public sealed class DuchessDanceShoes : DuchessRelic
+public sealed class DuchessPrimalGlintstoneBlade : DuchessRelic
 {
+    public override RelicRarity Rarity => RelicRarity.Uncommon;
+
+    public override async Task AfterPlayerTurnStart(PlayerChoiceContext context, Player player)
+    {
+        if (player != Owner || player.PlayerCombatState.TurnNumber % 4 != 0) return;
+        Flash();
+        DuchessRadiantBlade blade = Owner.Creature.CombatState.CreateCard<DuchessRadiantBlade>(Owner);
+        if (Owner.Creature.GetPower<DuchessRadiantBladeGrowthPower>() is { } growth)
+            blade.DynamicVars.Damage.BaseValue += growth.TotalGrowth;
+        await CardPileCmd.AddGeneratedCardToCombat(blade, PileType.Hand, Owner, CardPilePosition.Top);
+    }
+}
+
+public sealed class DuchessBlessedIronCoin : DuchessRelic
+{
+    [SavedProperty]
+    public bool DexterityActive { get; set; }
+
     public override RelicRarity Rarity => RelicRarity.Rare;
-    public override async Task AfterPlayerTurnStart(PlayerChoiceContext context, Player player)
+
+    public override async Task AfterPowerAmountChanged(PlayerChoiceContext context, PowerModel power,
+        decimal amount, Creature applier, CardModel cardSource)
     {
-        if (player != Owner) return;
+        if (power is not DuchessConcealmentPower || power.Owner != Owner.Creature) return;
+        bool active = power.Amount > 0m;
+        if (active == DexterityActive) return;
+        DexterityActive = active;
         Flash();
-        await DuchessMomentPower.Advance(context, Owner.Creature, 1, this);
+        await PowerCmd.Apply<DexterityPower>(context, Owner.Creature, active ? 2m : -2m, Owner.Creature, cardSource);
+    }
+
+    public override Task AfterCombatEnd(CombatRoom room)
+    {
+        DexterityActive = false;
+        return Task.CompletedTask;
     }
 }
 
-public sealed class DuchessUnsentLetter : DuchessRelic
+public sealed class DuchessNightOfWisdom : DuchessRelic
 {
-    public override RelicRarity Rarity => RelicRarity.Uncommon;
-    public override async Task AfterPlayerTurnStart(PlayerChoiceContext context, Player player)
+    [SavedProperty]
+    public int LastTriggeredTurn { get; set; } = -1;
+
+    public override RelicRarity Rarity => RelicRarity.Rare;
+
+    public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay play)
     {
-        if (player == Owner && player.PlayerCombatState.TurnNumber == 1)
-            await CardPileCmd.Draw(context, 2m, Owner);
+        if (play.Card.Owner != Owner || play.Card is not DuchessCard { HasReaction: true }
+            || LastTriggeredTurn == Owner.PlayerCombatState.TurnNumber) return;
+        LastTriggeredTurn = Owner.PlayerCombatState.TurnNumber;
+        Flash();
+        await CardPileCmd.Draw(context, 1m, Owner);
+    }
+
+    public override Task AfterCombatEnd(CombatRoom room)
+    {
+        LastTriggeredTurn = -1;
+        return Task.CompletedTask;
     }
 }
 
-public sealed class DuchessBlueRibbon : DuchessRelic
+public sealed class DuchessBlueStainedBlade : DuchessRelic
 {
-    public override RelicRarity Rarity => RelicRarity.Common;
+    public override RelicRarity Rarity => RelicRarity.Shop;
+
     public override async Task AfterPlayerTurnStart(PlayerChoiceContext context, Player player)
     {
-        if (player == Owner && player.PlayerCombatState.TurnNumber == 1)
-            await CreatureCmd.GainBlock(Owner.Creature, 6m, ValueProp.Unpowered, null);
+        if (player != Owner || !Owner.Creature.HasPower<DuchessConcealmentPower>()) return;
+        Flash();
+        await CardPileCmd.Draw(context, 1m, Owner);
+    }
+}
+
+public sealed class DuchessCarianBadge : DuchessRelic
+{
+    [SavedProperty]
+    public int MomentEffectsTriggered { get; set; }
+
+    public override RelicRarity Rarity => RelicRarity.Rare;
+
+    public async Task OnMomentEffect(PlayerChoiceContext context)
+    {
+        MomentEffectsTriggered++;
+        if (MomentEffectsTriggered % 4 != 0) return;
+        Flash();
+        await PlayerCmd.GainEnergy(1m, Owner);
     }
 }

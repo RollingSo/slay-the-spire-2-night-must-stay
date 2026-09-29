@@ -83,12 +83,12 @@
     [
       [
         "Damage",
-        7,
-        10
+        8,
+        11
       ],
       [
         "Draw",
-        2,
+        1,
         2,
         "moment"
       ]
@@ -142,7 +142,7 @@
     "米凯拉的光环",
     "Miquella's Halo",
     "ミケラの光輪",
-    1,
+    0,
     "Attack",
     "Rare",
     [
@@ -150,15 +150,11 @@
         "MomentDamage",
         0,
         0
-      ],
-      [
-        "ReturnSelfToDrawTop",
-        0,
-        0
       ]
     ],
     {
-      "upgradeCost": 0
+      "xCost": true,
+      "upgradeX": true
     }
   ],
   [
@@ -536,7 +532,10 @@
         1
       ]
     ],
-    {"upgradeCost": 0, "targetSelf": true}
+    {
+      "upgradeCost": 0,
+      "targetSelf": true
+    }
   ],
   [
     "Pivot",
@@ -568,8 +567,16 @@
     1,
     "Skill",
     "Common",
-    [["Concealment", 2, 3]],
-    {"reaction": true}
+    [
+      [
+        "Concealment",
+        2,
+        3
+      ]
+    ],
+    {
+      "reaction": true
+    }
   ],
   [
     "Feint",
@@ -605,17 +612,14 @@
     "Uncommon",
     [
       [
-        "DodgeToDraw",
-        3,
-        3
-      ],
-      [
-        "Draw",
-        1,
-        1
+        "DodgeToDrawTop",
+        2,
+        2
       ]
     ],
-    {"upgradeTokens": true}
+    {
+      "upgradeTokens": true
+    }
   ],
   [
     "RadiantBladeArray",
@@ -652,7 +656,9 @@
         4
       ]
     ],
-    {"targetSelf": true}
+    {
+      "targetSelf": true
+    }
   ],
   [
     "SoftLanding",
@@ -670,8 +676,8 @@
       ],
       [
         "Concealment",
-        1,
         2,
+        3,
         "moment"
       ]
     ],
@@ -699,7 +705,9 @@
         1
       ]
     ],
-    {"upgradeCost": 0}
+    {
+      "upgradeCost": 0
+    }
   ],
   [
     "Distraction",
@@ -717,8 +725,8 @@
       ],
       [
         "Concealment",
-        1,
         2,
+        3,
         "moment"
       ]
     ],
@@ -827,6 +835,32 @@
     }
   ],
   [
+    "InsightFuture",
+    "洞察未来",
+    "Insight into the Future",
+    "未来の洞察",
+    1,
+    "Skill",
+    "Common",
+    [
+      [
+        "Block",
+        4,
+        4
+      ],
+      [
+        "ChooseDrawToTop",
+        1,
+        1
+      ]
+    ],
+    {
+      "exhaust": true,
+      "upgradeRemoveExhaust": true,
+      "targetSelf": true
+    }
+  ],
+  [
     "QuickHands",
     "巧手",
     "Quick Hands",
@@ -841,7 +875,10 @@
         1
       ]
     ],
-    {"exhaust": true, "upgradeRemoveExhaust": true}
+    {
+      "exhaust": true,
+      "upgradeRemoveExhaust": true
+    }
   ],
   [
     "Composure",
@@ -1062,7 +1099,7 @@
     "Rare",
     [
       [
-        "DrawUntilReaction",
+        "DrawUntilMomentHandSize",
         1,
         1
       ]
@@ -1088,7 +1125,9 @@
         1
       ]
     ],
-    {"upgradeCost": 0}
+    {
+      "upgradeCost": 0
+    }
   ],
   [
     "EternalRestage",
@@ -1115,26 +1154,454 @@
       "targetSelf": true
     }
   ],
-  ["Reenactment", "重演", "Reenactment", "再演", 1, "Skill", "Uncommon", [["RestageAoe", 2, 2]], {"upgradeCost": 0, "targetSelf": true}],
-  ["SideSomersault", "侧空翻", "Side Somersault", "側転", 1, "Skill", "Common", [["Block", 8, 8], ["DodgeToDraw", 2, 2, "moment"]], {"moment": 2, "upgradeTokens": true}],
-  ["Initiative", "先机", "Initiative", "先手", 1, "Attack", "Common", [["Damage", 8, 8], ["Vulnerable", 2, 3, "moment"]], {"moment": 0}],
-  ["GoldenBlade", "黄金刀刃", "Golden Blade", "黄金の刃", 1, "Attack", "Rare", [["Damage", 8, 8], ["MomentBonusDamage", 15, 15, "moment"]], {"moment": 9, "upgradedMoment": 7}],
-  ["CarianGreatsword", "卡利亚大剑", "Carian Greatsword", "カーリアの大剣", 2, "Attack", "Uncommon", [["Damage", 6, 9]], {"reaction": true, "all": true, "hits": 2}],
-  ["CarianPiercer", "卡利亚贯刺", "Carian Piercer", "カーリアの貫き", 2, "Attack", "Uncommon", [["Damage", 11, 11], ["DrawReactionDamageBoost", 4, 6]], {"reaction": true}],
-  ["RadiantBladeMagic", "辉剑魔法", "Radiant Blade Magic", "輝剣の魔術", 1, "Power", "Rare", [["RadiantBladeGrowth", 1, 1]], {"upgradeInnate": true}],
-  ["DeathBlade", "死亡刀刃", "Death Blade", "死の刃", 1, "Attack", "Rare", [["Damage", 8, 8], ["Weak", 5, 5, "moment"], ["Vulnerable", 5, 5, "moment"]], {"moment": 9, "upgradedMoment": 7}],
-  ["CarianRetaliation", "卡利亚式奉还", "Carian Retaliation", "カーリアの返報", 1, "Skill", "Uncommon", [["Block", 7, 10], ["FullBlockRadiantBlade", 2, 2]], {"targetSelf": true}],
-  ["CalmComposure", "沉着冷静", "Calm Composure", "冷静沈着", 1, "Power", "Uncommon", [["EndTurnDodge", 1, 1]], {"upgradeTokens": true}],
-  ["TidyCollar", "整理衣襟", "Tidy Collar", "襟を整える", 0, "Skill", "Uncommon", [["EndTurnRetain", 2, 3]], {"targetSelf": true}],
-  ["Beat", "节拍", "Beat", "拍子", 1, "Power", "Uncommon", [["MomentFiveFirstEnergy", 1, 2]], {"targetSelf": true}],
-  ["Silence", "噤声", "Silence", "静寂", 2, "Attack", "Rare", [["Damage", 11, 15]], {"retain": true, "concealedTripleDamage": true}],
-  ["Duchess", "女爵", "Duchess", "公爵夫人", 0, "Skill", "Uncommon", [["AllyDodgeDrawX", 0, 0]], {"xCost": true, "upgradeX": true, "targetSelf": true, "multiplayerOnly": true}],
-  ["GrandBearing", "华丽身段", "Grand Bearing", "華麗な身ごなし", 0, "Skill", "Ancient", [["DodgeToDraw", 3, 3], ["Draw", 1, 1]], {"upgradeTokens": true}],
-  ["GoldenMoment", "黄金时刻", "Golden Moment", "黄金の時刻", 1, "Power", "Uncommon", [["MomentFiveBlock", 4, 6]], {"targetSelf": true}],
-  ["LorettaMastery", "罗蕾塔的绝招", "Loretta's Mastery", "ローレッタの絶技", 12, "Attack", "Rare", [["Damage", 15, 20]], {"hits": 3, "momentCostReductionDynamic": true}],
-  ["LorettaGreatbow", "罗蕾塔的大弓", "Loretta's Greatbow", "ローレッタの大弓", 6, "Attack", "Uncommon", [["Damage", 12, 16]], {"momentCostReductionDynamic": true}],
-  ["SleightOfHand", "戏法", "Sleight of Hand", "手品", 0, "Skill", "Uncommon", [["ShuffleHand", 3, 3], ["Weak", 2, 3], ["Vulnerable", 2, 3]], {"targetSelf": true, "all": true}],
-  ["BecomeInvisible", "化为无形", "Become Invisible", "姿を消す", 0, "Skill", "Uncommon", [["Concealment", 2, 3]], {"exhaust": true, "targetSelf": true}],
+  [
+    "Reenactment",
+    "重演",
+    "Reenactment",
+    "再演",
+    1,
+    "Skill",
+    "Uncommon",
+    [
+      [
+        "RestageAoe",
+        2,
+        2
+      ]
+    ],
+    {
+      "upgradeCost": 0,
+      "targetSelf": true
+    }
+  ],
+  [
+    "SideSomersault",
+    "侧空翻",
+    "Side Somersault",
+    "側転",
+    1,
+    "Skill",
+    "Common",
+    [
+      [
+        "Block",
+        8,
+        8
+      ],
+      [
+        "DodgeToDraw",
+        2,
+        2,
+        "moment"
+      ]
+    ],
+    {
+      "moment": 2,
+      "upgradeTokens": true
+    }
+  ],
+  [
+    "Initiative",
+    "先机",
+    "Initiative",
+    "先手",
+    1,
+    "Attack",
+    "Common",
+    [
+      [
+        "Damage",
+        8,
+        8
+      ],
+      [
+        "Vulnerable",
+        2,
+        3,
+        "moment"
+      ]
+    ],
+    {
+      "moment": 0
+    }
+  ],
+  [
+    "GoldenBlade",
+    "黄金刀刃",
+    "Golden Blade",
+    "黄金の刃",
+    1,
+    "Attack",
+    "Rare",
+    [
+      [
+        "Damage",
+        8,
+        8
+      ],
+      [
+        "MomentBonusDamage",
+        15,
+        15,
+        "moment"
+      ]
+    ],
+    {
+      "moment": 9,
+      "upgradedMoment": 7
+    }
+  ],
+  [
+    "CarianGreatsword",
+    "卡利亚大剑",
+    "Carian Greatsword",
+    "カーリアの大剣",
+    2,
+    "Attack",
+    "Uncommon",
+    [
+      [
+        "Damage",
+        6,
+        9
+      ]
+    ],
+    {
+      "reaction": true,
+      "all": true,
+      "hits": 2
+    }
+  ],
+  [
+    "CarianPiercer",
+    "卡利亚贯刺",
+    "Carian Piercer",
+    "カーリアの貫き",
+    2,
+    "Attack",
+    "Uncommon",
+    [
+      [
+        "Damage",
+        11,
+        11
+      ],
+      [
+        "DrawReactionDamageBoost",
+        4,
+        6
+      ]
+    ],
+    {
+      "reaction": true
+    }
+  ],
+  [
+    "RadiantBladeMagic",
+    "辉剑魔法",
+    "Radiant Blade Magic",
+    "輝剣の魔術",
+    1,
+    "Power",
+    "Rare",
+    [
+      [
+        "RadiantBladeGrowth",
+        1,
+        1
+      ]
+    ],
+    {
+      "upgradeInnate": true
+    }
+  ],
+  [
+    "DeathBlade",
+    "死亡刀刃",
+    "Death Blade",
+    "死の刃",
+    1,
+    "Attack",
+    "Rare",
+    [
+      [
+        "Damage",
+        8,
+        8
+      ],
+      [
+        "Weak",
+        5,
+        5,
+        "moment"
+      ],
+      [
+        "Vulnerable",
+        5,
+        5,
+        "moment"
+      ]
+    ],
+    {
+      "moment": 9,
+      "upgradedMoment": 7
+    }
+  ],
+  [
+    "CarianRetaliation",
+    "卡利亚式奉还",
+    "Carian Retaliation",
+    "カーリアの返報",
+    1,
+    "Skill",
+    "Uncommon",
+    [
+      [
+        "Block",
+        7,
+        10
+      ],
+      [
+        "FullBlockRadiantBlade",
+        2,
+        2
+      ]
+    ],
+    {
+      "targetSelf": true
+    }
+  ],
+  [
+    "CalmComposure",
+    "沉着冷静",
+    "Calm Composure",
+    "冷静沈着",
+    1,
+    "Power",
+    "Uncommon",
+    [
+      [
+        "EndTurnDodge",
+        1,
+        1
+      ]
+    ],
+    {
+      "upgradeTokens": true
+    }
+  ],
+  [
+    "TidyCollar",
+    "整理衣襟",
+    "Tidy Collar",
+    "襟を整える",
+    0,
+    "Skill",
+    "Uncommon",
+    [
+      [
+        "EndTurnRetain",
+        2,
+        3
+      ]
+    ],
+    {
+      "targetSelf": true
+    }
+  ],
+  [
+    "Beat",
+    "节拍",
+    "Beat",
+    "拍子",
+    1,
+    "Power",
+    "Uncommon",
+    [
+      [
+        "MomentFiveFirstEnergy",
+        1,
+        2
+      ]
+    ],
+    {
+      "targetSelf": true
+    }
+  ],
+  [
+    "Silence",
+    "噤声",
+    "Silence",
+    "静寂",
+    2,
+    "Attack",
+    "Rare",
+    [
+      [
+        "Damage",
+        11,
+        15
+      ]
+    ],
+    {
+      "retain": true,
+      "concealedTripleDamage": true
+    }
+  ],
+  [
+    "Duchess",
+    "女爵",
+    "Duchess",
+    "公爵夫人",
+    0,
+    "Skill",
+    "Uncommon",
+    [
+      [
+        "AllyDodgeDrawX",
+        0,
+        0
+      ]
+    ],
+    {
+      "xCost": true,
+      "upgradeX": true,
+      "targetSelf": true,
+      "multiplayerOnly": true
+    }
+  ],
+  [
+    "GrandBearing",
+    "华丽身段",
+    "Grand Bearing",
+    "華麗な身ごなし",
+    0,
+    "Skill",
+    "Ancient",
+    [
+      [
+        "DodgeToDraw",
+        3,
+        3
+      ],
+      [
+        "Draw",
+        1,
+        1
+      ]
+    ],
+    {
+      "upgradeTokens": true
+    }
+  ],
+  [
+    "GoldenMoment",
+    "黄金时刻",
+    "Golden Moment",
+    "黄金の時刻",
+    1,
+    "Power",
+    "Uncommon",
+    [
+      [
+        "MomentFiveBlock",
+        4,
+        6
+      ]
+    ],
+    {
+      "targetSelf": true
+    }
+  ],
+  [
+    "LorettaMastery",
+    "罗蕾塔的绝招",
+    "Loretta's Mastery",
+    "ローレッタの絶技",
+    12,
+    "Attack",
+    "Rare",
+    [
+      [
+        "Damage",
+        15,
+        20
+      ]
+    ],
+    {
+      "hits": 3,
+      "momentCostReductionDynamic": true
+    }
+  ],
+  [
+    "LorettaGreatbow",
+    "罗蕾塔的大弓",
+    "Loretta's Greatbow",
+    "ローレッタの大弓",
+    6,
+    "Attack",
+    "Uncommon",
+    [
+      [
+        "Damage",
+        12,
+        16
+      ]
+    ],
+    {
+      "momentCostReductionDynamic": true
+    }
+  ],
+  [
+    "SleightOfHand",
+    "戏法",
+    "Sleight of Hand",
+    "手品",
+    0,
+    "Skill",
+    "Uncommon",
+    [
+      [
+        "ShuffleHand",
+        1,
+        1
+      ],
+      [
+        "Weak",
+        1,
+        2
+      ],
+      [
+        "Vulnerable",
+        1,
+        2
+      ]
+    ],
+    {
+      "targetSelf": true,
+      "all": true
+    }
+  ],
+  [
+    "BecomeInvisible",
+    "化为无形",
+    "Become Invisible",
+    "姿を消す",
+    0,
+    "Skill",
+    "Uncommon",
+    [
+      [
+        "Concealment",
+        2,
+        3
+      ]
+    ],
+    {
+      "exhaust": true,
+      "targetSelf": true
+    }
+  ],
   [
     "RadiantBlade",
     "辉剑",
@@ -1183,5 +1650,160 @@
       "exhaust": true,
       "reaction": true
     }
+  ],
+  [
+    "FleetingInstant",
+    "刹那",
+    "Fleeting Instant",
+    "刹那",
+    1,
+    "Attack",
+    "Rare",
+    [
+      [
+        "RewindDamage",
+        3,
+        4
+      ]
+    ],
+    {}
+  ],
+  [
+    "MomentAndEternity",
+    "瞬与恒",
+    "Moment and Eternity",
+    "瞬と永遠",
+    0,
+    "Skill",
+    "Uncommon",
+    [
+      [
+        "RememberMoment",
+        0,
+        0
+      ]
+    ],
+    {
+      "upgradeRetain": true
+    }
+  ],
+  [
+    "EternalForm",
+    "永恒形态",
+    "Eternal Form",
+    "永遠の姿",
+    3,
+    "Power",
+    "Rare",
+    [
+      [
+        "MomentEffectEnergy",
+        1,
+        1
+      ]
+    ],
+    {
+      "upgradeRetain": true
+    }
+  ],
+  [
+    "ShadowSword",
+    "影中剑",
+    "Sword in Shadow",
+    "影の剣",
+    0,
+    "Power",
+    "Uncommon",
+    [
+      [
+        "ConcealedStrength",
+        2,
+        3
+      ]
+    ],
+    {}
+  ],
+  [
+    "Quietude",
+    "寂静",
+    "Quietude",
+    "静寂",
+    0,
+    "Skill",
+    "Common",
+    [
+      [
+        "ShuffleHand",
+        1,
+        1
+      ],
+      [
+        "Concealment",
+        1,
+        2
+      ]
+    ],
+    {}
+  ],
+  [
+    "ParallelTime",
+    "平行时空",
+    "Parallel Time",
+    "並行時空",
+    0,
+    "Skill",
+    "Common",
+    [
+      [
+        "SetMoment",
+        0,
+        0
+      ],
+      [
+        "Draw",
+        1,
+        2,
+        "moment"
+      ]
+    ],
+    {
+      "moment": 3
+    }
+  ],
+  [
+    "Memory", "回忆", "Recollection", "回想", 0, "Skill", "Uncommon",
+    [["ShuffleHand", 2, 2], ["Energy", 1, 2]], {}
+  ],
+  [
+    "InchVictory", "寸短寸利", "Every Inch Counts", "寸短寸利", 2, "Power", "Uncommon",
+    [["ZeroCostAttackBonus", 4, 4]], {"upgradeCost": 1}
+  ],
+  [
+    "LorettaSlash", "罗蕾塔的斩击", "Loretta's Slash", "ローレッタの斬撃", 5, "Attack", "Common",
+    [["Damage", 11, 14]], {"all": true, "momentCostReductionDynamic": true}
+  ],
+  [
+    "SacredHalo", "神圣光环", "Sacred Halo", "聖なる光輪", 0, "Attack", "Common",
+    [["MomentDamage", 0, 0]], {"upgradeRetain": true}
+  ],
+  [
+    "GracefulSwordDance", "优雅剑舞", "Graceful Sword Dance", "優雅な剣舞", 1, "Power", "Rare",
+    [["DodgePlayAoe", 7, 10]], {}
+  ],
+  [
+    "MemoryFragment", "记忆碎片", "Memory Fragment", "記憶の欠片", 0, "Attack", "Rare",
+    [["Damage", 6, 9], ["ReturnSelfToHand", 0, 0, "moment"]], {"moment": 5}
+  ],
+  [
+    "PhantomKiller", "幻影杀机", "Phantom Killer", "幻影の殺意", 1, "Power", "Rare",
+    [["ConcealedKillNextCombatStrength", 3, 3]], {"upgradeCost": 0}
+  ],
+  [
+    "GreatCaria", "伟哉卡利亚", "Great Caria", "偉大なるカーリア", 3, "Attack", "Rare",
+    [["Damage", 24, 32]], {"all": true, "reaction": true}
+  ],
+  [
+    "Fate", "运命", "Fate", "運命", 0, "Skill", "Rare",
+    [["ShuffleHandAllDraw", 0, 0]], {"exhaust": true, "upgradeRemoveExhaust": true}
   ]
 ]

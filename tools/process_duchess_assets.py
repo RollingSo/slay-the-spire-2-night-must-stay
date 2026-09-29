@@ -129,7 +129,7 @@ def main():
                 for folder in ('images/powers','powers'):
                     save(icon,f'{folder}/{output_name}.png')
                 atlas('power_atlas',output_name,f'images/powers/{output_name}.png',(256,256))
-        elif name in ('duchess_silver_perfume','duchess_veil_vial','duchess_memory_draught'):
+        elif name in ('duchess_smoke_bottle','duchess_radiant_blade_crystal','duchess_regret_potion'):
             save(icon,f'duchess_assets/potions/{name}.png')
             atlas('potion_atlas',name,f'duchess_assets/potions/{name}.png',(256,256))
         elif name!='duchess_energy':

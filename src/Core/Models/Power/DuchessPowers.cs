@@ -15,6 +15,7 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using NightMustStay.Core.Models.Cards;
 using NightMustStay.Core.Models.Relics;
 
@@ -35,6 +36,8 @@ public sealed class DuchessReactionDescriptionPower : PowerModel
 
 public sealed class DuchessMomentPower : PowerModel
 {
+    [SavedProperty]
+    public bool SkipNextTurnReset { get; set; }
     public const int PocketwatchMoment = 2;
     private sealed record CardSnapshot(PileType Pile, int Index, int Cost);
 
@@ -90,6 +93,8 @@ public sealed class DuchessMomentPower : PowerModel
         }
         if (before != 5 && after == 5)
         {
+            foreach (DuchessCrownBadge relic in player.Relics.OfType<DuchessCrownBadge>().ToArray())
+                await relic.OnMomentFive(context);
             foreach (DuchessMomentFiveRewardPower power in player.Creature.Powers
                          .OfType<DuchessMomentFiveRewardPower>().ToArray())
                 await power.OnMomentFive(context);
@@ -113,7 +118,10 @@ public sealed class DuchessMomentPower : PowerModel
 
         Data data = GetInternalData<Data>();
         data.PendingMoment = null;
-        await Set(context, Owner, 0, this);
+        if (SkipNextTurnReset)
+            SkipNextTurnReset = false;
+        else
+            await Set(context, Owner, 0, this);
         data.TurnStartEnergy = player.PlayerCombatState.Energy;
         data.TurnStart.Clear();
         foreach (CardPile pile in player.PlayerCombatState.AllPiles)

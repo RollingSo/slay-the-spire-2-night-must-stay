@@ -22,6 +22,11 @@ public sealed class DuchessConcealmentPower : PowerModel
 {
     public const decimal AttackDamageMultiplier = 1.25m;
     public const decimal CardBlockMultiplier = 1.25m;
+    public override async Task AfterRemoved(Creature oldOwner)
+    {
+        if (oldOwner.GetPower<DuchessShadowSwordPower>() is { } shadowSword)
+            await shadowSword.Synchronize(new BlockingPlayerChoiceContext());
+    }
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 

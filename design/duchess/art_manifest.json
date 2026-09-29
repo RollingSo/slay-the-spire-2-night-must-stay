@@ -1,6 +1,10 @@
 {
   "cards": [
     {
+      "key": "InsightFuture",
+      "hint": "Approved second preview on 2026-09-28: images/packed/card_portraits/duchess/duchess_insight_future.png"
+    },
+    {
       "key": "GreatswordPhalanx",
       "hint": "Approved artwork: images/packed/card_portraits/duchess/duchess_greatsword_phalanx.png"
     },
@@ -26,7 +30,7 @@
     },
     {
       "key": "BladeRevealMoment",
-      "hint": "Approved artwork: images/packed/card_portraits/duchess/duchess_blade_reveal_moment.png"
+      "hint": "Approved close-up promoted 2026-09-29: images/packed/card_portraits/duchess/duchess_blade_reveal_moment.png; source: design/卡图预览/女爵_2026-09-28_聊天协作/BladeRevealMoment.png"
     },
     {
       "key": "Strike",
@@ -34,7 +38,7 @@
     },
     {
       "key": "Defend",
-      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-a4740ee6-52ac-49af-a717-b04288a76026.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      "hint": "Approved close-up promoted 2026-09-29: images/packed/card_portraits/duchess/duchess_defend.png; source: design/卡图预览/女爵_2026-09-28_聊天协作/Defend.png"
     },
     {
       "key": "Restage",
@@ -62,7 +66,7 @@
     },
     {
       "key": "GlintstoneKnife",
-      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-54ffbde9-42b8-46d0-b17f-324534660092.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      "hint": "2026-09-28: user-supplied Switcheroo replacement codex-clipboard-5147a962-7078-47fc-b808-8b93ce345d04.png. Approved and normalized to images/packed/card_portraits/duchess/duchess_glintstone_knife.png at 1000x760."
     },
     {
       "key": "Pivot",
@@ -86,7 +90,7 @@
     },
     {
       "key": "Reverberation",
-      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-39469c5c-5071-44d9-af1f-ecbaf7aa6638.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      "hint": "Approved swinging-pocketwatch close-up on 2026-09-29: images/packed/card_portraits/duchess/duchess_reverberation.png"
     },
     {
       "key": "Distraction",
@@ -106,7 +110,7 @@
     },
     {
       "key": "QuickHands",
-      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-a86e0a66-0547-469c-82bb-1716ad2071af.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+      "hint": "Approved revision promoted 2026-09-29: images/packed/card_portraits/duchess/duchess_quick_hands.png; source: design/卡图预览/女爵_2026-09-29_修订/QuickHands.png"
     },
     {
       "key": "Composure",
@@ -139,6 +143,74 @@
     {
       "key": "GapMoonshadow",
       "hint": "Approved project artwork: images/packed/card_portraits/duchess/duchess_gap_moonshadow.png"
+    },
+    {
+      "key": "TidyCollar",
+      "hint": "Approved close-up promoted 2026-09-29: images/packed/card_portraits/duchess/duchess_tidy_collar.png; source: design/卡图预览/女爵_2026-09-28_聊天协作/TidyCollar.png"
+    },
+    {
+      "key": "BackToPast",
+      "hint": "Approved revision promoted 2026-09-29: images/packed/card_portraits/duchess/duchess_back_to_past.png; source: design/卡图预览/女爵_2026-09-29_修订/BackToPast.png"
+    },
+    {
+      "key": "ParallelTime",
+      "hint": "Approved 2026-09-29; promoted to images/packed/card_portraits/duchess/duchess_parallel_time.png; source design/卡图预览/女爵_2026-09-29_寂静平行时空/ParallelTime.png"
+    },
+    {
+      "key": "Quietude",
+      "hint": "Approved 2026-09-29; source design/卡图预览/女爵_2026-09-29_寂静重绘/Quietude.png; formal images/packed/card_portraits/duchess/duchess_quietude.png"
+    },
+    {
+      "key": "MomentAndEternity",
+      "hint": "Approved 2026-09-29; source design/卡图预览/女爵_2026-09-29_四张新牌/MomentAndEternity.png; formal images/packed/card_portraits/duchess/duchess_moment_and_eternity.png"
+    },
+    {
+      "key": "FleetingInstant",
+      "hint": "Approved 2026-09-29; source design/卡图预览/女爵_2026-09-29_三张重绘/FleetingInstant.png; formal images/packed/card_portraits/duchess/duchess_fleeting_instant.png"
+    },
+    {
+      "key": "EternalForm",
+      "hint": "Approved 2026-09-29; source design/卡图预览/女爵_2026-09-29_三张重绘/EternalForm.png; formal images/packed/card_portraits/duchess/duchess_eternal_form.png"
+    },
+    {
+      "key": "ShadowSword",
+      "hint": "Approved 2026-09-29; source design/卡图预览/女爵_2026-09-29_三张重绘/ShadowSword.png; formal images/packed/card_portraits/duchess/duchess_shadow_sword.png"
+    },
+    {
+      "key": "Memory",
+      "hint": "Preview awaiting approval: design/card art preview/Duchess_2026-09-30_NewCards/processed"
+    },
+    {
+      "key": "InchVictory",
+      "hint": "Preview awaiting approval: design/card art preview/Duchess_2026-09-30_NewCards/processed"
+    },
+    {
+      "key": "LorettaSlash",
+      "hint": "Preview awaiting approval: design/card art preview/Duchess_2026-09-30_NewCards/processed"
+    },
+    {
+      "key": "SacredHalo",
+      "hint": "Preview awaiting approval: design/card art preview/Duchess_2026-09-30_NewCards/processed"
+    },
+    {
+      "key": "GracefulSwordDance",
+      "hint": "Preview awaiting approval: design/card art preview/Duchess_2026-09-30_NewCards/processed"
+    },
+    {
+      "key": "MemoryFragment",
+      "hint": "Preview awaiting approval: design/card art preview/Duchess_2026-09-30_NewCards/processed"
+    },
+    {
+      "key": "PhantomKiller",
+      "hint": "Preview awaiting approval: design/card art preview/Duchess_2026-09-30_NewCards/processed"
+    },
+    {
+      "key": "GreatCaria",
+      "hint": "Preview awaiting approval: design/card art preview/Duchess_2026-09-30_NewCards/processed"
+    },
+    {
+      "key": "Fate",
+      "hint": "Preview awaiting approval: design/card art preview/Duchess_2026-09-30_NewCards/processed"
     }
   ],
   "sprite": {
@@ -303,44 +375,72 @@
       "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-8d10fb12-b692-4cfb-bd70-44136195e093.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
     },
     {
-      "key": "duchess_mended_pocketwatch",
-      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-a10b6832-fcee-4c24-9096-9797c73cf300.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
-    },
-    {
-      "key": "duchess_lace_cuff",
-      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-1d0ebb05-3c12-4b90-a394-885a7a133046.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
-    },
-    {
-      "key": "duchess_silver_thimble",
-      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-d428025a-e582-4718-b03a-8d44f6ab2bc7.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
-    },
-    {
-      "key": "duchess_unsent_letter",
-      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-5825d7ae-2efc-4480-87bd-16ab6992fad1.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
-    },
-    {
-      "key": "duchess_blue_ribbon",
-      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-0b904320-100b-421b-9104-f64149aedec7.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
-    },
-    {
-      "key": "duchess_silver_perfume",
-      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-1dbd7328-abfc-4443-b157-a2654e6a52d8.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
-    },
-    {
-      "key": "duchess_dance_shoes",
-      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-d56a8d80-6b0e-443d-87a2-bd87b6fc9bb8.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
-    },
-    {
-      "key": "duchess_veil_vial",
-      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-ffa803c7-148e-4ad5-818c-3aa00c649285.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
-    },
-    {
-      "key": "duchess_memory_draught",
-      "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-8719a8c6-9dc4-48d0-9268-41e253bbac45.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
-    },
-    {
       "key": "duchess_energy",
       "hint": "Generated images are saved to C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33 as C:\\Users\\17857\\.codex\\generated_images\\01a06222-dd51-7131-a1a9-59fb6b71cc33\\exec-7eb4c516-c474-4c53-94d3-545e8b06f67e.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link."
+    },
+    {
+      "key": "duchess_eternal_form_power",
+      "hint": "2026-09-29 icon used for approved card export; source design/卡图预览/女爵_2026-09-29_四张新牌/EternalFormPower.png; images/powers and powers share artwork"
+    },
+    {
+      "key": "duchess_shadow_sword_power",
+      "hint": "2026-09-29 icon used for approved card export; source design/卡图预览/女爵_2026-09-29_四张新牌/ShadowSwordPower.png; images/powers and powers share artwork"
+    },
+    {
+      "key": "duchess_reverse_pocketwatch",
+      "hint": "Approved 2026-09-30: duchess_assets/relics/duchess_reverse_pocketwatch.png"
+    },
+    {
+      "key": "duchess_crown_badge",
+      "hint": "Approved 2026-09-30: duchess_assets/relics/duchess_crown_badge.png"
+    },
+    {
+      "key": "duchess_golden_dewdrop",
+      "hint": "Approved 2026-09-30: duchess_assets/relics/duchess_golden_dewdrop.png"
+    },
+    {
+      "key": "duchess_primal_glintstone_blade",
+      "hint": "Approved 2026-09-30: duchess_assets/relics/duchess_primal_glintstone_blade.png"
+    },
+    {
+      "key": "duchess_blessed_iron_coin",
+      "hint": "Approved 2026-09-30: duchess_assets/relics/duchess_blessed_iron_coin.png"
+    },
+    {
+      "key": "duchess_night_of_wisdom",
+      "hint": "Approved 2026-09-30: duchess_assets/relics/duchess_night_of_wisdom.png"
+    },
+    {
+      "key": "duchess_blue_stained_blade",
+      "hint": "Approved 2026-09-30: duchess_assets/relics/duchess_blue_stained_blade.png"
+    },
+    {
+      "key": "duchess_carian_badge",
+      "hint": "Approved 2026-09-30: duchess_assets/relics/duchess_carian_badge.png"
+    },
+    {
+      "key": "duchess_smoke_bottle",
+      "hint": "Approved 2026-09-30: duchess_assets/potions/duchess_smoke_bottle.png"
+    },
+    {
+      "key": "duchess_radiant_blade_crystal",
+      "hint": "Approved 2026-09-30: duchess_assets/potions/duchess_radiant_blade_crystal.png"
+    },
+    {
+      "key": "duchess_regret_potion",
+      "hint": "Approved 2026-09-30: duchess_assets/potions/duchess_regret_potion.png"
+    },
+    {
+      "key": "duchess_zero_cost_attack_power",
+      "hint": "2026-09-30: images/powers/duchess_zero_cost_attack_power.png"
+    },
+    {
+      "key": "duchess_graceful_sword_dance_power",
+      "hint": "2026-09-30: images/powers/duchess_graceful_sword_dance_power.png"
+    },
+    {
+      "key": "duchess_phantom_killer_power",
+      "hint": "2026-09-30: images/powers/duchess_phantom_killer_power.png"
     }
   ],
   "scenes": [

@@ -8,5 +8,5 @@ public sealed class DuchessPotionPool : PotionPoolModel
     public override string EnergyColorName => "duchess";
     public override Color LabOutlineColor => new("809CC8");
     protected override IEnumerable<PotionModel> GenerateAllPotions() => new PotionModel[]
-    { ModelDb.Potion<DuchessSilverPerfume>(), ModelDb.Potion<DuchessVeilVial>(), ModelDb.Potion<DuchessMemoryDraught>() };
+    { ModelDb.Potion<DuchessSmokeBottle>(), ModelDb.Potion<DuchessRadiantBladeCrystal>(), ModelDb.Potion<DuchessRegretPotion>() };
 }

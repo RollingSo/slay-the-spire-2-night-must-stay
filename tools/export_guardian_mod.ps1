@@ -115,6 +115,41 @@ if ($godotExportExitCode -ne 0) {
     throw "Godot PCK export failed with exit code $godotExportExitCode"
 }
 
+# Godot remaps .tscn/.tres and imported PNGs inside a PCK. Export the same
+# preset as ZIP to inspect its directory before installing an unopenable mod.
+$inspectionZipPath = Join-Path $buildDirectory "$modId-inspect.zip"
+$godotInspectionExitCode = Invoke-GodotAndWait @('--headless', '--path', $root, '--export-pack', 'Windows Desktop', $inspectionZipPath)
+if ($godotInspectionExitCode -ne 0) {
+    throw "Godot inspection export failed with exit code $godotInspectionExitCode"
+}
+Add-Type -AssemblyName System.IO.Compression
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+$inspectionZip = [System.IO.Compression.ZipFile]::OpenRead($inspectionZipPath)
+try {
+    $requiredEntries = @(
+        'duchess_assets/char_select_bg_duchess.tscn.remap',
+        'duchess_assets/character_icon_duchess.tscn.remap',
+        'duchess_assets/char_select_duchess.png.import',
+        'duchess_assets/char_select_duchess_locked.png.import',
+        'duchess_assets/character_select_duchess_bg.png.import',
+        'duchess_assets/map_marker_duchess.png.import',
+        'materials/character_select_idle.gdshader',
+        'materials/transitions/duchess_transition_mat.tres.remap'
+    )
+    $entryNames = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+    foreach ($entry in $inspectionZip.Entries) {
+        [void]$entryNames.Add($entry.FullName)
+    }
+    foreach ($requiredEntry in $requiredEntries) {
+        if (-not $entryNames.Contains($requiredEntry)) {
+            throw "Required Duchess resource missing from exported pack: $requiredEntry"
+        }
+    }
+}
+finally {
+    $inspectionZip.Dispose()
+}
+
 dotnet build $projectPath -c Release --no-restore `
     "-p:Sts2AssemblyDir=$Sts2AssemblyDir" `
     -p:IntermediateOutputPath=.godot\mono\temp\obj\CodexExport\ `

@@ -270,5 +270,15 @@
   "DUCHESS_ETERNAL_RESTAGE_POWER.title": "永不落幕的重演",
   "DUCHESS_ETERNAL_RESTAGE_POWER.description": "到达时刻12时结束你的回合；每回合结束时，本回合每造成过3点伤害，对所有敌人造成1点伤害。",
   "DUCHESS_REPLAY_MOMENT_THREE_POWER.title": "完美预演",
-  "DUCHESS_REPLAY_MOMENT_THREE_POWER.description": "本回合时刻3打出的牌会重放。"
+  "DUCHESS_REPLAY_MOMENT_THREE_POWER.description": "本回合时刻3打出的牌会重放。",
+  "DUCHESS_ETERNAL_FORM_POWER.title": "永恒形态",
+  "DUCHESS_ETERNAL_FORM_POWER.description": "触发卡牌的时刻效果时，获得{Amount}点能量。",
+  "DUCHESS_SHADOW_SWORD_POWER.title": "影中剑",
+  "DUCHESS_SHADOW_SWORD_POWER.description": "隐匿期间获得{Amount}点力量，失去隐匿时收回。",
+  "DUCHESS_ZERO_COST_ATTACK_POWER.title": "寸短寸利",
+  "DUCHESS_ZERO_COST_ATTACK_POWER.description": "耗能为0的攻击牌造成的伤害增加{Amount}。",
+  "DUCHESS_GRACEFUL_SWORD_DANCE_POWER.title": "优雅剑舞",
+  "DUCHESS_GRACEFUL_SWORD_DANCE_POWER.description": "连续打出闪避时，对所有敌人造成{Amount}点伤害。",
+  "DUCHESS_PHANTOM_KILLER_POWER.title": "幻影杀机",
+  "DUCHESS_PHANTOM_KILLER_POWER.description": "本场战斗中在隐匿状态下斩杀敌人后，下场战斗开始时获得{Amount}点力量。"
 }
