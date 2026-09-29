@@ -356,6 +356,16 @@ public abstract class DuchessCard : CardModel
             switch (effect.Kind)
             {
                 case "Damage":
+                    if (this is DuchessMidnightWaltz)
+                    {
+                        await NightMustStay.Core.Nodes.Vfx.DuchessMidnightWaltzVfx.PlayPrelude(Owner.Creature);
+                        await DamageCmd.Attack(amount).CompatFromCard(this)
+                            .TargetingAllOpponents(CombatState)
+                            .WithHitVfxNode(NightMustStay.Core.Nodes.Vfx.DuchessMidnightWaltzVfx.CreateImpact)
+                            .WithHitFx(null, null, "blunt_attack.mp3")
+                            .Execute(context);
+                        break;
+                    }
                     int hits = IsUpgraded && Spec.UpgradeHits > 0 ? Spec.UpgradeHits : Spec.Hits;
                     if (Spec.All)
                     {
