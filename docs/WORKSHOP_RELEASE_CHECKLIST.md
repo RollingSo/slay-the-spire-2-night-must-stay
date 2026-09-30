@@ -20,6 +20,7 @@ workshop_branch.txt # 双分支发布时用于让两个快照生成不同 manife
 
 ## 2. 版本与兼容性
 
+- 用户说“发布”时，默认同时发布正式版 `public` 与 `public-beta` 的同一新版本；无需分别请求确认。只有用户明确指定单一分支时才只发布该分支。
 - 每次更新前修改 `manifest.json` 的语义化版本号。
 - 确认是否添加 `min_game_version`；本地当前用于开发的游戏版本是 `0.107.1`。
 - 当前公开版本同时支持 Production/正式版与 Public Beta 分支；每次发布前必须分别编译验证。
