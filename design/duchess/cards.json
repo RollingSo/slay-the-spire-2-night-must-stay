@@ -123,7 +123,7 @@
     "Greatsword Phalanx",
     "大剣の円陣",
     2,
-    "Attack",
+    "Skill",
     "Rare",
     [
       [
@@ -148,8 +148,8 @@
     [
       [
         "MomentDamage",
-        0,
-        0
+        2,
+        2
       ]
     ],
     {
@@ -627,7 +627,7 @@
     "Radiant Blade Array",
     "輝剣円陣",
     1,
-    "Attack",
+    "Skill",
     "Common",
     [
       [
@@ -1011,7 +1011,7 @@
     "Magic Radiant Blade",
     "魔法の輝剣",
     0,
-    "Attack",
+    "Skill",
     "Uncommon",
     [
       [
@@ -1032,7 +1032,7 @@
     "Caria Phalanx",
     "カーリアの円陣",
     2,
-    "Attack",
+    "Skill",
     "Uncommon",
     [
       [
@@ -1241,8 +1241,8 @@
       ],
       [
         "MomentBonusDamage",
-        15,
-        15,
+        25,
+        25,
         "moment"
       ]
     ],

@@ -116,7 +116,7 @@ foreach (var entry in DuchessCardCatalog.All)
             "Damage" when entry.Value.RestageDivisor > 0 || entry.Value.ConcealedTripleDamage
                 || entry.Value.Effects.Any(e => e.Kind is "ConcealedBonusDamage" or "MomentBonusDamage") => "CalculationBase",
             "ConcealedBonusDamage" or "MomentBonusDamage" => "ExtraDamage",
-            "MomentDamage" => "CalculationBase",
+            "MomentDamage" => effect.Amount > 0 ? "ExtraDamage" : "CalculationBase",
             "RewindDamage" => "ExtraDamage",
             _ => effect.Kind,
         };
@@ -133,7 +133,7 @@ foreach (var entry in DuchessCardCatalog.All)
             "Damage" when entry.Value.RestageDivisor > 0 || entry.Value.ConcealedTripleDamage
                 || entry.Value.Effects.Any(e => e.Kind is "ConcealedBonusDamage" or "MomentBonusDamage") => "CalculationBase",
             "ConcealedBonusDamage" or "MomentBonusDamage" => "ExtraDamage",
-            "MomentDamage" => "CalculationBase",
+            "MomentDamage" => effect.Amount > 0 ? "ExtraDamage" : "CalculationBase",
             "RewindDamage" => "ExtraDamage",
             _ => effect.Kind,
         };
@@ -442,25 +442,30 @@ if (radiantBladeCard.Pool is not TokenCardPool || radiantBladeCard.VisualCardPoo
     throw new Exception("Radiant Blade must be a colorless token card.");
 
 var magicRadiantBlade = DuchessCardCatalog.All[nameof(DuchessMagicRadiantBlade)];
-if (magicRadiantBlade.Cost != 0 || magicRadiantBlade.Type != CardType.Attack
+if (magicRadiantBlade.Cost != 0 || magicRadiantBlade.Type != CardType.Skill
     || magicRadiantBlade.Rarity != CardRarity.Uncommon || !magicRadiantBlade.XCost
     || !magicRadiantBlade.UpgradeX || !magicRadiantBlade.TargetSelf
     || magicRadiantBlade.Effects.Length != 1 || magicRadiantBlade.Effects[0].Kind != "RadiantBladeTurns")
     throw new Exception("Magic Radiant Blade specification is wrong.");
 
 var radiantBladeArray = DuchessCardCatalog.All[nameof(DuchessRadiantBladeArray)];
-if (radiantBladeArray.Cost != 1 || radiantBladeArray.Type != CardType.Attack
+if (radiantBladeArray.Cost != 1 || radiantBladeArray.Type != CardType.Skill
     || radiantBladeArray.Rarity != CardRarity.Common || !radiantBladeArray.TargetSelf
     || !radiantBladeArray.UpgradeTokens || radiantBladeArray.Effects.Length != 1
     || radiantBladeArray.Effects[0] != new DuchessEffect("RadiantBladeToDraw", 3, 3))
     throw new Exception("Radiant Blade Array specification is wrong.");
 var cariaPhalanx = DuchessCardCatalog.All[nameof(DuchessCariaPhalanx)];
-if (cariaPhalanx.Cost != 2 || cariaPhalanx.Type != CardType.Attack
+if (cariaPhalanx.Cost != 2 || cariaPhalanx.Type != CardType.Skill
     || cariaPhalanx.Rarity != CardRarity.Uncommon || !cariaPhalanx.Reaction
     || !cariaPhalanx.UpgradeTokens || !cariaPhalanx.TargetSelf
     || cariaPhalanx.Effects.Length != 1
     || cariaPhalanx.Effects[0] != new DuchessEffect("RadiantBladeToHand", 3, 3))
     throw new Exception("Caria Phalanx specification is wrong.");
+foreach (CardModel skill in new CardModel[] { ModelDb.Card<DuchessMagicRadiantBlade>().ToMutable(),
+             ModelDb.Card<DuchessRadiantBladeArray>().ToMutable(), ModelDb.Card<DuchessCariaPhalanx>().ToMutable(),
+             ModelDb.Card<DuchessGreatswordPhalanx>().ToMutable() })
+    if (skill.Type != CardType.Skill || skill.TargetType != TargetType.Self)
+        throw new Exception(skill.Id + " must be a self-targeted Skill.");
 var angelWings = DuchessCardCatalog.All[nameof(DuchessAngelWings)];
 if (angelWings.Cost != 2 || angelWings.Type != CardType.Attack
     || angelWings.Rarity != CardRarity.Rare || angelWings.Effects.Length != 2
@@ -546,14 +551,15 @@ using (JsonDocument cards = JsonDocument.Parse(File.ReadAllText(Path.Combine(
     if (renderedBase.Contains("闪避+") || !renderedPreview.Contains("闪避[green]+[/green]"))
         throw new Exception("The game's formatter must visibly change Elegant Bearing's generated Dodge on upgrade preview.");
     string haloText = cards.RootElement.GetProperty("DUCHESS_MIQUELLAS_HALO.description").GetString()!;
-    if (!haloText.Contains("造成等同于当前[gold]时刻[/gold]的伤害（{CalculatedDamage:diff()}点）X{IfUpgraded:show:+1|}次。")
+    if (!haloText.Contains("造成等同于当前[gold]时刻[/gold]乘2的伤害（{CalculatedDamage:diff()}点）X{IfUpgraded:show:+1|}次。")
         || haloText.Contains("抽牌堆") || haloText.Contains("时刻7"))
         throw new Exception("Miquella's Halo must preview Moment damage with X/X+1 hits.");
     var halo = ModelDb.Card<DuchessMiquellasHalo>().ToMutable();
     if (!DuchessCardCatalog.All[nameof(DuchessMiquellasHalo)].XCost
         || !DuchessCardCatalog.All[nameof(DuchessMiquellasHalo)].UpgradeX
         || DuchessCardCatalog.All[nameof(DuchessMiquellasHalo)].Cost != 0
-        || !halo.DynamicVars.ContainsKey("CalculatedDamage"))
+        || !halo.DynamicVars.ContainsKey("CalculatedDamage")
+        || halo.DynamicVars["ExtraDamage"].BaseValue != 2)
         throw new Exception("Miquella's Halo must be an X-cost attack with X+1 hit upgrade.");
     _ = halo.DynamicVars.CalculatedDamage.Calculate(null);
     string haloBase = formatter.Format(System.Globalization.CultureInfo.InvariantCulture, haloText,
@@ -614,6 +620,24 @@ if (!filterOrder.SequenceEqual(new[] { "GuardianPool", "IroneyePool", "RevenantP
 
 if (typeof(DuchessMomentPower).GetMethods(flags).Any(method => method.Name.Contains("Star", StringComparison.Ordinal)))
     throw new Exception("Moment must not reuse or mutate Regent Stars.");
+
+// Exercise the actual damage hook against native local cost modifiers.
+var zeroCostBonus = (DuchessZeroCostAttackPower)ModelDb.Power<DuchessZeroCostAttackPower>().ToMutable();
+var bonusDealer = (Creature)System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(typeof(Creature));
+typeof(PowerModel).GetProperty("Owner")!.SetValue(zeroCostBonus, bonusDealer);
+zeroCostBonus.SetAmount(4, false);
+var discountedAttack = ModelDb.Card<DuchessCarianSlicer>().ToMutable();
+decimal BonusFor(CardModel candidate) => zeroCostBonus.ModifyDamageAdditive(
+    null!, 9, ValueProp.Move, bonusDealer, candidate, null!);
+if (discountedAttack.EnergyCost.Canonical != 1 || BonusFor(discountedAttack) != 0)
+    throw new Exception("Inch Victory must not boost a positive-cost attack.");
+discountedAttack.EnergyCost.AddUntilPlayed(-1, true);
+if (discountedAttack.EnergyCost.GetResolved() != 0 || BonusFor(discountedAttack) != 4)
+    throw new Exception("Inch Victory must boost an originally nonzero attack discounted to zero.");
+var turnDiscountedAttack = ModelDb.Card<DuchessCarianGreatsword>().ToMutable();
+turnDiscountedAttack.EnergyCost.SetThisTurn(0, true);
+if (BonusFor(turnDiscountedAttack) != 4)
+    throw new Exception("Inch Victory must include attacks set to zero for the turn.");
 
 if (DuchessReactionRules.IsEligibleDraw(true, PileType.Hand)
     || !DuchessReactionRules.IsEligibleDraw(false, PileType.Hand)

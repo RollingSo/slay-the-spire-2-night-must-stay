@@ -113,7 +113,12 @@ public abstract class DuchessCard : CardModel
     internal bool IsMomentActive => IsMoment(RequiredMoment) || IsMoment(Spec.SecondaryMoment);
     private bool IsMoment(int moment) => moment >= 0 && DuchessMomentPower.Current(Owner) == moment;
     public bool HasReaction => Spec.Reaction;
-    protected override bool ShouldGlowGoldInternal => IsMomentActive;
+    private bool IsConcealmentConditionActive =>
+        Owner?.Creature?.GetPower<DuchessConcealmentPower>() is { Amount: > 0 }
+        && (Spec.ConcealedTripleDamage || Spec.ConcealedCostReduction > 0
+            || Spec.Effects.Any(effect => effect.Condition == "concealed"
+                || effect.Kind is "ConcealedBonusDamage" or "ConcealedStrength" or "ConcealedKillNextCombatStrength"));
+    protected override bool ShouldGlowGoldInternal => IsMomentActive || IsConcealmentConditionActive;
 
     protected override IEnumerable<DynamicVar> CanonicalVars
     {
@@ -153,7 +158,7 @@ public abstract class DuchessCard : CardModel
                 if (effect.Kind == "MomentDamage")
                 {
                     yield return new CalculationBaseVar(0m);
-                    yield return new ExtraDamageVar(1m);
+                    yield return new ExtraDamageVar(effect.Amount > 0 ? effect.Amount : 1m);
                     yield return new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
                         static (card, _) => DuchessMomentPower.Current(card.Owner));
                     continue;
@@ -187,14 +192,13 @@ public abstract class DuchessCard : CardModel
                     "TemporaryStrength" => new PowerVar<StrengthPower>(effect.Kind, effect.Amount),
                     "Intangible" => new PowerVar<IntangiblePower>(effect.Kind, effect.Amount),
                     "Dexterity" => new PowerVar<DexterityPower>(effect.Kind, effect.Amount),
-                    "Energy" or "NextTurnEnergy" or "FutureMomentEnergy" =>
+                    "Energy" or "NextTurnEnergy" or "FutureMomentEnergy" or "MomentEffectEnergy" or "MomentFiveFirstEnergy" =>
                         new EnergyVar(effect.Kind, (int)effect.Amount),
                     "TurnStartSwap" => new PowerVar<DuchessTurnStartSwapPower>(effect.Kind, effect.Amount),
                     "Concealment" => new PowerVar<DuchessConcealmentPower>(effect.Kind, effect.Amount),
                     "ReactionDrawBlock" => new PowerVar<DuchessReactionDrawBlockPower>(effect.Kind, effect.Amount),
                     "RadiantBladeGrowth" => new PowerVar<DuchessRadiantBladeGrowthPower>(effect.Kind, effect.Amount),
                     "EndTurnDodge" => new PowerVar<DuchessEndTurnDodgePower>(effect.Kind, effect.Amount),
-                    "MomentFiveFirstEnergy" => new PowerVar<DuchessBeatPower>(effect.Kind, effect.Amount),
                     "MomentFiveBlock" => new PowerVar<DuchessMomentFiveBlockPower>(effect.Kind, effect.Amount),
                     "RestageEndTurnAoe" => new PowerVar<DuchessEternalRestagePower>(effect.Kind, effect.Amount),
                     "ReactionBlock" => new PowerVar<DuchessReactionBlockPower>(effect.Kind, effect.Amount),
@@ -527,10 +531,7 @@ public abstract class DuchessCard : CardModel
                     await Apply<DuchessNextTurnDrawPower>(context, Owner.Creature, amount);
                     break;
                 case "FutureMomentEnergy":
-                    if (DuchessMomentPower.Current(Owner) == 6)
-                        await PlayerCmd.GainEnergy(amount, Owner);
-                    else
-                        await Apply<DuchessFutureMomentEnergyPower>(context, Owner.Creature, amount);
+                    await Apply<DuchessFutureMomentEnergyPower>(context, Owner.Creature, amount);
                     break;
                 case "RadiantBladeToDraw": await AddRadiantBlades(Owner, amount, PileType.Draw); break;
                 case "InstinctRadiantBladesToDraw": await AddInstinctRadiantBladesToDraw(amount); break;

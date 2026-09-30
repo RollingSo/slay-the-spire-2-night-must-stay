@@ -106,9 +106,9 @@ def effects_text(row, language, upgraded=False):
                 text = f'{target}造成{damage_var}点伤害' + (f'，共{hits}次' if hits > 1 else '') + '。'
         else:
             templates = {
-                'RewindDamage': [f'使[gold]时刻[/gold]逐点逆转至0，每回退1点累积{{ExtraDamage:diff()}}点伤害。\n最后对敌人造成一次{{CalculatedDamage:diff()}}点伤害。', f'Rewind [gold]Moment[/gold] to 0, one step at a time, accumulating {{ExtraDamage:diff()}} damage per step.\nDeal the total {{CalculatedDamage:diff()}} damage in one hit.', f'[gold]時刻[/gold]を1ずつ0まで巻き戻し、1ごとに{{ExtraDamage:diff()}}ダメージを蓄積する。\n最後に合計{{CalculatedDamage:diff()}}ダメージを1回与える。'],
+                'RewindDamage': [f'使[gold]时刻[/gold]逆时针变化直至变为0。\n每变化1点[gold]时刻[/gold]，对敌人造成{{ExtraDamage:diff()}}点伤害（合计{{CalculatedDamage:diff()}}点）。', f'Rewind [gold]Moment[/gold] counterclockwise to 0.\nDeal {{ExtraDamage:diff()}} damage per step ({{CalculatedDamage:diff()}} total).', f'[gold]時刻[/gold]を反時計回りに0まで戻す。\n1変化するたびに{{ExtraDamage:diff()}}ダメージ（合計{{CalculatedDamage:diff()}}）を与える。'],
                 'RememberMoment': ['下个回合开始时，[gold]时刻[/gold]不会重置为0。', 'At the start of your next turn, [gold]Moment[/gold] will not reset to 0.', '次のターン開始時、[gold]時刻[/gold]は0にリセットされない。'],
-                'MomentEffectEnergy': [f'触发[gold]时刻[/gold]效果时，获得{var}点能量。', f'Whenever you trigger a [gold]Moment[/gold] effect, gain {var} Energy.', f'[gold]時刻[/gold]効果を発動するたび、エナジーを{var}得る。'],
+                'MomentEffectEnergy': ['触发[gold]时刻[/gold]效果时，获得{MomentEffectEnergy:energyIcons()}。', 'Whenever you trigger a [gold]Moment[/gold] effect, gain {MomentEffectEnergy:energyIcons()}.', '[gold]時刻[/gold]効果を発動するたび、{MomentEffectEnergy:energyIcons()}を得る。'],
                 'ConcealedStrength': [f'[gold]隐匿[/gold]时，获得{var}点[gold]力量[/gold]。', f'While [gold]Concealed[/gold], gain {var} [gold]Strength[/gold].', f'[gold]隠密[/gold]中、[gold]筋力[/gold]{var}を得る。'],
                 'ZeroCostAttackBonus': [f'耗能为0的牌攻击伤害增加{var}。', f'Attacks that cost 0 deal {var} more damage.', f'コスト0のアタックはダメージが{var}増加する。'],
                 'DodgePlayAoe': [f'连续打出[gold]闪避[/gold]时，对所有敌人造成{var}点伤害。', f'When you play [gold]Dodge[/gold] consecutively, deal {var} damage to ALL enemies.', f'[gold]回避[/gold]を連続してプレイしたとき、敵全体に{var}ダメージを与える。'],
@@ -135,7 +135,7 @@ def effects_text(row, language, upgraded=False):
                 'FullBlockRadiantBlade': [f'本回合首次完全[gold]格挡[/gold]住一次完整攻击时，将{var}张[gold]辉剑[/gold]加入[gold]手牌[/gold]。', f'The first time you fully [gold]block[/gold] an entire attack this turn, add {var} [gold]Radiant Blades[/gold] to your [gold]hand[/gold].', f'このターン初めて攻撃全体を完全に防いだとき、[gold]輝剣[/gold]を{var}枚[gold]手札[/gold]に加える。'],
                 'EndTurnDodge': [f'回合结束时，将{var}张[gold]{dodge}[/gold]洗入[gold]抽牌堆[/gold]。', f'At the end of your turn, shuffle {var} [gold]{dodge}[/gold] into your [gold]draw pile[/gold].', f'ターン終了時、[gold]{dodge}[/gold]を{var}枚[gold]山札[/gold]に加えてシャッフルする。'],
                 'EndTurnRetain': [f'本回合结束时，[gold]保留[/gold]最多{var}张[gold]手牌[/gold]。', f'At the end of this turn, [gold]retain[/gold] up to {var} cards from your [gold]hand[/gold].', f'このターン終了時、[gold]手札[/gold]から最大{var}枚保留する。'],
-                'MomentFiveFirstEnergy': [f'回合中[gold]时刻[/gold]首次到达5时，获得{var}能量。', f'The first time [gold]Moment[/gold] reaches 5 each turn, gain {var} Energy.', f'各ターン初めて[gold]時刻[/gold]が5に到達したとき、エナジーを{var}得る。'],
+                'MomentFiveFirstEnergy': ['回合中[gold]时刻[/gold]首次到达5时，获得{MomentFiveFirstEnergy:energyIcons()}。', 'The first time [gold]Moment[/gold] reaches 5 each turn, gain {MomentFiveFirstEnergy:energyIcons()}.', '各ターン初めて[gold]時刻[/gold]が5に到達したとき、{MomentFiveFirstEnergy:energyIcons()}を得る。'],
                 'MomentFiveBlock': [f'到达[gold]时刻5[/gold]时，获得{var}点[gold]格挡[/gold]。', f'When you reach [gold]Moment 5[/gold], gain {var} [gold]Block[/gold].', f'[gold]時刻5[/gold]に到達したとき、[gold]ブロック[/gold]{var}を得る。'],
                 'MomentTwelveEndTurn': ['到达[gold]时刻12[/gold]时，结束你的回合。', 'When you reach [gold]Moment 12[/gold], end your turn.', '[gold]時刻12[/gold]に到達したとき、ターンを終了する。'],
                 'RestageEndTurnAoe': [f'本回合每造成过{var}点伤害，回合结束时对所有敌人造成1点伤害。', f'At end of turn, deal 1 damage to ALL enemies for every {var} damage you dealt this turn.', f'このターン与えたダメージ{var}につき、ターン終了時に敵全体へ1ダメージを与える。'],
@@ -177,7 +177,7 @@ def effects_text(row, language, upgraded=False):
                 'RadiantBladeTurns': [f'接下来X{"+1" if upgraded and opt.get("upgradeX") else ""}个回合，在回合开始时将1张[gold]辉剑[/gold]加入[gold]手牌[/gold]。', f'For the next X{"+1" if upgraded and opt.get("upgradeX") else ""} turns, add 1 [gold]Radiant Blade[/gold] to your [gold]hand[/gold] at the start of your turn.', f'次のX{"+1" if upgraded and opt.get("upgradeX") else ""}ターンの間、ターン開始時に[gold]輝剣[/gold]1枚を[gold]手札[/gold]に加える。'],
                 'ShuffleGrowth': [f'每次被洗入[gold]抽牌堆[/gold]后，伤害增加{var}。', f'Whenever this is shuffled into your [gold]draw pile[/gold], increase its damage by {var}.', f'[gold]山札[/gold]に加えてシャッフルされるたび、ダメージが{var}増加する。'],
                 'Intangible': [f'获得{var}层[gold]无实体[/gold]。', f'Gain {var} [gold]Intangible[/gold].', f'[gold]無形[/gold]{var}を得る。'],
-                'FutureMomentEnergy': ['本回合到达[gold]时刻6[/gold]时，获得{FutureMomentEnergy:energyIcons()}。', 'When you reach [gold]Moment 6[/gold] this turn, gain {FutureMomentEnergy:energyIcons()}.', 'このターン[gold]時刻6[/gold]に到達した時、{FutureMomentEnergy:energyIcons()}を得る。'],
+                'FutureMomentEnergy': ['下个回合到达[gold]时刻4[/gold]时，获得{FutureMomentEnergy:energyIcons()}。', 'When you reach [gold]Moment 4[/gold] next turn, gain {FutureMomentEnergy:energyIcons()}.', '次のターン[gold]時刻4[/gold]に到達した時、{FutureMomentEnergy:energyIcons()}を得る。'],
                 'DodgeCurrentMoment': [f'将等同于当前[gold]时刻[/gold]数量的[gold]{dodge}[/gold]洗入[gold]抽牌堆[/gold]。', f'Shuffle [gold]{dodge}[/gold] cards equal to your current [gold]Moment[/gold] into your [gold]draw pile[/gold].', f'現在の[gold]時刻[/gold]に等しい枚数の[gold]{dodge}[/gold]を[gold]山札[/gold]に加えてシャッフルする。'],
                 'DrawCurrentMoment': ['抽等同于当前[gold]时刻[/gold]数量的牌。', 'Draw cards equal to your current [gold]Moment[/gold].', '現在の[gold]時刻[/gold]に等しい枚数のカードを引く。'],
                 'ReactionBlock': [f'每打出一张[gold]反应[/gold]牌，获得{var}点[gold]格挡[/gold]。', f'Whenever you play a [gold]Reaction[/gold] card, gain {var} [gold]Block[/gold].', f'[gold]リアクション[/gold]のカードをプレイするたび、[gold]ブロック[/gold]{var}を得る。'],
@@ -187,6 +187,15 @@ def effects_text(row, language, upgraded=False):
                 'ShuffleBlock': [f'每将一张[gold]手牌[/gold]或[gold]弃牌堆[/gold]中的牌洗入[gold]抽牌堆[/gold]，获得{var}点[gold]格挡[/gold]。', f'Whenever you shuffle a card from your [gold]hand[/gold] or [gold]discard pile[/gold] into your [gold]draw pile[/gold], gain {var} [gold]Block[/gold].', f'[gold]手札[/gold]か[gold]捨て札[/gold]からカードを[gold]山札[/gold]に加えてシャッフルするたび、[gold]ブロック[/gold]{var}を得る。'],
             }
             text = templates[kind][language]
+            if kind == 'MomentDamage' and opt.get('xCost') and effect[1] == 2:
+                hits = 'X+1' if upgraded and opt.get('upgradeX') else 'X'
+                text = [f'造成等同于当前[gold]时刻[/gold]乘2的伤害（{{CalculatedDamage:diff()}}点）{hits}次。',
+                        f'Deal damage equal to twice your current [gold]Moment[/gold] ({{CalculatedDamage:diff()}}) {hits} times.',
+                        f'現在の[gold]時刻[/gold]の2倍のダメージ（{{CalculatedDamage:diff()}}）を{hits}回与える。'][language]
+            if kind == 'MomentDamage' and not opt.get('xCost'):
+                text = ['造成等同于当前[gold]时刻[/gold]的伤害（{CalculatedDamage:diff()}点）。',
+                        'Deal damage equal to your current [gold]Moment[/gold] ({CalculatedDamage:diff()}).',
+                        '現在の[gold]時刻[/gold]に等しいダメージ（{CalculatedDamage:diff()}）を与える。'][language]
             if row[0] in ('SleightOfHand', 'DeathBlade'):
                 weak = next((e for e in row[7] if e[0] == 'Weak'), None)
                 vulnerable = next((e for e in row[7] if e[0] == 'Vulnerable'), None)

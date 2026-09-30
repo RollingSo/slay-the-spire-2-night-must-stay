@@ -108,10 +108,10 @@ public sealed class DuchessMomentPower : PowerModel
             foreach (DuchessBeatPower power in player.Creature.Powers.OfType<DuchessBeatPower>().ToArray())
                 await power.OnMomentFive(context);
         }
-        if (before != 6 && after == 6)
+        if (before != 4 && after == 4)
             foreach (DuchessFutureMomentEnergyPower power in player.Creature.Powers
                          .OfType<DuchessFutureMomentEnergyPower>().ToArray())
-                await power.OnMomentSix(context);
+                await power.OnMomentFour(context);
         if (before != 12 && after == 12)
             foreach (DuchessEternalRestagePower power in player.Creature.Powers
                          .OfType<DuchessEternalRestagePower>().ToArray())
@@ -312,24 +312,38 @@ public sealed class DuchessNextTurnDrawPower : PowerModel
 
 public sealed class DuchessFutureMomentEnergyPower : PowerModel
 {
+    [SavedProperty]
+    public decimal ReadyAmount { get; set; }
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
     protected override bool IsVisibleInternal => false;
 
-    public async Task OnMomentSix(PlayerChoiceContext context)
+    public override Task AfterPlayerTurnStart(PlayerChoiceContext context, Player player)
     {
+        if (player == Owner.Player) ReadyAmount = Amount;
+        return Task.CompletedTask;
+    }
+
+    public async Task OnMomentFour(PlayerChoiceContext context)
+    {
+        if (ReadyAmount <= 0) return;
         // Remove first: gaining energy can dispatch more hooks before this
         // callback returns, and this reward is strictly one-shot.
-        decimal reward = Amount;
+        decimal reward = ReadyAmount;
+        ReadyAmount = 0;
         Flash();
-        await PowerCmd.Remove(this);
+        await PowerCmd.Apply<DuchessFutureMomentEnergyPower>(context, Owner, -reward, Owner, null);
         await PlayerCmd.GainEnergy(reward, Owner.Player);
     }
 
     public override async Task BeforeSideTurnEnd(PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> participants)
     {
-        if (participants.Contains(Owner))
-            await PowerCmd.Remove(this);
+        if (participants.Contains(Owner) && ReadyAmount > 0)
+        {
+            decimal expired = ReadyAmount;
+            ReadyAmount = 0;
+            await PowerCmd.Apply<DuchessFutureMomentEnergyPower>(context, Owner, -expired, Owner, null);
+        }
     }
 }
 
