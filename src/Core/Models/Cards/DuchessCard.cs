@@ -329,6 +329,8 @@ public abstract class DuchessCard : CardModel
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
+        if (GainsBlock)
+            NightMustStay.Core.Patches.DuchessAnimationPatch.PlayBlock(Owner.Creature);
         CardPlayFinishedEntry previous = CombatManager.Instance.History.CardPlaysFinished
             .LastOrDefault(entry => entry.HappenedThisTurn(CombatState) && entry.CardPlay.Card.Owner == Owner);
         var conditions = new Dictionary<string, bool>
@@ -377,14 +379,14 @@ public abstract class DuchessCard : CardModel
                         // so targeting and attack-completion hooks retain their semantics.
                         await DamageCmd.Attack(amount).WithHitCount(hits).CompatFromCard(this)
                             .TargetingAllOpponents(CombatState)
-                            .WithHitVfxNode(NightMustStay.Core.Nodes.Vfx.DuchessSlashVfx.Create).Execute(context);
+                            .WithHitVfxNode(target => NightMustStay.Core.Nodes.Vfx.DuchessAttackEffects.Create(this, target)).Execute(context);
                     }
                     else
                     {
                         for (int i = 0; i < hits; i++)
                             foreach (Creature enemy in enemies.Where(e => e.IsAlive))
                                 await DamageCmd.Attack(amount).CompatFromCard(this).Targeting(enemy)
-                                    .WithHitVfxNode(NightMustStay.Core.Nodes.Vfx.DuchessSlashVfx.Create).Execute(context);
+                                    .WithHitVfxNode(target => NightMustStay.Core.Nodes.Vfx.DuchessAttackEffects.Create(this, target)).Execute(context);
                     }
                     if (this is DuchessGlintstoneHail && PendingGlintstoneDamage > 0)
                     {
@@ -404,7 +406,7 @@ public abstract class DuchessCard : CardModel
                             ? (int)extraHits.BaseValue : 0);
                     foreach (Creature enemy in enemies.Where(e => e.IsAlive))
                         await DamageCmd.Attack(amount).WithHitCount(momentHits).CompatFromCard(this).Targeting(enemy)
-                            .WithHitVfxNode(NightMustStay.Core.Nodes.Vfx.DuchessSlashVfx.Create).Execute(context);
+                            .WithHitVfxNode(target => NightMustStay.Core.Nodes.Vfx.DuchessAttackEffects.Create(this, target)).Execute(context);
                     break;
                 case "MomentExtraHits": break; // Applied to the single native multi-hit attack above.
                 case "AoeDamage":
@@ -414,7 +416,7 @@ public abstract class DuchessCard : CardModel
                 case "ExtraDamage":
                     foreach (Creature enemy in enemies.Where(e => e.IsAlive))
                         await DamageCmd.Attack(amount).CompatFromCard(this).Targeting(enemy)
-                            .WithHitVfxNode(NightMustStay.Core.Nodes.Vfx.DuchessSlashVfx.Create).Execute(context);
+                            .WithHitVfxNode(target => NightMustStay.Core.Nodes.Vfx.DuchessAttackEffects.Create(this, target)).Execute(context);
                     break;
                 case "Block": await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play); break;
                 case "AllyBlock":
@@ -452,7 +454,8 @@ public abstract class DuchessCard : CardModel
                     for (int step = rewindSteps - 1; step >= 0; step--)
                         await DuchessMomentPower.Set(context, Owner.Creature, step, this);
                     if (play.Target is { IsAlive: true } rewindTarget)
-                        await DamageCmd.Attack(amount).CompatFromCard(this).Targeting(rewindTarget).Execute(context);
+                        await DamageCmd.Attack(amount).CompatFromCard(this).Targeting(rewindTarget)
+                            .WithHitVfxNode(target => NightMustStay.Core.Nodes.Vfx.DuchessAttackEffects.Create(this, target)).Execute(context);
                     (await DuchessMomentPower.Ensure(context, Owner.Creature)).SetAfterCurrentCard(0);
                     break;
                 case "RememberMoment":
@@ -522,7 +525,8 @@ public abstract class DuchessCard : CardModel
                 case "RestageAoe":
                     decimal restageDamage = DynamicVars.CalculatedDamage.Calculate(null);
                     if (restageDamage > 0)
-                        await DamageCmd.Attack(restageDamage).CompatFromCard(this).TargetingAllOpponents(CombatState).Execute(context);
+                        await DamageCmd.Attack(restageDamage).CompatFromCard(this).TargetingAllOpponents(CombatState)
+                            .WithHitVfxNode(target => NightMustStay.Core.Nodes.Vfx.DuchessAttackEffects.Create(this, target)).Execute(context);
                     break;
                 case "NextTurnEnergy": await Apply<DuchessNextTurnEnergyPower>(context, Owner.Creature, amount); break;
                 case "NextTurnDraw": await Apply<DuchessNextTurnDrawPower>(context, Owner.Creature, amount); break;

@@ -9,6 +9,7 @@ public partial class DuchessSlashVfx : Node2D
 {
     private float _age;
     private bool _echo;
+    public override void _Ready() => DuchessAudio.Play("slash_attack.mp3", .45f);
     public static Node2D Create(Creature target)
     {
         if (TestMode.IsOn || target?.GetCreatureNode() is not { } node) return null;

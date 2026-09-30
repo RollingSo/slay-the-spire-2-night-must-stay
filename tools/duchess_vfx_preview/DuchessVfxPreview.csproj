@@ -1,0 +1,9 @@
+<Project Sdk="Godot.NET.Sdk/4.5.1">
+ <PropertyGroup><TargetFramework>net9.0</TargetFramework><EnableDynamicLoading>true</EnableDynamicLoading></PropertyGroup>
+ <ItemGroup>
+  <Compile Include="../../src/Core/Nodes/Vfx/CombatVfxCanvas.cs" Link="CombatVfxCanvas.cs" />
+  <Compile Include="../../src/Core/Nodes/Vfx/DuchessAttackVfx.cs" Link="DuchessAttackVfx.cs" />
+  <Compile Include="../../src/Core/Nodes/Vfx/DuchessReverseTimeVfx.cs" Link="DuchessReverseTimeVfx.cs" />
+  <Compile Include="../../src/Core/Nodes/Vfx/ParticleVfxMaterials.cs" Link="ParticleVfxMaterials.cs" />
+ </ItemGroup>
+</Project>

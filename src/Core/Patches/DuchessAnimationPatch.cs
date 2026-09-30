@@ -9,6 +9,24 @@ namespace NightMustStay.Core.Patches
     [HarmonyPatch]
     public static class DuchessAnimationPatch
     {
+        [HarmonyPatch(typeof(NCreature), nameof(NCreature._Ready))]
+        [HarmonyPostfix]
+        public static void AttachStatusVisual(NCreature __instance)
+        {
+            if (__instance.Entity?.Player?.Character is Duchess
+                && __instance.GetNodeOrNull<Node>("DuchessStatusVisual") == null)
+                __instance.AddChild(new NightMustStay.Core.Nodes.Vfx.DuchessStatusVisual {
+                    Name = "DuchessStatusVisual", CreatureNode = __instance });
+        }
+
+        public static void PlayBlock(MegaCrit.Sts2.Core.Entities.Creatures.Creature creature)
+        {
+            if (creature.GetCreatureNode() is { } node && TryGetRig(node, out Node rig))
+            {
+                rig.Call("play_trigger", "Block");
+                NightMustStay.Core.Nodes.Vfx.DuchessAudio.Play("SOTE_SFX_SleepBlanket_v1.mp3", .25f);
+            }
+        }
         [HarmonyPatch(typeof(NCreature), nameof(NCreature.SetAnimationTrigger))]
         [HarmonyPostfix]
         public static void SetAnimationTrigger(NCreature __instance, string trigger)

@@ -20,7 +20,7 @@ public sealed class DuchessZeroCostAttackPower : PowerModel
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public override decimal ModifyDamageAdditive(Creature target, decimal amount, ValueProp props,
-        Creature dealer, CardModel cardSource, CardPlay cardPlay) =>
+        Creature dealer, CardModel cardSource) =>
         dealer == Owner && props.IsPoweredAttack() && cardSource?.Type == CardType.Attack
         && cardSource.EnergyCost.GetResolved() == 0 ? Amount : 0m;
 }

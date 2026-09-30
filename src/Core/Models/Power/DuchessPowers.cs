@@ -198,6 +198,8 @@ public sealed class DuchessMomentPower : PowerModel
         if (data.TurnStart.Count == 0)
             return;
 
+        await NightMustStay.Core.Nodes.Vfx.DuchessReverseTimeEffects.PlayPrelude();
+
         CardModel[] generatedSinceStart = Owner.Player.PlayerCombatState.AllCards
             .Where(card => card != source && !data.TurnStart.ContainsKey(card))
             .ToArray();

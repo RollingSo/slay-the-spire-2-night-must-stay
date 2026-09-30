@@ -51,6 +51,42 @@ foreach (var character in new CharacterModel[] {
         throw new Exception($"{character.Id} drawing and deck colors must match.");
 }
 Console.WriteLine("PASS: four Nightfarer drawing colors match their deck colors.");
+foreach (var kind in Enum.GetValues<NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind>())
+{
+    var cues = NightMustStay.Core.Nodes.Vfx.DuchessAudio.AttackCues(kind);
+    if (cues.Length != 2 || cues[0].At > cues[1].At
+        || cues.Any(cue => cue.At < 0 || cue.At >= 1 || cue.Volume <= 0 || cue.Volume > 1
+            || !cue.File.EndsWith(".mp3", StringComparison.Ordinal)))
+        throw new Exception($"Invalid Duchess audio timeline: {kind}");
+}
+var clockAudio = NightMustStay.Core.Nodes.Vfx.DuchessAudio.AttackCues(
+    NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Clock);
+if (clockAudio[1].At != .48f || clockAudio[1].File != "glass_orb_evoke.mp3")
+    throw new Exception("Clock shatter sound must match the .48 visual break cue.");
+if (!NightMustStay.Core.Nodes.Vfx.DuchessAudio.AttackCues(NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Greatbow)
+    .SequenceEqual(NightMustStay.Core.Nodes.Vfx.DuchessAudio.AttackCues(NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Mastery)))
+    throw new Exception("Loretta's spells must share the same bow sound palette.");
+Console.WriteLine("PASS: all twelve Duchess VFX audio timelines and clock/bow synchronization.");
+foreach (var (card, expected) in new (CardModel, NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind)[] {
+    (ModelDb.Card<DuchessRadiantBlade>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Glintblade),
+    (ModelDb.Card<DuchessCarianSlicer>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Slicer),
+    (ModelDb.Card<DuchessGreatCaria>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.GreatCaria),
+    (ModelDb.Card<DuchessCarianGreatsword>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Greatsword),
+    (ModelDb.Card<DuchessCarianPiercer>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Piercer),
+    (ModelDb.Card<DuchessRestage>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Clock),
+    (ModelDb.Card<DuchessReenactment>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Clock),
+    (ModelDb.Card<DuchessFleetingInstant>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Clock),
+    (ModelDb.Card<DuchessLorettaGreatbow>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Greatbow),
+    (ModelDb.Card<DuchessLorettaMastery>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Mastery),
+    (ModelDb.Card<DuchessDeathBlade>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.DeathBlade),
+    (ModelDb.Card<DuchessGoldenBlade>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.GoldenBlade),
+    (ModelDb.Card<DuchessMiquellasHalo>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Miquella),
+    (ModelDb.Card<DuchessSacredHalo>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Sacred) })
+{
+    if (NightMustStay.Core.Nodes.Vfx.DuchessAttackEffects.KindFor(card) != expected)
+        throw new Exception($"Incorrect Duchess VFX route: {card.Id}");
+}
+Console.WriteLine("PASS: all fourteen Duchess spell/reprise cards have explicit visual routes.");
 if (duchess.Id.Entry != "DUCHESS"
     || duchess.StartingHp != 66
     || duchess.StartingGold != 99
@@ -636,7 +672,7 @@ typeof(PowerModel).GetProperty("Owner")!.SetValue(zeroCostBonus, bonusDealer);
 zeroCostBonus.SetAmount(4, false);
 var discountedAttack = ModelDb.Card<DuchessCarianSlicer>().ToMutable();
 decimal BonusFor(CardModel candidate) => zeroCostBonus.ModifyDamageAdditive(
-    null!, 9, ValueProp.Move, bonusDealer, candidate, null!);
+    null!, 9, ValueProp.Move, bonusDealer, candidate);
 if (discountedAttack.EnergyCost.Canonical != 1 || BonusFor(discountedAttack) != 0)
     throw new Exception("Inch Victory must not boost a positive-cost attack.");
 discountedAttack.EnergyCost.AddUntilPlayed(-1, true);

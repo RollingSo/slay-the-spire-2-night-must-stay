@@ -35,7 +35,7 @@ public sealed class DuchessConcealmentPower : PowerModel
         target == Owner && cardSource != null ? CardBlockMultiplier : 1m;
 
     public override decimal ModifyDamageMultiplicative(
-        Creature target, decimal amount, ValueProp props, Creature dealer, CardModel cardSource, CardPlay cardPlay) =>
+        Creature target, decimal amount, ValueProp props, Creature dealer, CardModel cardSource) =>
         dealer == Owner && props.IsPoweredAttack() ? AttackDamageMultiplier : 1m;
 
     public override async Task BeforeSideTurnEnd(
@@ -206,7 +206,9 @@ public sealed class DuchessEternalRestagePower : PowerModel
         if (damage <= 0) return;
         Flash();
         await DamageCmd.Attack(damage).CompatFromCard(source)
-            .TargetingAllOpponents(source.CombatState).Execute(context);
+            .TargetingAllOpponents(source.CombatState)
+            .WithHitVfxNode(target => NightMustStay.Core.Nodes.Vfx.DuchessAttackEffects.Create(
+                target, NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Clock, Owner)).Execute(context);
     }
 }
 

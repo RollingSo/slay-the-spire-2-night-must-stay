@@ -47,7 +47,7 @@ foreach ($key in $powers.PSObject.Properties.Name | Where-Object { $_ -like 'DUC
     }
 }
 Test-DuchessImage 'duchess_assets/character_select_duchess_bg.png' 2560 1200 $false
-foreach ($name in @('duchess_combat_character','duchess_attack','duchess_hit')) {
+foreach ($name in @('duchess_combat_character','duchess_attack','duchess_hit','duchess_block')) {
     Test-DuchessImage "duchess_assets/combat_rig/$name.png" 0 0 $true
 }
 foreach ($name in @('character_icon_duchess','character_icon_duchess_outline','map_marker_duchess')) {
