@@ -5,10 +5,10 @@
 [resource]
 resource_local_to_scene = true
 shader = ExtResource("1_shader")
-shader_parameter/frame_shadow = Color(0.082353, 0.101961, 0.094118, 1)
-shader_parameter/frame_mid = Color(0.40, 0.52, 0.72, 1)
-shader_parameter/frame_highlight = Color(0.77, 0.88, 1.0, 1)
-shader_parameter/panel_shadow = Color(0.066667, 0.094118, 0.05098, 1)
-shader_parameter/panel_mid = Color(0.20, 0.28, 0.42, 1)
+shader_parameter/frame_shadow = Color(0.074510, 0.223529, 0.376471, 1)
+shader_parameter/frame_mid = Color(0.282353, 0.725490, 0.929412, 1)
+shader_parameter/frame_highlight = Color(0.745098, 0.941176, 1.0, 1)
+shader_parameter/panel_shadow = Color(0.039216, 0.078431, 0.137255, 1)
+shader_parameter/panel_mid = Color(0.086275, 0.203922, 0.305882, 1)
 shader_parameter/frame_saturation_threshold = 0.16
 shader_parameter/contrast = 1.12

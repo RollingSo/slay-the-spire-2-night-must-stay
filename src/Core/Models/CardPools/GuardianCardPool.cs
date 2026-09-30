@@ -15,7 +15,7 @@ namespace NightMustStay.Core.Models.CardPools
 
         public override string CardFrameMaterialPath => "card_frame_guardian";
 
-        public override Color DeckEntryCardColor => new Color("3A6EA5");
+        public override Color DeckEntryCardColor => NightMustStay.Core.CharacterThemeColors.Guardian;
 
         public override Color EnergyOutlineColor => new Color("1A3A5C");
 

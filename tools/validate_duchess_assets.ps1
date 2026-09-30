@@ -50,8 +50,12 @@ Test-DuchessImage 'duchess_assets/character_select_duchess_bg.png' 2560 1200 $fa
 foreach ($name in @('duchess_combat_character','duchess_attack','duchess_hit')) {
     Test-DuchessImage "duchess_assets/combat_rig/$name.png" 0 0 $true
 }
-foreach ($name in @('character_icon_duchess','character_icon_duchess_outline','char_select_duchess','char_select_duchess_locked','map_marker_duchess')) {
+foreach ($name in @('character_icon_duchess','character_icon_duchess_outline','map_marker_duchess')) {
     Test-DuchessImage "duchess_assets/$name.png" 0 0 $true
+}
+# Selection portraits have a painted background, matching the other Nightfarers.
+foreach ($name in @('char_select_duchess','char_select_duchess_locked')) {
+    Test-DuchessImage "duchess_assets/$name.png" 132 195 $false
 }
 foreach ($name in @('old_pocketwatch','reverse_pocketwatch','crown_badge','golden_dewdrop','primal_glintstone_blade','blessed_iron_coin','night_of_wisdom','blue_stained_blade','carian_badge')) {
     Test-DuchessImage "duchess_assets/relics/duchess_$name.png" 256 256 $true

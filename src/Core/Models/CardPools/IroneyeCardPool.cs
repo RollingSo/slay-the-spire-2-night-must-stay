@@ -14,7 +14,7 @@ namespace NightMustStay.Core.Models.CardPools
 
         public override string CardFrameMaterialPath => "card_frame_ironeye";
 
-        public override Color DeckEntryCardColor => new("75824D");
+        public override Color DeckEntryCardColor => NightMustStay.Core.CharacterThemeColors.Ironeye;
 
         public override Color EnergyOutlineColor => new("29351F");
 
