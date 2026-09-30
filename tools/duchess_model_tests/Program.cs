@@ -43,6 +43,14 @@ foreach (var type in new[] { typeof(TokenCardPool), typeof(ColorlessCardPool) })
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+foreach (var character in new CharacterModel[] {
+    ModelDb.Character<Guardian>(), ModelDb.Character<Ironeye>(),
+    ModelDb.Character<Revenant>(), duchess })
+{
+    if (character.MapDrawingColor != character.CardPool.DeckEntryCardColor)
+        throw new Exception($"{character.Id} drawing and deck colors must match.");
+}
+Console.WriteLine("PASS: four Nightfarer drawing colors match their deck colors.");
 if (duchess.Id.Entry != "DUCHESS"
     || duchess.StartingHp != 66
     || duchess.StartingGold != 99

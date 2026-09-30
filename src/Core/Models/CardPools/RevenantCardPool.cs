@@ -11,7 +11,7 @@ public sealed class RevenantCardPool : CardPoolModel
     public override string Title => "revenant";
     public override string EnergyColorName => "revenant";
     public override string CardFrameMaterialPath => "card_frame_revenant";
-    public override Color DeckEntryCardColor => new("67538A");
+    public override Color DeckEntryCardColor => NightMustStay.Core.CharacterThemeColors.Revenant;
     public override Color EnergyOutlineColor => new("21172E");
     public override bool IsColorless => false;
 

@@ -75,7 +75,7 @@ namespace NightMustStay.Core.Models.Characters
 
         public override VfxColor SpeechBubbleColor => VfxColor.Cyan;
 
-        public override Color MapDrawingColor => new Color("3A6EA5");
+        public override Color MapDrawingColor => NightMustStay.Core.CharacterThemeColors.Guardian;
 
         public override Color RemoteTargetingLineColor => new Color("4A8EC5FF");
 

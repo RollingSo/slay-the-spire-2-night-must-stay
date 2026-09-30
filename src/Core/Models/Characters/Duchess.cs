@@ -41,7 +41,7 @@ public sealed class Duchess : CharacterModel
     public override Color EnergyLabelOutlineColor => new("17243D");
     public override Color DialogueColor => new("253654");
     public override VfxColor SpeechBubbleColor => VfxColor.Purple;
-    public override Color MapDrawingColor => new("92ACD6");
+    public override Color MapDrawingColor => NightMustStay.Core.CharacterThemeColors.Duchess;
     public override Color RemoteTargetingLineColor => new("B6D7FF");
     public override Color RemoteTargetingLineOutline => new("17243D");
     public override List<string> GetArchitectAttackVfx() => new()

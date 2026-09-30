@@ -311,7 +311,7 @@ public sealed class DuchessCardPool : CardPoolModel
     public override string Title => "duchess";
     public override string EnergyColorName => "duchess";
     public override string CardFrameMaterialPath => "card_frame_duchess";
-    public override Color DeckEntryCardColor => new("809CC8");
+    public override Color DeckEntryCardColor => NightMustStay.Core.CharacterThemeColors.Duchess;
     public override Color EnergyOutlineColor => new("17243D");
     public override bool IsColorless => false;
     protected override CardModel[] GenerateAllCards() => new CardModel[] {

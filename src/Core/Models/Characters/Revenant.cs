@@ -49,7 +49,7 @@ public sealed class Revenant : CharacterModel
     public override Color EnergyLabelOutlineColor => new("21172EFF");
     public override Color DialogueColor => new("30243D");
     public override VfxColor SpeechBubbleColor => VfxColor.Purple;
-    public override Color MapDrawingColor => new("8F74B7");
+    public override Color MapDrawingColor => NightMustStay.Core.CharacterThemeColors.Revenant;
     public override Color RemoteTargetingLineColor => new("D7BDF5FF");
     public override Color RemoteTargetingLineOutline => new("21172EFF");
     public override List<string> GetArchitectAttackVfx() => new()

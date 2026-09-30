@@ -5,9 +5,9 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_idle"]
 shader = ExtResource("2_idle")
-shader_parameter/body_center = Vector2(0.62, 0.55)
+shader_parameter/body_center = Vector2(0.595, 0.56)
 shader_parameter/body_radius = Vector2(0.17, 0.43)
-shader_parameter/secondary_center = Vector2(0.73, 0.72)
+shader_parameter/secondary_center = Vector2(0.77, 0.68)
 shader_parameter/secondary_radius = Vector2(0.14, 0.28)
 shader_parameter/breath_amount = 0.002
 shader_parameter/secondary_amount = 0.003
@@ -21,9 +21,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -1280.0
-offset_top = -600.0
+offset_top = -480.0
 offset_right = 1280.0
-offset_bottom = 600.0
+offset_bottom = 720.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(1280, 600)
