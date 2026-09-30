@@ -13,11 +13,12 @@
 《黑夜长留》是《杀戮尖塔 2》的大型角色扩展模组，以《艾尔登法环：黑夜君临》中的角色形象与战斗特色为设计蓝本，将渡夜者们转化为拥有独立牌组与专属机制的尖塔角色。
 
 [h2]当前内容[/h2]
-现已加入三名可玩角色：
+现已加入四名可玩角色：
 [list]
 [*][b]守护者[/b]
 [*][b]铁之眼[/b]
 [*][b]复仇者[/b]
+[*][b]女爵[/b]——围绕时刻、反应与闪避构筑
 [/list]
 每名角色均拥有完整的卡牌、遗物、药水以及专属战斗机制，可以独立完成一局游戏。
 
@@ -45,8 +46,8 @@
 
 [h2]模组信息[/h2]
 [list]
-[*][b]当前版本：[/b]0.2.12
-[*][b]支持语言：[/b]简体中文、英语、日语
+[*][b]当前版本：[/b]0.3.0
+[*][b]支持语言：[/b]简体中文、英语、日语、韩语
 [*][b]模组类型：[/b]独立角色
 [*][b]前置模组：[/b]无
 [/list]
@@ -77,11 +78,12 @@ Title: `Night Must Stay | Elden Ring : Nightreign Mod`
 Night Must Stay is a large character expansion mod for Slay the Spire 2. Inspired by the characters and combat styles of ELDEN RING NIGHTREIGN, it reimagines the Nightfarers as Spire characters with independent card pools and unique mechanics.
 
 [h2]Current Content[/h2]
-Three playable characters are currently included:
+Four playable characters are currently included:
 [list]
 [*][b]Guardian[/b]
 [*][b]Ironeye[/b]
 [*][b]Revenant[/b]
+[*][b]Duchess[/b] — build around Moment, Reaction, and Dodge
 [/list]
 Each character has a complete set of cards, relics, potions, and exclusive combat mechanics, and can complete a full run independently.
 
@@ -109,8 +111,8 @@ If you encounter a problem or have feedback about character design or balance, y
 
 [h2]Mod Information[/h2]
 [list]
-[*][b]Current Version:[/b] 0.2.12
-[*][b]Supported Languages:[/b] Simplified Chinese, English, and Japanese
+[*][b]Current Version:[/b] 0.3.0
+[*][b]Supported Languages:[/b] Simplified Chinese, English, Japanese, and Korean
 [*][b]Mod Type:[/b] Standalone playable characters
 [*][b]Required Mods:[/b] None
 [/list]
