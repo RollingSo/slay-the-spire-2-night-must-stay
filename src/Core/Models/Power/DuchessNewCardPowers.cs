@@ -47,7 +47,8 @@ public sealed class DuchessGracefulSwordDancePower : PowerModel
         data.PreviousWasDodge = dodge;
         if (!trigger || !CombatState.HittableEnemies.Any(enemy => enemy.IsAlive)) return;
         Flash();
-        await DamageCmd.Attack(Amount).TargetingAllOpponents(CombatState).Execute(context);
+        await DamageCmd.Attack(Amount).CompatFromCard(play.Card)
+            .TargetingAllOpponents(CombatState).Execute(context);
     }
 }
 

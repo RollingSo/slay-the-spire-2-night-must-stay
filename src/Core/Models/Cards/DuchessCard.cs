@@ -25,8 +25,9 @@ namespace NightMustStay.Core.Models.Cards;
 
 public static class DuchessReactionRules
 {
+    public static bool IsDrawnIntoHand(PileType currentPile) => currentPile == PileType.Hand;
     public static bool IsEligibleDraw(bool fromHandDraw, PileType currentPile) =>
-        !fromHandDraw && currentPile == PileType.Hand;
+        !fromHandDraw && IsDrawnIntoHand(currentPile);
 }
 
 public record DuchessEffect(string Kind, decimal Amount, decimal Upgraded, string Condition = "");
@@ -309,8 +310,7 @@ public abstract class DuchessCard : CardModel
     {
         // The native draw hook distinguishes the fixed turn-opening hand from
         // all other draws, including draws made during turn-start effects.
-        if (card != this || !DuchessReactionRules.IsEligibleDraw(
-                fromHandDraw, card.Pile?.Type ?? PileType.None))
+        if (card != this || !DuchessReactionRules.IsDrawnIntoHand(card.Pile?.Type ?? PileType.None))
             return Task.CompletedTask;
         if (this is DuchessCarianPiercer)
         {
@@ -318,7 +318,7 @@ public abstract class DuchessCard : CardModel
             PendingPiercerDamage += boost;
             DynamicVars.Damage.BaseValue += boost;
         }
-        if (Spec.Reaction)
+        if (Spec.Reaction && DuchessReactionRules.IsEligibleDraw(fromHandDraw, card.Pile?.Type ?? PileType.None))
             EnergyCost.AddUntilPlayed(-1, true);
         return Task.CompletedTask;
     }
@@ -499,9 +499,8 @@ public abstract class DuchessCard : CardModel
                 case "ZeroCostAttackBonus": await Apply<DuchessZeroCostAttackPower>(context, Owner.Creature, amount); break;
                 case "DodgePlayAoe": await Apply<DuchessGracefulSwordDancePower>(context, Owner.Creature, amount); break;
                 case "ConcealedKillNextCombatStrength": await Apply<DuchessPhantomKillerPower>(context, Owner.Creature, amount); break;
-                case "ReturnSelfToHand":
-                    await CardPileCmd.Add(this, PileType.Hand, CardPilePosition.Top, this);
-                    break;
+                // Passive: DuchessMomentPower moves the card when Moment reaches 5.
+                case "ReturnSelfToHand": break;
                 case "ShuffleHandAllDraw":
                     CardModel[] handToShuffle = PileType.Hand.GetPile(Owner).Cards.Where(card => card != this).ToArray();
                     if (handToShuffle.Length > 0)

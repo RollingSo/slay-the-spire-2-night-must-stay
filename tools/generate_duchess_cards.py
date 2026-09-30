@@ -53,6 +53,11 @@ def validate_upgrade_contracts():
     if ('NextTurnEnergy' in str(ROWS) or 'FutureMomentEnergy' in str(ROWS)) \
             and '"Energy" or "NextTurnEnergy" or "FutureMomentEnergy"' not in source:
         raise ValueError('Duchess energyIcons variables must be backed by EnergyVar')
+    for row in ROWS:
+        for language in range(3):
+            for upgraded in (False, True):
+                if '[E]' in effects_text(row, language, upgraded):
+                    raise ValueError(f'{row[0]} {language}: raw [E] is not a renderable energy icon; use energyIcons()')
 
 def model_id(name):
     return re.sub(r'(?<!^)(?=[A-Z])', '_', 'Duchess' + name).upper()
@@ -108,7 +113,7 @@ def effects_text(row, language, upgraded=False):
                 'ZeroCostAttackBonus': [f'耗能为0的牌攻击伤害增加{var}。', f'Attacks that cost 0 deal {var} more damage.', f'コスト0のアタックはダメージが{var}増加する。'],
                 'DodgePlayAoe': [f'连续打出[gold]闪避[/gold]时，对所有敌人造成{var}点伤害。', f'When you play [gold]Dodge[/gold] consecutively, deal {var} damage to ALL enemies.', f'[gold]回避[/gold]を連続してプレイしたとき、敵全体に{var}ダメージを与える。'],
                 'ConcealedKillNextCombatStrength': [f'若本场战斗中在[gold]隐匿[/gold]状态下斩杀敌人，在下场战斗开始时获得{var}点[gold]力量[/gold]。', f'If you kill an enemy while [gold]Concealed[/gold] this combat, gain {var} [gold]Strength[/gold] at the start of the next combat.', f'この戦闘中に[gold]隠密[/gold]状態で敵を倒したなら、次の戦闘開始時に[gold]筋力[/gold]{var}を得る。'],
-                'ReturnSelfToHand': ['将这张牌加入[gold]手牌[/gold]。', 'Return this card to your [gold]hand[/gold].', 'このカードを[gold]手札[/gold]に戻す。'],
+                'ReturnSelfToHand': ['每当[gold]时刻[/gold]到达5时，将这张牌加入[gold]手牌[/gold]。', 'Whenever [gold]Moment[/gold] reaches 5, return this card to your [gold]hand[/gold].', '[gold]時刻[/gold]が5に到達するたび、このカードを[gold]手札[/gold]に戻す。'],
                 'ShuffleHandAllDraw': ['将所有[gold]手牌[/gold]洗入[gold]抽牌堆[/gold]，抽等同于洗入数量的牌。', 'Shuffle your entire [gold]hand[/gold] into your [gold]draw pile[/gold], then draw that many cards.', '[gold]手札[/gold]をすべて[gold]山札[/gold]に加えてシャッフルし、同じ枚数引く。'],
                 'Block': [f'获得{var}点[gold]格挡[/gold]。', f'Gain {var} [gold]Block[/gold].', f'[gold]ブロック[/gold]{var}を得る。'],
                 'TurnStartSwap': ['每回合开始时，选择1张[gold]手牌[/gold]洗入[gold]抽牌堆[/gold]，抽1张牌。', 'At the start of each turn, choose 1 card in your [gold]hand[/gold], shuffle it into your [gold]draw pile[/gold], then draw 1 card.', '毎ターン開始時、[gold]手札[/gold]から1枚選んで[gold]山札[/gold]に加えてシャッフルし、カードを1枚引く。'],
@@ -140,7 +145,7 @@ def effects_text(row, language, upgraded=False):
                 'ChooseDrawToTop': ['选择[gold]抽牌堆[/gold]中的1张牌放到[gold]抽牌堆[/gold]顶部。', 'Choose 1 card in your [gold]draw pile[/gold] and put it on top of your [gold]draw pile[/gold].', '[gold]山札[/gold]からカードを1枚選び、[gold]山札[/gold]の一番上に置く。'],
                 'EndTurnMomentBlock': ['回合结束时，获得等同于当前[gold]时刻[/gold]的[gold]格挡[/gold]。', 'At the end of your turn, gain [gold]Block[/gold] equal to your current [gold]Moment[/gold].', 'ターン終了時、現在の[gold]時刻[/gold]に等しい[gold]ブロック[/gold]を得る。'],
                 'ReturnHandDamageBoost': [f'将这张牌放回[gold]手牌[/gold]，在下次打出前伤害增加{var}。', f'Return this card to your [gold]hand[/gold]. Until it is next played, its damage increases by {var}.', f'このカードを[gold]手札[/gold]に戻す。次にプレイするまでダメージが{var}増加する。'],
-                'Energy': [('获得' + '[E]' * int(effect[2] if upgraded else effect[1]) + '。'), ('Gain ' + '[E]' * int(effect[2] if upgraded else effect[1]) + '.'), ('[E]' * int(effect[2] if upgraded else effect[1]) + 'を得る。')],
+                'Energy': ['获得{Energy:energyIcons()}。', 'Gain {Energy:energyIcons()}.', '{Energy:energyIcons()}を得る。'],
                 'Weak': [(f'对所有敌人施加' if opt.get('all') else '施加') + f'{var}层[gold]虚弱[/gold]。', f'Apply {var} [gold]Weak[/gold]' + (' to ALL enemies' if opt.get('all') else '') + '.', ('敵全体に' if opt.get('all') else '敵1体に') + f'[gold]脱力[/gold]{var}を付与する。'],
                 'WeakAll': [f'给予所有敌人{var}层[gold]虚弱[/gold]。', f'Apply {var} [gold]Weak[/gold] to ALL enemies.', f'敵全体に[gold]脱力[/gold]{var}を付与する。'],
                 'Vulnerable': [(f'对所有敌人施加' if opt.get('all') else '施加') + f'{var}层[gold]易伤[/gold]。', f'Apply {var} [gold]Vulnerable[/gold]' + (' to ALL enemies' if opt.get('all') else '') + '.', ('敵全体に' if opt.get('all') else '敵1体に') + f'[gold]弱体[/gold]{var}を付与する。'],
@@ -222,7 +227,7 @@ def effects_text(row, language, upgraded=False):
                      f'[gold]Moment {moment}[/gold]: Cost -{reduction}.',
                      f'[gold]時刻{moment}[/gold]：コスト-{reduction}。'] if compact else
                     [f'[gold]时刻{moment}[/gold]：此牌耗能-{reduction}。',
-                     f'[gold]Moment {moment}[/gold]: this card costs {reduction} less [E].',
+                     f'[gold]Moment {moment}[/gold]: this card costs {reduction} less Energy.',
                      f'[gold]時刻{moment}[/gold]：このカードのコストを{reduction}減らす。'])[language])
     if opt.get('restageDivisor'):
         divisor = opt['restageDivisor']

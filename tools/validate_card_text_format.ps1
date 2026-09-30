@@ -58,6 +58,17 @@ $revenantIds = @(
 
 $errors = [System.Collections.Generic.List[string]]::new()
 
+# A literal [E] is parsed as an unclosed rich-text tag, not an energy glyph.
+# Cards must use an EnergyVar with {Energy:energyIcons()} instead.
+foreach ($locale in @(@('zhs', $zhs), @('eng', $eng), @('jpn', $jpn), @('kor', $kor))) {
+    foreach ($entry in $locale[1].PSObject.Properties) {
+        if ($entry.Name -match '\.(?:description|upgradeDescription|unchargedDescription|chargedDescription)$' -and
+            [string]$entry.Value -match '\[E\]') {
+            $errors.Add("$($locale[0])/$($entry.Name): literal [E] is not a renderable energy icon; use energyIcons().")
+        }
+    }
+}
+
 # Live card descriptions must not bake in dealt-damage amounts. A literal
 # number bypasses DamageVar preview hooks, so Strength, Weak, Vulnerable and
 # other combat modifiers cannot update the number shown on the card. Audit all

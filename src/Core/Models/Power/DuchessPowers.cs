@@ -93,6 +93,13 @@ public sealed class DuchessMomentPower : PowerModel
         }
         if (before != 5 && after == 5)
         {
+            // This is a Moment-arrival trigger, not an on-play condition.
+            // Snapshot both piles before moving cards so multiple copies can
+            // independently return without invalidating an enumeration.
+            foreach (DuchessMemoryFragment fragment in PileType.Draw.GetPile(player).Cards
+                         .Concat(PileType.Discard.GetPile(player).Cards)
+                         .OfType<DuchessMemoryFragment>().ToArray())
+                await CardPileCmd.Add(fragment, PileType.Hand, CardPilePosition.Top, fragment);
             foreach (DuchessCrownBadge relic in player.Relics.OfType<DuchessCrownBadge>().ToArray())
                 await relic.OnMomentFive(context);
             foreach (DuchessMomentFiveRewardPower power in player.Creature.Powers

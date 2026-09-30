@@ -217,8 +217,19 @@ if (!fate.Keywords.Contains(CardKeyword.Exhaust)) throw new Exception("Fate must
 fate.UpgradeInternal();
 if (fate.Keywords.Contains(CardKeyword.Exhaust)) throw new Exception("Fate upgrade must remove Exhaust.");
 if (DuchessCardCatalog.All[nameof(DuchessMemoryFragment)].Moment != 5
-    || DuchessCardCatalog.All[nameof(DuchessMemoryFragment)].Effects[1].Kind != "ReturnSelfToHand")
-    throw new Exception("Memory Fragment must return to hand at Moment 5.");
+    || DuchessCardCatalog.All[nameof(DuchessMemoryFragment)].Effects[1].Kind != "ReturnSelfToHand"
+    || DuchessCardCatalog.All[nameof(DuchessMemoryFragment)].Effects[1].Condition != "")
+    throw new Exception("Memory Fragment must return on Moment arrival, not when played at Moment 5.");
+var greatbow = DuchessCardCatalog.All[nameof(DuchessLorettaGreatbow)];
+if (greatbow.Effects[0] != new DuchessEffect("Damage", 18, 22))
+    throw new Exception("Loretta's Greatbow must deal 18 damage, upgraded to 22.");
+var recollection = ModelDb.Card<DuchessMemory>().ToMutable();
+if (recollection.DynamicVars["Energy"] is not EnergyVar
+    || recollection.DynamicVars["Energy"].BaseValue != 1)
+    throw new Exception("Recollection must use a 1-energy EnergyVar for its icon.");
+recollection.UpgradeInternal();
+if (recollection.DynamicVars["Energy"].BaseValue != 2)
+    throw new Exception("Upgraded Recollection must use a 2-energy EnergyVar for its icon.");
 if (instant.TargetType != TargetType.AnyEnemy || instant.DynamicVars["ExtraDamage"].BaseValue != 3
     || !instant.DynamicVars.ContainsKey("CalculatedDamage"))
     throw new Exception("Fleeting Instant must target an enemy and preview one accumulated attack.");
@@ -606,7 +617,9 @@ if (typeof(DuchessMomentPower).GetMethods(flags).Any(method => method.Name.Conta
 
 if (DuchessReactionRules.IsEligibleDraw(true, PileType.Hand)
     || !DuchessReactionRules.IsEligibleDraw(false, PileType.Hand)
-    || DuchessReactionRules.IsEligibleDraw(false, PileType.Draw))
+    || DuchessReactionRules.IsEligibleDraw(false, PileType.Draw)
+    || !DuchessReactionRules.IsDrawnIntoHand(PileType.Hand)
+    || DuchessReactionRules.IsDrawnIntoHand(PileType.Draw))
     throw new Exception("Reaction must exclude only the native opening hand draw, not other draws.");
 foreach (Type type in new[] { typeof(DuchessCard), typeof(DuchessReactionDrawPower),
              typeof(DuchessReactionDrawBlockPower) })
