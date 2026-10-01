@@ -11,21 +11,30 @@ namespace NightMustStay.Core.Models
         private static readonly HashSet<string> DefendCardIds = new(StringComparer.Ordinal)
         {
             "ABSOLUTE_DEFENSE",
+            "ANCHORED_DEFEND",
             "DEFEND_GUARDIAN",
             "DEFEND_IRONEYE",
+            "DEFEND_RELAY",
             "DEFEND_REVENANT",
+            "DEFENSIVE_CADENCE",
             "DEFENSIVE_REINFORCEMENT",
             "DUCHESS_DEFEND",
             "EMERGENCY_DEFEND",
             "EVOLVED_DEFEND",
             "GUARD_COUNTER_CARD",
+            "MIRROR_GUARD_DEFEND",
+            "PERFECT_GUARD",
             "POWERFUL_DEFEND",
             "POWERFUL_GUARD_COUNTER",
             "PROTECTIVE_AIRSTREAM",
             "RETREATING_DEFENSE",
             "SHARED_GREAT_SHIELD",
+            "SHIELD_BASH_DEFEND",
+            "SHIELD_WALL_DEFEND",
             "SLOW_DEFEND",
             "ULTIMATE_DEFEND_COUNTER",
+            "UNYIELDING_DEFEND",
+            "WINGBEAT_DEFEND",
         };
 
         public static bool HasDefendInName(CardModel card)

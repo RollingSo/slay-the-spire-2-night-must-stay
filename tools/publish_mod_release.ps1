@@ -27,8 +27,12 @@ function Get-NextVersion([string]$CurrentVersion) {
     }
 
     $major = [int]$parts[0]
-    $minor = [int]$parts[1] + 1
-    return "$major.$minor"
+    $minor = [int]$parts[1]
+    if ($parts.Count -ge 3) {
+        $patch = [int]$parts[2] + 1
+        return "$major.$minor.$patch"
+    }
+    return "$major.$($minor + 1)"
 }
 
 $existingState = $null

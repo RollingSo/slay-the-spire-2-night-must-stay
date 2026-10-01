@@ -73,6 +73,8 @@ if (-not $SkipInstall) {
 }
 $currentPowerShell = (Get-Process -Id $PID).Path
 
+& (Join-Path $PSScriptRoot 'validate_defend_card_names.ps1')
+
 # Keep Guardian glossary terms highlighted in every card description. The
 # explicit policy bypass also handles freshly-created local validation scripts.
 & $currentPowerShell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'validate_guardian_card_localization.ps1')

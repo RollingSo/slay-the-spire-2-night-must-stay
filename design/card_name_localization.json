@@ -466,9 +466,9 @@
     },
     "GUARD_COUNTER_CARD": {
       "zhs": "防御反击",
-      "eng": "Guard Counter",
-      "jpn": "ガードカウンター",
-      "kor": "가드 카운터",
+      "eng": "Guard Counter (Defend)",
+      "jpn": "ガードカウンター（防御）",
+      "kor": "가드 카운터 (수비)",
       "reference": "GC;ER:TutorialTitle.fmg/302400"
     },
     "OBSERVATION": {
@@ -529,23 +529,23 @@
     },
     "POWERFUL_DEFEND": {
       "zhs": "强力防御",
-      "eng": "Steel Guard",
-      "jpn": "ハイガード",
-      "kor": "하이가드",
+      "eng": "Steel Guard (Defend)",
+      "jpn": "ハイガード（防御）",
+      "kor": "하이가드 (수비)",
       "reference": "G；https://eldenring.inven.co.kr/dataninfo/class/?bidx=306434；https://game8.jp/eldenring-nightreign/696504"
     },
     "POWERFUL_GUARD_COUNTER": {
       "zhs": "强力防御反击",
-      "eng": "Powerful Guard Counter",
-      "jpn": "強力なガードカウンター",
-      "kor": "강력한 가드 카운터",
+      "eng": "Powerful Guard Counter (Defend)",
+      "jpn": "強力なガードカウンター（防御）",
+      "kor": "강력한 가드 카운터 (수비)",
       "reference": "Composite/token terminology based on confirmed official names"
     },
     "ULTIMATE_DEFEND_COUNTER": {
       "zhs": "究极防御反击",
-      "eng": "Ultimate Guard Counter",
-      "jpn": "究極のガードカウンター",
-      "kor": "궁극의 가드 카운터",
+      "eng": "Ultimate Guard Counter (Defend)",
+      "jpn": "究極のガードカウンター（防御）",
+      "kor": "궁극의 가드 카운터 (수비)",
       "reference": "Composite/token terminology based on confirmed official names"
     },
     "DUCHESS_RADIANT_BLADE": {
@@ -582,24 +582,54 @@
       "jpn": "回避",
       "kor": "회피",
       "reference": "Composite/token terminology based on confirmed official names"
+    },
+    "DEFENSIVE_CADENCE": {
+      "zhs": "防御节奏",
+      "eng": "Defensive Cadence (Defend)",
+      "jpn": "守勢の律動（防御）",
+      "kor": "수비의 박자",
+      "reference": "Preserve the Chinese Defend-name marker"
+    },
+    "PERFECT_GUARD": {
+      "zhs": "完美防御",
+      "eng": "Perfect Guard (Defend)",
+      "jpn": "完全防御",
+      "kor": "완벽한 수비",
+      "reference": "Preserve the Chinese Defend-name marker"
+    },
+    "RETREATING_DEFENSE": {
+      "zhs": "后撤防御",
+      "eng": "Retreating Defense",
+      "jpn": "退き守り（防御）",
+      "kor": "후퇴 수비",
+      "reference": "Preserve the Chinese Defend-name marker"
     }
   },
   "defendCardIds": [
     "ABSOLUTE_DEFENSE",
+    "ANCHORED_DEFEND",
     "DEFEND_GUARDIAN",
     "DEFEND_IRONEYE",
+    "DEFEND_RELAY",
     "DEFEND_REVENANT",
+    "DEFENSIVE_CADENCE",
     "DEFENSIVE_REINFORCEMENT",
     "DUCHESS_DEFEND",
     "EMERGENCY_DEFEND",
     "EVOLVED_DEFEND",
     "GUARD_COUNTER_CARD",
+    "MIRROR_GUARD_DEFEND",
+    "PERFECT_GUARD",
     "POWERFUL_DEFEND",
     "POWERFUL_GUARD_COUNTER",
     "PROTECTIVE_AIRSTREAM",
     "RETREATING_DEFENSE",
     "SHARED_GREAT_SHIELD",
+    "SHIELD_BASH_DEFEND",
+    "SHIELD_WALL_DEFEND",
     "SLOW_DEFEND",
-    "ULTIMATE_DEFEND_COUNTER"
+    "ULTIMATE_DEFEND_COUNTER",
+    "UNYIELDING_DEFEND",
+    "WINGBEAT_DEFEND"
   ]
 }
