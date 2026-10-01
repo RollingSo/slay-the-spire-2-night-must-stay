@@ -7,7 +7,8 @@ namespace NightMustStay.Core.Nodes.Vfx;
 public partial class DuchessAttackVfx : CombatVfxCanvas
 {
     public enum Kind { Glintblade, Slicer, GreatCaria, Greatsword, Piercer, Clock,
-        Greatbow, Mastery, DeathBlade, GoldenBlade, Miquella, Sacred }
+        Greatbow, Mastery, DeathBlade, GoldenBlade, Miquella, Sacred,
+        LorettaSlash, SilverStorm, OpeningMoment }
     public Kind AttackKind { get; set; }
     public Vector2 Source { get; set; } = new(-300,0);
     private float _age;
@@ -25,6 +26,8 @@ public partial class DuchessAttackVfx : CombatVfxCanvas
             Kind.DeathBlade => new Color("E34A67"),
             Kind.GoldenBlade or Kind.Sacred => new Color("F4CB67"),
             Kind.Miquella => new Color("FFF1B5"),
+            Kind.SilverStorm => new Color("DAE5EF"),
+            Kind.OpeningMoment => new Color("FFB65C"),
             _ => new Color("48B9ED") };
         _impact = new Sprite2D { Texture=ParticleVfxMaterials.Texture(7),
             Material=ParticleVfxMaterials.Material(7,tint),
@@ -38,7 +41,9 @@ public partial class DuchessAttackVfx : CombatVfxCanvas
     {
         if (_impact == null) return;
         float t=Math.Clamp(_age/Duration,0,1);
-        float start=AttackKind == Kind.Clock ? .4f : .3f;
+        float start=AttackKind switch {
+            Kind.Clock => .4f, Kind.LorettaSlash => .42f,
+            Kind.SilverStorm => .38f, _ => .3f };
         float fade=Ease(start,start+.05f,t)*(1-Ease(.55f,1,t));
         _impact.Modulate=new Color(1,1,1,fade*.8f);
         _impact.Visible=AttackKind != Kind.Clock;
@@ -50,7 +55,9 @@ public partial class DuchessAttackVfx : CombatVfxCanvas
         _wake.Modulate=new Color(1,1,1,Ease(.05f,.2f,t)*(1-Ease(.45f,.8f,t))*.7f);
         ((ShaderMaterial)_wake.Material).SetShaderParameter("phase",t*3);
     }
-    public float Duration => AttackKind == Kind.Clock ? .85f : .72f;
+    public float Duration => AttackKind switch {
+        Kind.Clock => .85f, Kind.LorettaSlash => .9f,
+        Kind.SilverStorm => .8f, Kind.OpeningMoment => 1f, _ => .72f };
     public void Seek(float progress) { _manual = true; _age = Math.Clamp(progress,0,1)*Duration; UpdateLayers(); QueueRedraw(); }
     public override void _Process(double delta)
     {
@@ -78,6 +85,9 @@ public partial class DuchessAttackVfx : CombatVfxCanvas
         Color blue = Fade(new Color("48B9ED"),alpha), white = Fade(new Color("D4F7FF"),alpha);
         Color gold = Fade(new Color("F4CB67"),alpha);
         if (AttackKind == Kind.Clock) { Clock(t,Fade(new Color("FFFFFF"),alpha)); return; }
+        if (AttackKind == Kind.LorettaSlash) { LorettaSlash(t,blue,white); return; }
+        if (AttackKind == Kind.SilverStorm) { SilverStorm(t,alpha); return; }
+        if (AttackKind == Kind.OpeningMoment) { OpeningMoment(t,alpha); return; }
         if (AttackKind is Kind.Slicer or Kind.GreatCaria or Kind.Greatsword or Kind.Piercer)
         {
             float angle = AttackKind switch {
@@ -140,6 +150,62 @@ public partial class DuchessAttackVfx : CombatVfxCanvas
                 DrawArc(tip,radius*.55f,0,MathF.Tau,48,color,3,true);
         }
         Impact(t,.36f,color);
+    }
+    private void LorettaSlash(float t,Color blue,Color white)
+    {
+        Vector2 pivot=new(-75,45);
+        float sweep=Ease(.06f,.42f,t),angle=Mathf.Lerp(-2.3f,1.1f,sweep);
+        // Long shaft and curved sickle blade, distinct from the Carian swords.
+        Vector2 d=Vector2.FromAngle(angle),tip=pivot+d*190;
+        DrawLine(pivot-d*95,tip,Fade(blue,blue.A*.5f),9,true);
+        DrawLine(pivot-d*95,tip,white,3,true);
+        Band(tip,new Vector2(72,48),-1.8f,.9f,18,angle,blue);
+        Band(tip,new Vector2(70,46),-1.8f,.9f,5,angle,white);
+        if(sweep>0)
+        {
+            Band(pivot,new Vector2(245,185),-2.3f,angle,45,-.15f,Fade(blue,blue.A*.35f));
+            Band(pivot,new Vector2(226,170),-2.3f,angle,25,-.15f,blue);
+            Band(pivot,new Vector2(222,167),-2.3f,angle,7,-.15f,white);
+        }
+        Impact(t,.42f,blue);
+    }
+    private void SilverStorm(float t,float alpha)
+    {
+        Color silver=Fade(new Color("DAE5EF"),alpha),white=Fade(new Color("FFFFFF"),alpha);
+        // One storm per damage event: card execution retains its own 2/3 hits.
+        for(int i=0;i<3;i++)
+        {
+            float u=Ease(.03f+i*.05f,.38f+i*.05f,t);
+            if(u<=0)continue;
+            Vector2 center=new(0,-55+i*55);
+            float start=-2.8f+i*.65f,end=start+u*4.9f;
+            Band(center,new Vector2(205-i*15,58+i*6),start,end,17,.15f*(i-1),silver);
+            Band(center,new Vector2(204-i*15,57+i*6),start,end,4,.15f*(i-1),white);
+            Vector2 tip=center+new Vector2(MathF.Cos(end)*(205-i*15),MathF.Sin(end)*(58+i*6)).Rotated(.15f*(i-1));
+            Shard(tip,24,6,end+MathF.PI*.5f,white);
+        }
+        Impact(t,.38f,silver);
+    }
+    private void OpeningMoment(float t,float alpha)
+    {
+        Color gold=Fade(new Color("FFB65C"),alpha),white=Fade(new Color("FFF3D8"),alpha);
+        float burst=Ease(.28f,.62f,t),radius=95+burst*105;
+        Color face=Fade(gold,gold.A*(1-Ease(.32f,.7f,t)));
+        DrawArc(Vector2.Zero,95,0,MathF.Tau,64,face,3,true);
+        for(int i=0;i<12;i++)
+        {
+            float a=i*MathF.Tau/12-MathF.PI*.5f;
+            DrawLine(Vector2.FromAngle(a)*80,Vector2.FromAngle(a)*91,face,3,true);
+        }
+        float hand=Mathf.Lerp(-MathF.PI*1.5f,-MathF.PI*.5f,Ease(0,.28f,t));
+        DrawLine(Vector2.Zero,Vector2.FromAngle(hand)*77,face,5,true);
+        DrawCircle(Vector2.Zero,5,face);
+        if(t>=.28f)
+        {
+            Band(Vector2.Zero,new Vector2(radius*1.3f,radius*.42f),-MathF.PI,MathF.PI,14,0,white,false);
+            Splinters(burst,Vector2.Zero,gold,12,145);
+        }
+        Impact(t,.3f,gold);
     }
     private void Sword(Vector2 hilt,float length,float width,float angle,Color edge,Color core)
     {

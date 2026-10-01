@@ -25,6 +25,13 @@ func render_preview() -> void:
 		await process_frame
 		await RenderingServer.frame_post_draw
 		var rendered = viewport.get_texture().get_image()
+		for y in range(rendered.get_height()):
+			for x in range(rendered.get_width()):
+				var pixel = rendered.get_pixel(x,y)
+				if abs(pixel.r-pixel.g) > 0.005 or abs(pixel.g-pixel.b) > 0.005:
+					push_error("Clock transition must remain monochrome")
+					quit(1)
+					return
 		rendered.save_png(args[1]+"/reveal_%02d.png" % index)
 		if index == 0 and rendered.get_pixel(0,0).a < 0.999:
 			push_error("Start must be fully covered")
@@ -34,5 +41,5 @@ func render_preview() -> void:
 			push_error("End must be fully transparent")
 			quit(1)
 			return
-	print("PASS: clock shader rendered nine reveal frames; opaque start and transparent end")
+	print("PASS: nine monochrome reveal frames; opaque start and transparent end")
 	quit()

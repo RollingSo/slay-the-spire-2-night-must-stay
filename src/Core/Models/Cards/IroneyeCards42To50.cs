@@ -248,6 +248,8 @@ public sealed class RoadAlreadyTraveled : CardModel
 }
 
 // Card-table ID 47: 鬼步
+// Legacy model/asset names are retained for save compatibility. This is NOT 天眼形态;
+// the current 天眼形态 is NowhereToHide (NOWHERE_TO_HIDE), with nowhere_to_hide.png.
 public sealed class HeavenlyEyeForm : CardModel
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords =>

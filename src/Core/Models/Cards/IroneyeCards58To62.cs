@@ -63,7 +63,8 @@ public sealed class ThroatSeal : CardModel
         DynamicVars[HiddenPoisonKey].UpgradeValueBy(2m);
 }
 
-// Card-table ID 59: 无处可躲
+// Card-table ID 59: 天眼形态 (legacy model ID: NOWHERE_TO_HIDE).
+// Portrait: nowhere_to_hide.png. Do not confuse with HeavenlyEyeForm / 鬼步.
 public sealed class NowhereToHide : CardModel
 {
     private const string MarkKey = "Mark";

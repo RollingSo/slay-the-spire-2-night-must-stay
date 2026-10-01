@@ -29,7 +29,8 @@ void fragment() {
     hands = max(hands,1.0-smoothstep(0.009,0.009+aa,r));
     float visibility = smoothstep(0.0,0.14,phase)*(1.0-smoothstep(0.68,0.94,phase));
     float clock = max(max(ring,inner*0.5),max(marks,hands))*visibility;
-    vec3 ink = mix(vec3(0.72,0.63,0.43),vec3(0.282353,0.725490,0.929412),hands);
+    // White clock face markings and hands over the black transition mask.
+    vec3 ink = vec3(1.0);
     COLOR = vec4(ink*clock,max(cover,clock));
     if (threshold <= 0.0) { COLOR = vec4(0.0); }
     if (threshold >= 1.0) { COLOR = vec4(0.0,0.0,0.0,1.0); }

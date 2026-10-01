@@ -1,0 +1,30 @@
+[
+  {
+    "title": "救世形态",
+    "localizationKey": "SAVIOR_FORM.title",
+    "model": "SaviorForm",
+    "definition": "src/Core/Models/Cards/SaviorForm.cs",
+    "portrait": "packed/card_portraits/guardian/savior_form.png"
+  },
+  {
+    "title": "天眼形态",
+    "localizationKey": "NOWHERE_TO_HIDE.title",
+    "model": "NowhereToHide",
+    "definition": "src/Core/Models/Cards/IroneyeCards58To62.cs",
+    "portrait": "images/packed/card_portraits/ironeye/nowhere_to_hide.png"
+  },
+  {
+    "title": "鬼步",
+    "localizationKey": "HEAVENLY_EYE_FORM.title",
+    "model": "HeavenlyEyeForm",
+    "definition": "src/Core/Models/Cards/IroneyeCards42To50.cs",
+    "portrait": "images/packed/card_portraits/ironeye/heavenly_eye_form.png"
+  },
+  {
+    "title": "通灵形态",
+    "localizationKey": "SPIRIT_FORM.title",
+    "model": "SpiritForm",
+    "definition": "src/Core/Models/Cards/RevenantAdvancedCards.cs",
+    "portrait": "revenant_assets/cards/spirit_form.png"
+  }
+]

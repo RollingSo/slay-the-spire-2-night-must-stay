@@ -16,6 +16,12 @@ public static class DuchessAudio
 
     public static Cue[] AttackCues(DuchessAttackVfx.Kind kind) => kind switch
     {
+        DuchessAttackVfx.Kind.LorettaSlash => new[] {
+            new Cue(.06f,"slash_attack.mp3",.35f), new Cue(.42f,"frost_orb_evoke.mp3",.6f) },
+        DuchessAttackVfx.Kind.SilverStorm => new[] {
+            new Cue(.03f,"slash_attack.mp3",.4f), new Cue(.38f,"dagger_throw.mp3",.5f) },
+        DuchessAttackVfx.Kind.OpeningMoment => new[] {
+            new Cue(0,"glass_orb_channel.mp3",.35f), new Cue(.3f,"heavy_attack.mp3",.6f) },
         DuchessAttackVfx.Kind.Clock => new[] {
             new Cue(0, "glass_orb_channel.mp3", .35f),
             new Cue(.48f, "glass_orb_evoke.mp3", .6f) },

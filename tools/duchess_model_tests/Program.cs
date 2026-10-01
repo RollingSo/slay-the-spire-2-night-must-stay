@@ -66,7 +66,7 @@ if (clockAudio[1].At != .48f || clockAudio[1].File != "glass_orb_evoke.mp3")
 if (!NightMustStay.Core.Nodes.Vfx.DuchessAudio.AttackCues(NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Greatbow)
     .SequenceEqual(NightMustStay.Core.Nodes.Vfx.DuchessAudio.AttackCues(NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Mastery)))
     throw new Exception("Loretta's spells must share the same bow sound palette.");
-Console.WriteLine("PASS: all twelve Duchess VFX audio timelines and clock/bow synchronization.");
+Console.WriteLine("PASS: all Duchess VFX audio timelines and clock/bow synchronization.");
 foreach (var (card, expected) in new (CardModel, NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind)[] {
     (ModelDb.Card<DuchessRadiantBlade>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Glintblade),
     (ModelDb.Card<DuchessCarianSlicer>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Slicer),
@@ -81,12 +81,15 @@ foreach (var (card, expected) in new (CardModel, NightMustStay.Core.Nodes.Vfx.Du
     (ModelDb.Card<DuchessDeathBlade>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.DeathBlade),
     (ModelDb.Card<DuchessGoldenBlade>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.GoldenBlade),
     (ModelDb.Card<DuchessMiquellasHalo>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Miquella),
-    (ModelDb.Card<DuchessSacredHalo>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Sacred) })
+    (ModelDb.Card<DuchessSacredHalo>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Sacred),
+    (ModelDb.Card<DuchessLorettaSlash>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.LorettaSlash),
+    (ModelDb.Card<DuchessSilverStorm>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.SilverStorm),
+    (ModelDb.Card<DuchessOpeningMoment>(), NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.OpeningMoment) })
 {
     if (NightMustStay.Core.Nodes.Vfx.DuchessAttackEffects.KindFor(card) != expected)
         throw new Exception($"Incorrect Duchess VFX route: {card.Id}");
 }
-Console.WriteLine("PASS: all fourteen Duchess spell/reprise cards have explicit visual routes.");
+Console.WriteLine("PASS: all Duchess spell/reprise and three additional attack cards have explicit visual routes.");
 if (duchess.Id.Entry != "DUCHESS"
     || duchess.StartingHp != 66
     || duchess.StartingGold != 99

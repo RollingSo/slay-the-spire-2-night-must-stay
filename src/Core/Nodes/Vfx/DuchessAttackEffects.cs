@@ -23,6 +23,9 @@ public static class DuchessAttackEffects
         "DuchessGoldenBlade" => DuchessAttackVfx.Kind.GoldenBlade,
         "DuchessMiquellasHalo" => DuchessAttackVfx.Kind.Miquella,
         "DuchessSacredHalo" => DuchessAttackVfx.Kind.Sacred,
+        "DuchessLorettaSlash" => DuchessAttackVfx.Kind.LorettaSlash,
+        "DuchessSilverStorm" => DuchessAttackVfx.Kind.SilverStorm,
+        "DuchessOpeningMoment" => DuchessAttackVfx.Kind.OpeningMoment,
         _ => null
     };
 

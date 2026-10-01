@@ -15,9 +15,12 @@ public partial class Preview : Node2D
    AddChild(new DuchessReverseTimeVfx());
    return;
   }
-  foreach(var kind in Enum.GetValues<DuchessAttackVfx.Kind>())
+  bool extra=Array.Exists(OS.GetCmdlineUserArgs(),arg=>arg=="--extra-attacks");
+  var kinds=extra ? new[]{DuchessAttackVfx.Kind.LorettaSlash,DuchessAttackVfx.Kind.SilverStorm,DuchessAttackVfx.Kind.OpeningMoment} : Enum.GetValues<DuchessAttackVfx.Kind>();
+  int cell=0;
+  foreach(var kind in kinds)
   {
-   int index=(int)kind;
+   int index=cell++;
    var label=new Label { Text=kind.ToString(), Position=new Vector2(index%4*360+12,index/4*320+12) };
    AddChild(label);
    AddChild(new DuchessAttackVfx { AttackKind=kind, Source=new Vector2(-140,0), Position=new Vector2(index%4*360+205,index/4*320+175),Scale=new Vector2(.63f,.63f) });
