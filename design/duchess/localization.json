@@ -22,12 +22,12 @@
     ],
     "DUCHESS_RADIANT_BLADE_GROWTH_POWER.title": [
       "辉剑魔法",
-      "Radiant Blade Magic",
+      "Glintblade Magic",
       "輝剣の魔術"
     ],
     "DUCHESS_RADIANT_BLADE_GROWTH_POWER.description": [
       "每打出1张辉剑，本场战斗中所有辉剑的伤害增加{Amount}。",
-      "Each Radiant Blade played gives all Radiant Blades {Amount} damage for this combat.",
+      "Each Glintblade played gives all Glintblades {Amount} damage for this combat.",
       "輝剣をプレイするたび、この戦闘中すべての輝剣のダメージが{Amount}増える。"
     ],
     "DUCHESS_FULL_BLOCK_RADIANT_BLADE_POWER.title": [
@@ -37,7 +37,7 @@
     ],
     "DUCHESS_FULL_BLOCK_RADIANT_BLADE_POWER.description": [
       "本回合首次完全格挡住一次完整攻击时，将{Amount}张辉剑加入手牌。",
-      "The first time you fully block an entire attack this turn, add {Amount} Radiant Blades to your hand.",
+      "The first time you fully block an entire attack this turn, add {Amount} Glintblades to your hand.",
       "このターン初めて攻撃全体を完全に防いだとき、輝剣を{Amount}枚手札に加える。"
     ],
     "DUCHESS_END_TURN_DODGE_POWER.title": [

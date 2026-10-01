@@ -5,6 +5,7 @@ $cards = Get-Content (Join-Path $localization 'kor\cards.json') -Raw -Encoding U
 $chinese = Get-Content (Join-Path $localization 'zhs\cards.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 $failures = [System.Collections.Generic.List[string]]::new()
 $defendCount = 0
+$nameCatalog = Get-Content (Join-Path $root 'design/card_name_localization.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 $filterSource = Get-Content (Join-Path $root 'src\Core\Models\GuardianCardFilters.cs') -Raw -Encoding UTF8
 if (-not $filterSource.Contains('title.Contains("수비", StringComparison.OrdinalIgnoreCase)')) {
     $failures.Add('GuardianCardFilters must recognize Korean Defend names.')
@@ -14,10 +15,11 @@ foreach ($entry in $cards.PSObject.Properties) {
     $key = $entry.Name
     $text = [string]$entry.Value
     if ($key.EndsWith('.title')) {
-        # Preserve the Chinese design's Defend membership; translating a
-        # non-Defend title as "수비" would silently change its interactions.
+        # Official translated names no longer define custom-card mechanics.
+        # Check the fixed membership against each audited Chinese name instead.
         $isDefend = ([string]$chinese.PSObject.Properties[$key].Value).Contains('防御')
-        if ($isDefend -ne $text.Contains('수비')) {
+        if ($isDefend -ne ($key.Replace('.title', '') -in $nameCatalog.defendCardIds) -and
+            $key.Replace('.title', '') -in $nameCatalog.cards.PSObject.Properties.Name) {
             $failures.Add("$key changes Defend-name membership.")
         }
         if ($isDefend) { $defendCount++ }

@@ -56,8 +56,8 @@
   [
     "ElegantBearing",
     "优雅身段",
-    "Elegant Bearing",
-    "優雅な身ごなし",
+    "Magnificent Poise",
+    "華麗な身ごなし",
     0,
     "Skill",
     "Basic",
@@ -120,8 +120,8 @@
   [
     "GreatswordPhalanx",
     "巨剑阵",
-    "Greatsword Phalanx",
-    "大剣の円陣",
+    "Greatblade Phalanx",
+    "巨剣陣",
     2,
     "Skill",
     "Rare",
@@ -140,7 +140,7 @@
   [
     "MiquellasHalo",
     "米凯拉的光环",
-    "Miquella's Halo",
+    "Miquella's Ring of Light",
     "ミケラの光輪",
     0,
     "Attack",
@@ -494,9 +494,9 @@
   ],
   [
     "GlintstoneHail",
-    "辉石慧砾",
-    "Glintstone Hail",
-    "輝石のつぶて",
+    "辉石彗砾",
+    "Glintstone Dart",
+    "輝石の彗礫",
     0,
     "Attack",
     "Uncommon",
@@ -624,8 +624,8 @@
   [
     "RadiantBladeArray",
     "辉剑圆阵",
-    "Radiant Blade Array",
-    "輝剣円陣",
+    "Glintblade Phalanx",
+    "輝剣の円陣",
     1,
     "Skill",
     "Common",
@@ -779,8 +779,8 @@
   [
     "GapMoonshadow",
     "隙间月影",
-    "Gap Moonshadow",
-    "間隙の月影",
+    "Transient Moonlight",
+    "束の間の月影",
     1,
     "Attack",
     "Uncommon",
@@ -883,8 +883,8 @@
   [
     "Composure",
     "镇定",
-    "Composure",
-    "平静",
+    "Lucidity",
+    "冷静",
     1,
     "Power",
     "Uncommon",
@@ -919,8 +919,8 @@
   [
     "Finale",
     "落幕终章",
-    "Final Curtain",
-    "終幕の最終章",
+    "Finale",
+    "フィナーレ",
     2,
     "Skill",
     "Rare",
@@ -1008,8 +1008,8 @@
   [
     "MagicRadiantBlade",
     "魔法辉剑",
-    "Magic Radiant Blade",
-    "魔法の輝剣",
+    "Magic Glintblade",
+    "魔術の輝剣",
     0,
     "Skill",
     "Uncommon",
@@ -1028,8 +1028,8 @@
   ],
   [
     "CariaPhalanx",
-    "卡利亚剑阵",
-    "Caria Phalanx",
+    "卡利亚圆阵",
+    "Carian Phalanx",
     "カーリアの円陣",
     2,
     "Skill",
@@ -1050,7 +1050,7 @@
   [
     "AngelWings",
     "天使羽翼",
-    "Angel Wings",
+    "Angel's Wings",
     "天使の翼",
     2,
     "Attack",
@@ -1072,7 +1072,7 @@
   [
     "FallingMagic",
     "天降魔力",
-    "Falling Magic",
+    "Magic Downpour",
     "降り注ぐ魔力",
     0,
     "Skill",
@@ -1157,8 +1157,8 @@
   [
     "Reenactment",
     "重演",
-    "Reenactment",
-    "再演",
+    "Restage",
+    "リステージ",
     1,
     "Skill",
     "Uncommon",
@@ -1228,7 +1228,7 @@
   [
     "GoldenBlade",
     "黄金刀刃",
-    "Golden Blade",
+    "Blade of Gold",
     "黄金の刃",
     1,
     "Attack",
@@ -1299,7 +1299,7 @@
   [
     "RadiantBladeMagic",
     "辉剑魔法",
-    "Radiant Blade Magic",
+    "Glintblade Sorcery",
     "輝剣の魔術",
     1,
     "Power",
@@ -1318,7 +1318,7 @@
   [
     "DeathBlade",
     "死亡刀刃",
-    "Death Blade",
+    "Blade of Death",
     "死の刃",
     1,
     "Attack",
@@ -1452,7 +1452,7 @@
     "Duchess",
     "女爵",
     "Duchess",
-    "公爵夫人",
+    "レディ",
     0,
     "Skill",
     "Uncommon",
@@ -1585,8 +1585,8 @@
   [
     "BecomeInvisible",
     "化为无形",
-    "Become Invisible",
-    "姿を消す",
+    "Unseen Form",
+    "見えざる姿",
     0,
     "Skill",
     "Uncommon",
@@ -1605,7 +1605,7 @@
   [
     "RadiantBlade",
     "辉剑",
-    "Radiant Blade",
+    "Glintblade",
     "輝剣",
     0,
     "Attack",
@@ -1783,7 +1783,7 @@
     [["Damage", 11, 14]], {"all": true, "momentCostReductionDynamic": true}
   ],
   [
-    "SacredHalo", "神圣光环", "Sacred Halo", "聖なる光輪", 0, "Attack", "Common",
+    "SacredHalo", "神圣光环", "Sacred Ring of Light", "聖なる光輪", 0, "Attack", "Common",
     [["MomentDamage", 0, 0]], {"upgradeRetain": true}
   ],
   [
@@ -1799,7 +1799,7 @@
     [["ConcealedKillNextCombatStrength", 3, 3]], {"upgradeCost": 0}
   ],
   [
-    "GreatCaria", "伟哉卡利亚", "Great Caria", "偉大なるカーリア", 3, "Attack", "Rare",
+    "GreatCaria", "伟哉卡利亚", "Carian Grandeur", "グレート・カーリア", 3, "Attack", "Rare",
     [["Damage", 24, 32]], {"all": true, "reaction": true}
   ],
   [

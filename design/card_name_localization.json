@@ -1,0 +1,605 @@
+{
+  "schemaVersion": 1,
+  "notes": "Confirmed card-name audit, 2026-10-02. Composite names retain mod wording with official terminology; IDs and mechanics are unchanged.",
+  "cards": {
+    "WHIRLING_STRIKE": {
+      "zhs": "回旋击",
+      "eng": "Spinning Strikes",
+      "jpn": "回転撃",
+      "kor": "회전격",
+      "reference": "ArtsName.fmg/111"
+    },
+    "STORM_ASSAULT": {
+      "zhs": "风暴袭击",
+      "eng": "Storm Assault",
+      "jpn": "嵐の襲撃",
+      "kor": "폭풍의 습격",
+      "reference": "ArtsName.fmg/122"
+    },
+    "INVOKE_STORM": {
+      "zhs": "唤起风暴",
+      "eng": "Stormcaller",
+      "jpn": "嵐呼び",
+      "kor": "폭풍 부르기",
+      "reference": "ArtsName.fmg/123"
+    },
+    "PHANTOM_SPEAR": {
+      "zhs": "幻影枪",
+      "eng": "Spectral Lance",
+      "jpn": "幻影の槍",
+      "kor": "환영창",
+      "reference": "ArtsName.fmg/226"
+    },
+    "PHANTOM_CO_STRIKE": {
+      "zhs": "幻影共击",
+      "eng": "Phantom Slash",
+      "jpn": "共撃の幻",
+      "kor": "협공하는 환영",
+      "reference": "ArtsName.fmg/225"
+    },
+    "IRON_WALL_DEFEND": {
+      "zhs": "铁壁盾防",
+      "eng": "Barricade Shield",
+      "jpn": "鉄壁の盾",
+      "kor": "철벽의 방패",
+      "reference": "ArtsName.fmg/301"
+    },
+    "GUARDIAN_SANCTUARY": {
+      "zhs": "圣域",
+      "eng": "Holy Ground",
+      "jpn": "聖域",
+      "kor": "성역",
+      "reference": "ArtsName.fmg/702"
+    },
+    "GUARDIAN_ASSAULT": {
+      "zhs": "突击",
+      "eng": "Charge Forth",
+      "jpn": "突撃",
+      "kor": "돌격",
+      "reference": "ArtsName.fmg/105"
+    },
+    "STORM_KICK": {
+      "zhs": "风暴足",
+      "eng": "Storm Stomp",
+      "jpn": "嵐脚",
+      "kor": "남각",
+      "reference": "ArtsName.fmg/502"
+    },
+    "GIANT_HUNTER": {
+      "zhs": "狩猎巨人",
+      "eng": "Giant Hunt",
+      "jpn": "巨人狩り",
+      "kor": "거인 사냥",
+      "reference": "ArtsName.fmg/116"
+    },
+    "SHIELD_IMPACT": {
+      "zhs": "盾牌冲击",
+      "eng": "Shield Bash",
+      "jpn": "シールドバッシュ",
+      "kor": "방패 강타",
+      "reference": "ArtsName.fmg/300"
+    },
+    "STORM_BARRIER": {
+      "zhs": "风暴障壁",
+      "eng": "Storm Wall",
+      "jpn": "嵐の壁",
+      "kor": "폭풍의 벽",
+      "reference": "ArtsName.fmg/306"
+    },
+    "FULL_DRAW": {
+      "zhs": "拉满弓",
+      "eng": "Mighty Shot",
+      "jpn": "強射",
+      "kor": "강화 사격",
+      "reference": "ArtsName.fmg/402"
+    },
+    "CONTINUOUS_SHOOTING": {
+      "zhs": "连续射击",
+      "eng": "Barrage",
+      "jpn": "連続射撃",
+      "kor": "연속 사격",
+      "reference": "ArtsName.fmg/401"
+    },
+    "TWIN_KISS_POISON_MOTH": {
+      "zhs": "双吻毒蛾",
+      "eng": "Poison Moth Flight",
+      "jpn": "毒蛾は二度舞う",
+      "kor": "독나방은 두 번 춤춘다",
+      "reference": "ArtsName.fmg/119"
+    },
+    "ANTI_AIR_SHOT": {
+      "zhs": "对空射击",
+      "eng": "Sky Shot",
+      "jpn": "空撃ち",
+      "kor": "허공에 쏘기",
+      "reference": "ArtsName.fmg/405"
+    },
+    "SPIRIT_SHOT": {
+      "zhs": "宿灵射击",
+      "eng": "Enchanted Shot",
+      "jpn": "宿し撃ち",
+      "kor": "추적 사격",
+      "reference": "ArtsName.fmg/404"
+    },
+    "IRONEYE_ARROW_RAIN": {
+      "zhs": "箭雨",
+      "eng": "Rain of Arrows",
+      "jpn": "アローレイン",
+      "kor": "애로우 레인",
+      "reference": "ArtsName.fmg/406"
+    },
+    "HEARTPIERCING_ARROW": {
+      "zhs": "贯穿射击",
+      "eng": "Through and Through",
+      "jpn": "貫通射撃",
+      "kor": "관통 사격",
+      "reference": "ArtsName.fmg/400"
+    },
+    "POISON_BLADE": {
+      "zhs": "毒刃",
+      "eng": "Poison Armament",
+      "jpn": "毒の刃",
+      "kor": "독 칼날",
+      "reference": "GoodsName.fmg/7230"
+    },
+    "HALO": {
+      "zhs": "光环",
+      "eng": "Discus of Light",
+      "jpn": "光輪",
+      "kor": "빛고리",
+      "reference": "GoodsName.fmg/6700"
+    },
+    "PRECISE_LIGHTNING_STRIKE": {
+      "zhs": "精准雷击",
+      "eng": "Honed Bolt",
+      "jpn": "狙いすます雷撃",
+      "kor": "조준하는 뇌격",
+      "reference": "GoodsName.fmg/6930"
+    },
+    "THREEFOLD_HALO": {
+      "zhs": "化三光环",
+      "eng": "Triple Rings of Light",
+      "jpn": "三なる光輪",
+      "kor": "세 개의 빛고리",
+      "reference": "GoodsName.fmg/6701"
+    },
+    "ANCIENT_DRAGON_LIGHTNING": {
+      "zhs": "古龙雷击",
+      "eng": "Ancient Dragons' Lightning Strike",
+      "jpn": "古竜の雷撃",
+      "kor": "고룡의 뇌격",
+      "reference": "GoodsName.fmg/6910"
+    },
+    "LANSSEAX_BLADE": {
+      "zhs": "兰斯桑克斯的刀",
+      "eng": "Lansseax's Glaive",
+      "jpn": "ランサクスの薙刀",
+      "kor": "란삭스의 치도",
+      "reference": "GoodsName.fmg/6950"
+    },
+    "ANCIENT_DRAGON_SPEAR": {
+      "zhs": "古龙雷枪",
+      "eng": "Ancient Dragons' Lightning Spear",
+      "jpn": "古竜の雷槍",
+      "kor": "고룡의 뇌창",
+      "reference": "GoodsName.fmg/6940"
+    },
+    "RECOVER": {
+      "zhs": "恢复",
+      "eng": "Heal",
+      "jpn": "回復",
+      "kor": "회복",
+      "reference": "GoodsName.fmg/6421"
+    },
+    "SPACE_RENDING_FRENZY": {
+      "zhs": "划空癫火",
+      "eng": "Frenzied Burst",
+      "jpn": "空裂狂火",
+      "kor": "공열광화",
+      "reference": "GoodsName.fmg/7320"
+    },
+    "WHITE_SHADOW_LURE": {
+      "zhs": "白影诱惑",
+      "eng": "White Shadow's Lure",
+      "jpn": "白い影の誘い",
+      "kor": "흰 그림자의 유인",
+      "reference": "ArtsName.fmg/850"
+    },
+    "LIGHTNING_SPEAR": {
+      "zhs": "雷电枪",
+      "eng": "Lightning Spear",
+      "jpn": "雷の槍",
+      "kor": "벼락 창",
+      "reference": "GoodsName.fmg/6900"
+    },
+    "UNBEARABLE_FRENZY": {
+      "zhs": "难耐癫火",
+      "eng": "Unendurable Frenzy",
+      "jpn": "堪えきれぬ狂い火",
+      "kor": "참을 수 없는 미친 불",
+      "reference": "GoodsName.fmg/7311"
+    },
+    "BEASTSTONE": {
+      "zhs": "兽石",
+      "eng": "Bestial Sling",
+      "jpn": "獣の石",
+      "kor": "짐승의 돌",
+      "reference": "GoodsName.fmg/6800"
+    },
+    "RADAGON_HALO": {
+      "zhs": "拉达冈的光环",
+      "eng": "Radagon's Rings of Light",
+      "jpn": "ラダゴンの光輪",
+      "kor": "라다곤의 빛고리",
+      "reference": "GoodsName.fmg/6710"
+    },
+    "GREATER_RECOVER": {
+      "zhs": "大恢复",
+      "eng": "Great Heal",
+      "jpn": "大回復",
+      "kor": "대 회복",
+      "reference": "GoodsName.fmg/6422"
+    },
+    "BLESSING_OF_GRACE": {
+      "zhs": "恩惠赐福",
+      "eng": "Blessing's Boon",
+      "jpn": "恵みの祝福",
+      "kor": "은혜의 축복",
+      "reference": "GoodsName.fmg/6430"
+    },
+    "GURRANQS_ROCK": {
+      "zhs": "古兰格的岩石",
+      "eng": "Stone of Gurranq",
+      "jpn": "グラングの岩",
+      "kor": "그랭의 바위",
+      "reference": "GoodsName.fmg/6810"
+    },
+    "FRENZIED_FLAME": {
+      "zhs": "癫火",
+      "eng": "The Flame of Frenzy",
+      "jpn": "狂い火",
+      "kor": "미친 불",
+      "reference": "GoodsName.fmg/7310"
+    },
+    "KINGS_RECOVERY": {
+      "zhs": "王之恢复",
+      "eng": "Lord's Heal",
+      "jpn": "王たる回復",
+      "kor": "왕의 회복",
+      "reference": "GoodsName.fmg/6423"
+    },
+    "SOUL_CURSING_BELL": {
+      "zhs": "召咒魂铃",
+      "eng": "Wraith Calling Bell",
+      "jpn": "呪霊喚びの鈴",
+      "kor": "주령을 부르는 종",
+      "reference": "GoodsName.fmg/3080"
+    },
+    "ICE_LIGHTNING_SPEAR": {
+      "zhs": "冰雷枪",
+      "eng": "Frozen Lightning Spear",
+      "jpn": "氷の雷槍",
+      "kor": "얼음 뇌창",
+      "reference": "GoodsName.fmg/6921"
+    },
+    "DUCHESS_CARIAN_SLICER": {
+      "zhs": "卡利亚迅剑",
+      "eng": "Carian Slicer",
+      "jpn": "カーリアの速剣",
+      "kor": "카리아의 속검",
+      "reference": "GoodsName.fmg/4440"
+    },
+    "DUCHESS_GREATSWORD_PHALANX": {
+      "zhs": "巨剑阵",
+      "eng": "Greatblade Phalanx",
+      "jpn": "巨剣陣",
+      "kor": "거검진",
+      "reference": "GoodsName.fmg/4302"
+    },
+    "DUCHESS_MIQUELLAS_HALO": {
+      "zhs": "米凯拉的光环",
+      "eng": "Miquella's Ring of Light",
+      "jpn": "ミケラの光輪",
+      "kor": "미켈라의 빛고리",
+      "reference": "ArtsName.fmg/1051"
+    },
+    "DUCHESS_RADIANT_BLADE_ARRAY": {
+      "zhs": "辉剑圆阵",
+      "eng": "Glintblade Phalanx",
+      "jpn": "輝剣の円陣",
+      "kor": "휘검의 원진",
+      "reference": "ArtsName.fmg/200"
+    },
+    "DUCHESS_GAP_MOONSHADOW": {
+      "zhs": "隙间月影",
+      "eng": "Transient Moonlight",
+      "jpn": "束の間の月影",
+      "kor": "순간의 달그림자",
+      "reference": "ArtsName.fmg/1178"
+    },
+    "DUCHESS_COMPOSURE": {
+      "zhs": "镇定",
+      "eng": "Lucidity",
+      "jpn": "冷静",
+      "kor": "냉정",
+      "reference": "GoodsName.fmg/4480"
+    },
+    "DUCHESS_MAGIC_RADIANT_BLADE": {
+      "zhs": "魔法辉剑",
+      "eng": "Magic Glintblade",
+      "jpn": "魔術の輝剣",
+      "kor": "마술의 휘검",
+      "reference": "GoodsName.fmg/4390"
+    },
+    "DUCHESS_ANGEL_WINGS": {
+      "zhs": "天使羽翼",
+      "eng": "Angel's Wings",
+      "jpn": "天使の翼",
+      "kor": "천사의 날개",
+      "reference": "ArtsName.fmg/1189"
+    },
+    "DUCHESS_FALLING_MAGIC": {
+      "zhs": "天降魔力",
+      "eng": "Magic Downpour",
+      "jpn": "降り注ぐ魔力",
+      "kor": "쏟아지는 마력",
+      "reference": "GoodsName.fmg/4370"
+    },
+    "DUCHESS_GOLDEN_BLADE": {
+      "zhs": "黄金刀刃",
+      "eng": "Blade of Gold",
+      "jpn": "黄金の刃",
+      "kor": "황금 칼날",
+      "reference": "ArtsName.fmg/1037"
+    },
+    "DUCHESS_CARIAN_GREATSWORD": {
+      "zhs": "卡利亚大剑",
+      "eng": "Carian Greatsword",
+      "jpn": "カーリアの大剣",
+      "kor": "카리아의 대검",
+      "reference": "ArtsName.fmg/219"
+    },
+    "DUCHESS_CARIAN_PIERCER": {
+      "zhs": "卡利亚贯刺",
+      "eng": "Carian Piercer",
+      "jpn": "カーリアの貫き",
+      "kor": "카리아의 찌르기",
+      "reference": "GoodsName.fmg/4450"
+    },
+    "DUCHESS_DEATH_BLADE": {
+      "zhs": "死亡刀刃",
+      "eng": "Blade of Death",
+      "jpn": "死の刃",
+      "kor": "죽음의 칼날",
+      "reference": "ArtsName.fmg/1036"
+    },
+    "DUCHESS_LORETTA_MASTERY": {
+      "zhs": "罗蕾塔的绝招",
+      "eng": "Loretta's Mastery",
+      "jpn": "ローレッタの絶技",
+      "kor": "로레타의 묘기",
+      "reference": "GoodsName.fmg/4381"
+    },
+    "DUCHESS_LORETTA_GREATBOW": {
+      "zhs": "罗蕾塔的大弓",
+      "eng": "Loretta's Greatbow",
+      "jpn": "ローレッタの大弓",
+      "kor": "로레타의 대궁",
+      "reference": "GoodsName.fmg/4380"
+    },
+    "DUCHESS_BECOME_INVISIBLE": {
+      "zhs": "化为无形",
+      "eng": "Unseen Form",
+      "jpn": "見えざる姿",
+      "kor": "보이지 않는 모습",
+      "reference": "GoodsName.fmg/4670"
+    },
+    "DUCHESS_LORETTA_SLASH": {
+      "zhs": "罗蕾塔的斩击",
+      "eng": "Loretta's Slash",
+      "jpn": "ローレッタの斬撃",
+      "kor": "로레타의 참격",
+      "reference": "ArtsName.fmg/118"
+    },
+    "DUCHESS_SACRED_HALO": {
+      "zhs": "神圣光环",
+      "eng": "Sacred Ring of Light",
+      "jpn": "聖なる光輪",
+      "kor": "성스러운 빛고리",
+      "reference": "ArtsName.fmg/222"
+    },
+    "DUCHESS_GREAT_CARIA": {
+      "zhs": "伟哉卡利亚",
+      "eng": "Carian Grandeur",
+      "jpn": "グレート・カーリア",
+      "kor": "그레이트 카리아",
+      "reference": "ArtsName.fmg/218"
+    },
+    "SAVIOR_SPREAD_WINGS": {
+      "zhs": "救世展翼",
+      "eng": "Wings of Salvation",
+      "jpn": "救世の翼",
+      "kor": "구세의 날개",
+      "reference": "G;JP;KO"
+    },
+    "GUARDIAN_WHIRLWIND": {
+      "zhs": "旋风",
+      "eng": "Whirlwind",
+      "jpn": "つむじ風",
+      "kor": "회오리",
+      "reference": "G;JP;KO"
+    },
+    "IRONEYE_MARK": {
+      "zhs": "标记",
+      "eng": "Marking",
+      "jpn": "マーキング",
+      "kor": "마킹",
+      "reference": "I;JP;STEAM"
+    },
+    "IRON_EYE": {
+      "zhs": "铁之眼",
+      "eng": "Ironeye",
+      "jpn": "鉄の目",
+      "kor": "철의 눈",
+      "reference": "I;JP;STEAM"
+    },
+    "UNDYING_MARCH": {
+      "zhs": "不死行军",
+      "eng": "Immortal March",
+      "jpn": "不死の行進",
+      "kor": "불사의 행진",
+      "reference": "R;JP;STEAM"
+    },
+    "DUCHESS_REENACTMENT": {
+      "zhs": "重演",
+      "eng": "Restage",
+      "jpn": "リステージ",
+      "kor": "재상영",
+      "reference": "D;JP;KO;STEAM"
+    },
+    "DUCHESS_DUCHESS": {
+      "zhs": "女爵",
+      "eng": "Duchess",
+      "jpn": "レディ",
+      "kor": "레이디",
+      "reference": "D;JP;KO"
+    },
+    "GUARD_COUNTER_CARD": {
+      "zhs": "防御反击",
+      "eng": "Guard Counter",
+      "jpn": "ガードカウンター",
+      "kor": "가드 카운터",
+      "reference": "GC;ER:TutorialTitle.fmg/302400"
+    },
+    "OBSERVATION": {
+      "zhs": "观察力",
+      "eng": "Discovery",
+      "jpn": "発見力",
+      "kor": "발견력",
+      "reference": "ER:GR_MenuText.fmg/10562"
+    },
+    "DUCHESS_CARIAN_RETALIATION": {
+      "zhs": "卡利亚式奉还",
+      "eng": "Carian Retaliation",
+      "jpn": "カーリアの返報",
+      "kor": "카리아의 응보",
+      "reference": "GoodsName.fmg/4640；用户确认采用法术"
+    },
+    "DUCHESS_GLINTSTONE_HAIL": {
+      "zhs": "辉石彗砾",
+      "eng": "Glintstone Dart",
+      "jpn": "輝石の彗礫",
+      "kor": "휘석의 혜성",
+      "reference": "ArtsName.fmg/1017；辉石克力士专用战技"
+    },
+    "DUCHESS_CARIA_PHALANX": {
+      "zhs": "卡利亚圆阵",
+      "eng": "Carian Phalanx",
+      "jpn": "カーリアの円陣",
+      "kor": "카리아의 원진",
+      "reference": "GoodsName.fmg/4301；用户确认中文更名"
+    },
+    "EMERGENCY_RESTORE": {
+      "zhs": "紧急恢复",
+      "eng": "Urgent Heal",
+      "jpn": "性急な回復",
+      "kor": "성급한 회복",
+      "reference": "GoodsName.fmg/6420；用户确认中文更名"
+    },
+    "WILLOW_PIERCING_ARROW": {
+      "zhs": "穿杨一箭",
+      "eng": "Single Shot",
+      "jpn": "ワンショット",
+      "kor": "원 샷",
+      "reference": "I；JP；Inven 韩文游戏图鉴；用户确认铁之眼绝招"
+    },
+    "DUCHESS_FINALE": {
+      "zhs": "落幕终章",
+      "eng": "Finale",
+      "jpn": "フィナーレ",
+      "kor": "피날레",
+      "reference": "D；JP；KO；用户确认女爵绝招"
+    },
+    "DUCHESS_ELEGANT_BEARING": {
+      "zhs": "优雅身段",
+      "eng": "Magnificent Poise",
+      "jpn": "華麗な身ごなし",
+      "kor": "화려한 몸놀림",
+      "reference": "D；Gamerch 日文游戏图鉴；Inven 韩文游戏图鉴；用户确认女爵被动"
+    },
+    "POWERFUL_DEFEND": {
+      "zhs": "强力防御",
+      "eng": "Steel Guard",
+      "jpn": "ハイガード",
+      "kor": "하이가드",
+      "reference": "G；https://eldenring.inven.co.kr/dataninfo/class/?bidx=306434；https://game8.jp/eldenring-nightreign/696504"
+    },
+    "POWERFUL_GUARD_COUNTER": {
+      "zhs": "强力防御反击",
+      "eng": "Powerful Guard Counter",
+      "jpn": "強力なガードカウンター",
+      "kor": "강력한 가드 카운터",
+      "reference": "Composite/token terminology based on confirmed official names"
+    },
+    "ULTIMATE_DEFEND_COUNTER": {
+      "zhs": "究极防御反击",
+      "eng": "Ultimate Guard Counter",
+      "jpn": "究極のガードカウンター",
+      "kor": "궁극의 가드 카운터",
+      "reference": "Composite/token terminology based on confirmed official names"
+    },
+    "DUCHESS_RADIANT_BLADE": {
+      "zhs": "辉剑",
+      "eng": "Glintblade",
+      "jpn": "輝剣",
+      "kor": "휘검",
+      "reference": "Composite/token terminology based on confirmed official names"
+    },
+    "DUCHESS_RADIANT_BLADE_MAGIC": {
+      "zhs": "辉剑魔法",
+      "eng": "Glintblade Sorcery",
+      "jpn": "輝剣の魔術",
+      "kor": "휘검 마술",
+      "reference": "Composite/token terminology based on confirmed official names"
+    },
+    "DUCHESS_RESTAGE": {
+      "zhs": "短剑重演",
+      "eng": "Dagger Restage",
+      "jpn": "短剣のリステージ",
+      "kor": "단검 재상영",
+      "reference": "Composite/token terminology based on confirmed official names"
+    },
+    "DUCHESS_ETERNAL_RESTAGE": {
+      "zhs": "永不落幕的重演",
+      "eng": "Eternal Restage",
+      "jpn": "終わらぬリステージ",
+      "kor": "끝나지 않는 재상영",
+      "reference": "Composite/token terminology based on confirmed official names"
+    },
+    "DUCHESS_DODGE": {
+      "zhs": "闪避",
+      "eng": "Dodge",
+      "jpn": "回避",
+      "kor": "회피",
+      "reference": "Composite/token terminology based on confirmed official names"
+    }
+  },
+  "defendCardIds": [
+    "ABSOLUTE_DEFENSE",
+    "DEFEND_GUARDIAN",
+    "DEFEND_IRONEYE",
+    "DEFEND_REVENANT",
+    "DEFENSIVE_REINFORCEMENT",
+    "DUCHESS_DEFEND",
+    "EMERGENCY_DEFEND",
+    "EVOLVED_DEFEND",
+    "GUARD_COUNTER_CARD",
+    "POWERFUL_DEFEND",
+    "POWERFUL_GUARD_COUNTER",
+    "PROTECTIVE_AIRSTREAM",
+    "RETREATING_DEFENSE",
+    "SHARED_GREAT_SHIELD",
+    "SLOW_DEFEND",
+    "ULTIMATE_DEFEND_COUNTER"
+  ]
+}

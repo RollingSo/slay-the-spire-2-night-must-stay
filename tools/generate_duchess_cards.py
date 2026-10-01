@@ -12,6 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 ROWS = json.loads((ROOT / 'design/duchess/cards.json').read_text(encoding='utf-8'))
+NAME_LOCALIZATION = json.loads((ROOT / 'design/card_name_localization.json').read_text(encoding='utf-8'))['cards']
 
 def validate_upgrade_contracts():
     keyword_flags = {'upgradeRetain', 'upgradeInnate', 'upgradeRemoveExhaust'}
@@ -131,8 +132,8 @@ def effects_text(row, language, upgraded=False):
                 'MomentBonusDamage': [f'伤害增加{var}。', f'Increase damage by {var}.', f'ダメージが{var}増加する。'],
                 'DrawReactionDamageBoost': [f'抽到这张牌时，使其在下次打出前伤害增加{var}。', f'When drawn, this card deals {var} more damage until it is next played.', f'このカードを引いたとき、次にプレイするまでダメージが{var}増加する。'],
                 'DrawReactionFromPile': ['从[gold]抽牌堆[/gold]中随机抽取1张[gold]反应[/gold]牌。', 'Draw 1 random [gold]Reaction[/gold] card from your [gold]draw pile[/gold].', '[gold]山札[/gold]からランダムな[gold]リアクション[/gold]のカードを1枚引く。'],
-                'RadiantBladeGrowth': [f'每打出1张[gold]辉剑[/gold]，本场战斗中所有[gold]辉剑[/gold]的伤害+{var}。', f'Whenever you play a [gold]Radiant Blade[/gold], all [gold]Radiant Blades[/gold] gain {var} damage for this combat.', f'[gold]輝剣[/gold]をプレイするたび、この戦闘中すべての[gold]輝剣[/gold]のダメージが{var}増加する。'],
-                'FullBlockRadiantBlade': [f'本回合首次完全[gold]格挡[/gold]住一次完整攻击时，将{var}张[gold]辉剑[/gold]加入[gold]手牌[/gold]。', f'The first time you fully [gold]block[/gold] an entire attack this turn, add {var} [gold]Radiant Blades[/gold] to your [gold]hand[/gold].', f'このターン初めて攻撃全体を完全に防いだとき、[gold]輝剣[/gold]を{var}枚[gold]手札[/gold]に加える。'],
+                'RadiantBladeGrowth': [f'每打出1张[gold]辉剑[/gold]，本场战斗中所有[gold]辉剑[/gold]的伤害+{var}。', f'Whenever you play a [gold]Glintblade[/gold], all [gold]Glintblades[/gold] gain {var} damage for this combat.', f'[gold]輝剣[/gold]をプレイするたび、この戦闘中すべての[gold]輝剣[/gold]のダメージが{var}増加する。'],
+                'FullBlockRadiantBlade': [f'本回合首次完全[gold]格挡[/gold]住一次完整攻击时，将{var}张[gold]辉剑[/gold]加入[gold]手牌[/gold]。', f'The first time you fully [gold]block[/gold] an entire attack this turn, add {var} [gold]Glintblades[/gold] to your [gold]hand[/gold].', f'このターン初めて攻撃全体を完全に防いだとき、[gold]輝剣[/gold]を{var}枚[gold]手札[/gold]に加える。'],
                 'EndTurnDodge': [f'回合结束时，将{var}张[gold]{dodge}[/gold]洗入[gold]抽牌堆[/gold]。', f'At the end of your turn, shuffle {var} [gold]{dodge}[/gold] into your [gold]draw pile[/gold].', f'ターン終了時、[gold]{dodge}[/gold]を{var}枚[gold]山札[/gold]に加えてシャッフルする。'],
                 'EndTurnRetain': [f'本回合结束时，[gold]保留[/gold]最多{var}张[gold]手牌[/gold]。', f'At the end of this turn, [gold]retain[/gold] up to {var} cards from your [gold]hand[/gold].', f'このターン終了時、[gold]手札[/gold]から最大{var}枚保留する。'],
                 'MomentFiveFirstEnergy': ['回合中[gold]时刻[/gold]首次到达5时，获得{MomentFiveFirstEnergy:energyIcons()}。', 'The first time [gold]Moment[/gold] reaches 5 each turn, gain {MomentFiveFirstEnergy:energyIcons()}.', '各ターン初めて[gold]時刻[/gold]が5に到達したとき、{MomentFiveFirstEnergy:energyIcons()}を得る。'],
@@ -168,13 +169,13 @@ def effects_text(row, language, upgraded=False):
                 'NextTurnEnergy': ['下回合开始时，获得{NextTurnEnergy:energyIcons()}。', 'At the start of next turn, gain {NextTurnEnergy:energyIcons()}.', '次のターン開始時、{NextTurnEnergy:energyIcons()}を得る。'],
                 'NextTurnDraw': [f'下回合开始时，抽{var}张牌。', f'At the start of next turn, draw {var} cards.', f'次のターン開始時、カードを{var}枚引く。'],
                 'NextTurnEnergyAndDraw': [f'下回合开始时，获得1能量并抽{var}张牌。', f'At the start of next turn, gain 1 Energy and draw {var} card(s).', f'次のターン開始時、エナジーを1得て、カードを{var}枚引く。'],
-                'RadiantBladeToDraw': [f'将{var}张[gold]{["辉剑", "Radiant Blade", "輝剣"][language] + ("+" if upgraded and opt.get("upgradeTokens") else "")}[/gold]洗入[gold]抽牌堆[/gold]。', f'Shuffle {var} [gold]{"Radiant Blade+" if upgraded and opt.get("upgradeTokens") else "Radiant Blade"}[/gold] cards into your [gold]draw pile[/gold].', f'[gold]{"輝剣+" if upgraded and opt.get("upgradeTokens") else "輝剣"}[/gold]を{var}枚[gold]山札[/gold]に加えてシャッフルする。'],
-                'InstinctRadiantBladesToDraw': [f'将{var}张带有[gold]本能[/gold]的[gold]{"辉剑+" if upgraded and opt.get("upgradeTokens") else "辉剑"}[/gold]洗入[gold]抽牌堆[/gold]。', f'Shuffle {var} [gold]{"Radiant Blade+" if upgraded and opt.get("upgradeTokens") else "Radiant Blade"}[/gold] cards with [gold]Instinct[/gold] into your [gold]draw pile[/gold].', f'[gold]本能[/gold]を付与した[gold]{"輝剣+" if upgraded and opt.get("upgradeTokens") else "輝剣"}[/gold]を{var}枚[gold]山札[/gold]に加えてシャッフルする。'],
+                'RadiantBladeToDraw': [f'将{var}张[gold]{["辉剑", "Glintblade", "輝剣"][language] + ("+" if upgraded and opt.get("upgradeTokens") else "")}[/gold]洗入[gold]抽牌堆[/gold]。', f'Shuffle {var} [gold]{"Glintblade+" if upgraded and opt.get("upgradeTokens") else "Glintblade"}[/gold] cards into your [gold]draw pile[/gold].', f'[gold]{"輝剣+" if upgraded and opt.get("upgradeTokens") else "輝剣"}[/gold]を{var}枚[gold]山札[/gold]に加えてシャッフルする。'],
+                'InstinctRadiantBladesToDraw': [f'将{var}张带有[gold]本能[/gold]的[gold]{"辉剑+" if upgraded and opt.get("upgradeTokens") else "辉剑"}[/gold]洗入[gold]抽牌堆[/gold]。', f'Shuffle {var} [gold]{"Glintblade+" if upgraded and opt.get("upgradeTokens") else "Glintblade"}[/gold] cards with [gold]Instinct[/gold] into your [gold]draw pile[/gold].', f'[gold]本能[/gold]を付与した[gold]{"輝剣+" if upgraded and opt.get("upgradeTokens") else "輝剣"}[/gold]を{var}枚[gold]山札[/gold]に加えてシャッフルする。'],
                 'MomentDamage': [f'造成等同于当前[gold]时刻[/gold]的伤害（{{CalculatedDamage:diff()}}点）{("X+1" if upgraded and opt.get("upgradeX") else "X") if opt.get("xCost") else ""}次。', f'Deal damage equal to your current [gold]Moment[/gold] ({{CalculatedDamage:diff()}}) {("X+1" if upgraded and opt.get("upgradeX") else "X") if opt.get("xCost") else "once"}.', f'現在の[gold]時刻[/gold]に等しいダメージ（{{CalculatedDamage:diff()}}）を{("X+1" if upgraded and opt.get("upgradeX") else "X") if opt.get("xCost") else "1"}回与える。'],
                 'MomentExtraHits': [f'伤害次数+{var}。', f'Hit {var} additional times.', f'攻撃回数+{var}。'],
                 'ReturnSelfToDrawTop': ['将这张牌放到[gold]抽牌堆[/gold]顶部。', 'Put this card on top of your [gold]draw pile[/gold].', 'このカードを[gold]山札[/gold]の一番上に置く。'],
-                'RadiantBladeToHand': [f'将{var}张[gold]{["辉剑", "Radiant Blade", "輝剣"][language] + ("+" if upgraded and opt.get("upgradeTokens") else "")}[/gold]加入[gold]手牌[/gold]。', f'Add {var} [gold]{"Radiant Blade+" if upgraded and opt.get("upgradeTokens") else "Radiant Blade"}[/gold] cards to your [gold]hand[/gold].', f'[gold]{"輝剣+" if upgraded and opt.get("upgradeTokens") else "輝剣"}[/gold]を{var}枚[gold]手札[/gold]に加える。'],
-                'RadiantBladeTurns': [f'接下来X{"+1" if upgraded and opt.get("upgradeX") else ""}个回合，在回合开始时将1张[gold]辉剑[/gold]加入[gold]手牌[/gold]。', f'For the next X{"+1" if upgraded and opt.get("upgradeX") else ""} turns, add 1 [gold]Radiant Blade[/gold] to your [gold]hand[/gold] at the start of your turn.', f'次のX{"+1" if upgraded and opt.get("upgradeX") else ""}ターンの間、ターン開始時に[gold]輝剣[/gold]1枚を[gold]手札[/gold]に加える。'],
+                'RadiantBladeToHand': [f'将{var}张[gold]{["辉剑", "Glintblade", "輝剣"][language] + ("+" if upgraded and opt.get("upgradeTokens") else "")}[/gold]加入[gold]手牌[/gold]。', f'Add {var} [gold]{"Glintblade+" if upgraded and opt.get("upgradeTokens") else "Glintblade"}[/gold] cards to your [gold]hand[/gold].', f'[gold]{"輝剣+" if upgraded and opt.get("upgradeTokens") else "輝剣"}[/gold]を{var}枚[gold]手札[/gold]に加える。'],
+                'RadiantBladeTurns': [f'接下来X{"+1" if upgraded and opt.get("upgradeX") else ""}个回合，在回合开始时将1张[gold]辉剑[/gold]加入[gold]手牌[/gold]。', f'For the next X{"+1" if upgraded and opt.get("upgradeX") else ""} turns, add 1 [gold]Glintblade[/gold] to your [gold]hand[/gold] at the start of your turn.', f'次のX{"+1" if upgraded and opt.get("upgradeX") else ""}ターンの間、ターン開始時に[gold]輝剣[/gold]1枚を[gold]手札[/gold]に加える。'],
                 'ShuffleGrowth': [f'每次被洗入[gold]抽牌堆[/gold]后，伤害增加{var}。', f'Whenever this is shuffled into your [gold]draw pile[/gold], increase its damage by {var}.', f'[gold]山札[/gold]に加えてシャッフルされるたび、ダメージが{var}増加する。'],
                 'Intangible': [f'获得{var}层[gold]无实体[/gold]。', f'Gain {var} [gold]Intangible[/gold].', f'[gold]無形[/gold]{var}を得る。'],
                 'FutureMomentEnergy': ['下个回合到达[gold]时刻4[/gold]时，获得{FutureMomentEnergy:energyIcons()}。', 'When you reach [gold]Moment 4[/gold] next turn, gain {FutureMomentEnergy:energyIcons()}.', '次のターン[gold]時刻4[/gold]に到達した時、{FutureMomentEnergy:energyIcons()}を得る。'],
@@ -334,7 +335,16 @@ public sealed class DuchessCardPool : CardPoolModel
             data[key + '.description'] = runtime_description(row, lang)
             data[key + '.upgradeDescription'] = effects_text(row, lang, True)
         data.update({key: values[lang] for key, values in support.get('cards', {}).items()})
+        for card_id, names in NAME_LOCALIZATION.items():
+            if card_id + '.title' in data:
+                data[card_id + '.title'] = names[locale]
         yield path, json.dumps(data, ensure_ascii=False, indent=2) + '\n'
+    # Korean rules are authored separately; never restore English fallback titles.
+    path = ROOT / 'NightMustStay/localization/kor/cards.json'
+    data = json.loads(path.read_text(encoding='utf-8-sig'))
+    for card_id, names in NAME_LOCALIZATION.items():
+        data[card_id + '.title'] = names['kor']
+    yield path, json.dumps(data, ensure_ascii=False, indent=2) + '\n'
     if support:
         for table, entries in support.items():
             if table == 'cards' or not entries:
