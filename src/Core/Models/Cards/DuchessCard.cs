@@ -224,13 +224,13 @@ public abstract class DuchessCard : CardModel
             foreach (DuchessEffect effect in Spec.Effects)
             {
                 if (effect.Kind is "DodgeToDraw" or "DodgeToDrawTop" or "DodgeToHand" or "AllyDodge"
-                    or "EndTurnDodge" or "AllyDodgeDrawX")
+                    or "EndTurnDodge" or "AllyDodgeDrawX" or "TransformDrawToDodge")
                     foreach (IHoverTip tip in HoverTipFactory.FromCardWithCardHoverTips<DuchessDodge>(IsUpgraded && Spec.UpgradeTokens))
                         yield return tip;
                 if (effect.Kind is "RadiantBladeToDraw" or "RadiantBladeToHand" or "RadiantBladeTurns"
-                    or "InstinctRadiantBladesToDraw" or "FullBlockRadiantBlade" or "RadiantBladeGrowth")
+                    or "InstinctRadiantBladesToDraw" or "FullBlockRadiantBlade" or "RadiantBladeGrowth" or "TransformDrawToRadiantBlade")
                     foreach (IHoverTip tip in HoverTipFactory.FromCardWithCardHoverTips<DuchessRadiantBlade>(
-                                 effect.Kind is "RadiantBladeToDraw" or "RadiantBladeToHand" or "InstinctRadiantBladesToDraw" && IsUpgraded && Spec.UpgradeTokens))
+                                 effect.Kind is "RadiantBladeToDraw" or "RadiantBladeToHand" or "InstinctRadiantBladesToDraw" or "TransformDrawToRadiantBlade" && IsUpgraded && Spec.UpgradeTokens))
                         yield return tip;
                 if (effect.Kind == "InstinctRadiantBladesToDraw")
                     foreach (IHoverTip tip in HoverTipFactory.FromEnchantment<Instinct>())
@@ -362,6 +362,15 @@ public abstract class DuchessCard : CardModel
             switch (effect.Kind)
             {
                 case "Damage":
+                    if (DynamicVars.TryGetValue("ShuffleHandDamage", out DynamicVar shuffleDamage))
+                    {
+                        CardPile hand = PileType.Hand.GetPile(Owner);
+                        var selected = (await CardSelectCmd.FromCombatPile(context, hand, Owner,
+                            new CardSelectorPrefs(new LocString("cards", "DUCHESS_SELECT_TO_SHUFFLE"), 0, hand.Cards.Count))).ToArray();
+                        foreach (CardModel card in selected)
+                            await CardPileCmd.Add(card, PileType.Draw, CardPilePosition.Random, this);
+                        amount += selected.Length * shuffleDamage.BaseValue;
+                    }
                     if (this is DuchessMidnightWaltz)
                     {
                         await NightMustStay.Core.Nodes.Vfx.DuchessMidnightWaltzVfx.PlayPrelude(Owner.Creature);
@@ -551,7 +560,28 @@ public abstract class DuchessCard : CardModel
                 // DuchessMomentPower.ModifyCardPlayCount. The engine then
                 // creates each replay as its own native CardPlay.
                 case "Replay": break;
-                case "ShuffleGrowth": break;
+                case "ShuffleGrowth":
+                case "ShuffleHandDamage": break;
+                case "TransformDrawToDodge":
+                case "TransformDrawToRadiantBlade":
+                    CardPile draw = PileType.Draw.GetPile(Owner);
+                    int count = Math.Min((int)amount, draw.Cards.Count(card => card.IsTransformable));
+                    if (count == 0) break;
+                    var transforms = (await CardSelectCmd.FromCombatPile(context, draw, Owner,
+                        new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, count),
+                        card => card.IsTransformable)).ToArray();
+                    foreach (CardModel card in transforms)
+                    {
+                        CardModel replacement = effect.Kind == "TransformDrawToDodge"
+                            ? CombatState.CreateCard<DuchessDodge>(Owner)
+                            : CombatState.CreateCard<DuchessRadiantBlade>(Owner);
+                        if (IsUpgraded && Spec.UpgradeTokens) CardCmd.Upgrade(replacement);
+                        if (replacement is DuchessRadiantBlade
+                            && Owner.Creature.GetPower<DuchessRadiantBladeGrowthPower>() is { } growthPower)
+                            replacement.DynamicVars.Damage.BaseValue += growthPower.TotalGrowth;
+                        await CardCmd.Transform(card, replacement);
+                    }
+                    break;
                 case "ShuffleAoeDamage": break;
                 case "ReturnSelfToDrawTop":
                     await CardPileCmd.Add(this, PileType.Draw, CardPilePosition.Top, this);

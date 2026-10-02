@@ -86,9 +86,9 @@
       "終わらぬリステージ"
     ],
     "DUCHESS_ETERNAL_RESTAGE_POWER.description": [
-      "到达时刻12时结束你的回合；每回合结束时，本回合每造成过3点伤害，对所有敌人造成1点伤害。",
-      "End your turn on reaching Moment 12; at end of turn, deal 1 damage to all enemies per 3 damage dealt this turn.",
-      "時刻12に到達したときターンを終了する。ターン終了時、このターン与えたダメージ3につき敵全体に1ダメージを与える。"
+      "到达时刻12时结束你的回合；每回合结束时，本回合每造成过3点伤害，对所有敌人造成1点伤害。 NL 本回合结束时将造成{PendingDamage}点伤害。",
+      "End your turn on reaching Moment 12; at end of turn, deal 1 damage to all enemies per 3 damage dealt this turn. NL Pending end-of-turn damage: {PendingDamage}.",
+      "時刻12に到達したときターンを終了する。ターン終了時、このターン与えたダメージ3につき敵全体に1ダメージを与える。 NL このターン終了時のダメージ：{PendingDamage}。"
     ],
     "DUCHESS_REPLAY_MOMENT_THREE_POWER.title": [
       "完美预演",

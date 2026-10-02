@@ -274,7 +274,7 @@
   "DUCHESS_MOMENT_FIVE_BLOCK_POWER.title": "Golden Moment",
   "DUCHESS_MOMENT_FIVE_BLOCK_POWER.description": "When Moment reaches 5, gain {Amount} Block.",
   "DUCHESS_ETERNAL_RESTAGE_POWER.title": "Eternal Restage",
-  "DUCHESS_ETERNAL_RESTAGE_POWER.description": "End your turn on reaching Moment 12; at end of turn, deal 1 damage to all enemies per 3 damage dealt this turn.",
+  "DUCHESS_ETERNAL_RESTAGE_POWER.description": "End your turn on reaching Moment 12; at end of turn, deal 1 damage to all enemies per 3 damage dealt this turn. NL Pending end-of-turn damage: {PendingDamage}.",
   "DUCHESS_REPLAY_MOMENT_THREE_POWER.title": "Perfect Rehearsal",
   "DUCHESS_REPLAY_MOMENT_THREE_POWER.description": "Cards played at Moment 3 this turn replay.",
   "DUCHESS_ETERNAL_FORM_POWER.title": "Eternal Form",

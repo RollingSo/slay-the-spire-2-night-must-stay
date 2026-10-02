@@ -239,10 +239,29 @@ var parallel = DuchessCardCatalog.All[nameof(DuchessParallelTime)];
 if (quiet.Cost != 0 || quiet.Rarity != CardRarity.Common || quiet.Type != CardType.Skill
     || quiet.Effects[0] != new DuchessEffect("ShuffleHand", 1, 1) || quiet.Effects[1] != new DuchessEffect("Concealment", 1, 2)
     || parallel.Cost != 0 || parallel.Rarity != CardRarity.Common || parallel.Type != CardType.Skill || parallel.Moment != 3
-    || parallel.Effects[0] != new DuchessEffect("SetMoment", 0, 0) || parallel.Effects[1] != new DuchessEffect("Draw", 1, 2, "moment"))
+    || parallel.Effects[0] != new DuchessEffect("SetMoment", 0, 0) || parallel.Effects[1] != new DuchessEffect("Draw", 2, 3, "moment"))
     throw new Exception("Quietude or Parallel Time specification differs from the supplied table.");
 if (ModelDb.Card<DuchessQuietude>().TargetType != TargetType.Self || ModelDb.Card<DuchessParallelTime>().TargetType != TargetType.Self)
     throw new Exception("Both new skills must not require an enemy target.");
+var piercerUpgrade = ModelDb.Card<DuchessCarianPiercer>().ToMutable();
+if (piercerUpgrade.DynamicVars.Damage.BaseValue != 11
+    || piercerUpgrade.DynamicVars["DrawReactionDamageBoost"].BaseValue != 8)
+    throw new Exception("Carian Piercer must start at 11 damage and gain 8 damage on draw.");
+MegaCrit.Sts2.Core.Commands.CardCmd.Upgrade(piercerUpgrade);
+if (piercerUpgrade.DynamicVars.Damage.BaseValue != 15
+    || piercerUpgrade.DynamicVars["DrawReactionDamageBoost"].BaseValue != 8
+    || piercerUpgrade.DynamicVars["DrawReactionDamageBoost"].WasJustUpgraded)
+    throw new Exception("Carian Piercer upgrade must change only its base damage to 15.");
+foreach (string blade in new[] { nameof(DuchessGoldenBlade), nameof(DuchessDeathBlade) })
+{
+    var spec = DuchessCardCatalog.All[blade];
+    if (spec.Moment != 7 || spec.UpgradedMoment != 5)
+        throw new Exception(blade + " must upgrade its required Moment from 7 to 5.");
+}
+var parallelUpgrade = ModelDb.Card<DuchessParallelTime>().ToMutable();
+MegaCrit.Sts2.Core.Commands.CardCmd.Upgrade(parallelUpgrade);
+if (parallelUpgrade.DynamicVars["Draw"].BaseValue != 3)
+    throw new Exception("Parallel Time upgrade must draw 3 cards.");
 var newCards = new[] { nameof(DuchessMemory), nameof(DuchessInchVictory), nameof(DuchessLorettaSlash),
     nameof(DuchessSacredHalo), nameof(DuchessGracefulSwordDance), nameof(DuchessMemoryFragment),
     nameof(DuchessPhantomKiller), nameof(DuchessGreatCaria), nameof(DuchessFate) };
@@ -369,7 +388,7 @@ if (pivot.Cost != 0 || pivot.Type != CardType.Skill || pivot.Rarity != CardRarit
 var reverberation = DuchessCardCatalog.All[nameof(DuchessReverberation)];
 if (reverberation.Rarity != CardRarity.Uncommon || reverberation.Effects.Length != 2 || reverberation.UpgradeCost != 0
     || reverberation.Effects[0] != new DuchessEffect("ShuffleDiscard", 2, 2)
-    || reverberation.Effects[1] != new DuchessEffect("Draw", 1, 1))
+    || reverberation.Effects[1] != new DuchessEffect("Draw", 2, 2))
     throw new Exception("Reverberation specification is wrong.");
 var composure = DuchessCardCatalog.All[nameof(DuchessComposure)];
 if (composure.Effects.Length != 1 || composure.Effects[0] != new DuchessEffect("ReactionDrawBlock", 2, 3))
@@ -417,7 +436,7 @@ foreach (bool upgradedStrike in new[] { false, true })
 
 var swayingStep = DuchessCardCatalog.All[nameof(DuchessSwayingStep)];
 if (swayingStep.Type != CardType.Skill || swayingStep.Cost != 1 || swayingStep.Rarity != CardRarity.Uncommon
-    || swayingStep.Effects.Length != 1 || swayingStep.Effects[0] != new DuchessEffect("DodgeToDrawTop", 2, 2)
+    || swayingStep.Effects.Length != 1 || swayingStep.Effects[0] != new DuchessEffect("TransformDrawToDodge", 2, 2)
     || !swayingStep.UpgradeTokens)
     throw new Exception("Swaying Step specification is wrong.");
 var insightFuture = DuchessCardCatalog.All[nameof(DuchessInsightFuture)];
@@ -506,7 +525,7 @@ if (cariaPhalanx.Cost != 2 || cariaPhalanx.Type != CardType.Skill
     || cariaPhalanx.Rarity != CardRarity.Uncommon || !cariaPhalanx.Reaction
     || !cariaPhalanx.UpgradeTokens || !cariaPhalanx.TargetSelf
     || cariaPhalanx.Effects.Length != 1
-    || cariaPhalanx.Effects[0] != new DuchessEffect("RadiantBladeToHand", 3, 3))
+    || cariaPhalanx.Effects[0] != new DuchessEffect("TransformDrawToRadiantBlade", 2, 2))
     throw new Exception("Caria Phalanx specification is wrong.");
 foreach (CardModel skill in new CardModel[] { ModelDb.Card<DuchessMagicRadiantBlade>().ToMutable(),
              ModelDb.Card<DuchessRadiantBladeArray>().ToMutable(), ModelDb.Card<DuchessCariaPhalanx>().ToMutable(),
@@ -517,7 +536,7 @@ var angelWings = DuchessCardCatalog.All[nameof(DuchessAngelWings)];
 if (angelWings.Cost != 2 || angelWings.Type != CardType.Attack
     || angelWings.Rarity != CardRarity.Rare || angelWings.Effects.Length != 2
     || angelWings.Effects[0] != new DuchessEffect("Damage", 10, 10)
-    || angelWings.Effects[1] != new DuchessEffect("ShuffleGrowth", 6, 9))
+    || angelWings.Effects[1] != new DuchessEffect("ShuffleHandDamage", 6, 9))
     throw new Exception("Angel Wings specification is wrong.");
 var feint = DuchessCardCatalog.All[nameof(DuchessFeint)];
 if (feint.Cost != 0 || feint.Type != CardType.Skill || !feint.UpgradeRetain
@@ -621,8 +640,8 @@ using (JsonDocument cards = JsonDocument.Parse(File.ReadAllText(Path.Combine(
         throw new Exception("Caria Phalanx must preview Radiant Blade before upgrade and Radiant Blade+ after upgrade.");
     string angelBase = cards.RootElement.GetProperty("DUCHESS_ANGEL_WINGS.description").GetString()!;
     string angelUpgrade = cards.RootElement.GetProperty("DUCHESS_ANGEL_WINGS.upgradeDescription").GetString()!;
-    if (!angelBase.Contains("伤害增加{ShuffleGrowth:diff()}")
-        || !angelUpgrade.Contains("伤害增加{ShuffleGrowth:diff()}"))
+    if (!angelBase.Contains("伤害增加{ShuffleHandDamage:diff()}")
+        || !angelUpgrade.Contains("伤害增加{ShuffleHandDamage:diff()}"))
         throw new Exception("Angel Wings must bind its visible shuffle-growth amount to the upgraded dynamic variable.");
     foreach (string cardId in new[] { "ANGEL_WINGS", "GOLDEN_BLADE", "CARIAN_PIERCER", "GLINTSTONE_HAIL" })
     {
@@ -672,6 +691,12 @@ if (typeof(DuchessMomentPower).GetMethods(flags).Any(method => method.Name.Conta
 var zeroCostBonus = (DuchessZeroCostAttackPower)ModelDb.Power<DuchessZeroCostAttackPower>().ToMutable();
 var bonusDealer = (Creature)System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(typeof(Creature));
 typeof(PowerModel).GetProperty("Owner")!.SetValue(zeroCostBonus, bonusDealer);
+var concealment = (DuchessConcealmentPower)ModelDb.Power<DuchessConcealmentPower>().ToMutable();
+typeof(PowerModel).GetProperty("Owner")!.SetValue(concealment, bonusDealer);
+if (concealment.ModifyDamageMultiplicative(null!, 10, ValueProp.Move, bonusDealer, null!) != 1.25m
+    || concealment.ModifyDamageMultiplicative(null!, 10, ValueProp.Unpowered, bonusDealer, null!) != 1m
+    || concealment.ModifyDamageMultiplicative(null!, 10, ValueProp.Move, null!, null!) != 1m)
+    throw new Exception("Concealment must boost only the owner's powered attacks by 25%.");
 zeroCostBonus.SetAmount(4, false);
 var discountedAttack = ModelDb.Card<DuchessCarianSlicer>().ToMutable();
 decimal BonusFor(CardModel candidate) => zeroCostBonus.ModifyDamageAdditive(

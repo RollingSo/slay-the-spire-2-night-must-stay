@@ -274,7 +274,7 @@
   "DUCHESS_MOMENT_FIVE_BLOCK_POWER.title": "黄金时刻",
   "DUCHESS_MOMENT_FIVE_BLOCK_POWER.description": "时刻到达5时，获得{Amount}点格挡。",
   "DUCHESS_ETERNAL_RESTAGE_POWER.title": "永不落幕的重演",
-  "DUCHESS_ETERNAL_RESTAGE_POWER.description": "到达时刻12时结束你的回合；每回合结束时，本回合每造成过3点伤害，对所有敌人造成1点伤害。",
+  "DUCHESS_ETERNAL_RESTAGE_POWER.description": "到达时刻12时结束你的回合；每回合结束时，本回合每造成过3点伤害，对所有敌人造成1点伤害。 NL 本回合结束时将造成{PendingDamage}点伤害。",
   "DUCHESS_REPLAY_MOMENT_THREE_POWER.title": "完美预演",
   "DUCHESS_REPLAY_MOMENT_THREE_POWER.description": "本回合时刻3打出的牌会重放。",
   "DUCHESS_ETERNAL_FORM_POWER.title": "永恒形态",

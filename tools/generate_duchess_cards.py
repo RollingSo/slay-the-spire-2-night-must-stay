@@ -38,7 +38,7 @@ def validate_upgrade_contracts():
                 raise ValueError(f'{row[0]} {language}: runtime description does not render both upgrade states')
         if opt.get('upgradeTokens'):
             base, upgraded = effects_text(row, 0, False), effects_text(row, 0, True)
-            token_name = '辉剑' if any(effect[0] in ('RadiantBladeToDraw', 'RadiantBladeToHand', 'InstinctRadiantBladesToDraw') for effect in row[7]) else '闪避'
+            token_name = '辉剑' if any(effect[0] in ('RadiantBladeToDraw', 'RadiantBladeToHand', 'InstinctRadiantBladesToDraw', 'TransformDrawToRadiantBlade') for effect in row[7]) else '闪避'
             if f'[gold]{token_name}+[/gold]' in base or f'[gold]{token_name}+[/gold]' not in upgraded:
                 raise ValueError(f'{row[0]} must generate {token_name} before upgrade and {token_name}+ only after upgrade')
         if keyword_change and not (value_change or text_rule_change):
@@ -176,7 +176,9 @@ def effects_text(row, language, upgraded=False):
                 'ReturnSelfToDrawTop': ['将这张牌放到[gold]抽牌堆[/gold]顶部。', 'Put this card on top of your [gold]draw pile[/gold].', 'このカードを[gold]山札[/gold]の一番上に置く。'],
                 'RadiantBladeToHand': [f'将{var}张[gold]{["辉剑", "Glintblade", "輝剣"][language] + ("+" if upgraded and opt.get("upgradeTokens") else "")}[/gold]加入[gold]手牌[/gold]。', f'Add {var} [gold]{"Glintblade+" if upgraded and opt.get("upgradeTokens") else "Glintblade"}[/gold] cards to your [gold]hand[/gold].', f'[gold]{"輝剣+" if upgraded and opt.get("upgradeTokens") else "輝剣"}[/gold]を{var}枚[gold]手札[/gold]に加える。'],
                 'RadiantBladeTurns': [f'接下来X{"+1" if upgraded and opt.get("upgradeX") else ""}个回合，在回合开始时将1张[gold]辉剑[/gold]加入[gold]手牌[/gold]。', f'For the next X{"+1" if upgraded and opt.get("upgradeX") else ""} turns, add 1 [gold]Glintblade[/gold] to your [gold]hand[/gold] at the start of your turn.', f'次のX{"+1" if upgraded and opt.get("upgradeX") else ""}ターンの間、ターン開始時に[gold]輝剣[/gold]1枚を[gold]手札[/gold]に加える。'],
-                'ShuffleGrowth': [f'每次被洗入[gold]抽牌堆[/gold]后，伤害增加{var}。', f'Whenever this is shuffled into your [gold]draw pile[/gold], increase its damage by {var}.', f'[gold]山札[/gold]に加えてシャッフルされるたび、ダメージが{var}増加する。'],
+                'ShuffleHandDamage': [f'选择任意张[gold]手牌[/gold]洗回[gold]抽牌堆[/gold]，每洗回1张，伤害增加{var}。', f'Shuffle any number of cards from your [gold]hand[/gold] into your [gold]draw pile[/gold]. Increase damage by {var} per card shuffled.', f'[gold]手札[/gold]を好きな枚数[gold]山札[/gold]に戻してシャッフルする。1枚につきダメージが{var}増加する。'],
+                'TransformDrawToDodge': [f'选择[gold]抽牌堆[/gold]中的{var}张牌，将其变化为[gold]{dodge}[/gold]。', f'Transform {var} cards chosen from your [gold]draw pile[/gold] into [gold]{dodge}[/gold].', f'[gold]山札[/gold]から{var}枚選び、[gold]{dodge}[/gold]に変化させる。'],
+                'TransformDrawToRadiantBlade': [f'选择[gold]抽牌堆[/gold]中的{var}张牌，将其变化为[gold]{"辉剑+" if upgraded and opt.get("upgradeTokens") else "辉剑"}[/gold]。', f'Transform {var} cards chosen from your [gold]draw pile[/gold] into [gold]{"Glintblade+" if upgraded and opt.get("upgradeTokens") else "Glintblade"}[/gold].', f'[gold]山札[/gold]から{var}枚選び、[gold]{"輝剣+" if upgraded and opt.get("upgradeTokens") else "輝剣"}[/gold]に変化させる。'],
                 'Intangible': [f'获得{var}层[gold]无实体[/gold]。', f'Gain {var} [gold]Intangible[/gold].', f'[gold]無形[/gold]{var}を得る。'],
                 'FutureMomentEnergy': ['下个回合到达[gold]时刻4[/gold]时，获得{FutureMomentEnergy:energyIcons()}。', 'When you reach [gold]Moment 4[/gold] next turn, gain {FutureMomentEnergy:energyIcons()}.', '次のターン[gold]時刻4[/gold]に到達した時、{FutureMomentEnergy:energyIcons()}を得る。'],
                 'DodgeCurrentMoment': [f'将等同于当前[gold]时刻[/gold]数量的[gold]{dodge}[/gold]洗入[gold]抽牌堆[/gold]。', f'Shuffle [gold]{dodge}[/gold] cards equal to your current [gold]Moment[/gold] into your [gold]draw pile[/gold].', f'現在の[gold]時刻[/gold]に等しい枚数の[gold]{dodge}[/gold]を[gold]山札[/gold]に加えてシャッフルする。'],

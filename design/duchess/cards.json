@@ -612,7 +612,7 @@
     "Uncommon",
     [
       [
-        "DodgeToDrawTop",
+        "TransformDrawToDodge",
         2,
         2
       ]
@@ -701,8 +701,8 @@
       ],
       [
         "Draw",
-        1,
-        1
+        2,
+        2
       ]
     ],
     {
@@ -865,7 +865,7 @@
     "巧手",
     "Quick Hands",
     "早業",
-    1,
+    0,
     "Skill",
     "Uncommon",
     [
@@ -1036,9 +1036,9 @@
     "Uncommon",
     [
       [
-        "RadiantBladeToHand",
-        3,
-        3
+        "TransformDrawToRadiantBlade",
+        2,
+        2
       ]
     ],
     {
@@ -1062,7 +1062,7 @@
         10
       ],
       [
-        "ShuffleGrowth",
+        "ShuffleHandDamage",
         6,
         9
       ]
@@ -1247,8 +1247,8 @@
       ]
     ],
     {
-      "moment": 9,
-      "upgradedMoment": 7
+      "moment": 7,
+      "upgradedMoment": 5
     }
   ],
   [
@@ -1262,7 +1262,7 @@
     [
       [
         "Damage",
-        6,
+        7,
         9
       ]
     ],
@@ -1284,12 +1284,12 @@
       [
         "Damage",
         11,
-        11
+        15
       ],
       [
         "DrawReactionDamageBoost",
-        4,
-        6
+        8,
+        8
       ]
     ],
     {
@@ -1343,8 +1343,8 @@
       ]
     ],
     {
-      "moment": 9,
-      "upgradedMoment": 7
+      "moment": 7,
+      "upgradedMoment": 5
     }
   ],
   [
@@ -1518,7 +1518,7 @@
     "罗蕾塔的绝招",
     "Loretta's Mastery",
     "ローレッタの絶技",
-    12,
+    5,
     "Attack",
     "Rare",
     [
@@ -1761,8 +1761,8 @@
       ],
       [
         "Draw",
-        1,
         2,
+        3,
         "moment"
       ]
     ],

@@ -189,6 +189,31 @@ public sealed class DuchessEternalRestagePower : PowerModel
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
+    private decimal PendingDamage => Owner?.Player?.PlayerCombatState?.AllCards.FirstOrDefault() is CardModel source
+        ? decimal.Floor(DuchessMomentPower.DamageDealtThisTurn(source) / 3m) * (Amount / 3m) : 0m;
+    public override int DisplayAmount => decimal.ToInt32(decimal.Floor(PendingDamage));
+    public override LocString Description
+    {
+        get
+        {
+            LocString description = base.Description;
+            description.Add("PendingDamage", PendingDamage);
+            return description;
+        }
+    }
+
+    public override Task AfterDamageGiven(PlayerChoiceContext context, Creature dealer, DamageResult result,
+        ValueProp props, Creature target, CardModel cardSource)
+    {
+        if (dealer == Owner) InvokeDisplayAmountChanged();
+        return Task.CompletedTask;
+    }
+
+    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    {
+        InvokeDisplayAmountChanged();
+        return Task.CompletedTask;
+    }
 
     public Task OnMomentTwelve(PlayerChoiceContext context)
     {
@@ -200,9 +225,9 @@ public sealed class DuchessEternalRestagePower : PowerModel
         PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> participants)
     {
         if (!participants.Contains(Owner)) return;
-        CardModel source = Owner.Player.PlayerCombatState.AllCards.First();
-        decimal damage = decimal.Floor(DuchessMomentPower.DamageDealtThisTurn(source) / 3m)
-            * (Amount / 3m);
+        CardModel source = Owner.Player.PlayerCombatState.AllCards.FirstOrDefault();
+        if (source == null) return;
+        decimal damage = PendingDamage;
         if (damage <= 0) return;
         Flash();
         await DamageCmd.Attack(damage).CompatFromCard(source)
