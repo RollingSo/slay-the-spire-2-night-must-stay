@@ -194,7 +194,7 @@
   "GUARDIAN_SYNTHESIS.title": "合成",
   "GUARDIAN_SYNTHESIS.description": "カード2枚を1枚に[gold]合成[/gold]する。\n素材はこの戦闘中[gold]廃棄[/gold]され、新しいカードは[gold]手札[/gold]に加わる。",
   "GUARDIAN_CONCEALED_EDGE.title": "隠し刃",
-  "GUARDIAN_CONCEALED_EDGE.description": "名前に「防御」を含むカードをプレイするたび、このカードのコストは次にプレイするまで1減少する。",
+  "GUARDIAN_CONCEALED_EDGE.description": "名前に「防御」を含むカードを1枚プレイするたび、このカードのコストが1下がる（最低0）。\nこのコスト減少は累積し、ターンをまたいで持続する。\nこのカードをプレイすると、コスト減少はリセットされる。",
   "SHIELD_BASH_DEFEND.title": "盾撃防御",
   "SHIELD_BASH_DEFEND.description": "{Damage:diff()}ダメージを与える。\n{Block:diff()}[gold]ブロック[/gold]を得る。",
   "SHIELD_BASH_DEFEND.upgradeDescription": "{Damage:diff()}ダメージを与える。\n{Block:diff()}[gold]ブロック[/gold]を得る。",
