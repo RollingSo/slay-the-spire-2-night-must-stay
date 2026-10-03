@@ -62,7 +62,7 @@ public sealed class DuchessCardPool : CardPoolModel
         ModelDb.Card<DuchessAngelWings>(),
         ModelDb.Card<DuchessFallingMagic>(),
         ModelDb.Card<DuchessThiefsArsenal>(),
-        ModelDb.Card<DuchessPerfectRehearsal>(),
+        ModelDb.Card<DuchessEscape>(),
         ModelDb.Card<DuchessEternalRestage>(),
         ModelDb.Card<DuchessReenactment>(),
         ModelDb.Card<DuchessSideSomersault>(),

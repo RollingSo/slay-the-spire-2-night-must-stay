@@ -66,9 +66,9 @@
       "拍子"
     ],
     "DUCHESS_BEAT_POWER.description": [
-      "每回合时刻首次到达5时，获得{Amount}能量。",
-      "The first time Moment reaches 5 each turn, gain {Amount} Energy.",
-      "各ターン初めて時刻が5に到達したとき、エナジーを{Amount}得る。"
+      "到达时刻6时，获得{Amount}能量。",
+      "Whenever Moment reaches 6, gain {Amount} Energy.",
+      "時刻が6に到達するたび、エナジーを{Amount}得る。"
     ],
     "DUCHESS_MOMENT_FIVE_BLOCK_POWER.title": [
       "黄金时刻",
@@ -76,9 +76,9 @@
       "黄金の時刻"
     ],
     "DUCHESS_MOMENT_FIVE_BLOCK_POWER.description": [
-      "时刻到达5时，获得{Amount}点格挡。",
-      "When Moment reaches 5, gain {Amount} Block.",
-      "時刻が5に到達したとき、ブロックを{Amount}得る。"
+      "到达时刻3时，获得{Amount}点格挡。",
+      "When Moment reaches 3, gain {Amount} Block.",
+      "時刻が3に到達したとき、ブロックを{Amount}得る。"
     ],
     "DUCHESS_ETERNAL_RESTAGE_POWER.title": [
       "永不落幕的重演",
@@ -166,9 +166,9 @@
       "稲妻の神経"
     ],
     "DUCHESS_REACTION_DRAW_POWER.description": [
-      "抽到[gold]反应[/gold]牌时，额外抽{Amount}张牌。",
-      "Whenever you draw a [gold]Reaction[/gold] card, draw {Amount} additional card.",
-      "[gold]リアクション[/gold]のカードを引くたび、追加で{Amount}枚引く。"
+      "回合中抽到[gold]反应[/gold]牌时，额外抽{Amount}张牌。",
+      "Whenever you draw a [gold]Reaction[/gold] card during your turn, draw {Amount} additional card.",
+      "自分のターン中に[gold]リアクション[/gold]のカードを引くたび、追加で{Amount}枚引く。"
     ],
     "DUCHESS_END_TURN_MOMENT_BLOCK_POWER.title": [
       "穿隙",
@@ -230,12 +230,35 @@
       "Gain {Amount} Strength while Concealed. Lose that Strength when Concealment ends.",
       "隠密中、筋力を{Amount}得る。隠密が終了するとその筋力を失う。"
     ],
-    "DUCHESS_ZERO_COST_ATTACK_POWER.title": ["寸短寸利", "Every Inch Counts", "寸短寸利"],
-    "DUCHESS_ZERO_COST_ATTACK_POWER.description": ["耗能为0的攻击牌造成的伤害增加{Amount}。", "Attacks that cost 0 deal {Amount} more damage.", "コスト0のアタックはダメージが{Amount}増加する。"],
-    "DUCHESS_GRACEFUL_SWORD_DANCE_POWER.title": ["优雅剑舞", "Graceful Sword Dance", "優雅な剣舞"],
-    "DUCHESS_GRACEFUL_SWORD_DANCE_POWER.description": ["连续打出闪避时，对所有敌人造成{Amount}点伤害。", "When you play Dodge consecutively, deal {Amount} damage to ALL enemies.", "回避を連続してプレイしたとき、敵全体に{Amount}ダメージを与える。"],
-    "DUCHESS_PHANTOM_KILLER_POWER.title": ["幻影杀机", "Phantom Killer", "幻影の殺意"],
-    "DUCHESS_PHANTOM_KILLER_POWER.description": ["本场战斗中在隐匿状态下斩杀敌人后，下场战斗开始时获得{Amount}点力量。", "After killing an enemy while Concealed this combat, gain {Amount} Strength at the start of the next combat.", "この戦闘中に隠密状態で敵を倒したなら、次の戦闘開始時に筋力を{Amount}得る。"
+    "DUCHESS_ZERO_COST_ATTACK_POWER.title": [
+      "寸短寸利",
+      "Every Inch Counts",
+      "寸短寸利"
+    ],
+    "DUCHESS_ZERO_COST_ATTACK_POWER.description": [
+      "耗能为0的攻击牌造成的伤害增加{Amount}。",
+      "Attacks that cost 0 deal {Amount} more damage.",
+      "コスト0のアタックはダメージが{Amount}増加する。"
+    ],
+    "DUCHESS_GRACEFUL_SWORD_DANCE_POWER.title": [
+      "优雅剑舞",
+      "Graceful Sword Dance",
+      "優雅な剣舞"
+    ],
+    "DUCHESS_GRACEFUL_SWORD_DANCE_POWER.description": [
+      "连续打出闪避时，对所有敌人造成{Amount}点伤害。",
+      "When you play Dodge consecutively, deal {Amount} damage to ALL enemies.",
+      "回避を連続してプレイしたとき、敵全体に{Amount}ダメージを与える。"
+    ],
+    "DUCHESS_PHANTOM_KILLER_POWER.title": [
+      "幻影杀机",
+      "Phantom Killer",
+      "幻影の殺意"
+    ],
+    "DUCHESS_PHANTOM_KILLER_POWER.description": [
+      "本场战斗中在隐匿状态下斩杀敌人后，下场战斗开始时获得{Amount}点力量。",
+      "After killing an enemy while Concealed this combat, gain {Amount} Strength at the start of the next combat.",
+      "この戦闘中に隠密状態で敵を倒したなら、次の戦闘開始時に筋力を{Amount}得る。"
     ]
   },
   "relics": {
@@ -1018,6 +1041,16 @@
       "选择要洗入抽牌堆的牌。",
       "Choose cards to shuffle into your draw pile.",
       "山札に加えてシャッフルするカードを選択。"
+    ],
+    "DUCHESS_TRANSFORM.title": [
+      "变化",
+      "Transform",
+      "変化"
+    ],
+    "DUCHESS_TRANSFORM.description": [
+      "将选择的牌替换为指定的牌。变化仅在本场战斗生效，不改变牌组。",
+      "Replace the chosen card with the specified card for this combat only. Your deck is unchanged.",
+      "選んだカードを指定されたカードに置き換える。この戦闘中のみ有効で、デッキは変わらない。"
     ]
   }
 }

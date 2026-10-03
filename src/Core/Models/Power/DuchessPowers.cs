@@ -105,9 +105,13 @@ public sealed class DuchessMomentPower : PowerModel
             foreach (DuchessMomentFiveRewardPower power in player.Creature.Powers
                          .OfType<DuchessMomentFiveRewardPower>().ToArray())
                 await power.OnMomentFive(context);
-            foreach (DuchessBeatPower power in player.Creature.Powers.OfType<DuchessBeatPower>().ToArray())
-                await power.OnMomentFive(context);
         }
+        if (before != 6 && after == 6)
+            foreach (DuchessBeatPower power in player.Creature.Powers.OfType<DuchessBeatPower>().ToArray())
+                await power.OnMomentSix(context);
+        if (before != 3 && after == 3)
+            foreach (DuchessMomentFiveBlockPower power in player.Creature.Powers.OfType<DuchessMomentFiveBlockPower>().ToArray())
+                await power.OnMomentThree(context);
         if (before != 4 && after == 4)
             foreach (DuchessFutureMomentEnergyPower power in player.Creature.Powers
                          .OfType<DuchessFutureMomentEnergyPower>().ToArray())

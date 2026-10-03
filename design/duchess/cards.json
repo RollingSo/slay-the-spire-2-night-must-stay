@@ -13,7 +13,8 @@
         6,
         9
       ]
-    ]
+    ],
+    {}
   ],
   [
     "Defend",
@@ -29,7 +30,8 @@
         5,
         8
       ]
-    ]
+    ],
+    {}
   ],
   [
     "Restage",
@@ -83,13 +85,13 @@
     [
       [
         "Damage",
-        8,
-        11
+        7,
+        7
       ],
       [
         "Draw",
-        1,
         2,
+        3,
         "moment"
       ]
     ],
@@ -309,7 +311,8 @@
         10,
         13
       ]
-    ]
+    ],
+    {}
   ],
   [
     "ForeseeFuture",
@@ -337,7 +340,7 @@
     "過去への回帰",
     1,
     "Skill",
-    "Uncommon",
+    "Common",
     [
       [
         "Block",
@@ -349,7 +352,8 @@
         0,
         0
       ]
-    ]
+    ],
+    {}
   ],
   [
     "UndecidedFate",
@@ -417,7 +421,8 @@
         3,
         4
       ]
-    ]
+    ],
+    {}
   ],
   [
     "PassingCut",
@@ -702,12 +707,10 @@
       [
         "Draw",
         2,
-        2
+        3
       ]
     ],
-    {
-      "upgradeCost": 0
-    }
+    {}
   ],
   [
     "Distraction",
@@ -770,8 +773,8 @@
       ],
       [
         "ConcealedBonusDamage",
-        8,
-        12
+        10,
+        14
       ]
     ],
     {}
@@ -1094,7 +1097,7 @@
     "盗贼的武库",
     "Thief's Arsenal",
     "盗賊の武器庫",
-    1,
+    0,
     "Skill",
     "Rare",
     [
@@ -1106,27 +1109,32 @@
     ],
     {
       "exhaust": true,
-      "upgradeCost": 0,
-      "targetSelf": true
+      "targetSelf": true,
+      "upgradeRemoveExhaust": true
     }
   ],
   [
-    "PerfectRehearsal",
-    "完美预演",
-    "Perfect Rehearsal",
-    "完璧な予行",
-    1,
+    "Escape",
+    "逃脱",
+    "Escape",
+    "脱出",
+    0,
     "Skill",
     "Uncommon",
     [
       [
-        "ReplayMomentThree",
-        1,
+        "LoseConcealment",
+        2,
         1
+      ],
+      [
+        "ExhaustHandUpTo",
+        2,
+        2
       ]
     ],
     {
-      "upgradeCost": 0
+      "targetSelf": true
     }
   ],
   [
@@ -1170,8 +1178,8 @@
       ]
     ],
     {
-      "upgradeCost": 0,
-      "targetSelf": true
+      "targetSelf": true,
+      "upgradeRetain": true
     }
   ],
   [
@@ -1358,8 +1366,8 @@
     [
       [
         "Block",
-        7,
-        10
+        6,
+        9
       ],
       [
         "FullBlockRadiantBlade",
@@ -1400,9 +1408,14 @@
     "Uncommon",
     [
       [
-        "EndTurnRetain",
-        2,
-        3
+        "ShuffleHand",
+        1,
+        2
+      ],
+      [
+        "Draw",
+        1,
+        2
       ]
     ],
     {
@@ -1505,8 +1518,8 @@
     [
       [
         "MomentFiveBlock",
-        4,
-        6
+        5,
+        7
       ]
     ],
     {
@@ -1518,13 +1531,13 @@
     "罗蕾塔的绝招",
     "Loretta's Mastery",
     "ローレッタの絶技",
-    5,
+    9,
     "Attack",
     "Rare",
     [
       [
         "Damage",
-        15,
+        10,
         20
       ]
     ],
@@ -1538,7 +1551,7 @@
     "罗蕾塔的大弓",
     "Loretta's Greatbow",
     "ローレッタの大弓",
-    6,
+    5,
     "Attack",
     "Uncommon",
     [
@@ -1593,8 +1606,8 @@
     [
       [
         "Concealment",
-        2,
-        3
+        3,
+        4
       ]
     ],
     {
@@ -1752,7 +1765,7 @@
     "並行時空",
     0,
     "Skill",
-    "Common",
+    "Uncommon",
     [
       [
         "SetMoment",
@@ -1762,12 +1775,13 @@
       [
         "Draw",
         2,
-        3,
+        2,
         "moment"
       ]
     ],
     {
-      "moment": 3
+      "moment": 3,
+      "upgradeRetain": true
     }
   ],
   [

@@ -8,9 +8,11 @@ using SmartFormat.Core.Settings;
 
 // Use the parser shipped with the installed game, not a new NuGet version.
 // This checks syntax and plural branches, not Godot rendering or combat logic.
-string root = args.Length > 0 ? Path.GetFullPath(args[0]) : Directory.GetCurrentDirectory();
+string? rootArgument = args.FirstOrDefault(arg => !arg.StartsWith("--", StringComparison.Ordinal));
+string root = rootArgument != null ? Path.GetFullPath(rootArgument) : Directory.GetCurrentDirectory();
 string locRoot = Path.Combine(root, "NightMustStay", "localization");
 var errors = new List<string>();
+int dynamicPreviewTests = 0;
 var tables = new Dictionary<string, Dictionary<string, Dictionary<string, string>>>();
 var parser = new Parser(new SmartSettings());
 int count = 0, pluralTests = 0;
@@ -61,6 +63,69 @@ foreach (string locale in new[] { "eng", "jpn", "kor", "zhs" })
     }
 }
 void Require(bool ok, string message) { if (!ok) errors.Add(message); }
+// Native BodySlam uses the default SmartFormat boolean conditional supplied by
+// CardModel.GetDescriptionForPile. Exercise both branches in all four locales.
+int errorsBeforeDynamicPreviews = errors.Count;
+foreach (string locale in new[] { "zhs", "eng", "jpn", "kor" })
+foreach (string cardId in new[] { "SHIELD_IMPACT", "BLADE_GLIDE", "WORLD_ENDING_WINGS",
+             "DUCHESS_MIQUELLAS_HALO", "DUCHESS_SACRED_HALO", "DUCHESS_REENACTMENT", "DUCHESS_FLEETING_INSTANT" })
+foreach (string suffix in new[] { "description", "upgradeDescription" })
+foreach (bool upgraded in new[] { false, true })
+{
+    string label = $"{locale}/{cardId}.{suffix}";
+    string description = tables[locale]["cards"][cardId + "." + suffix];
+    Require(description.Contains("{InCombat:"), $"Missing native combat-only preview: {label}");
+    string format = Regex.Replace(description, @"\{IfUpgraded:show:([^{}|]*)\|([^{}]*)\}",
+        m => m.Groups[upgraded ? 1 : 2].Value).Replace(":diff()", "");
+    foreach (int damage in new[] { 0, 1, 26 })
+    foreach (bool inCombat in new[] { false, true })
+    {
+        var values = new Dictionary<string, object>();
+        foreach (Match field in Regex.Matches(format, @"\{(\w+)(?:[:}])"))
+            values[field.Groups[1].Value] = 7;
+        values["InCombat"] = inCombat;
+        values["CalculatedDamage"] = damage;
+        try
+        {
+            string actual = Smart.Format(CultureInfo.InvariantCulture, format, values);
+            values["CalculatedDamage"] = damage + 100;
+            string changed = Smart.Format(CultureInfo.InvariantCulture, format, values);
+            Require(inCombat ? actual != changed : actual == changed,
+                $"Calculated result must affect only combat text: {label}, upgraded={upgraded}, InCombat={inCombat}");
+            Require(!actual.Contains('{'), $"Unresolved preview expression: {label}");
+        }
+        catch (Exception e) { errors.Add($"Dynamic preview formatting failed: {label}: {e.Message}"); }
+        dynamicPreviewTests++;
+    }
+}
+// Narrow mode isolates this regression suite; the default still runs every
+// existing copy-edit assertion and reports all pre-existing failures.
+foreach (string locale in new[] { "zhs", "eng", "jpn", "kor" })
+foreach (string suffix in new[] { "description", "upgradeDescription" })
+foreach (int hits in new[] { 1, 2, 4 })
+foreach (bool inCombat in new[] { false, true })
+{
+    string format = tables[locale]["cards"]["WHIRLING_STRIKE." + suffix].Replace(":diff()", "");
+    var values = new Dictionary<string, object> { ["Damage"] = suffix == "description" ? 5 : 7,
+        ["CalculatedHits"] = hits, ["InCombat"] = inCombat };
+    try
+    {
+        string actual = Smart.Format(CultureInfo.InvariantCulture, format, values);
+        values["CalculatedHits"] = hits + 100;
+        string changed = Smart.Format(CultureInfo.InvariantCulture, format, values);
+        Require(inCombat ? actual != changed : actual == changed,
+            $"Whirling Strike hit count must affect only combat text: {locale}/{suffix}, hits={hits}");
+    }
+    catch (Exception e) { errors.Add($"Whirling Strike preview formatting failed: {locale}/{suffix}: {e.Message}"); }
+    dynamicPreviewTests++;
+}
+if (args.Contains("--dynamic-preview-only"))
+{
+    foreach (string error in errors.Skip(errorsBeforeDynamicPreviews)) Console.Error.WriteLine(error);
+    if (errors.Count != errorsBeforeDynamicPreviews) return 1;
+    Console.WriteLine($"PASS: {dynamicPreviewTests} native combat/library preview cases across four locales.");
+    return 0;
+}
 foreach (string locale in new[] { "eng", "jpn", "kor" })
 {
     var cards = tables[locale]["cards"];
@@ -87,5 +152,5 @@ if (errors.Count > 0)
     foreach (string error in errors) Console.Error.WriteLine(error);
     return 1;
 }
-Console.WriteLine($"Localization tests passed: {count} strings parsed, {pluralTests} English plural cases, rich-text nesting and copy-edit regressions.");
+Console.WriteLine($"Localization tests passed: {count} strings parsed, {pluralTests} English plural cases, {dynamicPreviewTests} native combat/library preview cases, rich-text nesting and copy-edit regressions.");
 return 0;

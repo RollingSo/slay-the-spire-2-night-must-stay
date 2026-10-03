@@ -89,14 +89,11 @@ namespace NightMustStay.Core.Models.Cards
     // Card-table ID 58: 盾牌冲击
     public sealed class ShieldImpact : CardModel
     {
-        private const string CalculatedDamageKey = "CalculatedDamage";
-
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new DamageVar(0m, ValueProp.Move),
             new CalculationBaseVar(0m),
-            new CalculationExtraVar(1m),
-            new CalculatedVar(CalculatedDamageKey).WithMultiplier(
+            new ExtraDamageVar(1m),
+            new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
                 (card, _) => card.Owner.Creature.GetPower<FortifyPower>()?.Amount ?? 0m)
         };
 
@@ -110,9 +107,7 @@ namespace NightMustStay.Core.Models.Cards
         protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
-            decimal damage = ((CalculatedVar)DynamicVars[CalculatedDamageKey]).Calculate(cardPlay.Target);
-
-            await DamageCmd.Attack(DynamicVars.Damage.BaseValue + damage)
+            await DamageCmd.Attack(DynamicVars.CalculatedDamage)
                 .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
                 .WithGuardianWeaponFx()

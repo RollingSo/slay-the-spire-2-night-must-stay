@@ -161,28 +161,22 @@ public sealed class DuchessBeatPower : PowerModel
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
-    [SavedProperty]
-    public bool TriggeredThisTurn { get; set; }
-
-    public override Task AfterPlayerTurnStartLate(PlayerChoiceContext context, Player player)
+    public async Task OnMomentSix(PlayerChoiceContext context)
     {
-        if (player == Owner.Player) TriggeredThisTurn = false;
-        return Task.CompletedTask;
-    }
-
-    public async Task OnMomentFive(PlayerChoiceContext context)
-    {
-        if (TriggeredThisTurn) return;
-        TriggeredThisTurn = true;
         Flash();
         await PlayerCmd.GainEnergy(Amount, Owner.Player);
     }
 }
 
-public sealed class DuchessMomentFiveBlockPower : DuchessMomentFiveRewardPower
+public sealed class DuchessMomentFiveBlockPower : PowerModel
 {
-    protected override Task ResolveMomentFive(PlayerChoiceContext context) =>
-        CreatureCmd.GainBlock(Owner, Amount, ValueProp.Unpowered, null);
+    public override PowerType Type => PowerType.Buff;
+    public override PowerStackType StackType => PowerStackType.Counter;
+    public async Task OnMomentThree(PlayerChoiceContext context)
+    {
+        Flash();
+        await CreatureCmd.GainBlock(Owner, Amount, ValueProp.Unpowered, null);
+    }
 }
 
 public sealed class DuchessEternalRestagePower : PowerModel

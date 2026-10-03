@@ -17,10 +17,14 @@ namespace NightMustStay.Core.Models.Cards
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
             new DamageVar(5m, ValueProp.Move),
-            new CalculationBaseVar(0m),
+            new CalculationBaseVar(1m),
             new CalculationExtraVar(1m),
-            new CalculatedVar("CalculatedHits").WithMultiplier((card, _) => PileType.Hand.GetPile(card.Owner).Cards.Count(GuardianCardFilters.HasDefendInName))
+            new CalculatedVar("CalculatedHits").WithMultiplier((card, _) =>
+                CountAdditionalHits(PileType.Hand.GetPile(card.Owner).Cards))
         };
+
+        internal static int CountAdditionalHits(IEnumerable<CardModel> hand) =>
+            hand.Count(GuardianCardFilters.HasDefendInName);
 
         public WhirlingStrike()
             : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies)
@@ -29,12 +33,10 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            int defendCardsInHand = (int)((CalculatedVar)base.DynamicVars["CalculatedHits"]).Calculate(cardPlay.Target);
-            if (defendCardsInHand == 0)
-                return;
+            int hits = (int)((CalculatedVar)base.DynamicVars["CalculatedHits"]).Calculate(cardPlay.Target);
 
             await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
-                .WithHitCount(defendCardsInHand)
+                .WithHitCount(hits)
                 .CompatFromCard(this)
                 .TargetingAllOpponents(base.CombatState)
                 .WithGuardianWhirlwindFx()

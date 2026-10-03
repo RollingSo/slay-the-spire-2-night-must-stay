@@ -165,7 +165,7 @@ public abstract class DuchessCard : CardModel
                 }
                 if (effect.Kind == "RewindDamage")
                 {
-                    yield return new CalculationBaseVar(0m);
+                    yield return new CalculationBaseVar(6m);
                     yield return new ExtraDamageVar(effect.Amount);
                     yield return new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
                         static (card, _) => DuchessMomentPower.Current(card.Owner));
@@ -251,8 +251,13 @@ public abstract class DuchessCard : CardModel
                 if (effect.Kind == "Intangible") yield return HoverTipFactory.FromPower<IntangiblePower>();
                 if (effect.Kind == "AllyIntangible") yield return HoverTipFactory.FromPower<IntangiblePower>();
                 if (effect.Kind == "TurnStartSwap") yield return HoverTipFactory.FromPower<DuchessTurnStartSwapPower>();
-                if (effect.Kind == "Concealment" || effect.Condition == "concealed" || Spec.ConcealedTripleDamage)
+                if (effect.Kind is "Concealment" or "LoseConcealment" || effect.Condition == "concealed" || Spec.ConcealedTripleDamage)
                     yield return HoverTipFactory.FromPower<DuchessConcealmentPower>();
+                if (effect.Kind is "TransformDrawToDodge" or "TransformDrawToRadiantBlade")
+                    yield return new HoverTip(new LocString("cards", "DUCHESS_TRANSFORM.title"),
+                        new LocString("cards", "DUCHESS_TRANSFORM.description"));
+                if (effect.Kind == "ExhaustHandUpTo")
+                    yield return HoverTipFactory.FromKeyword(CardKeyword.Exhaust);
                 if (effect.Kind == "ReactionDrawBlock") yield return HoverTipFactory.FromPower<DuchessReactionDrawBlockPower>();
                 if (effect.Kind == "RadiantBladeGrowth") yield return HoverTipFactory.FromPower<DuchessRadiantBladeGrowthPower>();
                 if (effect.Kind == "EndTurnDodge") yield return HoverTipFactory.FromPower<DuchessEndTurnDodgePower>();
@@ -482,6 +487,18 @@ public abstract class DuchessCard : CardModel
                 case "RewindTurn": await (await DuchessMomentPower.Ensure(context, Owner.Creature)).RestoreTurnStart(context, this); break;
                 case "TurnStartSwap": await Apply<DuchessTurnStartSwapPower>(context, Owner.Creature, amount); break;
                 case "Concealment": await Apply<DuchessConcealmentPower>(context, Owner.Creature, amount); break;
+                case "LoseConcealment":
+                    if (Owner.Creature.GetPower<DuchessConcealmentPower>() is { } concealment)
+                        await Apply<DuchessConcealmentPower>(context, Owner.Creature, -Math.Min(amount, concealment.Amount));
+                    break;
+                case "ExhaustHandUpTo":
+                    CardPile exhaustHand = PileType.Hand.GetPile(Owner);
+                    int exhaustMax = Math.Min((int)amount, exhaustHand.Cards.Count);
+                    if (exhaustMax > 0)
+                        foreach (CardModel card in (await CardSelectCmd.FromCombatPile(context, exhaustHand, Owner,
+                                     new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 0, exhaustMax))).ToArray())
+                            await CardCmd.Exhaust(context, card);
+                    break;
                 case "ReactionDrawBlock": await Apply<DuchessReactionDrawBlockPower>(context, Owner.Creature, amount); break;
                 case "RadiantBladeGrowth": await Apply<DuchessRadiantBladeGrowthPower>(context, Owner.Creature, amount); break;
                 case "FullBlockRadiantBlade": await Apply<DuchessFullBlockRadiantBladePower>(context, Owner.Creature, amount); break;

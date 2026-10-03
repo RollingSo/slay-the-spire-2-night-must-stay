@@ -42,18 +42,12 @@ public sealed class CurtainCall : CardModel
         int retainedCards = PileType.Hand.GetPile(Owner).Cards.Count(
             card => card.ShouldRetainThisTurn);
 
-        for (int i = 0; i < retainedCards; i++)
+        if (retainedCards > 0)
         {
-            Creature[] enemies = CombatState.HittableEnemies
-                .Where(enemy => enemy.IsAlive)
-                .ToArray();
-            if (enemies.Length == 0)
-                break;
-
-            Creature target = Owner.RunState.Rng.CombatTargets.NextItem(enemies);
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+                .WithHitCount(retainedCards)
                 .CompatFromCard(this)
-                .Targeting(target)
+                .TargetingAllOpponents(CombatState)
                 .WithIroneyeShotFx(Owner.Creature)
                 .Execute(context);
         }
