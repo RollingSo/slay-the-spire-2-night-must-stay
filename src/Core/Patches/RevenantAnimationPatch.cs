@@ -1,8 +1,13 @@
+#nullable enable
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Hooks;
+using MegaCrit.Sts2.Core.TestSupport;
+using MegaCrit.Sts2.Core.Helpers;
 using NightMustStay.Core.Models.Characters;
 using NightMustStay.Core.Models.Revenant;
 
@@ -11,6 +16,24 @@ namespace NightMustStay.Core.Patches;
 [HarmonyPatch]
 public static class RevenantAnimationPatch
 {
+    // Preserve routing across all hits of a card, but not across cards.
+    [HarmonyPatch(typeof(Hook), nameof(Hook.BeforeCardPlayed))]
+    [HarmonyPrefix]
+    public static void BeforeCardMotion(CardPlay __1) => ClearCardMotion(__1.Card);
+
+    [HarmonyPatch(typeof(Hook), nameof(Hook.AfterCardPlayed))]
+    [HarmonyPrefix]
+    public static void AfterCardMotion(CardPlay __2) => ClearCardMotion(__2.Card);
+
+    private static void ClearCardMotion(CardModel card)
+    {
+        if (TestMode.IsOn || NonInteractiveMode.IsActive) return;
+        if (card.Owner?.Creature != null
+            && NCombatRoom.Instance?.GetCreatureNode(card.Owner.Creature) is { } creature
+            && TryGetRig(creature, out Node rig))
+            rig.Call("clear_card_motion");
+    }
+
     [HarmonyPatch(typeof(NCreature), nameof(NCreature._Ready))]
     [HarmonyPostfix]
     public static void CreatureReady(NCreature __instance)
@@ -45,13 +68,13 @@ public static class RevenantAnimationPatch
 
     public static void PlayCardMotion(CardModel card, string motion)
     {
+        if (TestMode.IsOn || NonInteractiveMode.IsActive) return;
         if (card.Owner?.Creature == null)
             return;
         NCreature? creature = NCombatRoom.Instance?.GetCreatureNode(card.Owner.Creature);
         if (creature != null && TryGetRig(creature, out Node rig))
         {
-            rig.Call("queue_attack_motion", motion);
-            rig.Call("play_trigger", motion);
+            rig.Call("play_card_motion", motion);
         }
     }
 

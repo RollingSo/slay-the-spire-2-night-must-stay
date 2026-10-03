@@ -12,6 +12,15 @@ using K=NightMustStay.Core.Nodes.Vfx.RevenantAttackVfx.Kind;
 
 typeof(TestMode).GetProperty("IsOn")!.SetValue(null,true);
 void Assert(bool ok,string message) { if(!ok) throw new Exception(message); }
+foreach(var (hookName, patchName) in new[] {
+    ("BeforeCardPlayed", "BeforeCardMotion"), ("AfterCardPlayed", "AfterCardMotion") })
+{
+    var original=typeof(MegaCrit.Sts2.Core.Hooks.Hook).GetMethod(hookName)!.GetParameters();
+    var parameter=typeof(NightMustStay.Core.Patches.RevenantAnimationPatch).GetMethod(patchName)!.GetParameters().Single();
+    int index=int.Parse(parameter.Name![2..]);
+    Assert(original[index].ParameterType==parameter.ParameterType,"Animation hook parameter drift: "+hookName);
+}
+Console.WriteLine("PASS: Revenant card animation hook parameter bindings.");
 CardModel Card(Type type)=>(CardModel)RuntimeHelpers.GetUninitializedObject(type);
 var groups=new Dictionary<K,Type[]>
 {
