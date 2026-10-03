@@ -800,8 +800,20 @@ if (DuchessMomentPower.PocketwatchMoment != 2
     || DuchessConcealmentPower.CardBlockMultiplier != 1.25m
     || DuchessConcealmentPower.AttackDamageMultiplier != 1.25m)
     throw new Exception("Pocketwatch must trigger at Moment 2 and Concealment must add 25% attack damage and card Block.");
-if (typeof(DuchessConcealmentPower).GetMethod("ModifyDamageMultiplicative")?.DeclaringType != typeof(DuchessConcealmentPower))
-    throw new Exception("Concealment must modify powered attack damage.");
+// Invoke the actual patched base hook, including the optional Beta CardPlay.
+var damageCompatHarmony = new HarmonyLib.Harmony("NightMustStay.Duchess.DamageCompat.Tests");
+foreach (string name in new[] { "DuchessConcealmentDamageBranchPatch", "DuchessZeroCostAttackDamageBranchPatch" })
+    damageCompatHarmony.CreateClassProcessor(typeof(DuchessConcealmentPower).Assembly
+        .GetType("NightMustStay.Core.Patches."+name)!).Patch();
+decimal DamageHook(PowerModel power, string name, ValueProp props, Creature dealer, CardModel card)
+{
+    var method=typeof(PowerModel).GetMethods(BindingFlags.Public|BindingFlags.NonPublic|BindingFlags.Instance)
+        .Single(candidate => candidate.Name==name);
+    object?[] args=method.GetParameters().Length==5
+        ? new object?[] { null,10m,props,dealer,card }
+        : new object?[] { null,10m,props,dealer,card,null };
+    return (decimal)method.Invoke(power,args)!;
+}
 if (typeof(DuchessConcealmentPower).GetMethod("BeforeCardPlayed")?.DeclaringType == typeof(DuchessConcealmentPower)
     || typeof(DuchessConcealmentPower).GetMethod("AfterCardPlayedLate")?.DeclaringType == typeof(DuchessConcealmentPower)
     || typeof(DuchessConcealmentPower).GetMethod("BeforeSideTurnEnd")?.DeclaringType != typeof(DuchessConcealmentPower))
@@ -823,14 +835,14 @@ var bonusDealer = (Creature)System.Runtime.CompilerServices.RuntimeHelpers.GetUn
 typeof(PowerModel).GetProperty("Owner")!.SetValue(zeroCostBonus, bonusDealer);
 var concealment = (DuchessConcealmentPower)ModelDb.Power<DuchessConcealmentPower>().ToMutable();
 typeof(PowerModel).GetProperty("Owner")!.SetValue(concealment, bonusDealer);
-if (concealment.ModifyDamageMultiplicative(null!, 10, ValueProp.Move, bonusDealer, null!) != 1.25m
-    || concealment.ModifyDamageMultiplicative(null!, 10, ValueProp.Unpowered, bonusDealer, null!) != 1m
-    || concealment.ModifyDamageMultiplicative(null!, 10, ValueProp.Move, null!, null!) != 1m)
+if (DamageHook(concealment,"ModifyDamageMultiplicative",ValueProp.Move,bonusDealer,null!) != 1.25m
+    || DamageHook(concealment,"ModifyDamageMultiplicative",ValueProp.Unpowered,bonusDealer,null!) != 1m
+    || DamageHook(concealment,"ModifyDamageMultiplicative",ValueProp.Move,null!,null!) != 1m)
     throw new Exception("Concealment must boost only the owner's powered attacks by 25%.");
 zeroCostBonus.SetAmount(4, false);
 var discountedAttack = ModelDb.Card<DuchessCarianSlicer>().ToMutable();
-decimal BonusFor(CardModel candidate) => zeroCostBonus.ModifyDamageAdditive(
-    null!, 9, ValueProp.Move, bonusDealer, candidate);
+decimal BonusFor(CardModel candidate) => DamageHook(zeroCostBonus,"ModifyDamageAdditive",
+    ValueProp.Move,bonusDealer,candidate);
 if (discountedAttack.EnergyCost.Canonical != 1 || BonusFor(discountedAttack) != 0)
     throw new Exception("Inch Victory must not boost a positive-cost attack.");
 discountedAttack.EnergyCost.AddUntilPlayed(-1, true);
@@ -840,6 +852,11 @@ var turnDiscountedAttack = ModelDb.Card<DuchessCarianGreatsword>().ToMutable();
 turnDiscountedAttack.EnergyCost.SetThisTurn(0, true);
 if (BonusFor(turnDiscountedAttack) != 4)
     throw new Exception("Inch Victory must include attacks set to zero for the turn.");
+if (BonusFor(ModelDb.Card<DuchessDefend>().ToMutable()) != 0
+    || DamageHook(zeroCostBonus,"ModifyDamageAdditive",ValueProp.Unpowered,bonusDealer,turnDiscountedAttack) != 0
+    || DamageHook(zeroCostBonus,"ModifyDamageAdditive",ValueProp.Move,null!,turnDiscountedAttack) != 0)
+    throw new Exception("Zero-cost bonus must exclude skills, unpowered damage and other dealers.");
+Console.WriteLine("PASS: actual branch-compatible damage hooks, concealment and resolved zero-cost conditions.");
 
 if (DuchessReactionRules.IsEligibleDraw(true, PileType.Hand)
     || !DuchessReactionRules.IsEligibleDraw(false, PileType.Hand)

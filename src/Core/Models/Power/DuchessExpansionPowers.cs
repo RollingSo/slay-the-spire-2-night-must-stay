@@ -34,8 +34,8 @@ public sealed class DuchessConcealmentPower : PowerModel
         Creature target, decimal block, ValueProp props, CardModel cardSource, CardPlay cardPlay) =>
         target == Owner && cardSource != null ? CardBlockMultiplier : 1m;
 
-    public override decimal ModifyDamageMultiplicative(
-        Creature target, decimal amount, ValueProp props, Creature dealer, CardModel cardSource) =>
+    // Runtime damage hook is routed by the release/Beta compatibility patch.
+    internal decimal GetAttackDamageMultiplier(Creature dealer, ValueProp props) =>
         dealer == Owner && props.IsPoweredAttack() ? AttackDamageMultiplier : 1m;
 
     public override async Task BeforeSideTurnEnd(

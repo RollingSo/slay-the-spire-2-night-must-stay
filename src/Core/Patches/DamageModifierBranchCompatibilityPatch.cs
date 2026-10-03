@@ -28,6 +28,39 @@ internal static class DamageModifierBranchCompatibility
 }
 
 [HarmonyPatch]
+internal static class DuchessConcealmentDamageBranchPatch
+{
+    private static MethodBase TargetMethod() =>
+        DamageModifierBranchCompatibility.Resolve("ModifyDamageMultiplicative");
+
+    [HarmonyPrefix]
+    private static bool BeforeModify(
+        PowerModel __instance, Creature dealer, ValueProp props, ref decimal __result)
+    {
+        if (__instance is not DuchessConcealmentPower power) return true;
+        __result = power.GetAttackDamageMultiplier(dealer, props);
+        return false;
+    }
+}
+
+[HarmonyPatch]
+internal static class DuchessZeroCostAttackDamageBranchPatch
+{
+    private static MethodBase TargetMethod() =>
+        DamageModifierBranchCompatibility.Resolve("ModifyDamageAdditive");
+
+    [HarmonyPrefix]
+    private static bool BeforeModify(
+        PowerModel __instance, Creature dealer, ValueProp props,
+        CardModel cardSource, ref decimal __result)
+    {
+        if (__instance is not DuchessZeroCostAttackPower power) return true;
+        __result = power.GetZeroCostAttackBonus(props, dealer, cardSource);
+        return false;
+    }
+}
+
+[HarmonyPatch]
 internal static class IncomingDamageReductionBranchPatch
 {
     private static MethodBase TargetMethod() =>

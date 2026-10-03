@@ -19,8 +19,8 @@ public sealed class DuchessZeroCostAttackPower : PowerModel
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override decimal ModifyDamageAdditive(Creature target, decimal amount, ValueProp props,
-        Creature dealer, CardModel cardSource) =>
+    // Runtime damage hook is routed by the release/Beta compatibility patch.
+    internal decimal GetZeroCostAttackBonus(ValueProp props, Creature dealer, CardModel cardSource) =>
         dealer == Owner && props.IsPoweredAttack() && cardSource?.Type == CardType.Attack
         && cardSource.EnergyCost.GetResolved() == 0 ? Amount : 0m;
 }
