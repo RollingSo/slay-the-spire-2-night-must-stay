@@ -75,7 +75,10 @@ public abstract class DuchessCard : CardModel
         || Spec.UpgradeTokens || Spec.UpgradeX || Spec.UpgradeRetain || Spec.UpgradeInnate
         || Spec.UpgradeRemoveExhaust || Spec.UpgradedMoment >= 0 || Spec.UpgradeCost >= 0
         || Spec.UpgradeHits >= 0 ? 1 : 0;
-    protected override bool IsPlayable => this is not DuchessFallingMagic && base.IsPlayable;
+    protected override bool IsPlayable => this is not DuchessFallingMagic && base.IsPlayable
+        && (this is not DuchessEscape
+            || (Owner?.Creature?.GetPower<DuchessConcealmentPower>()?.Amount ?? 0m)
+                >= DynamicVars["LoseConcealment"].BaseValue);
     public override CardPoolModel Pool => this is DuchessDodge or DuchessRadiantBlade
         ? ModelDb.CardPool<TokenCardPool>() : base.Pool;
     public override CardPoolModel VisualCardPool => this is DuchessDodge or DuchessRadiantBlade

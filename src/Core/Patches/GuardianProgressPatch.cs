@@ -406,8 +406,8 @@ namespace NightMustStay.Core.Patches
                 if (image.Material is ShaderMaterial shader)
                 {
                     shader.SetShaderParameter("h", 1f);
-                    shader.SetShaderParameter("s", 1f);
-                    shader.SetShaderParameter("v", 1f);
+                    shader.SetShaderParameter("s", filter.IsSelected ? 1f : 0.3f);
+                    shader.SetShaderParameter("v", filter.IsSelected ? 1f : 0.55f);
                 }
             }
         }
@@ -429,8 +429,8 @@ namespace NightMustStay.Core.Patches
             if (image.Material is ShaderMaterial shader)
             {
                 shader.SetShaderParameter("h", 1f);
-                shader.SetShaderParameter("s", 1f);
-                shader.SetShaderParameter("v", 1f);
+                shader.SetShaderParameter("s", filter.IsSelected ? 1f : 0.3f);
+                shader.SetShaderParameter("v", filter.IsSelected ? 1f : 0.55f);
             }
         }
 
@@ -451,8 +451,8 @@ namespace NightMustStay.Core.Patches
             if (image.Material is ShaderMaterial shader)
             {
                 shader.SetShaderParameter("h", 1f);
-                shader.SetShaderParameter("s", 1f);
-                shader.SetShaderParameter("v", 1f);
+                shader.SetShaderParameter("s", filter.IsSelected ? 1f : 0.3f);
+                shader.SetShaderParameter("v", filter.IsSelected ? 1f : 0.55f);
             }
         }
     }

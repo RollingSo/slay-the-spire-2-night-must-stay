@@ -51,6 +51,21 @@ foreach (var character in new CharacterModel[] {
         throw new Exception($"{character.Id} drawing and deck colors must match.");
 }
 Console.WriteLine("PASS: four Nightfarer drawing colors match their deck colors.");
+// UI source guards: refreshing a portrait must not overwrite radio selection
+// visuals; history fitting must not introduce nonuniform scaling.
+string libraryPortraitSource = File.ReadAllText("src/Core/Patches/GuardianProgressPatch.cs");
+if (System.Text.RegularExpressions.Regex.Matches(libraryPortraitSource,
+        "filter.IsSelected \\? 1f : 0.3f").Count != 3
+    || System.Text.RegularExpressions.Regex.Matches(libraryPortraitSource,
+        "filter.IsSelected \\? 1f : 0.55f").Count != 3)
+    throw new Exception("All three original Nightfarer filters must preserve native selection shading.");
+string historyIconSource = File.ReadAllText("src/Core/Patches/DuchessHistoryIconPatch.cs");
+if (!historyIconSource.Contains("TextureRect.StretchModeEnum.KeepAspectCentered")
+    || !historyIconSource.Contains("TextureRect.ExpandModeEnum.IgnoreSize")
+    || !historyIconSource.Contains("OriginalLayouts.Remove(icon)")
+    || historyIconSource.Contains("icon.Scale ="))
+    throw new Exception("Duchess history icon must preserve aspect ratio and restore reused controls.");
+Console.WriteLine("PASS: history icon and card-library selection source guards.");
 foreach (var kind in Enum.GetValues<NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind>())
 {
     var cues = NightMustStay.Core.Nodes.Vfx.DuchessAudio.AttackCues(kind);
@@ -388,10 +403,34 @@ if (DuchessCardCatalog.All.ContainsKey("DuchessPerfectRehearsal")
     || escape.DynamicVars["ExhaustHandUpTo"].BaseValue != 2
     || escape.Keywords.Contains(CardKeyword.Exhaust))
     throw new Exception("Escape must replace Perfect Rehearsal: 0-cost skill, lose 2 Concealment, exhaust up to 2 hand cards.");
+escape.Owner = rewindPlayer;
+var escapeConcealment = (DuchessConcealmentPower)ModelDb.Power<DuchessConcealmentPower>().ToMutable();
+typeof(PowerModel).GetProperty("Owner")!.SetValue(escapeConcealment, rewindCreature);
+var escapePowers = (List<PowerModel>)typeof(Creature).GetField("_powers",
+    BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(rewindCreature)!;
+var escapePlayable = typeof(DuchessCard).GetProperty("IsPlayable",
+    BindingFlags.Instance | BindingFlags.NonPublic)!;
+bool EscapeIsPlayable() => (bool)escapePlayable.GetValue(escape)!;
+if (EscapeIsPlayable()) throw new Exception("Escape must not be playable without Concealment.");
+escapePowers.Add(escapeConcealment);
+foreach (int stacks in new[] { 0, 1, 2, 3 })
+{
+    escapeConcealment.SetAmount(stacks, false);
+    if (EscapeIsPlayable() != (stacks >= 2))
+        throw new Exception($"Base Escape must require 2 Concealment; tested {stacks}.");
+}
 escape.UpgradeInternal();
 if (escape.DynamicVars["LoseConcealment"].BaseValue != 1
     || escape.DynamicVars["ExhaustHandUpTo"].BaseValue != 2)
     throw new Exception("Escape upgrade must only reduce Concealment lost to 1.");
+foreach (int stacks in new[] { 0, 1, 2, 3 })
+{
+    escapeConcealment.SetAmount(stacks, false);
+    if (EscapeIsPlayable() != (stacks >= 1))
+        throw new Exception($"Upgraded Escape must require 1 Concealment; tested {stacks}.");
+}
+escapePowers.Remove(escapeConcealment);
+Console.WriteLine("PASS: Escape requires sufficient Concealment before play, base and upgraded.");
 foreach (CardModel retained in new[] { ModelDb.Card<DuchessReenactment>().ToMutable(), ModelDb.Card<DuchessParallelTime>().ToMutable() })
 {
     int cost = retained.EnergyCost.Canonical;
