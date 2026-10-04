@@ -497,7 +497,10 @@ public abstract class DuchessCard : CardModel
                     if (exhaustMax > 0)
                         foreach (CardModel card in (await CardSelectCmd.FromCombatPile(context, exhaustHand, Owner,
                                      new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 0, exhaustMax))).ToArray())
-                            await CardCmd.Exhaust(context, card);
+                            // Exhaust returns Task on Production and Task<T> on
+                            // newer builds. A direct call breaks JIT binding of
+                            // this shared OnPlay body for every Duchess card.
+                            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Exhaust(context, card);
                     break;
                 case "ReactionDrawBlock": await Apply<DuchessReactionDrawBlockPower>(context, Owner.Creature, amount); break;
                 case "RadiantBladeGrowth": await Apply<DuchessRadiantBladeGrowthPower>(context, Owner.Creature, amount); break;

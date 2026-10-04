@@ -34,6 +34,19 @@ function Build-Branch([string]$Name, [string]$AssemblyDir) {
 Build-Branch 'Stable' $StableAssemblyDir
 Build-Branch 'PublicBeta' $BetaAssemblyDir
 
+# Compilation alone misses return-type changes in referenced game methods.
+# JIT the same Production DLL against both runtimes, especially the shared
+# Duchess OnPlay async body (an invalid call here prevents every card play).
+$apiInspector = Join-Path $projectRoot 'tools\inspect_sts2_api\inspect_sts2_api.csproj'
+$stableMod = Join-Path $projectRoot 'build\bin\CompatibilityStable\NightMustStay.dll'
+foreach ($runtimeDir in @($StableAssemblyDir, $BetaAssemblyDir)) {
+    & dotnet run --project $apiInspector -- `
+        (Join-Path $runtimeDir 'sts2.dll') unused prepare-duchess $BetaAssemblyDir $stableMod
+    if ($LASTEXITCODE -ne 0) {
+        throw "Duchess runtime API binding failed against: $runtimeDir"
+    }
+}
+
 function Assert-NoModelIdCollisions(
     [string]$Name,
     [string]$AssemblyDir,
