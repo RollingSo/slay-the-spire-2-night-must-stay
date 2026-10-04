@@ -217,47 +217,61 @@ public sealed class ThreefoldHalo : CardModel
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
 }
 
-public sealed class AncientDragonLightning : CardModel
+public sealed class AncientDragonLightning : CardModel, IRevenantChargeCard
 {
-    private bool _recoveredThisTurn;
-    protected override bool HasEnergyCostX => true;
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(7m, ValueProp.Move) };
+    private bool _chargeComplete;
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] {
+        new DamageVar(6m, ValueProp.Move), new RepeatVar(4),
+        new DynamicVar("ChargeHits", 5m), new BoolVar("Ready") };
     public override string PortraitPath => "res://revenant_assets/cards/ancient_dragon_lightning.png";
-    public AncientDragonLightning() : base(0, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies) { }
+    public AncientDragonLightning() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
+    public override TargetType TargetType =>
+        IsChargeComplete ? TargetType.RandomEnemy : TargetType.AnyEnemy;
+    [SavedProperty]
+    public bool ChargeComplete
+    {
+        get => _chargeComplete;
+        set { AssertMutable(); _chargeComplete = value; ((BoolVar)DynamicVars["Ready"]).BoolVal = value; }
+    }
+    public bool IsChargeComplete => ChargeComplete;
+    protected override IEnumerable<IHoverTip> ExtraHoverTips
+    {
+        get
+        {
+            var preview = (AncientDragonLightning)MutableClone();
+            preview.ChargeComplete = !IsChargeComplete;
+            yield return new CardHoverTip(preview);
+        }
+    }
+    protected override void AddExtraArgsToDescription(LocString description) =>
+        RevenantCardHelpers.AddChargeStateDescription(this, description, IsChargeComplete,
+            state => state.Add("ChargedHits", DynamicVars.Repeat.IntValue + DynamicVars["ChargeHits"].IntValue));
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        int hits = ResolveEnergyXValue() + (IsUpgraded ? 1 : 0) + (_recoveredThisTurn ? 1 : 0);
-        await RevenantCardHelpers.DamageRandomEachHit(
-            this,
-            context,
-            DynamicVars.Damage.BaseValue,
-            hits);
+        if (cardPlay.Target == Owner.Creature) { await CompleteCharge(context); return; }
+        bool charged = IsChargeComplete;
+        int hits = DynamicVars.Repeat.IntValue + (charged ? DynamicVars["ChargeHits"].IntValue : 0);
+        ChargeComplete = false;
+        await RevenantCardHelpers.DamageRandomEachHit(this, context, DynamicVars.Damage.BaseValue, hits);
+        if (charged) await RevenantSummonManager.For(Owner).NotifyChargedCardPlayed(context);
     }
-    public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
+    public async Task CompleteCharge(PlayerChoiceContext context)
     {
-        if (card == this && RevenantCardHelpers.WasMovedFromDiscardToHand(card, oldPileType))
-            _recoveredThisTurn = true;
-        return Task.CompletedTask;
+        if (IsChargeComplete) return;
+        ChargeComplete = true;
+        await RevenantSummonManager.For(Owner).NotifyChargeCompleted(this);
+        await ChargeReturnPower.Schedule(context, this);
     }
-    public override Task AfterSideTurnEnd(
-        PlayerChoiceContext context,
-        CombatSide side,
-        IEnumerable<Creature> creatures)
-    {
-        if (side == Owner.Creature.Side)
-            _recoveredThisTurn = false;
-        return Task.CompletedTask;
-    }
-    protected override void OnUpgrade() { }
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(1m);
 }
 
 public sealed class LansseaxBlade : CardModel
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(63m, ValueProp.Move) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(42m, ValueProp.Move) };
     public override string PortraitPath => "res://revenant_assets/cards/lansseax_blade.png";
-    public LansseaxBlade() : base(5, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
+    public LansseaxBlade() : base(5, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
-    { ArgumentNullException.ThrowIfNull(cardPlay.Target); await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).WithRevenantFx(this, cardPlay.Target).Targeting(cardPlay.Target).Execute(context); }
+    { await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).WithRevenantFx(this).TargetingAllOpponents(CombatState).Execute(context); }
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
     {
@@ -269,37 +283,20 @@ public sealed class LansseaxBlade : CardModel
 
 public sealed class LightningStrike : CardModel
 {
-    private bool _recoveredThisTurn;
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(12m, ValueProp.Move) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(6m, ValueProp.Move) };
+    protected override bool IsPlayable => false;
     public override string PortraitPath => "res://revenant_assets/cards/lightning_strike.png";
-    public LightningStrike() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
-    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
-    { ArgumentNullException.ThrowIfNull(cardPlay.Target); await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).WithRevenantFx(this, cardPlay.Target).Targeting(cardPlay.Target).Execute(context); }
-    public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
+    public LightningStrike() : base(2, CardType.Attack, CardRarity.Common, TargetType.Self) { }
+    internal static bool ShouldTriggerOnDiscard(PileType oldPile, PileType newPile) =>
+        newPile == PileType.Discard && oldPile != PileType.Discard;
+    public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
     {
-        if (card == this
-            && !_recoveredThisTurn
-            && RevenantCardHelpers.WasMovedFromDiscardToHand(card, oldPileType))
-        {
-            _recoveredThisTurn = true;
-            DynamicVars.Damage.BaseValue *= 2m;
-        }
-        return Task.CompletedTask;
+        if (card != this || !ShouldTriggerOnDiscard(oldPileType, card.Pile?.Type ?? PileType.None)
+            || CombatState == null || !CombatState.HittableEnemies.Any(enemy => enemy.IsAlive)) return;
+        await RevenantCardHelpers.DamageRandomEachHit(this, new BlockingPlayerChoiceContext(),
+            DynamicVars.Damage.BaseValue, 1);
     }
-    public override Task AfterSideTurnEnd(
-        PlayerChoiceContext context,
-        CombatSide side,
-        IEnumerable<Creature> creatures)
-    {
-        if (side == Owner.Creature.Side && _recoveredThisTurn)
-        {
-            DynamicVars.Damage.BaseValue /= 2m;
-            _recoveredThisTurn = false;
-        }
-        return Task.CompletedTask;
-    }
-    protected override void OnUpgrade() =>
-        DynamicVars.Damage.UpgradeValueBy(_recoveredThisTurn ? 8m : 4m);
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
 }
 
 public sealed class AncientDragonSpear : CardModel
@@ -371,22 +368,17 @@ public sealed class Recover : CardModel
 
 public sealed class FlannSaxLightningSpear : CardModel
 {
-    private object _combatIdentity;
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(5m, ValueProp.Move), new RepeatVar(3) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(10m, ValueProp.Move), new RepeatVar(2) };
+    public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
     public override string PortraitPath => "res://revenant_assets/cards/flannsax_lightning_spear.png";
-    public FlannSaxLightningSpear() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) { }
-    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
-    { EnsureCombatValue(); await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).WithRevenantFx(this, cardPlay.Target).TargetingAllOpponents(CombatState).WithHitCount(DynamicVars.Repeat.IntValue).Execute(context); }
-    private void EnsureCombatValue() { if (ReferenceEquals(_combatIdentity, CombatState)) return; _combatIdentity = CombatState; DynamicVars.Damage.BaseValue = 5m; }
-    public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
-    {
-        if (card != this) return Task.CompletedTask;
-        EnsureCombatValue();
-        if (RevenantCardHelpers.WasMovedFromDiscardToHand(card, oldPileType))
-            DynamicVars.Damage.BaseValue += 2m;
-        return Task.CompletedTask;
-    }
-    protected override void OnUpgrade() => DynamicVars.Repeat.UpgradeValueBy(1m);
+    public FlannSaxLightningSpear() : base(3, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) { }
+    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this)
+            .WithRevenantFx(this, cardPlay.Target).TargetingAllOpponents(CombatState)
+            .WithHitCount(DynamicVars.Repeat.IntValue).Execute(context);
+    public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source) =>
+        card == this ? RevenantCardHelpers.AutoPlayWhenRecovered(this, oldPileType) : Task.CompletedTask;
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);
 }
 
 public sealed class BeastClaw : CardModel, IRevenantChargeCard
@@ -466,7 +458,7 @@ public sealed class BeastClaw : CardModel, IRevenantChargeCard
 public sealed class DeathLightning : CardModel, IRevenantChargeCard
 {
     private bool _chargeComplete;
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(5m, ValueProp.Move), new RepeatVar(4), new DynamicVar("ChargeHits", 5m), new BoolVar("Ready") };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(5m, ValueProp.Move), new RepeatVar(2), new DynamicVar("ChargeHits", 2m), new CardsVar(1), new BoolVar("Ready") };
     public override string PortraitPath => "res://revenant_assets/cards/death_lightning.png";
     [SavedProperty]
     public bool ChargeComplete
@@ -486,7 +478,7 @@ public sealed class DeathLightning : CardModel, IRevenantChargeCard
     {
         new CardHoverTip(CreateOppositeChargePreview()),
     };
-    public DeathLightning() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
+    public DeathLightning() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.RandomEnemy) { }
     protected override void AddExtraArgsToDescription(LocString description) =>
         RevenantCardHelpers.AddChargeStateDescription(this, description, IsChargeComplete, state =>
             state.Add("ChargedHits", DynamicVars.Repeat.IntValue + DynamicVars["ChargeHits"].IntValue));
@@ -518,6 +510,7 @@ public sealed class DeathLightning : CardModel, IRevenantChargeCard
             .TargetingRandomOpponents(CombatState)
             .Execute(context);
         if (wasCharged) await RevenantSummonManager.For(Owner).NotifyChargedCardPlayed(context);
+        await RevenantCardHelpers.AddFromDiscard(this, context, DynamicVars.Cards.IntValue, false);
     }
     public async Task CompleteCharge(PlayerChoiceContext context)
     {
@@ -526,7 +519,11 @@ public sealed class DeathLightning : CardModel, IRevenantChargeCard
         await RevenantSummonManager.For(Owner).NotifyChargeCompleted(this);
         await ChargeReturnPower.Schedule(context, this);
     }
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(1m);
+    protected override void OnUpgrade()
+    {
+        DynamicVars["ChargeHits"].UpgradeValueBy(1m);
+        DynamicVars.Cards.UpgradeValueBy(1m);
+    }
 }
 
 public sealed class SpaceRendingFrenzy : CardModel
@@ -664,7 +661,7 @@ public sealed class UnbearableFrenzy : CardModel
 
 public sealed class Beaststone : CardModel
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(5m, ValueProp.Move), new DynamicVar("Strength", 1m) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(7m, ValueProp.Move), new DynamicVar("Strength", 1m) };
     public override string PortraitPath => "res://revenant_assets/cards/beaststone.png";
     public Beaststone() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)

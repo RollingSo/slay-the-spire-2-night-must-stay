@@ -55,7 +55,7 @@ public sealed class SoulChargingClaw : CardModel, IRevenantChargeCard
     {
         new DamageVar(8m, ValueProp.Move),
         new DynamicVar("ChargeDamage", 6m),
-        new PowerVar<WeakPower>("Weak", 2m),
+        new PowerVar<WeakPower>("Weak", 3m),
         new BoolVar("Ready"),
     };
 

@@ -27,6 +27,7 @@ internal static class IroneyeHybridTargetState
     public static bool IsHybridTargetCard(CardModel card) =>
         card is AdvanceAndRetreat
             or IroneyeSwift
+            or AncientDragonLightning { IsChargeComplete: false }
             or BeastClaw { IsChargeComplete: false }
             or DeathLightning { IsChargeComplete: false }
             or LightningSpear
@@ -104,6 +105,7 @@ internal static class RevenantDirectPlayFallbackPatch
             return true;
 
         if (card is not BeastClaw { IsChargeComplete: false }
+            && card is not AncientDragonLightning { IsChargeComplete: false }
             && card is not DeathLightning { IsChargeComplete: false }
             && card is not GurranqBeastClaw { IsChargeComplete: false }
             && card is not Ensemble { IsChargeComplete: false }

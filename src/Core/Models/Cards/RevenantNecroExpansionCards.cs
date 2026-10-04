@@ -120,61 +120,24 @@ public sealed class StyxSpiritFire : CardModel
 
 public sealed class IceLightningSpear : CardModel
 {
-    private bool _recoveredThisTurn;
-
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-    {
-        new DamageVar(8m, ValueProp.Move),
-        new PowerVar<FreezePower>("BonusFreeze", 3m),
-    };
-
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] {
+        new DamageVar(7m, ValueProp.Move), new PowerVar<FreezePower>("Freeze", 2m) };
     public override string PortraitPath => "res://revenant_assets/cards/ice_lightning_spear.png";
-    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        new[] { HoverTipFactory.FromPower<FreezePower>() };
-
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => new[] { HoverTipFactory.FromPower<FreezePower>() };
     public IceLightningSpear() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
-
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .CompatFromCard(this).WithRevenantFx(this, cardPlay.Target)
-            .Targeting(cardPlay.Target)
-            .Execute(context);
-        if (!cardPlay.Target.IsAlive)
-            return;
-        if (_recoveredThisTurn)
-        {
-            await PowerCmd.Apply<FreezePower>(
-                context,
-                cardPlay.Target,
-                DynamicVars["BonusFreeze"].BaseValue,
-                Owner.Creature,
-                this);
-        }
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this)
+            .WithRevenantFx(this, cardPlay.Target).Targeting(cardPlay.Target).Execute(context);
+        if (cardPlay.Target.IsAlive)
+            await PowerCmd.Apply<FreezePower>(context, cardPlay.Target,
+                DynamicVars["Freeze"].BaseValue, Owner.Creature, this);
     }
-
-    public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
-    {
-        if (card == this && RevenantCardHelpers.WasMovedFromDiscardToHand(card, oldPileType))
-            _recoveredThisTurn = true;
-        return Task.CompletedTask;
-    }
-
-    public override Task AfterSideTurnEnd(
-        PlayerChoiceContext context,
-        CombatSide side,
-        IEnumerable<Creature> creatures)
-    {
-        if (side == Owner.Creature.Side)
-            _recoveredThisTurn = false;
-        return Task.CompletedTask;
-    }
-
     protected override void OnUpgrade()
     {
-        DynamicVars.Damage.UpgradeValueBy(3m);
-        DynamicVars["BonusFreeze"].UpgradeValueBy(1m);
+        DynamicVars.Damage.UpgradeValueBy(2m);
+        DynamicVars["Freeze"].UpgradeValueBy(1m);
     }
 }
 
@@ -258,7 +221,7 @@ public sealed class Harmony : CardModel
 public sealed class GhostlyTouch : CardModel
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new DynamicVar[] { new PowerVar<GhostlyTouchPower>("Freeze", 1m) };
+        new DynamicVar[] { new PowerVar<GhostlyTouchPower>("Freeze", 2m) };
 
     public override string PortraitPath => "res://revenant_assets/cards/ghostly_touch.png";
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -274,5 +237,5 @@ public sealed class GhostlyTouch : CardModel
             Owner.Creature,
             this);
 
-    protected override void OnUpgrade() => DynamicVars["Freeze"].UpgradeValueBy(1m);
+    protected override void OnUpgrade() => AddKeyword(CardKeyword.Innate);
 }

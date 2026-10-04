@@ -66,6 +66,70 @@ if (!historyIconSource.Contains("TextureRect.StretchModeEnum.KeepAspectCentered"
     || historyIconSource.Contains("icon.Scale ="))
     throw new Exception("Duchess history icon must preserve aspect ratio and restore reused controls.");
 Console.WriteLine("PASS: history icon and card-library selection source guards.");
+// Revenant lightning balance and transition boundary regression.
+var discardLightning = ModelDb.Card<LightningStrike>().ToMutable();
+if (discardLightning.DynamicVars.Damage.BaseValue != 6
+    || (bool)typeof(LightningStrike).GetProperty("IsPlayable", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(discardLightning)!)
+    throw new Exception("Lightning Strike must be unplayable with 6 discard damage.");
+var discardTrigger = typeof(LightningStrike).GetMethod("ShouldTriggerOnDiscard", BindingFlags.Static | BindingFlags.NonPublic)!;
+foreach (PileType oldPile in Enum.GetValues<PileType>())
+foreach (PileType newPile in Enum.GetValues<PileType>())
+    if ((bool)discardTrigger.Invoke(null, new object[] { oldPile, newPile })!
+        != (newPile == PileType.Discard && oldPile != PileType.Discard))
+        throw new Exception($"Incorrect Lightning Strike transition: {oldPile} -> {newPile}");
+discardLightning.UpgradeInternal();
+if (discardLightning.DynamicVars.Damage.BaseValue != 9) throw new Exception("Lightning Strike upgrade must deal 9.");
+var ancientLightning = (AncientDragonLightning)ModelDb.Card<AncientDragonLightning>().ToMutable();
+if (ancientLightning.EnergyCost.Canonical != 2 || ancientLightning.EnergyCost.CostsX
+    || ancientLightning.DynamicVars.Damage.BaseValue != 6 || ancientLightning.DynamicVars.Repeat.IntValue != 4
+    || ancientLightning.DynamicVars["ChargeHits"].IntValue != 5)
+    throw new Exception("Ancient Dragon Lightning must cost 2 and hit 4/9 times for 6.");
+ancientLightning.ChargeComplete = true;
+if (ancientLightning.TargetType != TargetType.RandomEnemy || !((BoolVar)ancientLightning.DynamicVars["Ready"]).BoolVal)
+    throw new Exception("Ancient Dragon Lightning must expose its charged state.");
+ancientLightning.UpgradeInternal();
+if (ancientLightning.DynamicVars.Damage.BaseValue != 7) throw new Exception("Ancient Dragon Lightning upgrade must deal 7.");
+var deathLightning = (DeathLightning)ModelDb.Card<DeathLightning>().ToMutable();
+if (deathLightning.EnergyCost.Canonical != 1 || deathLightning.DynamicVars.Damage.BaseValue != 5
+    || deathLightning.DynamicVars.Repeat.IntValue != 2 || deathLightning.DynamicVars["ChargeHits"].IntValue != 2
+    || deathLightning.DynamicVars.Cards.IntValue != 1) throw new Exception("Death Lightning base values changed incorrectly.");
+deathLightning.UpgradeInternal();
+if (deathLightning.DynamicVars.Damage.BaseValue != 5 || deathLightning.DynamicVars.Repeat.IntValue != 2
+    || deathLightning.DynamicVars["ChargeHits"].IntValue != 3 || deathLightning.DynamicVars.Cards.IntValue != 2)
+    throw new Exception("Death Lightning upgrade must only increase charged hits and recovery.");
+var iceSpear = ModelDb.Card<IceLightningSpear>().ToMutable();
+if (iceSpear.DynamicVars.Damage.BaseValue != 7 || iceSpear.DynamicVars["Freeze"].IntValue != 2)
+    throw new Exception("Ice Lightning Spear base must deal 7 and apply 2 Frostbite.");
+iceSpear.UpgradeInternal();
+if (iceSpear.DynamicVars.Damage.BaseValue != 9 || iceSpear.DynamicVars["Freeze"].IntValue != 3)
+    throw new Exception("Ice Lightning Spear upgrade must deal 9 and apply 3 Frostbite.");
+var ghostTouch = ModelDb.Card<GhostlyTouch>().ToMutable();
+if (ghostTouch.DynamicVars["Freeze"].IntValue != 2 || ghostTouch.Keywords.Contains(CardKeyword.Innate))
+    throw new Exception("Ghostly Touch base must apply 2 Frostbite without Innate.");
+ghostTouch.UpgradeInternal();
+if (ghostTouch.DynamicVars["Freeze"].IntValue != 2 || !ghostTouch.Keywords.Contains(CardKeyword.Innate))
+    throw new Exception("Ghostly Touch upgrade must add Innate without increasing Frostbite.");
+var fortissax = ModelDb.Card<FlannSaxLightningSpear>().ToMutable();
+if (fortissax.EnergyCost.Canonical != 3 || fortissax.TargetType != TargetType.AllEnemies
+    || fortissax.DynamicVars.Damage.BaseValue != 10 || fortissax.DynamicVars.Repeat.IntValue != 2
+    || !fortissax.Keywords.Contains(CardKeyword.Exhaust)) throw new Exception("Fortissax base values or target are incorrect.");
+fortissax.UpgradeInternal();
+if (fortissax.DynamicVars.Damage.BaseValue != 14 || fortissax.DynamicVars.Repeat.IntValue != 2)
+    throw new Exception("Fortissax upgrade must only increase damage to 14.");
+var lansseax = ModelDb.Card<LansseaxBlade>().ToMutable();
+if (lansseax.TargetType != TargetType.AllEnemies || lansseax.DynamicVars.Damage.BaseValue != 42)
+    throw new Exception("Lansseax must deal 42 AOE damage.");
+lansseax.UpgradeInternal();
+if (lansseax.EnergyCost.GetResolved() != 4 || lansseax.DynamicVars.Damage.BaseValue != 42)
+    throw new Exception("Lansseax upgrade must retain cost reduction only.");
+var beaststone = ModelDb.Card<Beaststone>().ToMutable();
+if (beaststone.DynamicVars.Damage.BaseValue != 7) throw new Exception("Beaststone must deal 7.");
+beaststone.UpgradeInternal();
+if (beaststone.DynamicVars.Damage.BaseValue != 9 || beaststone.DynamicVars["Strength"].IntValue != 2)
+    throw new Exception("Beaststone must preserve its existing upgrade.");
+if (ModelDb.Card<SoulChargingClaw>().DynamicVars["Weak"].IntValue != 3)
+    throw new Exception("Soul Charging Claw must apply 3 Weak.");
+Console.WriteLine("PASS: nine Revenant balance changes and all Lightning Strike pile-transition pairs.");
 foreach (var kind in Enum.GetValues<NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind>())
 {
     var cues = NightMustStay.Core.Nodes.Vfx.DuchessAudio.AttackCues(kind);
