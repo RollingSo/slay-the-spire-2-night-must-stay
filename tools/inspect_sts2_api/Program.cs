@@ -15,6 +15,23 @@ string methodFilter = args.Length > 2 ? args[2] : string.Empty;
 
 using InspectionLoadContext context = new(assemblyDirectory, args.Length > 3 ? args[3] : null);
 Assembly assembly = context.LoadFromAssemblyPath(assemblyPath);
+if (methodFilter == "prepare-fortify")
+{
+    Assembly mod = context.LoadFromAssemblyPath(Path.GetFullPath(args[4]));
+    Type patch = mod.GetType("NightMustStay.Core.Patches.FortifyAutomaticBlockRetentionPatch", true)!;
+    Assembly harmonyAssembly = context.LoadFromAssemblyName(new AssemblyName("0Harmony"));
+    Type harmonyType = harmonyAssembly.GetType("HarmonyLib.Harmony", true)!;
+    string patchId = "night-must-stay.tests.fortify-branch";
+    object harmony = Activator.CreateInstance(harmonyType, patchId)!;
+    try
+    {
+        object processor = harmonyType.GetMethod("CreateClassProcessor")!.Invoke(harmony, new object[] { patch })!;
+        processor.GetType().GetMethod("Patch")!.Invoke(processor, null);
+        Console.WriteLine("PASS: Fortify native automatic-clear transpiler applies against " + assemblyPath);
+    }
+    finally { harmonyType.GetMethod("UnpatchAll")!.Invoke(harmony, new object[] { patchId }); }
+    return 0;
+}
 if (methodFilter == "prepare-duchess")
 {
     Assembly mod = context.LoadFromAssemblyPath(Path.GetFullPath(args[4]));

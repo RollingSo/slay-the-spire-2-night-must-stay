@@ -1,9 +1,11 @@
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
-using MegaCrit.Sts2.Core.Models.Relics;
 
 namespace NightMustStay.Core.Models.Power
 {
@@ -13,33 +15,22 @@ namespace NightMustStay.Core.Models.Power
 
         public override PowerStackType StackType => PowerStackType.Counter;
 
-        public override bool ShouldClearBlock(Creature creature)
+        public int GetAutomaticClearRetainedBlock(int currentBlock)
         {
-            if (base.Owner != creature)
-                return true;
-            return false;
+            return System.Math.Min(System.Math.Max(0, currentBlock), System.Math.Max(0, Amount));
         }
 
-        public override async Task AfterPreventingBlockClear(AbstractModel preventer, Creature creature)
+        public void NotifyAutomaticClearRetention(int retainedBlock)
         {
-            if (this != preventer || creature != base.Owner)
-                return;
-
-            int clampAllowance = base.Owner.Player?.GetRelic<SturdyClamp>() != null ? 10 : 0;
-            int blockBeforeRetention = base.Owner.Block;
+            if (retainedBlock <= 0) return;
             Flash();
-            int retainedBlock = System.Math.Min(
-                blockBeforeRetention,
-                (int)base.Amount + clampAllowance);
-            int retainedByFortify = System.Math.Min(
-                (int)base.Amount,
-                System.Math.Max(0, blockBeforeRetention - clampAllowance));
-            GuardianMultiplayerPower guardianPower = base.Owner.GetPower<GuardianMultiplayerPower>();
-            if (guardianPower != null && retainedByFortify > 0)
-                guardianPower.QueueRetainedBlockForTeammates(retainedByFortify);
-            int blockToLose = base.Owner.Block - retainedBlock;
-            if (blockToLose > 0)
-                await NightMustStay.Core.Compatibility.Sts2BranchCompat.LoseBlock(base.Owner, blockToLose);
+            Owner.GetPower<GuardianMultiplayerPower>()?.QueueRetainedBlockForTeammates(retainedBlock);
+        }
+
+        public override async Task AfterSideTurnStart(CombatSide side,
+            IReadOnlyList<Creature> creatures, ICombatState combatState)
+        {
+            if (side != Owner.Side || !creatures.Contains(Owner)) return;
             await PowerCmd.Decrement(this);
         }
     }

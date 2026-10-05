@@ -45,6 +45,11 @@ foreach ($runtimeDir in @($StableAssemblyDir, $BetaAssemblyDir)) {
     if ($LASTEXITCODE -ne 0) {
         throw "Duchess runtime API binding failed against: $runtimeDir"
     }
+    & dotnet run --project $apiInspector -- `
+        (Join-Path $runtimeDir 'sts2.dll') unused prepare-fortify $BetaAssemblyDir $stableMod
+    if ($LASTEXITCODE -ne 0) {
+        throw "Fortify native automatic-clear patch failed against: $runtimeDir"
+    }
 }
 
 function Assert-NoModelIdCollisions(

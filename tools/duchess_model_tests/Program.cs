@@ -47,6 +47,7 @@ foreach (var type in new[] { typeof(TokenCardPool), typeof(ColorlessCardPool) })
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+FortifyRetentionRegression.Run();
 RevenantRoutingRegression.Run();
 var wingsBalance = ModelDb.Card<WorldEndingWings>().ToMutable();
 if (wingsBalance.DynamicVars.Damage.BaseValue != 7 || wingsBalance.TargetType != TargetType.AllEnemies)
