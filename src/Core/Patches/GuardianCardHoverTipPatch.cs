@@ -69,6 +69,8 @@ namespace NightMustStay.Core.Patches
                 "[gold]敏捷[/gold]", "[gold]Dexterity[/gold]", "[gold]민첩[/gold]");
             AddIfMentioned(tips, text, HoverTipFactory.Static(StaticHoverTip.Stun),
                 "[gold]击晕[/gold]", "[gold]Stun[/gold]", "[gold]기절[/gold]");
+            AddIfMentioned(tips, text, HoverTipFactory.Static(StaticHoverTip.ReplayStatic),
+                "[gold]重放[/gold]", "[gold]Replay[/gold]", "[gold]リプレイ[/gold]", "[gold]재연[/gold]");
             AddIfMentioned(tips, text, HoverTipFactory.FromKeyword(CardKeyword.Retain),
                 "[gold]保留[/gold]", "[gold]Retain[/gold]", "[gold]보존[/gold]");
             AddIfMentioned(tips, text, HoverTipFactory.FromKeyword(CardKeyword.Exhaust),
@@ -84,20 +86,17 @@ namespace NightMustStay.Core.Patches
 
         private static string GetAllDescriptionText(CardModel card)
         {
-            string id = card.Id.Entry;
-            string text = card.Description.Exists() ? card.Description.GetRawText() : string.Empty;
-            string[] supplementalKeys =
+            // Never mix base and upgrade text. Charged previews, however,
+            // still need their mechanic definitions alongside the original.
+            string text = card.Description.Exists()
+                ? card.GetDescriptionForPile(PileType.None)
+                : string.Empty;
+            if (card is IRevenantChargeCard { IsChargeComplete: false })
             {
-                id + ".upgradeDescription",
-                id + ".unchargedDescription",
-                id + ".chargedDescription",
-            };
-            foreach (string key in supplementalKeys)
-            {
-                if (LocString.Exists("cards", key))
-                    text += "\n" + new LocString("cards", key).GetRawText();
+                var preview = (CardModel)card.MutableClone();
+                ((IRevenantChargeCard)preview).ChargeComplete = true;
+                text += "\n" + preview.GetDescriptionForPile(PileType.None);
             }
-
             return text;
         }
 

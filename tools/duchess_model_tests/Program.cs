@@ -51,6 +51,13 @@ foreach (Type type in typeof(PowerModel).Assembly.GetTypes().Where(type => !type
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+if (args.Contains("--glossary-only"))
+{
+    foreach (var type in typeof(CardModel).Assembly.GetTypes().Where(type => !type.IsAbstract && typeof(AbstractModel).IsAssignableFrom(type)))
+        if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
+    CardGlossaryRegression.Run();
+    return 0;
+}
 if (args.Contains("--necro-hive-only"))
 {
     NecroHiveRegression.Run();

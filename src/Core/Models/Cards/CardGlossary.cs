@@ -12,6 +12,11 @@ namespace NightMustStay.Core.Models.Cards;
 /// <summary>Card rules explain mechanics; an unapplied power is not a rules preview.</summary>
 internal static class CardGlossary
 {
+    private static readonly Dictionary<string, Type> ModPowerTypes = typeof(FreezePower).Assembly.GetTypes()
+        .Where(type => !type.IsAbstract && typeof(PowerModel).IsAssignableFrom(type)
+            && type.Namespace == "NightMustStay.Core.Models.Power")
+        .ToDictionary(type => ModelDb.GetId(type).ToString());
+
     internal static readonly Type[] Mechanics =
     {
         typeof(FortifyPower), typeof(GuardCounterPower), typeof(PhantomImbalancePower),
@@ -36,7 +41,17 @@ internal static class CardGlossary
         var result = new List<IHoverTip>();
         foreach (IHoverTip tip in original)
         {
-            if (tip.CanonicalModel is not PowerModel power
+            // Native dumb power tips have no CanonicalModel; their Id still
+            // identifies the power. Do not let those bypass normalization.
+            PowerModel power = tip.CanonicalModel as PowerModel;
+            if (power == null && ModPowerTypes.TryGetValue(tip.Id, out Type powerType))
+                power = ModelDb.GetById<PowerModel>(ModelDb.GetId(powerType));
+            // Other glossary producers may use a localization ID instead of
+            // a power ID. Resolve those by title before applying the same rules.
+            if (power == null && tip is HoverTip { Title: { } title })
+                power = ModPowerTypes.Values.Select(type => ModelDb.GetById<PowerModel>(ModelDb.GetId(type)))
+                    .FirstOrDefault(candidate => candidate.Title.GetFormattedText() == title);
+            if (power == null
                 || power.GetType().Namespace != "NightMustStay.Core.Models.Power" || IsFamilyAction(power.GetType()))
             {
                 result.MegaTryAddingTip(tip);
@@ -77,7 +92,11 @@ internal static class CardGlossary
         power.DynamicVars.AddTo(description);
         description.Add("Amount", 1);
         description.Add("energyPrefix", EnergyIconHelper.GetPrefix(power));
-        // Stable localization identity deduplicates the glossary; no power icon or canonical power.
-        return new HoverTip(power.Title, description);
+        // Frostbite remains a generic definition, never a zero-stack preview.
+        if (power is FreezePower)
+            return new HoverTip(power.Title, description);
+        // Keep one native icon-bearing definition per power ID, even when an
+        // instance-type power would normally allow multiple hover tips.
+        return new HoverTip(power, description.GetFormattedText(), false) { IsInstanced = false };
     }
 }

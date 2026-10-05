@@ -25,6 +25,7 @@ namespace NightMustStay.Core.Models.Cards;
 
 public interface IRevenantChargeCard
 {
+    bool ChargeComplete { get; set; }
     bool IsChargeComplete { get; }
     Task CompleteCharge(PlayerChoiceContext context);
 }
@@ -530,7 +531,8 @@ public sealed class DeathLightning : CardModel, IRevenantChargeCard
             .TargetingRandomOpponents(CombatState)
             .Execute(context);
         if (wasCharged) await RevenantSummonManager.For(Owner).NotifyChargedCardPlayed(context);
-        await RevenantCardHelpers.AddFromDiscard(this, context, DynamicVars.Cards.IntValue, false);
+        if (wasCharged)
+            await RevenantCardHelpers.AddFromDiscard(this, context, DynamicVars.Cards.IntValue, false);
     }
     public async Task CompleteCharge(PlayerChoiceContext context)
     {

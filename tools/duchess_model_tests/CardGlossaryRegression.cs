@@ -27,9 +27,13 @@ internal static class CardGlossaryRegression
         // localization identities, keyword tips and generated-card models still run.
         Patch(AccessTools.Method(typeof(HoverTipFactory), nameof(HoverTipFactory.FromPower), new[] { typeof(PowerModel), typeof(int?) }), nameof(Power));
         Patch(AccessTools.Method(typeof(HoverTipFactory), nameof(HoverTipFactory.ForEnergy), new[] { typeof(CardModel) }), nameof(Energy));
+        Patch(AccessTools.PropertyGetter(typeof(PowerModel), nameof(PowerModel.Icon)), nameof(Icon));
+        Patch(AccessTools.Method(typeof(MegaCrit.Sts2.Core.Helpers.EnergyIconHelper), "GetPrefix", new[] { typeof(AbstractModel) }), nameof(EnergyPrefix));
         Patch(AccessTools.PropertyGetter(typeof(EnchantmentModel), nameof(EnchantmentModel.HoverTips)), nameof(Enchantment));
         fixture.CreateClassProcessor(typeof(GuardianCardHoverTipPatch)).Patch();
+        fixture.CreateClassProcessor(typeof(DuchessCard).Assembly.GetType("NightMustStay.Core.Patches.RevenantCallDescriptionPatch")!).Patch();
         int checks = 0;
+        var uncovered = new SortedSet<string>();
         try
         {
             var pools = new CardPoolModel[] { ModelDb.CardPool<GuardianCardPool>(), ModelDb.CardPool<IroneyeCardPool>(),
@@ -45,6 +49,15 @@ internal static class CardGlossaryRegression
                     try
                     {
                         IHoverTip[] tips = card.HoverTips.ToArray();
+                        if (card is Concerto or RevenantCall)
+                        {
+                            bool hasRecover = tips.OfType<HoverTip>().Any(tip => tip.Title == Tables["cards"]["REVENANT_RECOVER.tooltipTitle"]);
+                            if (hasRecover != upgraded) throw new Exception("Recover must appear only on upgraded Call/Concerto.");
+                        }
+                        if (card is IceLightningSpear && tips.OfType<HoverTip>().Count(tip => tip.Title == Tables["powers"]["FREEZE_POWER.title"]) != 1)
+                            throw new Exception("Frostbite must have exactly one explanation.");
+                        if (card is UndyingMarch && tips.Any(tip => tip.Id == ModelDb.Power<UndyingMarchPower>().Id.ToString()))
+                            throw new Exception("Undying March must not show its unapplied power.");
                         var extraGetter = typeof(CardModel).GetProperty("ExtraHoverTips", BindingFlags.Instance | BindingFlags.NonPublic)!;
                         IHoverTip[] originalExtras = ((IEnumerable<IHoverTip>)extraGetter.GetValue(card)!).ToArray();
                         foreach (IHoverTip preview in originalExtras.Where(tip => tip is CardHoverTip || tip.CanonicalModel is PowerModel power
@@ -59,14 +72,29 @@ internal static class CardGlossaryRegression
                         var mechanicTypes = (Type[])glossaryType.GetField("Mechanics", BindingFlags.Static | BindingFlags.NonPublic)!.GetValue(null)!;
                         string text = (string)typeof(GuardianCardHoverTipPatch).GetMethod("GetAllDescriptionText", BindingFlags.Static | BindingFlags.NonPublic)!
                             .Invoke(null, new object[] { card })!;
+                        if (locale == "zhs")
+                        foreach (Match match in Regex.Matches(text, @"\[gold\]([^\[]+)\[/gold\]"))
+                        {
+                            string word = match.Groups[1].Value;
+                            if (new[] { "手牌", "抽牌堆", "弃牌堆", "耗能", "能量", "召唤物", "蓄力完成" }.Contains(word)
+                                || word.StartsWith("时刻")) continue;
+                            if (!tips.OfType<HoverTip>().Any(tip => tip.Title == word)
+                                && !tips.OfType<CardHoverTip>().Any(tip => tip.Card.Title.TrimEnd('+') == word.TrimEnd('+')))
+                                uncovered.Add(word);
+                        }
                         foreach (Type type in mechanicTypes)
                         {
                             string title = ModelDb.GetById<PowerModel>(ModelDb.GetId(type)).Title.GetFormattedText();
                             if (text.Contains("[gold]" + title + "[/gold]", StringComparison.OrdinalIgnoreCase)
-                                && !tips.OfType<HoverTip>().Any(tip => tip.Title == title && tip.Icon == null && tip.CanonicalModel == null))
-                                throw new Exception($"Missing iconless glossary for {title}.");
+                                && tips.OfType<HoverTip>().Count(tip => tip.Title == title) != 1)
+                                throw new Exception($"Missing or duplicate glossary for {title}.");
+                            if (type != typeof(FreezePower) && text.Contains("[gold]" + title, StringComparison.OrdinalIgnoreCase)
+                                && !tips.Any(tip => tip.Id == ModelDb.GetId(type).ToString()))
+                                throw new Exception($"Mechanic {title} must use its native icon-bearing power definition.");
                         }
-                        if (tips.Any(tip => tip.CanonicalModel is PowerModel p && p.Id.Entry == card.Id.Entry + "_POWER"))
+                        if (tips.Any(tip => (!mechanicTypes.Any(type => ModelDb.GetId(type).ToString() == tip.Id)
+                            && tip.Id == "POWER." + card.Id.Entry + "_POWER")
+                            || tip.CanonicalModel is PowerModel p && p.Id.Entry == card.Id.Entry + "_POWER"))
                             throw new Exception("A card must not preview its own unapplied power.");
                         if (tips.Select(tip => tip.Id).Distinct().Count() != tips.Length)
                             throw new Exception("Glossary tips must be deduplicated.");
@@ -85,6 +113,7 @@ internal static class CardGlossaryRegression
                 }
             }
             Console.WriteLine($"PASS: {checks} card hover-tip checks across four characters, four locales and both upgrade states (asset factories stubbed).");
+            Console.WriteLine("Highlighted references requiring manual classification: " + string.Join(", ", uncovered));
         }
         finally { fixture.UnpatchAll(fixture.Id); }
     }
@@ -119,8 +148,18 @@ internal static class CardGlossaryRegression
                 ? value is DynamicVar variable ? variable.BaseValue.ToString() : value.ToString()! : match.Value);
         return false;
     }
-    public static bool Power(PowerModel model, ref IHoverTip __result) { __result = new AssetFreeTip(model); return false; }
+    public static bool Power(PowerModel model, ref IHoverTip __result)
+    { __result = new NativeDumbTip(model.Id.ToString()); return false; }
+    public static bool Icon(ref Godot.Texture2D? __result) { __result = null; return false; }
+    private sealed record NativeDumbTip(string Id) : IHoverTip
+    {
+        public AbstractModel? CanonicalModel => null;
+        public bool IsSmart => false;
+        public bool IsDebuff => false;
+        public bool IsInstanced => false;
+    }
     public static bool Energy(ref IHoverTip __result) { __result = new AssetFreeTip(null); return false; }
+    public static bool EnergyPrefix(ref string __result) { __result = ""; return false; }
     public static bool Enchantment(EnchantmentModel __instance, ref IEnumerable<IHoverTip> __result)
     { __result = new[] { new AssetFreeTip(__instance) }; return false; }
     private sealed record AssetFreeTip(AbstractModel? CanonicalModel) : IHoverTip

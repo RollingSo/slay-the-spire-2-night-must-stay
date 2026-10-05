@@ -239,7 +239,7 @@ public sealed class Concerto : CardModel
 
 public sealed class FightForMe : CardModel
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new DynamicVar("DexterityLoss", 3m) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new DynamicVar("DexterityLoss", 2m) };
     public override string PortraitPath => "res://revenant_assets/cards/fight_for_me.png";
     public FightForMe() : base(1, CardType.Power, CardRarity.Ancient, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)

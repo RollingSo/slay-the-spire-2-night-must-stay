@@ -217,13 +217,36 @@ if ($gurranqSelfBranch -match 'TriggerResonance|ChargeResonance') {
 if ($gurranqClassSource -notmatch 'if\s*\(wasCharged\)\s*\{[\s\S]*?TriggerResonance\(context\)') {
     $errors.Add('GURRANQ_BEAST_CLAW: Resonance must trigger only when the charged card is played.')
 }
-$gurranqZhText = Get-CardText $zhs 'GURRANQ_BEAST_CLAW.unchargedDescription'
-$gurranqEnText = Get-CardText $eng 'GURRANQ_BEAST_CLAW.unchargedDescription'
-if ($gurranqZhText -notmatch ('\[gold\]' + [regex]::Escape($zhCharge) + '\[/gold\]' + [regex]::Escape($zhColon) + '\[gold\]' + [regex]::Escape($zhResonance) + '\[/gold\]')) {
-    $errors.Add('GURRANQ_BEAST_CLAW: Chinese text must place Resonance inside the Charge effect.')
+$gurranqZhText = Get-CardText $zhs 'GURRANQ_BEAST_CLAW.chargedDescription'
+$gurranqEnText = Get-CardText $eng 'GURRANQ_BEAST_CLAW.chargedDescription'
+if ($gurranqZhText -notmatch ('\[gold\]' + [regex]::Escape($zhResonance) + '\[/gold\]') -or
+    $gurranqEnText -notmatch '\[gold\]Resonance\[/gold\]') {
+    $errors.Add('GURRANQ_BEAST_CLAW: charged previews must retain Resonance.')
 }
-if ($gurranqEnText -notmatch '\[gold\]Charge\[/gold\]: \[gold\]Resonance\[/gold\]') {
-    $errors.Add('GURRANQ_BEAST_CLAW: English text must place Resonance inside the Charge effect.')
+
+# Uncharged cards expose only the Charge label; details belong to the charged
+# hover preview. Discover implementations so newly added Charge cards are audited.
+$chargeClassNames = Get-ChildItem (Join-Path $root 'src/Core/Models/Cards') -Filter '*.cs' |
+    ForEach-Object {
+        [regex]::Matches((Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8),
+            'public sealed class (\w+)\s*:\s*CardModel,\s*IRevenantChargeCard') |
+            ForEach-Object { $_.Groups[1].Value }
+    }
+foreach ($locale in @(@('zhs', $zhs), @('eng', $eng), @('jpn', $jpn), @('kor', $kor))) {
+    foreach ($className in $chargeClassNames) {
+        $cardId = ConvertTo-CardId $className
+        $uncharged = Get-CardText $locale[1] "$cardId.unchargedDescription"
+        $charged = Get-CardText $locale[1] "$cardId.chargedDescription"
+        if ($uncharged -notmatch '\[gold\][^\[]+\[/gold\][.\u3002](?:\r?\n|$)' -or
+            $uncharged -match '\[gold\][^\[]+\[/gold\][:\uFF1A]' -or
+            $uncharged -match '\{(?:ChargeDamage|ChargeHits|ChargedDamage|ChargedHits)' -or
+            [string]::IsNullOrWhiteSpace($charged) -or $charged -eq $uncharged) {
+            $errors.Add("$($locale[0])/${cardId}: hide charged effects in the original text and retain a distinct charged preview.")
+        }
+        if ((Get-CardText $locale[1] "$cardId.upgradeDescription") -ne '{ChargeStateText}') {
+            $errors.Add("$($locale[0])/${cardId}: upgrade audit text must use the same Charge state description.")
+        }
+    }
 }
 
 # Keep the localization tables aligned with the ModelId entries generated from
