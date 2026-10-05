@@ -103,8 +103,8 @@ public sealed class RevenantSummonManager
     private readonly List<NIntent> _familyIntentNodes = new();
     private readonly List<NIntent> _necroIntentNodes = new();
     private Sprite2D _familyVisual;
+    private Node _familyAnimation;
     private Tween _familyIdleTween;
-    private Tween _familyActionTween;
     private Creature _familyCreature;
     private RevenantFamilyAction? _scheduledAction;
     private bool _handlingFamilyDeath;
@@ -729,7 +729,9 @@ public sealed class RevenantSummonManager
     internal static int CalculateNecroMaxHp(bool isElite) => isElite ? EliteNecroHp : NecroBaseHp;
 
     internal static bool IsEliteNecro(MonsterModel monster) => ModelDb.AllEncounters
-        .Where(encounter => encounter.RoomType == RoomType.Elite && !encounter.IsDebugEncounter)
+        .Where(encounter => encounter.RoomType == RoomType.Elite &&
+            // This flag is absent from the installed stable game assembly.
+            !(AccessTools.Property(encounter.GetType(), "IsDebugEncounter")?.GetValue(encounter) is true))
         .SelectMany(encounter => encounter.AllPossibleMonsters)
         .Any(candidate => candidate.Id == monster.Id);
 
@@ -844,14 +846,15 @@ public sealed class RevenantSummonManager
         StopFamilyTweens();
         _familyVisual?.QueueFree();
         _familyVisual = null;
+        _familyAnimation = null;
     }
 
     public void PrepareForSceneExit()
     {
         ClearFamilyIntents();
         ClearNecroIntents();
-        _familyActionTween?.Kill();
-        _familyActionTween = null;
+        if (_familyAnimation != null && GodotObject.IsInstanceValid(_familyAnimation))
+            _familyAnimation.Call("play_trigger", "Idle");
         // Deliberately leave the visual and its idle tween attached to the
         // combat scene so it remains present on the victory/result screen.
     }
@@ -876,6 +879,7 @@ public sealed class RevenantSummonManager
         StopFamilyTweens();
         _familyVisual?.QueueFree();
         _familyVisual = null;
+        _familyAnimation = null;
         await ClearFamilyActionPower();
         if (_familyCreature != null)
             _familyCreature.MaxHpChanged -= OnFamilyMaxHpChanged;
@@ -903,6 +907,7 @@ public sealed class RevenantSummonManager
             StopFamilyTweens();
             _familyVisual.QueueFree();
             _familyVisual = null;
+            _familyAnimation = null;
         }
         if (_familyVisual == null || !GodotObject.IsInstanceValid(_familyVisual))
         {
@@ -917,6 +922,14 @@ public sealed class RevenantSummonManager
             // the intent and power UI above the artwork at the same canvas Z.
             petNode.AddChild(_familyVisual);
             petNode.MoveChild(_familyVisual, 0);
+            _familyAnimation = new Node { Name = "FamilyFrameAnimation" };
+            _familyAnimation.SetScript(GD.Load<GDScript>("res://revenant_assets/families/family_animation.gd"));
+            _familyVisual.AddChild(_familyAnimation);
+            _familyAnimation.Connect("finished", Callable.From(() =>
+            {
+                if (CurrentFamilyId is RevenantFamilyId current)
+                    StartFamilyIdleAnimation(current);
+            }));
         }
         RefreshFamilyVisualScaleAndPosition();
         _familyVisual.Rotation = 0f;
@@ -930,28 +943,35 @@ public sealed class RevenantSummonManager
             _ => "sebastian.png",
         };
         _familyVisual.Texture = PreloadManager.Cache.GetTexture2D($"res://revenant_assets/families/{file}");
+        _familyAnimation.Call("configure", _familyVisual,
+            $"res://revenant_assets/families/animations/{System.IO.Path.GetFileNameWithoutExtension(file)}");
         StartFamilyIdleAnimation(family);
     }
 
-    // Osty's combat bounds are 204 px high. These values are derived from
-    // each 512x512 sprite's visible alpha bounds rather than its canvas size:
-    // Helen 476 px => 0.8x Osty, Frederick 453 px => 1.0x Osty,
-    // Sebastian 386 px => 1.2x Osty.
-    private static float GetFamilyBaseVisualScale(RevenantFamilyId family) => family switch
+    private static string GetFamilyAssetName(RevenantFamilyId family) => family switch
     {
-        RevenantFamilyId.Helen => 0.342857f,
-        RevenantFamilyId.PumpkinHead => 0.450331f,
-        RevenantFamilyId.Skeleton => 0.634197f,
-        _ => 0.342857f,
+        RevenantFamilyId.Helen => "helen",
+        RevenantFamilyId.PumpkinHead => "frederick",
+        _ => "sebastian",
     };
 
-    private static float GetFamilyBottomOffset(RevenantFamilyId family) => family switch
+    private static Rect2I GetFamilyIdleBounds(RevenantFamilyId family)
     {
-        RevenantFamilyId.Helen => 244f,
-        RevenantFamilyId.PumpkinHead => 245f,
-        RevenantFamilyId.Skeleton => 242f,
-        _ => 243f,
-    };
+        using Image image = PreloadManager.Cache.GetTexture2D(
+            $"res://revenant_assets/families/{GetFamilyAssetName(family)}.png").GetImage();
+        return image.GetUsedRect();
+    }
+
+    private static float GetFamilyBaseVisualScale(RevenantFamilyId family)
+    {
+        float ratio = family == RevenantFamilyId.Helen ? 0.8f : family == RevenantFamilyId.Skeleton ? 1.2f : 1f;
+        // Retain the existing 204 px Osty baseline, measuring new idle art by alpha bounds.
+        // All authored action frames share this scale; never resize by individual poses.
+        return 204f * ratio / Math.Max(1, GetFamilyIdleBounds(family).Size.Y);
+    }
+
+    private static float GetFamilyBottomOffset(RevenantFamilyId family) =>
+        GetFamilyIdleBounds(family).End.Y - 256f;
 
     private float GetFamilyGrowthScale()
     {
@@ -999,48 +1019,30 @@ public sealed class RevenantSummonManager
 
     private void PlayFamilyActionAnimation(RevenantFamilyId family, bool first)
     {
-        if (_familyVisual == null || !GodotObject.IsInstanceValid(_familyVisual))
+        PlayFamilyFrameAnimation("Attack");
+    }
+
+    public void PlayFamilyHitAnimation()
+    {
+        PlayFamilyFrameAnimation("Hit");
+    }
+
+    private void PlayFamilyFrameAnimation(string trigger)
+    {
+        if (_familyVisual == null || !GodotObject.IsInstanceValid(_familyVisual) ||
+            _familyAnimation == null || !GodotObject.IsInstanceValid(_familyAnimation) ||
+            CurrentFamilyId is not RevenantFamilyId family || _familyCreature?.IsAlive != true)
             return;
-
-        _familyIdleTween?.Kill();
-        _familyActionTween?.Kill();
-        Vector2 basePosition = GetFamilyVisualBasePosition(family);
-        _familyVisual.Position = basePosition;
+        StopFamilyTweens();
+        _familyVisual.Position = GetFamilyVisualBasePosition(family);
         _familyVisual.Rotation = 0f;
-
-        Vector2 windup = family switch
-        {
-            RevenantFamilyId.Helen => basePosition + new Vector2(-12f, -4f),
-            RevenantFamilyId.PumpkinHead => basePosition + new Vector2(-18f, 4f),
-            _ => basePosition + new Vector2(-8f, -6f),
-        };
-        Vector2 strike = family switch
-        {
-            RevenantFamilyId.Helen => basePosition + new Vector2(36f, -2f),
-            RevenantFamilyId.PumpkinHead => basePosition + new Vector2(28f, 8f),
-            _ => basePosition + new Vector2(20f, 2f),
-        };
-        if (!first)
-            strike = new Vector2(strike.X * 0.65f, strike.Y - 4f);
-
-        _familyActionTween = _familyVisual.CreateTween();
-        _familyActionTween.TweenProperty(_familyVisual, "position", windup, 0.10f)
-            .SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Quad);
-        _familyActionTween.TweenProperty(_familyVisual, "position", strike, 0.13f)
-            .SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Back);
-        _familyActionTween.Parallel().TweenProperty(_familyVisual, "rotation", 0.035f, 0.13f);
-        _familyActionTween.TweenProperty(_familyVisual, "position", basePosition, 0.24f)
-            .SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Cubic);
-        _familyActionTween.Parallel().TweenProperty(_familyVisual, "rotation", 0f, 0.24f);
-        _familyActionTween.TweenCallback(Callable.From(() => StartFamilyIdleAnimation(family)));
+        _familyAnimation.Call("play_trigger", trigger);
     }
 
     private void StopFamilyTweens()
     {
         _familyIdleTween?.Kill();
         _familyIdleTween = null;
-        _familyActionTween?.Kill();
-        _familyActionTween = null;
     }
 
     private void RefreshFamilyIntents(RevenantFamilyId family, RevenantFamilyAction action)

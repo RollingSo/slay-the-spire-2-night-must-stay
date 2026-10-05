@@ -175,7 +175,11 @@ public sealed class RevenantSummonControllerPower : PowerModel
         }
 
         if (manager.IsFamilyCreature(target))
+        {
+            if (result.TotalDamage > 0m)
+                manager.PlayFamilyHitAnimation();
             manager.RefreshScheduledFamilyIntent();
+        }
     }
 
     public override Task AfterDamageGiven(

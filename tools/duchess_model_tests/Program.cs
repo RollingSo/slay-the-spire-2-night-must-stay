@@ -43,7 +43,7 @@ foreach (var type in models)
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 // The standalone fixture only discovers mod models; token cards also resolve
 // the game's built-in token and colorless pools at runtime.
-foreach (var type in new[] { typeof(TokenCardPool), typeof(ColorlessCardPool) })
+foreach (var type in new[] { typeof(TokenCardPool), typeof(ColorlessCardPool), typeof(MegaCrit.Sts2.Core.Models.Powers.BufferPower) })
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
