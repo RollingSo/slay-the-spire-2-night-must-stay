@@ -85,24 +85,36 @@ public sealed class DuchessRadiantBladeGrowthPower : PowerModel
 
 public sealed class DuchessFullBlockRadiantBladePower : PowerModel
 {
+    private bool _resolving;
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
     public async Task AfterFullyBlockedAttack(PlayerChoiceContext context)
     {
+        if (_resolving || Owner?.Player == null || !Owner.IsAlive || Owner.CombatState == null)
+            return;
+        var owner = Owner;
+        var player = owner.Player;
+        var combatState = owner.CombatState;
         int bladeCount = Amount;
-        Flash();
-        await PowerCmd.Remove(this);
-        for (int i = 0; i < bladeCount; i++)
+        _resolving = true;
+        try
         {
-            DuchessRadiantBlade blade = Owner.Player.PlayerCombatState.AllCards.First().CombatState
-                .CreateCard<DuchessRadiantBlade>(Owner.Player);
-            if (Owner.HasPower<DuchessRadiantBladeGrowthPower>())
-                blade.DynamicVars.Damage.BaseValue += Owner.GetPower<DuchessRadiantBladeGrowthPower>().TotalGrowth;
-            CardPileAddResult added = await CardPileCmd.AddGeneratedCardToCombat(
-                blade, PileType.Hand, Owner.Player, CardPilePosition.Top);
-            CardCmd.PreviewCardPileAdd(added);
+            Flash();
+            await PowerCmd.Remove(this);
+            for (int i = 0; i < bladeCount; i++)
+            {
+                if (!owner.IsAlive || owner.CombatState != combatState
+                    || !MegaCrit.Sts2.Core.Combat.CombatManager.Instance.IsInProgress) break;
+                DuchessRadiantBlade blade = combatState.CreateCard<DuchessRadiantBlade>(player);
+                if (owner.HasPower<DuchessRadiantBladeGrowthPower>())
+                    blade.DynamicVars.Damage.BaseValue += owner.GetPower<DuchessRadiantBladeGrowthPower>().TotalGrowth;
+                CardPileAddResult added = await CardPileCmd.AddGeneratedCardToCombat(
+                    blade, PileType.Hand, player, CardPilePosition.Top);
+                CardCmd.PreviewCardPileAdd(added);
+            }
         }
+        finally { _resolving = false; }
     }
 
     public override async Task BeforeHandDraw(Player player, PlayerChoiceContext context, ICombatState combatState)
