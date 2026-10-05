@@ -4,4 +4,4 @@
 
 [resource]
 atlas = ExtResource("1_savior_spread_wings")
-region = Rect2(0, 0, 1000, 700)
+region = Rect2(0, 0, 1000, 760)

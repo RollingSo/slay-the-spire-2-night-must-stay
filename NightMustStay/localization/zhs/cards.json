@@ -715,7 +715,7 @@
   "DEFEND_REVENANT.title": "防御",
   "DEFEND_REVENANT.description": "获得{Block:diff()}点[gold]格挡[/gold]。",
   "DEFEND_REVENANT.upgradeDescription": "获得{Block:diff()}点[gold]格挡[/gold]。",
-  "REVENANT_CALL.title": "奏琴",
+  "REVENANT_CALL.title": "召唤灵魂",
   "REVENANT_CALL.description": "[gold]呼唤[/gold]。",
   "REVENANT_CALL.upgradeDescription": "[gold]呼唤[/gold]。\n[gold]回收[/gold]1张牌。",
   "REVENANT_CALL.tooltipTitle": "呼唤",

@@ -46,7 +46,9 @@
 
 - Before generating or revising Helen, Frederick, or Sebastian combat sprites, summon-choice artwork, character-select silhouettes, or family card artwork, read `design/Revenant_家人视觉规范.md` completely.
 - Scale family combat visuals by their visible non-transparent bounds relative to Osty: Helen `0.8×`, Frederick `1.0×`, Sebastian `1.2×`; do not infer size from canvas dimensions alone.
-- Helen's hood must completely hide her face, Frederick must wield a pumpkin-shaped hammer, and Sebastian must be an unclothed half-body skeleton with no full legs.
+- Before generating or revising Frederick artwork, also read `design/Frederick_美术强制规范.md` completely and use its three saved in-game screenshots as the identity reference. Frederick has an oversized covered headpiece, a gaunt body, ragged drapery, full slender legs, and a two-handed long-shaft round-headed hammer; the old bulky chef, pumpkin helmet, and apron requirements are obsolete. The existing pumpkin-hammer label must not override the screenshot shape.
+- Before generating or revising Sebastian artwork, also read `design/Sebastian_美术强制规范.md` completely and use its five saved in-game screenshots. Preserve the low arched rib cage, long forward neck, exposed skull, extremely long bony arms, residual lower spine, and hanging chest chains with round ornaments. No clothing or full legs; all surfaces use the spirit effect. Do not require eye-origin beams; the supplied energy reference is in front of the skull's mouth.
+- Before generating or revising Helen artwork, also read `design/Helen_美术强制规范.md` completely and use its four saved in-game screenshots. Preserve the pointed hood and hanging face covering, wide sleeves, belted short patterned clothing, chest chains with round ornaments, back drapery, exposed skeletal forearms and hands, full skeletal legs and feet, and one slender straight sword. All surfaces use the spirit effect; no visible face, flesh legs, tight trousers, tall boots, or shield.
 
 ## Power artwork
 
