@@ -137,32 +137,38 @@ position = Vector2(0, -116)
 scale = Vector2(1.2, 1.2)
 
 [node name="Idle" type="Sprite2D" parent="PoseRoot"]
-scale = Vector2(0.21, 0.21)
+position = Vector2(0, 0.000000000)
+scale = Vector2(0.210000000, 0.210000000)
 texture = ExtResource("2_idle")
 
 [node name="Attack" type="Sprite2D" parent="PoseRoot"]
 visible = false
-scale = Vector2(0.21, 0.21)
+position = Vector2(0, -1.489061785)
+scale = Vector2(0.212242563, 0.212242563)
 texture = ExtResource("3_attack")
 
 [node name="Hit" type="Sprite2D" parent="PoseRoot"]
 visible = false
-scale = Vector2(0.21, 0.21)
+position = Vector2(0, 0.000000000)
+scale = Vector2(0.210000000, 0.210000000)
 texture = ExtResource("4_hit")
 
 [node name="ClawAttack" type="Sprite2D" parent="PoseRoot"]
 visible = false
-scale = Vector2(0.21, 0.21)
+position = Vector2(0, 0.000000000)
+scale = Vector2(0.210000000, 0.210000000)
 texture = ExtResource("5_claw")
 
 [node name="PrayerAttack" type="Sprite2D" parent="PoseRoot"]
 visible = false
-scale = Vector2(0.21, 0.21)
+position = Vector2(0, 0.000000000)
+scale = Vector2(0.210000000, 0.210000000)
 texture = ExtResource("6_prayer")
 
 [node name="Death" type="Sprite2D" parent="PoseRoot"]
 visible = false
-scale = Vector2(0.21, 0.21)
+position = Vector2(0, 0.000000000)
+scale = Vector2(0.210000000, 0.210000000)
 texture = ExtResource("7_death")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
