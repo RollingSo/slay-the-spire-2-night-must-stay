@@ -23,7 +23,7 @@ namespace NightMustStay.Core.Models.Relics;
 public abstract class DuchessRelic : RelicModel
 {
     public override string PackedIconPath => $"res://duchess_assets/relics/{Id.Entry.ToLowerInvariant()}.png";
-    protected override string PackedIconOutlinePath => PackedIconPath;
+    protected override string PackedIconOutlinePath => PackedIconPath.Replace(".png", "_outline.png");
     protected override string BigIconPath => PackedIconPath;
 }
 

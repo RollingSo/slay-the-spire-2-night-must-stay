@@ -26,7 +26,7 @@ public abstract class IroneyeRelicModel : RelicModel
     public override string PackedIconPath =>
         $"res://ironeye_assets/relics/{IroneyeIconName}.png";
 
-    protected override string PackedIconOutlinePath => PackedIconPath;
+    protected override string PackedIconOutlinePath => PackedIconPath.Replace(".png", "_outline.png");
 
     protected override string BigIconPath => PackedIconPath;
 

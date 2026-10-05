@@ -17,12 +17,12 @@ func _initialize() -> void:
         var img: Image = texture.get_image()
         if img != null and img.is_compressed():
             img.decompress()
-        if img == null or img.get_size() != Vector2i(512,512):
+        if img == null or img.get_size() != Vector2i(256,256):
             push_error("Invalid Spirit Calling Jar icon dimensions: " + path)
             quit(1)
             return
         img.convert(Image.FORMAT_RGBA8)
-        for corner in [Vector2i(0,0), Vector2i(511,0), Vector2i(0,511), Vector2i(511,511)]:
+        for corner in [Vector2i(0,0), Vector2i(255,0), Vector2i(0,255), Vector2i(255,255)]:
             if img.get_pixelv(corner).a != 0:
                 push_error("Spirit Calling Jar icon has opaque corners")
                 quit(1)
@@ -34,5 +34,5 @@ func _initialize() -> void:
             push_error("Spirit Calling Jar atlas pixels differ")
             quit(1)
             return
-    print("SPIRIT_JAR_PACK: PNG and atlas imported correctly, 512x512, transparent corners.")
+    print("SPIRIT_JAR_PACK: PNG and atlas imported correctly, 256x256, transparent corners.")
     quit(0)

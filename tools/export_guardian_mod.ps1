@@ -114,6 +114,7 @@ if (Test-Path -LiteralPath (Join-Path $root 'src/Core/Models/Characters/Duchess.
 # were exported as raw PNGs without import metadata. Build a focused manifest
 # so the isolated PCK check below verifies actual Texture2D loading.
 & (Join-Path $PSScriptRoot 'validate_ironeye_power_icons.ps1')
+& (Join-Path $PSScriptRoot 'validate_item_icons.ps1')
 
 & (Join-Path $PSScriptRoot 'sync_guardian_power_icons.ps1')
 
@@ -135,6 +136,11 @@ if ($godotExportExitCode -ne 0) {
 }
 
 # Check actual imported textures in a separate project with no source/cache fallback.
+$itemIconCheckExitCode = Invoke-GodotAndWait @('--headless', '--path', (Join-Path $PSScriptRoot 'card_portrait_validation'), '--log-file', (Join-Path $buildDirectory 'item_icon_validation.log'), '--script', 'res://validate.gd', '--', $packPath, (Join-Path $buildDirectory 'item_icon_paths.json'))
+if ($itemIconCheckExitCode -ne 0) {
+    throw "Exported item icon validation failed: $itemIconCheckExitCode. See build/item_icon_validation.log"
+}
+
 $portraitCheckExitCode = Invoke-GodotAndWait @('--headless', '--path', (Join-Path $PSScriptRoot 'card_portrait_validation'), '--log-file', (Join-Path $buildDirectory 'card_portrait_validation.log'), '--script', 'res://validate.gd', '--', $packPath, (Join-Path $buildDirectory 'card_portrait_paths.json'))
 if ($portraitCheckExitCode -ne 0) {
     throw "Exported card portrait validation failed with exit code $portraitCheckExitCode. See build/card_portrait_validation.log"

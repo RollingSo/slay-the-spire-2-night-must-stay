@@ -25,7 +25,7 @@ namespace NightMustStay.Core.Models.Relics
         protected abstract string GuardianIconName { get; }
 
         public override string PackedIconPath => $"res://guardian_assets/relics/{GuardianIconName}.png";
-        protected override string PackedIconOutlinePath => PackedIconPath;
+        protected override string PackedIconOutlinePath => PackedIconPath.Replace(".png", "_outline.png");
         protected override string BigIconPath => PackedIconPath;
 
         // Guardian relic art uses substantially larger filled silhouettes than

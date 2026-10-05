@@ -22,7 +22,7 @@ public abstract class RevenantSummonRelicModel : RelicModel
     private bool _initialCallPending;
 
     public override bool SpawnsPets => true;
-    protected override string PackedIconOutlinePath => PackedIconPath;
+    protected override string PackedIconOutlinePath => PackedIconPath.Replace(".png", "_outline.png");
     protected override string BigIconPath => PackedIconPath;
     public override bool ShouldFlashOnPlayer => false;
 
