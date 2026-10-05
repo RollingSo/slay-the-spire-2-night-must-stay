@@ -145,6 +145,16 @@ if ($powerIconCheckExitCode -ne 0) {
     throw "Exported Ironeye power icon validation failed with exit code $powerIconCheckExitCode. See build/ironeye_power_icon_validation.log"
 }
 
+$necroCheckExitCode = Invoke-GodotAndWait @('--headless', '--path', (Join-Path $PSScriptRoot 'card_portrait_validation'), '--log-file', (Join-Path $buildDirectory 'necro_action_validation.log'), '--script', 'res://validate_necro_actions.gd', '--', $packPath)
+if ($necroCheckExitCode -ne 0) {
+    throw "Exported Necro action icon validation failed: $necroCheckExitCode. See build/necro_action_validation.log"
+}
+
+$spiritJarCheckExitCode = Invoke-GodotAndWait @('--headless', '--path', (Join-Path $PSScriptRoot 'card_portrait_validation'), '--log-file', (Join-Path $buildDirectory 'spirit_jar_validation.log'), '--script', 'res://validate_spirit_jar.gd', '--', $packPath)
+if ($spiritJarCheckExitCode -ne 0) {
+    throw "Exported Spirit Calling Jar icon validation failed: $spiritJarCheckExitCode. See build/spirit_jar_validation.log"
+}
+
 $themeCheckExitCode = Invoke-GodotAndWait @('--headless', '--path', (Join-Path $PSScriptRoot 'card_portrait_validation'), '--log-file', (Join-Path $buildDirectory 'character_theme_validation.log'), '--script', 'res://validate_character_themes.gd', '--', $packPath)
 if ($themeCheckExitCode -ne 0) {
     throw "Exported character theme/hand validation failed with exit code $themeCheckExitCode. See build/character_theme_validation.log"

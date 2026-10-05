@@ -56,11 +56,11 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new CardsVar(2)
+            new CardsVar(1)
         };
 
         public Featherstep()
-            : base(1, CardType.Power, CardRarity.Rare, TargetType.Self)
+            : base(2, CardType.Power, CardRarity.Rare, TargetType.Self)
         {
         }
 
@@ -72,7 +72,7 @@ namespace NightMustStay.Core.Models.Cards
                 Owner.Creature,
                 this);
 
-        protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1m);
+        protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     }
 
     public sealed class DustReturnSlash : CardModel
@@ -212,40 +212,21 @@ namespace NightMustStay.Core.Models.Power
 {
     public sealed class FeatherstepPower : PowerModel
     {
-        private sealed class Data
-        {
-            public bool TriggeredThisTurn;
-        }
-
         public override PowerType Type => PowerType.Buff;
 
         public override PowerStackType StackType => PowerStackType.Counter;
 
-        protected override object InitInternalData() => new Data();
-
         public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay cardPlay)
         {
-            Data data = GetInternalData<Data>();
-            if (data.TriggeredThisTurn
-                || cardPlay.Card.Owner.Creature != Owner
+            if (cardPlay.Card.Owner.Creature != Owner
                 || cardPlay.Card is not GuardianConcealedEdgeCard)
             {
                 return;
             }
 
-            data.TriggeredThisTurn = true;
             Flash();
             await CardPileCmd.Draw(context, Amount, Owner.Player);
         }
 
-        public override Task AfterSideTurnStart(
-            CombatSide side,
-            IReadOnlyList<Creature> creatures,
-            ICombatState combatState)
-        {
-            if (side == Owner.Side)
-                GetInternalData<Data>().TriggeredThisTurn = false;
-            return Task.CompletedTask;
-        }
     }
 }

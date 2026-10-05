@@ -22,33 +22,31 @@ namespace NightMustStay.Core.Models.Cards;
 
 public sealed class DeadRealmSpiritFire : CardModel
 {
+    protected override bool HasEnergyCostX => true;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(10m, ValueProp.Move),
-        new PowerVar<FreezePower>("Freeze", 4m),
+        new DamageVar(1m, ValueProp.Move),
     };
 
     public override string PortraitPath => "res://revenant_assets/cards/dead_realm_spirit_fire.png";
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         new[] { HoverTipFactory.FromPower<FreezePower>() };
 
-    public DeadRealmSpiritFire() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies) { }
+    public DeadRealmSpiritFire() : base(0, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies) { }
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
+        int count = ResolveEnergyXValue() + (IsUpgraded ? 1 : 0);
+        if (count <= 0) return;
+        await PowerCmd.Apply<FreezePower>(context, CombatState.HittableEnemies, count, Owner.Creature, this);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
             .CompatFromCard(this)
             .TargetingAllOpponents(CombatState)
+            .WithHitCount(count)
             .Execute(context);
-        await PowerCmd.Apply<FreezePower>(
-            context,
-            CombatState.HittableEnemies,
-            DynamicVars["Freeze"].BaseValue,
-            Owner.Creature,
-            this);
     }
 
-    protected override void OnUpgrade() => DynamicVars["Freeze"].UpgradeValueBy(1m);
+    protected override void OnUpgrade() { }
 }
 
 public sealed class StyxSpiritFire : CardModel
@@ -71,12 +69,16 @@ public sealed class StyxSpiritFire : CardModel
     {
         HoverTipFactory.FromPower<FreezePower>(),
         EnergyHoverTip,
+        HoverTipFactory.Static(StaticHoverTip.Fatal),
     };
 
     public StyxSpiritFire()
         : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
     {
     }
+
+    public decimal GetTargetFreezeDamage(Creature target) =>
+        (target?.GetPower<FreezePower>()?.Amount ?? 0m) * DynamicVars[DamageMultiplierKey].BaseValue;
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
@@ -88,23 +90,13 @@ public sealed class StyxSpiritFire : CardModel
             Owner.Creature,
             this);
 
-        int enemiesKilled = 0;
-        foreach (Creature target in targets.Where(target => target.IsAlive))
-        {
-            decimal freeze = target.GetPower<FreezePower>()?.Amount ?? 0m;
-            var attack = await DamageCmd.Attack(
-                    freeze * DynamicVars[DamageMultiplierKey].BaseValue)
-                .CompatFromCard(this)
-                .Targeting(target)
-                .Execute(context);
-
-            if (attack.Results
-                .SelectMany(resultSet => resultSet)
-                .Any(result => result.WasTargetKilled))
-            {
-                enemiesKilled++;
-            }
-        }
+        var fatalTargets = targets.Where(target => target.Powers.All(power => power.ShouldOwnerDeathTriggerFatal())).ToHashSet();
+        // The additive card hook supplies each target's own Freeze-based damage
+        // before the native strength and damage multipliers are resolved.
+        var attack = await DamageCmd.Attack(1m).CompatFromCard(this)
+            .TargetingAllOpponents(CombatState).Execute(context);
+        int enemiesKilled = attack.Results.SelectMany(results => results)
+            .Count(result => result.WasTargetKilled && fatalTargets.Contains(result.Receiver));
 
         if (enemiesKilled > 0)
         {

@@ -19,6 +19,7 @@ namespace NightMustStay
             Core.Compatibility.Sts2BranchCompat.RegisterSavedPropertyType(typeof(ReturningWindArrow));
             Core.Compatibility.Sts2BranchCompat.RegisterSavedPropertyType(typeof(EvolutionWings));
             Core.Compatibility.Sts2BranchCompat.RegisterSavedPropertyType(typeof(FlyingFeatherHelm));
+            Core.Compatibility.Sts2BranchCompat.RegisterSavedPropertyType(typeof(Core.Patches.RevenantSpiritJarSaveData));
 
             var harmony = new HarmonyLib.Harmony("NightMustStay.author");
             harmony.PatchAll();

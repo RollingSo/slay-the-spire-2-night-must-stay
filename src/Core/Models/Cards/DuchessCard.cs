@@ -44,6 +44,34 @@ public record DuchessCardSpec(int Cost, CardType Type, CardRarity Rarity,
 
 public abstract class DuchessCard : CardModel
 {
+    private bool _playInProgress;
+    private int _reactionDiscountAfterCleanup;
+
+    public override Task BeforeCardPlayed(CardPlay play)
+    {
+        if (play.Card == this)
+        {
+            _playInProgress = true;
+            _reactionDiscountAfterCleanup = 0;
+        }
+        return Task.CompletedTask;
+    }
+
+    internal void ApplyReactionDrawDiscount()
+    {
+        EnergyCost.AddUntilPlayed(-1, true);
+        if (_playInProgress) _reactionDiscountAfterCleanup++;
+    }
+
+    internal bool RestoreReactionDiscountAfterPlayCleanup()
+    {
+        _playInProgress = false;
+        int discount = _reactionDiscountAfterCleanup;
+        _reactionDiscountAfterCleanup = 0;
+        if (discount == 0) return false;
+        EnergyCost.AddUntilPlayed(-discount, true);
+        return true;
+    }
     [SavedProperty]
     public int PendingGlintstoneDamage { get; set; }
     [SavedProperty]
@@ -83,7 +111,7 @@ public abstract class DuchessCard : CardModel
         ? ModelDb.CardPool<TokenCardPool>() : base.Pool;
     public override CardPoolModel VisualCardPool => this is DuchessDodge or DuchessRadiantBlade
         ? ModelDb.CardPool<ColorlessCardPool>() : base.VisualCardPool;
-    public override bool GainsBlock => Spec.Effects.Any(e => e.Kind is "Block" or "AllyBlock" or "HandToDrawTopBlock");
+    public override bool GainsBlock => Spec.Effects.Any(e => e.Kind is "Block" or "AllyBlock" or "HandToDrawTopBlock" or "BlockPerExhaust");
 
     public override async Task BeforeCombatStart()
     {
@@ -188,7 +216,7 @@ public abstract class DuchessCard : CardModel
                 {
                     "Damage" => new DamageVar(effect.Amount, ValueProp.Move),
                     "AoeDamage" or "ExtraDamage" => new DynamicVar(effect.Kind, effect.Amount),
-                    "Block" or "AllyBlock" => new BlockVar(effect.Amount, ValueProp.Move),
+                    "Block" or "AllyBlock" or "BlockPerExhaust" => new BlockVar(effect.Amount, ValueProp.Move),
                     "Weak" or "WeakAll" => new PowerVar<WeakPower>(effect.Kind, effect.Amount),
                     "Vulnerable" => new PowerVar<VulnerablePower>(effect.Kind, effect.Amount),
                     "Strength" => new PowerVar<StrengthPower>(effect.Kind, effect.Amount),
@@ -243,42 +271,30 @@ public abstract class DuchessCard : CardModel
                 if (effect.Kind == "Strength") yield return HoverTipFactory.FromPower<StrengthPower>();
                 if (effect.Kind is "RewindDamage" or "RememberMoment" or "MomentEffectEnergy")
                     yield return HoverTipFactory.FromPower<DuchessMomentDescriptionPower>();
-                if (effect.Kind == "MomentEffectEnergy") yield return HoverTipFactory.FromPower<DuchessEternalFormPower>();
                 if (effect.Kind == "ConcealedStrength")
                 {
                     yield return HoverTipFactory.FromPower<DuchessConcealmentPower>();
                     yield return HoverTipFactory.FromPower<StrengthPower>();
-                    yield return HoverTipFactory.FromPower<DuchessShadowSwordPower>();
                 }
                 if (effect.Kind == "TemporaryStrength") yield return HoverTipFactory.FromPower<StrengthPower>();
                 if (effect.Kind == "Intangible") yield return HoverTipFactory.FromPower<IntangiblePower>();
                 if (effect.Kind == "AllyIntangible") yield return HoverTipFactory.FromPower<IntangiblePower>();
-                if (effect.Kind == "TurnStartSwap") yield return HoverTipFactory.FromPower<DuchessTurnStartSwapPower>();
-                if (effect.Kind is "Concealment" or "LoseConcealment" || effect.Condition == "concealed" || Spec.ConcealedTripleDamage)
+                if (effect.Kind is "Concealment" or "LoseConcealment" or "ConcealedBonusDamage" or "ConcealedKillNextCombatStrength"
+                    || effect.Condition == "concealed" || Spec.ConcealedTripleDamage || Spec.ConcealedCostReduction > 0)
                     yield return HoverTipFactory.FromPower<DuchessConcealmentPower>();
                 if (effect.Kind is "TransformDrawToDodge" or "TransformDrawToRadiantBlade")
                     yield return new HoverTip(new LocString("cards", "DUCHESS_TRANSFORM.title"),
                         new LocString("cards", "DUCHESS_TRANSFORM.description"));
                 if (effect.Kind == "ExhaustHandUpTo")
                     yield return HoverTipFactory.FromKeyword(CardKeyword.Exhaust);
-                if (effect.Kind == "ReactionDrawBlock") yield return HoverTipFactory.FromPower<DuchessReactionDrawBlockPower>();
-                if (effect.Kind == "RadiantBladeGrowth") yield return HoverTipFactory.FromPower<DuchessRadiantBladeGrowthPower>();
-                if (effect.Kind == "EndTurnDodge") yield return HoverTipFactory.FromPower<DuchessEndTurnDodgePower>();
-                if (effect.Kind == "MomentFiveFirstEnergy") yield return HoverTipFactory.FromPower<DuchessBeatPower>();
-                if (effect.Kind == "MomentFiveBlock") yield return HoverTipFactory.FromPower<DuchessMomentFiveBlockPower>();
                 if (effect.Kind == "Dexterity") yield return HoverTipFactory.FromPower<DexterityPower>();
-                if (effect.Kind == "ReactionBlock") yield return HoverTipFactory.FromPower<DuchessReactionBlockPower>();
-                if (effect.Kind == "ReactionDraw") yield return HoverTipFactory.FromPower<DuchessReactionDrawPower>();
                 if (effect.Kind == "TransformStrike")
                     foreach (IHoverTip tip in HoverTipFactory.FromCardWithCardHoverTips<DuchessCarianSlicer>())
                         yield return tip;
-                if (effect.Kind == "MomentFiveDraw") yield return HoverTipFactory.FromPower<DuchessMomentFiveDrawPower>();
-                if (effect.Kind == "EndTurnMomentBlock") yield return HoverTipFactory.FromPower<DuchessEndTurnMomentBlockPower>();
-                if (effect.Kind == "DodgeMoment") yield return HoverTipFactory.FromPower<DuchessDodgeMomentPower>();
-                if (effect.Kind == "ShuffleBlock") yield return HoverTipFactory.FromPower<DuchessShuffleBlockPower>();
-                if (effect.Kind == "ZeroCostAttackBonus") yield return HoverTipFactory.FromPower<DuchessZeroCostAttackPower>();
-                if (effect.Kind == "DodgePlayAoe") yield return HoverTipFactory.FromPower<DuchessGracefulSwordDancePower>();
-                if (effect.Kind == "ConcealedKillNextCombatStrength") yield return HoverTipFactory.FromPower<DuchessPhantomKillerPower>();
+                if (effect.Kind == "ConcealedKillNextCombatStrength")
+                {
+                    yield return HoverTipFactory.Static(StaticHoverTip.Fatal);
+                }
             }
         }
     }
@@ -295,7 +311,7 @@ public abstract class DuchessCard : CardModel
                     || Spec.ConcealedTripleDamage || Spec.Effects.Any(e => e.Kind is "ConcealedBonusDamage" or "MomentBonusDamage"))
                 ? "CalculationBase" : effect.Kind is "ConcealedBonusDamage" or "MomentBonusDamage" ? "ExtraDamage"
                 : effect.Kind == "RewindDamage" ? "ExtraDamage"
-                : effect.Kind == "AllyBlock" ? "Block" : effect.Kind;
+                : effect.Kind is "AllyBlock" or "BlockPerExhaust" ? "Block" : effect.Kind;
             if (DynamicVars.TryGetValue(key, out DynamicVar variable))
                 variable.UpgradeValueBy(effect.Upgraded - effect.Amount);
         }
@@ -331,7 +347,7 @@ public abstract class DuchessCard : CardModel
             DynamicVars.Damage.BaseValue += boost;
         }
         if (Spec.Reaction && DuchessReactionRules.IsEligibleDraw(fromHandDraw, card.Pile?.Type ?? PileType.None))
-            EnergyCost.AddUntilPlayed(-1, true);
+            ApplyReactionDrawDiscount();
         return Task.CompletedTask;
     }
 
@@ -356,7 +372,7 @@ public abstract class DuchessCard : CardModel
         foreach (DuchessEffect effect in Spec.Effects)
         {
             if (!conditions.TryGetValue(effect.Condition, out bool met) || !met) continue;
-            string key = effect.Kind == "AllyBlock" ? "Block" : effect.Kind;
+            string key = effect.Kind is "AllyBlock" or "BlockPerExhaust" ? "Block" : effect.Kind;
             decimal amount = effect.Kind == "Damage" && (Spec.RestageDivisor > 0
                     || Spec.ConcealedTripleDamage || Spec.Effects.Any(e => e.Kind is "ConcealedBonusDamage" or "MomentBonusDamage"))
                 ? DynamicVars.CalculatedDamage.Calculate(play.Target)
@@ -500,11 +516,21 @@ public abstract class DuchessCard : CardModel
                     if (exhaustMax > 0)
                         foreach (CardModel card in (await CardSelectCmd.FromCombatPile(context, exhaustHand, Owner,
                                      new CardSelectorPrefs(CardSelectorPrefs.ExhaustSelectionPrompt, 0, exhaustMax))).ToArray())
+                        {
+                            int exhaustedBefore = CombatManager.Instance.History.Entries
+                                .OfType<CardExhaustedEntry>().Count(entry => entry.Card == card);
                             // Exhaust returns Task on Production and Task<T> on
                             // newer builds. A direct call breaks JIT binding of
                             // this shared OnPlay body for every Duchess card.
                             await NightMustStay.Core.Compatibility.Sts2BranchCompat.Exhaust(context, card);
+                            // Count actual exhaustion, even if an exhaustion hook moves the card again.
+                            if (Spec.Effects.Any(e => e.Kind == "BlockPerExhaust")
+                                && CombatManager.Instance.History.Entries.OfType<CardExhaustedEntry>()
+                                    .Count(entry => entry.Card == card) > exhaustedBefore)
+                                await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, play);
+                        }
                     break;
+                case "BlockPerExhaust": break; // Granted per successful exhaustion above.
                 case "ReactionDrawBlock": await Apply<DuchessReactionDrawBlockPower>(context, Owner.Creature, amount); break;
                 case "RadiantBladeGrowth": await Apply<DuchessRadiantBladeGrowthPower>(context, Owner.Creature, amount); break;
                 case "FullBlockRadiantBlade": await Apply<DuchessFullBlockRadiantBladePower>(context, Owner.Creature, amount); break;
@@ -707,7 +733,7 @@ public abstract class DuchessCard : CardModel
 
     private async Task AllyDodgeDrawX(PlayerChoiceContext context)
     {
-        int count = ResolveEnergyXValue() + (IsUpgraded && Spec.UpgradeX ? 1 : 0);
+        int count = DynamicVars["AllyDodgeDrawX"].IntValue;
         foreach (var ally in CombatState.Players.Where(p => p != Owner && p.Creature.IsAlive))
         {
             await AddDodges(ally, count, PileType.Draw);

@@ -70,7 +70,7 @@ public sealed class SpiritFormPower : PowerModel
             return;
 
         RevenantSummonManager manager = RevenantSummonManager.For(Owner.Player);
-        await manager.IncreaseFamilyMaxAndCurrentHp(FamilyHpGain);
+        await manager.IncreaseSummonsMaxAndCurrentHp(FamilyHpGain);
         await manager.TriggerResonance(context);
     }
 }
@@ -151,9 +151,8 @@ public sealed class BeastClawMarkPower : PowerModel
 
     public async Task AfterResonance(PlayerChoiceContext context)
     {
-        Creature family = Owner.Player.Osty;
-        if (family is { IsAlive: true })
-            await PowerCmd.Apply<StrengthPower>(context, family, Amount, Owner, null);
+        foreach (Creature summon in RevenantSummonManager.For(Owner.Player).GetLivingSummons())
+            await PowerCmd.Apply<StrengthPower>(context, summon, Amount, Owner, null);
     }
 }
 
@@ -189,7 +188,7 @@ public sealed class BlessingOfGracePower : PowerModel
         ICombatState combatState)
     {
         if (side != Owner.Side || !creatures.Contains(Owner)) return;
-        Creature family = Owner.Player.Osty;
-        if (family is { IsAlive: true }) await RevenantAttackEffects.Heal(family, Amount);
+        foreach (Creature summon in RevenantSummonManager.For(Owner.Player).GetLivingSummons())
+            await RevenantAttackEffects.Heal(summon, Amount);
     }
 }

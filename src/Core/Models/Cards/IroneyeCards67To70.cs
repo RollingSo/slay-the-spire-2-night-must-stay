@@ -208,18 +208,11 @@ public sealed class SeeThrough : CardModel
         if (xValue <= 0)
             return;
 
-        // Resolve this as X separate applications. This preserves the card's
-        // intended "X times 1 Mark / X times 4 Block" wording and makes every
-        // block application pass through the normal BlockVar path, including
-        // Dexterity and other block modifiers.
+        await PowerCmd.Apply<NightMustStayMarkPower>(
+            context, cardPlay.Target, xValue * DynamicVars[MarkKey].BaseValue,
+            Owner.Creature, this);
         for (int i = 0; i < xValue; i++)
         {
-            await PowerCmd.Apply<NightMustStayMarkPower>(
-                context,
-                cardPlay.Target,
-                DynamicVars[MarkKey].BaseValue,
-                Owner.Creature,
-                this);
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
         }
     }

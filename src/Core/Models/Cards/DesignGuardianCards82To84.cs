@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -145,11 +146,7 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new CalculationBaseVar(20m),
-            new ExtraDamageVar(4m),
-            new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
-                static (card, _) => PileType.Discard.GetPile(card.Owner).Cards.Count(
-                    discardCard => discardCard.Type == CardType.Skill))
+            new DamageVar(7m, ValueProp.Move)
         };
 
         public WorldEndingWings()
@@ -159,22 +156,31 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
         {
-            decimal damage = DynamicVars.CalculatedDamage.Calculate(null);
-            CardModel[] skills = PileType.Discard.GetPile(Owner).Cards
+            CardModel[] skills = PileType.Draw.GetPile(Owner).Cards
                 .Where(card => card.Type == CardType.Skill)
                 .ToArray();
+            int exhausted = 0;
             foreach (CardModel skill in skills)
-                await CardPileCmd.Add(skill, PileType.Exhaust);
+            {
+                if (skill.Pile != PileType.Draw.GetPile(Owner)) continue;
+                int before = CombatManager.Instance.History.Entries.OfType<CardExhaustedEntry>()
+                    .Count(entry => entry.Card == skill);
+                await NightMustStay.Core.Compatibility.Sts2BranchCompat.Exhaust(context, skill);
+                if (CombatManager.Instance.History.Entries.OfType<CardExhaustedEntry>()
+                    .Count(entry => entry.Card == skill) > before) exhausted++;
+            }
+            if (exhausted == 0) return;
 
-            await DamageCmd.Attack(damage)
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
                 .CompatFromCard(this)
                 .TargetingAllOpponents(CombatState)
+                .WithHitCount(exhausted)
                 .WithGuardianWhirlwindFx()
                 .Execute(context);
         }
 
         protected override void OnUpgrade() =>
-            DynamicVars.ExtraDamage.UpgradeValueBy(2m);
+            DynamicVars.Damage.UpgradeValueBy(2m);
     }
 }
 

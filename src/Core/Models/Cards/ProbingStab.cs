@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -19,11 +20,12 @@ namespace NightMustStay.Core.Models.Cards
     public sealed class ProbingStab : CardModel
     {
         private const string RetainCountKey = "RetainCount";
+        private int _pendingRetainCount;
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
             new DamageVar(6m, ValueProp.Move),
-            new DynamicVar(RetainCountKey, 1m),
+            new DynamicVar(RetainCountKey, 2m),
         };
 
         public ProbingStab()
@@ -41,34 +43,24 @@ namespace NightMustStay.Core.Models.Cards
                 .WithGuardianWeaponFx()
                 .Execute(choiceContext);
 
-            int retainCount = base.DynamicVars[RetainCountKey].IntValue;
-            List<CardModel> candidates = PileType.Hand.GetPile(base.Owner).Cards
-                .Where(card => GuardianCardFilters.HasDefendInName(card) && !card.Keywords.Contains(CardKeyword.Retain))
-                .ToList();
-            if (candidates.Count == 0)
-                return;
+            _pendingRetainCount += DynamicVars[RetainCountKey].IntValue;
+        }
 
-            IEnumerable<CardModel> selected = candidates;
-            if (candidates.Count > retainCount)
-            {
-                selected = await CardSelectCmd.FromHand(
-                    choiceContext,
-                    base.Owner,
-                    new CardSelectorPrefs(new LocString("cards", "PROBING_STAB.selectionScreenPrompt"), retainCount),
-                    card => GuardianCardFilters.HasDefendInName(card) && !card.Keywords.Contains(CardKeyword.Retain),
-                    this);
-            }
-
-            foreach (CardModel card in selected.ToList())
-            {
-                CardCmd.ApplyKeyword(card, CardKeyword.Retain);
-                TransientCardKeywordRegistry.TrackRetain(card);
-            }
+        public override async Task BeforeFlushLate(PlayerChoiceContext context, Player player)
+        {
+            if (player != Owner || _pendingRetainCount <= 0) return;
+            int count = _pendingRetainCount;
+            _pendingRetainCount = 0;
+            if (!MegaCrit.Sts2.Core.Hooks.Hook.ShouldFlush(player.Creature.CombatState, player)) return;
+            var selected = await CardSelectCmd.FromHand(context, player,
+                new CardSelectorPrefs(new LocString("cards", "PROBING_STAB.selectionScreenPrompt"), 0, count),
+                card => !card.ShouldRetainThisTurn, this);
+            foreach (CardModel card in selected.ToArray()) card.GiveSingleTurnRetain();
         }
 
         protected override void OnUpgrade()
         {
-            base.DynamicVars.Damage.UpgradeValueBy(3m);
+            base.DynamicVars.Damage.UpgradeValueBy(2m);
             base.DynamicVars[RetainCountKey].UpgradeValueBy(1m);
         }
     }

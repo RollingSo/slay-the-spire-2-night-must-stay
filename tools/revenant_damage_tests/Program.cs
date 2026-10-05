@@ -132,7 +132,7 @@ static void VerifySpiritFormStats()
         "MoveNext",
         BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!;
     MethodBase[] calls = ReadCalledMethods(moveNext).ToArray();
-    if (!calls.Any(call => call.Name == nameof(RevenantSummonManager.IncreaseFamilyMaxAndCurrentHp))
+    if (!calls.Any(call => call.Name == nameof(RevenantSummonManager.IncreaseSummonsMaxAndCurrentHp))
         || !calls.Any(call => call.Name == nameof(RevenantSummonManager.TriggerResonance)))
     {
         throw new InvalidOperationException(
