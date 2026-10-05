@@ -4,6 +4,8 @@
     <Sts2AssemblyDir Condition="'$(Sts2AssemblyDir)' == ''">D:/Steam/steamapps/common/Slay the Spire 2/data_sts2_windows_x86_64</Sts2AssemblyDir>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Sentry.Godot"><HintPath>$(Sts2AssemblyDir)/Sentry.Godot.dll</HintPath></Reference>
+    <Reference Include="Sentry"><HintPath>$(Sts2AssemblyDir)/Sentry.dll</HintPath></Reference>
     <Reference Include="sts2"><HintPath>$(Sts2AssemblyDir)/sts2.dll</HintPath></Reference>
     <Reference Include="GodotSharp"><HintPath>$(Sts2AssemblyDir)/GodotSharp.dll</HintPath></Reference>
     <Reference Include="NightMustStay"><HintPath>../../.godot/mono/temp/bin/Debug/NightMustStay.dll</HintPath></Reference>
