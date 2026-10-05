@@ -27,8 +27,9 @@ public sealed class FrenziedThreeFingersPower : PowerModel
         Creature dealer,
         CardModel cardSource)
     {
-        decimal hpLost = result.UnblockedDamage - result.OverkillDamage;
-        if (!RevenantSummonManager.For(Owner.Player).IsKnownFamilyCreature(target) || hpLost <= 0m)
+        decimal hpLost = result.UnblockedDamage;
+        RevenantSummonManager manager = RevenantSummonManager.For(Owner.Player);
+        if ((!manager.IsKnownFamilyCreature(target) && !manager.IsNecroCreature(target)) || hpLost <= 0m)
             return;
 
         Creature[] enemies = Owner.CombatState.HittableEnemies.Where(enemy => enemy.IsAlive).ToArray();
@@ -139,15 +140,21 @@ public sealed class NecromancyPower : PowerModel
     public override PowerType Type => PowerType.Debuff;
     public override PowerStackType StackType => PowerStackType.Single;
 
-    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> creatures, ICombatState combatState)
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> creatures)
     {
-        if (side != Owner.Side || !creatures.Contains(Owner) || !Owner.IsAlive) return;
+        // Native player-turn participants contain players, not their pets.
+        // Also gate by this pet's owner for independent multiplayer turns.
+        if (!ShouldDecay(Owner, side, creatures)) return;
         await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
-            new BlockingPlayerChoiceContext(),
+            context,
             Owner,
-            5m,
+            4m,
             ValueProp.Unblockable | ValueProp.Unpowered,
             Owner,
             null);
     }
+
+    internal static bool ShouldDecay(Creature pet, CombatSide side, IEnumerable<Creature> participants) =>
+        side == pet.Side && pet.IsAlive
+        && (participants.Contains(pet) || participants.Contains(pet.PetOwner?.Creature));
 }

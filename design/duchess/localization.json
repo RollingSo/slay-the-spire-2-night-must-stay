@@ -256,9 +256,9 @@
       "幻影の殺意"
     ],
     "DUCHESS_PHANTOM_KILLER_POWER.description": [
-      "本场战斗中在隐匿状态下斩杀敌人后，下场战斗开始时获得{Amount}点力量。",
-      "After killing an enemy while Concealed this combat, gain {Amount} Strength at the start of the next combat.",
-      "この戦闘中に隠密状態で敵を倒したなら、次の戦闘開始時に筋力を{Amount}得る。"
+      "本场战斗中在[gold]隐匿[/gold]状态下[gold]斩杀[/gold]敌人后，下场战斗开始时获得{Amount}点[gold]力量[/gold]。",
+      "After triggering [gold]Fatal[/gold] while [gold]Concealed[/gold] this combat, gain {Amount} [gold]Strength[/gold] at the start of the next combat.",
+      "この戦闘中に[gold]隠密[/gold]状態で[gold]リーサル[/gold]を発動したなら、次の戦闘開始時に[gold]筋力[/gold]を{Amount}得る。"
     ]
   },
   "relics": {

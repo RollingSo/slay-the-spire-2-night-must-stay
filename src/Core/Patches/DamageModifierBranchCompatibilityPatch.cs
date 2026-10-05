@@ -9,6 +9,23 @@ using NightMustStay.Core.Models.Power;
 
 namespace NightMustStay.Core.Patches;
 
+[HarmonyPatch]
+internal static class StyxSpiritFireDamageBranchPatch
+{
+    private static MethodBase TargetMethod() =>
+        DamageModifierBranchCompatibility.Resolve("ModifyDamageAdditive");
+
+    [HarmonyPrefix]
+    private static bool BeforeModify(AbstractModel __instance, Creature target,
+        CardModel cardSource, ref decimal __result)
+    {
+        if (__instance is not NightMustStay.Core.Models.Cards.StyxSpiritFire card || cardSource != card)
+            return true;
+        __result = card.GetTargetFreezeDamage(target) - 1m;
+        return false;
+    }
+}
+
 /// <summary>
 /// The Public Beta added a CardPlay parameter to PowerModel's damage modifier
 /// hooks in v0.108. Resolving the current method by name keeps one mod DLL
@@ -35,7 +52,7 @@ internal static class DuchessConcealmentDamageBranchPatch
 
     [HarmonyPrefix]
     private static bool BeforeModify(
-        PowerModel __instance, Creature dealer, ValueProp props, ref decimal __result)
+        AbstractModel __instance, Creature dealer, ValueProp props, ref decimal __result)
     {
         if (__instance is not DuchessConcealmentPower power) return true;
         __result = power.GetAttackDamageMultiplier(dealer, props);
@@ -51,7 +68,7 @@ internal static class DuchessZeroCostAttackDamageBranchPatch
 
     [HarmonyPrefix]
     private static bool BeforeModify(
-        PowerModel __instance, Creature dealer, ValueProp props,
+        AbstractModel __instance, Creature dealer, ValueProp props,
         CardModel cardSource, ref decimal __result)
     {
         if (__instance is not DuchessZeroCostAttackPower power) return true;
@@ -68,7 +85,7 @@ internal static class IncomingDamageReductionBranchPatch
 
     [HarmonyPrefix]
     private static bool BeforeModify(
-        PowerModel __instance,
+        AbstractModel __instance,
         Creature target,
         ref decimal __result)
     {
@@ -90,7 +107,7 @@ internal static class SaviorSpreadWingsDamageBranchPatch
 
     [HarmonyPrefix]
     private static bool BeforeModify(
-        PowerModel __instance, Creature dealer, ValueProp props, ref decimal __result)
+        AbstractModel __instance, Creature dealer, ValueProp props, ref decimal __result)
     {
         if (__instance is not SaviorSpreadWingsPower power)
             return true;
@@ -108,7 +125,7 @@ internal static class FreezeDamageBranchPatch
 
     [HarmonyPrefix]
     private static bool BeforeModify(
-        PowerModel __instance,
+        AbstractModel __instance,
         Creature target,
         decimal amount,
         ValueProp props,
@@ -135,7 +152,7 @@ internal static class WhiteShadowDamageCapBranchPatch
 
     [HarmonyPrefix]
     private static bool BeforeModify(
-        PowerModel __instance,
+        AbstractModel __instance,
         Creature target,
         ref decimal __result)
     {

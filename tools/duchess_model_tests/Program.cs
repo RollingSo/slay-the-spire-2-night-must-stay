@@ -22,6 +22,10 @@ using NightMustStay.Core.Models.Relics;
 using NightMustStay.Core.Models.Potions;
 using NightMustStay.Core.Patches;
 using System.Text.Json;
+using NightMustStay.Core.Models.Revenant;
+using MegaCrit.Sts2.Core.Saves.Runs;
+using MegaCrit.Sts2.Core.Multiplayer.Serialization;
+using System.Text.Json.Serialization;
 
 try
 {
@@ -43,6 +47,270 @@ foreach (var type in new[] { typeof(TokenCardPool), typeof(ColorlessCardPool) })
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+var wingsBalance = ModelDb.Card<WorldEndingWings>().ToMutable();
+if (wingsBalance.DynamicVars.Damage.BaseValue != 7 || wingsBalance.TargetType != TargetType.AllEnemies)
+    throw new Exception("World Ending Wings must use 7-damage native AOE hits.");
+wingsBalance.UpgradeInternal();
+if (wingsBalance.DynamicVars.Damage.BaseValue != 9) throw new Exception("World Ending Wings upgrade must deal 9 per exhausted Skill.");
+var retreatBalance = (RetreatingDefense)ModelDb.Card<RetreatingDefense>().ToMutable();
+if (retreatBalance.DynamicVars.Block.BaseValue != 4 || !retreatBalance.Keywords.Contains(CardKeyword.Exhaust))
+    throw new Exception("Retreating Defense must give 4 Block and exhaust before upgrade.");
+retreatBalance.DynamicVars["BlockedAttackDamage"].UpdateCardPreview(retreatBalance, CardPreviewMode.Normal, null!, false);
+if (retreatBalance.BlockedAttackDamageThisTurn() != 0 || retreatBalance.DynamicVars["BlockedAttackDamage"].PreviewValue != 0)
+    throw new Exception("Retreating Defense compendium preview must not read absent combat history.");
+retreatBalance.UpgradeInternal();
+if (retreatBalance.Keywords.Contains(CardKeyword.Exhaust) || retreatBalance.DynamicVars.Block.BaseValue != 4
+    || retreatBalance.DynamicVars.Block.WasJustUpgraded)
+    throw new Exception("Retreating Defense upgrade must only remove Exhaust.");
+var retreatPlayer = (Player)System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(typeof(Player));
+var retreatCreature = new Creature(retreatPlayer, 70, 70);
+typeof(Player).GetField("<Creature>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)!.SetValue(retreatPlayer, retreatCreature);
+var retreatState = new MegaCrit.Sts2.Core.Combat.CombatState();
+retreatCreature.CombatState = retreatState;
+retreatBalance.Owner = retreatPlayer;
+var retreatHistory = MegaCrit.Sts2.Core.Combat.CombatManager.Instance.History;
+var retreatEntries = (List<MegaCrit.Sts2.Core.Combat.History.CombatHistoryEntry>)retreatHistory.GetType()
+    .GetField("_entries", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(retreatHistory)!;
+var addedRetreatEntries = new List<MegaCrit.Sts2.Core.Combat.History.CombatHistoryEntry>();
+void AddRetreatDamage(int blocked, ValueProp props, int round, MegaCrit.Sts2.Core.Combat.CombatSide side)
+{
+    var entry = new MegaCrit.Sts2.Core.Combat.History.Entries.DamageReceivedEntry(
+        new DamageResult(retreatCreature, props) { BlockedDamage = blocked, UnblockedDamage = 5 },
+        retreatCreature, null, null, round, side, retreatHistory, Array.Empty<Player>());
+    retreatEntries.Add(entry);
+    addedRetreatEntries.Add(entry);
+}
+try
+{
+    if (retreatBalance.BlockedAttackDamageThisTurn() != 0) throw new Exception("Empty turn must have zero blocked attack damage.");
+    AddRetreatDamage(3, ValueProp.Move, retreatState.RoundNumber, retreatState.CurrentSide);
+    if (retreatBalance.BlockedAttackDamageThisTurn() != 3) throw new Exception("Partial blocks must count their blocked portion only.");
+    AddRetreatDamage(4, ValueProp.Move, retreatState.RoundNumber, retreatState.CurrentSide);
+    AddRetreatDamage(99, ValueProp.Unpowered, retreatState.RoundNumber, retreatState.CurrentSide);
+    AddRetreatDamage(99, ValueProp.Move, retreatState.RoundNumber - 1, retreatState.CurrentSide);
+    AddRetreatDamage(99, ValueProp.Move, retreatState.RoundNumber, MegaCrit.Sts2.Core.Combat.CombatSide.Enemy);
+    retreatBalance.DynamicVars["BlockedAttackDamage"].UpdateCardPreview(retreatBalance, CardPreviewMode.Normal, null!, false);
+    if (retreatBalance.BlockedAttackDamageThisTurn() != 7 || retreatBalance.DynamicVars["BlockedAttackDamage"].PreviewValue != 7)
+        throw new Exception("Blocked damage preview must sum current-turn attack blocks, excluding unpowered and older-turn damage.");
+}
+finally
+{
+    foreach (var entry in addedRetreatEntries) retreatEntries.Remove(entry);
+    retreatCreature.CombatState = null;
+}
+var probingBalance = ModelDb.Card<ProbingStab>().ToMutable();
+if (probingBalance.DynamicVars.Damage.BaseValue != 6 || probingBalance.DynamicVars["RetainCount"].IntValue != 2)
+    throw new Exception("Probing Stab must deal 6 and retain up to 2 at end of turn.");
+probingBalance.UpgradeInternal();
+if (probingBalance.DynamicVars.Damage.BaseValue != 8 || probingBalance.DynamicVars["RetainCount"].IntValue != 3)
+    throw new Exception("Probing Stab upgrade must deal 8 and retain up to 3.");
+Console.WriteLine("PASS: World Ending Wings 7/9 AOE, Retreating Defense 4 Block and Exhaust removal, Probing Stab 6/8 and 2/3 retain.");
+var seeThroughBalance = ModelDb.Card<SeeThrough>().ToMutable();
+var volleyBalance = (SoulChasingVolley)ModelDb.Card<SoulChasingVolley>().ToMutable();
+var halberdBalance = ModelDb.Card<ThousandWeightHalberd>().ToMutable();
+var deadFireBalance = ModelDb.Card<DeadRealmSpiritFire>().ToMutable();
+foreach (var xCard in new[] { seeThroughBalance, volleyBalance, halberdBalance, deadFireBalance })
+    if (!xCard.EnergyCost.CostsX) throw new Exception($"{xCard.Id} must cost X.");
+if (seeThroughBalance.DynamicVars.Block.BaseValue != 4
+    || volleyBalance.DynamicVars.CalculatedDamage.Calculate(null) != 5
+    || volleyBalance.DynamicVars.Repeat.IntValue != 1
+    || halberdBalance.Type != CardType.Attack || halberdBalance.TargetType != TargetType.AnyEnemy
+    || halberdBalance.DynamicVars.Damage.BaseValue != 8
+    || deadFireBalance.DynamicVars.Damage.BaseValue != 1 || deadFireBalance.TargetType != TargetType.AllEnemies)
+    throw new Exception("Revised X-card values, native calculation or targeting disagree.");
+volleyBalance.UpgradeInternal();
+if (volleyBalance.DynamicVars.Repeat.IntValue != 2 || volleyBalance.DynamicVars.CalculatedDamage.Calculate(null) != 5)
+    throw new Exception("Volley upgrade must change X+1 hits to X+2, not base damage.");
+var volleyMultiplier = (Func<CardModel, Creature?, decimal>)typeof(CalculatedVar)
+    .GetField("_multiplierCalc", BindingFlags.Instance | BindingFlags.NonPublic)!
+    .GetValue(volleyBalance.DynamicVars.CalculatedDamage)!;
+var volleyActive = typeof(SoulChasingVolley).GetField("_resolvingVolley", BindingFlags.Instance | BindingFlags.NonPublic)!;
+volleyBalance.OnMarkTriggered(5);
+if (volleyMultiplier(volleyBalance, null) != 0) throw new Exception("Mark triggers outside the volley must not increase it.");
+volleyActive.SetValue(volleyBalance, true);
+foreach (int triggerCount in new[] { 0, 1, 2 })
+{
+    if (triggerCount > 0) volleyBalance.OnMarkTriggered(5);
+    decimal damage = volleyBalance.DynamicVars.CalculationBase.BaseValue
+        + volleyBalance.DynamicVars.ExtraDamage.BaseValue * volleyMultiplier(volleyBalance, null);
+    if (damage != 5 + 5 * triggerCount) throw new Exception("Volley must accumulate 5/10/15 damage after zero/one/two Mark triggers.");
+}
+volleyActive.SetValue(volleyBalance, false);
+var featherBalance = ModelDb.Card<Featherstep>().ToMutable();
+if (featherBalance.EnergyCost.Canonical != 2 || featherBalance.DynamicVars.Cards.IntValue != 1)
+    throw new Exception("Featherstep must cost 2 and draw 1.");
+featherBalance.UpgradeInternal();
+if (featherBalance.EnergyCost.GetResolved() != 1 || featherBalance.DynamicVars.Cards.IntValue != 1)
+    throw new Exception("Featherstep upgrade must only reduce cost.");
+var packBalance = ModelDb.Card<PackUp>().ToMutable();
+if (packBalance.DynamicVars.Cards.IntValue != 2) throw new Exception("Pack Up must discard up to 2.");
+packBalance.UpgradeInternal();
+if (packBalance.DynamicVars.Cards.IntValue != 3) throw new Exception("Pack Up upgrade must discard up to 3.");
+var teamBalance = ModelDb.Card<DuchessDuchess>().ToMutable();
+if (teamBalance.EnergyCost.CostsX || teamBalance.EnergyCost.Canonical != 1 || teamBalance.Rarity != CardRarity.Rare
+    || teamBalance.DynamicVars["AllyDodgeDrawX"].IntValue != 2)
+    throw new Exception("Duchess multiplayer card must be a 1-cost Rare with two tokens/draws.");
+teamBalance.UpgradeInternal();
+if (teamBalance.EnergyCost.GetResolved() != 0 || teamBalance.DynamicVars["AllyDodgeDrawX"].IntValue != 2)
+    throw new Exception("Duchess multiplayer upgrade must reduce cost to 0 without changing count.");
+Console.WriteLine("PASS: revised X cards, calculated volley damage, Featherstep 2/1, Pack Up 2/3, and multiplayer Duchess 1/0 Rare.");
+var wraithJar = ModelDb.Potion<WraithJar>().ToMutable();
+if (wraithJar.TargetType != TargetType.AnyEnemy || wraithJar.DynamicVars.Damage.BaseValue != 30)
+    throw new Exception("Wraith Jar must target an enemy and deal 30 damage.");
+SpiritCallingJar CapturedJar(string entry)
+{
+    var jar = (SpiritCallingJar)ModelDb.Potion<SpiritCallingJar>().ToMutable();
+    jar.SetCapturedMonster(new ModelId(ModelId.SlugifyCategory<MonsterModel>(), entry));
+    return jar;
+}
+PotionModel[] capturedSlots = { CapturedJar("BYRDONIS"), null!, CapturedJar("FROG_KNIGHT") };
+SerializableRelic captureEnvelope = RevenantSpiritJarPersistence.CreateEnvelope(capturedSlots);
+var nativeJsonContext = (JsonSerializerContext)typeof(PotionModel).Assembly
+    .GetType("MegaCrit.Sts2.Core.Saves.MegaCritSerializerContext", true)!
+    .GetProperty("Default", flags)!.GetValue(null)!;
+var relicJsonInfo = nativeJsonContext.GetTypeInfo(typeof(SerializableRelic))!;
+string captureSaveJson = JsonSerializer.Serialize(captureEnvelope, relicJsonInfo);
+if (!captureSaveJson.Contains("BYRDONIS") || !captureSaveJson.Contains("FROG_KNIGHT")
+    || !captureSaveJson.Contains("MONSTER"))
+    throw new Exception("Native save JSON must retain both exact full monster IDs.");
+var jsonEnvelope = (SerializableRelic)JsonSerializer.Deserialize(captureSaveJson, relicJsonInfo)!;
+// The standalone fixture skips workshop discovery; register the envelope entry
+// in the same native cache that the game's mod-aware Init fills at startup.
+var netEntryMap = (Dictionary<string, int>)typeof(ModelIdSerializationCache)
+    .GetField("_entryNameToNetIdMap", flags)!.GetValue(null)!;
+var netEntries = (List<string>)typeof(ModelIdSerializationCache)
+    .GetField("_netIdToEntryNameMap", flags)!.GetValue(null)!;
+if (!netEntryMap.ContainsKey(captureEnvelope.Id!.Entry))
+{
+    netEntryMap[captureEnvelope.Id.Entry] = netEntries.Count;
+    netEntries.Add(captureEnvelope.Id.Entry);
+}
+typeof(ModelIdSerializationCache).GetProperty("EntryIdBitSize", flags)!.SetValue(null, 16);
+var packetWriter = new PacketWriter();
+NightMustStay.Core.Compatibility.Sts2BranchCompat.RegisterSavedPropertyType(typeof(RevenantSpiritJarSaveData));
+captureEnvelope.Serialize(packetWriter);
+var packetReader = new PacketReader();
+packetReader.Reset(packetWriter.Buffer);
+var packetEnvelope = new SerializableRelic();
+packetEnvelope.Deserialize(packetReader);
+foreach (SerializableRelic envelope in new[] { jsonEnvelope, packetEnvelope })
+{
+    PotionModel[] restoredSlots =
+    {
+        ModelDb.Potion<SpiritCallingJar>().ToMutable(), null!, ModelDb.Potion<SpiritCallingJar>().ToMutable(),
+    };
+    RevenantSpiritJarPersistence.Restore(restoredSlots, new[] { envelope });
+    if (((SpiritCallingJar)restoredSlots[0]).CapturedMonsterEntry != "BYRDONIS"
+        || ((SpiritCallingJar)restoredSlots[2]).CapturedMonsterEntry != "FROG_KNIGHT")
+        throw new Exception("Cross-act save or multiplayer restore lost or swapped captured monster identities.");
+    // A second act/save round trip must preserve the already-restored identities.
+    SerializableRelic secondAct = RevenantSpiritJarPersistence.CreateEnvelope(restoredSlots);
+    if (!JsonSerializer.Serialize(secondAct, relicJsonInfo).Contains("FROG_KNIGHT"))
+        throw new Exception("Captured monster identity must survive repeated act transitions.");
+}
+var emptyCallingJar = (SpiritCallingJar)ModelDb.Potion<SpiritCallingJar>().ToMutable();
+if (emptyCallingJar.PassesCustomUsabilityCheck || emptyCallingJar.Rarity != MegaCrit.Sts2.Core.Entities.Potions.PotionRarity.Token
+    || emptyCallingJar.CanBeGeneratedInCombat || emptyCallingJar.TargetType != TargetType.Self)
+    throw new Exception("An empty generated-only Spirit Calling Jar must not be usable or randomly generated.");
+emptyCallingJar.SetCapturedMonster(new ModelId("MONSTER", "MISSING_REMOVED_MOD_MONSTER"));
+if (emptyCallingJar.TryGetCapturedMonster(out _) || emptyCallingJar.PassesCustomUsabilityCheck)
+    throw new Exception("Missing monsters must fail safely without random summons.");
+emptyCallingJar.SetCapturedMonster(ModelDb.Potion<WraithJar>().Id);
+if (emptyCallingJar.TryGetCapturedMonster(out _))
+    throw new Exception("Wrong-category captured IDs must not throw or resolve as monsters.");
+var capturedMonsterType = typeof(PotionModel).Assembly.GetType("MegaCrit.Sts2.Core.Models.Monsters.Byrdonis", true)!;
+if (!ModelDb.Contains(capturedMonsterType)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { capturedMonsterType });
+emptyCallingJar.SetCapturedMonster(ModelDb.GetId(capturedMonsterType));
+if (!emptyCallingJar.TryGetCapturedMonster(out MonsterModel exactMonster)
+    || exactMonster.Id != ModelDb.GetId(capturedMonsterType) || !emptyCallingJar.PassesCustomUsabilityCheck)
+    throw new Exception("Spirit Calling Jar must resolve the exact canonical monster from the saved ID.");
+var captureSnapshot = new SerializablePlayer { Relics = new() { jsonEnvelope } };
+RevenantSpiritJarLoadPatch.ExcludeSaveOnlyEnvelope(captureSnapshot, out var captureLoadState);
+if (captureSnapshot.Relics.Count != 0 || captureLoadState.Envelopes.Length != 1)
+    throw new Exception("Save-only capture envelopes must not enter the real relic inventory.");
+RevenantSpiritJarLoadPatch.PreserveInputSnapshot(captureSnapshot, captureLoadState, null!);
+if (captureSnapshot.Relics.Count != 1)
+    throw new Exception("Capture loading must not mutate the input save snapshot.");
+var killingBlow = typeof(WraithJar).GetMethod("IsKillingBlow", flags)!;
+var killTargetFixture = (Creature)System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(typeof(Creature));
+var targetHpField = typeof(Creature).GetField("_currentHp", BindingFlags.Instance | BindingFlags.NonPublic)!;
+foreach (var (hp, killed, expected) in new[] { (0, true, true), (5, false, false), (0, false, false), (5, true, false) })
+{
+    targetHpField.SetValue(killTargetFixture, hp);
+    var result = new DamageResult(killTargetFixture, ValueProp.Unpowered) { WasTargetKilled = killed };
+    if ((bool)killingBlow.Invoke(null, new object[] { killTargetFixture, new[] { result } })! != expected)
+        throw new Exception("Wraith Jar must award a captured jar only for its own lethal damage, not survivors or resurrected targets.");
+}
+Console.WriteLine("PASS: Wraith Jar damage/target, distinct captured IDs, native JSON and network round trips, repeated act transitions, and stale-ID safety.");
+var necroHp = typeof(RevenantSummonManager).GetMethod("CalculateNecroMaxHp", flags)!;
+foreach (bool elite in new[] { false, true })
+{
+    if ((int)necroHp.Invoke(null, new object[] { elite })! != (elite ? 40 : 20))
+        throw new Exception("Necro HP must be fixed at 20/40, independent of source monster HP.");
+    foreach (var action in new[] { RevenantFamilyAction.First, RevenantFamilyAction.Second })
+    {
+        var necro = new RevenantNecro
+        {
+            SourceMonster = null!, Creature = null!, IsElite = elite, ScheduledAction = action,
+        };
+        int damage = action == RevenantFamilyAction.First ? 8 : elite ? 6 : 3;
+        int hits = action == RevenantFamilyAction.First && elite ? 2 : 1;
+        if (necro.DamagePerHit != damage || necro.HitCount != hits)
+            throw new Exception($"Incorrect Necro action: elite={elite}, action={action}.");
+    }
+}
+foreach (var power in new PowerModel[]
+    { ModelDb.Power<NecroAttackPower>().ToMutable(), ModelDb.Power<NecroProtectPower>().ToMutable() })
+{
+    power.DynamicVars["Damage"].BaseValue = 6;
+    power.DynamicVars["Hits"].BaseValue = 2;
+    if (power.DynamicVars["Damage"].PreviewValue != 6 || power.DynamicVars["Hits"].PreviewValue != 2)
+        throw new Exception("Necro action hover tips must reflect the scheduled action's values.");
+}
+if (typeof(NecromancyPower).GetMethod("AfterSideTurnEnd")!.DeclaringType != typeof(NecromancyPower)
+    || typeof(NecromancyPower).GetMethod("AfterSideTurnStart")!.DeclaringType == typeof(NecromancyPower))
+    throw new Exception("Necromancy must decay at turn end, never turn start.");
+Console.WriteLine("PASS: ordinary/elite Necro HP, both actions, dynamic action hover tips, and end-turn decay hook.");
+var revenantTeamCard = ModelDb.Card<RevenantCard>().ToMutable();
+if (revenantTeamCard.EnergyCost.Canonical != 1)
+    throw new Exception("Revenant's multiplayer card must cost 1.");
+var reanimateCard = ModelDb.Card<ReanimateDead>().ToMutable();
+if (reanimateCard.TargetType != TargetType.Self || reanimateCard.EnergyCost.Canonical != 1
+    || !reanimateCard.Keywords.Contains(CardKeyword.Exhaust))
+    throw new Exception("Reanimate Dead must summon without selecting a target and exhaust.");
+reanimateCard.UpgradeInternal();
+if (reanimateCard.EnergyCost.GetResolved() != 0 || !reanimateCard.Keywords.Contains(CardKeyword.Exhaust))
+    throw new Exception("Reanimate Dead must preserve its 0-cost upgrade and Exhaust.");
+var manipulation = ModelDb.Card<SpiritManipulation>().ToMutable();
+if (manipulation.DynamicVars.Damage.BaseValue != 14)
+    throw new Exception("Spirit Manipulation must deal 14 damage.");
+manipulation.UpgradeInternal();
+if (manipulation.DynamicVars.Damage.BaseValue != 19)
+    throw new Exception("Spirit Manipulation must upgrade to 19 damage.");
+string revenantTextSource = File.ReadAllText("src/Core/Models/Cards/RevenantTextTableCards.cs");
+string reanimateSource = revenantTextSource.Split("public sealed class ReanimateDead")[1].Split("public sealed class SoulReturn")[0];
+if (!reanimateSource.Contains("SummonRandomNecro(context)") || reanimateSource.Contains("ChooseFamilyAndCall")
+    || reanimateSource.Contains("ReviveDeadEnemy"))
+    throw new Exception("Reanimate Dead must summon a random Necro, not a Family member or a required corpse.");
+foreach (string locale in new[] { "zhs", "eng", "jpn", "kor" })
+{
+    using JsonDocument relicText = JsonDocument.Parse(File.ReadAllText($"NightMustStay/localization/{locale}/relics.json"));
+    foreach (JsonProperty title in relicText.RootElement.EnumerateObject().Where(entry => entry.Name.EndsWith(".title")
+        && !entry.Name.StartsWith("SEA_GLASS.")))
+    {
+        string flavorKey = title.Name[..^6] + ".flavor";
+        if (!relicText.RootElement.TryGetProperty(flavorKey, out JsonElement flavor) || flavor.ValueKind != JsonValueKind.String)
+            throw new Exception($"Relic inspection requires {locale}:{flavorKey}, even when the flavor is empty.");
+    }
+    string nativeFlavorKey = ModelDb.Relic<DuchessPrimalGlintstoneBlade>().Flavor.LocEntryKey;
+    if (!relicText.RootElement.TryGetProperty(nativeFlavorKey, out _))
+        throw new Exception("Primal Glintstone Blade's native inspection flavor lookup must resolve.");
+}
+if (!revenantTextSource.Contains("HoverTipFactory.Static(StaticHoverTip.Fatal)")
+    || !File.ReadAllText("src/Core/Models/Cards/DuchessCard.cs").Contains("HoverTipFactory.Static(StaticHoverTip.Fatal)"))
+    throw new Exception("Both Fatal cards must reuse the native Fatal hover tip.");
+Console.WriteLine("PASS: relic inspection flavor keys in four locales, Revenant card costs, random summoning, and Spirit Manipulation 14/19 with native Fatal tips.");
+CardGlossaryRegression.Run();
 foreach (var character in new CharacterModel[] {
     ModelDb.Character<Guardian>(), ModelDb.Character<Ironeye>(),
     ModelDb.Character<Revenant>(), duchess })
@@ -238,7 +506,7 @@ foreach (var entry in DuchessCardCatalog.All)
     {
         string key = effect.Kind switch
         {
-            "AllyBlock" => "Block",
+            "AllyBlock" or "BlockPerExhaust" => "Block",
             "Damage" when entry.Value.RestageDivisor > 0 || entry.Value.ConcealedTripleDamage
                 || entry.Value.Effects.Any(e => e.Kind is "ConcealedBonusDamage" or "MomentBonusDamage") => "CalculationBase",
             "ConcealedBonusDamage" or "MomentBonusDamage" => "ExtraDamage",
@@ -255,7 +523,7 @@ foreach (var entry in DuchessCardCatalog.All)
     {
         string key = effect.Kind switch
         {
-            "AllyBlock" => "Block",
+            "AllyBlock" or "BlockPerExhaust" => "Block",
             "Damage" when entry.Value.RestageDivisor > 0 || entry.Value.ConcealedTripleDamage
                 || entry.Value.Effects.Any(e => e.Kind is "ConcealedBonusDamage" or "MomentBonusDamage") => "CalculationBase",
             "ConcealedBonusDamage" or "MomentBonusDamage" => "ExtraDamage",
@@ -340,6 +608,66 @@ if (shieldImpactPreview.DynamicVars["CalculatedDamage"] is not CalculatedDamageV
 // Exercise the exact native multiplier callback with zero, one, and many rewind steps.
 var rewindPlayer = (Player)System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(typeof(Player));
 var rewindCreature = new Creature(rewindPlayer, 70, 70);
+typeof(Player).GetField("<Creature>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)!
+    .SetValue(rewindPlayer, rewindCreature);
+var necroPetFixture = (Creature)System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(typeof(Creature));
+typeof(Creature).GetField("_currentHp", BindingFlags.Instance | BindingFlags.NonPublic)!.SetValue(necroPetFixture, 20);
+typeof(Creature).GetField("<Side>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)!
+    .SetValue(necroPetFixture, MegaCrit.Sts2.Core.Combat.CombatSide.Player);
+necroPetFixture.PetOwner = rewindPlayer;
+var shouldDecay = typeof(NecromancyPower).GetMethod("ShouldDecay", flags)!;
+foreach (var (side, participants, expected) in new[]
+{
+    (MegaCrit.Sts2.Core.Combat.CombatSide.Player, new[] { rewindCreature }, true),
+    (MegaCrit.Sts2.Core.Combat.CombatSide.Player, Array.Empty<Creature>(), false),
+    (MegaCrit.Sts2.Core.Combat.CombatSide.Enemy, new[] { rewindCreature }, false),
+})
+    if ((bool)shouldDecay.Invoke(null, new object[] { necroPetFixture, side, participants })! != expected)
+        throw new Exception("Necromancy must decay when the pet owner's turn ends, not another player's or the enemy turn.");
+Console.WriteLine("PASS: Necromancy recognizes player-only native turn participants and independent multiplayer turns.");
+
+var summonManager = RevenantSummonManager.For(rewindPlayer);
+var summonNecroFixture = new Creature(rewindPlayer, 20, 20) { PetOwner = rewindPlayer };
+summonManager.RegisterNecro(new RevenantNecro { SourceMonster = null!, Creature = summonNecroFixture });
+var summonFamilyFixture = new Creature(rewindPlayer, 11, 11) { PetOwner = rewindPlayer };
+var familyField = typeof(RevenantSummonManager).GetField("_familyCreature", BindingFlags.Instance | BindingFlags.NonPublic)!;
+var sacrifice = ModelDb.Card<FrenziedFlame>().ToMutable();
+sacrifice.Owner = rewindPlayer;
+var sacrificeMultiplier = (Func<CardModel, Creature?, decimal>)typeof(CalculatedVar)
+    .GetField("_multiplierCalc", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(sacrifice.DynamicVars.CalculatedDamage)!;
+var playableGetter = typeof(CardModel).GetProperty("IsPlayable", BindingFlags.Instance | BindingFlags.NonPublic)!.GetMethod!;
+foreach (CardModel summonCard in new CardModel[]
+{
+    sacrifice, ModelDb.Card<BurnLife>().ToMutable(), ModelDb.Card<UndyingMarch>().ToMutable(),
+    ModelDb.Card<UnbearableFrenzy>().ToMutable(), ModelDb.Card<SpaceRendingFrenzy>().ToMutable(),
+})
+{
+    if (summonCard.Owner == null) summonCard.Owner = rewindPlayer;
+    if (!(bool)playableGetter.Invoke(summonCard, null)!)
+        throw new Exception($"{summonCard.GetType().Name} must be playable with only a living Necro.");
+}
+if (summonManager.GetLivingSummons().Count != 1 || sacrificeMultiplier(sacrifice, null) != 20)
+    throw new Exception("Sacrifice must include a Necro without a Family member.");
+familyField.SetValue(summonManager, summonFamilyFixture);
+if (summonManager.GetLivingSummons().Count != 2 || sacrificeMultiplier(sacrifice, null) * 2 != 62)
+    throw new Exception("Frenzied Flame must sum both summons' HP, not just Family HP.");
+var summonUndying = ModelDb.Power<UndyingMarchPower>().ToMutable();
+typeof(PowerModel).GetProperty("Owner")!.SetValue(summonUndying, summonNecroFixture);
+((List<PowerModel>)typeof(Creature).GetField("_powers", BindingFlags.Instance | BindingFlags.NonPublic)!
+    .GetValue(summonNecroFixture)!).Add(summonUndying);
+if (sacrificeMultiplier(sacrifice, null) * 2 != 60 || summonUndying.ShouldDie(summonNecroFixture))
+    throw new Exception("Undying March must protect Necros and exclude their remaining 1 HP from sacrifice previews.");
+targetHpField.SetValue(summonNecroFixture, 0);
+if (summonManager.GetLivingSummons().Count != 1 || !summonManager.IsNecroCreature(summonNecroFixture))
+    throw new Exception("Dead summons must be excluded from buffs but remain identifiable for HP-loss triggers.");
+targetHpField.SetValue(summonFamilyFixture, 0);
+if ((bool)playableGetter.Invoke(sacrifice, null)! || sacrificeMultiplier(sacrifice, null) != 0)
+    throw new Exception("Summon sacrifice must be unplayable without a living summon.");
+familyField.SetValue(summonManager, null);
+if (ModelDb.Card<UnbearableFrenzy>().ToMutable().DynamicVars["FamilyDamage"].BaseValue != 6
+    || ModelDb.Card<SpaceRendingFrenzy>().ToMutable().DynamicVars["FamilyDamage"].BaseValue != 4)
+    throw new Exception("Summon HP costs must be 6 for Unbearable Frenzy and 4 for Space-Rending Frenzy.");
+Console.WriteLine("PASS: Necro-only playability, both-summon sacrifice, Undying March, dead-summon filtering and revised HP costs.");
 typeof(Player).GetField("<Creature>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)!
     .SetValue(rewindPlayer, rewindCreature);
 var rewindMoment = (DuchessMomentPower)ModelDb.Power<DuchessMomentPower>().ToMutable();
@@ -465,6 +793,7 @@ if (DuchessCardCatalog.All.ContainsKey("DuchessPerfectRehearsal")
     || escape.Rarity != CardRarity.Uncommon || escape.TargetType != TargetType.Self
     || escape.DynamicVars["LoseConcealment"].BaseValue != 2
     || escape.DynamicVars["ExhaustHandUpTo"].BaseValue != 2
+    || escape.DynamicVars.Block.BaseValue != 4 || !escape.GainsBlock
     || escape.Keywords.Contains(CardKeyword.Exhaust))
     throw new Exception("Escape must replace Perfect Rehearsal: 0-cost skill, lose 2 Concealment, exhaust up to 2 hand cards.");
 escape.Owner = rewindPlayer;
@@ -485,7 +814,8 @@ foreach (int stacks in new[] { 0, 1, 2, 3 })
 }
 escape.UpgradeInternal();
 if (escape.DynamicVars["LoseConcealment"].BaseValue != 1
-    || escape.DynamicVars["ExhaustHandUpTo"].BaseValue != 2)
+    || escape.DynamicVars["ExhaustHandUpTo"].BaseValue != 2
+    || escape.DynamicVars.Block.BaseValue != 4 || !escape.GainsBlock)
     throw new Exception("Escape upgrade must only reduce Concealment lost to 1.");
 foreach (int stacks in new[] { 0, 1, 2, 3 })
 {
@@ -554,6 +884,23 @@ foreach (string name in new[] { nameof(DuchessRestage), nameof(DuchessReenactmen
 if (!DuchessCardCatalog.All[nameof(DuchessSwayingStep)].UpgradeTokens
     || DuchessCardCatalog.All[nameof(DuchessSilverStorm)].UpgradeHits != 3)
     throw new Exception("Swaying Step token and Silver Storm hit-count upgrades are missing.");
+var silverStorm = (DuchessSilverStorm)ModelDb.Card<DuchessSilverStorm>().ToMutable();
+silverStorm.Owner = rewindPlayer;
+var stormConcealment = (DuchessConcealmentPower)ModelDb.Power<DuchessConcealmentPower>().ToMutable();
+typeof(PowerModel).GetProperty("Owner")!.SetValue(stormConcealment, rewindCreature);
+stormConcealment.SetAmount(1, false);
+var stormPowers = (List<PowerModel>)typeof(Creature).GetField("_powers", BindingFlags.Instance | BindingFlags.NonPublic)!
+    .GetValue(rewindCreature)!;
+foreach (bool upgradedStorm in new[] { false, true })
+{
+    if (upgradedStorm) silverStorm.UpgradeInternal();
+    rewindMoment.TryModifyEnergyCostInCombat(silverStorm, 3m, out decimal normalStormCost);
+    stormPowers.Add(stormConcealment);
+    rewindMoment.TryModifyEnergyCostInCombat(silverStorm, 3m, out decimal concealedStormCost);
+    stormPowers.Remove(stormConcealment);
+    if (normalStormCost != 3m || concealedStormCost != 2m)
+        throw new Exception("Silver Storm must cost 3 normally and 2 while Concealed, base and upgraded.");
+}
 foreach (string removed in new[] { "FollowThrough", "NoWitness", "Encore", "Backstage", "VanishingAct" })
 {
     string name = "Duchess" + removed;
@@ -975,6 +1322,10 @@ foreach (Type type in new[] { typeof(DuchessCard), typeof(DuchessReactionDrawPow
 }
 
 var harmony = new HarmonyLib.Harmony("NightMustStay.Duchess.Tests");
+// Verify private-field injection against the actual installed UI API.
+harmony.CreateClassProcessor(typeof(RevenantNecroActionLayoutPatch)).Patch();
+foreach (Type patch in new[] { typeof(RevenantSpiritJarSavePatch), typeof(RevenantSpiritJarLoadPatch),
+    typeof(RevenantSpiritJarHistoryPatch) }) harmony.CreateClassProcessor(patch).Patch();
 foreach (var patch in typeof(NightMustStay.Core.Patches.DuchessMomentPatch).Assembly.GetTypes()
     .Where(t => t.Namespace == "NightMustStay.Core.Patches" && t.Name.StartsWith("Duchess")))
     harmony.CreateClassProcessor(patch).Patch();
@@ -983,6 +1334,42 @@ var momentCounterPatch = typeof(NightMustStay.Core.Patches.DuchessAssetPatch)
     .GetMethod(nameof(NightMustStay.Core.Patches.DuchessAssetPatch.InitializeDuchessMomentCounter))!;
 if (HarmonyLib.Harmony.GetPatchInfo(activate)?.Postfixes.Any(p => p.PatchMethod == momentCounterPatch) != true)
     throw new Exception("Duchess Moment UI must be attached after combat UI reparents the star counter.");
+foreach (bool upgradedSlicer in new[] { false, true })
+{
+    var redrawnSlicer = (DuchessCarianSlicer)ModelDb.Card<DuchessCarianSlicer>().ToMutable();
+    if (upgradedSlicer) redrawnSlicer.UpgradeInternal();
+    var drawOwner = (Player)System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(typeof(Player));
+    typeof(Player).GetField("<Creature>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)!
+        .SetValue(drawOwner, new Creature(drawOwner, 70, 70));
+    var handFixture = new CardPile(PileType.Hand);
+    typeof(Player).GetField("_runPiles", BindingFlags.Instance | BindingFlags.NonPublic)!
+        .SetValue(drawOwner, new[] { handFixture });
+    redrawnSlicer.Owner = drawOwner;
+    handFixture.AddInternal(redrawnSlicer, silent: true);
+    var slicerPlay = (CardPlay)System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(typeof(CardPlay));
+    typeof(CardPlay).GetProperty("Card")!.SetValue(slicerPlay, redrawnSlicer);
+    redrawnSlicer.AfterCardDrawn(null!, redrawnSlicer, true).GetAwaiter().GetResult();
+    if (redrawnSlicer.EnergyCost.GetResolved() != 1)
+        throw new Exception("Opening hand draw must not discount Carian Slicer.");
+    redrawnSlicer.AfterCardDrawn(null!, redrawnSlicer, false).GetAwaiter().GetResult();
+    if (redrawnSlicer.EnergyCost.GetResolved() != 0)
+        throw new Exception("Normal draw must discount Carian Slicer.");
+    redrawnSlicer.BeforeCardPlayed(slicerPlay).GetAwaiter().GetResult();
+    redrawnSlicer.EnergyCost.AfterCardPlayedCleanup();
+    if (redrawnSlicer.EnergyCost.GetResolved() != 1)
+        throw new Exception("Playing Carian Slicer must consume the existing discount.");
+    redrawnSlicer.BeforeCardPlayed(slicerPlay).GetAwaiter().GetResult();
+    // Pocketwatch draws the same physical card during its prior play's late hook.
+    redrawnSlicer.AfterCardDrawn(null!, redrawnSlicer, false).GetAwaiter().GetResult();
+    redrawnSlicer.EnergyCost.AfterCardPlayedCleanup();
+    if (redrawnSlicer.EnergyCost.GetResolved() != 0)
+        throw new Exception("Pocketwatch redraw discount must survive cleanup of the previous play.");
+    redrawnSlicer.BeforeCardPlayed(slicerPlay).GetAwaiter().GetResult();
+    redrawnSlicer.EnergyCost.AfterCardPlayedCleanup();
+    if (redrawnSlicer.EnergyCost.GetResolved() != 1)
+        throw new Exception("Redraw discount must expire on the next actual play, not last forever.");
+}
+Console.WriteLine("PASS: base/upgraded Carian Slicer redraw discounts survive old-play cleanup and expire on the next play.");
 harmony.UnpatchAll(harmony.Id);
 Console.WriteLine("PASS: independent Moment, Reaction/Dodge core, starter loadout, and all Duchess patch bindings.");
 return 0;

@@ -79,7 +79,7 @@ namespace NightMustStay.Core.Patches
             if (text.Contains("energyIcons", StringComparison.Ordinal))
                 tips.MegaTryAddingTip(HoverTipFactory.ForEnergy(__instance));
 
-            __result = tips;
+            __result = CardGlossary.Normalize(__instance, text, tips);
         }
 
         private static string GetAllDescriptionText(CardModel card)

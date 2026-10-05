@@ -388,11 +388,22 @@ namespace NightMustStay.Core.Models.Cards
     // Card-table ID 53: 千钧戟
     public sealed class ThousandWeightHalberd : CardModel
     {
-        protected override IEnumerable<IHoverTip> ExtraHoverTips => new[] { HoverTipFactory.FromPower<GuardCounterPower>() };
-        public ThousandWeightHalberd() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self) { }
-        protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
-            await PowerCmd.Apply<ThousandWeightHalberdPower>(context, Owner.Creature, 1m, Owner.Creature, this);
-        protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+        protected override bool HasEnergyCostX => true;
+        protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(8m, ValueProp.Move) };
+        protected override IEnumerable<IHoverTip> ExtraHoverTips => new[] { HoverTipFactory.FromPower<PhantomImbalancePower>() };
+        public ThousandWeightHalberd() : base(0, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
+        protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
+        {
+            ArgumentNullException.ThrowIfNull(cardPlay.Target);
+            int count = ResolveEnergyXValue() + (IsUpgraded ? 1 : 0);
+            if (count <= 0) return;
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this)
+                .Targeting(cardPlay.Target).WithHitCount(count).Execute(context);
+            if (!cardPlay.Target.IsAlive) return;
+            await PowerCmd.Apply<PhantomImbalancePower>(context, cardPlay.Target, count, Owner.Creature, this);
+            await PhantomImbalancePower.ResolveThreshold(context, cardPlay.Target);
+        }
+        protected override void OnUpgrade() { }
     }
 
     // Card-table ID 54: 漫步咒魂

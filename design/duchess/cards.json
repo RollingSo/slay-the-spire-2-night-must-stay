@@ -921,7 +921,7 @@
   ],
   [
     "Finale",
-    "落幕终章",
+    "落幕之章",
     "Finale",
     "フィナーレ",
     2,
@@ -1005,7 +1005,7 @@
       "hits": 2,
       "upgradeHits": 3,
       "all": true,
-      "concealedCostReduction": 2
+      "concealedCostReduction": 1
     }
   ],
   [
@@ -1131,6 +1131,11 @@
         "ExhaustHandUpTo",
         2,
         2
+      ],
+      [
+        "BlockPerExhaust",
+        4,
+        4
       ]
     ],
     {
@@ -1466,19 +1471,18 @@
     "女爵",
     "Duchess",
     "レディ",
-    0,
+    1,
     "Skill",
-    "Uncommon",
+    "Rare",
     [
       [
         "AllyDodgeDrawX",
-        0,
-        0
+        2,
+        2
       ]
     ],
     {
-      "xCost": true,
-      "upgradeX": true,
+      "upgradeCost": 0,
       "targetSelf": true,
       "multiplayerOnly": true
     }

@@ -54,8 +54,10 @@ public sealed class RevenantNecro
     public required Creature Creature { get; init; }
     public int OriginalHp { get; init; }
     public int MaxHp { get; init; }
-    public int DamagePerHit { get; init; }
-    public int HitCount { get; init; } = 1;
+    public bool IsElite { get; init; }
+    public RevenantFamilyAction ScheduledAction { get; set; }
+    public int DamagePerHit => ScheduledAction == RevenantFamilyAction.First ? 8 : IsElite ? 6 : 3;
+    public int HitCount => ScheduledAction == RevenantFamilyAction.First && IsElite ? 2 : 1;
     public bool IsAlive => Creature is { IsAlive: true };
 
     public async Task PerformAction(PlayerChoiceContext choiceContext)
@@ -65,7 +67,13 @@ public sealed class RevenantNecro
         Creature target = Creature.PetOwner.RunState.Rng.CombatTargets.NextItem(enemies);
         NCombatRoom.Instance?.GetCreatureNode(Creature)?.SetAnimationTrigger("Attack");
         for (int hit = 0; hit < HitCount && target.IsAlive; hit++)
-            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(choiceContext, target, DamagePerHit, ValueProp.Unpowered, Creature, null);
+        {
+            IEnumerable<DamageResult> results = await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
+                choiceContext, target, DamagePerHit, ValueProp.Move, Creature, null);
+            if (ScheduledAction == RevenantFamilyAction.Second)
+                await CreatureCmd.GainBlock(Creature.PetOwner.Creature,
+                    results.Sum(result => result.TotalDamage), ValueProp.Unpowered, null);
+        }
     }
 }
 
@@ -73,13 +81,8 @@ public sealed class RevenantSummonManager
 {
     public const int FamilyInitialHp = 6;
     public const int ExistingFamilyCallMaxHpBonus = 6;
-    // Necro stat formula. "Base" is the fixed value and "Ratio" is the
-    // percentage of the source monster's unmodified original stat. Keep these
-    // meanings stable when balance values are changed later.
-    public const int NecroBaseHp = 7;
-    public const decimal NecroHpRatio = 0.15m;
-    public const decimal NecroDamageRatio = 0.30m;
-    public const int NecroMinimumDamage = 3;
+    public const int NecroBaseHp = 20;
+    public const int EliteNecroHp = 40;
     private const float NecroVisualScale = 1f / 3f;
     private const float NecroOffsetRightOfFamily = 220f;
     private const float FamilyGrowthReferenceHp = 150f;
@@ -311,6 +314,19 @@ public sealed class RevenantSummonManager
         SnapshotCurrentFamily();
     }
 
+    public async Task IncreaseSummonsMaxAndCurrentHp(int amount)
+    {
+        if (amount <= 0) return;
+        await IncreaseFamilyMaxAndCurrentHp(amount);
+        foreach (RevenantNecro necro in GetLivingNecros())
+        {
+            Creature summon = necro.Creature;
+            (int maxHp, int currentHp) = CalculateFamilyHpIncrease(summon.MaxHp, summon.CurrentHp, amount);
+            await CreatureCmd.SetMaxHp(summon, maxHp);
+            await CreatureCmd.SetCurrentHp(summon, currentHp);
+        }
+    }
+
     private static int GetInitialFamilyHp(RevenantFamilyId family) => family switch
     {
         RevenantFamilyId.Helen => FamilyInitialHp,
@@ -519,6 +535,13 @@ public sealed class RevenantSummonManager
 
     public IReadOnlyList<RevenantNecro> GetNecros() => _necros;
     public IReadOnlyList<RevenantNecro> GetLivingNecros() => _necros.Where(necro => necro.IsAlive).ToArray();
+    public IReadOnlyList<Creature> GetLivingSummons()
+    {
+        var summons = new List<Creature>();
+        if (_familyCreature is { IsAlive: true }) summons.Add(_familyCreature);
+        summons.AddRange(GetLivingNecros().Select(necro => necro.Creature));
+        return summons.Distinct().ToArray();
+    }
     public bool IsNecroCreature(Creature creature) =>
         creature != null && _necros.Any(necro => necro.Creature == creature);
 
@@ -540,10 +563,11 @@ public sealed class RevenantSummonManager
 
         PlayNecroIntents();
         ClearNecroIntents();
+        await ClearNecroActionPower(necro);
         await necro.PerformAction(context);
         await NotifySummonActed(context);
         if (necro.IsAlive)
-            RefreshNecroIntent(necro);
+            await ScheduleNecroAction(context, necro);
     }
 
     public async Task TriggerAllNecros(PlayerChoiceContext context)
@@ -640,6 +664,12 @@ public sealed class RevenantSummonManager
             return;
         }
 
+        await SummonRandomNecro(context);
+    }
+
+    public async Task SummonRandomNecro(PlayerChoiceContext context)
+    {
+        // Random summoning never requires a corpse or summons a Family member.
         // Underworld Reflection promises a random Necro without requiring a
         // corpse.  Keep it functional at the start of a combat by selecting a
         // compendium-visible monster from a non-boss encounter as the visual
@@ -670,45 +700,57 @@ public sealed class RevenantSummonManager
         relic.ClearPendingNecro();
     }
 
+    public Task SummonCapturedNecro(PlayerChoiceContext context, MonsterModel sourceMonster) =>
+        SummonNecro(context, sourceMonster, sourceMonster.MaxInitialHp);
+
     private async Task SummonNecro(PlayerChoiceContext context, MonsterModel sourceMonster, int originalHp)
     {
         await ReplaceCurrentNecro();
         Creature pet = Owner.Creature.CombatState.CreateCreature(sourceMonster.ToMutable(), Owner.Creature.Side, null);
         await PlayerCmd.AddPet(pet, Owner);
-        int maxHp = CalculateNecroMaxHp(originalHp);
+        bool isElite = IsEliteNecro(sourceMonster);
+        int maxHp = CalculateNecroMaxHp(isElite);
         await CreatureCmd.SetMaxAndCurrentHp(pet, maxHp);
         await PowerCmd.Apply<DieForYouPower>(context, pet, 1m, Owner.Creature, null);
         await PowerCmd.Apply<NecromancyPower>(context, pet, 1m, Owner.Creature, null);
-        (int damagePerHit, int hitCount) = CalculateNecroAttack(pet);
         var necro = new RevenantNecro
         {
             SourceMonster = sourceMonster,
             Creature = pet,
             OriginalHp = originalHp,
             MaxHp = maxHp,
-            DamagePerHit = damagePerHit,
-            HitCount = hitCount,
+            IsElite = isElite,
         };
         RegisterNecro(necro);
         ConfigureNecroNode(necro);
+        await ScheduleNecroAction(context, necro);
     }
 
-    private static int CalculateNecroMaxHp(int originalHp) =>
-        NecroBaseHp + Math.Max(0, (int)Math.Floor(originalHp * NecroHpRatio));
+    internal static int CalculateNecroMaxHp(bool isElite) => isElite ? EliteNecroHp : NecroBaseHp;
 
-    private static (int damagePerHit, int hitCount) CalculateNecroAttack(Creature necro)
+    internal static bool IsEliteNecro(MonsterModel monster) => ModelDb.AllEncounters
+        .Where(encounter => encounter.RoomType == RoomType.Elite && !encounter.IsDebugEncounter)
+        .SelectMany(encounter => encounter.AllPossibleMonsters)
+        .Any(candidate => candidate.Id == monster.Id);
+
+    private static async Task ClearNecroActionPower(RevenantNecro necro)
     {
-        AttackIntent attack = necro.Monster?.MoveStateMachine?.States.Values
-            .OfType<MoveState>()
-            .SelectMany(move => move.Intents)
-            .OfType<AttackIntent>()
-            .FirstOrDefault();
-        decimal originalDamage = attack?.DamageCalc?.Invoke() ?? 0m;
-        int damagePerHit = Math.Max(
-            NecroMinimumDamage,
-            (int)Math.Floor(Math.Max(0m, originalDamage) * NecroDamageRatio));
-        int hitCount = attack is MultiAttackIntent multi ? Math.Max(1, multi.Repeats) : 1;
-        return (damagePerHit, hitCount);
+        foreach (PowerModel power in necro.Creature.Powers.OfType<RevenantNecroActionPower>().ToArray())
+            await PowerCmd.Remove(power);
+    }
+
+    private async Task ScheduleNecroAction(PlayerChoiceContext context, RevenantNecro necro)
+    {
+        await ClearNecroActionPower(necro);
+        necro.ScheduledAction = Owner.RunState.Rng.Niche.NextBool()
+            ? RevenantFamilyAction.First : RevenantFamilyAction.Second;
+        RevenantNecroActionPower power = necro.ScheduledAction == RevenantFamilyAction.First
+            ? (RevenantNecroActionPower)ModelDb.Power<NecroAttackPower>().ToMutable()
+            : (RevenantNecroActionPower)ModelDb.Power<NecroProtectPower>().ToMutable();
+        power.DynamicVars["Damage"].BaseValue = necro.DamagePerHit;
+        power.DynamicVars["Hits"].BaseValue = necro.HitCount;
+        await PowerCmd.Apply(context, power, necro.Creature, 1m, Owner.Creature, null);
+        RefreshNecroIntent(necro);
     }
 
     private async Task ReplaceCurrentNecro()
@@ -1051,9 +1093,7 @@ public sealed class RevenantSummonManager
         Creature[] enemies = Owner.Creature.CombatState.HittableEnemies
             .Where(enemy => enemy.IsAlive)
             .ToArray();
-        AbstractIntent attackIntent = necro.HitCount > 1
-            ? new MultiAttackIntent(necro.DamagePerHit, necro.HitCount)
-            : new SingleAttackIntent(necro.DamagePerHit);
+        AbstractIntent attackIntent = new RevenantFamilyAttackIntent(necro.DamagePerHit, necro.HitCount, powered: true);
         NIntent intentNode = NIntent.Create((float)GetHashCode() * 0.01f + 0.15f);
         intentNode.Name = "RevenantNecroIntent";
         necroNode.IntentContainer.AddChild(intentNode);

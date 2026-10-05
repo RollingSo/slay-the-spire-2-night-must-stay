@@ -7,6 +7,8 @@ $targets = @(
     Join-Path $root 'powers'
 )
 $revenantPowerIcons = @(
+    'necro_attack_power.png'
+    'necro_protect_power.png'
     'helen_step_strike_power.png'
     'helen_retreat_power.png'
     'frederick_heavy_hammer_power.png'

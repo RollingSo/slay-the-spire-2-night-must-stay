@@ -100,7 +100,7 @@ def effects_text(row, language, upgraded=False):
         out.append(['无法打出。', 'Cannot be played.', 'プレイできない。'][language])
     for effect in row[7]:
         kind = effect[0]
-        var_key = 'Block' if kind == 'AllyBlock' else 'ExtraDamage' if kind in ('ConcealedBonusDamage', 'MomentBonusDamage') else kind
+        var_key = 'Block' if kind in ('AllyBlock', 'BlockPerExhaust') else 'ExtraDamage' if kind in ('ConcealedBonusDamage', 'MomentBonusDamage') else kind
         var = '{' + var_key + ':diff()}'
         dodge = ['闪避', 'Dodge', '回避'][language] + ('+' if upgraded and opt.get('upgradeTokens') else '')
         if kind == 'Damage':
@@ -120,7 +120,7 @@ def effects_text(row, language, upgraded=False):
                 'ConcealedStrength': [f'[gold]隐匿[/gold]时，获得{var}点[gold]力量[/gold]。', f'While [gold]Concealed[/gold], gain {var} [gold]Strength[/gold].', f'[gold]隠密[/gold]中、[gold]筋力[/gold]{var}を得る。'],
                 'ZeroCostAttackBonus': [f'耗能为0的牌攻击伤害增加{var}。', f'Attacks that cost 0 deal {var} more damage.', f'コスト0のアタックはダメージが{var}増加する。'],
                 'DodgePlayAoe': [f'连续打出[gold]闪避[/gold]时，对所有敌人造成{var}点伤害。', f'When you play [gold]Dodge[/gold] consecutively, deal {var} damage to ALL enemies.', f'[gold]回避[/gold]を連続してプレイしたとき、敵全体に{var}ダメージを与える。'],
-                'ConcealedKillNextCombatStrength': [f'若本场战斗中在[gold]隐匿[/gold]状态下斩杀敌人，在下场战斗开始时获得{var}点[gold]力量[/gold]。', f'If you kill an enemy while [gold]Concealed[/gold] this combat, gain {var} [gold]Strength[/gold] at the start of the next combat.', f'この戦闘中に[gold]隠密[/gold]状態で敵を倒したなら、次の戦闘開始時に[gold]筋力[/gold]{var}を得る。'],
+                'ConcealedKillNextCombatStrength': [f'若本场战斗中在[gold]隐匿[/gold]状态下[gold]斩杀[/gold]敌人，在下场战斗开始时获得{var}点[gold]力量[/gold]。', f'If you trigger [gold]Fatal[/gold] while [gold]Concealed[/gold] this combat, gain {var} [gold]Strength[/gold] at the start of the next combat.', f'この戦闘中に[gold]隠密[/gold]状態で[gold]リーサル[/gold]を発動したなら、次の戦闘開始時に[gold]筋力[/gold]{var}を得る。'],
                 'ReturnSelfToHand': ['每当[gold]时刻[/gold]到达5时，将这张牌加入[gold]手牌[/gold]。', 'Whenever [gold]Moment[/gold] reaches 5, return this card to your [gold]hand[/gold].', '[gold]時刻[/gold]が5に到達するたび、このカードを[gold]手札[/gold]に戻す。'],
                 'ShuffleHandAllDraw': ['将所有[gold]手牌[/gold]洗入[gold]抽牌堆[/gold]，抽等同于洗入数量的牌。', 'Shuffle your entire [gold]hand[/gold] into your [gold]draw pile[/gold], then draw that many cards.', '[gold]手札[/gold]をすべて[gold]山札[/gold]に加えてシャッフルし、同じ枚数引く。'],
                 'Block': [f'获得{var}点[gold]格挡[/gold]。', f'Gain {var} [gold]Block[/gold].', f'[gold]ブロック[/gold]{var}を得る。'],
@@ -136,6 +136,7 @@ def effects_text(row, language, upgraded=False):
                 'ReactionDrawBlock': [f'回合中抽到[gold]反应[/gold]牌时，获得{var}点[gold]格挡[/gold]。', f'Whenever you draw a [gold]Reaction[/gold] card during your turn, gain {var} [gold]Block[/gold].', f'自分のターン中に[gold]リアクション[/gold]のカードを引くたび、[gold]ブロック[/gold]{var}を得る。'],
                 'LoseConcealment': [f'失去{var}层[gold]隐匿[/gold]。', f'Lose {var} [gold]Concealment[/gold].', f'[gold]隠密[/gold]を{var}失う。'],
                 'ExhaustHandUpTo': [f'[gold]消耗[/gold][gold]手牌[/gold]中最多{var}张牌。', f'[gold]Exhaust[/gold] up to {var} cards from your [gold]hand[/gold].', f'[gold]手札[/gold]から最大{var}枚を[gold]廃棄[/gold]する。'],
+                'BlockPerExhaust': [f'每[gold]消耗[/gold]1张牌，获得{var}点[gold]格挡[/gold]。', f'Gain {var} [gold]Block[/gold] for each card [gold]Exhausted[/gold].', f'カードを1枚[gold]廃棄[/gold]するたびに、[gold]ブロック[/gold]{var}を得る。'],
                 'Concealment': [f'获得{var}层[gold]隐匿[/gold]。', f'Gain {var} [gold]Concealment[/gold].', f'[gold]隠密[/gold]{var}を得る。'],
                 'ConcealedBonusDamage': [f'[gold]隐匿[/gold]时打出，伤害额外加{var}。', f'If played while [gold]Concealed[/gold], deal {var} additional damage.', f'[gold]隠密[/gold]中にプレイすると、追加で{var}ダメージを与える。'],
                 'MomentBonusDamage': [f'伤害增加{var}。', f'Increase damage by {var}.', f'ダメージが{var}増加する。'],
@@ -150,7 +151,7 @@ def effects_text(row, language, upgraded=False):
                 'MomentTwelveEndTurn': ['到达[gold]时刻12[/gold]时，结束你的回合。', 'When you reach [gold]Moment 12[/gold], end your turn.', '[gold]時刻12[/gold]に到達したとき、ターンを終了する。'],
                 'RestageEndTurnAoe': [f'本回合每造成过{var}点伤害，回合结束时对所有敌人造成1点伤害。', f'At end of turn, deal 1 damage to ALL enemies for every {var} damage you dealt this turn.', f'このターン与えたダメージ{var}につき、ターン終了時に敵全体へ1ダメージを与える。'],
                 'ReplayMomentThree': ['本回合内，重放你在[gold]时刻3[/gold]打出的卡牌。', 'This turn, replay cards you play at [gold]Moment 3[/gold].', 'このターン、[gold]時刻3[/gold]でプレイしたカードをリプレイする。'],
-                'AllyDodgeDrawX': [f'将X{ "+1" if upgraded and opt.get("upgradeX") else ""}张[gold]闪避[/gold]洗入其他玩家的牌堆，其他玩家抽取相同数量的牌。', f'Shuffle X{ "+1" if upgraded and opt.get("upgradeX") else ""} [gold]Dodge[/gold] into each other player’s deck. They draw that many cards.', f'ほかのプレイヤーの山札に[gold]回避[/gold]をX{ "+1" if upgraded and opt.get("upgradeX") else ""}枚加えてシャッフルし、同じ枚数引く。'],
+                'AllyDodgeDrawX': [f'将{var}张[gold]闪避[/gold]洗入其他玩家的[gold]抽牌堆[/gold]，其他玩家抽{var}张牌。', f'Shuffle {var} [gold]Dodge[/gold] into each other player’s [gold]draw pile[/gold].\nThey draw {var} cards.', f'ほかのプレイヤーの[gold]山札[/gold]に[gold]回避[/gold]を{var}枚加えてシャッフルし、カードを{var}枚引く。'],
                 'TransformStrike': [f'选择[gold]抽牌堆[/gold]中的{var}张[gold]打击[/gold]，将其永久变化为[gold]卡利亚迅剑[/gold]。', f'Choose {var} [gold]Strike[/gold] in your [gold]draw pile[/gold] and permanently transform it into [gold]Carian Slicer[/gold].', f'[gold]山札[/gold]の[gold]ストライク[/gold]を{var}枚選び、恒久的に[gold]カーリアの速剣[/gold]に[gold]変化[/gold]させる。'],
                 'ChooseDrawToTop': ['选择[gold]抽牌堆[/gold]中的1张牌放到[gold]抽牌堆[/gold]顶部。', 'Choose 1 card in your [gold]draw pile[/gold] and put it on top of your [gold]draw pile[/gold].', '[gold]山札[/gold]からカードを1枚選び、[gold]山札[/gold]の一番上に置く。'],
                 'EndTurnMomentBlock': ['回合结束时，获得等同于当前[gold]时刻[/gold]的[gold]格挡[/gold]。', 'At the end of your turn, gain [gold]Block[/gold] equal to your current [gold]Moment[/gold].', 'ターン終了時、現在の[gold]時刻[/gold]に等しい[gold]ブロック[/gold]を得る。'],
@@ -287,7 +288,7 @@ def chinese_card_table():
         for upgraded in (False, True):
             text = effects_text(row, 0, upgraded)
             for effect in row[7]:
-                key = 'Block' if effect[0] == 'AllyBlock' else 'ExtraDamage' if effect[0] in ('ConcealedBonusDamage', 'MomentBonusDamage', 'RewindDamage') else effect[0]
+                key = 'Block' if effect[0] in ('AllyBlock', 'BlockPerExhaust') else 'ExtraDamage' if effect[0] in ('ConcealedBonusDamage', 'MomentBonusDamage', 'RewindDamage') else effect[0]
                 if effect[0] == 'Damage' and (opt.get('restageDivisor') or opt.get('concealedTripleDamage') or any(e[0] in ('ConcealedBonusDamage', 'MomentBonusDamage') for e in row[7])):
                     key = 'CalculatedDamage'
                 value = effect[2] if upgraded else effect[1]

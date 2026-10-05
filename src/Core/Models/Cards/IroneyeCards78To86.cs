@@ -269,13 +269,17 @@ public sealed class TurningArrow : CardModel
 public sealed class SoulChasingVolley : CardModel, IMarkTriggerObserver
 {
     private const string FollowupDamageKey = "FollowupDamage";
-    private bool _triggeredMark;
+    private int _markTriggersInPlay;
+    private bool _resolvingVolley;
+    protected override bool HasEnergyCostX => true;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         new DynamicVar[]
         {
-            new DamageVar(5m, ValueProp.Move),
-            new RepeatVar(3),
+            new CalculationBaseVar(5m),
+            new ExtraDamageVar(5m),
+            new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) => ((SoulChasingVolley)card)._markTriggersInPlay),
+            new RepeatVar(1),
             new DynamicVar(FollowupDamageKey, 5m),
         };
 
@@ -286,26 +290,34 @@ public sealed class SoulChasingVolley : CardModel, IMarkTriggerObserver
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/soul_chasing_volley.png");
 
     public SoulChasingVolley()
-        : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
+        : base(0, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
     {
     }
 
-    public void OnMarkTriggered(decimal triggeringDamage) => _triggeredMark = true;
+    public void OnMarkTriggered(decimal triggeringDamage)
+    {
+        if (_resolvingVolley)
+            _markTriggersInPlay++;
+    }
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        decimal hitDamage = DynamicVars.Damage.BaseValue;
-        for (int i = 0; i < DynamicVars.Repeat.IntValue && cardPlay.Target.IsAlive; i++)
+        _markTriggersInPlay = 0;
+        _resolvingVolley = true;
+        try
         {
-            _triggeredMark = false;
-            await DamageCmd.Attack(hitDamage)
+            await DamageCmd.Attack(DynamicVars.CalculatedDamage)
                 .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
+                .WithHitCount(ResolveEnergyXValue() + DynamicVars.Repeat.IntValue)
                 .WithIroneyeShotFx(Owner.Creature)
                 .Execute(context);
-            if (_triggeredMark)
-                hitDamage += DynamicVars[FollowupDamageKey].BaseValue;
+        }
+        finally
+        {
+            _resolvingVolley = false;
+            _markTriggersInPlay = 0;
         }
     }
 

@@ -13,6 +13,7 @@ public sealed class RevenantPotionPool : PotionPoolModel
     {
         ModelDb.Potion<DustyNote>(),
         ModelDb.Potion<WraithJar>(),
+        ModelDb.Potion<SpiritCallingJar>(),
         ModelDb.Potion<StarlightShard>(),
     };
 }

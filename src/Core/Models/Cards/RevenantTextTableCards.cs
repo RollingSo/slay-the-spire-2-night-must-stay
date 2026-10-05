@@ -300,11 +300,8 @@ public sealed class ReanimateDead : CardModel
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
     public override string PortraitPath => "res://revenant_assets/cards/reanimate_dead.png";
     public ReanimateDead() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
-    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
-    {
-        await RevenantCall.ChooseFamilyAndCall(context, Owner);
-        await RevenantSummonManager.For(Owner).ReviveDeadEnemy(context);
-    }
+    protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
+        RevenantSummonManager.For(Owner).SummonRandomNecro(context);
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }
 
@@ -362,19 +359,22 @@ public sealed class UnderworldReflection : CardModel
 
 public sealed class SpiritManipulation : CardModel
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new DamageVar(10m, ValueProp.Move) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new DamageVar(14m, ValueProp.Move) };
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
+    protected override IEnumerable<IHoverTip> ExtraHoverTips =>
+        new[] { HoverTipFactory.Static(StaticHoverTip.Fatal) };
     public override string PortraitPath => "res://revenant_assets/cards/spirit_manipulation.png";
     public SpiritManipulation() : base(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         Creature target = cardPlay.Target;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(target).Execute(context);
-        if (!target.IsAlive)
+        bool shouldTriggerFatal = target.Powers.All(power => power.ShouldOwnerDeathTriggerFatal());
+        var attack = await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(target).Execute(context);
+        if (shouldTriggerFatal && attack.Results.SelectMany(results => results).Any(result => result.WasTargetKilled))
             RevenantSummonManager.For(Owner).MarkForNextCombat(target);
     }
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(5m);
 }
 
 public sealed class PreparationRitual : CardModel

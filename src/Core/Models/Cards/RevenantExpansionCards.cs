@@ -51,27 +51,32 @@ public sealed class GurranqsRock : CardModel
 public sealed class FrenziedFlame : CardModel
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new DynamicVar[] { new DynamicVar("DamageMultiplier", 2m) };
+        new DynamicVar[]
+        {
+            new DynamicVar("DamageMultiplier", 2m),
+            new CalculationBaseVar(0m),
+            new ExtraDamageVar(2m),
+            new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) =>
+                card.Owner == null ? 0m : RevenantSummonManager.For(card.Owner).GetLivingSummons()
+                    .Sum(summon => summon.GetPower<BufferPower>() is { Amount: > 0 } ? 0m
+                        : Math.Max(0m, summon.CurrentHp - (summon.GetPower<UndyingMarchPower>() != null ? 1m : 0m))))
+        };
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         IsUpgraded
             ? new[] { CardKeyword.Exhaust, CardKeyword.Retain }
             : new[] { CardKeyword.Exhaust };
-    protected override bool IsPlayable => RevenantSummonManager.For(Owner).HasLivingFamily;
+    protected override bool IsPlayable => RevenantSummonManager.For(Owner).GetLivingSummons().Count > 0;
     public override string PortraitPath => "res://revenant_assets/cards/frenzied_flame.png";
 
     public FrenziedFlame() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        Creature family = Owner.Osty;
-        if (family is not { IsAlive: true })
-            return;
-        decimal hpBefore = family.CurrentHp;
-        await RevenantCardHelpers.DamageFamily(this, context, hpBefore);
-        decimal hpLost = Math.Max(0m, hpBefore - family.CurrentHp);
+        decimal hpLost = await RevenantCardHelpers.DamageSummons(this, context);
         if (hpLost <= 0m)
             return;
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
+        if (!cardPlay.Target.IsAlive) return;
         await DamageCmd.Attack(hpLost * DynamicVars["DamageMultiplier"].BaseValue)
             .CompatFromCard(this).WithRevenantFx(this, cardPlay.Target)
             .Targeting(cardPlay.Target)
@@ -273,7 +278,7 @@ public sealed class RevenantCard : CardModel
         CardMultiplayerConstraint.MultiplayerOnly;
     public override string PortraitPath => "res://revenant_assets/cards/revenant_card.png";
 
-    public RevenantCard() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self) { }
+    public RevenantCard() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
@@ -316,17 +321,18 @@ public sealed class UndyingMarch : CardModel
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         new[] { CardKeyword.Exhaust, CardKeyword.Retain };
-    protected override bool IsPlayable => RevenantSummonManager.For(Owner).HasLivingFamily;
+    protected override bool IsPlayable => RevenantSummonManager.For(Owner).GetLivingSummons().Count > 0;
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         new IHoverTip[] { HoverTipFactory.FromPower<UndyingMarchPower>() };
     public override string PortraitPath => "res://revenant_assets/cards/undying_march.png";
 
     public UndyingMarch() : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
 
-    protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
-        Owner.Osty is { IsAlive: true } family
-            ? PowerCmd.Apply<UndyingMarchPower>(context, family, 1m, Owner.Creature, this)
-            : Task.CompletedTask;
+    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
+    {
+        foreach (Creature summon in RevenantSummonManager.For(Owner).GetLivingSummons())
+            await PowerCmd.Apply<UndyingMarchPower>(context, summon, 1m, Owner.Creature, this);
+    }
 
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -73,16 +74,17 @@ namespace NightMustStay.Core.Models.Cards
 
     public sealed class RetreatingDefense : CardModel
     {
+        public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
         public override string PortraitPath =>
             "res://packed/card_portraits/guardian/retreating_defense.png";
 
         public override bool GainsBlock => true;
 
         protected override IEnumerable<DynamicVar> CanonicalVars =>
-            new DynamicVar[] { new BlockVar(8m, ValueProp.Move) };
+            new DynamicVar[] { new BlockVar(4m, ValueProp.Move), new BlockedAttackDamageVar() };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            new[] { HoverTipFactory.Static(StaticHoverTip.Block) };
+            new[] { HoverTipFactory.Static(StaticHoverTip.Block), HoverTipFactory.FromPower<GuardCounterPower>() };
 
         public RetreatingDefense()
             : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
@@ -92,15 +94,34 @@ namespace NightMustStay.Core.Models.Cards
         protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
         {
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-            await PowerCmd.Apply<RetreatingDefensePower>(
+            decimal blocked = BlockedAttackDamageThisTurn();
+            if (blocked <= 0m) return;
+            await PowerCmd.Apply<GuardCounterPower>(
                 context,
                 Owner.Creature,
-                1m,
+                blocked,
                 Owner.Creature,
                 this);
         }
 
-        protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3m);
+        public decimal BlockedAttackDamageThisTurn()
+        {
+            ICombatState state = Owner?.Creature?.CombatState;
+            if (state == null) return 0m;
+            return CombatManager.Instance.History.Entries.OfType<DamageReceivedEntry>()
+                .Where(entry => entry.Receiver == Owner.Creature && entry.HappenedThisTurn(state)
+                    && entry.Result.Props.HasFlag(ValueProp.Move))
+                .Sum(entry => (decimal)entry.Result.BlockedDamage);
+        }
+
+        protected override void OnUpgrade() => RemoveKeyword(CardKeyword.Exhaust);
+
+        private sealed class BlockedAttackDamageVar() : DynamicVar("BlockedAttackDamage", 0m)
+        {
+            public override void UpdateCardPreview(CardModel card, CardPreviewMode previewMode,
+                Creature target, bool runGlobalHooks) =>
+                PreviewValue = ((RetreatingDefense)card).BlockedAttackDamageThisTurn();
+        }
     }
 
     public sealed class SkySweepingGod : CardModel

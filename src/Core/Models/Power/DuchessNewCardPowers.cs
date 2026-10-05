@@ -63,7 +63,8 @@ public sealed class DuchessPhantomKillerPower : PowerModel
         ValueProp props, Creature target, CardModel cardSource)
     {
         if (GetInternalData<Data>().Triggered || dealer != Owner || !result.WasTargetKilled
-            || !Owner.HasPower<DuchessConcealmentPower>() || target.Side == Owner.Side)
+            || !Owner.HasPower<DuchessConcealmentPower>() || target.Side == Owner.Side
+            || target.Powers.Any(power => !power.ShouldOwnerDeathTriggerFatal()))
             return Task.CompletedTask;
         DuchessPhantomKiller deckCard = PileType.Deck.GetPile(Owner.Player).Cards
             .OfType<DuchessPhantomKiller>().FirstOrDefault();

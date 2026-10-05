@@ -80,7 +80,7 @@ public sealed class Relay : CardModel
 public sealed class PackUp : CardModel
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new DynamicVar[] { new CardsVar(1) };
+        new DynamicVar[] { new CardsVar(2) };
     public override string PortraitPath => "res://revenant_assets/cards/pack_up.png";
 
     public PackUp() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) { }

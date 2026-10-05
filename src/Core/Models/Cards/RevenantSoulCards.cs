@@ -29,18 +29,17 @@ public sealed class BurnLife : CardModel
     };
 
     public override bool GainsBlock => true;
-    protected override bool IsPlayable => RevenantSummonManager.For(Owner).HasLivingFamily;
+    protected override bool IsPlayable => RevenantSummonManager.For(Owner).GetLivingSummons().Count > 0;
     public override string PortraitPath => "res://revenant_assets/cards/burn_life.png";
 
     public BurnLife() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        Creature family = Owner.Osty;
-        if (family is not { IsAlive: true })
+        if (RevenantSummonManager.For(Owner).GetLivingSummons().Count == 0)
             return;
 
-        await RevenantCardHelpers.DamageFamily(this, context, family.CurrentHp);
+        await RevenantCardHelpers.DamageSummons(this, context);
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
         await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
     }
