@@ -22,6 +22,13 @@ foreach ($role in @('guardian','ironeye','revenant','duchess')) {
                 $paths.Add('res://'+$relative)
             }
             if ($kind -eq 'potions') {
+                $relative = 'images/atlases/potion_atlas.sprites/'+$icon.BaseName+'.tres'
+                $mapping = Get-Content -LiteralPath (Join-Path $root $relative) -Raw
+                $expected = 'res://'+$role+'_assets/potions/'+$icon.BaseName+'.png'
+                if (-not $mapping.Contains('path="'+$expected+'"') -or -not $mapping.Contains('region = Rect2(0, 0, 256, 256)')) {
+                    throw "Incorrect potion icon mapping: $relative"
+                }
+                $paths.Add('res://'+$relative)
                 $relative = 'images/atlases/potion_outline_atlas.sprites/'+$icon.BaseName+'.tres'
                 $mapping = Get-Content -LiteralPath (Join-Path $root $relative) -Raw
                 $expected = 'res://'+$role+'_assets/potions/'+$icon.BaseName+'_outline.png'
@@ -34,8 +41,8 @@ foreach ($role in @('guardian','ironeye','revenant','duchess')) {
         }
     }
 }
-if ($count -ne 49 -or $paths.Count -ne 111) { throw "Unexpected item icon inventory: $count icons / $($paths.Count) resources" }
+if ($count -ne 49 -or $paths.Count -ne 124) { throw "Unexpected item icon inventory: $count icons / $($paths.Count) resources" }
 $parent = Split-Path -Parent $ManifestPath
 New-Item -ItemType Directory -Force -Path $parent | Out-Null
 [IO.File]::WriteAllText($ManifestPath,(@{paths=@($paths)} | ConvertTo-Json -Depth 5),[Text.UTF8Encoding]::new($false))
-Write-Output 'Item icons validated: 49 icons, 49 outlines, 13 potion mappings.'
+Write-Output 'Item icons validated: 49 icons, 49 outlines, 13 potion icon and 13 outline mappings.'
