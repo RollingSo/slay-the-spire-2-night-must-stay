@@ -23,7 +23,7 @@ public static class RevenantDieForYouPatch
         }
 
         // Family and Necro keep the visible stock power, but the Revenant's
-        // controller owns the actual family -> Necro -> Revenant routing. If
+        // controller owns the actual Necro -> family -> Revenant routing. If
         // the stock hook also redirects, both summons can consume the same
         // damage instance or a routed hit can recurse.
         __result = target;

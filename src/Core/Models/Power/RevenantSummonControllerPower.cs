@@ -67,24 +67,6 @@ public sealed class RevenantSummonControllerPower : PowerModel
         decimal remaining = pending.Amount;
         ValueProp routedProps = ValueProp.Unblockable | ValueProp.Unpowered;
 
-        Creature family = manager.CurrentFamilyCreature;
-        if (family is { IsAlive: true } && remaining > 0m)
-        {
-            bool cannotDieThisTurn = family.HasPower<UndyingMarchPower>();
-            bool preventsThisHit = family.HasPower<BufferPower>();
-            decimal familyDamage = cannotDieThisTurn || preventsThisHit
-                ? remaining
-                : decimal.Min(remaining, family.CurrentHp);
-            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
-                new BlockingPlayerChoiceContext(),
-                family,
-                familyDamage,
-                routedProps,
-                pending.Dealer,
-                pending.CardSource);
-            remaining = cannotDieThisTurn || preventsThisHit ? 0m : remaining - familyDamage;
-        }
-
         Creature necro = manager
             .GetLivingNecros()
             .Select(candidate => candidate.Creature)
@@ -103,6 +85,24 @@ public sealed class RevenantSummonControllerPower : PowerModel
                 pending.Dealer,
                 pending.CardSource);
             remaining = preventsThisHit ? 0m : remaining - necroDamage;
+        }
+
+        Creature family = manager.CurrentFamilyCreature;
+        if (family is { IsAlive: true } && remaining > 0m)
+        {
+            bool cannotDieThisTurn = family.HasPower<UndyingMarchPower>();
+            bool preventsThisHit = family.HasPower<BufferPower>();
+            decimal familyDamage = cannotDieThisTurn || preventsThisHit
+                ? remaining
+                : decimal.Min(remaining, family.CurrentHp);
+            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
+                new BlockingPlayerChoiceContext(),
+                family,
+                familyDamage,
+                routedProps,
+                pending.Dealer,
+                pending.CardSource);
+            remaining = cannotDieThisTurn || preventsThisHit ? 0m : remaining - familyDamage;
         }
 
         if (remaining > 0m && Owner.IsAlive)
