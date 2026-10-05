@@ -879,10 +879,8 @@ public sealed class RevenantSummonManager
         RefreshFamilyVisualScaleAndPosition();
         _familyVisual.Rotation = 0f;
         _familyVisual.Modulate = Colors.White;
-        // Helen's source art faces left.  Player-side summons face the enemies
-        // on the right; the other current family assets are already authored
-        // in that direction.
-        _familyVisual.FlipH = family == RevenantFamilyId.Helen;
+        // Approved family sprites face the enemies on the right.
+        _familyVisual.FlipH = false;
         string file = family switch
         {
             RevenantFamilyId.Helen => "helen.png",
@@ -895,20 +893,20 @@ public sealed class RevenantSummonManager
 
     // Osty's combat bounds are 204 px high. These values are derived from
     // each 512x512 sprite's visible alpha bounds rather than its canvas size:
-    // Helen 409 px => 0.8x Osty, Frederick 488 px => 1.0x Osty,
-    // Sebastian 487 px => 1.2x Osty.
+    // Helen 476 px => 0.8x Osty, Frederick 453 px => 1.0x Osty,
+    // Sebastian 386 px => 1.2x Osty.
     private static float GetFamilyBaseVisualScale(RevenantFamilyId family) => family switch
     {
-        RevenantFamilyId.Helen => 0.3990f,
-        RevenantFamilyId.PumpkinHead => 0.4180f,
-        RevenantFamilyId.Skeleton => 0.5027f,
-        _ => 0.3990f,
+        RevenantFamilyId.Helen => 0.342857f,
+        RevenantFamilyId.PumpkinHead => 0.450331f,
+        RevenantFamilyId.Skeleton => 0.634197f,
+        _ => 0.342857f,
     };
 
     private static float GetFamilyBottomOffset(RevenantFamilyId family) => family switch
     {
-        RevenantFamilyId.Helen => 243f,
-        RevenantFamilyId.PumpkinHead => 243f,
+        RevenantFamilyId.Helen => 244f,
+        RevenantFamilyId.PumpkinHead => 245f,
         RevenantFamilyId.Skeleton => 242f,
         _ => 243f,
     };
