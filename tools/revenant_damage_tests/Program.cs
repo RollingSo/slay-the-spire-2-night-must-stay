@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -63,8 +64,10 @@ static void VerifyFamilyIntentDamage()
 static void VerifyCardDamageUsesDynamicVars()
 {
     var lansseaxBlade = new LansseaxBlade();
-    if (lansseaxBlade.DynamicVars.Damage.BaseValue != 63m)
-        throw new InvalidOperationException("Lansseax Blade must expose its 63 damage through DamageVar.");
+    if (lansseaxBlade.DynamicVars.Damage.BaseValue != 42m
+        || lansseaxBlade.DynamicVars.Damage is not DamageVar { Props: ValueProp.Move }
+        || lansseaxBlade.TargetType != TargetType.AllEnemies)
+        throw new InvalidOperationException("Lansseax Blade must expose its 42 area damage through DamageVar.");
 
     var formationBreakerHammer = new FormationBreakerHammer();
     DynamicVar frederickDamage = formationBreakerHammer.DynamicVars["FamilyDamage"];
