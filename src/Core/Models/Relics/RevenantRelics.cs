@@ -26,7 +26,7 @@ public abstract class RevenantRelicModel : RelicModel
 
     public override string PackedIconPath =>
         $"res://revenant_assets/relics/{RevenantIconName}.png";
-    protected override string PackedIconOutlinePath => PackedIconPath;
+    protected override string PackedIconOutlinePath => PackedIconPath.Replace(".png", "_outline.png");
     protected override string BigIconPath => PackedIconPath;
     public override bool ShouldFlashOnPlayer => false;
 }

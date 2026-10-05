@@ -17,7 +17,7 @@ namespace NightMustStay.Core.Models.Relics
 
         public override string PackedIconPath => "res://guardian_assets/relics/single_wing_greatshield.png";
 
-        protected override string PackedIconOutlinePath => PackedIconPath;
+        protected override string PackedIconOutlinePath => PackedIconPath.Replace(".png", "_outline.png");
 
         protected override string BigIconPath => PackedIconPath;
 
@@ -38,7 +38,7 @@ namespace NightMustStay.Core.Models.Relics
 
         public override string PackedIconPath => "res://guardian_assets/relics/twin_wing_greatshield.png";
 
-        protected override string PackedIconOutlinePath => PackedIconPath;
+        protected override string PackedIconOutlinePath => PackedIconPath.Replace(".png", "_outline.png");
 
         protected override string BigIconPath => PackedIconPath;
 

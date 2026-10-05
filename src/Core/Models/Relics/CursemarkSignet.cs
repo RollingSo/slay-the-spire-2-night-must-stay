@@ -20,7 +20,7 @@ namespace NightMustStay.Core.Models.Relics
 
         public override string PackedIconPath => "res://ironeye_assets/relics/cursemark_signet.png";
 
-        protected override string PackedIconOutlinePath => PackedIconPath;
+        protected override string PackedIconOutlinePath => PackedIconPath.Replace(".png", "_outline.png");
 
         protected override string BigIconPath => PackedIconPath;
 
@@ -68,7 +68,7 @@ namespace NightMustStay.Core.Models.Relics
 
         public override string PackedIconPath => "res://ironeye_assets/relics/runemark_signet.png";
 
-        protected override string PackedIconOutlinePath => PackedIconPath;
+        protected override string PackedIconOutlinePath => PackedIconPath.Replace(".png", "_outline.png");
 
         protected override string BigIconPath => PackedIconPath;
 
