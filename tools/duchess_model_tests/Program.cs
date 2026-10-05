@@ -43,7 +43,11 @@ foreach (var type in models)
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 // The standalone fixture only discovers mod models; token cards also resolve
 // the game's built-in token and colorless pools at runtime.
-foreach (var type in new[] { typeof(TokenCardPool), typeof(ColorlessCardPool), typeof(MegaCrit.Sts2.Core.Models.Powers.BufferPower) })
+foreach (var type in new[] { typeof(TokenCardPool), typeof(ColorlessCardPool), typeof(MegaCrit.Sts2.Core.Models.Powers.BufferPower), typeof(MegaCrit.Sts2.Core.Models.Powers.BarricadePower) })
+    if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
+foreach (Type type in typeof(PowerModel).Assembly.GetTypes().Where(type => !type.IsAbstract
+    && (typeof(PowerModel).IsAssignableFrom(type) || typeof(CardModel).IsAssignableFrom(type)
+        || typeof(EnchantmentModel).IsAssignableFrom(type)) && type.GetConstructor(Type.EmptyTypes) != null))
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
@@ -176,18 +180,36 @@ if (!captureSaveJson.Contains("BYRDONIS") || !captureSaveJson.Contains("FROG_KNI
     || !captureSaveJson.Contains("MONSTER"))
     throw new Exception("Native save JSON must retain both exact full monster IDs.");
 var jsonEnvelope = (SerializableRelic)JsonSerializer.Deserialize(captureSaveJson, relicJsonInfo)!;
-// The standalone fixture skips workshop discovery; register the envelope entry
-// in the same native cache that the game's mod-aware Init fills at startup.
-var netEntryMap = (Dictionary<string, int>)typeof(ModelIdSerializationCache)
-    .GetField("_entryNameToNetIdMap", flags)!.GetValue(null)!;
-var netEntries = (List<string>)typeof(ModelIdSerializationCache)
-    .GetField("_netIdToEntryNameMap", flags)!.GetValue(null)!;
-if (!netEntryMap.ContainsKey(captureEnvelope.Id!.Entry))
+Type? assemblyInfoType = typeof(ModManager).Assembly.GetType("MegaCrit.Sts2.Core.Modding.AssemblyInfo");
+assemblyInfoType?.GetMethod("Init", flags)!.Invoke(null, null);
+var serializationHarmony = new HarmonyLib.Harmony("night-must-stay.tests.serialization-init");
+serializationHarmony.Patch(HarmonyLib.AccessTools.Method(typeof(MegaCrit.Sts2.Core.Logging.Log), "Error"),
+    prefix: new HarmonyLib.HarmonyMethod(typeof(SerializationFixture), nameof(SerializationFixture.Prefix)));
+serializationHarmony.Patch(HarmonyLib.AccessTools.Method(typeof(MegaCrit.Sts2.Core.Logging.Log), "Info"),
+    prefix: new HarmonyLib.HarmonyMethod(typeof(SerializationFixture), nameof(SerializationFixture.Info)));
+serializationHarmony.Patch(HarmonyLib.AccessTools.Method(typeof(MegaCrit.Sts2.Core.Logging.Log), "Warn"),
+    prefix: new HarmonyLib.HarmonyMethod(typeof(SerializationFixture), nameof(SerializationFixture.Info)));
+var fixtureMod = new Mod { path = typeof(DuchessStrike).Assembly.Location, manifest = new ModManifest { id = "NightMustStay", affectsGameplay = true } };
+if (assemblyInfoType != null)
 {
-    netEntryMap[captureEnvelope.Id.Entry] = netEntries.Count;
-    netEntries.Add(captureEnvelope.Id.Entry);
+    var mockTypes = new Dictionary<Type, (Mod, bool)>();
+    foreach (Type modelType in typeof(DuchessStrike).Assembly.GetTypes()) mockTypes[modelType] = (fixtureMod, true);
+    assemblyInfoType.GetProperty("MockTypes", flags)!.SetValue(null, mockTypes);
 }
-typeof(ModelIdSerializationCache).GetProperty("EntryIdBitSize", flags)!.SetValue(null, 16);
+else
+{
+    // Older runtimes discover network IDs through loaded ModManager entries.
+    typeof(Mod).GetField("assembly")!.SetValue(fixtureMod, typeof(DuchessStrike).Assembly);
+    typeof(Mod).GetField("state")!.SetValue(fixtureMod, ModLoadState.Loaded);
+    var loadedFixtureMods = (IList<Mod>)typeof(ModManager).GetProperty("Mods", flags)!.GetValue(null)!;
+    loadedFixtureMods.Clear();
+    loadedFixtureMods.Add(fixtureMod);
+}
+typeof(ModelIdSerializationCache).GetMethod("Init", flags)!.Invoke(null, null);
+serializationHarmony.UnpatchAll(serializationHarmony.Id);
+// Use native cache membership and bit widths rather than hand-built network IDs.
+if (!ModelIdSerializationCache.TryGetNetIdForEntry(captureEnvelope.Id!.Entry, out _))
+    throw new Exception("Native model cache must include the captured-spirit save envelope.");
 var packetWriter = new PacketWriter();
 NightMustStay.Core.Compatibility.Sts2BranchCompat.RegisterSavedPropertyType(typeof(RevenantSpiritJarSaveData));
 captureEnvelope.Serialize(packetWriter);
