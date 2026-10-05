@@ -136,6 +136,9 @@ internal static class CardGlossaryRegression
     { __result = Tables.TryGetValue(table, out var values) && values.ContainsKey(key); return false; }
     public static bool Raw(LocString __instance, ref string __result)
     {
+        if (__instance.LocTable == "powers" && __instance.LocEntryKey.EndsWith(".title")
+            && (!Tables.TryGetValue("powers", out var powers) || !powers.ContainsKey(__instance.LocEntryKey)))
+            throw new Exception("Missing power title: " + __instance.LocEntryKey);
         __result = Tables.TryGetValue(__instance.LocTable, out var table) && table.TryGetValue(__instance.LocEntryKey, out string? value)
             ? value : __instance.LocEntryKey;
         return false;

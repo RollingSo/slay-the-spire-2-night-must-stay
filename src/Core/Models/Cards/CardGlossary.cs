@@ -50,7 +50,8 @@ internal static class CardGlossary
             // a power ID. Resolve those by title before applying the same rules.
             if (power == null && tip is HoverTip { Title: { } title })
                 power = ModPowerTypes.Values.Select(type => ModelDb.GetById<PowerModel>(ModelDb.GetId(type)))
-                    .FirstOrDefault(candidate => candidate.Title.GetFormattedText() == title);
+                    .FirstOrDefault(candidate => candidate.Title.Exists()
+                        && candidate.Title.GetFormattedText() == title);
             if (power == null
                 || power.GetType().Namespace != "NightMustStay.Core.Models.Power" || IsFamilyAction(power.GetType()))
             {
