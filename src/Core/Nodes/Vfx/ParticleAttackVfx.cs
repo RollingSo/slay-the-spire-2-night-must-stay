@@ -20,7 +20,7 @@ public abstract partial class ParticleAttackVfx : Node2D
     private float ArtScale => PowerScale * (EffectIndex switch {
         0 => .65f, 1 => .63f, 2 => .62f, 3 or 6 => .55f, 4 or 7 => .52f,
         5 => .60f, 8 => .68f, 9 or 10 => .58f, 11 or 12 or 13 or 14 or 16 => .64f,
-        15 or 19 or 20 or 21 => .63f, 17 => .66f, 18 => .60f, _ => 1f });
+        15 or 19 or 20 or 21 => .63f, 17 => .66f, 18 => .60f, 22 => .65f, _ => 1f });
     private readonly List<(Sprite2D Node, ShaderMaterial Material, Action<Sprite2D,float> Animate, float Start,float End)> _layers=new();
     private readonly List<(GpuParticles2D Node, float Start, bool Follow)> _emitters=new();
     private readonly HashSet<GpuParticles2D> _started=new();
@@ -200,6 +200,11 @@ public abstract partial class ParticleAttackVfx : Node2D
                     motion:(s,u)=>s.Position-=new Vector2(0,80*Ease(0,.85f,u))*ArtScale);
                 Layer(Ring,Gold,new(540,220),new(0,105),start:.02f);
                 Burst(Impact,Gold,24,32,130,new(0,100),spread:25,direction:new Vector3(0,-1,0));break;
+            case 22: // Completed charge: inward seal, brief bright core, ascending spirit sparks.
+                Layer(Ring,Violet,new(350,310),Vector2.Zero,end:.8f,flow:.004f,
+                    motion:(s,u)=>{s.Scale*=1-.6f*Ease(0,.6f,u);s.Rotation=u*.3f;});
+                Layer(Impact,Silver,new(170,170),Vector2.Zero,start:.1f,end:.55f,flow:0);
+                Burst(Impact,Violet,16,24,110,Vector2.Zero,.04f,spread:30,direction:new Vector3(0,-1,0));break;
             default: throw new InvalidOperationException("Unmapped VFX type " + EffectIndex);
         }
     }

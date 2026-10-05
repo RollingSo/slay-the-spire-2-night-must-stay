@@ -830,6 +830,7 @@ public sealed class RevenantSummonManager
 
     public async Task NotifyChargeCompleted(CardModel card)
     {
+        RevenantChargeVfx.Play(Owner.Creature);
         foreach (ChantingBlessingPower power in Owner.Creature.Powers.OfType<ChantingBlessingPower>().ToArray())
             await power.AfterChargeCompleted();
         if (Owner.GetRelic<BelieversVowCloth>() is { } believersVowCloth)

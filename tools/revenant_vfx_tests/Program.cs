@@ -11,6 +11,7 @@ using NightMustStay.Core.Nodes.Vfx;
 using K=NightMustStay.Core.Nodes.Vfx.RevenantAttackVfx.Kind;
 
 typeof(TestMode).GetProperty("IsOn")!.SetValue(null,true);
+RevenantChargeVfx.Play(null!); // Headless/test simulations must never create nodes or audio.
 void Assert(bool ok,string message) { if(!ok) throw new Exception(message); }
 foreach(var (hookName, patchName) in new[] {
     ("BeforeCardPlayed", "BeforeCardMotion"), ("AfterCardPlayed", "AfterCardMotion") })
@@ -78,6 +79,25 @@ Assert(animationPatch.Contains("nameof(NCreature._Ready)") &&
     "Family visuals are not retried when the backing Osty node becomes ready.");
 Assert(manager.Contains("_familyVisual.GetParent() != petNode"),
     "Family visuals are not rebound after the backing combat node is rebuilt.");
+string completion=manager[manager.IndexOf("public async Task NotifyChargeCompleted(")..manager.IndexOf("public async Task NotifyChargedCardPlayed(")];
+Assert(Regex.Matches(completion,"RevenantChargeVfx.Play").Count==1,"Charge completion cue must use the shared completion notification exactly once.");
+int chargeTypes=0;
+foreach(var type in typeof(BeastClaw).Assembly.GetTypes().Where(t=>typeof(IRevenantChargeCard).IsAssignableFrom(t)&&!t.IsInterface))
+{
+    string source=Directory.GetFiles("src/Core/Models/Cards","*.cs").Select(File.ReadAllText).First(s=>s.Contains("class "+type.Name+" :"));
+    int start=source.IndexOf("class "+type.Name+" :");
+    int next=source.IndexOf("public sealed class ",start+10);
+    string body=source[start..(next<0?source.Length:next)];
+    int transition=body.IndexOf("public async Task CompleteCharge(");
+    string charge=body[transition..];
+    Assert(charge.IndexOf("if (IsChargeComplete)")<charge.IndexOf("ChargeComplete = true"),"Repeated completion is not guarded: "+type.Name);
+    Assert(charge.IndexOf("NotifyChargeCompleted(this)")>charge.IndexOf("ChargeComplete = true"),"Cue precedes actual charge completion: "+type.Name);
+    chargeTypes++;
+}
+Assert(chargeTypes==8,"Audit new charge-card paths when adding a charge type.");
+Assert(Read("src/Core/Models/Cards/RevenantTextTableCards.cs").Contains("await chargeCard.CompleteCharge(context)"),"Preparation Ritual bypasses completion.");
+Assert(Read("src/Core/Models/Cards/RevenantNecroExpansionCards.cs").Contains("await chargeCard.CompleteCharge(context)"),"Harmony bypasses completion.");
+Console.WriteLine("PASS: eight charge transitions, shared completion cue, direct/assisted paths and TestMode safety.");
 string actions=manager[manager.IndexOf("private async Task PerformFamilyAction(")..manager.IndexOf("public IReadOnlyList<RevenantNecro> GetNecros()")];
 Assert(Regex.Matches(actions,"RevenantAttackEffects.FamilyDamage").Count==6,"Not all 6 family actions connected.");
 Assert(!actions.Contains("Sts2BranchCompat.Damage"),"Family action bypasses FX routing.");

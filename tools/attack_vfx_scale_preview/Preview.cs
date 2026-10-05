@@ -35,6 +35,12 @@ public partial class Preview : Node2D
         }
         _output = ProjectSettings.GlobalizePath("res://../../design/特效预览/refined_remake_20260911");
         Directory.CreateDirectory(_output);
+        if(OS.GetCmdlineUserArgs().Contains("--charge-preview"))
+        {
+            _output=ProjectSettings.GlobalizePath("res://../../design/特效预览/charge_complete_20261006");
+            Directory.CreateDirectory(_output);
+            RunChargePreview();return;
+        }
         foreach (G k in Enum.GetValues<G>()) _cases.Add(("GUARDIAN / " + k, () => new GuardianSample { AttackKind = k }));
         foreach (I k in Enum.GetValues<I>()) _cases.Add(("IRONEYE / " + k, () => new IroneyeSample { AttackKind = k }));
         foreach (R k in Enum.GetValues<R>()) _cases.Add(("REVENANT / " + k, () => new RevenantSample { AttackKind = k }));
@@ -88,6 +94,28 @@ public partial class Preview : Node2D
         if (node is RevenantSample r) r.T = t;
         if (node is MarkSample m) m.T = t;
         node.QueueRedraw();
+    }
+
+    private async void RunChargePreview()
+    {
+        _running=true;
+        var view=new SubViewport{Size=new Vector2I(600,500),TransparentBg=true,RenderTargetUpdateMode=SubViewport.UpdateMode.Always};
+        AddChild(view);var sample=new ChargeSample{Position=new Vector2(300,250)};view.AddChild(sample);
+        Image? best=null;int pixels=0,width=0,height=0;
+        for(int frame=0;frame<=60;frame++)
+        {
+            sample.Seek(frame/60f);await ToSignal(RenderingServer.Singleton,RenderingServer.SignalName.FramePostDraw);
+            var img=view.GetTexture().GetImage();var b=Bounds(img);
+            if(b.Pixels>pixels){best?.Dispose();best=img;(width,height,pixels)=b;}else img.Dispose();
+        }
+        if(best==null || pixels<1000 || width>320 || height>320)throw new Exception("Invalid charge completion visibility.");
+        _captures.Add(("REVENANT / CHARGE COMPLETE",best,width,height,pixels));
+        await SaveSheet("charge_complete.png",new[]{0},1,1);
+        best.Dispose();view.Free();
+        var live=new ChargeSample();AddChild(live);
+        for(int i=0;i<65;i++)await ToSignal(GetTree(),SceneTree.SignalName.ProcessFrame);
+        if(GodotObject.IsInstanceValid(live))throw new Exception("Charge cue leaked after completion.");
+        GD.Print($"PASS: charge completion {width}x{height}, {pixels} visible pixels; .65s lifetime and cleanup.");GetTree().Quit();
     }
 
     private async void RunVerification()
@@ -300,6 +328,7 @@ public partial class Preview : Node2D
 
     public override void _Draw()
     {
+        if(_cases.Count==0)return;
         DrawString(ThemeDB.FallbackFont, new Vector2(25, 40), "ATTACK VFX / SPACE: NEXT PAGE / ALL CELLS AT 0.65 CANVAS SCALE", fontSize:24);
         for (int slot = 0; slot < 6; slot++)
         {

@@ -1,4 +1,9 @@
 using NightMustStay.Core.Nodes.Vfx;
+public partial class ChargeSample : ParticleAttackVfx
+{
+    protected override int EffectIndex => 22;
+    public override float Duration => .65f;
+}
 
 public partial class GuardianSample : GuardianAttackVfx
 {
