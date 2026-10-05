@@ -19,12 +19,14 @@ public sealed class FrenziedThreeFingersPower : PowerModel
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override async Task AfterDamageReceived(
+    // The native received-damage hook is skipped for lethal hits. Given-damage
+    // runs once for every result, including fatal damage to a summon.
+    public override async Task AfterDamageGiven(
         PlayerChoiceContext context,
-        Creature target,
+        Creature dealer,
         DamageResult result,
         ValueProp props,
-        Creature dealer,
+        Creature target,
         CardModel cardSource)
     {
         decimal hpLost = result.UnblockedDamage;

@@ -47,6 +47,16 @@ foreach (var type in new[] { typeof(TokenCardPool), typeof(ColorlessCardPool) })
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+if (args.Contains("--necro-hive-only"))
+{
+    NecroHiveRegression.Run();
+    return 0;
+}
+if (args.Contains("--three-fingers-only"))
+{
+    FrenziedThreeFingersRegression.Run();
+    return 0;
+}
 FortifyRetentionRegression.Run();
 RevenantRoutingRegression.Run();
 var wingsBalance = ModelDb.Card<WorldEndingWings>().ToMutable();
@@ -338,7 +348,8 @@ if (!historyIconSource.Contains("TextureRect.StretchModeEnum.KeepAspectCentered"
 Console.WriteLine("PASS: history icon and card-library selection source guards.");
 // Revenant lightning balance and transition boundary regression.
 var discardLightning = ModelDb.Card<LightningStrike>().ToMutable();
-if (discardLightning.DynamicVars.Damage.BaseValue != 6
+if (discardLightning.EnergyCost.Canonical != ModelDb.Card<DuchessFallingMagic>().EnergyCost.Canonical
+    || discardLightning.DynamicVars.Damage.BaseValue != 6
     || (bool)typeof(LightningStrike).GetProperty("IsPlayable", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(discardLightning)!)
     throw new Exception("Lightning Strike must be unplayable with 6 discard damage.");
 var discardTrigger = typeof(LightningStrike).GetMethod("ShouldTriggerOnDiscard", BindingFlags.Static | BindingFlags.NonPublic)!;
@@ -1373,6 +1384,7 @@ foreach (bool upgradedSlicer in new[] { false, true })
 }
 Console.WriteLine("PASS: base/upgraded Carian Slicer redraw discounts survive old-play cleanup and expire on the next play.");
 harmony.UnpatchAll(harmony.Id);
+FrenziedThreeFingersRegression.Run();
 Console.WriteLine("PASS: independent Moment, Reaction/Dodge core, starter loadout, and all Duchess patch bindings.");
 return 0;
 }

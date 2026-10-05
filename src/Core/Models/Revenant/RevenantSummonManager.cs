@@ -729,7 +729,12 @@ public sealed class RevenantSummonManager
     internal static int CalculateNecroMaxHp(bool isElite) => isElite ? EliteNecroHp : NecroBaseHp;
 
     internal static bool IsEliteNecro(MonsterModel monster) => ModelDb.AllEncounters
-        .Where(encounter => encounter.RoomType == RoomType.Elite && !encounter.IsDebugEncounter)
+        .Where(encounter => encounter.RoomType == RoomType.Elite
+            && typeof(EncounterModel).GetProperty("IsDebugEncounter")?.GetValue(encounter) is not true
+            // Newer APIs removed IsDebugEncounter. Native mock encounters must
+            // still be excluded, or their full monster lists mark normal foes elite.
+            && encounter.GetType().Namespace?.EndsWith(".Mocks", StringComparison.Ordinal) != true
+            && encounter.GetType().Name != "DeprecatedEncounter")
         .SelectMany(encounter => encounter.AllPossibleMonsters)
         .Any(candidate => candidate.Id == monster.Id);
 

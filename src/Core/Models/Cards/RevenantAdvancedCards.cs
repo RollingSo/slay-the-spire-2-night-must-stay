@@ -308,7 +308,7 @@ public sealed class LightningStrike : CardModel
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(6m, ValueProp.Move) };
     protected override bool IsPlayable => false;
     public override string PortraitPath => "res://revenant_assets/cards/lightning_strike.png";
-    public LightningStrike() : base(2, CardType.Attack, CardRarity.Common, TargetType.Self) { }
+    public LightningStrike() : base(0, CardType.Attack, CardRarity.Common, TargetType.Self) { }
     internal static bool ShouldTriggerOnDiscard(PileType oldPile, PileType newPile) =>
         newPile == PileType.Discard && oldPile != PileType.Discard;
     public override async Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source)
