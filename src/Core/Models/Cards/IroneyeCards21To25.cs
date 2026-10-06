@@ -146,59 +146,34 @@ namespace NightMustStay.Core.Models.Cards
     // Card-table ID 24: 散射
     public sealed class Scatter : CardModel
     {
-        private const string DistanceKey = "Distance";
+        private const string MarkKey = "Mark";
 
         protected override IEnumerable<DynamicVar> CanonicalVars =>
-            new DynamicVar[]
-            {
-                new DynamicVar(DistanceKey, 1m),
-                new DamageVar(4m, ValueProp.Move),
-            };
+            new DynamicVar[] { new DamageVar(5m, ValueProp.Move),
+                new PowerVar<NightMustStayMarkPower>(MarkKey, 1m) };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            new IHoverTip[]
-            {
-                HoverTipFactory.FromPower<DistancePower>(),
-                HoverTipFactory.FromPower<NightMustStayMarkPower>(),
-            };
+            new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
 
         public override string PortraitPath =>
             ImageHelper.GetImagePath("packed/card_portraits/ironeye/startled_bird.png");
 
-        public Scatter()
-            : base(0, CardType.Attack, CardRarity.Common, TargetType.AllEnemies)
+        public Scatter() : base(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies) { }
+
+        protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
         {
+            foreach (Creature target in CombatState.HittableEnemies.Where(enemy => enemy.IsAlive).ToArray())
+                await PowerCmd.Apply<NightMustStayMarkPower>(context, target,
+                    DynamicVars[MarkKey].BaseValue, Owner.Creature, this);
+
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+                .CompatFromCard(this)
+                .TargetingAllOpponents(CombatState)
+                .WithIroneyeShotFx(Owner.Creature)
+                .Execute(context);
         }
 
-        protected override async Task OnPlay(
-            PlayerChoiceContext context,
-            CardPlay cardPlay)
-        {
-            Creature[] markedTargets = CombatState.HittableEnemies
-                .Where(enemy => enemy.IsAlive && enemy.HasPower<NightMustStayMarkPower>())
-                .ToArray();
-            foreach (Creature target in markedTargets)
-            {
-                if (!target.IsAlive)
-                    continue;
-
-                await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-                    .CompatFromCard(this)
-                    .Targeting(target)
-                    .WithIroneyeShotFx(Owner.Creature)
-                    .Execute(context);
-            }
-
-            await PowerCmd.Apply<DistancePower>(
-                context,
-                Owner.Creature,
-                -DynamicVars[DistanceKey].BaseValue,
-                Owner.Creature,
-                this);
-        }
-
-        protected override void OnUpgrade() =>
-            DynamicVars.Damage.UpgradeValueBy(2m);
+        protected override void OnUpgrade() => DynamicVars[MarkKey].UpgradeValueBy(1m);
     }
 
     // New card: 惊弓之鸟

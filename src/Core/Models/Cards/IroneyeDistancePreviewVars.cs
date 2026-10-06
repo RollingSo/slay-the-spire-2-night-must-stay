@@ -134,6 +134,13 @@ internal sealed class PostDistanceCalculatedBlockVar : CalculatedBlockVar
         Creature target,
         bool runGlobalHooks)
     {
+        // At zero movement the card skips GainBlock, including Dexterity.
+        if (Calculate(target) <= 0m)
+        {
+            PreviewValue = 0m;
+            return;
+        }
+
         if (!runGlobalHooks || card.CombatState == null)
         {
             base.UpdateCardPreview(card, previewMode, target, runGlobalHooks);

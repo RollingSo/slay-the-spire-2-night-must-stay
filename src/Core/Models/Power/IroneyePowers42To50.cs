@@ -155,16 +155,9 @@ public sealed class HeavenlyEyeFormPower : PowerModel
 
 public sealed class SharedIntelligencePower : PowerModel, IMarkTriggerPower
 {
-    private sealed class Data
-    {
-        public int TriggersThisTurn;
-    }
-
     public override PowerType Type => PowerType.Buff;
 
     public override PowerStackType StackType => PowerStackType.Counter;
-
-    protected override object InitInternalData() => new Data();
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
@@ -174,29 +167,17 @@ public sealed class SharedIntelligencePower : PowerModel, IMarkTriggerPower
         Creature markedTarget,
         CardModel triggeringCard)
     {
-        Data data = GetInternalData<Data>();
-        if (Owner.Player == null || data.TriggersThisTurn >= Amount)
+        if (Owner.Player == null || Amount <= 0)
             return;
 
-        data.TriggersThisTurn++;
         Flash();
         foreach (var teammate in CombatState.Players.Where(player =>
                      player.Creature != Owner && player.Creature.IsAlive))
         {
-            await CardPileCmd.Draw(choiceContext, 1, teammate);
+            await CardPileCmd.Draw(choiceContext, Amount, teammate);
         }
     }
 
-    public override Task AfterSideTurnStart(
-        CombatSide side,
-        IReadOnlyList<Creature> creatures,
-        ICombatState combatState)
-    {
-        if (side == Owner.Side && creatures.Contains(Owner))
-            GetInternalData<Data>().TriggersThisTurn = 0;
-
-        return Task.CompletedTask;
-    }
 }
 
 public sealed class IronEyePower : PowerModel

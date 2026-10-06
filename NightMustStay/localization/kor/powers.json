@@ -142,7 +142,7 @@
   "HEAVENLY_EYE_FORM_POWER.title": "유령 걸음",
   "HEAVENLY_EYE_FORM_POWER.description": "내 턴 시작 시, 무작위 [gold]접근+[/gold] 또는 [gold]후퇴+[/gold]를 {Amount}장 [gold]손[/gold]에 추가합니다.",
   "SHARED_INTELLIGENCE_POWER.title": "정보 공유",
-  "SHARED_INTELLIGENCE_POWER.description": "매 턴 [gold]표식[/gold]을 처음 {Amount}번 발동할 때, 모든 팀원이 카드를 1장 뽑습니다.",
+  "SHARED_INTELLIGENCE_POWER.description": "[gold]표식[/gold]을 발동할 때마다 모든 팀원이 카드를 {Amount}장 뽑습니다.",
   "IRON_EYE_POWER.title": "철의 눈",
   "IRON_EYE_POWER.description": "[gold]거리[/gold]가 0보다 크면, 팀원도 그만큼 [gold]민첩[/gold]을 얻습니다.",
   "OBSERVATION_POWER.title": "관찰",

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
@@ -184,7 +185,7 @@ public sealed class VolatilePoison : CardModel
 }
 
 // Card-table ID 62: 追踪箭
-public sealed class TrackingArrow : CardModel, IMarkTriggerObserver
+public sealed class TrackingArrow : CardModel
 {
     private bool _triggeredMark;
 
@@ -202,8 +203,28 @@ public sealed class TrackingArrow : CardModel, IMarkTriggerObserver
     {
     }
 
-    public void OnMarkTriggered(decimal triggeringDamage) =>
-        _triggeredMark = true;
+    public static async Task ReturnAllAfterMarkTrigger(PlayerChoiceContext context, Player player)
+    {
+        if (player?.PlayerCombatState == null) return;
+        foreach (TrackingArrow arrow in player.PlayerCombatState.AllCards.OfType<TrackingArrow>().ToArray())
+            await arrow.AfterOwnerTriggeredMark(context);
+    }
+
+    public async Task AfterOwnerTriggeredMark(PlayerChoiceContext context)
+    {
+        if (Pile == null || !Pile.Type.IsCombatPile() || Pile.Type == PileType.Hand)
+            return;
+
+        // Native play cleanup would discard a card moved out of Play too early.
+        // Other copies can return immediately; the resolving copy waits for its play hook.
+        if (Pile.Type == PileType.Play)
+        {
+            _triggeredMark = true;
+            return;
+        }
+
+        await CardPileCmd.Add(this, PileType.Hand);
+    }
 
     protected override async Task OnPlay(
         PlayerChoiceContext context,

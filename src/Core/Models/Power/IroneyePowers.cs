@@ -741,6 +741,11 @@ namespace NightMustStay.Core.Models.Power
             if (cardSource is IMarkTriggerObserver observer)
                 observer.OnMarkTriggered(triggeringDamage);
 
+            // Tracking Arrow responds to any Mark triggered by its owner, not
+            // only a Mark caused by that particular copy's attack.
+            await NightMustStay.Core.Models.Cards.TrackingArrow.ReturnAllAfterMarkTrigger(
+                choiceContext, dealer.Player);
+
             await PowerCmd.Decrement(this);
 
             if (Amount <= 0m)

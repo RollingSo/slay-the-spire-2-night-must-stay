@@ -264,7 +264,7 @@ public sealed class HeavenlyEyeForm : CardModel
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/heavenly_eye_form.png");
 
     public HeavenlyEyeForm()
-        : base(3, CardType.Power, CardRarity.Rare, TargetType.Self)
+        : base(2, CardType.Power, CardRarity.Rare, TargetType.Self)
     {
     }
 
@@ -284,13 +284,8 @@ public sealed class HeavenlyEyeForm : CardModel
 // Card-table ID 48: 共享情报
 public sealed class SharedIntelligence : CardModel
 {
-    private const string TriggersKey = "Triggers";
-
     public override CardMultiplayerConstraint MultiplayerConstraint =>
         CardMultiplayerConstraint.MultiplayerOnly;
-
-    protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new[] { new PowerVar<SharedIntelligencePower>(TriggersKey, 1m) };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
@@ -299,7 +294,7 @@ public sealed class SharedIntelligence : CardModel
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/shared_intelligence.png");
 
     public SharedIntelligence()
-        : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
+        : base(2, CardType.Power, CardRarity.Uncommon, TargetType.Self)
     {
     }
 
@@ -308,13 +303,13 @@ public sealed class SharedIntelligence : CardModel
         await PowerCmd.Apply<SharedIntelligencePower>(
             context,
             Owner.Creature,
-            DynamicVars[TriggersKey].BaseValue,
+            1m,
             Owner.Creature,
             this);
     }
 
     protected override void OnUpgrade() =>
-        DynamicVars[TriggersKey].UpgradeValueBy(1m);
+        EnergyCost.UpgradeBy(-1);
 }
 
 // Card-table ID 49: 铁之眼

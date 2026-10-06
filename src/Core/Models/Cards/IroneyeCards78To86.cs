@@ -167,9 +167,9 @@ public sealed class ReversalStep : CardModel
                 ValueProp.Move,
                 static (card, _) =>
                     2m * decimal.Abs(
-                        card.Owner.Creature.GetPower<DistancePower>()?.Amount ?? 0m),
+                        card.Owner?.Creature.GetPower<DistancePower>()?.Amount ?? 0m),
                 static card =>
-                    -(card.Owner.Creature.GetPower<DistancePower>()?.Amount ?? 0m)),
+                    -(card.Owner?.Creature.GetPower<DistancePower>()?.Amount ?? 0m)),
         };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -467,33 +467,46 @@ public sealed class CutThroughChaos : CardModel
 }
 
 // Card-table ID 86: 风华刃舞
-public sealed class GracefulBladeDance : CardModel
+public sealed class GracefulBladeDance : CardModel, IMarkTriggerObserver
 {
+    private bool _triggeredMark;
+    private bool _resolvingDamage;
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         new[] { CardKeyword.Retain };
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new DynamicVar[] { new DamageVar(5m, ValueProp.Move) };
+        new DynamicVar[] { new DamageVar(4m, ValueProp.Move) };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        new[] { HoverTipFactory.FromKeyword(CardKeyword.Retain) };
+        new[] { HoverTipFactory.FromKeyword(CardKeyword.Retain), HoverTipFactory.FromPower<NightMustStayMarkPower>() };
 
     public override string PortraitPath =>
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/graceful_blade_dance.png");
 
     public GracefulBladeDance()
-        : base(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
+        : base(0, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
     {
+    }
+
+    public void OnMarkTriggered(decimal triggeringDamage)
+    {
+        if (_resolvingDamage) _triggeredMark = true;
     }
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .CompatFromCard(this)
-            .Targeting(cardPlay.Target)
-            .WithIroneyeKnifeFx()
-            .Execute(context);
+        _triggeredMark = false;
+        _resolvingDamage = true;
+        try
+        {
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
+                .CompatFromCard(this)
+                .Targeting(cardPlay.Target)
+                .WithIroneyeKnifeFx()
+                .Execute(context);
+        }
+        finally { _resolvingDamage = false; }
     }
 
     public override async Task AfterCardPlayedLate(
@@ -501,6 +514,7 @@ public sealed class GracefulBladeDance : CardModel
         CardPlay cardPlay)
     {
         if (cardPlay.Card != this
+            || !_triggeredMark
             || Pile == null
             || Pile.Type == PileType.Hand
             || !Pile.Type.IsCombatPile())
@@ -508,9 +522,9 @@ public sealed class GracefulBladeDance : CardModel
             return;
         }
 
-        EnergyCost.AddThisTurn(1);
+        _triggeredMark = false;
         await CardPileCmd.Add(this, PileType.Hand);
     }
 
-    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2m);
 }

@@ -144,7 +144,7 @@
   "HEAVENLY_EYE_FORM_POWER.title": "Heavenly Eye Form",
   "HEAVENLY_EYE_FORM_POWER.description": "At the start of your turn, add {Amount} random [gold]Approach+[/gold] or [gold]Retreat+[/gold] cards to your [gold]Hand[/gold].",
   "SHARED_INTELLIGENCE_POWER.title": "Shared Intelligence",
-  "SHARED_INTELLIGENCE_POWER.description": "The first {Amount} {Amount:plural:time|times} you trigger [gold]Mark[/gold] each turn, all teammates draw 1 card.",
+  "SHARED_INTELLIGENCE_POWER.description": "Whenever you trigger [gold]Mark[/gold], all teammates draw {Amount} cards.",
   "IRON_EYE_POWER.title": "Iron Eye",
   "IRON_EYE_POWER.description": "While [gold]Distance[/gold] is above 0, it also grants that much [gold]Dexterity[/gold] to your teammates.",
   "OBSERVATION_POWER.title": "Observation",

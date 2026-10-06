@@ -144,7 +144,7 @@
   "HEAVENLY_EYE_FORM_POWER.title": "天眼形态",
   "HEAVENLY_EYE_FORM_POWER.description": "每回合开始时，随机将{Amount}张[gold]接近[/gold]或[gold]远离[/gold]加入你的[gold]手牌[/gold]。",
   "SHARED_INTELLIGENCE_POWER.title": "共享情报",
-  "SHARED_INTELLIGENCE_POWER.description": "本回合前{Amount}次触发[gold]标记[/gold]时，所有队友抽1张牌。",
+  "SHARED_INTELLIGENCE_POWER.description": "触发[gold]标记[/gold]时，所有队友抽{Amount}张牌。",
   "IRON_EYE_POWER.title": "铁之眼",
   "IRON_EYE_POWER.description": "当[gold]距离[/gold]大于0时，也为队友提供等量[gold]敏捷[/gold]。",
   "OBSERVATION_POWER.title": "观察力",

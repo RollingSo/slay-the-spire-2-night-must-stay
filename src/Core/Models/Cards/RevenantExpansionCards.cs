@@ -180,7 +180,7 @@ public sealed class UnderworldRising : CardModel
 {
     public override string PortraitPath => "res://revenant_assets/cards/underworld_rising.png";
 
-    public UnderworldRising() : base(3, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
+    public UnderworldRising() : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
 
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
         RevenantCall.ChooseFamilyAndCall(context, Owner);

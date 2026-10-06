@@ -313,7 +313,7 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new DamageVar(14m, ValueProp.Move),
+            new DamageVar(7m, ValueProp.Move),
             new PowerVar<NightMustStayMarkPower>(MarkKey, 1m),
         };
 
@@ -328,7 +328,7 @@ namespace NightMustStay.Core.Models.Cards
             ImageHelper.GetImagePath("packed/card_portraits/ironeye/anti_air_shot.png");
 
         public AntiAirShot()
-            : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+            : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
         {
         }
 
@@ -354,15 +354,18 @@ namespace NightMustStay.Core.Models.Cards
             }
         }
 
-        protected override void OnUpgrade() =>
-            DynamicVars.Damage.UpgradeValueBy(4m);
+        protected override void OnUpgrade()
+        {
+            DynamicVars.Damage.UpgradeValueBy(1m);
+            DynamicVars[MarkKey].UpgradeValueBy(1m);
+        }
     }
 
     // Card-table ID 10: 宿灵射击
     public sealed class SpiritShot : CardModel, ILongShotCard
     {
         protected override IEnumerable<DynamicVar> CanonicalVars =>
-            new[] { new DamageVar(12m, ValueProp.Move) };
+            new[] { new DamageVar(8m, ValueProp.Move) };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
             new IHoverTip[]
@@ -376,7 +379,7 @@ namespace NightMustStay.Core.Models.Cards
             ImageHelper.GetImagePath("packed/card_portraits/ironeye/spirit_shot.png");
 
         public SpiritShot()
-            : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+            : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
         {
         }
 
@@ -403,7 +406,7 @@ namespace NightMustStay.Core.Models.Cards
         }
 
         protected override void OnUpgrade() =>
-            DynamicVars.Damage.UpgradeValueBy(4m);
+            DynamicVars.Damage.UpgradeValueBy(3m);
     }
 
     // Card-table ID 11: 三箭齐射

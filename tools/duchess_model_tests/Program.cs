@@ -51,6 +51,36 @@ foreach (Type type in typeof(PowerModel).Assembly.GetTypes().Where(type => !type
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+if (args.Contains("--six-card-balance-only"))
+{
+    SixCardBalanceRegression.Run();
+    return 0;
+}
+if (args.Contains("--shared-intelligence-only"))
+{
+    var shared = ModelDb.Card<SharedIntelligence>().ToMutable();
+    if (shared.EnergyCost.GetResolved() != 2 || shared.Type != CardType.Power
+        || shared.MultiplayerConstraint != CardMultiplayerConstraint.MultiplayerOnly)
+        throw new Exception("Shared Intelligence base cost/type/multiplayer constraint mismatch.");
+    shared.UpgradeInternal();
+    if (shared.EnergyCost.GetResolved() != 1)
+        throw new Exception("Shared Intelligence upgrade must only reduce cost to 1.");
+    if (typeof(SharedIntelligencePower).GetMethod("AfterSideTurnStart")!.DeclaringType == typeof(SharedIntelligencePower)
+        || typeof(SharedIntelligencePower).GetNestedType("Data", BindingFlags.NonPublic) != null)
+        throw new Exception("Shared Intelligence must no longer cap/reset per-turn triggers.");
+    Console.WriteLine("PASS: Shared Intelligence costs 2/1, preserves multiplayer-only Power type, and removes the old per-turn trigger counter.");
+    return 0;
+}
+if (args.Contains("--reversal-step-only"))
+{
+    ReversalStepRegression.Run();
+    return 0;
+}
+if (args.Contains("--tracking-arrow-only"))
+{
+    TrackingArrowRegression.Run();
+    return 0;
+}
 if (args.Contains("--glossary-only"))
 {
     foreach (var type in typeof(CardModel).Assembly.GetTypes().Where(type => !type.IsAbstract && typeof(AbstractModel).IsAssignableFrom(type)))
