@@ -376,7 +376,8 @@
       ]
     ],
     {
-      "upgradeTokens": true
+      "upgradeTokens": true,
+      "exhaust": true
     }
   ],
   [

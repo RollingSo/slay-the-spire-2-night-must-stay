@@ -94,7 +94,7 @@
   "STORM_BARRIER_POWER.title": "嵐の障壁",
   "STORM_BARRIER_POWER.description": "攻撃を完全に[gold]ブロック[/gold]したとき、攻撃者に[gold]脱力[/gold]{Amount}を付与する。\nラウンド終了時に解除される。",
   "SPEAR_GRINDING_POWER.title": "槍研ぎ",
-  "SPEAR_GRINDING_POWER.description": "すべての[gold]盾突き[/gold]が2倍のダメージを与える。",
+  "SPEAR_GRINDING_POWER.description": "[gold]盾突き[/gold]をプレイするたび、このターン中[gold]筋力[/gold]{Amount}を得る。",
   "SPEAR_POLISH_POWER.title": "風纏い",
   "SPEAR_POLISH_POWER.description": "すべての[gold]盾突き[/gold]（[gold]盾突き+[/gold]を含む）が[purple]墨塗り[/purple]を持つ。\n以後生成される[gold]盾突き[/gold]も[purple]墨塗り[/purple]を得る。",
   "EVOLUTION_WINGS_POWER.title": "進化の翼",

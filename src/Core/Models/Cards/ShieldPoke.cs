@@ -34,26 +34,14 @@ namespace NightMustStay.Core.Models.Cards
 
         // Used by both the card preview and the actual attack. Keep transient
         // bonuses out of BaseValue so upgrades, redraws and turn changes cannot compound them.
-        internal decimal GetDamageBeforeHooks() => CalculateDamageBeforeHooks(
-            DynamicVars.Damage.BaseValue,
-            Fearless.GetShieldPokeDamageBonus(this),
-            Owner?.Creature.GetPower<SpearGrindingPower>()?.Amount ?? 0m);
-
-        internal static decimal CalculateDamageBeforeHooks(decimal baseDamage, decimal fearlessBonus, decimal grindingStacks)
-        {
-            decimal damage = baseDamage + fearlessBonus;
-            for (int i = 0; i < grindingStacks; i++)
-                damage *= 2m;
-            return damage;
-        }
+        internal decimal GetDamageBeforeHooks() => DynamicVars.Damage.BaseValue;
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
 
-            decimal fearlessBonus = Fearless.GetShieldPokeDamageBonus(this);
             decimal damage = GetDamageBeforeHooks();
-            if (fearlessBonus <= 0m)
+            if (!Fearless.IsShieldPokeEmpowered(this))
                 await CreatureCmd.GainBlock(base.Owner.Creature, base.DynamicVars.Block, cardPlay);
             await DamageCmd.Attack(damage)
                 .CompatFromCard(this)

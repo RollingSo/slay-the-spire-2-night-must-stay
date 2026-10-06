@@ -45,6 +45,24 @@ internal static class DamageModifierBranchCompatibility
 }
 
 [HarmonyPatch]
+internal static class FearlessDamageBranchPatch
+{
+    private static MethodBase TargetMethod() =>
+        DamageModifierBranchCompatibility.Resolve("ModifyDamageMultiplicative");
+
+    [HarmonyPrefix]
+    private static bool BeforeModify(AbstractModel __instance, Creature dealer,
+        ValueProp props, CardModel cardSource, ref decimal __result)
+    {
+        if (__instance is not NightMustStay.Core.Models.Cards.ShieldPoke card || cardSource != card)
+            return true;
+        __result = props.IsPoweredAttack()
+            && NightMustStay.Core.Models.Cards.Fearless.IsShieldPokeEmpowered(card) ? 2m : 1m;
+        return false;
+    }
+}
+
+[HarmonyPatch]
 internal static class DuchessConcealmentDamageBranchPatch
 {
     private static MethodBase TargetMethod() =>

@@ -32,7 +32,7 @@ internal sealed class ShieldPokeDamageVar(decimal damage) : DamageVar(damage, Va
                 raw += enchantment.EnchantDamageAdditive(raw, Props);
                 raw *= enchantment.EnchantDamageMultiplicative(raw, Props);
             }
-            PreviewValue = raw;
+            PreviewValue = Fearless.IsShieldPokeEmpowered(card) ? raw * 2m : raw;
         }
     }
 }
@@ -42,7 +42,7 @@ internal sealed class ShieldPokeBlockVar(decimal block) : BlockVar(block, ValueP
 {
     public override void UpdateCardPreview(CardModel card, CardPreviewMode previewMode, Creature target, bool runGlobalHooks)
     {
-        if (Fearless.GetShieldPokeDamageBonus(card) > 0m)
+        if (Fearless.IsShieldPokeEmpowered(card))
         {
             base.UpdateCardPreview(card, previewMode, target, runGlobalHooks: false);
             PreviewValue = 0m;

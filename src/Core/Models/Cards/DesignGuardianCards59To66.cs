@@ -98,10 +98,16 @@ namespace NightMustStay.Core.Models.Cards
     {
         public override string PortraitPath => "res://packed/card_portraits/guardian/spear_grinding.png";
 
-        public SpearGrinding() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self) { }
+        protected override IEnumerable<IHoverTip> ExtraHoverTips => new[] { HoverTipFactory.FromCard<ShieldPoke>() };
 
-        protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
+        public SpearGrinding() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self) { }
+
+        protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
+        {
+            CardModel poke = CombatState.CreateCard<ShieldPoke>(Owner);
+            CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(poke, PileType.Draw, Owner, CardPilePosition.Random));
             await PowerCmd.Apply<SpearGrindingPower>(context, Owner.Creature, 1m, Owner.Creature, this);
+        }
 
         protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     }

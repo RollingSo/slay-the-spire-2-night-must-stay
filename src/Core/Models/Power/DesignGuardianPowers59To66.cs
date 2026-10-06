@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Enchantments;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Cards;
 
 namespace NightMustStay.Core.Models.Power
@@ -59,6 +60,18 @@ namespace NightMustStay.Core.Models.Power
     {
         public override PowerType Type => PowerType.Buff;
         public override PowerStackType StackType => PowerStackType.Counter;
+
+        public override async Task AfterCardPlayed(PlayerChoiceContext context, CardPlay play)
+        {
+            if (play.Card.Owner != Owner.Player || play.Card is not ShieldPoke) return;
+            Flash();
+            await PowerCmd.Apply<SpearGrindingTemporaryStrengthPower>(context, Owner, Amount, Owner, play.Card);
+        }
+    }
+
+    public sealed class SpearGrindingTemporaryStrengthPower : TemporaryStrengthPower
+    {
+        public override AbstractModel OriginModel => ModelDb.Card<SpearGrinding>();
     }
 
     public sealed class SpearPolishPower : PowerModel

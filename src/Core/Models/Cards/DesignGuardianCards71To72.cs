@@ -38,7 +38,7 @@ namespace NightMustStay.Core.Models.Cards
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
             new DamageVar(10m, ValueProp.Move),
-            new DynamicVar(IncreaseKey, 8m)
+            new DynamicVar(IncreaseKey, 12m)
         };
 
         public FinalCurtainHalberd()
@@ -88,13 +88,6 @@ namespace NightMustStay.Core.Models.Cards
     // Card-table ID 72: 无畏
     public sealed class Fearless : CardModel
     {
-        private const string ExtraDamageKey = "ExtraDamage";
-
-        protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        {
-            new DynamicVar(ExtraDamageKey, 6m)
-        };
-
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
             new[] { HoverTipFactory.FromCard<ShieldPoke>() };
 
@@ -102,18 +95,12 @@ namespace NightMustStay.Core.Models.Cards
 
         public Fearless() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
 
-        public static decimal GetShieldPokeDamageBonus(CardModel shieldPoke)
-        {
-            if (shieldPoke?.CombatState == null || shieldPoke.Owner == null)
-                return 0m;
-
-            return CombatManager.Instance.History.CardPlaysFinished
-                .Where(entry =>
-                    entry.HappenedThisTurn(shieldPoke.CombatState)
-                    && entry.CardPlay.Card.Owner == shieldPoke.Owner
-                    && entry.CardPlay.Card is Fearless)
-                .Sum(entry => entry.CardPlay.Card.DynamicVars[ExtraDamageKey].BaseValue);
-        }
+        public static bool IsShieldPokeEmpowered(CardModel card) =>
+            card?.CombatState != null && card.Owner != null
+            && CombatManager.Instance.History.CardPlaysFinished.Any(entry =>
+                entry.HappenedThisTurn(card.CombatState)
+                && entry.CardPlay.Card.Owner == card.Owner
+                && entry.CardPlay.Card is Fearless);
 
         protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     }

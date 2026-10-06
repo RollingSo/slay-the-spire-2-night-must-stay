@@ -45,29 +45,20 @@ namespace NightMustStay.Core.Models.Cards
         protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     }
 
-    public sealed class Heavenfall : CardModel
+    public sealed class Heavenfall : GuardianConcealedEdgeCard
     {
-        public override string PortraitPath =>
-            "res://packed/card_portraits/guardian/heavenfall.png";
+        public override string PortraitPath => "res://packed/card_portraits/guardian/heavenfall.png";
+        protected override IEnumerable<DynamicVar> CanonicalVars =>
+            new DynamicVar[] { new DamageVar(100m, ValueProp.Move) };
 
-        protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
-        {
-            HoverTipFactory.Static(StaticHoverTip.Block),
-            HoverTipFactory.FromPower<GuardCounterPower>()
-        };
+        public Heavenfall() : base(10, CardRarity.Rare, CardType.Attack, TargetType.AnyEnemy) { }
 
-        public Heavenfall()
-            : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self)
+        protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
         {
+            ArgumentNullException.ThrowIfNull(cardPlay.Target);
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this)
+                .Targeting(cardPlay.Target).WithGuardianWeaponFx().Execute(context);
         }
-
-        protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
-            await PowerCmd.Apply<HeavenfallPower>(
-                context,
-                Owner.Creature,
-                1m,
-                Owner.Creature,
-                this);
 
         protected override void OnUpgrade() => CardCmd.ApplyKeyword(this, CardKeyword.Retain);
     }

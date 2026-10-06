@@ -92,7 +92,7 @@
   "STORM_BARRIER_POWER.title": "폭풍 장벽",
   "STORM_BARRIER_POWER.description": "공격을 완전히 [gold]방어[/gold]하면, 공격자에게 [gold]약화[/gold]를 {Amount} 부여합니다.\n라운드 종료 시 제거됩니다.",
   "SPEAR_GRINDING_POWER.title": "창날 갈기",
-  "SPEAR_GRINDING_POWER.description": "모든 [gold]방패 찌르기[/gold]의 피해가 2배가 됩니다.",
+  "SPEAR_GRINDING_POWER.description": "[gold]방패 찌르기[/gold]를 사용할 때마다 이번 턴 동안 [gold]힘[/gold]을 {Amount} 얻습니다.",
   "SPEAR_POLISH_POWER.title": "바람을 두르고",
   "SPEAR_POLISH_POWER.description": "모든 [gold]방패 찌르기[/gold]([gold]방패 찌르기+[/gold] 포함)에 [purple]잉크투성이[/purple]를 부여합니다.\n이후 생성되는 [gold]방패 찌르기[/gold]에도 [purple]잉크투성이[/purple]를 부여합니다.",
   "EVOLUTION_WINGS_POWER.title": "진화의 날개",

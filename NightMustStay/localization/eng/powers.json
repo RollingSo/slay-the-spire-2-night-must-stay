@@ -94,7 +94,7 @@
   "STORM_BARRIER_POWER.title": "Storm Barrier",
   "STORM_BARRIER_POWER.description": "When you fully [gold]Block[/gold] an attack, apply {Amount} [gold]Weak[/gold] to the attacker.\nRemoved at the end of the round.",
   "SPEAR_GRINDING_POWER.title": "Spear Grinding",
-  "SPEAR_GRINDING_POWER.description": "All [gold]Shield Pokes[/gold] deal double damage.",
+  "SPEAR_GRINDING_POWER.description": "Whenever you play a [gold]Shield Poke[/gold], gain {Amount} [gold]Strength[/gold] this turn.",
   "SPEAR_POLISH_POWER.title": "Wind-Wreathed",
   "SPEAR_POLISH_POWER.description": "All [gold]Shield Pokes[/gold] (including [gold]Shield Poke+[/gold]) have [purple]Inky[/purple].\n[gold]Shield Pokes[/gold] generated later also gain [purple]Inky[/purple].",
   "EVOLUTION_WINGS_POWER.title": "Evolution Wings",
