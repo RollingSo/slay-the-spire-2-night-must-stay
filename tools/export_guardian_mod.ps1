@@ -166,6 +166,12 @@ if ($themeCheckExitCode -ne 0) {
     throw "Exported character theme/hand validation failed with exit code $themeCheckExitCode. See build/character_theme_validation.log"
 }
 
+# Validate every native-format multiplayer arm inside the exported pack.
+$handCheckExitCode = Invoke-GodotAndWait @('--headless', '--path', (Join-Path $PSScriptRoot 'card_portrait_validation'), '--log-file', (Join-Path $buildDirectory 'multiplayer_hand_validation.log'), '--script', 'res://validate_multiplayer_hands.gd', '--', $packPath)
+if ($handCheckExitCode -ne 0) {
+    throw "Exported multiplayer hand validation failed: $handCheckExitCode. See build/multiplayer_hand_validation.log"
+}
+
 # Godot remaps .tscn/.tres and imported PNGs inside a PCK. Export the same
 # preset as ZIP to inspect its directory before installing an unopenable mod.
 $inspectionZipPath = Join-Path $buildDirectory "$modId-inspect.zip"

@@ -74,7 +74,7 @@ Test-DuchessImage 'duchess_assets/rest_site/duchess_rest_site.png' 1400 1280 $tr
 Test-DuchessImage 'duchess_assets/merchant/duchess_merchant.png' 1400 1280 $true
 Test-DuchessImage 'duchess_assets/multiplayer_hands/multiplayer_hand_duchess_point.png' 422 1200 $true
 foreach ($name in @('rock','paper','scissors')) {
-    Test-DuchessImage "duchess_assets/multiplayer_hands/multiplayer_hand_duchess_$name.png" 627 627 $true
+    Test-DuchessImage "duchess_assets/multiplayer_hands/multiplayer_hand_duchess_$name.png" 422 1200 $true
 }
 # Check literal resource paths in the character patch and every Duchess scene.
 $sources = @((Join-Path $root 'src/Core/Patches/DuchessAssetPatch.cs')) + @(Get-ChildItem (Join-Path $root 'duchess_assets') -Recurse -File | Where-Object { $_.Extension -in '.tscn','.tres','.gd' } | ForEach-Object FullName)

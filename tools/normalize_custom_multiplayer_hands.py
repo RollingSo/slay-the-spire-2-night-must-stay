@@ -72,8 +72,8 @@ def clear_revenant_sheet_edge(image: Image.Image) -> Image.Image:
 def normalize(path: Path) -> None:
     image = Image.open(path).convert("RGBA")
     if image.size == TARGET_SIZE:
-        if "revenant_assets" in path.parts:
-            image = clear_revenant_sheet_edge(image)
+        # Native-format redraws are complete arms, not legacy contact-sheet
+        # cells. Cropping their right edge would remove fingers and sleeves.
         image.save(path)
         return
     image = remove_detached_alpha(image)
