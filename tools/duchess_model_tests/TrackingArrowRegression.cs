@@ -37,8 +37,7 @@ internal static class TrackingArrowRegression
                     "Another card's Mark must return all eligible owner copies, not ally/hand/deck/resolving cards.");
                 Assert(resolving.Pile!.Type == PileType.Play, "Resolving card must wait for native cleanup.");
                 Move(resolving, PileType.Discard);
-                var play = new CardPlay { Card = resolving, Player = owner, Target = null, ResultPile = PileType.Discard,
-                    Resources = default!, IsAutoPlay = false, PlayIndex = 0, PlayCount = 1 };
+                var play = MakePlay(resolving, owner);
                 resolving.AfterCardPlayed(null!, play).GetAwaiter().GetResult();
                 Assert(Returned.Count == 3 && Returned.Contains(resolving), "Own Mark must still return after cleanup.");
                 resolving.AfterCardPlayed(null!, play).GetAwaiter().GetResult();
@@ -50,6 +49,17 @@ internal static class TrackingArrowRegression
             Console.WriteLine("PASS: normal/upgraded Tracking Arrows return on owner's external Mark; multiple copies, own-play deferral, repeated triggers, hand/deck exclusion and multiplayer ownership (movement visuals stubbed).");
         }
         finally { harmony.UnpatchAll(harmony.Id); }
+    }
+
+    internal static CardPlay MakePlay(CardModel card, Player owner)
+    {
+        var play = Activator.CreateInstance<CardPlay>();
+        foreach (var (name, value) in new (string, object?)[] {
+            ("Card", card), ("Player", owner), ("Target", null),
+            ("ResultPile", PileType.Discard), ("Resources", null),
+            ("IsAutoPlay", false), ("PlayIndex", 0), ("PlayCount", 1) })
+            typeof(CardPlay).GetProperty(name)?.SetValue(play, value);
+        return play;
     }
 
     internal static Player MakePlayer()
