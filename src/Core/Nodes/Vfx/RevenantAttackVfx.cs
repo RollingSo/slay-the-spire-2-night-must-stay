@@ -5,10 +5,12 @@ namespace NightMustStay.Core.Nodes.Vfx;
 public partial class RevenantAttackVfx : ParticleAttackVfx
 {
     public enum Kind { HaloOut, HaloReturn, LightningRed, LightningYellow, LightningBlue,
-        BeastRock, BeastClaw, Frenzy, CursedClaw, Helen, Frederick, Sebastian, Heal }
+        BeastRock, BeastClaw, Frenzy, CursedClaw, Helen, Frederick, Sebastian, Heal,
+        AncientDragonColumn, DeathColumn, AncientDragonSpear, FortissaxSpears,
+        GoldenLightningSpear, GoldenLightningStrike }
     public Kind AttackKind { get; set; }
     public Vector2 Source { get; set; } = new(-280,0);
-    protected override int EffectIndex => 9 + (int)AttackKind;
+    protected override int EffectIndex => (int)AttackKind >= 13 ? 23 + (int)AttackKind - 13 : 9 + (int)AttackKind;
     protected override Vector2 Origin => Source;
     protected override Vector2 Route(float t) => FlightPoint(t);
     public float VisualScale => AttackKind is Kind.HaloOut or Kind.HaloReturn ? AttackVfxSizing.HaloScale(VisualDamage)/1.6f : 1f;

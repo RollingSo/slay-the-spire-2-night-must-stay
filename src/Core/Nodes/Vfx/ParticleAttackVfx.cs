@@ -122,6 +122,23 @@ public abstract partial class ParticleAttackVfx : Node2D
         Layer(Slash,color,new(size,size*.85f),Vector2.Zero,angle,start,1,.012f,
             (s,u)=>s.Rotation=angle-.35f+.62f*Ease(0,.55f,u));
     }
+    private void DragonLightning(int tile, Color color, Vector2 size, bool death=false, bool spear=false)
+    {
+        // A single authored silhouette per actual hit. Anchor its tip at the hit
+        // position; reveal the shaft from top to bottom instead of growing upward.
+        Layer(tile,color,size,new(0,-size.Y*.44f),end:.72f,flow:0,motion:(s,u)=>{
+            s.Scale=size/s.Texture.GetSize();
+            float fall=Ease(0,.18f,u);
+            s.Position=new Vector2(0,-size.Y*.44f-(spear?100*(1-fall):0));
+            var material=(ShaderMaterial)s.Material;
+            material.SetShaderParameter("reveal",spear?1f:fall);
+            material.SetShaderParameter("dark_body",death?1f:0f);
+        });
+        Layer(Ring,death?new Color("#17121D"):color,new(240,80),new(0,32),start:.08f,end:.62f,flow:0);
+        Layer(Impact,color,new(170,135),Vector2.Zero,start:.08f,end:.4f,flow:0);
+        if(death)Burst(Smoke,new Color("#17121D"),12,95,90,new(0,28),.10f,spread:65);
+        else Burst(Impact,color,12,28,145,Vector2.Zero,.10f,spread:80);
+    }
     private void Build()
     {
         if(_built)return;_built=true;
@@ -205,6 +222,26 @@ public abstract partial class ParticleAttackVfx : Node2D
                     motion:(s,u)=>{s.Scale*=1-.6f*Ease(0,.6f,u);s.Rotation=u*.3f;});
                 Layer(Impact,Silver,new(170,170),Vector2.Zero,start:.1f,end:.55f,flow:0);
                 Burst(Impact,Violet,16,24,110,Vector2.Zero,.04f,spread:30,direction:new Vector3(0,-1,0));break;
+            case 23: DragonLightning(16,new Color("#F04454"),new(270,760));break;
+            case 24: DragonLightning(17,new Color("#E8BC3E"),new(290,760),death:true);break;
+            case 25: DragonLightning(18,new Color("#F04454"),new(330,600),spear:true);break;
+            case 26: DragonLightning(19,new Color("#F04454"),new(400,620),spear:true);break;
+            case 27: // Card portrait: one diagonal golden lance, tip meets the target.
+                Layer(20,new Color("#FFC352"),new(440,440),new(-207,-194),end:.72f,flow:0,motion:(s,u)=>{
+                    s.Scale=new Vector2(440,440)/s.Texture.GetSize();
+                    s.Position=new Vector2(-207,-194)-new Vector2(80,80)*(1-Ease(0,.18f,u));
+                });
+                Layer(Ring,Gold,new(210,70),new(0,30),start:.08f,end:.62f,flow:0);
+                Layer(Impact,Gold,new(160,130),Vector2.Zero,start:.08f,end:.4f,flow:0);
+                Burst(Impact,Gold,12,28,145,Vector2.Zero,.1f,spread:80);break;
+            case 28: // Card portrait: three staggered bolts connected by a ground arc.
+                Layer(21,new Color("#FFC352"),new(430,650),new(-99,-228),end:.72f,flow:0,motion:(s,u)=>{
+                    s.Scale=new Vector2(430,650)/s.Texture.GetSize();
+                    ((ShaderMaterial)s.Material).SetShaderParameter("reveal",Ease(0,.18f,u));
+                });
+                Layer(Ring,Gold,new(260,65),new(-65,30),start:.08f,end:.62f,flow:0);
+                Layer(Impact,Gold,new(160,130),Vector2.Zero,start:.08f,end:.4f,flow:0);
+                Burst(Impact,Gold,12,28,145,Vector2.Zero,.1f,spread:80);break;
             default: throw new InvalidOperationException("Unmapped VFX type " + EffectIndex);
         }
     }

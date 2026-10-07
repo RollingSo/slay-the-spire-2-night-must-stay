@@ -12,7 +12,7 @@ public static class ParticleVfxMaterials
     private static Shader? _shader;
     public static Texture2D Texture(int tile)
     {
-        string name = "refined.png";
+        string name = tile >= 20 ? "gold_lightning.png" : tile >= 16 ? "dragon_lightning.png" : "refined.png";
         string path = AssetRoot + name;
         if (!Textures.TryGetValue(path, out var texture))
         {
@@ -26,7 +26,11 @@ public static class ParticleVfxMaterials
     {
         _shader ??= new Shader { Code = ShaderCode };
         var material = new ShaderMaterial { Shader = _shader };
-        material.SetShaderParameter("tile_rect", new Vector4((tile % 4) * .25f, (tile / 4) * .25f, .25f, .25f));
+        material.SetShaderParameter("tile_rect", tile >= 20
+            ? new Vector4((tile-20)*.5f, 0, .5f, 1f)
+            : tile >= 16
+            ? new Vector4(((tile-16)%2)*.5f, ((tile-16)/2)*.5f, .5f, .5f)
+            : new Vector4((tile % 4) * .25f, (tile / 4) * .25f, .25f, .25f));
         material.SetShaderParameter("tint", tint);
         material.SetShaderParameter("flow", Math.Min(flow, .008f));
         return material;
@@ -41,6 +45,8 @@ uniform float phase = 0.0;
 uniform float dissolve = 0.0;
 uniform float flow = 0.01;
 uniform float gain = 1.0;
+uniform float reveal = 1.0;
+uniform float dark_body = 0.0;
 varying vec4 vertex_color;
 void vertex() { vertex_color = COLOR; }
 void fragment() {
@@ -53,9 +59,10 @@ void fragment() {
     // Preserve the authored broad shading and bright core, without filament noise.
     float coverage=smoothstep(.045,.3,value)*sqrt(max(value,0.0));
     vec3 body=mix(tint.rgb*.48,tint.rgb,smoothstep(.15,.72,value));
+    body=mix(body,mix(vec3(.018,.012,.022),tint.rgb,smoothstep(.55,.82,value)),dark_body);
     vec3 color=mix(body,mix(tint.rgb,vec3(1.0),.3),smoothstep(.76,1.0,value))*min(gain,1.15);
     float fade=1.0-smoothstep(.1,1.0,dissolve);
-    COLOR=vec4(color,coverage*.82*edge.x*edge.y*fade*tint.a)*vertex_color;
+    COLOR=vec4(color,coverage*.82*edge.x*edge.y*fade*tint.a*(1.0-smoothstep(reveal,reveal+.025,p.y)))*vertex_color;
 }
 """;
 }

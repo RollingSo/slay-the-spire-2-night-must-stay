@@ -35,6 +35,16 @@ public partial class Preview : Node2D
         }
         _output = ProjectSettings.GlobalizePath("res://../../design/特效预览/refined_remake_20260911");
         Directory.CreateDirectory(_output);
+        if(OS.GetCmdlineUserArgs().Contains("--gold-preview"))
+        {
+            _output=ProjectSettings.GlobalizePath("res://../../design/特效预览/gold_lightning_20261007");
+            Directory.CreateDirectory(_output);RunDragonPreview(true);return;
+        }
+        if(OS.GetCmdlineUserArgs().Contains("--dragon-preview"))
+        {
+            _output=ProjectSettings.GlobalizePath("res://../../design/特效预览/dragon_lightning_20261007");
+            Directory.CreateDirectory(_output);RunDragonPreview();return;
+        }
         if(OS.GetCmdlineUserArgs().Contains("--charge-preview"))
         {
             _output=ProjectSettings.GlobalizePath("res://../../design/特效预览/charge_complete_20261006");
@@ -43,7 +53,7 @@ public partial class Preview : Node2D
         }
         foreach (G k in Enum.GetValues<G>()) _cases.Add(("GUARDIAN / " + k, () => new GuardianSample { AttackKind = k }));
         foreach (I k in Enum.GetValues<I>()) _cases.Add(("IRONEYE / " + k, () => new IroneyeSample { AttackKind = k }));
-        foreach (R k in Enum.GetValues<R>()) _cases.Add(("REVENANT / " + k, () => new RevenantSample { AttackKind = k }));
+        foreach (R k in Enum.GetValues<R>().Where(k=>(int)k<13)) _cases.Add(("REVENANT / " + k, () => new RevenantSample { AttackKind = k }));
         foreach (decimal damage in new[] { 8m, 30m, 80m, 200m })
             _cases.Add(($"COUNTER / {damage} DAMAGE", () => new GuardianSample { AttackKind = G.Counter, VisualDamage = damage }));
         foreach (decimal damage in new[] { 8m, 30m, 80m, 200m })
@@ -116,6 +126,47 @@ public partial class Preview : Node2D
         for(int i=0;i<65;i++)await ToSignal(GetTree(),SceneTree.SignalName.ProcessFrame);
         if(GodotObject.IsInstanceValid(live))throw new Exception("Charge cue leaked after completion.");
         GD.Print($"PASS: charge completion {width}x{height}, {pixels} visible pixels; .65s lifetime and cleanup.");GetTree().Quit();
+    }
+
+    private async void RunDragonPreview(bool gold=false)
+    {
+        _running=true;
+        try
+        {
+            VerifyMath();
+            var kinds=gold?new[]{R.GoldenLightningSpear,R.GoldenLightningStrike}
+                :new[]{R.AncientDragonColumn,R.DeathColumn,R.AncientDragonSpear,R.FortissaxSpears};
+            foreach(var kind in kinds)
+            {
+                if(ParticleVfxMaterials.Texture(16+(int)kind-13).GetWidth()<512)throw new Exception("Missing prayer atlas.");
+                var view=new SubViewport{Size=new Vector2I(1200,950),TransparentBg=true,RenderTargetUpdateMode=SubViewport.UpdateMode.Always};
+                AddChild(view);var sample=new RevenantSample{AttackKind=kind,Position=new Vector2(700,800)};view.AddChild(sample);
+                if(sample.GetChildren().OfType<Sprite2D>().Count()!=3)throw new Exception("Expected one prayer silhouette and two impact accents.");
+                Image? best=null;int pixels=0,width=0,height=0;
+                string frames=ProjectSettings.GlobalizePath("res://../../.tmp/vfx-scale/dragon/"+kind);Directory.CreateDirectory(frames);
+                for(int frame=0;frame<=48;frame++)
+                {
+                    sample.Seek(Math.Min(1,frame/24f/sample.Duration));
+                    await ToSignal(RenderingServer.Singleton,RenderingServer.SignalName.FramePostDraw);
+                    var img=view.GetTexture().GetImage();var b=Bounds(img);
+                    img.SavePng(Path.Combine(frames,$"frame_{frame:D2}.png"));
+                    if(b.Pixels>pixels){best?.Dispose();best=img;(width,height,pixels)=b;}else img.Dispose();
+                }
+                if(best==null||pixels<6500||width>(gold?580:460)||height>(850)||height<(gold?250:400))throw new Exception("Invalid prayer footprint: "+kind+$" {width}x{height}/{pixels}");
+                _captures.Add((kind.ToString(),best,width,height,pixels));
+                best.SavePng(Path.Combine(_output,kind+".png"));
+                _audit.Add(new{Kind=kind.ToString(),Width=width,Height=height,Pixels=pixels,Silhouettes=1,Particles=sample.GetChildren().OfType<GpuParticles2D>().Sum(p=>p.Amount)});
+                GD.Print($"PASS: {kind} {width}x{height}, {pixels} pixels; one authored silhouette per hit.");
+                view.Free();
+            }
+            await SaveSheet(gold?"gold_lightning.png":"dragon_lightning.png",Enumerable.Range(0,kinds.Length).ToArray(),2,gold?1:2,650,500,new Vector2(700,800));
+            File.WriteAllText(Path.Combine(_output,"audit.json"),JsonSerializer.Serialize(_audit,new JsonSerializerOptions{WriteIndented=true}));
+            foreach(var kind in kinds){var live=new RevenantAttackVfx{AttackKind=kind};AddChild(live);_lifecycle.Add(live);}
+            for(int frame=0;frame<90;frame++)await ToSignal(GetTree(),SceneTree.SignalName.ProcessFrame);
+            if(_lifecycle.Any(GodotObject.IsInstanceValid))throw new Exception("Prayer node leaked.");
+            GD.Print($"PASS: {kinds.Length} prayer lifetimes and automatic cleanup.");GetTree().Quit();
+        }
+        catch(Exception e){GD.PushError(e.ToString());GetTree().Quit(1);}
     }
 
     private async void RunVerification()
@@ -249,12 +300,12 @@ public partial class Preview : Node2D
         return (maxX - minX + 1, maxY - minY + 1, count);
     }
 
-    private async System.Threading.Tasks.Task SaveSheet(string file, int[] indices, int columns, int rows, int cellHeight = 460, int cellWidth=640)
+    private async System.Threading.Tasks.Task SaveSheet(string file, int[] indices, int columns, int rows, int cellHeight = 460, int cellWidth=640, Vector2? hitPoint=null)
     {
         var view = new SubViewport { Size = new Vector2I(columns * cellWidth, rows * cellHeight + 65),
             RenderTargetUpdateMode = SubViewport.UpdateMode.Always };
         AddChild(view);
-        var sheet = new ContactSheet { Captures = indices.Select(i => _captures[i]).ToArray(), Columns = columns, CellHeight = cellHeight, CellWidth=cellWidth };
+        var sheet = new ContactSheet { Captures = indices.Select(i => _captures[i]).ToArray(), Columns = columns, CellHeight = cellHeight, CellWidth=cellWidth, HitPoint=hitPoint };
         view.AddChild(sheet);
         await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw);
         await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw);
@@ -341,6 +392,7 @@ public partial class Preview : Node2D
 
 public partial class ContactSheet : Node2D
 {
+    public Vector2? HitPoint;
     public (string Name, Image Image, int Width, int Height, int Pixels)[] Captures = Array.Empty<(string, Image, int, int, int)>();
     public int Columns;
     public int CellHeight = 460;
@@ -361,7 +413,7 @@ public partial class ContactSheet : Node2D
         {
             Vector2 p = new(i % Columns * CellWidth, i / Columns * CellHeight + 65);
             DrawRect(new Rect2(p + Vector2.One * 6, new Vector2(CellWidth-12, CellHeight-12)), new Color(i % 2 == 0 ? "#252A38" : "#292E3D"));
-            Vector2 target = Origin(i) + (Vector2)Captures[i].Image.GetSize() * .325f;
+            Vector2 target = Origin(i) + (HitPoint ?? (Vector2)Captures[i].Image.GetSize()*.5f) * .65f;
             DrawRect(new Rect2(target - new Vector2(48, 95), new Vector2(96, 150)), new Color("#414755"));
             DrawString(ThemeDB.FallbackFont, p + new Vector2(22, 33), Captures[i].Name, fontSize:23);
             DrawString(ThemeDB.FallbackFont, p + new Vector2(22, 61), $"{Captures[i].Width} x {Captures[i].Height} / alpha > 0.10", fontSize:18, modulate: new Color("#B0BBCD"));

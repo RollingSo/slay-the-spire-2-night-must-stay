@@ -30,14 +30,20 @@ public static class RevenantAttackEffects
 {
     private sealed record HaloRoute(object Combat, Vector2 End, decimal VisualDamage);
     private static readonly ConditionalWeakTable<CardModel, HaloRoute> HaloRoutes = new();
-    private static readonly ulong[] LastSound = new ulong[13];
-    private static readonly bool[] Played = new bool[13];
+    private static readonly ulong[] LastSound = new ulong[Enum.GetValues<K>().Length];
+    private static readonly bool[] Played = new bool[Enum.GetValues<K>().Length];
 
     public static K? KindFor(CardModel? card) => card switch
     {
         Halo or ThreefoldHalo or RadagonHalo => K.HaloOut,
-        AncientDragonLightning or LansseaxBlade or AncientDragonSpear or FlannSaxLightningSpear => K.LightningRed,
-        PreciseLightningStrike or LightningStrike or LightningSpear or DeathLightning => K.LightningYellow,
+        AncientDragonLightning => K.AncientDragonColumn,
+        DeathLightning => K.DeathColumn,
+        AncientDragonSpear => K.AncientDragonSpear,
+        FlannSaxLightningSpear => K.FortissaxSpears,
+        LansseaxBlade => K.LightningRed,
+        LightningSpear => K.GoldenLightningSpear,
+        LightningStrike => K.GoldenLightningStrike,
+        PreciseLightningStrike => K.LightningYellow,
         IceLightningSpear => K.LightningBlue,
         Beaststone or GurranqsRock => K.BeastRock,
         BeastClaw or GurranqBeastClaw => K.BeastClaw,
@@ -202,6 +208,10 @@ public static class RevenantAttackEffects
     {
         K.HaloOut => "glass_orb_passive.mp3", K.HaloReturn => "glass_orb_evoke.mp3",
         K.LightningRed => "lightning_orb_evoke.mp3", K.LightningYellow => "lightning_orb_passive.mp3",
+        K.AncientDragonColumn or K.AncientDragonSpear or K.FortissaxSpears => "lightning_orb_evoke.mp3",
+        K.DeathColumn => "lightning_orb_passive.mp3",
+        K.GoldenLightningSpear => "lightning_orb_evoke.mp3",
+        K.GoldenLightningStrike => "lightning_orb_passive.mp3",
         K.LightningBlue => "lightning_orb_channel.mp3", K.BeastRock => "blunt_attack.mp3",
         K.BeastClaw => "heavy_attack.mp3", K.Frenzy => "STS_SFX_BurnCard_v1.mp3",
         K.CursedClaw => "slash_attack.mp3", K.Helen => "dagger_throw.mp3",
@@ -214,10 +224,13 @@ public static class RevenantAttackEffects
         var audio = NDebugAudioManager.Instance;
         string? name = SoundFor(kind);
         if (audio == null || name == null) return;
-        ulong now = Time.GetTicksMsec(), interval = kind is K.LightningRed or K.LightningYellow or K.LightningBlue or K.Frenzy ? 240UL : 85UL;
+        bool lightning = kind is K.LightningRed or K.LightningYellow or K.LightningBlue
+            or K.AncientDragonColumn or K.DeathColumn or K.AncientDragonSpear or K.FortissaxSpears
+            or K.GoldenLightningSpear or K.GoldenLightningStrike;
+        ulong now = Time.GetTicksMsec(), interval = lightning || kind == K.Frenzy ? 240UL : 85UL;
         int i = (int)kind;
         if (Played[i] && now - LastSound[i] < interval) return;
         Played[i] = true; LastSound[i] = now;
-        audio.Play(name, kind is K.LightningRed or K.LightningYellow or K.LightningBlue ? .5f : .65f);
+        audio.Play(name, lightning ? .5f : .65f);
     }
 }

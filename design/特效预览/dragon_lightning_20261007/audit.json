@@ -1,0 +1,34 @@
+[
+  {
+    "Kind": "AncientDragonColumn",
+    "Width": 182,
+    "Height": 771,
+    "Pixels": 41226,
+    "Silhouettes": 1,
+    "Particles": 3
+  },
+  {
+    "Kind": "DeathColumn",
+    "Width": 188,
+    "Height": 772,
+    "Pixels": 75627,
+    "Silhouettes": 1,
+    "Particles": 3
+  },
+  {
+    "Kind": "AncientDragonSpear",
+    "Width": 227,
+    "Height": 622,
+    "Pixels": 49640,
+    "Silhouettes": 1,
+    "Particles": 3
+  },
+  {
+    "Kind": "FortissaxSpears",
+    "Width": 311,
+    "Height": 640,
+    "Pixels": 80251,
+    "Silhouettes": 1,
+    "Particles": 3
+  }
+]

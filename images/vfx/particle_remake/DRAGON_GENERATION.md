@@ -1,0 +1,9 @@
+# 古龙雷击与雷枪专用贴图
+
+使用内置 image_gen，参考现有 ancient_dragon_spear.png 与 flannsax_lightning_spear.png；没有修改卡图。
+输出 dragon_lightning.png：2×2 灰度亮度遮罩，黑色由生产 shader 转为零覆盖率，不是 alpha 贴图。
+左上单雷柱，右上死亡雷柱，左下分叉汇成单尖端雷枪，右下双独立雷枪。
+
+## 完整提示词
+
+Use case: stylized-concept. Asset type: one grayscale luminosity-mask VFX atlas for a 2D card battle game. Reference image 1 provides the single forked converging lightning spear silhouette; reference image 2 provides TWO parallel independent lightning spear silhouettes. Generate one square image, exact equal 2 by 2 grid, no borders, no text. Each quadrant has fully black empty background and generous black gutter at quadrant edges. Top left: ONE tall narrow vertical lightning column descending from sky, thick angular main shaft with only 3 short broad branches, bright white core and mid-gray surrounding energy, ends at pointed base. Top right: similar ONE vertical lightning column with thicker broad smoky gray sheath and strong white core, sparse angular branches, for death lightning. Bottom left: single tall long lightning spear, its two upper forks converge into ONE lower long tapering spearhead, matching reference1; no object, no card border. Bottom right: TWO separate parallel long downward lightning spears with independent sharp tips, matching reference2, angular sparse outward forks. Keep all silhouettes centered in their own quadrants, tips near bottom margin, tops near upper margin. Hand drawn graphic game VFX, medium detail, bold readable shapes, controlled cel-shaded gray energy body and bright white cores, limited soft edge glow, no hairline webs or dense sparks, no ground or circles, no photographic lightning. Pure grayscale only. Background must be pure black as zero luminosity, not transparency. This is a new runtime atlas, not revised card artwork.
