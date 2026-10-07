@@ -65,7 +65,7 @@ public sealed class ThroatSeal : CardModel
 }
 
 // Card-table ID 59: 天眼形态 (legacy model ID: NOWHERE_TO_HIDE).
-// Portrait: nowhere_to_hide.png. Do not confuse with HeavenlyEyeForm / 鬼步.
+// Portrait: heavenly_eye_form.png. Do not confuse with HeavenlyEyeForm / 鬼步.
 public sealed class NowhereToHide : CardModel
 {
     private const string MarkKey = "Mark";
@@ -80,7 +80,7 @@ public sealed class NowhereToHide : CardModel
         new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
 
     public override string PortraitPath =>
-        ImageHelper.GetImagePath("packed/card_portraits/ironeye/nowhere_to_hide.png");
+        ImageHelper.GetImagePath("packed/card_portraits/ironeye/heavenly_eye_form.png");
 
     public NowhereToHide()
         : base(3, CardType.Power, CardRarity.Rare, TargetType.Self)

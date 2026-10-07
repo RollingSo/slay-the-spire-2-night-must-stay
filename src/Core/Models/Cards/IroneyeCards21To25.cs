@@ -156,7 +156,7 @@ namespace NightMustStay.Core.Models.Cards
             new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
 
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/ironeye/startled_bird.png");
+            ImageHelper.GetImagePath("packed/card_portraits/ironeye/scatter.png");
 
         public Scatter() : base(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies) { }
 
@@ -197,7 +197,7 @@ namespace NightMustStay.Core.Models.Cards
             };
 
         public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/ironeye/piercing_shot.png");
+            ImageHelper.GetImagePath("packed/card_portraits/ironeye/frightened_bird.png");
 
         public FrightenedBird()
             : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)

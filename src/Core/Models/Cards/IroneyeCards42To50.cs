@@ -249,7 +249,7 @@ public sealed class RoadAlreadyTraveled : CardModel
 
 // Card-table ID 47: 鬼步
 // Legacy model/asset names are retained for save compatibility. This is NOT 天眼形态;
-// the current 天眼形态 is NowhereToHide (NOWHERE_TO_HIDE), with nowhere_to_hide.png.
+// the current 天眼形态 is NowhereToHide (NOWHERE_TO_HIDE), with heavenly_eye_form.png.
 public sealed class HeavenlyEyeForm : CardModel
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
@@ -261,7 +261,7 @@ public sealed class HeavenlyEyeForm : CardModel
             .Concat(IsUpgraded ? new[] { HoverTipFactory.FromKeyword(CardKeyword.Retain) } : Array.Empty<IHoverTip>());
 
     public override string PortraitPath =>
-        ImageHelper.GetImagePath("packed/card_portraits/ironeye/heavenly_eye_form.png");
+        ImageHelper.GetImagePath("packed/card_portraits/ironeye/ghost_step.png");
 
     public HeavenlyEyeForm()
         : base(2, CardType.Power, CardRarity.Rare, TargetType.Self)

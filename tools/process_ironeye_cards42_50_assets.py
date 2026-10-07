@@ -15,7 +15,7 @@ ART = {
     "advance_and_retreat.png": "exec-d73832c9-11d0-43f8-abe3-ed511423facd.png",
     "vigilance.png": "exec-92add4db-0660-45c4-9034-5ce2d8a2010b.png",
     "road_already_traveled.png": "exec-0e3a8f7a-6ffb-46c5-be5d-bc70c028c9a9.png",
-    "heavenly_eye_form.png": "exec-6938438b-92be-4978-ab62-1c486feb7489.png",
+    "ghost_step.png": "exec-6938438b-92be-4978-ab62-1c486feb7489.png",
     "shared_intelligence.png": "exec-d7b29979-48d1-4324-a7b0-6ae96a791a19.png",
     "iron_eye.png": "exec-f292724e-7ae0-4862-8ca3-caf056c986c6.png",
     "observation.png": "exec-5fddfcaa-d733-4831-a3bc-9d4b361cf7d1.png",
