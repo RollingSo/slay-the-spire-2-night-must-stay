@@ -262,12 +262,22 @@ namespace NightMustStay.Core.Models.Cards
     // Card-table ID 40: 大龙卷
     public sealed class GreatTornado : CardModel
     {
-        protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(13m, ValueProp.Move), new PowerVar<WeakPower>("Weak", 3m) };
+        public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
+        protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(13m, ValueProp.Move), new PowerVar<WeakPower>("Weak", 2m) };
         protected override IEnumerable<IHoverTip> ExtraHoverTips => new[] { HoverTipFactory.FromPower<WeakPower>() };
         public GreatTornado() : base(1, CardType.Attack, CardRarity.Rare, TargetType.Self) { }
-        protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
-            await PowerCmd.Apply<GreatTornadoPower>(context, Owner.Creature, DynamicVars.Damage.BaseValue, Owner.Creature, this);
-        protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);
+        protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
+        {
+            await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this)
+                .TargetingAllOpponents(CombatState).WithGuardianWeaponFx().Execute(context);
+            foreach (var enemy in CombatState.GetOpponentsOf(Owner.Creature).Where(enemy => enemy.IsAlive).ToArray())
+                await PowerCmd.Apply<WeakPower>(context, enemy, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
+        }
+        protected override void OnUpgrade()
+        {
+            DynamicVars.Damage.UpgradeValueBy(4m);
+            DynamicVars["Weak"].UpgradeValueBy(1m);
+        }
     }
 
     // Card-table ID 48: 圣域

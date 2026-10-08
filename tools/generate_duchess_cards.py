@@ -114,6 +114,8 @@ def effects_text(row, language, upgraded=False):
                 text = f'{target}造成{damage_var}点伤害' + (f'，共{hits}次' if hits > 1 else '') + '。'
         else:
             templates = {
+                'OtherPlayersEnergy': ['其他玩家获得{OtherPlayersEnergy:energyIcons()}。', 'Other players gain {OtherPlayersEnergy:energyIcons()}.', 'ほかのプレイヤーが{OtherPlayersEnergy:energyIcons()}を得る。'],
+                'AllyConcealmentPass': [f'给予另一名玩家{var}层[gold]隐匿[/gold]。将这张牌加入其[gold]抽牌堆[/gold]。', f'Give another player {var} [gold]Concealment[/gold]. Add this card to their [gold]draw pile[/gold].', f'ほかのプレイヤー1人に[gold]隠密[/gold]{var}を与える。このカードをそのプレイヤーの[gold]山札[/gold]に加える。'],
                 'RewindDamage': ['造成{CalculationBase:diff()}点伤害。\n使[gold]时刻[/gold]逆时针变化为0。\n每变化1点[gold]时刻[/gold]，伤害增加{ExtraDamage:diff()}。', 'Deal {CalculationBase:diff()} damage.\nRewind [gold]Moment[/gold] counterclockwise to 0.\nIncrease damage by {ExtraDamage:diff()} per step.', '{CalculationBase:diff()}ダメージを与える。\n[gold]時刻[/gold]を反時計回りに0まで戻す。\n1変化するたびにダメージが{ExtraDamage:diff()}増加する。'],
                 'RememberMoment': ['下个回合开始时，[gold]时刻[/gold]不会重置为0。', 'At the start of your next turn, [gold]Moment[/gold] will not reset to 0.', '次のターン開始時、[gold]時刻[/gold]は0にリセットされない。'],
                 'MomentEffectEnergy': ['触发[gold]时刻[/gold]效果时，获得{MomentEffectEnergy:energyIcons()}。', 'Whenever you trigger a [gold]Moment[/gold] effect, gain {MomentEffectEnergy:energyIcons()}.', '[gold]時刻[/gold]効果を発動するたび、{MomentEffectEnergy:energyIcons()}を得る。'],

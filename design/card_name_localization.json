@@ -2,6 +2,64 @@
   "schemaVersion": 1,
   "notes": "Confirmed card-name audit, 2026-10-02. Composite names retain mod wording with official terminology; IDs and mechanics are unchanged.",
   "cards": {
+    "DUCHESS_CARNIVAL_NIGHT": {"zhs": "狂欢夜", "eng": "Carnival Night", "jpn": "狂歓の夜", "kor": "축제의 밤", "reference": "User-provided multiplayer card table screenshot"},
+    "DUCHESS_MASQUERADE": {"zhs": "面具舞会", "eng": "Masquerade", "jpn": "仮面舞踏会", "kor": "가면무도회", "reference": "User-provided multiplayer card table screenshot"},
+    "SOUL_DEPARTURE": {
+      "zhs": "灵魂出窍",
+      "eng": "Soul Departure",
+      "jpn": "魂の離脱",
+      "kor": "영혼 이탈",
+      "reference": "User-provided multiplayer card table screenshot"
+    },
+    "WEEPING_STRINGS": {
+      "zhs": "泣弦",
+      "eng": "Weeping Strings",
+      "jpn": "泣きの弦",
+      "kor": "우는 현",
+      "reference": "User-requested replacement for Contract Lending"
+    },
+    "NIGHT_MUST_STAY_LONGING": {
+      "zhs": "思念",
+      "eng": "Longing",
+      "jpn": "思慕",
+      "kor": "그리움",
+      "reference": "User-requested generated colorless card"
+    },
+    "IRONEYE_READINESS": {
+      "zhs": "戒备",
+      "eng": "Readiness",
+      "jpn": "備え",
+      "kor": "대비",
+      "reference": "User-provided card table screenshot"
+    },
+    "STRANGLE_COMMAND": {
+      "zhs": "绞杀指令",
+      "eng": "Strangle Command",
+      "jpn": "絞殺指令",
+      "kor": "교살 명령",
+      "reference": "User-provided card table screenshot"
+    },
+    "TURN_THE_OFFENSIVE": {
+      "zhs": "一转攻势",
+      "eng": "Turn the Offensive",
+      "jpn": "攻勢一転",
+      "kor": "공세 전환",
+      "reference": "User-provided card table screenshot, 2026-10-08"
+    },
+    "SACRED_FEATHER_FORMATION": {
+      "zhs": "圣光羽阵",
+      "eng": "Sacred Feather Formation",
+      "jpn": "聖光の羽陣",
+      "kor": "성광의 깃털 진형",
+      "reference": "User-provided card table screenshot, 2026-10-08"
+    },
+    "GUARDIAN_MAJESTY": {
+      "zhs": "威严",
+      "eng": "Majesty",
+      "jpn": "威厳",
+      "kor": "위엄",
+      "reference": "User-requested new Guardian card, 2026-10-08"
+    },
     "WHIRLING_STRIKE": {
       "zhs": "回旋击",
       "eng": "Spinning Strikes",

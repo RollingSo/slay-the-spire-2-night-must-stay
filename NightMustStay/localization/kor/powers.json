@@ -77,8 +77,6 @@
   "INVOKE_STORM_STRENGTH_DOWN_POWER.description": "이번 턴에 힘을 {Amount} 잃습니다.",
   "IRON_WALL_DEFEND_POWER.title": "철벽 방패",
   "IRON_WALL_DEFEND_POWER.description": "내 턴 시작 시 [gold]철벽[/gold]을 {Amount} 얻습니다.",
-  "STORM_AVATAR_POWER.title": "폭풍의 화신",
-  "STORM_AVATAR_POWER.description": "[gold]가드 카운터[/gold]에 성공할 때마다 반격한 적에게 [gold]약화[/gold]를 {Amount} 부여합니다.",
   "GREAT_TORNADO_POWER.title": "거대한 회오리",
   "GREAT_TORNADO_POWER.description": "내 다음 턴 시작 시 모든 적에게 피해를 {Amount} 주고 [gold]약화[/gold]를 3 부여합니다.",
   "SANCTUARY_WATCH_POWER.title": "성역",

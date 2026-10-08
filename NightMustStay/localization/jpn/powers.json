@@ -79,8 +79,6 @@
   "INVOKE_STORM_STRENGTH_DOWN_POWER.description": "このターン、[gold]筋力[/gold]{Amount}を失う。",
   "IRON_WALL_DEFEND_POWER.title": "鉄壁の防御",
   "IRON_WALL_DEFEND_POWER.description": "ターン開始時、[gold]堅守[/gold]{Amount}を得る。",
-  "STORM_AVATAR_POWER.title": "嵐の化身",
-  "STORM_AVATAR_POWER.description": "[gold]ガードカウンター[/gold]が成功するたび、反撃対象に[gold]脱力[/gold]{Amount}を付与する。",
   "GREAT_TORNADO_POWER.title": "大竜巻",
   "GREAT_TORNADO_POWER.description": "次のターン開始時、敵全体に{Amount}ダメージを与え、[gold]脱力[/gold]3を付与する。",
   "SANCTUARY_WATCH_POWER.title": "聖域",

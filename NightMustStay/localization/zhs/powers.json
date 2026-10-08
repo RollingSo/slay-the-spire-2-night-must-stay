@@ -79,8 +79,6 @@
   "INVOKE_STORM_STRENGTH_DOWN_POWER.description": "本回合失去{Amount}点力量。",
   "IRON_WALL_DEFEND_POWER.title": "铁壁盾防",
   "IRON_WALL_DEFEND_POWER.description": "回合开始时，获得{Amount}层[gold]固守[/gold]。",
-  "STORM_AVATAR_POWER.title": "风暴化身",
-  "STORM_AVATAR_POWER.description": "每当[gold]防御反击[/gold]成功时，对被反击的敌人施加{Amount}层[gold]虚弱[/gold]。",
   "GREAT_TORNADO_POWER.title": "大龙卷",
   "GREAT_TORNADO_POWER.description": "下个回合开始时，对所有敌人造成{Amount}点伤害并给予3层[gold]虚弱[/gold]。",
   "SANCTUARY_WATCH_POWER.title": "圣域",

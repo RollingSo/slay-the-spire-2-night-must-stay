@@ -79,8 +79,6 @@
   "INVOKE_STORM_STRENGTH_DOWN_POWER.description": "Lose {Amount} [gold]Strength[/gold] this turn.",
   "IRON_WALL_DEFEND_POWER.title": "Iron Wall Defend",
   "IRON_WALL_DEFEND_POWER.description": "At the start of your turn, gain {Amount} [gold]Fortify[/gold].",
-  "STORM_AVATAR_POWER.title": "Storm Avatar",
-  "STORM_AVATAR_POWER.description": "Whenever [gold]Guard Counter[/gold] succeeds, apply {Amount} [gold]Weak[/gold] to the enemies it countered.",
   "GREAT_TORNADO_POWER.title": "Great Tornado",
   "GREAT_TORNADO_POWER.description": "At the start of your next turn, deal {Amount} damage and apply 3 [gold]Weak[/gold] to ALL enemies.",
   "SANCTUARY_WATCH_POWER.title": "Sanctuary",

@@ -33,7 +33,7 @@ public sealed class GurranqsRock : CardModel
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        int xValue = ResolveEnergyXValue();
+        int xValue = ResolveEnergyXValue() + (IsUpgraded ? 1 : 0);
         await RevenantCardHelpers.DamageRandomEachHit(
             this,
             context,
@@ -45,7 +45,7 @@ public sealed class GurranqsRock : CardModel
             await RevenantCall.ChooseFamilyAndCall(context, Owner);
     }
 
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
+    protected override void OnUpgrade() { }
 }
 
 public sealed class FrenziedFlame : CardModel
@@ -200,7 +200,7 @@ public sealed class Resurgence : CardModel
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new EnergyVar(2) };
     public override string PortraitPath => "res://revenant_assets/cards/resurgence.png";
 
-    public Resurgence() : base(4, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
+    public Resurgence() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
 
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
         PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);

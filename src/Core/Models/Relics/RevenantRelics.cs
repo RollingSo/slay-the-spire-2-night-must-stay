@@ -63,7 +63,7 @@ public sealed class MiniatureMakeupTools : RevenantRelicModel
     protected override string RevenantIconName => "miniature_makeup_tools";
     public override RelicRarity Rarity => RelicRarity.Uncommon;
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new[] { new PowerVar<StrengthPower>(2m) };
+        new[] { new PowerVar<StrengthPower>(1m) };
 
     public async Task AfterFamilyCalled(PlayerChoiceContext context)
     {

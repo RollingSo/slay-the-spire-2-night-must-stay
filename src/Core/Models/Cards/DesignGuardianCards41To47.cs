@@ -295,42 +295,6 @@ namespace NightMustStay.Core.Models.Cards
         }
     }
 
-    // Card-table ID 47: 风暴化身
-    public sealed class StormAvatar : CardModel
-    {
-        private const string WeakKey = "Weak";
-
-        protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        {
-            new PowerVar<WeakPower>(WeakKey, 2m)
-        };
-
-        protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
-        {
-            HoverTipFactory.FromPower<WeakPower>(),
-            HoverTipFactory.FromPower<GuardCounterPower>()
-        };
-
-        public StormAvatar()
-            : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
-        {
-        }
-
-        protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
-        {
-            await PowerCmd.Apply<StormAvatarPower>(
-                choiceContext,
-                base.Owner.Creature,
-                base.DynamicVars[WeakKey].BaseValue,
-                base.Owner.Creature,
-                this);
-        }
-
-        protected override void OnUpgrade()
-        {
-            base.DynamicVars[WeakKey].UpgradeValueBy(1m);
-        }
-    }
 }
 
 namespace NightMustStay.Core.Models.Power
@@ -463,23 +427,4 @@ namespace NightMustStay.Core.Models.Power
         }
     }
 
-    public sealed class StormAvatarPower : PowerModel
-    {
-        public override PowerType Type => PowerType.Buff;
-
-        public override PowerStackType StackType => PowerStackType.Counter;
-
-        public async Task AfterGuardCounterSucceeded(
-            PlayerChoiceContext choiceContext,
-            Creature counterTarget)
-        {
-            Flash();
-            await PowerCmd.Apply<WeakPower>(
-                choiceContext,
-                counterTarget,
-                base.Amount,
-                base.Owner,
-                null);
-        }
-    }
 }

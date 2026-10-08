@@ -23,7 +23,7 @@ namespace NightMustStay.Core.Models.Cards
         private const string DamageKey = "Damage";
 
         protected override IEnumerable<DynamicVar> CanonicalVars =>
-            new[] { new PowerVar<LightningArrowheadPower>(DamageKey, 6m) };
+            new[] { new PowerVar<LightningArrowheadPower>(DamageKey, 8m) };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
             new IHoverTip[]

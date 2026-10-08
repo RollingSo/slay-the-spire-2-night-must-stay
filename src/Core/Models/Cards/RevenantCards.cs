@@ -22,6 +22,7 @@ namespace NightMustStay.Core.Models.Cards;
 
 public sealed class CursedClawCombo : CardModel
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Ethereal };
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
         new DamageVar(5m, ValueProp.Move),
