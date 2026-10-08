@@ -6,8 +6,8 @@
 
 [node name="Visuals" type="Node2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -7.8510213)
-scale = Vector2(0.713729167, 0.713729167)
+position = Vector2(0, -7.831054963)
+scale = Vector2(0.711914088, 0.711914088)
 
 [node name="Prototype" parent="Visuals" instance=ExtResource("1_rig")]
 
@@ -23,16 +23,16 @@ mouse_filter = 2
 
 [node name="CenterPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -154.1655)
+position = Vector2(0.000000000, -153.773442366)
 
 [node name="IntentPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(7, -323)
+position = Vector2(6.982198350, -322.178580566)
 
 [node name="OrbPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -335)
+position = Vector2(0.000000000, -334.148063453)
 
 [node name="TalkPos" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(99, -315)
+position = Vector2(98.748233814, -314.198925309)

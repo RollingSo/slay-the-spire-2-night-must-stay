@@ -39,8 +39,7 @@ internal static class SixCardBalanceRegression
                 if (upgraded) card.UpgradeInternal();
                 ((List<CardModel>)AccessTools.Field(typeof(CardPile), "_cards")
                     .GetValue(player.PlayerCombatState!.DiscardPile)!).Add(card);
-                var play = new CardPlay { Card = card, Player = player, Target = null,
-                    ResultPile = PileType.Discard, Resources = default!, IsAutoPlay = false, PlayIndex = 0, PlayCount = 1 };
+                var play = TrackingArrowRegression.MakePlay(card, player);
                 card.AfterCardPlayedLate(null!, play).GetAwaiter().GetResult();
                 Assert(card.Pile!.Type == PileType.Discard, "No Mark: no return.");
                 card.OnMarkTriggered(4);

@@ -22,7 +22,7 @@ ART_51_57 = (
 
 ART_58_62 = {
     "throat_seal.png": "exec-2297f216-ef56-407b-886e-6174e8978ff4.png",
-    "nowhere_to_hide.png": "exec-25197643-a4ad-422d-b321-448135ca50e8.png",
+    "heavenly_eye_form.png": "exec-25197643-a4ad-422d-b321-448135ca50e8.png",
     "willow_piercing_arrow.png": "exec-ec948269-48e7-496e-9162-788424a4d57b.png",
     "volatile_poison.png": "exec-55e3a94e-fa9c-4e4b-8b56-d49be3b77177.png",
     "tracking_arrow.png": "exec-061eb77d-4f53-4545-8abd-ab709b05df47.png",

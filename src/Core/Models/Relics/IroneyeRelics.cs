@@ -192,8 +192,6 @@ public sealed class FarArrowTalisman : IroneyeRelicModel
 
 public sealed class HardArrowTalisman : IroneyeRelicModel
 {
-    private bool _triggeredThisTurn;
-
     protected override string IroneyeIconName => "hard_arrow_talisman";
 
     public override RelicRarity Rarity => RelicRarity.Rare;
@@ -208,31 +206,17 @@ public sealed class HardArrowTalisman : IroneyeRelicModel
             HoverTipFactory.ForEnergy(this),
         };
 
-    public override Task BeforeSideTurnStart(
-        PlayerChoiceContext choiceContext,
-        CombatSide side,
-        IReadOnlyList<Creature> participants,
-        ICombatState combatState)
-    {
-        if (participants.Contains(Owner.Creature))
-            _triggeredThisTurn = false;
-
-        return Task.CompletedTask;
-    }
-
     public override async Task AfterCardPlayed(
         PlayerChoiceContext choiceContext,
         CardPlay cardPlay)
     {
-        if (_triggeredThisTurn
-            || cardPlay.Card.Owner != Owner
+        if (cardPlay.Card.Owner != Owner
             || cardPlay.Card is not ILongShotCard
             || (Owner.Creature.GetPower<DistancePower>()?.Amount ?? 0m) < 2m)
         {
             return;
         }
 
-        _triggeredThisTurn = true;
         Flash();
         await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
     }

@@ -1,0 +1,18 @@
+[
+  {
+    "Kind": "GoldenLightningSpear",
+    "Width": 492,
+    "Height": 445,
+    "Pixels": 34600,
+    "Silhouettes": 1,
+    "Particles": 3
+  },
+  {
+    "Kind": "GoldenLightningStrike",
+    "Width": 397,
+    "Height": 604,
+    "Pixels": 58771,
+    "Silhouettes": 1,
+    "Particles": 3
+  }
+]

@@ -26,8 +26,14 @@ CardModel Card(Type type)=>(CardModel)RuntimeHelpers.GetUninitializedObject(type
 var groups=new Dictionary<K,Type[]>
 {
     [K.HaloOut]=[typeof(Halo),typeof(ThreefoldHalo),typeof(RadagonHalo)],
-    [K.LightningRed]=[typeof(AncientDragonLightning),typeof(LansseaxBlade),typeof(AncientDragonSpear),typeof(FlannSaxLightningSpear)],
-    [K.LightningYellow]=[typeof(PreciseLightningStrike),typeof(LightningStrike),typeof(LightningSpear),typeof(DeathLightning)],
+    [K.LightningRed]=[typeof(LansseaxBlade)],
+    [K.AncientDragonColumn]=[typeof(AncientDragonLightning)],
+    [K.AncientDragonSpear]=[typeof(AncientDragonSpear)],
+    [K.FortissaxSpears]=[typeof(FlannSaxLightningSpear)],
+    [K.DeathColumn]=[typeof(DeathLightning)],
+    [K.LightningYellow]=[typeof(PreciseLightningStrike)],
+    [K.GoldenLightningSpear]=[typeof(LightningSpear)],
+    [K.GoldenLightningStrike]=[typeof(LightningStrike)],
     [K.LightningBlue]=[typeof(IceLightningSpear)],
     [K.BeastRock]=[typeof(Beaststone),typeof(GurranqsRock)],
     [K.BeastClaw]=[typeof(BeastClaw),typeof(GurranqBeastClaw)],

@@ -1,5 +1,10 @@
 # 全量粒子特效渲染与审查
 
+
+雷电枪与雷击使用 `--gold-preview`，可追加 `--pack=绝对路径`；输出 `design/特效预览/gold_lightning_20261007`。运行 `assemble_dragon_gifs.py --gold` 组装这两种实际渲染的 GIF。
+
+古龙雷击、死亡雷击、古龙雷枪和弗尔桑克斯的雷枪单独使用 `--dragon-preview`，可追加 `--pack=绝对路径` 检查导出包。输出 `design/特效预览/dragon_lightning_20261007`，运行 `assemble_dragon_gifs.py` 将原生渲染帧组装为 GIF。该模式检查四种独立形态、纵向尺寸、每击一个主体和节点释放；旧全量模式保留前 13 个复仇者枚举的固定排列。
+
 该隔离 Godot 项目直接编译生产环境的绘图类，覆盖全部 22 类战斗特效、防御反击和光环的四档伤害，以及标记出现/常驻两种状态。不会启动游戏或改写安装目录。
 
 先设置 `NUGET_PACKAGES` 为本机已有的 NuGet 缓存，再执行：
