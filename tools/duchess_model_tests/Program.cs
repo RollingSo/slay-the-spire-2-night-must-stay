@@ -169,7 +169,38 @@ if (args.Contains("--five-card-balance-only"))
         || !tornado.Keywords.Contains(CardKeyword.Exhaust) || observation.EnergyCost.GetResolved() != 0)
         throw new Exception("Five-card balance upgraded values mismatch.");
     observation.PendingRewardPlayers = "1|2|";
-    var saved = SavedProperties.From(observation)!;
+    Type? observationAssemblyInfo = typeof(ModManager).Assembly.GetType("MegaCrit.Sts2.Core.Modding.AssemblyInfo");
+    observationAssemblyInfo?.GetMethod("Init", flags)!.Invoke(null, null);
+    var observationSerializationHarmony = new HarmonyLib.Harmony("night-must-stay.tests.serialization-init");
+    observationSerializationHarmony.Patch(HarmonyLib.AccessTools.Method(typeof(MegaCrit.Sts2.Core.Logging.Log), "Error"),
+        prefix: new HarmonyLib.HarmonyMethod(typeof(SerializationFixture), nameof(SerializationFixture.Prefix)));
+    observationSerializationHarmony.Patch(HarmonyLib.AccessTools.Method(typeof(MegaCrit.Sts2.Core.Logging.Log), "Info"),
+        prefix: new HarmonyLib.HarmonyMethod(typeof(SerializationFixture), nameof(SerializationFixture.Info)));
+    observationSerializationHarmony.Patch(HarmonyLib.AccessTools.Method(typeof(MegaCrit.Sts2.Core.Logging.Log), "Warn"),
+        prefix: new HarmonyLib.HarmonyMethod(typeof(SerializationFixture), nameof(SerializationFixture.Info)));
+    var observationFixtureMod = new Mod { path = typeof(DuchessStrike).Assembly.Location, manifest = new ModManifest { id = "NightMustStay", affectsGameplay = true } };
+    if (observationAssemblyInfo != null)
+    {
+        var observationMockTypes = new Dictionary<Type, (Mod, bool)>();
+        foreach (Type observationModelType in typeof(DuchessStrike).Assembly.GetTypes()) observationMockTypes[observationModelType] = (observationFixtureMod, true);
+        observationAssemblyInfo.GetProperty("MockTypes", flags)!.SetValue(null, observationMockTypes);
+    }
+    else
+    {
+        // Older runtimes discover network IDs through loaded ModManager entries.
+        typeof(Mod).GetField("assembly")!.SetValue(observationFixtureMod, typeof(DuchessStrike).Assembly);
+        typeof(Mod).GetField("state")!.SetValue(observationFixtureMod, ModLoadState.Loaded);
+        var observationLoadedMods = (IList<Mod>)typeof(ModManager).GetProperty("Mods", flags)!.GetValue(null)!;
+        observationLoadedMods.Clear();
+        observationLoadedMods.Add(observationFixtureMod);
+    }
+    typeof(ModelIdSerializationCache).GetMethod("Init", flags)!.Invoke(null, null);
+    observationSerializationHarmony.UnpatchAll(observationSerializationHarmony.Id);
+    // Older runtimes keep saved-property registration in a separate cache.
+    typeof(SavedProperties).Assembly.GetType("MegaCrit.Sts2.Core.Saves.Runs.SavedPropertiesTypeCache")
+        ?.GetMethod("InjectTypeIntoCache", flags)?.Invoke(null, new object[] { typeof(Observation) });
+    var saved = SavedProperties.From(observation)
+        ?? throw new Exception("Observation saved state was not serialized.");
     var restored = (Observation)ModelDb.Card<Observation>().ToMutable();
     saved.Fill(restored);
     if (restored.PendingRewardPlayers != "1|2|") throw new Exception("Observation player-specific reward state did not round-trip.");
@@ -233,49 +264,12 @@ if (wingsBalance.DynamicVars.Damage.BaseValue != 9) throw new Exception("World E
 var retreatBalance = (RetreatingDefense)ModelDb.Card<RetreatingDefense>().ToMutable();
 if (retreatBalance.DynamicVars.Block.BaseValue != 4 || !retreatBalance.Keywords.Contains(CardKeyword.Exhaust))
     throw new Exception("Retreating Defense must give 4 Block and exhaust before upgrade.");
-retreatBalance.DynamicVars["BlockedAttackDamage"].UpdateCardPreview(retreatBalance, CardPreviewMode.Normal, null!, false);
-if (retreatBalance.BlockedAttackDamageThisTurn() != 0 || retreatBalance.DynamicVars["BlockedAttackDamage"].PreviewValue != 0)
-    throw new Exception("Retreating Defense compendium preview must not read absent combat history.");
+if (retreatBalance.DynamicVars.ContainsKey("BlockedAttackDamage"))
+    throw new Exception("Retreating Defense must use immediate power conversion, not past-turn damage.");
 retreatBalance.UpgradeInternal();
 if (retreatBalance.Keywords.Contains(CardKeyword.Exhaust) || retreatBalance.DynamicVars.Block.BaseValue != 4
     || retreatBalance.DynamicVars.Block.WasJustUpgraded)
     throw new Exception("Retreating Defense upgrade must only remove Exhaust.");
-var retreatPlayer = (Player)System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(typeof(Player));
-var retreatCreature = new Creature(retreatPlayer, 70, 70);
-typeof(Player).GetField("<Creature>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)!.SetValue(retreatPlayer, retreatCreature);
-var retreatState = new MegaCrit.Sts2.Core.Combat.CombatState();
-retreatCreature.CombatState = retreatState;
-retreatBalance.Owner = retreatPlayer;
-var retreatHistory = MegaCrit.Sts2.Core.Combat.CombatManager.Instance.History;
-var retreatEntries = (List<MegaCrit.Sts2.Core.Combat.History.CombatHistoryEntry>)retreatHistory.GetType()
-    .GetField("_entries", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(retreatHistory)!;
-var addedRetreatEntries = new List<MegaCrit.Sts2.Core.Combat.History.CombatHistoryEntry>();
-void AddRetreatDamage(int blocked, ValueProp props, int round, MegaCrit.Sts2.Core.Combat.CombatSide side)
-{
-    var entry = new MegaCrit.Sts2.Core.Combat.History.Entries.DamageReceivedEntry(
-        new DamageResult(retreatCreature, props) { BlockedDamage = blocked, UnblockedDamage = 5 },
-        retreatCreature, null, null, round, side, retreatHistory, Array.Empty<Player>());
-    retreatEntries.Add(entry);
-    addedRetreatEntries.Add(entry);
-}
-try
-{
-    if (retreatBalance.BlockedAttackDamageThisTurn() != 0) throw new Exception("Empty turn must have zero blocked attack damage.");
-    AddRetreatDamage(3, ValueProp.Move, retreatState.RoundNumber, retreatState.CurrentSide);
-    if (retreatBalance.BlockedAttackDamageThisTurn() != 3) throw new Exception("Partial blocks must count their blocked portion only.");
-    AddRetreatDamage(4, ValueProp.Move, retreatState.RoundNumber, retreatState.CurrentSide);
-    AddRetreatDamage(99, ValueProp.Unpowered, retreatState.RoundNumber, retreatState.CurrentSide);
-    AddRetreatDamage(99, ValueProp.Move, retreatState.RoundNumber - 1, retreatState.CurrentSide);
-    AddRetreatDamage(99, ValueProp.Move, retreatState.RoundNumber, MegaCrit.Sts2.Core.Combat.CombatSide.Enemy);
-    retreatBalance.DynamicVars["BlockedAttackDamage"].UpdateCardPreview(retreatBalance, CardPreviewMode.Normal, null!, false);
-    if (retreatBalance.BlockedAttackDamageThisTurn() != 7 || retreatBalance.DynamicVars["BlockedAttackDamage"].PreviewValue != 7)
-        throw new Exception("Blocked damage preview must sum current-turn attack blocks, excluding unpowered and older-turn damage.");
-}
-finally
-{
-    foreach (var entry in addedRetreatEntries) retreatEntries.Remove(entry);
-    retreatCreature.CombatState = null;
-}
 var probingBalance = ModelDb.Card<ProbingStab>().ToMutable();
 if (probingBalance.DynamicVars.Damage.BaseValue != 6 || probingBalance.DynamicVars["RetainCount"].IntValue != 2)
     throw new Exception("Probing Stab must deal 6 and retain up to 2 at end of turn.");
@@ -747,12 +741,12 @@ string[] tableIds = (
     "MidnightWaltz SilverStorm ThiefsArsenal Finale Duchess GlintstoneKnife HiddenPocket EternalRestage " +
     "GrandBearing GoldenMoment LorettaMastery LorettaGreatbow SleightOfHand BecomeInvisible BlindSpot " +
     "FleetingInstant MomentAndEternity EternalForm ShadowSword Quietude ParallelTime " +
-    "Memory InchVictory LorettaSlash SacredHalo GracefulSwordDance MemoryFragment PhantomKiller GreatCaria Fate")
+    "Memory InchVictory LorettaSlash SacredHalo GracefulSwordDance MemoryFragment PhantomKiller GreatCaria CarnivalNight Masquerade Fate")
     .Split(' ', StringSplitOptions.RemoveEmptyEntries);
 var expectedIds = tableIds.Select(id => "Duchess" + id)
     .Concat(new[] { nameof(DuchessStrike), nameof(DuchessDefend),
         nameof(DuchessRadiantBlade), nameof(DuchessDodge) }).ToHashSet();
-if (tableIds.Length != 86 || !expectedIds.SetEquals(DuchessCardCatalog.All.Keys))
+if (tableIds.Length != 88 || !expectedIds.SetEquals(DuchessCardCatalog.All.Keys))
     throw new Exception("Duchess card IDs differ from the user-approved table and additions.");
 var instant = ModelDb.Card<DuchessFleetingInstant>().ToMutable();
 var whirlingStrike = ModelDb.Card<WhirlingStrike>().ToMutable();

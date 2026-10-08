@@ -114,7 +114,7 @@
   "HEAVENFALL_POWER.title": "Heavenfall",
   "HEAVENFALL_POWER.description": "Whenever you gain [gold]Block[/gold] this turn, gain that much [gold]Guard Counter[/gold].",
   "RETREATING_DEFENSE_POWER.title": "Retreating Defense",
-  "RETREATING_DEFENSE_POWER.description": "This turn, whenever you block enemy attack damage, gain that much [gold]Guard Counter[/gold].",
+  "RETREATING_DEFENSE_POWER.description": "This turn, whenever you [gold]block[/gold] enemy attack damage, gain that much [gold]Guard Counter[/gold].",
   "FEATHERSTEP_POWER.title": "Featherstep",
   "FEATHERSTEP_POWER.description": "Whenever you play a [gold]Concealed Edge[/gold] card, draw {Amount} {Amount:plural:card|cards}.",
   "CLOUD_RENDING_STRENGTH_RESTORE_POWER.title": "Cloud-Rending Sweep",
