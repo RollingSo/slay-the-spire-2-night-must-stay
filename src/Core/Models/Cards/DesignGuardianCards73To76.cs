@@ -191,12 +191,13 @@ namespace NightMustStay.Core.Models.Power
                 return;
 
             Flash();
-            await PowerCmd.Apply<GuardCounterPower>(
+            GuardCounterPower counter = await PowerCmd.Apply<GuardCounterPower>(
                 new BlockingPlayerChoiceContext(),
                 Owner,
                 amount * Amount,
                 Owner,
                 card);
+            if (counter != null) counter.HeavenfallVisual = true;
         }
 
         public override async Task AfterSideTurnEnd(

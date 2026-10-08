@@ -37,7 +37,7 @@ namespace NightMustStay.Core.Models.Cards
             await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
                 .CompatFromCard(this)
                 .TargetingAllOpponents(base.CombatState)
-                .WithGuardianWhirlwindFx()
+                .WithGuardianWindFx(GuardianWindVfx.Kind.Cyclone)
                 .Execute(choiceContext);
             await PowerCmd.Apply<WeakPower>(choiceContext, base.CombatState.HittableEnemies, base.DynamicVars[WeakKey].BaseValue, base.Owner.Creature, this);
         }
