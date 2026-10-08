@@ -114,7 +114,7 @@
   "HEAVENFALL_POWER.title": "하늘의 추락",
   "HEAVENFALL_POWER.description": "이번 턴에 [gold]방어도[/gold]를 얻을 때마다 같은 양의 [gold]가드 카운터[/gold]를 얻습니다.",
   "RETREATING_DEFENSE_POWER.title": "후퇴 수비",
-  "RETREATING_DEFENSE_POWER.description": "공격을 완전히 [gold]방어[/gold]한 후, 이번 턴에 [gold]손[/gold]의 모든 카드를 [gold]보존[/gold]합니다.",
+  "RETREATING_DEFENSE_POWER.description": "이번 턴에 적의 공격 피해를 막을 때마다 그만큼 [gold]가드 카운터[/gold]를 얻습니다.",
   "FEATHERSTEP_POWER.title": "깃털 걸음",
   "FEATHERSTEP_POWER.description": "[gold]숨긴 칼날[/gold] 카드를 사용할 때마다 카드를 {Amount}장 뽑습니다.",
   "CLOUD_RENDING_STRENGTH_RESTORE_POWER.title": "구름을 가르는 휩쓸기",

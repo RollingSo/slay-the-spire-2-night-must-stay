@@ -116,7 +116,7 @@
   "HEAVENFALL_POWER.title": "天坠",
   "HEAVENFALL_POWER.description": "本回合获得[gold]格挡[/gold]时，获得等量[gold]防御反击[/gold]。",
   "RETREATING_DEFENSE_POWER.title": "后撤防御",
-  "RETREATING_DEFENSE_POWER.description": "完全[gold]格挡[/gold]攻击后，本回合[gold]保留[/gold]所有[gold]手牌[/gold]。",
+  "RETREATING_DEFENSE_POWER.description": "在本回合，每当你格挡敌方攻击伤害时，获得等量[gold]防御反击[/gold]。",
   "FEATHERSTEP_POWER.title": "飞羽步",
   "FEATHERSTEP_POWER.description": "打出[gold]藏锋[/gold]牌时，抽{Amount}张牌。",
   "CLOUD_RENDING_STRENGTH_RESTORE_POWER.title": "卷残云",
