@@ -94,7 +94,8 @@ public abstract class DuchessCard : CardModel
 
     public override string PortraitPath => this switch
     {
-        DuchessCarnivalNight or DuchessMasquerade => MissingPortraitPath,
+        DuchessCarnivalNight => "res://images/packed/card_portraits/duchess/duchess_carnival_night.png",
+        DuchessMasquerade => "res://images/packed/card_portraits/duchess/duchess_masquerade.png",
         DuchessElegantBearing => "res://images/packed/card_portraits/duchess/duchess_elegant_bearing.png",
         DuchessDodge => "res://images/packed/card_portraits/duchess/duchess_dodge.png",
         _ => $"res://images/packed/card_portraits/duchess/{Id.Entry.ToLowerInvariant()}.png",

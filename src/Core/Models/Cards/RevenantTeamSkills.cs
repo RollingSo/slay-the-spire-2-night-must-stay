@@ -15,7 +15,7 @@ namespace NightMustStay.Core.Models.Cards;
 public sealed class SoulDeparture : CardModel
 {
     public SoulDeparture() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
-    public override string PortraitPath => MissingPortraitPath;
+    public override string PortraitPath => "res://revenant_assets/cards/soul_departure.png";
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
     protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new CardsVar(1) };
@@ -40,7 +40,7 @@ public sealed class SoulDeparture : CardModel
 public sealed class WeepingStrings : CardModel
 {
     public WeepingStrings() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
-    public override string PortraitPath => MissingPortraitPath;
+    public override string PortraitPath => "res://revenant_assets/cards/weeping_strings.png";
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
     protected override IEnumerable<IHoverTip> ExtraHoverTips => HoverTipFactory.FromCardWithCardHoverTips<NightMustStayLonging>(IsUpgraded);
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
