@@ -15,7 +15,7 @@ namespace NightMustStay.Core.Models.Cards;
 public sealed class IroneyeReadiness : CardModel
 {
     public IroneyeReadiness() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
-    public override string PortraitPath => MissingPortraitPath;
+    public override string PortraitPath => "res://images/packed/card_portraits/ironeye/ironeye_readiness.png";
     protected override IEnumerable<IHoverTip> ExtraHoverTips => HoverTipFactory.FromCardWithCardHoverTips<Retreat>(IsUpgraded);
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
@@ -32,7 +32,7 @@ public sealed class IroneyeReadiness : CardModel
 public sealed class StrangleCommand : CardModel
 {
     public StrangleCommand() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
-    public override string PortraitPath => MissingPortraitPath;
+    public override string PortraitPath => "res://images/packed/card_portraits/ironeye/strangle_command.png";
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
     protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
     {

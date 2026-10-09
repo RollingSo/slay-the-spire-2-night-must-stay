@@ -1,0 +1,101 @@
+{
+  "approval": "User approved all on 2026-10-09",
+  "assets": [
+    {
+      "source": "design\\卡图预览\\四角色_缺图十卡_20261009\\guardian_majesty.png",
+      "formal": "images/packed/card_portraits/guardian/guardian_majesty.png",
+      "size": [
+        1000,
+        760
+      ]
+    },
+    {
+      "source": "design\\卡图预览\\四角色_缺图十卡_20261009\\turn_the_offensive.png",
+      "formal": "images/packed/card_portraits/guardian/turn_the_offensive.png",
+      "size": [
+        1000,
+        760
+      ]
+    },
+    {
+      "source": "design\\卡图预览\\四角色_缺图十卡_20261009\\sacred_feather_formation.png",
+      "formal": "images/packed/card_portraits/guardian/sacred_feather_formation.png",
+      "size": [
+        1000,
+        760
+      ]
+    },
+    {
+      "source": "design\\卡图预览\\四角色_缺图十卡_20261009\\ironeye_readiness.png",
+      "formal": "images/packed/card_portraits/ironeye/ironeye_readiness.png",
+      "size": [
+        1000,
+        760
+      ]
+    },
+    {
+      "source": "design\\卡图预览\\四角色_缺图十卡_20261009\\strangle_command.png",
+      "formal": "images/packed/card_portraits/ironeye/strangle_command.png",
+      "size": [
+        1000,
+        760
+      ]
+    },
+    {
+      "source": "design\\卡图预览\\四角色_缺图十卡_20261009\\night_must_stay_longing.png",
+      "formal": "revenant_assets/cards/night_must_stay_longing.png",
+      "size": [
+        1000,
+        760
+      ]
+    },
+    {
+      "source": "design\\卡图预览\\四角色_缺图十卡_20261009\\soul_departure.png",
+      "formal": "revenant_assets/cards/soul_departure.png",
+      "size": [
+        1000,
+        760
+      ]
+    },
+    {
+      "source": "design\\卡图预览\\四角色_缺图十卡_20261009\\weeping_strings.png",
+      "formal": "revenant_assets/cards/weeping_strings.png",
+      "size": [
+        1000,
+        760
+      ]
+    },
+    {
+      "source": "design\\卡图预览\\狂欢夜_王之恢复_观察力_20261009\\duchess_carnival_night_v4.png",
+      "formal": "images/packed/card_portraits/duchess/duchess_carnival_night.png",
+      "size": [
+        1000,
+        760
+      ]
+    },
+    {
+      "source": "design\\卡图预览\\四角色_缺图十卡_20261009\\duchess_masquerade.png",
+      "formal": "images/packed/card_portraits/duchess/duchess_masquerade.png",
+      "size": [
+        1000,
+        760
+      ]
+    },
+    {
+      "source": "design\\卡图预览\\狂欢夜_王之恢复_观察力_20261009\\kings_recovery.png",
+      "formal": "revenant_assets/cards/kings_recovery.png",
+      "size": [
+        1000,
+        760
+      ]
+    },
+    {
+      "source": "design\\卡图预览\\狂欢夜_王之恢复_观察力_20261009\\observation.png",
+      "formal": "images/packed/card_portraits/ironeye/observation.png",
+      "size": [
+        1000,
+        760
+      ]
+    }
+  ]
+}

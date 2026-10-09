@@ -15,7 +15,7 @@ namespace NightMustStay.Core.Models.Cards;
 public sealed class TurnTheOffensive : CardModel
 {
     // Use the engine's safe missing-art tile until dedicated artwork is approved.
-    public override string PortraitPath => MissingPortraitPath;
+    public override string PortraitPath => "res://images/packed/card_portraits/guardian/turn_the_offensive.png";
     public TurnTheOffensive() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
     protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new PowerVar<GuardCounterPower>("GuardCounter", 12m) };
@@ -32,7 +32,7 @@ public sealed class TurnTheOffensive : CardModel
 
 public sealed class SacredFeatherFormation : CardModel
 {
-    public override string PortraitPath => MissingPortraitPath;
+    public override string PortraitPath => "res://images/packed/card_portraits/guardian/sacred_feather_formation.png";
     public SacredFeatherFormation() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };

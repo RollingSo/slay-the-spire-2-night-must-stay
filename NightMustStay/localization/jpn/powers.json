@@ -114,7 +114,7 @@
   "HEAVENFALL_POWER.title": "天墜",
   "HEAVENFALL_POWER.description": "このターンに[gold]ブロック[/gold]を得るたび、同量の[gold]ガードカウンター[/gold]を得る。",
   "RETREATING_DEFENSE_POWER.title": "退き守り",
-  "RETREATING_DEFENSE_POWER.description": "このターン、敵の攻撃ダメージをブロックするたび、その量の[gold]ガードカウンター[/gold]を得る。",
+  "RETREATING_DEFENSE_POWER.description": "このターン、敵の攻撃ダメージを[gold]ブロック[/gold]するたび、その量の[gold]ガードカウンター[/gold]を得る。",
   "FEATHERSTEP_POWER.title": "羽歩",
   "FEATHERSTEP_POWER.description": "[gold]隠し刃[/gold]カードをプレイするたび、カードを{Amount}枚引く。",
   "CLOUD_RENDING_STRENGTH_RESTORE_POWER.title": "雲裂き薙ぎ",

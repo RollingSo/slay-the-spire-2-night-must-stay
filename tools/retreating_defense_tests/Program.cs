@@ -20,7 +20,8 @@ TestMode.IsOn=true;
 typeof(ModManager).GetMethod("ResetForTests",stat)!.Invoke(null,null);
 var state=typeof(ModManager).GetProperty("State")!;
 state.SetValue(null,Enum.Parse(state.PropertyType,"Skipped"));
-typeof(ModelDb).GetMethod("Init",stat,null,Type.EmptyTypes,null)!.Invoke(null,null);
+var init=typeof(ModelDb).GetMethod("Init",stat)!;
+init.Invoke(null,init.GetParameters().Length==0 ? null : new object[]{Array.Empty<Type>()});
 foreach(var t in new[]{typeof(RetreatingDefense),typeof(RetreatingDefensePower),typeof(GuardCounterPower)})
  if(!ModelDb.Contains(t)) typeof(ModelDb).GetMethod("Inject",stat)!.Invoke(null,[t]);
 Creature Make(CombatSide side) {
@@ -31,15 +32,18 @@ var owner=Make(CombatSide.Player);var ally=Make(CombatSide.Player);var enemy=Mak
 var power=(RetreatingDefensePower)ModelDb.Power<RetreatingDefensePower>().ToMutable();
 typeof(PowerModel).GetProperty("Owner")!.SetValue(power,owner);power.SetAmount(2,false);
 var harmony=new HarmonyLib.Harmony("NightMustStay.RetreatingDefense.Tests");
-var apply=typeof(PowerCmd).GetMethods(stat).Single(m=>m.Name=="Apply" && m.IsGenericMethodDefinition && m.GetParameters().Length==5).MakeGenericMethod(typeof(GuardCounterPower));
-harmony.Patch(apply,prefix:new HarmonyMethod(typeof(Fixture).GetMethod(nameof(Fixture.Apply))!));
+var damageBody=typeof(RetreatingDefensePower).GetMethod(nameof(RetreatingDefensePower.AfterDamageReceived))!
+ .GetCustomAttribute<AsyncStateMachineAttribute>()!.StateMachineType;
+harmony.Patch(AccessTools.Method(damageBody,"MoveNext"),transpiler:new HarmonyMethod(typeof(Fixture),nameof(Fixture.CaptureApply)));
 var remove=typeof(PowerCmd).GetMethods(stat).Single(m=>m.Name=="Remove" && !m.IsGenericMethod && m.GetParameters().Length==1);
 harmony.Patch(remove,prefix:new HarmonyMethod(typeof(Fixture).GetMethod(nameof(Fixture.Remove))!));
-async Task Hit(Creature target,Creature? dealer,ValueProp props,int blocked,int unblocked) =>
- await power.AfterDamageReceived(new BlockingPlayerChoiceContext(),target,new DamageResult(target,props){BlockedDamage=blocked,UnblockedDamage=unblocked},props,dealer!,null!);
+async Task Hit(Creature target,Creature? dealer,ValueProp props,int blocked,int unblocked) {
+ var result=new DamageResult(target,props){BlockedDamage=blocked,UnblockedDamage=unblocked};
+ await power.AfterDamageReceived(new BlockingPlayerChoiceContext(),target,result,props,dealer!,null!);
+}
 try {
  await Hit(owner,enemy,ValueProp.Move,4,0);
- Check(Fixture.Total==4,"First full block failed to grant counter immediately.");
+ Check(Fixture.Total==4,$"First full block failed: total={Fixture.Total}, ownerMatch={power.Owner==owner}, dealerSide={enemy.Side}/{(int)enemy.Side}, powered={ValueProp.Move.IsPoweredAttack()}.");
  await Hit(owner,enemy,ValueProp.Move,3,5);
  await Hit(owner,enemy,ValueProp.Move,2,0);
  Check(Fixture.Total==9 && Fixture.Calls==3,"Partial block or multi-hit conversion incorrect; repeated plays multiplied conversion.");
@@ -61,7 +65,20 @@ try {
 Console.WriteLine("PASS: immediate full/partial/multi-hit conversion, no stack multiplier, ally and non-attack filters, next-owner-turn expiration, base/upgrade.");
 public static class Fixture {
  public static decimal Total;public static int Calls,Removes;public static Creature? Target;
- public static bool Apply(Creature __1,decimal __2,ref Task<GuardCounterPower> __result) {Target=__1;Total+=__2;Calls++;__result=Task.FromResult<GuardCounterPower>(null!);return false;}
+ public static IEnumerable<CodeInstruction> CaptureApply(IEnumerable<CodeInstruction> instructions) {
+  int replaced=0;
+  foreach(var instruction in instructions) {
+   if(instruction.operand is MethodInfo method && method.DeclaringType==typeof(PowerCmd)
+    && method.Name=="Apply" && method.IsGenericMethod && method.GetGenericArguments()[0]==typeof(GuardCounterPower)) {
+    instruction.operand=AccessTools.Method(typeof(Fixture),nameof(Apply));replaced++;
+   }
+   yield return instruction;
+  }
+  if(replaced!=1) throw new Exception("Expected exactly one Guard Counter application.");
+ }
+ public static Task<GuardCounterPower> Apply(PlayerChoiceContext context,Creature target,decimal amount,Creature applier,CardModel card,bool silent) {
+  Target=target;Total+=amount;Calls++;return Task.FromResult<GuardCounterPower>(null!);
+ }
  public static bool Remove(ref Task __result) {Removes++;__result=Task.CompletedTask;return false;}
 }
 

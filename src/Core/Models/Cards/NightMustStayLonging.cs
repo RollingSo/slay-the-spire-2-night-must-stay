@@ -18,7 +18,7 @@ public sealed class NightMustStayLonging : CardModel
     public NightMustStayLonging() : base(0, CardType.Skill, CardRarity.Token, TargetType.Self) { }
     public override CardPoolModel Pool => ModelDb.CardPool<TokenCardPool>();
     public override CardPoolModel VisualCardPool => ModelDb.CardPool<ColorlessCardPool>();
-    public override string PortraitPath => MissingPortraitPath;
+    public override string PortraitPath => "res://revenant_assets/cards/night_must_stay_longing.png";
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Retain, CardKeyword.Exhaust };
     protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new CardsVar(1) };
     protected override IEnumerable<IHoverTip> ExtraHoverTips => new[] { GuardianCardHoverTips.RevenantRecover };
