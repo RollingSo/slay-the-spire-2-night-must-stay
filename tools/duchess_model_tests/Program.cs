@@ -848,6 +848,29 @@ if (summonManager.GetLivingSummons().Count != 1 || sacrificeMultiplier(sacrifice
 familyField.SetValue(summonManager, summonFamilyFixture);
 if (summonManager.GetLivingSummons().Count != 2 || sacrificeMultiplier(sacrifice, null) * 2 != 62)
     throw new Exception("Frenzied Flame must sum both summons' HP, not just Family HP.");
+var spaceFrenzy = ModelDb.Card<SpaceRendingFrenzy>().ToMutable();
+var unbearableFrenzy = ModelDb.Card<UnbearableFrenzy>().ToMutable();
+spaceFrenzy.Owner = rewindPlayer; unbearableFrenzy.Owner = rewindPlayer;
+Func<CardModel, Creature?, decimal> FrenzyMultiplier(CardModel card) =>
+    (Func<CardModel, Creature?, decimal>)typeof(CalculatedVar).GetField("_multiplierCalc", BindingFlags.Instance | BindingFlags.NonPublic)!
+        .GetValue(card.DynamicVars.CalculatedDamage)!;
+if (FrenzyMultiplier(spaceFrenzy)(spaceFrenzy, null) * spaceFrenzy.DynamicVars.ExtraDamage.BaseValue != 32
+    || FrenzyMultiplier(unbearableFrenzy)(unbearableFrenzy, null) != 8 || unbearableFrenzy.DynamicVars.Repeat.BaseValue != 6)
+    throw new Exception("Both summons must contribute four HP to each frenzy.");
+spaceFrenzy.UpgradeInternal(); unbearableFrenzy.UpgradeInternal();
+if (spaceFrenzy.DynamicVars.ExtraDamage.BaseValue != 5 || unbearableFrenzy.DynamicVars.Repeat.BaseValue != 7
+    || unbearableFrenzy.DynamicVars.ExtraDamage.WasJustUpgraded || spaceFrenzy.DynamicVars["FamilyDamage"].WasJustUpgraded)
+    throw new Exception("Frenzy upgrades must change only the multiplier or repeat count.");
+foreach (var (familyHp, frenzyNecroHp, loss) in new[] { (0, 0, 0m), (0, 4, 4m), (4, 4, 8m), (2, 3, 5m) })
+{
+    targetHpField.SetValue(summonFamilyFixture, familyHp); targetHpField.SetValue(summonNecroFixture, frenzyNecroHp);
+    if (FrenzyMultiplier(spaceFrenzy)(spaceFrenzy, null) != loss || FrenzyMultiplier(unbearableFrenzy)(unbearableFrenzy, null) != loss)
+        throw new Exception("Frenzy previews must sum actual available HP without overkill.");
+}
+targetHpField.SetValue(summonFamilyFixture, 11); targetHpField.SetValue(summonNecroFixture, 20);
+if (ModelDb.Card<SoulChargingClaw>().Rarity != CardRarity.Uncommon || ModelDb.Card<SkyRendingChord>().Rarity != CardRarity.Common)
+    throw new Exception("Revenant revised rarities mismatch.");
+spaceFrenzy.DynamicVars.CalculatedDamage.Calculate(null);
 var summonUndying = ModelDb.Power<UndyingMarchPower>().ToMutable();
 typeof(PowerModel).GetProperty("Owner")!.SetValue(summonUndying, summonNecroFixture);
 ((List<PowerModel>)typeof(Creature).GetField("_powers", BindingFlags.Instance | BindingFlags.NonPublic)!
@@ -861,9 +884,9 @@ targetHpField.SetValue(summonFamilyFixture, 0);
 if ((bool)playableGetter.Invoke(sacrifice, null)! || sacrificeMultiplier(sacrifice, null) != 0)
     throw new Exception("Summon sacrifice must be unplayable without a living summon.");
 familyField.SetValue(summonManager, null);
-if (ModelDb.Card<UnbearableFrenzy>().ToMutable().DynamicVars["FamilyDamage"].BaseValue != 6
+if (ModelDb.Card<UnbearableFrenzy>().ToMutable().DynamicVars["FamilyDamage"].BaseValue != 4
     || ModelDb.Card<SpaceRendingFrenzy>().ToMutable().DynamicVars["FamilyDamage"].BaseValue != 4)
-    throw new Exception("Summon HP costs must be 6 for Unbearable Frenzy and 4 for Space-Rending Frenzy.");
+    throw new Exception("Both frenzy cards must cost each summon 4 HP.");
 Console.WriteLine("PASS: Necro-only playability, both-summon sacrifice, Undying March, dead-summon filtering and revised HP costs.");
 typeof(Player).GetField("<Creature>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)!
     .SetValue(rewindPlayer, rewindCreature);

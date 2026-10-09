@@ -26,6 +26,7 @@ try
     VerifyFamilyCallStats();
     VerifySpiritFormStats();
     VerifyFamilyIntentDamage();
+    VerifyPhantomCoStrikeDelayedDamage();
     VerifyCardDamageUsesDynamicVars();
     VerifySpaceRendingFrenzyTargeting();
     VerifyWhiteShadowLureProtection();
@@ -40,10 +41,33 @@ catch (Exception error)
     return 1;
 }
 
+static void VerifyPhantomCoStrikeDelayedDamage()
+{
+    MethodInfo calculation = typeof(PhantomCoStrike).GetMethod("CalculateDelayedDamage", BindingFlags.Instance | BindingFlags.NonPublic)!;
+    if (!ReadCalledMethods(calculation).Any(call => call.Name == "ModifyDamage"
+        && call.DeclaringType?.Name == "Sts2BranchCompat"))
+        throw new InvalidOperationException("Phantom Co-Strike must snapshot native enchantment and damage modifiers.");
+    MethodInfo onPlay = typeof(PhantomCoStrike).GetMethod("OnPlay", BindingFlags.Instance | BindingFlags.NonPublic)!;
+    Type stateMachine = onPlay.GetCustomAttribute<AsyncStateMachineAttribute>()!.StateMachineType;
+    MethodInfo moveNext = stateMachine.GetMethod("MoveNext", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!;
+    if (!ReadCalledMethods(moveNext).Contains(calculation))
+        throw new InvalidOperationException("Phantom Co-Strike must use the modified snapshot when scheduling its delayed hit.");
+}
+
 static void VerifyFamilyIntentDamage()
 {
     var helen = new RevenantFamilyAttackIntent(3);
     var frederick = new RevenantFamilyAttackIntent(5, 2);
+    var poweredField = typeof(RevenantFamilyAttackIntent).GetField("_powered", BindingFlags.Instance | BindingFlags.NonPublic)!;
+    if (!(bool)poweredField.GetValue(helen)! || !(bool)poweredField.GetValue(frederick)!)
+        throw new InvalidOperationException("Every family intent must include powered damage modifiers by default.");
+    foreach (string patchName in new[] { "RevenantFamilyIntentRefreshPatch", "RevenantFamilyIntentHidePatch" })
+    {
+        Type intentPatch = typeof(RevenantFamilyAttackIntent).Assembly.GetType("NightMustStay.Core.Patches." + patchName, true)!;
+        var patchHarmony = new HarmonyLib.Harmony("NightMustStay.FamilyIntent.Tests." + patchName);
+        patchHarmony.CreateClassProcessor(intentPatch).Patch();
+        patchHarmony.UnpatchAll(patchHarmony.Id);
+    }
     if (helen.GetTotalDamage(Array.Empty<Creature>(), null!) != 3)
         throw new InvalidOperationException("Helen's family intent must show 3 damage.");
     if (frederick.GetTotalDamage(Array.Empty<Creature>(), null!) != 10)
@@ -267,9 +291,9 @@ static void VerifySpaceRendingFrenzyTargeting()
 {
     var card = new SpaceRendingFrenzy();
     if (card.TargetType != MegaCrit.Sts2.Core.Entities.Cards.TargetType.AnyEnemy
-        || card.DynamicVars.Damage.BaseValue != 16m
-        || card.DynamicVars["FamilyDamage"].BaseValue != 5m)
-        throw new InvalidOperationException("Space-Rending Frenzy must keep its selected-enemy target and 16 damage / 5 family HP cost.");
+        || card.DynamicVars.ExtraDamage.BaseValue != 4m
+        || card.DynamicVars["FamilyDamage"].BaseValue != 4m)
+        throw new InvalidOperationException("Space-Rending Frenzy must target one enemy, cost each summon 4 HP and multiply total loss by 4.");
 
     MethodInfo onPlay = typeof(SpaceRendingFrenzy).GetMethod(
         "OnPlay", BindingFlags.Instance | BindingFlags.NonPublic)!;
@@ -278,7 +302,7 @@ static void VerifySpaceRendingFrenzyTargeting()
         "MoveNext", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!;
     MethodBase[] calls = ReadCalledMethods(moveNext).ToArray();
     if (!calls.Any(call => call.Name == "get_Target")
-        || !calls.Any(call => call.Name == "DamageFamily")
+        || !calls.Any(call => call.Name == "DamageSummons")
         || !calls.Any(call => call.Name == "Damage"
             && call.DeclaringType?.Name == "RevenantAttackEffects")
         || calls.Any(call => call.Name is "NextItem" or "get_CombatTargets" or "get_HittableEnemies"))
@@ -288,9 +312,9 @@ static void VerifySpaceRendingFrenzyTargeting()
         BindingFlags.Instance | BindingFlags.NonPublic)!.Invoke(card, new object[] { true });
     typeof(SpaceRendingFrenzy).GetMethod("OnUpgrade",
         BindingFlags.Instance | BindingFlags.NonPublic)!.Invoke(card, null);
-    if (card.DynamicVars.Damage.BaseValue != 20m
-        || card.DynamicVars["FamilyDamage"].BaseValue != 5m)
-        throw new InvalidOperationException("Upgraded Space-Rending Frenzy must keep 20 damage / 5 family HP cost.");
+    if (card.DynamicVars.ExtraDamage.BaseValue != 5m
+        || card.DynamicVars["FamilyDamage"].BaseValue != 4m)
+        throw new InvalidOperationException("Upgraded Space-Rending Frenzy must multiply HP loss by 5 without changing its HP cost.");
 }
 
 static void VerifyWhiteShadowLureProtection()

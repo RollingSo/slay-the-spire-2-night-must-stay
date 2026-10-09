@@ -187,9 +187,21 @@ namespace NightMustStay.Core.Models.Cards
         {
         }
 
+        internal decimal CalculateDelayedDamage(Creature target) => Math.Max(0m, Math.Floor(
+            NightMustStay.Core.Compatibility.Sts2BranchCompat.ModifyDamage(
+                Owner.RunState, CombatState, target, Owner.Creature,
+                DynamicVars.Damage.BaseValue, DynamicVars.Damage.Props, this,
+                MegaCrit.Sts2.Core.Hooks.ModifyDamageHookType.All,
+                CardPreviewMode.Normal, out _)));
+
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
+
+            // Snapshot the same native modifiers as the card preview before the
+            // first attack changes powers. The delayed Unpowered hit must not
+            // apply the source enchantment again.
+            decimal delayedDamage = CalculateDelayedDamage(cardPlay.Target);
 
             await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
                 .CompatFromCard(this)
@@ -202,7 +214,7 @@ namespace NightMustStay.Core.Models.Cards
                 await PowerCmd.Apply<PhantomCoStrikePower>(
                     choiceContext,
                     cardPlay.Target,
-                    base.DynamicVars.Damage.BaseValue,
+                    delayedDamage,
                     base.Owner.Creature,
                     this);
             }

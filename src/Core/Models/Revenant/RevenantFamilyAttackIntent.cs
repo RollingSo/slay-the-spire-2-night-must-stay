@@ -22,7 +22,7 @@ public sealed class RevenantFamilyAttackIntent : AttackIntent
 
     public override int Repeats => _repeats;
 
-    public RevenantFamilyAttackIntent(int damage, int repeats = 1, bool powered = false)
+    public RevenantFamilyAttackIntent(int damage, int repeats = 1, bool powered = true)
     {
         _damage = Math.Max(0, damage);
         _repeats = Math.Max(1, repeats);

@@ -185,7 +185,7 @@ public sealed class SkyRendingChord : CardModel
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(7m, ValueProp.Move) };
     protected override IEnumerable<IHoverTip> ExtraHoverTips => HoverTipFactory.FromCardWithCardHoverTips<NightMustStayLonging>(IsUpgraded);
     public override string PortraitPath => "res://revenant_assets/cards/sky_rending_chord.png";
-    public SkyRendingChord() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
+    public SkyRendingChord() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
