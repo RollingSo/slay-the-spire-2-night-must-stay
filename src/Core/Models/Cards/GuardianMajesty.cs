@@ -19,10 +19,12 @@ public sealed class GuardianMajesty : CardModel
 
     public override string PortraitPath => ImageHelper.GetImagePath("packed/card_portraits/guardian/guardian_majesty.png");
 
+    public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
+
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
         new CalculationBaseVar(0m),
-        new CalculationExtraVar(2m),
+        new CalculationExtraVar(1m),
         new CalculatedVar("CalculatedStrengthLoss").WithMultiplier(static (card, _) =>
             card.Owner?.PlayerCombatState == null ? 0 :
                 PileType.Hand.GetPile(card.Owner).Cards.Count(GuardianCardFilters.HasDefendInName))
@@ -38,5 +40,5 @@ public sealed class GuardianMajesty : CardModel
             await PowerCmd.Apply<StrengthPower>(context, enemy, -loss, Owner.Creature, this);
     }
 
-    protected override void OnUpgrade() => DynamicVars["CalculationExtra"].UpgradeValueBy(1m);
+    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }

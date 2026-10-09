@@ -87,7 +87,10 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new DamageVar(9m, ValueProp.Move)
+            new CalculationBaseVar(9m),
+            new ExtraDamageVar(18m),
+            new CalculatedDamageVar(ValueProp.Move).WithMultiplier(static (_, target) =>
+                target?.IsStunned == true ? 1m : 0m)
         };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips => new[]
@@ -103,16 +106,18 @@ namespace NightMustStay.Core.Models.Cards
         protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
-            decimal damage = DynamicVars.Damage.BaseValue
-                * (cardPlay.Target.IsStunned ? StunnedDamageMultiplier : 1);
-            await DamageCmd.Attack(damage)
+            await DamageCmd.Attack(DynamicVars.CalculatedDamage)
                 .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
                 .WithGuardianWeaponFx()
                 .Execute(context);
         }
 
-        protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
+        protected override void OnUpgrade()
+        {
+            DynamicVars.CalculationBase.UpgradeValueBy(3m);
+            DynamicVars.ExtraDamage.UpgradeValueBy(3m * (StunnedDamageMultiplier - 1));
+        }
     }
 
     public sealed class EveOfCounterattack : CardModel
