@@ -27,6 +27,9 @@ try
     VerifySpiritFormStats();
     VerifyFamilyIntentDamage();
     VerifyPhantomCoStrikeDelayedDamage();
+    VerifyGreaterRecoverTargetsAllSummons();
+    VerifyChargedGurranqCallsBeforeResonance();
+    VerifyNecroBossDeathIsolation();
     VerifyCardDamageUsesDynamicVars();
     VerifySpaceRendingFrenzyTargeting();
     VerifyWhiteShadowLureProtection();
@@ -39,6 +42,56 @@ catch (Exception error)
 {
     Console.Error.WriteLine(error);
     return 1;
+}
+
+static void VerifyNecroBossDeathIsolation()
+{
+    foreach (var listener in new[] { MegaCrit.Sts2.Core.Combat.CombatSide.Player, MegaCrit.Sts2.Core.Combat.CombatSide.Enemy })
+    foreach (var deceased in new[] { MegaCrit.Sts2.Core.Combat.CombatSide.Player, MegaCrit.Sts2.Core.Combat.CombatSide.Enemy })
+    {
+        bool expected = listener == MegaCrit.Sts2.Core.Combat.CombatSide.Enemy
+            && deceased == MegaCrit.Sts2.Core.Combat.CombatSide.Enemy;
+        if (NightMustStay.Core.Patches.RevenantBossMinionDeathHookPatch.ShouldRun(listener, deceased) != expected)
+            throw new InvalidOperationException("Necro deaths must not invoke enemy boss minion death responses.");
+    }
+    var patches = new[]
+    {
+        typeof(NightMustStay.Core.Patches.RevenantCrabBackgroundHookPatch),
+        typeof(NightMustStay.Core.Patches.RevenantBossMinionDeathHookPatch)
+    };
+    foreach (Type patch in patches)
+    {
+        var targets = (IEnumerable<MethodBase>)patch.GetMethod("TargetMethods", BindingFlags.Static | BindingFlags.NonPublic)!.Invoke(null, null)!;
+        if (targets.Any(target => target == null) || targets.Count() != (patch == patches[0] ? 4 : 2))
+            throw new InvalidOperationException("All special Necro hook patch targets must resolve.");
+    }
+}
+
+static void VerifyChargedGurranqCallsBeforeResonance()
+{
+    MethodInfo onPlay = typeof(GurranqBeastClaw).GetMethod("OnPlay", BindingFlags.Instance | BindingFlags.NonPublic)!;
+    Type state = onPlay.GetCustomAttribute<AsyncStateMachineAttribute>()!.StateMachineType;
+    MethodInfo move = state.GetMethod("MoveNext", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!;
+    var calls = ReadCalledMethods(move).ToArray();
+    int callIndex = Array.FindIndex(calls, call => call.Name == "ChooseFamilyAndCall");
+    int resonanceIndex = Array.FindIndex(calls, call => call.Name == "TriggerResonance");
+    if (callIndex < 0 || resonanceIndex <= callIndex)
+        throw new InvalidOperationException("Charged Gurranq's Beast Claw must Call before Resonance.");
+}
+
+static void VerifyGreaterRecoverTargetsAllSummons()
+{
+    Type helpers = typeof(GreaterRecover).Assembly.GetType("NightMustStay.Core.Models.Cards.RevenantCardHelpers", true)!;
+    MethodInfo heal = helpers.GetMethod("HealSummons", BindingFlags.Static | BindingFlags.Public)!;
+    Type healState = heal.GetCustomAttribute<AsyncStateMachineAttribute>()!.StateMachineType;
+    MethodInfo healMove = healState.GetMethod("MoveNext", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!;
+    if (!ReadCalledMethods(healMove).Any(call => call.Name == "GetLivingSummons"))
+        throw new InvalidOperationException("Greater Recover must heal the shared living Family and Necro list.");
+    MethodInfo onPlay = typeof(GreaterRecover).GetMethod("OnPlay", BindingFlags.Instance | BindingFlags.NonPublic)!;
+    Type playState = onPlay.GetCustomAttribute<AsyncStateMachineAttribute>()!.StateMachineType;
+    MethodInfo playMove = playState.GetMethod("MoveNext", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!;
+    if (!ReadCalledMethods(playMove).Contains(heal))
+        throw new InvalidOperationException("Greater Recover must call the all-summon healing helper.");
 }
 
 static void VerifyPhantomCoStrikeDelayedDamage()
