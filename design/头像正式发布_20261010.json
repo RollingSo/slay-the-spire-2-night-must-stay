@@ -1,0 +1,122 @@
+{
+  "approved": "2026-10-10 user approved all",
+  "assets": [
+    {
+      "source": "design\\角色资源预览\\四角色_原版头像重新设计第三版_20261009\\guardian\\character_icon_guardian.png",
+      "formal": "guardian_assets\\character_icon_guardian.png",
+      "size": [
+        88,
+        88
+      ],
+      "sha256": "8fe6d0f54d8d5d882481fc0b2340f6fc08c626d4c4078c68d464b4825fdb3106"
+    },
+    {
+      "source": "design\\角色资源预览\\四角色_原版头像重新设计第三版_20261009\\guardian\\character_icon_outline_guardian.png",
+      "formal": "guardian_assets\\character_icon_outline_guardian.png",
+      "size": [
+        88,
+        88
+      ],
+      "sha256": "29c5f0959d9c6f33663c813759b3488f38529de234d75f2177660ecb19ac3c3d"
+    },
+    {
+      "source": "design\\角色资源预览\\四角色_原版头像重新设计第三版_20261009\\guardian\\map_marker_guardian.png",
+      "formal": "guardian_assets\\map_marker_guardian.png",
+      "size": [
+        49,
+        64
+      ],
+      "sha256": "bd738916474cbc90dc47ffdfba470681dd52ecf4eec7faff773a6321087374d6"
+    },
+    {
+      "source": "design\\角色资源预览\\四角色_原版头像重新设计第三版_20261009\\duchess\\character_icon_duchess.png",
+      "formal": "duchess_assets\\character_icon_duchess.png",
+      "size": [
+        88,
+        88
+      ],
+      "sha256": "1f62cd45e772e433c6eef820719a247d5a1c4fb5a2753b3ea11cade93e276e18"
+    },
+    {
+      "source": "design\\角色资源预览\\四角色_原版头像重新设计第三版_20261009\\duchess\\character_icon_outline_duchess.png",
+      "formal": "duchess_assets\\character_icon_outline_duchess.png",
+      "size": [
+        88,
+        88
+      ],
+      "sha256": "bec45ad4fc0d572389eaae1880c308c5db9c924e2d646addc89b8acb1e47a635"
+    },
+    {
+      "source": "design\\角色资源预览\\四角色_原版头像重新设计第三版_20261009\\duchess\\map_marker_duchess.png",
+      "formal": "duchess_assets\\map_marker_duchess.png",
+      "size": [
+        49,
+        64
+      ],
+      "sha256": "d91a9da93f69864510218ba26cf5bb4adb8ffa05d532b659df5cd5b53f1e5647"
+    },
+    {
+      "source": "design\\角色资源预览\\铁之眼复仇者_小头像续改_20261010\\ironeye\\character_icon_ironeye.png",
+      "formal": "ironeye_assets\\character_icon_ironeye.png",
+      "size": [
+        88,
+        88
+      ],
+      "sha256": "ed11c37f9b295918b936bdf90297d8c8f4a14a155cbf9d75fe88ca77411d9383"
+    },
+    {
+      "source": "design\\角色资源预览\\铁之眼复仇者_小头像续改_20261010\\ironeye\\character_icon_ironeye_outline.png",
+      "formal": "ironeye_assets\\character_icon_outline_ironeye.png",
+      "size": [
+        88,
+        88
+      ],
+      "sha256": "2a5af0d39b8c3761fa138ae65b34ddbf561e65fc1257f3f6ffb7499b0cb34dc6"
+    },
+    {
+      "source": "design\\角色资源预览\\铁之眼复仇者_小头像续改_20261010\\ironeye\\map_marker_ironeye.png",
+      "formal": "ironeye_assets\\map_marker_ironeye.png",
+      "size": [
+        49,
+        64
+      ],
+      "sha256": "c16bc467f9c4fcccc07993455307ad7181cfad482cb0c3fe1948d34bbe967963"
+    },
+    {
+      "source": "design\\角色资源预览\\复仇者_小头像五官校正_20261010\\character_icon_revenant.png",
+      "formal": "revenant_assets\\character_icon_revenant.png",
+      "size": [
+        88,
+        88
+      ],
+      "sha256": "a17353eb4a918e2fe36424fb79fa3d523028bfdb8a4d36dab2c1bc23dc3a7b82"
+    },
+    {
+      "source": "design\\角色资源预览\\复仇者_小头像五官校正_20261010\\character_icon_revenant_outline.png",
+      "formal": "revenant_assets\\character_icon_outline_revenant.png",
+      "size": [
+        88,
+        88
+      ],
+      "sha256": "ab456b771709b817dbcde6659061c8567eb544c13e12f6ba6da1148eb0f2f692"
+    },
+    {
+      "source": "design\\角色资源预览\\复仇者_小头像五官校正_20261010\\map_marker_revenant.png",
+      "formal": "revenant_assets\\map_marker_revenant.png",
+      "size": [
+        49,
+        64
+      ],
+      "sha256": "4432bbfc006bd79e51c3a9852260cec52ef4bbaf9fd0ed7faef8a711c78d3c14"
+    },
+    {
+      "source": "design\\角色资源预览\\铁之眼复仇者_原版规范复核重绘_20261010\\ironeye\\char_select_ironeye.png",
+      "formal": "ironeye_assets/char_select_ironeye.png",
+      "size": [
+        132,
+        195
+      ]
+    }
+  ],
+  "locked_selection": "black silhouette of approved Ironeye selection portrait"
+}
