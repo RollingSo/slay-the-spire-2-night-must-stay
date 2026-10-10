@@ -25,6 +25,8 @@ namespace NightMustStay.Core.Models.Power
     public sealed class GuardCounterPower : PowerModel
     {
         private const ValueProp CounterDamageProps = ValueProp.Unpowered;
+        // Presentation-only provenance: Heavenfall expires before the enemy turn.
+        public bool HeavenfallVisual { get; set; }
 
         public static bool SucceededAtStartOfThisTurn(CardModel card)
         {
@@ -213,7 +215,13 @@ namespace NightMustStay.Core.Models.Power
             Flash();
             if (attacker.IsAlive)
             {
-                NightreignHitVfx.PlayGuardianCounter(attacker, base.Owner, base.Amount);
+                if (HeavenfallVisual)
+                {
+                    await GuardianAttackEffects.PlayHeavenfallPrelude(base.Owner);
+                    GuardianAttackEffects.PlaySpecial(attacker, GuardianSpecialAttackVfx.Kind.Heavenfall);
+                }
+                else
+                    NightreignHitVfx.PlayGuardianCounter(attacker, base.Owner, base.Amount);
                 await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(choiceContext, attacker, base.Amount, CounterDamageProps, base.Owner, null);
                 EvolutionWingsPower evolutionWings = base.Owner.GetPower<EvolutionWingsPower>();
                 if (evolutionWings != null)

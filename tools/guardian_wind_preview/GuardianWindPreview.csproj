@@ -1,0 +1,10 @@
+<Project Sdk="Godot.NET.Sdk/4.5.1">
+  <PropertyGroup><TargetFramework>net9.0</TargetFramework><EnableDynamicLoading>true</EnableDynamicLoading><Nullable>enable</Nullable></PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../src/Core/Nodes/Vfx/CombatVfxCanvas.cs" Link="CombatVfxCanvas.cs" />
+    <Compile Include="../../src/Core/Nodes/Vfx/GuardianWindVfx.cs" Link="GuardianWindVfx.cs" />
+    <Compile Include="../../src/Core/Nodes/Vfx/GuardianSpecialAttackVfx.cs" Link="GuardianSpecialAttackVfx.cs" />
+    <Compile Include="../../src/Core/Nodes/Vfx/GuardianStormAttackVfx.cs" Link="GuardianStormAttackVfx.cs" />
+    <Compile Include="../../src/Core/Nodes/Vfx/GuardianHeavenfallPreludeVfx.cs" Link="GuardianHeavenfallPreludeVfx.cs" />
+  </ItemGroup>
+</Project>

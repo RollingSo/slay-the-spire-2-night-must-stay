@@ -147,7 +147,7 @@ namespace NightMustStay.Core.Models.Cards
             Creature[] targets = CombatState.HittableEnemies.Where(enemy => enemy.IsAlive).ToArray();
             foreach (Creature target in targets)
             {
-                NightreignHitVfx.PlayGuardianWhirlwind(target);
+                GuardianAttackEffects.PlayWind(target, GuardianWindVfx.Kind.Whirlwind);
                 await PowerCmd.Apply<PhantomImbalancePower>(
                     context,
                     target,

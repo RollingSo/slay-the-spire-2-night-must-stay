@@ -53,7 +53,7 @@ namespace NightMustStay.Core.Models.Cards
             await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
                 .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
-                .WithGuardianWhirlwindFx()
+                .WithGuardianStormFx(GuardianStormAttackVfx.Kind.StormAssault)
                 .Execute(choiceContext);
 
             if (targetWasWeak)
@@ -97,7 +97,7 @@ namespace NightMustStay.Core.Models.Cards
                 .WithHitCount(xValue)
                 .CompatFromCard(this)
                 .TargetingAllOpponents(base.CombatState)
-                .WithGuardianWhirlwindFx()
+                .WithGuardianStormFx(GuardianStormAttackVfx.Kind.InvokeStorm)
                 .Execute(choiceContext);
 
             // Apply Weak once per point of X instead of as one stacked debuff.
@@ -147,7 +147,7 @@ namespace NightMustStay.Core.Models.Cards
             await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
                 .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
-                .WithGuardianWeaponFx()
+                .WithGuardianSpecialFx(GuardianSpecialAttackVfx.Kind.PhantomSpear)
                 .Execute(choiceContext);
 
             await PowerCmd.Apply<PhantomImbalancePower>(
@@ -206,7 +206,7 @@ namespace NightMustStay.Core.Models.Cards
             await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
                 .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
-                .WithGuardianWeaponFx()
+                .WithGuardianSpecialFx(GuardianSpecialAttackVfx.Kind.PhantomCoStrike)
                 .Execute(choiceContext);
 
             if (cardPlay.Target.IsAlive)
@@ -377,7 +377,7 @@ namespace NightMustStay.Core.Models.Power
             }
 
             Flash();
-            GuardianAttackEffects.Play(base.Owner, GuardianAttackVfx.Kind.Weapon);
+            GuardianAttackEffects.PlaySpecial(base.Owner, GuardianSpecialAttackVfx.Kind.PhantomCoStrike, echoOnly: true);
             await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
                 new BlockingPlayerChoiceContext(),
                 base.Owner,

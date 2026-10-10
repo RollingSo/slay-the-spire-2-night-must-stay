@@ -1,0 +1,12 @@
+config_version=5
+[application]
+config/name="Guardian Wind Preview"
+run/main_scene="res://preview.tscn"
+[display]
+window/size/viewport_width=1200
+window/size/viewport_height=480
+[dotnet]
+project/assembly_name="GuardianWindPreview"
+[rendering]
+renderer/rendering_method="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.04,0.055,0.075,1)

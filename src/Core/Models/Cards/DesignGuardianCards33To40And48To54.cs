@@ -118,7 +118,7 @@ namespace NightMustStay.Core.Models.Cards
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
                 .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
-                .WithGuardianWhirlwindFx()
+                .WithGuardianStormFx(GuardianStormAttackVfx.Kind.CycloneHalberd)
                 .Execute(context);
 
             await PowerCmd.Apply<PhantomImbalancePower>(
@@ -496,13 +496,13 @@ namespace NightMustStay.Core.Models.Power
                     .CompatFromCard(sourceCard)
                     .WithNoAttackerAnim()
                     .TargetingAllOpponents(CombatState)
-                    .WithGuardianWhirlwindFx()
+                    .WithGuardianWindFx(GuardianWindVfx.Kind.GreatTornado)
                     .Execute(context);
             }
             else
             {
                 foreach (Creature enemy in CombatState.HittableEnemies.Where(enemy => enemy.IsAlive))
-                    NightreignHitVfx.PlayGuardianWhirlwind(enemy);
+                    GuardianAttackEffects.PlayWind(enemy, GuardianWindVfx.Kind.GreatTornado);
                 await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
                     context,
                     CombatState.HittableEnemies,

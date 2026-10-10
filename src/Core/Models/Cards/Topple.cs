@@ -38,7 +38,7 @@ namespace NightMustStay.Core.Models.Cards
                 await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue)
                     .CompatFromCard(this)
                     .Targeting(target)
-                    .WithGuardianWeaponFx()
+                    .WithGuardianSpecialFx(GuardianSpecialAttackVfx.Kind.Topple)
                     .Execute(choiceContext);
             }
         }
