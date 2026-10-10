@@ -24,6 +24,10 @@ internal static class MajestyRegression
             prefix: new HarmonyMethod(typeof(MajestyRegression), nameof(CombatStateFixture)));
         harmony.Patch(AccessTools.PropertyGetter(typeof(CombatManager), nameof(CombatManager.IsInProgress)),
             prefix: new HarmonyMethod(typeof(ReversalStepRegression), nameof(ReversalStepRegression.InCombat)));
+        // This standalone fixture has no global combat room; bypass the native
+        // ending-state hook while keeping card-cost and preview calculations real.
+        harmony.Patch(AccessTools.PropertyGetter(typeof(CombatManager), nameof(CombatManager.IsOverOrEnding)),
+            prefix: new HarmonyMethod(typeof(MajestyRegression), nameof(CombatEndingFixture)));
         harmony.Patch(AccessTools.PropertyGetter(typeof(Creature), nameof(Creature.IsStunned)),
             prefix: new HarmonyMethod(typeof(MajestyRegression), nameof(StunFixture)));
         try
@@ -94,6 +98,12 @@ internal static class MajestyRegression
             Console.WriteLine("PASS: Majesty base/upgraded targeting, 0/1/2/3 defensive cards, preview and ownerless compendium; Storm Avatar removed.");
         }
         finally { _stunnedTarget = null; harmony.UnpatchAll(harmony.Id); }
+    }
+
+    public static bool CombatEndingFixture(ref bool __result)
+    {
+        __result = false;
+        return false;
     }
 
     public static bool StunFixture(Creature __instance, ref bool __result)

@@ -23,6 +23,36 @@ if (initResult != ESteamAPIInitResult.k_ESteamAPIInitResult_OK)
 
 try
 {
+    if (args[0] == "--verify")
+    {
+        var query = SteamUGC.CreateQueryUGCDetailsRequest(new[] { new PublishedFileId_t(publishedFileId) }, 1);
+        SteamUGC.SetAllowCachedResponse(query, 0);
+        bool done = false;
+        bool verified = false;
+        using var callback = CallResult<SteamUGCQueryCompleted_t>.Create((result, failed) =>
+        {
+            if (failed || result.m_eResult != EResult.k_EResultOK)
+                Console.WriteLine($"Query failed: {result.m_eResult}");
+            else
+            {
+                SteamUGC.GetQueryUGCResult(query, 0, out var detail);
+                Console.WriteLine($"Remote item={detail.m_nPublishedFileId}, updated={DateTimeOffset.FromUnixTimeSeconds(detail.m_rtimeUpdated):O}, content={detail.m_hFile}, size={detail.m_nFileSize}");
+                uint count = SteamUGC.GetNumSupportedGameVersions(query, 0);
+                for (uint i = 0; i < count; i++)
+                {
+                    SteamUGC.GetSupportedGameVersionData(query, 0, i, out string min, out string max, 256);
+                    Console.WriteLine($"Supported version {i}: {min} -> {max}");
+                }
+                verified = true;
+            }
+            done = true;
+        });
+        callback.Set(SteamUGC.SendQueryUGCRequest(query));
+        var timer = Stopwatch.StartNew();
+        while (!done && timer.Elapsed < TimeSpan.FromSeconds(60)) { SteamAPI.RunCallbacks(); Thread.Sleep(50); }
+        SteamUGC.ReleaseQueryUGCRequest(query);
+        return verified ? 0 : 4;
+    }
     foreach (string metadataPath in args)
     {
         WorkshopMetadata metadata = JsonSerializer.Deserialize<WorkshopMetadata>(
