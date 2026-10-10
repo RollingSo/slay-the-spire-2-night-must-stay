@@ -85,6 +85,7 @@ public abstract class DuchessCard : CardModel
     private static TargetType TargetFor(string key)
     {
         DuchessCardSpec spec = DuchessCardCatalog.All[key];
+        if (spec.Effects.Any(e => e.Kind == "AllyConcealmentPass")) return TargetType.AnyAlly;
         if (spec.TargetSelf) return TargetType.Self;
         if (spec.All) return TargetType.AllEnemies;
         return spec.Type == CardType.Attack || spec.Effects.Any(e => e.Kind is "Weak" or "Vulnerable")
@@ -93,6 +94,8 @@ public abstract class DuchessCard : CardModel
 
     public override string PortraitPath => this switch
     {
+        DuchessCarnivalNight => "res://images/packed/card_portraits/duchess/duchess_carnival_night.png",
+        DuchessMasquerade => "res://images/packed/card_portraits/duchess/duchess_masquerade.png",
         DuchessElegantBearing => "res://images/packed/card_portraits/duchess/duchess_elegant_bearing.png",
         DuchessDodge => "res://images/packed/card_portraits/duchess/duchess_dodge.png",
         _ => $"res://images/packed/card_portraits/duchess/{Id.Entry.ToLowerInvariant()}.png",
@@ -226,7 +229,8 @@ public abstract class DuchessCard : CardModel
                     "Energy" or "NextTurnEnergy" or "FutureMomentEnergy" or "MomentEffectEnergy" or "MomentFiveFirstEnergy" =>
                         new EnergyVar(effect.Kind, (int)effect.Amount),
                     "TurnStartSwap" => new PowerVar<DuchessTurnStartSwapPower>(effect.Kind, effect.Amount),
-                    "Concealment" => new PowerVar<DuchessConcealmentPower>(effect.Kind, effect.Amount),
+                    "Concealment" or "AllyConcealmentPass" => new PowerVar<DuchessConcealmentPower>(effect.Kind, effect.Amount),
+                    "OtherPlayersEnergy" => new EnergyVar(effect.Kind, (int)effect.Amount),
                     "ReactionDrawBlock" => new PowerVar<DuchessReactionDrawBlockPower>(effect.Kind, effect.Amount),
                     "RadiantBladeGrowth" => new PowerVar<DuchessRadiantBladeGrowthPower>(effect.Kind, effect.Amount),
                     "EndTurnDodge" => new PowerVar<DuchessEndTurnDodgePower>(effect.Kind, effect.Amount),
@@ -279,7 +283,7 @@ public abstract class DuchessCard : CardModel
                 if (effect.Kind == "TemporaryStrength") yield return HoverTipFactory.FromPower<StrengthPower>();
                 if (effect.Kind == "Intangible") yield return HoverTipFactory.FromPower<IntangiblePower>();
                 if (effect.Kind == "AllyIntangible") yield return HoverTipFactory.FromPower<IntangiblePower>();
-                if (effect.Kind is "Concealment" or "LoseConcealment" or "ConcealedBonusDamage" or "ConcealedKillNextCombatStrength"
+                if (effect.Kind is "Concealment" or "AllyConcealmentPass" or "LoseConcealment" or "ConcealedBonusDamage" or "ConcealedKillNextCombatStrength"
                     || effect.Condition == "concealed" || Spec.ConcealedTripleDamage || Spec.ConcealedCostReduction > 0)
                     yield return HoverTipFactory.FromPower<DuchessConcealmentPower>();
                 if (effect.Kind is "TransformDrawToDodge" or "TransformDrawToRadiantBlade")
@@ -472,6 +476,20 @@ public abstract class DuchessCard : CardModel
                 case "AllyIntangible":
                     foreach (var ally in CombatState.Players.Where(p => p.Creature.IsAlive))
                         await Apply<IntangiblePower>(context, ally.Creature, amount);
+                    break;
+                case "OtherPlayersEnergy":
+                    foreach (var ally in CombatState.Players.Where(p => p != Owner && p.Creature.IsAlive))
+                        await PlayerCmd.GainEnergy((int)amount, ally);
+                    break;
+                case "AllyConcealmentPass":
+                    if (play.Target?.Player is { } recipient && recipient != Owner && recipient.Creature.IsAlive)
+                    {
+                        await Apply<DuchessConcealmentPower>(context, recipient.Creature, amount);
+                        var passedCard = CombatState.CreateCard<DuchessMasquerade>(recipient);
+                        if (IsUpgraded) CardCmd.Upgrade(passedCard);
+                        var addedCard = await CardPileCmd.AddGeneratedCardToCombat(passedCard, PileType.Draw, Owner, CardPilePosition.Random);
+                        CardCmd.PreviewCardPileAdd(addedCard);
+                    }
                     break;
                 case "Dexterity": await Apply<DexterityPower>(context, Owner.Creature, amount); break;
                 case "DodgeToDraw": await AddDodges(Owner, amount, PileType.Draw); break;

@@ -394,12 +394,13 @@ public sealed class HundredSchemes : CardModel
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        CardModel selected = (await CardSelectCmd.FromHand(
+        var candidates = PileType.Draw.GetPile(Owner).Cards.ToArray();
+        if (candidates.Length == 0) return;
+        CardModel selected = (await CardSelectCmd.FromSimpleGrid(
                 context,
+                candidates,
                 Owner,
-                new CardSelectorPrefs(SelectionScreenPrompt, 1),
-                null,
-                this))
+                new CardSelectorPrefs(SelectionScreenPrompt, 1)))
             .FirstOrDefault();
         if (selected == null)
             return;

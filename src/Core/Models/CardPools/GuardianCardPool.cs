@@ -72,7 +72,7 @@ namespace NightMustStay.Core.Models.CardPools
                 ModelDb.Card<PhantomCoStrike>(),
                 ModelDb.Card<SlowDefend>(),
                 ModelDb.Card<IronWallDefend>(),
-                ModelDb.Card<StormAvatar>(),
+                ModelDb.Card<GuardianMajesty>(),
 
                 ModelDb.Card<GuardianSanctuary>(),
                 ModelDb.Card<GuardianAssault>(),
@@ -115,6 +115,8 @@ namespace NightMustStay.Core.Models.CardPools
                 // singleplayer rewards by CardMultiplayerConstraint.MultiplayerOnly.
                 ModelDb.Card<StepForwardForAll>(),
                 ModelDb.Card<GuardianMultiplayerCard>(),
+                ModelDb.Card<TurnTheOffensive>(),
+                ModelDb.Card<SacredFeatherFormation>(),
 
                 // Ancient rarity keeps these out of ordinary rewards. Their
                 // acquisition is wired to Dusty Tome and Archaic Tooth respectively.

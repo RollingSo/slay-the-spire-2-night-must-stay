@@ -148,6 +148,13 @@ public sealed class RevenantSummonControllerPower : PowerModel
             await summonRelic.PerformInitialCall(context);
     }
 
+    public override Task AfterPowerAmountChanged(PlayerChoiceContext context, PowerModel power,
+        decimal amount, Creature applier, CardModel cardSource)
+    {
+        RevenantSummonManager.For(Owner.Player).RefreshScheduledFamilyIntent();
+        return Task.CompletedTask;
+    }
+
     public override async Task AfterPlayerTurnStartLate(PlayerChoiceContext context, Player player)
     {
         if (player != Owner.Player)

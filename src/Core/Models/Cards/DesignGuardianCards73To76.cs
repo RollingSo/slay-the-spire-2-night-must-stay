@@ -4,11 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Combat;
-using MegaCrit.Sts2.Core.Combat.History.Entries;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
-using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
@@ -72,7 +70,7 @@ namespace NightMustStay.Core.Models.Cards
         public override bool GainsBlock => true;
 
         protected override IEnumerable<DynamicVar> CanonicalVars =>
-            new DynamicVar[] { new BlockVar(4m, ValueProp.Move), new BlockedAttackDamageVar() };
+            new DynamicVar[] { new BlockVar(4m, ValueProp.Move) };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
             new[] { HoverTipFactory.Static(StaticHoverTip.Block), HoverTipFactory.FromPower<GuardCounterPower>() };
@@ -85,34 +83,11 @@ namespace NightMustStay.Core.Models.Cards
         protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
         {
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
-            decimal blocked = BlockedAttackDamageThisTurn();
-            if (blocked <= 0m) return;
-            await PowerCmd.Apply<GuardCounterPower>(
-                context,
-                Owner.Creature,
-                blocked,
-                Owner.Creature,
-                this);
-        }
-
-        public decimal BlockedAttackDamageThisTurn()
-        {
-            ICombatState state = Owner?.Creature?.CombatState;
-            if (state == null) return 0m;
-            return CombatManager.Instance.History.Entries.OfType<DamageReceivedEntry>()
-                .Where(entry => entry.Receiver == Owner.Creature && entry.HappenedThisTurn(state)
-                    && entry.Result.Props.HasFlag(ValueProp.Move))
-                .Sum(entry => (decimal)entry.Result.BlockedDamage);
+            await PowerCmd.Apply<RetreatingDefensePower>(
+                context, Owner.Creature, 1m, Owner.Creature, this);
         }
 
         protected override void OnUpgrade() => RemoveKeyword(CardKeyword.Exhaust);
-
-        private sealed class BlockedAttackDamageVar() : DynamicVar("BlockedAttackDamage", 0m)
-        {
-            public override void UpdateCardPreview(CardModel card, CardPreviewMode previewMode,
-                Creature target, bool runGlobalHooks) =>
-                PreviewValue = ((RetreatingDefense)card).BlockedAttackDamageThisTurn();
-        }
     }
 
     public sealed class SkySweepingGod : CardModel
@@ -212,87 +187,29 @@ namespace NightMustStay.Core.Models.Power
 
     public sealed class RetreatingDefensePower : PowerModel
     {
-        private sealed class Data
-        {
-            public bool Triggered;
-            public bool RetainApplied;
-            public readonly List<CardModel> TemporarilyRetainedCards = new();
-        }
-
         public override PowerType Type => PowerType.Buff;
         public override PowerStackType StackType => PowerStackType.Counter;
 
-        protected override object InitInternalData() => new Data();
-
-        public void AfterFullyBlockedAttack()
+        public override async Task AfterDamageReceived(
+            PlayerChoiceContext context, Creature target, DamageResult result,
+            ValueProp props, Creature dealer, CardModel cardSource)
         {
-            GetInternalData<Data>().Triggered = true;
-            Flash();
-        }
-
-        public override async Task BeforeFlush(
-            PlayerChoiceContext context,
-            Player player)
-        {
-            Data data = GetInternalData<Data>();
-            if (player != Owner.Player || data.RetainApplied)
+            if (target != Owner || result.BlockedDamage <= 0 || !props.IsPoweredAttack()
+                || dealer == null || dealer.Side != CombatSide.Enemy)
                 return;
 
-            data.TemporarilyRetainedCards.Clear();
-            foreach (CardModel card in PileType.Hand.GetPile(player).Cards
-                         .Where(card => !card.Keywords.Contains(CardKeyword.Retain)))
-            {
-                CardCmd.ApplyKeyword(card, CardKeyword.Retain);
-                data.TemporarilyRetainedCards.Add(card);
-            }
-
-            data.RetainApplied = true;
+            // Damage hooks finish before GuardCounterAttackPatch resolves the attack,
+            // so this attack can use the counter gained from its own blocked damage.
             Flash();
-            await Task.CompletedTask;
+            await PowerCmd.Apply<GuardCounterPower>(
+                context, Owner, result.BlockedDamage, Owner, cardSource);
         }
 
-        public override async Task BeforeHandDraw(
-            Player player,
-            PlayerChoiceContext context,
-            ICombatState combatState)
+        public override async Task AfterSideTurnStart(
+            CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
         {
-            Data data = GetInternalData<Data>();
-            if (player != Owner.Player || !data.RetainApplied)
-                return;
-
-            foreach (CardModel card in data.TemporarilyRetainedCards)
-                card.RemoveKeyword(CardKeyword.Retain);
-
-            data.TemporarilyRetainedCards.Clear();
-            data.RetainApplied = false;
-
-            if (Amount <= 1m)
+            if (participants.Contains(Owner))
                 await PowerCmd.Remove(this);
-            else
-                await PowerCmd.ModifyAmount(context, this, -1m, Applier, null);
-        }
-
-        public override async Task AfterSideTurnEnd(
-            PlayerChoiceContext context,
-            CombatSide side,
-            IEnumerable<Creature> participants)
-        {
-            if (side != CombatSide.Enemy)
-                return;
-
-            Data data = GetInternalData<Data>();
-            if (data.Triggered)
-                return;
-
-            CardPile hand = PileType.Hand.GetPile(Owner.Player);
-            foreach (CardModel card in data.TemporarilyRetainedCards)
-            {
-                card.RemoveKeyword(CardKeyword.Retain);
-                if (hand.Cards.Contains(card))
-                    await CardPileCmd.Add(card, PileType.Discard);
-            }
-
-            await PowerCmd.Remove(this);
         }
     }
 }

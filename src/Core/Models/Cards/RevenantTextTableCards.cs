@@ -182,16 +182,17 @@ public sealed class GiantSkeletonWrath : CardModel
 
 public sealed class SkyRendingChord : CardModel
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(9m, ValueProp.Move), new CardsVar(1) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(7m, ValueProp.Move) };
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => HoverTipFactory.FromCardWithCardHoverTips<NightMustStayLonging>(IsUpgraded);
     public override string PortraitPath => "res://revenant_assets/cards/sky_rending_chord.png";
     public SkyRendingChord() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(cardPlay.Target).Execute(context);
-        await RevenantTextTableHelpers.DiscardFromDraw(this, context, SelectionScreenPrompt, DynamicVars.Cards.IntValue);
+        await NightMustStayLonging.Generate(CombatState, Owner, IsUpgraded, 1, PileType.Discard);
     }
-    protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1m);
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(1m);
 }
 
 public sealed class SubstituteDoll : CardModel
@@ -299,7 +300,7 @@ public sealed class ReanimateDead : CardModel
 {
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
     public override string PortraitPath => "res://revenant_assets/cards/reanimate_dead.png";
-    public ReanimateDead() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
+    public ReanimateDead() : base(2, CardType.Skill, CardRarity.Common, TargetType.Self) { }
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
         RevenantSummonManager.For(Owner).SummonRandomNecro(context);
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
@@ -309,7 +310,7 @@ public sealed class SoulReturn : CardModel
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new PowerVar<FreezePower>("Freeze", 3m),
+        new PowerVar<FreezePower>("Freeze", 2m),
         new CardsVar(1),
     };
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Ethereal };
@@ -350,11 +351,13 @@ public sealed class ChantingBlessing : CardModel
 
 public sealed class UnderworldReflection : CardModel
 {
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => HoverTipFactory.FromCardWithCardHoverTips<NightMustStayLonging>(IsUpgraded);
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
     public override string PortraitPath => "res://revenant_assets/cards/underworld_reflection.png";
-    public UnderworldReflection() : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
-    protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) => RevenantSummonManager.For(Owner).ReviveRandomNecro(context);
-    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+    public UnderworldReflection() : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
+    protected override Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
+        NightMustStayLonging.Generate(CombatState, Owner, IsUpgraded, 2, PileType.Discard);
+    protected override void OnUpgrade() { }
 }
 
 public sealed class SpiritManipulation : CardModel

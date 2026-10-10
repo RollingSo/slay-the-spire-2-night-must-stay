@@ -105,5 +105,7 @@ public sealed class RevenantCardPool : CardPoolModel
         ModelDb.Card<BoneCoin>(),
         ModelDb.Card<Harmony>(),
         ModelDb.Card<GhostlyTouch>(),
+        ModelDb.Card<SoulDeparture>(),
+        ModelDb.Card<WeepingStrings>(),
     };
 }

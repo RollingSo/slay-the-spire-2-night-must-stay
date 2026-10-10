@@ -451,6 +451,29 @@ public sealed class RevenantSummonManager
         }
     }
 
+    internal static bool RefreshManagedFamilyIntent(Creature creature, bool requireScheduledAction = false)
+    {
+        foreach (RevenantSummonManager manager in Managers.Values)
+        {
+            if (!manager.IsFamilyCreature(creature) || creature is not { IsAlive: true }) continue;
+            if (requireScheduledAction && !manager._scheduledAction.HasValue) return false;
+            manager.RefreshScheduledFamilyIntent();
+            return true;
+        }
+        return false;
+    }
+
+    private static void RevealFamilyIntentContainer(NCreature petNode)
+    {
+        // Native Osty fades can outlive our refresh and set alpha back to zero.
+        (AccessTools.Field(typeof(NCreature), "_intentFadeTween")?.GetValue(petNode) as Tween)?.Kill();
+        petNode.IntentContainer.Visible = true;
+        petNode.IntentContainer.Modulate = Colors.White;
+        // Keep summon artwork (including neighbouring creature nodes) below UI.
+        petNode.IntentContainer.ZAsRelative = false;
+        petNode.IntentContainer.ZIndex = 10;
+    }
+
     private async Task PerformFamilyAction(
         PlayerChoiceContext context,
         RevenantFamilyId family,
@@ -1084,7 +1107,7 @@ public sealed class RevenantSummonManager
             intentNode.UpdateIntent(intents[i], enemies, pet);
             _familyIntentNodes.Add(intentNode);
         }
-        petNode.IntentContainer.Modulate = Colors.White;
+        RevealFamilyIntentContainer(petNode);
     }
 
     private void RefreshNecroIntent(RevenantNecro necro)

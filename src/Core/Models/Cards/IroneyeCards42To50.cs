@@ -165,10 +165,10 @@ public sealed class Vigilance : CardModel
     private const string CardsKey = "Cards";
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new[] { new DynamicVar(CardsKey, 3m) };
+        new[] { new DynamicVar(CardsKey, 2m) };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-        new[] { HoverTipFactory.FromCard<Retreat>() };
+        new[] { HoverTipFactory.FromKeyword(CardKeyword.Retain) };
 
     public override string PortraitPath =>
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/vigilance.png");
@@ -191,8 +191,7 @@ public sealed class Vigilance : CardModel
         if (selected == null)
             return;
 
-        CardModel retreat = CombatState.CreateCard<Retreat>(Owner);
-        await CardCmd.Transform(selected, retreat);
+        selected.AddKeyword(CardKeyword.Retain);
     }
 
     protected override void OnUpgrade() =>
@@ -351,6 +350,16 @@ public sealed class IronEye : CardModel
 public sealed class Observation : CardModel
 {
     private int _pendingRewardUpgrades;
+    private string _pendingRewardPlayers = "";
+
+    public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
+
+    [SavedProperty]
+    public string PendingRewardPlayers
+    {
+        get => _pendingRewardPlayers;
+        set { AssertMutable(); _pendingRewardPlayers = value; }
+    }
 
     [SavedProperty]
     public int PendingRewardUpgrades
@@ -374,7 +383,7 @@ public sealed class Observation : CardModel
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         if (DeckVersion is Observation deckVersion)
-            deckVersion.PendingRewardUpgrades++;
+            deckVersion.PendingRewardPlayers += string.Concat(Owner.RunState.Players.Select(player => player.NetId + "|"));
 
         await PowerCmd.Apply<ObservationPower>(
             context,
@@ -389,8 +398,10 @@ public sealed class Observation : CardModel
         List<CardCreationResult> cardRewards,
         CardCreationOptions options)
     {
-        if (player != Owner
-            || PendingRewardUpgrades <= 0
+        string playerKey = player.NetId.ToString();
+        var pending = PendingRewardPlayers.Split('|', StringSplitOptions.RemoveEmptyEntries).ToList();
+        int count = pending.Count(key => key == playerKey) + (player == Owner ? PendingRewardUpgrades : 0);
+        if (count <= 0
             || options.Flags.HasFlag(CardCreationFlags.NoHookUpgrades))
         {
             return false;
@@ -403,18 +414,20 @@ public sealed class Observation : CardModel
         if (valid.Count == 0)
             return false;
 
-        int upgrades = Math.Min(PendingRewardUpgrades, valid.Count);
+        int upgrades = Math.Min(count, valid.Count);
         for (int i = 0; i < upgrades; i++)
         {
-            CardCreationResult selected = Owner.RunState.Rng.Niche.NextItem(valid);
+            CardCreationResult selected = player.RunState.Rng.Niche.NextItem(valid);
             valid.Remove(selected);
-            CardModel normalClone = Owner.RunState.CloneCard(selected.Card);
-            CardModel upgradedClone = Owner.RunState.CloneCard(normalClone);
+            CardModel normalClone = player.RunState.CloneCard(selected.Card);
+            CardModel upgradedClone = player.RunState.CloneCard(normalClone);
             CardCmd.Upgrade(upgradedClone, CardPreviewStyle.None);
             selected.ModifyCard(upgradedClone);
             ObservationRewardUpgradeRegistry.Mark(upgradedClone, normalClone);
-            PendingRewardUpgrades--;
+            if (!pending.Remove(playerKey)) PendingRewardUpgrades--;
         }
+
+        PendingRewardPlayers = pending.Count == 0 ? "" : string.Join("|", pending) + "|";
 
         return upgrades > 0;
     }

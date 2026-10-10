@@ -77,7 +77,7 @@ public sealed class SoulChargingClaw : CardModel, IRevenantChargeCard
         new CardHoverTip(CreateOppositeChargePreview()),
     };
 
-    public SoulChargingClaw() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
+    public SoulChargingClaw() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
 
     protected override void AddExtraArgsToDescription(LocString description) =>
         RevenantCardHelpers.AddChargeStateDescription(this, description, IsChargeComplete, state =>

@@ -43,18 +43,19 @@ public sealed class DirtyPhotoFrame : RevenantRelicModel
             return;
 
         var context = new BlockingPlayerChoiceContext();
-        CardModel selected = (await CardSelectCmd.FromCombatPile(
+        var selected = (await CardSelectCmd.FromCombatPile(
             context,
             draw,
             Owner,
             new CardSelectorPrefs(
                 new LocString("relics", "DIRTY_PHOTO_FRAME.selectionScreenPrompt"),
-                1))).FirstOrDefault();
-        if (selected == null)
+                Math.Min(3, draw.Cards.Count)))).ToList();
+        if (selected.Count == 0)
             return;
 
         Flash();
-        await CardPileCmd.Add(selected, PileType.Discard);
+        foreach (CardModel card in selected)
+            await CardPileCmd.Add(card, PileType.Discard);
     }
 }
 
@@ -63,7 +64,7 @@ public sealed class MiniatureMakeupTools : RevenantRelicModel
     protected override string RevenantIconName => "miniature_makeup_tools";
     public override RelicRarity Rarity => RelicRarity.Uncommon;
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new[] { new PowerVar<StrengthPower>(2m) };
+        new[] { new PowerVar<StrengthPower>(1m) };
 
     public async Task AfterFamilyCalled(PlayerChoiceContext context)
     {
@@ -99,29 +100,13 @@ public sealed class DeepSeaNight : RevenantRelicModel
 
 public sealed class OldPocketPortrait : RevenantRelicModel
 {
-    private bool _triggeredThisTurn;
-
     protected override string RevenantIconName => "old_pocket_portrait";
     public override RelicRarity Rarity => RelicRarity.Rare;
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         new[] { new CardsVar(1) };
 
-    public override Task BeforeSideTurnStart(
-        PlayerChoiceContext choiceContext,
-        CombatSide side,
-        IReadOnlyList<Creature> participants,
-        ICombatState combatState)
-    {
-        if (participants.Contains(Owner.Creature))
-            _triggeredThisTurn = false;
-        return Task.CompletedTask;
-    }
-
     public async Task AfterResonance(PlayerChoiceContext context)
     {
-        if (_triggeredThisTurn)
-            return;
-        _triggeredThisTurn = true;
         Flash();
         await CardPileCmd.Draw(context, DynamicVars.Cards.IntValue, Owner);
     }

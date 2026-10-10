@@ -1125,7 +1125,7 @@
     [
       [
         "LoseConcealment",
-        2,
+        1,
         1
       ],
       [
@@ -1136,7 +1136,7 @@
       [
         "BlockPerExhaust",
         4,
-        4
+        7
       ]
     ],
     {
@@ -1820,6 +1820,14 @@
   [
     "GreatCaria", "伟哉卡利亚", "Carian Grandeur", "グレート・カーリア", 3, "Attack", "Rare",
     [["Damage", 24, 32]], {"all": true, "reaction": true}
+  ],
+  [
+    "CarnivalNight", "狂欢夜", "Carnival Night", "狂歓の夜", 0, "Skill", "Uncommon",
+    [["OtherPlayersEnergy", 2, 3, "moment"]], {"moment": 5, "multiplayerOnly": true}
+  ],
+  [
+    "Masquerade", "面具舞会", "Masquerade", "仮面舞踏会", 1, "Skill", "Uncommon",
+    [["AllyConcealmentPass", 3, 4]], {"exhaust": true, "multiplayerOnly": true}
   ],
   [
     "Fate", "运命", "Fate", "運命", 0, "Skill", "Rare",

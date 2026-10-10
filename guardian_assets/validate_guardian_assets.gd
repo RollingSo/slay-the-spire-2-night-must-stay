@@ -136,7 +136,7 @@ func _initialize() -> void:
 		"last_stand_protocol_power.tres", "no_attacks_next_turn_power.tres", "phantom_co_strike_power.tres",
 		"phantom_imbalance_power.tres", "sacred_counter_power.tres", "sanctuary_watch_power.tres",
 		"savior_form_power.tres", "sentry_stance_power.tres", "sky_citadel_power.tres",
-		"spear_polish_power.tres", "stomp_stance_power.tres", "storm_avatar_power.tres",
+		"spear_polish_power.tres", "stomp_stance_power.tres",
 		"thousand_weight_halberd_power.tres", "unbroken_line_power.tres", "wandering_spell_soul_power.tres",
 		"wing_flap_power.tres", "winged_bulwark_power.tres", "zephyr_doctrine_power.tres",
 	]

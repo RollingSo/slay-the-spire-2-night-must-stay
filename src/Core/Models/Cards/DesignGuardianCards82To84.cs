@@ -146,8 +146,16 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new DamageVar(7m, ValueProp.Move)
+            new DamageVar(7m, ValueProp.Move),
+            new CalculationBaseVar(0m),
+            new CalculationExtraVar(1m),
+            new CalculatedVar("CalculatedHits").WithMultiplier(static (card, _) =>
+                ((WorldEndingWings)card).GetSkillsToExhaust().Length)
         };
+
+        internal CardModel[] GetSkillsToExhaust() => Owner?.PlayerCombatState == null
+            ? Array.Empty<CardModel>()
+            : PileType.Draw.GetPile(Owner).Cards.Where(card => card.Type == CardType.Skill).ToArray();
 
         public WorldEndingWings()
             : base(3, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies)
@@ -156,9 +164,7 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
         {
-            CardModel[] skills = PileType.Draw.GetPile(Owner).Cards
-                .Where(card => card.Type == CardType.Skill)
-                .ToArray();
+            CardModel[] skills = GetSkillsToExhaust();
             int exhausted = 0;
             foreach (CardModel skill in skills)
             {

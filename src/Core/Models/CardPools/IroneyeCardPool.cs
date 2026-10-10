@@ -111,6 +111,8 @@ namespace NightMustStay.Core.Models.CardPools
                 ModelDb.Card<HundredSchemes>(),
                 ModelDb.Card<CutThroughChaos>(),
                 ModelDb.Card<GracefulBladeDance>(),
+                ModelDb.Card<IroneyeReadiness>(),
+                ModelDb.Card<StrangleCommand>(),
 
                 // Ancient rarity keeps these out of ordinary rewards. Death
                 // Mark is excluded from Dusty Tome by Archaic Tooth's original

@@ -35,6 +35,12 @@ internal static class RevenantCardHelpers
 {
     public static Creature Family(CardModel card) => card.Owner?.Osty;
 
+    public static decimal PreviewSummonLifeLoss(CardModel card, decimal amount) =>
+        card.Owner == null ? 0m : RevenantSummonManager.For(card.Owner).GetLivingSummons()
+            .Sum(summon => summon.GetPower<BufferPower>() is { Amount: > 0 } ? 0m
+                : Math.Min(amount, Math.Max(0m, summon.CurrentHp
+                    - (summon.GetPower<UndyingMarchPower>() != null ? 1m : 0m))));
+
     public static async Task<decimal> DamageSummons(CardModel card, PlayerChoiceContext context, decimal? amount = null)
     {
         decimal totalLost = 0m;
@@ -550,7 +556,13 @@ public sealed class DeathLightning : CardModel, IRevenantChargeCard
 
 public sealed class SpaceRendingFrenzy : CardModel
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(16m, ValueProp.Move), new DynamicVar("FamilyDamage", 4m) };
+    private decimal? _resolvedLifeLoss;
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
+    {
+        new DynamicVar("FamilyDamage", 4m), new CalculationBaseVar(0m), new ExtraDamageVar(4m),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) =>
+            ((SpaceRendingFrenzy)card)._resolvedLifeLoss ?? RevenantCardHelpers.PreviewSummonLifeLoss(card, card.DynamicVars["FamilyDamage"].BaseValue))
+    };
     public override string PortraitPath => "res://revenant_assets/cards/space_rending_frenzy.png";
     protected override bool IsPlayable => RevenantSummonManager.For(Owner).GetLivingSummons().Count > 0;
     public SpaceRendingFrenzy() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
@@ -558,14 +570,19 @@ public sealed class SpaceRendingFrenzy : CardModel
     {
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         Creature target = cardPlay.Target;
-        await RevenantCardHelpers.DamageSummons(this, context, DynamicVars["FamilyDamage"].BaseValue);
+        decimal lost = await RevenantCardHelpers.DamageSummons(this, context, DynamicVars["FamilyDamage"].BaseValue);
         if (!target.IsAlive)
             return;
 
-        await RevenantAttackEffects.Damage(
-            context, target, DynamicVars.Damage.BaseValue, ValueProp.Move, Owner.Creature, this);
+        _resolvedLifeLoss = lost;
+        try
+        {
+            await RevenantAttackEffects.Damage(
+                context, target, DynamicVars.CalculatedDamage.Calculate(null), ValueProp.Move, Owner.Creature, this);
+        }
+        finally { _resolvedLifeLoss = null; }
     }
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);
+    protected override void OnUpgrade() => DynamicVars["ExtraDamage"].UpgradeValueBy(1m);
 }
 
 public sealed class WhiteShadowLure : CardModel
@@ -665,20 +682,30 @@ public sealed class SpiritForm : CardModel
 
 public sealed class UnbearableFrenzy : CardModel
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(4m, ValueProp.Move), new DynamicVar("FamilyDamage", 6m), new RepeatVar(6) };
+    private decimal? _resolvedLifeLoss;
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
+    {
+        new DynamicVar("FamilyDamage", 4m), new RepeatVar(6), new CalculationBaseVar(0m), new ExtraDamageVar(1m),
+        new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) =>
+            ((UnbearableFrenzy)card)._resolvedLifeLoss ?? RevenantCardHelpers.PreviewSummonLifeLoss(card, card.DynamicVars["FamilyDamage"].BaseValue))
+    };
     public override string PortraitPath => "res://revenant_assets/cards/unbearable_frenzy.png";
     protected override bool IsPlayable => RevenantSummonManager.For(Owner).GetLivingSummons().Count > 0;
     public UnbearableFrenzy() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.RandomEnemy) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        await RevenantCardHelpers.DamageSummons(this, context, DynamicVars["FamilyDamage"].BaseValue);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
-            .WithHitCount(DynamicVars.Repeat.IntValue)
-            .CompatFromCard(this).WithRevenantFx(this, cardPlay.Target)
-            .TargetingRandomOpponents(CombatState)
-            .Execute(context);
+        _resolvedLifeLoss = await RevenantCardHelpers.DamageSummons(this, context, DynamicVars["FamilyDamage"].BaseValue);
+        try
+        {
+            await DamageCmd.Attack(DynamicVars.CalculatedDamage.Calculate(null))
+                .WithHitCount(DynamicVars.Repeat.IntValue)
+                .CompatFromCard(this).WithRevenantFx(this, cardPlay.Target)
+                .TargetingRandomOpponents(CombatState)
+                .Execute(context);
+        }
+        finally { _resolvedLifeLoss = null; }
     }
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(1m);
+    protected override void OnUpgrade() => DynamicVars.Repeat.UpgradeValueBy(1m);
 }
 
 public sealed class Beaststone : CardModel

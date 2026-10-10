@@ -242,11 +242,6 @@ namespace NightMustStay.Core.Models.Power
             {
                 await greenTalisman.AfterGuardCounterSucceeded(choiceContext);
             }
-            StormAvatarPower stormAvatar = base.Owner.GetPower<StormAvatarPower>();
-            if (stormAvatar != null && attacker.IsAlive)
-            {
-                await stormAvatar.AfterGuardCounterSucceeded(choiceContext, attacker);
-            }
 
             GuardianCharge[] charges = base.Owner.Player.PlayerCombatState.AllCards
                 .OfType<GuardianCharge>()

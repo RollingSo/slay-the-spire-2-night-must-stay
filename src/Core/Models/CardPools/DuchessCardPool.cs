@@ -98,6 +98,8 @@ public sealed class DuchessCardPool : CardPoolModel
         ModelDb.Card<DuchessMemoryFragment>(),
         ModelDb.Card<DuchessPhantomKiller>(),
         ModelDb.Card<DuchessGreatCaria>(),
+        ModelDb.Card<DuchessCarnivalNight>(),
+        ModelDb.Card<DuchessMasquerade>(),
         ModelDb.Card<DuchessFate>(),
     };
 }
