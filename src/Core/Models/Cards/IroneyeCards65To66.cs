@@ -97,6 +97,9 @@ public sealed class PoisonScheme : CardModel
             this);
     }
 
-    protected override void OnUpgrade() =>
+    protected override void OnUpgrade()
+    {
+        DynamicVars[HiddenPoisonKey].UpgradeValueBy(1m);
         DynamicVars[RetainCardsKey].UpgradeValueBy(1m);
+    }
 }

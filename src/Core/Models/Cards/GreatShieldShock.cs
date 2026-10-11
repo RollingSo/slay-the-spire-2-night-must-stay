@@ -13,7 +13,9 @@ namespace NightMustStay.Core.Models.Cards
     {
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new DamageVar(4m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Move)
+            // The power deals unpowered damage, not an attack. Its preview
+            // must use the same flags so Strength/Weak cannot modify it.
+            new DamageVar(4m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered | MegaCrit.Sts2.Core.ValueProps.ValueProp.SkipHurtAnim)
         };
 
         public GreatShieldShock()

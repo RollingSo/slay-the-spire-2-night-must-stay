@@ -225,7 +225,7 @@ public sealed class RoadAlreadyTraveled : CardModel
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/road_already_traveled.png");
 
     public RoadAlreadyTraveled()
-        : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+        : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
     {
     }
 

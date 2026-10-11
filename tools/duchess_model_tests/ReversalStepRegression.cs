@@ -27,6 +27,35 @@ internal static class ReversalStepRegression
         {
             foreach (bool upgraded in new[] { false, true })
             {
+                CardModel Mutable<T>() where T : CardModel
+                {
+                    var model = ModelDb.Card<T>().ToMutable();
+                    if (upgraded) model.UpgradeInternal();
+                    return model;
+                }
+                if (Mutable<BowLikeFullMoon>().EnergyCost.GetResolved() != (upgraded ? 0 : 1)
+                    || Mutable<BladeShadowUnmatched>().EnergyCost.GetResolved() != (upgraded ? 0 : 1))
+                    throw new Exception("Moon/Blade costs must be 1/0.");
+                var poison = Mutable<PoisonScheme>();
+                if (poison.DynamicVars["HiddenPoison"].BaseValue != (upgraded ? 4 : 3)
+                    || poison.DynamicVars["RetainCards"].BaseValue != (upgraded ? 3 : 2))
+                    throw new Exception("Poison Scheme upgrade must improve poison and retention.");
+                var star = Mutable<StarPlucker>();
+                if (star.DynamicVars.Cards.BaseValue != (upgraded ? 3 : 2)
+                    || !star.Keywords.Contains(CardKeyword.Exhaust))
+                    throw new Exception("Star Plucker must draw 2/3 and Exhaust.");
+                var shadow = Mutable<IroneyeShadowAssault>();
+                if (shadow.DynamicVars["Distance"].BaseValue != -3
+                    || shadow.DynamicVars.Damage.BaseValue != (upgraded ? 12 : 9)
+                    || shadow.Rarity != CardRarity.Common || shadow.TargetType != TargetType.AnyEnemy
+                    || !shadow.Keywords.Contains(CardKeyword.Retain))
+                    throw new Exception("Shadow Assault stats/keywords mismatch.");
+                if (Mutable<HundredSchemes>().DynamicVars.Cards.BaseValue != 2
+                    || Mutable<RoadAlreadyTraveled>().Rarity != CardRarity.Uncommon)
+                    throw new Exception("Hundred Schemes count/Road rarity mismatch.");
+            }
+            foreach (bool upgraded in new[] { false, true })
+            {
                 var player = TrackingArrowRegression.MakePlayer();
                 var creature = new Creature(player, 70, 70) { CombatState = new CombatState() };
                 AccessTools.Field(typeof(Player), "<Creature>k__BackingField").SetValue(player, creature);
@@ -39,8 +68,8 @@ internal static class ReversalStepRegression
                     .GetValue(player.PlayerCombatState!.Hand)!).Add(card);
                 if (upgraded) card.UpgradeInternal();
                 foreach (var (current, extraDexterity, multiplier, expected) in new (int, decimal, decimal, decimal)[]
-                    { (0, 3, 1, 0), (1, 0, 1, 3), (-1, 0, 1, 5), (3, 0, 1, 9),
-                        (-3, 0, 1, 15), (5, 2, 1, 17), (-5, 2, 1, 27), (3, 2, 0.75m, 8) })
+                    { (0, 3, 1, 0), (1, 0, 1, 5), (-1, 0, 1, 7), (3, 0, 1, 15),
+                        (-3, 0, 1, 21), (5, 2, 1, 27), (-5, 2, 1, 37), (3, 2, 0.75m, 12) })
                 {
                     _distance = current; _extraDexterity = extraDexterity; _multiplier = multiplier;
                     distance.SetAmount(current, false);
@@ -49,8 +78,8 @@ internal static class ReversalStepRegression
                         throw new Exception($"Reversal Step preview: Distance {current}, expected {expected}, got {card.DynamicVars.CalculatedBlock.PreviewValue}.");
                     if (distance.Amount != current) throw new Exception("Preview changed actual Distance.");
                     card.DynamicVars.CalculatedBlock.UpdateCardPreview(card, CardPreviewMode.Normal, null!, false);
-                    if (card.DynamicVars.CalculatedBlock.PreviewValue != 4m * Math.Abs(current))
-                        throw new Exception("Raw block preview must match two points of movement per Distance at two Block each.");
+                    if (card.DynamicVars.CalculatedBlock.PreviewValue != 6m * Math.Abs(current))
+                        throw new Exception("Raw block preview must match two points of movement per Distance at three Block each.");
                 }
             }
             var libraryCard = ModelDb.Card<ReversalStep>().ToMutable();

@@ -2,6 +2,7 @@
   "schemaVersion": 1,
   "notes": "Confirmed card-name audit, 2026-10-02. Composite names retain mod wording with official terminology; IDs and mechanics are unchanged.",
   "cards": {
+    "COOPERATIVE_DEFENSE": {"zhs": "协同防御", "eng": "Cooperative Defense", "jpn": "協同防御", "kor": "협동 수비", "reference": "User-requested replacement for Shared Great Shield"},
     "DUCHESS_CARNIVAL_NIGHT": {"zhs": "狂欢夜", "eng": "Carnival Night", "jpn": "狂歓の夜", "kor": "축제의 밤", "reference": "User-provided multiplayer card table screenshot"},
     "DUCHESS_MASQUERADE": {"zhs": "面具舞会", "eng": "Masquerade", "jpn": "仮面舞踏会", "kor": "가면무도회", "reference": "User-provided multiplayer card table screenshot"},
     "SOUL_DEPARTURE": {
@@ -682,7 +683,7 @@
     "POWERFUL_GUARD_COUNTER",
     "PROTECTIVE_AIRSTREAM",
     "RETREATING_DEFENSE",
-    "SHARED_GREAT_SHIELD",
+    "COOPERATIVE_DEFENSE",
     "SHIELD_BASH_DEFEND",
     "SHIELD_WALL_DEFEND",
     "SLOW_DEFEND",

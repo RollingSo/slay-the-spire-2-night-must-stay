@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
+using NightMustStay.Core.Models.Cards;
 using System.Linq;
 
 namespace NightMustStay.Core.Patches;
@@ -52,6 +53,9 @@ public static class GuardCounterAttackPatch
                 continue;
 
             BlockingPlayerChoiceContext context = new BlockingPlayerChoiceContext();
+            if (playerCreature.Player != null)
+                foreach (var charge in playerCreature.Player.PlayerCombatState.AllCards.OfType<GuardianCharge>().ToArray())
+                    await charge.AfterFullyBlockedAttack();
             StormBarrierPower barrier = playerCreature.GetPower<StormBarrierPower>();
             if (barrier != null)
                 await barrier.AfterFullyBlockedAttack(context, attacker);

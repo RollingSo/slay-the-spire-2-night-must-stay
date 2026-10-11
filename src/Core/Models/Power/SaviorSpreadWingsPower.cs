@@ -11,17 +11,17 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace NightMustStay.Core.Models.Power;
 
-// Party-wide aura: filter the dealer, not the recipient. This also covers
-// enemies summoned after the card was played, without reapplying a debuff.
+// Enemy-side debuff: only this creature's attacks are reduced, regardless
+// of which player or summon receives them.
 public sealed class SaviorSpreadWingsPower : PowerModel
 {
-    public override PowerType Type => PowerType.Buff;
+    public override PowerType Type => PowerType.Debuff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
     // Routed through the branch-compatible Harmony hook (release/Beta have
     // different virtual signatures), just like the existing damage reduction.
     internal decimal GetAttackMultiplier(Creature dealer, ValueProp props) =>
-        dealer?.Side == CombatSide.Enemy && props.IsPoweredAttack()
+        dealer == Owner && dealer?.Side == CombatSide.Enemy && props.IsPoweredAttack()
             ? Math.Clamp((100m - Amount) / 100m, 0m, 1m)
             : 1m;
 

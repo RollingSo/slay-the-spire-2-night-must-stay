@@ -1,5 +1,6 @@
 using NightMustStay.Core.Nodes.Vfx;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -35,7 +36,8 @@ namespace NightMustStay.Core.Models.Cards
                 .TargetingAllOpponents(base.CombatState)
                 .WithGuardianWeaponFx()
                 .Execute(choiceContext);
-            await PowerCmd.Apply<SaviorSpreadWingsPower>(choiceContext, base.Owner.Creature, base.DynamicVars[DamageReductionKey].BaseValue, base.Owner.Creature, this);
+            foreach (var enemy in CombatState.HittableEnemies.ToArray())
+                await PowerCmd.Apply<SaviorSpreadWingsPower>(choiceContext, enemy, base.DynamicVars[DamageReductionKey].BaseValue, base.Owner.Creature, this);
         }
 
         protected override void OnUpgrade()

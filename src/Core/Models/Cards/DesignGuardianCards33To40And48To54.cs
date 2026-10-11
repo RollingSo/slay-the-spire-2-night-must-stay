@@ -148,7 +148,6 @@ namespace NightMustStay.Core.Models.Cards
     // Card-table ID 35: 冲撞
     public sealed class GuardianCharge : CardModel
     {
-        protected override IEnumerable<IHoverTip> ExtraHoverTips => new[] { HoverTipFactory.FromPower<GuardCounterPower>() };
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(6m, ValueProp.Move) };
         public GuardianCharge() : base(0, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
         protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
@@ -157,7 +156,7 @@ namespace NightMustStay.Core.Models.Cards
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(cardPlay.Target).WithGuardianWeaponFx().Execute(context);
         }
 
-        public async Task AfterGuardCounterSucceeded()
+        public async Task AfterFullyBlockedAttack()
         {
             if (Pile == null || Pile.Type == PileType.Hand || !Pile.Type.IsCombatPile())
                 return;
@@ -246,7 +245,7 @@ namespace NightMustStay.Core.Models.Cards
     public sealed class SharpenResolve : CardModel
     {
         protected override IEnumerable<IHoverTip> ExtraHoverTips => new[] { HoverTipFactory.FromPower<GuardCounterPower>() };
-        protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DynamicVar("GuardCounter", 10m) };
+        protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DynamicVar("GuardCounter", 14m) };
         public SharpenResolve() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) { }
         protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
         {
@@ -256,7 +255,7 @@ namespace NightMustStay.Core.Models.Cards
                 amount *= 2m;
             await PowerCmd.Apply<GuardCounterPower>(context, Owner.Creature, amount, Owner.Creature, this);
         }
-        protected override void OnUpgrade() => DynamicVars["GuardCounter"].UpgradeValueBy(4m);
+        protected override void OnUpgrade() => DynamicVars["GuardCounter"].UpgradeValueBy(5m);
     }
 
     // Card-table ID 40: 大龙卷
@@ -362,7 +361,7 @@ namespace NightMustStay.Core.Models.Cards
                     + PileType.Discard.GetPile(card.Owner).Cards.Count(pileCard => pileCard is ShieldPoke))
         };
 
-        public UltimateOffenseDefense() : base(2, CardType.Attack, CardRarity.Rare, TargetType.Self) { }
+        public UltimateOffenseDefense() : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
         protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
         {
             CardModel[] shieldPokes = PileType.Draw.GetPile(Owner).Cards

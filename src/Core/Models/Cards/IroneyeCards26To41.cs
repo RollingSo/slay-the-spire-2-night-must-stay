@@ -69,7 +69,7 @@ namespace NightMustStay.Core.Models.Cards
             ImageHelper.GetImagePath("packed/card_portraits/ironeye/bow_like_full_moon.png");
 
         public BowLikeFullMoon()
-            : base(2, CardType.Power, CardRarity.Rare, TargetType.Self)
+            : base(1, CardType.Power, CardRarity.Rare, TargetType.Self)
         {
         }
 
@@ -101,7 +101,7 @@ namespace NightMustStay.Core.Models.Cards
             ImageHelper.GetImagePath("packed/card_portraits/ironeye/blade_shadow_unmatched.png");
 
         public BladeShadowUnmatched()
-            : base(2, CardType.Power, CardRarity.Rare, TargetType.Self)
+            : base(1, CardType.Power, CardRarity.Rare, TargetType.Self)
         {
         }
 
@@ -580,7 +580,7 @@ namespace NightMustStay.Core.Models.Cards
             new[] { CardKeyword.Exhaust };
 
         protected override IEnumerable<DynamicVar> CanonicalVars =>
-            new[] { new DynamicVar(CardsKey, 1m) };
+            new[] { new DynamicVar(CardsKey, 2m) };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
             new[] { HoverTipFactory.FromKeyword(CardKeyword.Exhaust) };
