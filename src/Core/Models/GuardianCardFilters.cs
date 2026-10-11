@@ -28,7 +28,7 @@ namespace NightMustStay.Core.Models
             "POWERFUL_GUARD_COUNTER",
             "PROTECTIVE_AIRSTREAM",
             "RETREATING_DEFENSE",
-            "SHARED_GREAT_SHIELD",
+            "COOPERATIVE_DEFENSE",
             "SHIELD_BASH_DEFEND",
             "SHIELD_WALL_DEFEND",
             "SLOW_DEFEND",

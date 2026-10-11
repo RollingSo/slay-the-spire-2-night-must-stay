@@ -2,7 +2,7 @@
   "STALWART_SHIELD_GREASE.title": "견고한 방패 기름",
   "STALWART_SHIELD_GREASE.description": "[gold]철벽[/gold]을 {FortifyPower} 얻습니다.",
   "KNIGHTLY_SPIRIT.title": "기사의 기백",
-  "KNIGHTLY_SPIRIT.description": "[gold]가드 카운터[/gold]를 {GuardCounterPower} 얻습니다.",
+  "KNIGHTLY_SPIRIT.description": "[gold]방어도[/gold]를 {Block}, [gold]가드 카운터[/gold]를 {GuardCounterPower} 얻습니다.",
   "FEARLESS_LIQUOR.title": "'두려움 없는' 술",
   "FEARLESS_LIQUOR.description": "[gold]방패 찌르기+[/gold]를 {Cards}장 [gold]손[/gold]에 추가합니다.",
   "POISON_GREASE.title": "독기름",

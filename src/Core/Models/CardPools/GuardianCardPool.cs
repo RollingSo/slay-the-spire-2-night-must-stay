@@ -52,7 +52,7 @@ namespace NightMustStay.Core.Models.CardPools
                 ModelDb.Card<GreatShieldShock>(),
                 ModelDb.Card<ShieldPokeTactics>(),
                 ModelDb.Card<Topple>(),
-                ModelDb.Card<SharedGreatShield>(),
+                ModelDb.Card<CooperativeDefense>(),
                 ModelDb.Card<SaviorForm>(),
                 ModelDb.Card<SaviorSpreadWings>(),
                 ModelDb.Card<StompStance>(),

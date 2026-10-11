@@ -41,7 +41,7 @@ namespace NightMustStay.Core.Models.Relics
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new PowerVar<GuardCounterPower>(10m)
+            new PowerVar<GuardCounterPower>(5m)
         };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
@@ -49,10 +49,11 @@ namespace NightMustStay.Core.Models.Relics
             HoverTipFactory.FromPower<GuardCounterPower>()
         };
 
-        public override async Task BeforeCombatStart()
+        public override async Task AfterPlayerTurnStart(PlayerChoiceContext context, Player player)
         {
+            if (player != Owner) return;
             Flash();
-            await PowerCmd.Apply<GuardCounterPower>(new BlockingPlayerChoiceContext(), Owner.Creature,
+            await PowerCmd.Apply<GuardCounterPower>(context, Owner.Creature,
                 DynamicVars[nameof(GuardCounterPower)].BaseValue, Owner.Creature, null);
         }
     }
@@ -137,11 +138,11 @@ namespace NightMustStay.Core.Models.Relics
         public override RelicRarity Rarity => RelicRarity.Rare;
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new PowerVar<GuardCounterPower>(6m)
+            new BlockVar(4m, ValueProp.Unpowered)
         };
         protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
         {
-            HoverTipFactory.FromPower<GuardCounterPower>()
+            HoverTipFactory.Static(StaticHoverTip.Block)
         };
 
         public override async Task AfterCardPlayed(
@@ -156,12 +157,7 @@ namespace NightMustStay.Core.Models.Relics
             }
 
             Flash();
-            await PowerCmd.Apply<GuardCounterPower>(
-                choiceContext,
-                Owner.Creature,
-                DynamicVars[nameof(GuardCounterPower)].BaseValue,
-                Owner.Creature,
-                null);
+            await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, null);
         }
     }
 

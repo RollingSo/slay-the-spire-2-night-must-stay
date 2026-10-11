@@ -280,7 +280,10 @@ namespace NightMustStay.Core.Models.Power
                 Owner,
                 Amount,
                 ValueProp.Unblockable | ValueProp.Unpowered,
-                Applier,
+                // CreatureCmd ignores damage dealt by a dead creature.
+                // Existing poison persists independently of its applier;
+                // keep attribution only while that creature is alive.
+                Applier is { IsAlive: true } ? Applier : null,
                 null);
         }
 

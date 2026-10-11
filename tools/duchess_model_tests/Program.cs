@@ -51,6 +51,12 @@ foreach (Type type in typeof(PowerModel).Assembly.GetTypes().Where(type => !type
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+if (args.Contains("--cooperative-defense-only"))
+{
+    CooperativeDefenseRegression.Run();
+    Console.WriteLine("PASS: Cooperative Defense real preview/calculation (0/1/3 defense cards, base/upgraded), Wing Strike stats, old card removal.");
+    return 0;
+}
 if (args.Contains("--duchess-team-skills-only"))
 {
     var carnival = ModelDb.Card<DuchessCarnivalNight>().ToMutable();

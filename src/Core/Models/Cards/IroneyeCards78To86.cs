@@ -162,7 +162,7 @@ public sealed class ReversalStep : CardModel
         new DynamicVar[]
         {
             new CalculationBaseVar(0m),
-            new CalculationExtraVar(2m),
+            new CalculationExtraVar(3m),
             new PostDistanceCalculatedBlockVar(
                 ValueProp.Move,
                 static (card, _) =>
@@ -380,6 +380,8 @@ public sealed class CorrodeAll : CardModel
 // Card-table ID 84: 百谋
 public sealed class HundredSchemes : CardModel
 {
+    protected override IEnumerable<DynamicVar> CanonicalVars =>
+        new[] { new CardsVar(2) };
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         HoverTipFactory.FromCardWithCardHoverTips<Approach>(IsUpgraded)
             .Concat(HoverTipFactory.FromCardWithCardHoverTips<Retreat>(IsUpgraded));
@@ -396,21 +398,21 @@ public sealed class HundredSchemes : CardModel
     {
         var candidates = PileType.Draw.GetPile(Owner).Cards.ToArray();
         if (candidates.Length == 0) return;
-        CardModel selected = (await CardSelectCmd.FromSimpleGrid(
+        var selectedCards = (await CardSelectCmd.FromSimpleGrid(
                 context,
                 candidates,
                 Owner,
-                new CardSelectorPrefs(SelectionScreenPrompt, 1)))
-            .FirstOrDefault();
-        if (selected == null)
-            return;
-
-        CardModel replacement = selected.Type == CardType.Attack
-            ? CombatState.CreateCard<Approach>(Owner)
-            : CombatState.CreateCard<Retreat>(Owner);
-        if (IsUpgraded)
-            CardCmd.Upgrade(replacement);
-        await CardCmd.Transform(selected, replacement);
+                new CardSelectorPrefs(SelectionScreenPrompt, Math.Min(candidates.Length, (int)DynamicVars.Cards.BaseValue))))
+            .ToArray();
+        foreach (CardModel selected in selectedCards)
+        {
+            CardModel replacement = selected.Type == CardType.Attack
+                ? CombatState.CreateCard<Approach>(Owner)
+                : CombatState.CreateCard<Retreat>(Owner);
+            if (IsUpgraded)
+                CardCmd.Upgrade(replacement);
+            await CardCmd.Transform(selected, replacement);
+        }
     }
 
     protected override void OnUpgrade()

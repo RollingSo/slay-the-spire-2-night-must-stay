@@ -2,7 +2,7 @@
   "STALWART_SHIELD_GREASE.title": "堅牢な盾脂",
   "STALWART_SHIELD_GREASE.description": "[gold]堅守[/gold]{FortifyPower}を得る。",
   "KNIGHTLY_SPIRIT.title": "騎士の気概",
-  "KNIGHTLY_SPIRIT.description": "[gold]ガードカウンター[/gold]{GuardCounterPower}を得る。",
+  "KNIGHTLY_SPIRIT.description": "{Block}[gold]ブロック[/gold]と[gold]ガードカウンター[/gold]{GuardCounterPower}を得る。",
   "FEARLESS_LIQUOR.title": "「恐れ知らず」の酒",
   "FEARLESS_LIQUOR.description": "[gold]盾突き+[/gold]を{Cards}枚[gold]手札[/gold]に加える。",
   "POISON_GREASE.title": "毒脂",

@@ -44,7 +44,8 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override void OnUpgrade()
         {
-            base.DynamicVars.Damage.UpgradeValueBy(3m);
+            base.DynamicVars.Damage.UpgradeValueBy(1m);
+            base.DynamicVars.Cards.UpgradeValueBy(1m);
         }
     }
 }

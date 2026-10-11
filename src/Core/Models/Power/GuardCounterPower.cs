@@ -243,11 +243,6 @@ namespace NightMustStay.Core.Models.Power
                 await greenTalisman.AfterGuardCounterSucceeded(choiceContext);
             }
 
-            GuardianCharge[] charges = base.Owner.Player.PlayerCombatState.AllCards
-                .OfType<GuardianCharge>()
-                .ToArray();
-            foreach (GuardianCharge charge in charges)
-                await charge.AfterGuardCounterSucceeded();
         }
 
         private void RememberSuccessfulTrigger()

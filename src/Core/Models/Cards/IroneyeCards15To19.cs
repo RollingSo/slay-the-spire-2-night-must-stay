@@ -27,7 +27,7 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new DynamicVar(DistanceKey, 1m),
+            new DynamicVar(DistanceKey, -3m),
             new DamageVar(9m, ValueProp.Move),
         };
 
@@ -41,7 +41,7 @@ namespace NightMustStay.Core.Models.Cards
             ImageHelper.GetImagePath("packed/card_portraits/ironeye/shadow_assault.png");
 
         public IroneyeShadowAssault()
-            : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy)
+            : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
         {
         }
 
@@ -58,7 +58,7 @@ namespace NightMustStay.Core.Models.Cards
             await PowerCmd.Apply<DistancePower>(
                 context,
                 Owner.Creature,
-                -DynamicVars[DistanceKey].BaseValue,
+                DynamicVars[DistanceKey].BaseValue - (Owner.Creature.GetPower<DistancePower>()?.Amount ?? 0m),
                 Owner.Creature,
                 this);
         }

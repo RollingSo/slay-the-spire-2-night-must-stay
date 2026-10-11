@@ -8,6 +8,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Cards;
 using NightMustStay.Core.Models.Power;
 
@@ -33,11 +34,12 @@ namespace NightMustStay.Core.Models.Potions
         public override PotionRarity Rarity => PotionRarity.Uncommon;
         public override PotionUsage Usage => PotionUsage.CombatOnly;
         public override TargetType TargetType => TargetType.Self;
-        protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new PowerVar<GuardCounterPower>(20m) };
+        protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new BlockVar(15m, ValueProp.Unpowered), new PowerVar<GuardCounterPower>(20m) };
         public override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[] { HoverTipFactory.FromPower<GuardCounterPower>() };
 
         protected override async Task OnUse(PlayerChoiceContext choiceContext, Creature target)
         {
+            await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, null);
             await PowerCmd.Apply<GuardCounterPower>(choiceContext, Owner.Creature,
                 DynamicVars[nameof(GuardCounterPower)].BaseValue, Owner.Creature, null);
         }
