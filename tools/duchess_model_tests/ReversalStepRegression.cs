@@ -41,7 +41,7 @@ internal static class ReversalStepRegression
                     || poison.DynamicVars["RetainCards"].BaseValue != (upgraded ? 3 : 2))
                     throw new Exception("Poison Scheme upgrade must improve poison and retention.");
                 var star = Mutable<StarPlucker>();
-                if (star.DynamicVars.Cards.BaseValue != (upgraded ? 3 : 2)
+                if (star.DynamicVars["Cards"].BaseValue != (upgraded ? 3 : 2)
                     || !star.Keywords.Contains(CardKeyword.Exhaust))
                     throw new Exception("Star Plucker must draw 2/3 and Exhaust.");
                 var shadow = Mutable<IroneyeShadowAssault>();

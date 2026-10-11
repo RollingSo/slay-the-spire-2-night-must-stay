@@ -23,6 +23,36 @@ if (initResult != ESteamAPIInitResult.k_ESteamAPIInitResult_OK)
 
 try
 {
+    if (args[0] == "--download-verify")
+    {
+        bool done = false;
+        bool succeeded = false;
+        using var callback = Callback<DownloadItemResult_t>.Create(result =>
+        {
+            if (result.m_nPublishedFileId.m_PublishedFileId != publishedFileId) return;
+            Console.WriteLine($"Workshop download result: {result.m_eResult}");
+            succeeded = result.m_eResult == EResult.k_EResultOK;
+            done = true;
+        });
+        if (!SteamUGC.DownloadItem(new PublishedFileId_t(publishedFileId), true))
+            return 5;
+        var timer = Stopwatch.StartNew();
+        var progress = Stopwatch.StartNew();
+        while (!done && timer.Elapsed < TimeSpan.FromMinutes(10))
+        {
+            SteamAPI.RunCallbacks();
+            if (progress.Elapsed > TimeSpan.FromSeconds(10))
+            {
+                SteamUGC.GetItemDownloadInfo(new PublishedFileId_t(publishedFileId), out ulong downloaded, out ulong total);
+                Console.WriteLine($"Workshop download: {downloaded}/{total} bytes");
+                progress.Restart();
+            }
+            Thread.Sleep(50);
+        }
+        if (SteamUGC.GetItemInstallInfo(new PublishedFileId_t(publishedFileId), out ulong size, out string folder, 4096, out uint timestamp))
+            Console.WriteLine($"Workshop cache: {folder}, size={size}, updated={timestamp}");
+        return succeeded ? 0 : 6;
+    }
     if (args[0] == "--verify")
     {
         var query = SteamUGC.CreateQueryUGCDetailsRequest(new[] { new PublishedFileId_t(publishedFileId) }, 1);
