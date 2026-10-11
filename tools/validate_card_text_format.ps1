@@ -62,6 +62,12 @@ $errors = [System.Collections.Generic.List[string]]::new()
 # Cards must use an EnergyVar with {Energy:energyIcons()} instead.
 foreach ($locale in @(@('zhs', $zhs), @('eng', $eng), @('jpn', $jpn), @('kor', $kor))) {
     foreach ($entry in $locale[1].PSObject.Properties) {
+        # Native `show` accepts IfUpgradedVar only, not bool arguments. A
+        # mismatch causes LocManager to return the entire unformatted text.
+        # Bool conditions use SmartFormat's automatic conditional formatter.
+        if ([string]$entry.Value -match '\{(?:InCombat|OnTable|IsTargeting|GainsBlock|IsOstyAlive):show:') {
+            $errors.Add("$($locale[0])/$($entry.Name): show formatter cannot accept a boolean; use {InCombat:true text|false text} (or the corresponding boolean key).")
+        }
         if ($entry.Name -match '\.(?:description|upgradeDescription|unchargedDescription|chargedDescription)$' -and
             [string]$entry.Value -match '\[E\]') {
             $errors.Add("$($locale[0])/$($entry.Name): literal [E] is not a renderable energy icon; use energyIcons().")

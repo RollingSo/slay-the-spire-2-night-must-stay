@@ -45,8 +45,7 @@ public sealed class DuchessReversePocketwatch : DuchessOldPocketwatch
     public override async Task OnMomentTwo(PlayerChoiceContext context)
     {
         Flash();
-        await CardPileCmd.Draw(context, 1m, Owner);
-        await PlayerCmd.GainEnergy(1m, Owner);
+        await CardPileCmd.Draw(context, 2m, Owner);
     }
 }
 

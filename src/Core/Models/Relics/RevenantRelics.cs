@@ -36,13 +36,21 @@ public sealed class DirtyPhotoFrame : RevenantRelicModel
     protected override string RevenantIconName => "dirty_photo_frame";
     public override RelicRarity Rarity => RelicRarity.Common;
 
-    public override async Task BeforeCombatStart()
+    public override async Task BeforeHandDraw(
+        MegaCrit.Sts2.Core.Entities.Players.Player player,
+        PlayerChoiceContext context,
+        ICombatState combatState)
     {
+        // Like native Toolbox, gather the opening choice inside this player's
+        // turn-start action, not the globally awaited combat initialization.
+        // Its context pauses only this owner while teammates keep playing.
+        if (player != Owner || Owner.PlayerCombatState.TurnNumber != 1)
+            return;
+
         CardPile draw = PileType.Draw.GetPile(Owner);
         if (draw.Cards.Count == 0)
             return;
 
-        var context = new BlockingPlayerChoiceContext();
         var selected = (await CardSelectCmd.FromCombatPile(
             context,
             draw,
@@ -55,7 +63,7 @@ public sealed class DirtyPhotoFrame : RevenantRelicModel
 
         Flash();
         foreach (CardModel card in selected)
-            await CardPileCmd.Add(card, PileType.Discard);
+            if (card.Pile == draw) await CardPileCmd.Add(card, PileType.Discard);
     }
 }
 
