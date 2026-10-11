@@ -21,6 +21,14 @@ public sealed class SoulDeparture : CardModel
     protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new CardsVar(1) };
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
+        // This action gathers choices from multiple owners. Pausing only the
+        // caster's queue would let recipients play cards while their draw-pile
+        // choice is pending, including opening another selection screen and
+        // reserving competing choice IDs. Keep this group selection atomic;
+        // CardSelectCmd still synchronizes each recipient's choice normally.
+        var selectionContext = new BlockingPlayerChoiceContext();
+        selectionContext.PushModel(this);
+        var cardsToExhaust = new List<CardModel>();
         foreach (var player in CombatState.Players.Where(player => player.Creature.IsAlive).ToArray())
         {
             var pile = PileType.Draw.GetPile(player);
@@ -28,11 +36,14 @@ public sealed class SoulDeparture : CardModel
             if (count == 0) continue;
             // Use each recipient as the choice owner so native multiplayer sync
             // asks that player rather than the card's owner to choose.
-            var selected = (await CardSelectCmd.FromCombatPile(context, pile, player,
+            var selected = (await CardSelectCmd.FromCombatPile(selectionContext, pile, player,
                 new CardSelectorPrefs(SelectionScreenPrompt, count))).ToArray();
-            foreach (var card in selected)
-                if (card.Pile == pile) await CardCmd.Exhaust(context, card);
+            cardsToExhaust.AddRange(selected.Where(card => card.Pile == pile));
         }
+        // Exhaust hooks can request further choices. Run them only after all
+        // recipients have selected, using the original action context as usual.
+        foreach (var card in cardsToExhaust)
+            if (card.Pile?.Type == PileType.Draw) await CardCmd.Exhaust(context, card);
     }
     protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1);
 }

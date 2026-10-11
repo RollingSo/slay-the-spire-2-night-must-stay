@@ -141,8 +141,6 @@ public sealed class TreasuredMakeupBrush : RevenantSummonRelicModel
     protected override async Task AfterInitialCall(PlayerChoiceContext context)
     {
         Flash();
-        // Initial Call now runs after the turn's Energy initialization, so
-        // Helen's opening Retreat gain is preserved without a deferred flag.
-        await RevenantSummonManager.For(Owner).TriggerResonance(context);
+        await RevenantSummonManager.For(Owner).IncreaseFamilyMaxHp(10m);
     }
 }

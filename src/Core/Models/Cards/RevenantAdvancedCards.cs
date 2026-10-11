@@ -66,11 +66,13 @@ internal static class RevenantCardHelpers
     public static bool WasMovedFromDiscardToHand(CardModel card, PileType oldPileType) =>
         oldPileType == PileType.Discard && card.Pile?.Type == PileType.Hand;
 
-    public static async Task HealFamily(CardModel card, decimal amount)
+    public static async Task HealSummons(CardModel card, decimal amount)
     {
-        Creature family = Family(card);
-        if (family is { IsAlive: true })
-            await RevenantAttackEffects.Heal(family, amount);
+        foreach (Creature summon in RevenantSummonManager.For(card.Owner).GetLivingSummons())
+        {
+            if (summon.IsAlive)
+                await RevenantAttackEffects.Heal(summon, amount);
+        }
     }
 
     public static async Task DamageRandom(CardModel card, PlayerChoiceContext context, decimal amount, int hits = 1)
@@ -776,7 +778,11 @@ public sealed class GreaterRecover : CardModel
     public override bool GainsBlock => true;
     public override string PortraitPath => "res://revenant_assets/cards/greater_recover.png";
     public GreaterRecover() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
-    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) { await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay); await RevenantCardHelpers.HealFamily(this, DynamicVars["Heal"].BaseValue); }
+    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
+    {
+        await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
+        await RevenantCardHelpers.HealSummons(this, DynamicVars["Heal"].BaseValue);
+    }
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(4m);
 }
 
@@ -877,6 +883,7 @@ public sealed class GurranqBeastClaw : CardModel, IRevenantChargeCard
         await DamageCmd.Attack(damage).CompatFromCard(this).WithRevenantFx(this, cardPlay.Target).TargetingAllOpponents(CombatState).Execute(context);
         if (wasCharged)
         {
+            await RevenantCall.ChooseFamilyAndCall(context, Owner);
             await RevenantSummonManager.For(Owner).TriggerResonance(context);
             await RevenantSummonManager.For(Owner).NotifyChargedCardPlayed(context);
         }
