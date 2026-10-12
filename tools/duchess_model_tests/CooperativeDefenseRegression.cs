@@ -15,6 +15,14 @@ internal static class CooperativeDefenseRegression
         var harmony = new HarmonyLib.Harmony("night-must-stay.tests.cooperative-defense");
         harmony.Patch(AccessTools.PropertyGetter(typeof(CardModel), nameof(CardModel.Title)),
             prefix: new HarmonyMethod(typeof(WhirlingTitleFixture), nameof(WhirlingTitleFixture.Prefix)));
+        // Calculated previews require an active combat; this standalone fixture
+        // has no global combat room. Keep the native calculation itself intact.
+        harmony.Patch(AccessTools.PropertyGetter(typeof(CardModel), nameof(CardModel.CombatState)),
+            prefix: new HarmonyMethod(typeof(MajestyRegression), nameof(MajestyRegression.CombatStateFixture)));
+        harmony.Patch(AccessTools.PropertyGetter(typeof(CombatManager), nameof(CombatManager.IsInProgress)),
+            prefix: new HarmonyMethod(typeof(ReversalStepRegression), nameof(ReversalStepRegression.InCombat)));
+        harmony.Patch(AccessTools.PropertyGetter(typeof(CombatManager), nameof(CombatManager.IsOverOrEnding)),
+            prefix: new HarmonyMethod(typeof(MajestyRegression), nameof(MajestyRegression.CombatEndingFixture)));
         try
         {
             foreach (bool upgraded in new[] { false, true })
@@ -39,7 +47,7 @@ internal static class CooperativeDefenseRegression
                     card.DynamicVars.CalculatedBlock.UpdateCardPreview(card, CardPreviewMode.Normal, null!, false);
                     if (card.DynamicVars.CalculatedBlock.PreviewValue != 3 * count
                         || card.DynamicVars.CalculatedBlock.Calculate(null) != 3 * count)
-                        throw new Exception($"Cooperative Defense preview/resolution mismatch: {count} defenses.");
+                        throw new Exception($"Cooperative Defense preview/resolution mismatch: {count} defenses, preview={card.DynamicVars.CalculatedBlock.PreviewValue}, resolution={card.DynamicVars.CalculatedBlock.Calculate(null)}.");
                 }
                 var wing = (WingStrike)ModelDb.Card<WingStrike>().ToMutable();
                 if (upgraded) wing.UpgradeInternal();
