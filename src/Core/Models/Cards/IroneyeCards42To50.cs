@@ -206,7 +206,7 @@ public sealed class RoadAlreadyTraveled : CardModel
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         new DynamicVar[]
         {
-            new CalculationBaseVar(4m),
+            new CalculationBaseVar(6m),
             new CalculationExtraVar(2m),
             new CalculatedBlockVar(ValueProp.Move).WithMultiplier(
                 static (card, _) =>
@@ -243,7 +243,7 @@ public sealed class RoadAlreadyTraveled : CardModel
     }
 
     protected override void OnUpgrade() =>
-        DynamicVars["CalculationBase"].UpgradeValueBy(3m);
+        DynamicVars["CalculationExtra"].UpgradeValueBy(1m);
 }
 
 // Card-table ID 47: 鬼步

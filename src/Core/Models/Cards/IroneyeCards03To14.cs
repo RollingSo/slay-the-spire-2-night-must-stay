@@ -450,7 +450,7 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new BlockVar(4m, ValueProp.Move),
+            new BlockVar(5m, ValueProp.Move),
         };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]

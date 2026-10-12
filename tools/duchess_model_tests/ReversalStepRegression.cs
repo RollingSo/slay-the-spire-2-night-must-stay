@@ -53,6 +53,11 @@ internal static class ReversalStepRegression
                 if (Mutable<HundredSchemes>().DynamicVars.Cards.BaseValue != 2
                     || Mutable<RoadAlreadyTraveled>().Rarity != CardRarity.Uncommon)
                     throw new Exception("Hundred Schemes count/Road rarity mismatch.");
+                if (Mutable<BowCombatArt>().DynamicVars.Damage.BaseValue != (upgraded ? 12 : 9)
+                    || Mutable<Offensive>().DynamicVars.Damage.BaseValue != 6
+                    || Mutable<GroundSkid>().DynamicVars.Block.BaseValue != 5
+                    || Mutable<FrightenedBird>().EnergyCost.GetResolved() != 0)
+                    throw new Exception("Ironeye damage/block/cost balance mismatch.");
             }
             foreach (bool upgraded in new[] { false, true })
             {
@@ -67,6 +72,26 @@ internal static class ReversalStepRegression
                 ((List<CardModel>)AccessTools.Field(typeof(CardPile), "_cards")
                     .GetValue(player.PlayerCombatState!.Hand)!).Add(card);
                 if (upgraded) card.UpgradeInternal();
+                var road = (RoadAlreadyTraveled)ModelDb.Card<RoadAlreadyTraveled>().ToMutable();
+                AccessTools.Field(typeof(CardModel), "_owner").SetValue(road, player);
+                if (upgraded) road.UpgradeInternal();
+                if (road.DynamicVars["CalculationBase"].BaseValue != 6
+                    || road.DynamicVars["CalculationBase"].WasJustUpgraded
+                    || road.DynamicVars["CalculationExtra"].BaseValue != (upgraded ? 3 : 2))
+                    throw new Exception("Road upgrade must change only per-Distance block.");
+                foreach (int moved in new[] { 0, 1, 5 })
+                {
+                    distance.SetAmount(0, false);
+                    var data = AccessTools.Method(typeof(PowerModel), "GetInternalData")
+                        .MakeGenericMethod(typeof(DistancePower).GetNestedType("Data", BindingFlags.NonPublic)!)
+                        .Invoke(distance, null)!;
+                    AccessTools.Field(data.GetType(), "DistanceMovedThisTurn").SetValue(data, (decimal)moved);
+                    road.DynamicVars.CalculatedBlock.UpdateCardPreview(road, CardPreviewMode.Normal, null!, false);
+                    decimal expectedRoad = 6 + moved * (upgraded ? 3 : 2);
+                    if (road.DynamicVars.CalculatedBlock.PreviewValue != expectedRoad
+                        || road.DynamicVars.CalculatedBlock.Calculate(null) != expectedRoad)
+                        throw new Exception("Road dynamic block preview/resolution mismatch.");
+                }
                 foreach (var (current, extraDexterity, multiplier, expected) in new (int, decimal, decimal, decimal)[]
                     { (0, 3, 1, 0), (1, 0, 1, 5), (-1, 0, 1, 7), (3, 0, 1, 15),
                         (-3, 0, 1, 21), (5, 2, 1, 27), (-5, 2, 1, 37), (3, 2, 0.75m, 12) })

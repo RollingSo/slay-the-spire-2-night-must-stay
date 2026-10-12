@@ -21,7 +21,7 @@ namespace NightMustStay.Core.Models.Cards;
 public sealed class Offensive : CardModel
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new DynamicVar[] { new DamageVar(4m, ValueProp.Move) };
+        new DynamicVar[] { new DamageVar(6m, ValueProp.Move) };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         HoverTipFactory.FromCardWithCardHoverTips<Approach>();
