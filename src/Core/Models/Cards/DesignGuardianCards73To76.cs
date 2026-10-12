@@ -209,7 +209,9 @@ namespace NightMustStay.Core.Models.Power
             CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
         {
             if (participants.Contains(Owner))
-                await PowerCmd.Remove(this);
+                // Each stack is one remaining turn; stacking extends duration,
+                // never multiplies the counter gained from blocked damage.
+                await PowerCmd.Decrement(this);
         }
     }
 }
