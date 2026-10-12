@@ -1,0 +1,17 @@
+0.3.14
+
+中文
+• 调整守护者的卡牌、遗物与药水平衡。“共持防御”替换为“协同防御”：抽牌后，根据手牌中名称带有“防御”的牌获得格挡；“冲撞”现在在完全格挡敌人攻击时回到手牌。
+• 修正“巨盾震击”的伤害预览，并将“救世展翼”的减伤效果改为施加在敌人身上。
+• 调整铁之眼多张卡牌的耗能、数值和稀有度。“影袭”现在将距离变为-3，“百谋”可以变化2张牌；修复施毒者死亡后隐毒不再造成伤害的问题。
+• 修复复仇者“灵魂出窍”和“肮脏相框”的联机选牌流程，并修正癫火卡牌的动态伤害文本显示。
+• 调整“猎人的黑夜”“魔女胸针”“珍藏化妆刷”和“逆时怀表”的效果。
+• 更新“协同防御”“挺身而出”的卡图，并优化四个角色的地图小头像。
+
+English
+• Rebalanced Guardian's cards, relics, and potions. Shared Defense has been replaced by Cooperative Defense: draw cards, then gain Block for each card in your hand with Defend or Defense in its name. Charge now returns to your hand when you fully block an enemy attack.
+• Corrected Great Shield Shock's damage preview and changed Wings of Salvation to apply its damage-reduction effect to enemies.
+• Adjusted the costs, values, and rarities of several Ironeye cards. Shadow Assault now sets Distance to -3, and Hundred Schemes can transform 2 cards. Fixed Hidden Poison no longer dealing damage after its applier dies.
+• Fixed multiplayer card selection for Revenant's Soul Departure and Dirty Photo Frame, and corrected the dynamic damage text on Frenzied Flame cards.
+• Adjusted the effects of Hunter's Dark Night, Witch's Brooch, Treasured Makeup Brush, and Reverse Pocketwatch.
+• Updated the artwork for Cooperative Defense and Step Forward, and improved all four characters' map portraits.

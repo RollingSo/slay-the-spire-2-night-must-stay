@@ -1,16 +1,19 @@
 {
-  "last_published": "0.3.13",
-  "next_version": "0.3.14",
-  "last_package": "Slay the Spire 2 ： Night Must Stay 0.3.13.zip",
-  "last_sha256": "6E6CD94430C03225F5DCB4A4B4CE701C9D7DB0F7C7B97AD0BD00E84302025B93",
-  "published_at": "2026-10-11T01:38:22+08:00",
+  "last_published": "0.3.14",
+  "next_version": "0.3.15",
+  "last_package": "Slay the Spire 2 ： Night Must Stay 0.3.14.zip",
+  "last_sha256": "B622019032AF18CD44B639E35D9EBDD4B21130A2962F4DCC203E1CC7C06576B3",
+  "published_at": "2026-10-12T05:06:40.1783252+08:00",
   "verification": {
-    "public_manifest": "7983359780304435885",
-    "public_beta_manifest": "6256614972781300590",
-    "remote_supported_versions": 7,
+    "source_main": "b7dba5b",
+    "public_manifest": "3766629909839660947",
+    "public_beta_manifest": "482647854097717249",
+    "public_changelog_id": "1791752619",
+    "public_beta_changelog_id": "1791752705",
+    "bilingual_latest_changelogs_match": true,
     "downloaded_beta_core_hashes_match": true,
-    "four_language_changelog_verified": true,
-    "content_submit_callback": "k_EResultTimeout; server commit independently verified",
-    "notes_submit_callback": "k_EResultOK"
+    "download_callback": "k_EResultOK",
+    "content_submit_callback": "k_EResultTimeout; server commits and downloaded content independently verified",
+    "local_mods_install": false
   }
 }
