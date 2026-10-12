@@ -202,7 +202,7 @@
   "BEAST_CLAW_MARK_POWER.title": "野兽爪痕",
   "BEAST_CLAW_MARK_POWER.description": "每次[gold]共鸣[/gold]后，给予所有召唤物{Amount}点[gold]力量[/gold]。",
   "GOLDEN_ORDER_POWER.title": "黄金律法",
-  "GOLDEN_ORDER_POWER.description": "使你的[gold]虚无[/gold]牌[gold]耗能[/gold]-{Amount}。",
+  "GOLDEN_ORDER_POWER.description": "每回合首次打出的[gold]虚无[/gold]牌耗能为0。",
   "BLESSING_OF_GRACE_POWER.title": "恩惠赐福",
   "BLESSING_OF_GRACE_POWER.description": "回合开始时，恢复所有召唤物{Amount}点生命。",
   "SPIRIT_LINK_POWER.title": "灵界链接",

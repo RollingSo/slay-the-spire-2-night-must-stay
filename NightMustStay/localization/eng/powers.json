@@ -202,7 +202,7 @@
   "BEAST_CLAW_MARK_POWER.title": "Beast Claw Mark",
   "BEAST_CLAW_MARK_POWER.description": "After each [gold]Resonance[/gold], give all your summons {Amount} [gold]Strength[/gold].",
   "GOLDEN_ORDER_POWER.title": "Golden Order",
-  "GOLDEN_ORDER_POWER.description": "Your [gold]Ethereal[/gold] cards cost {Amount} less [gold]Energy[/gold].",
+  "GOLDEN_ORDER_POWER.description": "The first [gold]Ethereal[/gold] card you play each turn costs 0.",
   "BLESSING_OF_GRACE_POWER.title": "Blessing of Grace",
   "BLESSING_OF_GRACE_POWER.description": "At the start of your turn, heal all your summons for {Amount} HP.",
   "SPIRIT_LINK_POWER.title": "Spirit Link",

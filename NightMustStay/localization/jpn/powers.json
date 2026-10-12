@@ -202,7 +202,7 @@
   "BEAST_CLAW_MARK_POWER.title": "獣爪の痕",
   "BEAST_CLAW_MARK_POWER.description": "[gold]共鳴[/gold]するたび、自分の召喚物すべてに[gold]筋力[/gold]{Amount}を与える。",
   "GOLDEN_ORDER_POWER.title": "黄金律",
-  "GOLDEN_ORDER_POWER.description": "[gold]エセリアル[/gold]カードの[gold]エナジー[/gold]コストが{Amount}減少する。",
+  "GOLDEN_ORDER_POWER.description": "毎ターン最初にプレイする[gold]エセリアル[/gold]カードのコストは0になる。",
   "BLESSING_OF_GRACE_POWER.title": "祝福の恵み",
   "BLESSING_OF_GRACE_POWER.description": "ターン開始時、自分の召喚物すべてのHPを{Amount}回復する。",
   "SPIRIT_LINK_POWER.title": "魂の絆",

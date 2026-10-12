@@ -200,7 +200,7 @@
   "BEAST_CLAW_MARK_POWER.title": "짐승 발톱의 흔적",
   "BEAST_CLAW_MARK_POWER.description": "[gold]공명[/gold] 후 내 모든 소환물에게 [gold]힘[/gold]을 {Amount} 줍니다.",
   "GOLDEN_ORDER_POWER.title": "황금률",
-  "GOLDEN_ORDER_POWER.description": "[gold]휘발성[/gold] 카드의 [gold]에너지[/gold] 비용이 {Amount} 감소합니다.",
+  "GOLDEN_ORDER_POWER.description": "매 턴 처음 사용하는 [gold]휘발성[/gold] 카드의 비용이 0이 됩니다.",
   "BLESSING_OF_GRACE_POWER.title": "축복의 은총",
   "BLESSING_OF_GRACE_POWER.description": "내 턴 시작 시 내 모든 소환물의 체력을 {Amount} 회복시킵니다.",
   "SPIRIT_LINK_POWER.title": "영혼의 연결",
