@@ -1,0 +1,15 @@
+0.3.15
+
+中文
+• 调整守护者与铁之眼的卡牌平衡：“协同防御”耗能降为1，“惊弓之鸟”耗能降为0；提高“弓斗术”“攻势”的伤害和“贴地滑移”的格挡，并调整“来时路”的基础格挡与升级效果。
+• “黄金律法”改为每回合首次打出的虚无牌耗能为0。
+• “后撤防御”现在可以通过叠加延长持续回合数。
+• 修复复仇者召唤物的意图显示层级，避免遮挡卡牌与弹窗；优化“天眼形态”的效果描述。
+• 更新四个角色的界面头像及轮廓，重绘“为我而战”的卡图。
+
+English
+• Rebalanced Guardian and Ironeye cards: Cooperative Defense now costs 1 Energy, and Frightened Bird costs 0. Increased the damage of Bow Combat Art and Offensive, increased Ground Skid's Block, and adjusted Road Already Traveled's base Block and upgrade effect.
+• Golden Order now makes the first Ethereal card played each turn cost 0 Energy.
+• Stacking Retreating Defense now extends its duration.
+• Fixed Revenant summons' intent display layering so it no longer covers cards or pop-ups, and clarified Heavenly Eye Form's effect description.
+• Updated all four characters' UI portraits and outlines, and redrew the artwork for Fight for Me.

@@ -21,6 +21,8 @@ internal static class ReversalStepRegression
         var harmony = new HarmonyLib.Harmony("night-must-stay.tests.reversal-step");
         harmony.Patch(AccessTools.PropertyGetter(typeof(CombatManager), nameof(CombatManager.IsInProgress)),
             prefix: new HarmonyMethod(typeof(ReversalStepRegression), nameof(InCombat)));
+        harmony.Patch(AccessTools.PropertyGetter(typeof(CardModel), nameof(CardModel.CombatState)),
+            prefix: new HarmonyMethod(typeof(MajestyRegression), nameof(MajestyRegression.CombatStateFixture)));
         harmony.Patch(AccessTools.Method(typeof(Hook), nameof(Hook.ModifyBlock)),
             prefix: new HarmonyMethod(typeof(ReversalStepRegression), nameof(BlockHooks)));
         try
@@ -119,7 +121,7 @@ internal static class ReversalStepRegression
                     decimal expectedRoad = 6 + moved * (upgraded ? 3 : 2);
                     if (road.DynamicVars.CalculatedBlock.PreviewValue != expectedRoad
                         || road.DynamicVars.CalculatedBlock.Calculate(null) != expectedRoad)
-                        throw new Exception("Road dynamic block preview/resolution mismatch.");
+                        throw new Exception($"Road dynamic block preview/resolution mismatch: moved={moved}, preview={road.DynamicVars.CalculatedBlock.PreviewValue}, resolved={road.DynamicVars.CalculatedBlock.Calculate(null)}, expected={expectedRoad}.");
                 }
                 foreach (var (current, extraDexterity, multiplier, expected) in new (int, decimal, decimal, decimal)[]
                     { (0, 3, 1, 0), (1, 0, 1, 5), (-1, 0, 1, 7), (3, 0, 1, 15),
