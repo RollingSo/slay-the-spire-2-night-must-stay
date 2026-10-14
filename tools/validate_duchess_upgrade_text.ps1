@@ -4,6 +4,7 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $PSScriptRoot
+$godotProjectDirectory = $root.Replace('\', '/') + '/'
 $bundledPython = Join-Path $env:USERPROFILE '.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
 $python = if (Test-Path -LiteralPath $bundledPython) { $bundledPython } else {
     $command = Get-Command python -ErrorAction SilentlyContinue
@@ -17,7 +18,7 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'Duchess generated card text is out of date or invalid.' }
 
     $project = Join-Path $root 'NightMustStay.csproj'
-    dotnet build $project -c Debug --no-restore "-p:Sts2AssemblyDir=$Sts2AssemblyDir" -v:q
+    dotnet build $project -c Debug --no-restore "-p:Sts2AssemblyDir=$Sts2AssemblyDir" "-p:GodotProjectDir=$godotProjectDirectory" -v:q
     if ($LASTEXITCODE -ne 0) { throw 'Duchess Debug build failed.' }
 
     $tests = Join-Path $PSScriptRoot 'duchess_model_tests\duchess_model_tests.csproj'

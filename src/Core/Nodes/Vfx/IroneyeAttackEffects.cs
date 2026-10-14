@@ -6,6 +6,7 @@ using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.TestSupport;
+using NightMustStay.Core.Nodes;
 
 namespace NightMustStay.Core.Nodes.Vfx;
 
@@ -20,10 +21,12 @@ public static class IroneyeAttackEffects
     private static readonly bool[] HasPlayed = new bool[6];
 
     public static AttackCommand WithIroneyeKnifeFx(this AttackCommand command, bool poisoned = false) =>
-        command.WithHitFx().WithHitVfxNode(target => Create(target, poisoned ? IroneyeAttackVfx.Kind.PoisonKnife : IroneyeAttackVfx.Kind.Knife));
+        IroneyeAnimationContext.Register(command, IroneyeAnimationContext.AttackKind.Knife)
+            .WithHitFx().WithHitVfxNode(target => Create(target, poisoned ? IroneyeAttackVfx.Kind.PoisonKnife : IroneyeAttackVfx.Kind.Knife));
 
     public static AttackCommand WithIroneyeShotFx(this AttackCommand command, Creature attacker, bool poisoned = false) =>
-        command.WithHitFx().WithHitVfxNode(target => Create(target, poisoned ? IroneyeAttackVfx.Kind.PoisonShot : IroneyeAttackVfx.Kind.Shot, attacker));
+        IroneyeAnimationContext.Register(command, IroneyeAnimationContext.AttackKind.Shot)
+            .WithHitFx().WithHitVfxNode(target => Create(target, poisoned ? IroneyeAttackVfx.Kind.PoisonShot : IroneyeAttackVfx.Kind.Shot, attacker));
 
     public static Node2D? Create(Creature target, IroneyeAttackVfx.Kind kind, Creature? attacker = null)
     {
@@ -36,6 +39,9 @@ public static class IroneyeAttackEffects
             var source = attacker?.GetCreatureNode();
             if (source == null) return null;
             origin = source.VfxSpawnPosition - node.VfxSpawnPosition;
+            var rig = source.Visuals?.GetNodeOrNull<Node2D>("Visuals/Prototype");
+            if (rig != null && rig.HasMethod("get_shot_origin"))
+                origin = rig.Call("get_shot_origin").AsVector2() - node.VfxSpawnPosition;
         }
         return new IroneyeAttackVfx
         {

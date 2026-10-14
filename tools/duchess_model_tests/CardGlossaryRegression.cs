@@ -121,7 +121,8 @@ internal static class CardGlossaryRegression
     private static void Load(string locale)
     {
         Tables.Clear();
-        foreach (string root in new[] { $"D:/STS2/localization/{locale}", $"NightMustStay/localization/{locale}" })
+        string nativeRoot = Environment.GetEnvironmentVariable("NMS_NATIVE_LOCALIZATION") ?? "D:/STS2/localization";
+        foreach (string root in new[] { Path.Combine(nativeRoot, locale), $"NightMustStay/localization/{locale}" })
         foreach (string path in Directory.GetFiles(root, "*.json"))
         {
             string name = Path.GetFileNameWithoutExtension(path);

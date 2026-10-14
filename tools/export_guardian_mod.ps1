@@ -16,6 +16,7 @@ if ([string]::IsNullOrWhiteSpace($ModsDirectory)) {
 $buildDirectory = Join-Path $root 'build'
 $modId = 'NightMustStay'
 $projectPath = Join-Path $root "$modId.csproj"
+$godotProjectDirectory = $root.Replace('\', '/') + '/'
 $manifestPath = Join-Path $root 'manifest.json'
 $configPath = Join-Path $root 'config.json'
 $releaseDirectory = Join-Path $root '.godot\mono\temp\bin\CodexExport'
@@ -103,6 +104,12 @@ if ($LASTEXITCODE -ne 0) {
 
 # Validate Duchess runtime images before exporting.
 if (Test-Path -LiteralPath (Join-Path $root 'src/Core/Models/Characters/Duchess.cs')) {
+    $nativeLocalization = Join-Path $root '.tmp/native_test_localization'
+    $fixturePython = Join-Path $env:USERPROFILE '.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe'
+    if (-not (Test-Path -LiteralPath $fixturePython)) { $fixturePython = (Get-Command python -ErrorAction Stop).Source }
+    & $fixturePython (Join-Path $PSScriptRoot 'extract_test_localization.py') (Join-Path $gameDirectory 'SlayTheSpire2.pck') $nativeLocalization
+    if ($LASTEXITCODE -ne 0) { throw 'Native localization fixture extraction failed.' }
+    $env:NMS_NATIVE_LOCALIZATION = $nativeLocalization
     & (Join-Path $PSScriptRoot 'validate_duchess_upgrade_text.ps1') -Sts2AssemblyDir $Sts2AssemblyDir
     & (Join-Path $PSScriptRoot 'validate_duchess_assets.ps1')
 }
@@ -149,6 +156,11 @@ if ($portraitCheckExitCode -ne 0) {
 $powerIconCheckExitCode = Invoke-GodotAndWait @('--headless', '--path', (Join-Path $PSScriptRoot 'card_portrait_validation'), '--log-file', (Join-Path $buildDirectory 'ironeye_power_icon_validation.log'), '--script', 'res://validate.gd', '--', $packPath, (Join-Path $buildDirectory 'ironeye_power_icon_paths.json'))
 if ($powerIconCheckExitCode -ne 0) {
     throw "Exported Ironeye power icon validation failed with exit code $powerIconCheckExitCode. See build/ironeye_power_icon_validation.log"
+}
+
+$ironeyeAnimationCheckExitCode = Invoke-GodotAndWait @('--headless', '--path', (Join-Path $PSScriptRoot 'ironeye_animation_validation'), '--log-file', (Join-Path $buildDirectory 'ironeye_animation_validation.log'), '--script', 'res://validate.gd', '--', $packPath, (Join-Path $buildDirectory 'ironeye_animation_checks.json'))
+if ($ironeyeAnimationCheckExitCode -ne 0) {
+    throw "Exported Ironeye animation validation failed: $ironeyeAnimationCheckExitCode"
 }
 
 $necroCheckExitCode = Invoke-GodotAndWait @('--headless', '--path', (Join-Path $PSScriptRoot 'card_portrait_validation'), '--log-file', (Join-Path $buildDirectory 'necro_action_validation.log'), '--script', 'res://validate_necro_actions.gd', '--', $packPath)
@@ -209,6 +221,7 @@ finally {
 
 dotnet build $projectPath -c Release --no-restore `
     "-p:Sts2AssemblyDir=$Sts2AssemblyDir" `
+    "-p:GodotProjectDir=$godotProjectDirectory" `
     -p:IntermediateOutputPath=.godot\mono\temp\obj\CodexExport\ `
     -p:OutputPath=.godot\mono\temp\bin\CodexExport\
 if ($LASTEXITCODE -ne 0) {
