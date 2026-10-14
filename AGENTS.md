@@ -32,6 +32,12 @@
 - Before revising Guardian, Ironeye, or Revenant combat model scale, ground alignment, creature bounds, health-bar width, or combat marker positions, read `design/角色战斗体型与血条强制规范.md` completely.
 - Character size must be compared by the final rendered non-transparent visual bounds after every nested scale, not by source-canvas dimensions or the `Bounds` control.
 
+## Character combat animations
+
+- Before creating or revising character combat animations, video-generation prompts, transparent frame sequences, or Mod animation playback, read [角色战斗动画制作与 Mod 适配工作流](design/角色战斗动画制作与Mod适配工作流.md) completely.
+- Use its original-game timing references, production stages, and validation requirements together with the target character's identity and combat-scale specifications.
+- Record source duration, release marker, actual command wait, and resulting in-game playback duration separately. Preview normal, fast, and instant modes, repeated triggers, and interruptions before final integration.
+
 ## Character-select backgrounds
 
 - Before replacing or recomposing a character-select background, read `design/角色选择背景构图与裁切强制规范.md` completely.
