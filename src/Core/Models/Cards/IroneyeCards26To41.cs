@@ -132,7 +132,7 @@ namespace NightMustStay.Core.Models.Cards
             new DynamicVar[]
             {
                 new DynamicVar(DistanceKey, 2m),
-                new BlockVar(8m, ValueProp.Move),
+                new BlockVar(9m, ValueProp.Move),
             };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -473,7 +473,7 @@ namespace NightMustStay.Core.Models.Cards
         protected override IEnumerable<DynamicVar> CanonicalVars =>
             new DynamicVar[]
             {
-                new DamageVar(5m, ValueProp.Move),
+                new DamageVar(9m, ValueProp.Move),
                 new CardsVar(2),
             };
 
@@ -519,7 +519,7 @@ namespace NightMustStay.Core.Models.Cards
             new DynamicVar[]
             {
                 new CalculationBaseVar(0m),
-                new ExtraDamageVar(1m),
+                new ExtraDamageVar(2m),
                 new PostDistanceCalculatedDamageVar(
                     ValueProp.Move,
                     static (card, _) =>
@@ -656,8 +656,11 @@ namespace NightMustStay.Core.Models.Cards
                 this);
         }
 
-        protected override void OnUpgrade() =>
+        protected override void OnUpgrade()
+        {
+            DynamicVars.Block.UpgradeValueBy(2m);
             DynamicVars[MarkKey].UpgradeValueBy(1m);
+        }
     }
 
     public sealed class PoisonBlade : CardModel

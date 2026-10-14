@@ -51,6 +51,30 @@ foreach (Type type in typeof(PowerModel).Assembly.GetTypes().Where(type => !type
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+if (args.Contains("--recovery-order-only"))
+{
+    foreach (var type in new[] { typeof(GazeBeyond), typeof(FlannSaxLightningSpear) })
+    {
+        if (type.GetMethod(nameof(CardModel.AfterCardChangedPiles))!.DeclaringType != typeof(CardModel)
+            && type.GetMethod(nameof(CardModel.AfterCardChangedPiles))!.DeclaringType == type)
+            throw new Exception("Recovery auto-play must not run before recovery listeners.");
+        if (type.GetMethod(nameof(CardModel.AfterCardChangedPilesLate))!.DeclaringType != type)
+            throw new Exception("Recovery auto-play must use native late pile-change hook.");
+    }
+    if (typeof(SoulCursingBell).GetMethod(nameof(CardModel.AfterCardChangedPiles))!.DeclaringType != typeof(SoulCursingBell))
+        throw new Exception("Bell recovery must remain in the early hook.");
+    foreach (bool upgraded in new[] { false, true })
+    {
+        var giant = ModelDb.Card<GiantHunter>().ToMutable();
+        if (upgraded) giant.UpgradeInternal();
+        if (giant.DynamicVars["Imbalance"].BaseValue != 3
+            || giant.EnergyCost.GetResolved() != (upgraded ? 0 : 1)
+            || giant.TargetType != TargetType.AnyEnemy || !giant.Keywords.Contains(CardKeyword.Exhaust))
+            throw new Exception("Giant Hunter stats/target/upgrade mismatch.");
+    }
+    Console.WriteLine("PASS: recovery hook ordering and Giant Hunter base/upgraded stats.");
+    return 0;
+}
 if (args.Contains("--cooperative-defense-only"))
 {
     CooperativeDefenseRegression.Run();

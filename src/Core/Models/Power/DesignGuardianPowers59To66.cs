@@ -66,10 +66,16 @@ namespace NightMustStay.Core.Models.Power
             if (play.Card.Owner != Owner.Player || play.Card is not ShieldPoke) return;
             Flash();
             await PowerCmd.Apply<SpearGrindingTemporaryStrengthPower>(context, Owner, Amount, Owner, play.Card);
+            await PowerCmd.Apply<SpearGrindingTemporaryDexterityPower>(context, Owner, Amount, Owner, play.Card);
         }
     }
 
     public sealed class SpearGrindingTemporaryStrengthPower : TemporaryStrengthPower
+    {
+        public override AbstractModel OriginModel => ModelDb.Card<SpearGrinding>();
+    }
+
+    public sealed class SpearGrindingTemporaryDexterityPower : TemporaryDexterityPower
     {
         public override AbstractModel OriginModel => ModelDb.Card<SpearGrinding>();
     }

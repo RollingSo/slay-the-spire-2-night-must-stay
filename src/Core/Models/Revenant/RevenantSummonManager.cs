@@ -469,9 +469,10 @@ public sealed class RevenantSummonManager
         (AccessTools.Field(typeof(NCreature), "_intentFadeTween")?.GetValue(petNode) as Tween)?.Kill();
         petNode.IntentContainer.Visible = true;
         petNode.IntentContainer.Modulate = Colors.White;
-        // Keep summon artwork (including neighbouring creature nodes) below UI.
-        petNode.IntentContainer.ZAsRelative = false;
-        petNode.IntentContainer.ZIndex = 10;
+        // Match native creature.tscn Intents: relative Z=0, not a global overlay.
+        // Visibility/fade fixes must not lift intents above cards or modal UI.
+        petNode.IntentContainer.ZAsRelative = true;
+        petNode.IntentContainer.ZIndex = 0;
     }
 
     private async Task PerformFamilyAction(

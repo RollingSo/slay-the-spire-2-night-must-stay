@@ -21,7 +21,7 @@ namespace NightMustStay.Core.Models.Cards;
 public sealed class Offensive : CardModel
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new DynamicVar[] { new DamageVar(4m, ValueProp.Move) };
+        new DynamicVar[] { new DamageVar(6m, ValueProp.Move) };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         HoverTipFactory.FromCardWithCardHoverTips<Approach>();
@@ -217,6 +217,7 @@ public sealed class ReversalStep : CardModel
 // Card-table ID 81: 回身一箭
 public sealed class TurningArrow : CardModel
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Retain };
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         new DynamicVar[]
         {

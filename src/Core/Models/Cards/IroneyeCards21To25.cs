@@ -200,7 +200,7 @@ namespace NightMustStay.Core.Models.Cards
             ImageHelper.GetImagePath("packed/card_portraits/ironeye/frightened_bird.png");
 
         public FrightenedBird()
-            : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+            : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
         {
         }
 

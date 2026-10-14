@@ -60,7 +60,7 @@ namespace NightMustStay.Core.Models.Cards
         };
 
         public Featherstep()
-            : base(2, CardType.Power, CardRarity.Rare, TargetType.Self)
+            : base(1, CardType.Power, CardRarity.Rare, TargetType.Self)
         {
         }
 

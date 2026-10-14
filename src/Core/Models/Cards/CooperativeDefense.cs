@@ -21,7 +21,7 @@ public sealed class CooperativeDefense : CardModel
         new CalculatedBlockVar(ValueProp.Move).WithMultiplier((card, _) =>
             PileType.Hand.GetPile(card.Owner).Cards.Count(other => other != card && GuardianCardFilters.HasDefendInName(other)))
     };
-    public CooperativeDefense() : base(2, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+    public CooperativeDefense() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
         await CardPileCmd.Draw(context, DynamicVars.Cards.BaseValue, Owner);

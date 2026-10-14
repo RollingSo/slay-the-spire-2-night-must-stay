@@ -33,7 +33,8 @@ internal static class CooperativeDefenseRegression
                 var card = (CooperativeDefense)ModelDb.Card<CooperativeDefense>().ToMutable();
                 AccessTools.Field(typeof(CardModel), "_owner").SetValue(card, player);
                 if (upgraded) card.UpgradeInternal();
-                if (card.Type != CardType.Skill || card.TargetType != TargetType.Self
+                if (card.EnergyCost.GetResolved() != 1
+                    || card.Type != CardType.Skill || card.TargetType != TargetType.Self
                     || card.DynamicVars.Cards.BaseValue != (upgraded ? 2 : 1)
                     || card.DynamicVars["CalculationExtra"].BaseValue != 3
                     || card.DynamicVars["CalculationExtra"].WasJustUpgraded)

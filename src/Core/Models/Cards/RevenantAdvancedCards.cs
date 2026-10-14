@@ -407,7 +407,7 @@ public sealed class FlannSaxLightningSpear : CardModel
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this)
             .WithRevenantFx(this, cardPlay.Target).TargetingAllOpponents(CombatState)
             .WithHitCount(DynamicVars.Repeat.IntValue).Execute(context);
-    public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source) =>
+    public override Task AfterCardChangedPilesLate(CardModel card, PileType oldPileType, AbstractModel source) =>
         card == this ? RevenantCardHelpers.AutoPlayWhenRecovered(this, oldPileType) : Task.CompletedTask;
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);
 }

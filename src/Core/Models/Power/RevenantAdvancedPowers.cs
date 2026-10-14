@@ -161,18 +161,21 @@ public sealed class GoldenOrderPower : PowerModel
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override bool TryModifyEnergyCostInCombat(
+    public override bool TryModifyEnergyCostInCombatLate(
         CardModel card,
         decimal unmodifiedCost,
         out decimal modifiedCost)
     {
-        if (card.Owner != Owner.Player || !card.Keywords.Contains(CardKeyword.Ethereal))
+        if (card.Owner != Owner.Player || !card.Keywords.Contains(CardKeyword.Ethereal)
+            || CombatManager.Instance.History.CardPlaysStarted.Any(entry =>
+                entry.Actor == Owner && entry.HappenedThisTurn(CombatState)
+                && entry.CardPlay.Card.Keywords.Contains(CardKeyword.Ethereal)))
         {
             modifiedCost = unmodifiedCost;
             return false;
         }
 
-        modifiedCost = System.Math.Max(0m, unmodifiedCost - Amount);
+        modifiedCost = 0m;
         return true;
     }
 }
