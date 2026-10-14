@@ -386,7 +386,7 @@ namespace NightMustStay.Core.Models.Cards
             HoverTipFactory.FromCard<ShieldPoke>()
         }.Concat(HoverTipFactory.FromEnchantment<Inky>());
 
-        public SpearPolish() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self) { }
+        public SpearPolish() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self) { }
 
         protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
         {

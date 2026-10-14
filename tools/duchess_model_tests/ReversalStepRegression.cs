@@ -38,15 +38,17 @@ internal static class ReversalStepRegression
                     throw new Exception("Moon/Blade costs must be 1/0.");
                 var poison = Mutable<PoisonScheme>();
                 if (poison.DynamicVars["HiddenPoison"].BaseValue != (upgraded ? 4 : 3)
-                    || poison.DynamicVars["RetainCards"].BaseValue != (upgraded ? 3 : 2))
-                    throw new Exception("Poison Scheme upgrade must improve poison and retention.");
+                    || poison.DynamicVars["RetainCards"].BaseValue != 2
+                    || poison.DynamicVars["RetainCards"].WasJustUpgraded
+                    || poison.EnergyCost.GetResolved() != 0)
+                    throw new Exception("Poison Scheme upgrade must improve only poison.");
                 var star = Mutable<StarPlucker>();
                 if (star.DynamicVars["Cards"].BaseValue != (upgraded ? 3 : 2)
                     || !star.Keywords.Contains(CardKeyword.Exhaust))
                     throw new Exception("Star Plucker must draw 2/3 and Exhaust.");
                 var shadow = Mutable<IroneyeShadowAssault>();
                 if (shadow.DynamicVars["Distance"].BaseValue != -3
-                    || shadow.DynamicVars.Damage.BaseValue != (upgraded ? 12 : 9)
+                    || shadow.DynamicVars.Damage.BaseValue != (upgraded ? 13 : 10)
                     || shadow.Rarity != CardRarity.Common || shadow.TargetType != TargetType.AnyEnemy
                     || !shadow.Keywords.Contains(CardKeyword.Retain))
                     throw new Exception("Shadow Assault stats/keywords mismatch.");
@@ -58,6 +60,26 @@ internal static class ReversalStepRegression
                     || Mutable<GroundSkid>().DynamicVars.Block.BaseValue != 5
                     || Mutable<FrightenedBird>().EnergyCost.GetResolved() != 0)
                     throw new Exception("Ironeye damage/block/cost balance mismatch.");
+                if (Mutable<SpearPolish>().EnergyCost.GetResolved() != (upgraded ? 0 : 1)
+                    || Mutable<SpearGrinding>().EnergyCost.GetResolved() != (upgraded ? 1 : 2)
+                    || Mutable<SkySweepingGod>().EnergyCost.GetResolved() != (upgraded ? 0 : 1)
+                    || Mutable<Featherstep>().EnergyCost.GetResolved() != (upgraded ? 0 : 1))
+                    throw new Exception("Guardian power/attack costs mismatch.");
+                var imposing = Mutable<ImposingPresence>();
+                var scout = Mutable<Scouting>();
+                if (imposing.DynamicVars["Mark"].BaseValue != (upgraded ? 2 : 1)
+                    || imposing.DynamicVars["StrengthLoss"].BaseValue != (upgraded ? 6 : 4)
+                    || scout.DynamicVars.Block.BaseValue != (upgraded ? 14 : 12)
+                    || scout.DynamicVars["Mark"].BaseValue != (upgraded ? 2 : 1)
+                    || Mutable<CirclingManeuver>().DynamicVars.Block.BaseValue != (upgraded ? 12 : 9))
+                    throw new Exception("Ironeye mark/block upgrade mismatch.");
+                var cloud = Mutable<CloudPiercingArrow>();
+                if (cloud.DynamicVars["Energy"].BaseValue != 2
+                    || cloud.Keywords.Contains(CardKeyword.Retain) != upgraded
+                    || !Mutable<TurningArrow>().Keywords.Contains(CardKeyword.Retain)
+                    || !Mutable<FingerSnap>().Keywords.Contains(CardKeyword.Exhaust)
+                    || Mutable<FingerSnap>().EnergyCost.GetResolved() != 0)
+                    throw new Exception("Ironeye keyword/energy mismatch.");
             }
             foreach (bool upgraded in new[] { false, true })
             {
@@ -75,6 +97,9 @@ internal static class ReversalStepRegression
                 var road = (RoadAlreadyTraveled)ModelDb.Card<RoadAlreadyTraveled>().ToMutable();
                 AccessTools.Field(typeof(CardModel), "_owner").SetValue(road, player);
                 if (upgraded) road.UpgradeInternal();
+                var glide = (BladeGlide)ModelDb.Card<BladeGlide>().ToMutable();
+                AccessTools.Field(typeof(CardModel), "_owner").SetValue(glide, player);
+                if (upgraded) glide.UpgradeInternal();
                 if (road.DynamicVars["CalculationBase"].BaseValue != 6
                     || road.DynamicVars["CalculationBase"].WasJustUpgraded
                     || road.DynamicVars["CalculationExtra"].BaseValue != (upgraded ? 3 : 2))
@@ -86,6 +111,10 @@ internal static class ReversalStepRegression
                         .MakeGenericMethod(typeof(DistancePower).GetNestedType("Data", BindingFlags.NonPublic)!)
                         .Invoke(distance, null)!;
                     AccessTools.Field(data.GetType(), "DistanceMovedThisTurn").SetValue(data, (decimal)moved);
+                    glide.DynamicVars.CalculatedDamage.UpdateCardPreview(glide, CardPreviewMode.Normal, null!, false);
+                    if (glide.DynamicVars.CalculatedDamage.PreviewValue != moved * (upgraded ? 3 : 2)
+                        || glide.DynamicVars.CalculatedDamage.Calculate(null) != moved * (upgraded ? 3 : 2))
+                        throw new Exception("Blade Glide damage preview/resolution mismatch.");
                     road.DynamicVars.CalculatedBlock.UpdateCardPreview(road, CardPreviewMode.Normal, null!, false);
                     decimal expectedRoad = 6 + moved * (upgraded ? 3 : 2);
                     if (road.DynamicVars.CalculatedBlock.PreviewValue != expectedRoad

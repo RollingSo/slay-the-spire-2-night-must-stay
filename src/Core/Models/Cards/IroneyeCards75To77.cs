@@ -77,6 +77,8 @@ public sealed class Calibration : CardModel
 // Card-table ID 76: 穿云箭
 public sealed class CloudPiercingArrow : CardModel, ILongShotCard, IMarkTriggerObserver
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords =>
+        IsUpgraded ? new[] { CardKeyword.Retain } : System.Array.Empty<CardKeyword>();
     private const string EnergyKey = "Energy";
     private bool _triggeredMark;
 
@@ -84,7 +86,7 @@ public sealed class CloudPiercingArrow : CardModel, ILongShotCard, IMarkTriggerO
         new DynamicVar[]
         {
             new DamageVar(7m, ValueProp.Move),
-            new EnergyVar(EnergyKey, 1),
+            new EnergyVar(EnergyKey, 2),
         };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -123,8 +125,7 @@ public sealed class CloudPiercingArrow : CardModel, ILongShotCard, IMarkTriggerO
             await PlayerCmd.GainEnergy(DynamicVars[EnergyKey].IntValue, Owner);
     }
 
-    protected override void OnUpgrade() =>
-        DynamicVars[EnergyKey].UpgradeValueBy(1m);
+    protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);
 }
 
 // Card-table ID 77: 应变

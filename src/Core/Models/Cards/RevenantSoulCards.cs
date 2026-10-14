@@ -167,7 +167,7 @@ public sealed class GazeBeyond : CardModel
             this);
     }
 
-    public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source) =>
+    public override Task AfterCardChangedPilesLate(CardModel card, PileType oldPileType, AbstractModel source) =>
         card == this
             ? RevenantCardHelpers.AutoPlayWhenRecovered(this, oldPileType)
             : Task.CompletedTask;

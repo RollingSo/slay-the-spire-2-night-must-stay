@@ -172,6 +172,7 @@ namespace NightMustStay.Core.Models.Cards
     // Card-table ID 6: 响指
     public sealed class FingerSnap : CardModel
     {
+        public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
         private const string CardsKey = "Cards";
 
         protected override IEnumerable<DynamicVar> CanonicalVars =>
@@ -187,7 +188,7 @@ namespace NightMustStay.Core.Models.Cards
             ImageHelper.GetImagePath("packed/card_portraits/ironeye/finger_snap.png");
 
         public FingerSnap()
-            : base(1, CardType.Skill, CardRarity.Common, TargetType.AllEnemies)
+            : base(0, CardType.Skill, CardRarity.Common, TargetType.AllEnemies)
         {
         }
 
@@ -388,16 +389,13 @@ namespace NightMustStay.Core.Models.Cards
             CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
-            bool triggeredLongShot =
-                (Owner.Creature.GetPower<DistancePower>()?.Amount ?? 0m) >= 2m;
-
             await DamageCmd.Attack(DynamicVars.Damage.BaseValue)
                 .CompatFromCard(this)
                 .Targeting(cardPlay.Target)
                 .WithIroneyeShotFx(Owner.Creature)
                 .Execute(context);
 
-            if (triggeredLongShot && cardPlay.Target.IsAlive)
+            if (cardPlay.Target.IsAlive)
             {
                 NightMustStayMarkPower mark = cardPlay.Target.GetPower<NightMustStayMarkPower>();
                 if (mark != null)
