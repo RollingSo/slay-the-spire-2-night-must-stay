@@ -237,7 +237,7 @@ namespace NightMustStay.Core.Models.Cards
         };
 
         public SlowDefend()
-            : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+            : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
         {
         }
 

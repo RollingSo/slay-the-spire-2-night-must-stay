@@ -1,4 +1,6 @@
 {
+  "DESPERATE_STRUGGLE_POWER.title": "Desperate Struggle",
+  "DESPERATE_STRUGGLE_POWER.description": "You cannot play any more Attacks this turn.",
   "DISTANCE_POWER.maximumReached": "Distance is already at its maximum.",
   "DISTANCE_POWER.minimumReached": "Distance is already at its minimum.",
   "DISTANCE_POWER.title": "Distance",
