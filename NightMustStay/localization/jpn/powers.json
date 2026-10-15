@@ -1,4 +1,6 @@
 {
+  "DESPERATE_STRUGGLE_POWER.title": "必死の抵抗",
+  "DESPERATE_STRUGGLE_POWER.description": "このターン、これ以上アタックをプレイできない。",
   "DISTANCE_POWER.maximumReached": "距離はすでに最大です。",
   "DISTANCE_POWER.minimumReached": "距離はすでに最小です。",
   "DISTANCE_POWER.title": "距離",
