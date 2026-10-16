@@ -177,6 +177,9 @@ namespace NightMustStay.Core.Models.Power
                     Owner,
                     cardSource);
             }
+            if (IroneyeOriginPower.IsReturningToOrigin(oldDistance, newDistance)
+                && Owner.GetPower<IroneyeOriginPower>() is { } origin)
+                await origin.ReturnToOrigin(choiceContext, cardSource);
         }
 
         private decimal GetStrengthContribution(decimal distance)
@@ -511,41 +514,6 @@ namespace NightMustStay.Core.Models.Power
             new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
     }
 
-    public sealed class DisorderlyArrowsPower : PowerModel
-    {
-        public override PowerType Type => PowerType.Buff;
-
-        public override PowerStackType StackType => PowerStackType.Counter;
-
-        protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
-
-        public override async Task AfterPowerAmountChanged(
-            PlayerChoiceContext choiceContext,
-            PowerModel power,
-            decimal amount,
-            Creature applier,
-            CardModel cardSource)
-        {
-            if (power is not NightMustStayMarkPower
-                || amount <= 0m
-                || applier != Owner
-                || !power.Owner.IsAlive)
-            {
-                return;
-            }
-
-            Flash();
-            IroneyeAttackEffects.Play(power.Owner, IroneyeAttackVfx.Kind.Shot, Owner);
-            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
-                choiceContext,
-                power.Owner,
-                Amount,
-                ValueProp.Unpowered,
-                Owner,
-                null);
-        }
-    }
 
     public sealed class EagleEyePower : PowerModel
     {

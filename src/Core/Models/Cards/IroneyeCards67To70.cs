@@ -22,7 +22,16 @@ namespace NightMustStay.Core.Models.Cards;
 public sealed class CurtainCall : CardModel
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new[] { new DamageVar(5m, ValueProp.Move) };
+        new DynamicVar[]
+        {
+            new DamageVar(5m, ValueProp.Move),
+            new CalculationBaseVar(0m),
+            new CalculationExtraVar(1m),
+            new CalculatedVar("CalculatedHits").WithMultiplier(static (card, _) =>
+                card.Owner?.PlayerCombatState == null ? 0m :
+                    PileType.Hand.GetPile(card.Owner).Cards.Count(other =>
+                        other != card && other.ShouldRetainThisTurn)),
+        };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         new[] { HoverTipFactory.FromKeyword(CardKeyword.Retain) };
@@ -39,8 +48,7 @@ public sealed class CurtainCall : CardModel
         PlayerChoiceContext context,
         CardPlay cardPlay)
     {
-        int retainedCards = PileType.Hand.GetPile(Owner).Cards.Count(
-            card => card.ShouldRetainThisTurn);
+        int retainedCards = (int)((CalculatedVar)DynamicVars["CalculatedHits"]).Calculate(null);
 
         if (retainedCards > 0)
         {

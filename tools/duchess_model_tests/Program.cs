@@ -51,6 +51,39 @@ foreach (Type type in typeof(PowerModel).Assembly.GetTypes().Where(type => !type
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+if (args.Contains("--strangle-damage-preview-only"))
+{
+    StrangleDamagePreviewRegression.Run();
+    Console.WriteLine("PASS: Turning Arrow/Blade Glide previews with Strangle and Blade Shadow combinations.");
+    return 0;
+}
+if (args.Contains("--curtain-call-only"))
+{
+    CurtainCallRegression.Run();
+    Console.WriteLine("PASS: Curtain Call base/upgraded hit preview, permanent/temporary retain and self exclusion.");
+    return 0;
+}
+if (args.Contains("--origin-only"))
+{
+    if (typeof(IroneyeOrigin).Assembly.GetType("NightMustStay.Core.Models.Cards.DisorderlyArrows") != null
+        || typeof(IroneyeOrigin).Assembly.GetType("NightMustStay.Core.Models.Power.DisorderlyArrowsPower") != null)
+        throw new Exception("Disorderly Arrows must be removed.");
+    var predicate = typeof(IroneyeOriginPower).GetMethod("IsReturningToOrigin", BindingFlags.Static | BindingFlags.NonPublic)!;
+    foreach (var (before, after, expected) in new[] { (0m, 0m, false), (1m, 0m, true), (-5m, 0m, true), (3m, -3m, false), (0m, 2m, false) })
+        if ((bool)predicate.Invoke(null, new object[] { before, after })! != expected)
+            throw new Exception("Origin transition boundary mismatch.");
+    foreach (bool upgraded in new[] { false, true })
+    {
+        var origin = ModelDb.Card<IroneyeOrigin>().ToMutable();
+        if (upgraded) origin.UpgradeInternal();
+        if (origin.Type != CardType.Power || origin.TargetType != TargetType.Self
+            || origin.Rarity != CardRarity.Uncommon || origin.EnergyCost.GetResolved() != 1
+            || origin.DynamicVars.Block.BaseValue != (upgraded ? 7 : 5))
+            throw new Exception("Origin base/upgrade mismatch.");
+    }
+    Console.WriteLine("PASS: Origin transition boundaries and base/upgraded stats.");
+    return 0;
+}
 if (args.Contains("--recovery-order-only"))
 {
     foreach (var type in new[] { typeof(GazeBeyond), typeof(FlannSaxLightningSpear) })
