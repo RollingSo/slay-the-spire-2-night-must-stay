@@ -51,6 +51,39 @@ foreach (Type type in typeof(PowerModel).Assembly.GetTypes().Where(type => !type
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+if (args.Contains("--strangle-damage-preview-only"))
+{
+    StrangleDamagePreviewRegression.Run();
+    Console.WriteLine("PASS: Turning Arrow/Blade Glide previews with Strangle and Blade Shadow combinations.");
+    return 0;
+}
+if (args.Contains("--curtain-call-only"))
+{
+    CurtainCallRegression.Run();
+    Console.WriteLine("PASS: Curtain Call base/upgraded hit preview, permanent/temporary retain and self exclusion.");
+    return 0;
+}
+if (args.Contains("--origin-only"))
+{
+    if (typeof(IroneyeOrigin).Assembly.GetType("NightMustStay.Core.Models.Cards.DisorderlyArrows") != null
+        || typeof(IroneyeOrigin).Assembly.GetType("NightMustStay.Core.Models.Power.DisorderlyArrowsPower") != null)
+        throw new Exception("Disorderly Arrows must be removed.");
+    var predicate = typeof(IroneyeOriginPower).GetMethod("IsReturningToOrigin", BindingFlags.Static | BindingFlags.NonPublic)!;
+    foreach (var (before, after, expected) in new[] { (0m, 0m, false), (1m, 0m, true), (-5m, 0m, true), (3m, -3m, false), (0m, 2m, false) })
+        if ((bool)predicate.Invoke(null, new object[] { before, after })! != expected)
+            throw new Exception("Origin transition boundary mismatch.");
+    foreach (bool upgraded in new[] { false, true })
+    {
+        var origin = ModelDb.Card<IroneyeOrigin>().ToMutable();
+        if (upgraded) origin.UpgradeInternal();
+        if (origin.Type != CardType.Power || origin.TargetType != TargetType.Self
+            || origin.Rarity != CardRarity.Uncommon || origin.EnergyCost.GetResolved() != 1
+            || origin.DynamicVars.Block.BaseValue != (upgraded ? 7 : 5))
+            throw new Exception("Origin base/upgrade mismatch.");
+    }
+    Console.WriteLine("PASS: Origin transition boundaries and base/upgraded stats.");
+    return 0;
+}
 if (args.Contains("--recovery-order-only"))
 {
     foreach (var type in new[] { typeof(GazeBeyond), typeof(FlannSaxLightningSpear) })
@@ -339,10 +372,10 @@ foreach (int triggerCount in new[] { 0, 1, 2 })
 }
 volleyActive.SetValue(volleyBalance, false);
 var featherBalance = ModelDb.Card<Featherstep>().ToMutable();
-if (featherBalance.EnergyCost.Canonical != 2 || featherBalance.DynamicVars.Cards.IntValue != 1)
-    throw new Exception("Featherstep must cost 2 and draw 1.");
+if (featherBalance.EnergyCost.Canonical != 1 || featherBalance.DynamicVars.Cards.IntValue != 1)
+    throw new Exception("Featherstep must cost 1 and draw 1.");
 featherBalance.UpgradeInternal();
-if (featherBalance.EnergyCost.GetResolved() != 1 || featherBalance.DynamicVars.Cards.IntValue != 1)
+if (featherBalance.EnergyCost.GetResolved() != 0 || featherBalance.DynamicVars.Cards.IntValue != 1)
     throw new Exception("Featherstep upgrade must only reduce cost.");
 var packBalance = ModelDb.Card<PackUp>().ToMutable();
 if (packBalance.DynamicVars.Cards.IntValue != 2) throw new Exception("Pack Up must discard up to 2.");
@@ -355,7 +388,7 @@ if (teamBalance.EnergyCost.CostsX || teamBalance.EnergyCost.Canonical != 1 || te
 teamBalance.UpgradeInternal();
 if (teamBalance.EnergyCost.GetResolved() != 0 || teamBalance.DynamicVars["AllyDodgeDrawX"].IntValue != 2)
     throw new Exception("Duchess multiplayer upgrade must reduce cost to 0 without changing count.");
-Console.WriteLine("PASS: revised X cards, calculated volley damage, Featherstep 2/1, Pack Up 2/3, and multiplayer Duchess 1/0 Rare.");
+Console.WriteLine("PASS: revised X cards, calculated volley damage, Featherstep 1/0, Pack Up 2/3, and multiplayer Duchess 1/0 Rare.");
 var wraithJar = ModelDb.Potion<WraithJar>().ToMutable();
 if (wraithJar.TargetType != TargetType.AnyEnemy || wraithJar.DynamicVars.Damage.BaseValue != 30)
     throw new Exception("Wraith Jar must target an enemy and deal 30 damage.");

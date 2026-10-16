@@ -111,37 +111,6 @@ namespace NightMustStay.Core.Models.Cards
     }
 
     // Card-table ID 23: 乱箭
-    public sealed class DisorderlyArrows : CardModel
-    {
-        protected override IEnumerable<DynamicVar> CanonicalVars =>
-            new[] { new DamageVar(4m, ValueProp.Unpowered) };
-
-        protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
-
-        public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/ironeye/disorderly_arrows.png");
-
-        public DisorderlyArrows()
-            : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
-        {
-        }
-
-        protected override async Task OnPlay(
-            PlayerChoiceContext context,
-            CardPlay cardPlay)
-        {
-            await PowerCmd.Apply<DisorderlyArrowsPower>(
-                context,
-                Owner.Creature,
-                DynamicVars.Damage.BaseValue,
-                Owner.Creature,
-                this);
-        }
-
-        protected override void OnUpgrade() =>
-            DynamicVars.Damage.UpgradeValueBy(2m);
-    }
 
     // Card-table ID 24: 散射
     public sealed class Scatter : CardModel
