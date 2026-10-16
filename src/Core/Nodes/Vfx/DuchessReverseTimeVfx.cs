@@ -10,6 +10,7 @@ public partial class DuchessReverseTimeVfx : CombatVfxCanvas
     public const float Lifetime = 2.4f;
     private float _age;
     private bool _manual;
+    private readonly Vector2[] _ribbon = new Vector2[65];
     public bool SoundEnabled { get; set; }
     private bool _rewindSound;
     public override void _Ready()
@@ -47,7 +48,7 @@ public partial class DuchessReverseTimeVfx : CombatVfxCanvas
         float radius=(70+swell*size.Length()*.52f)*(1-returnPhase*.83f);
         for(int arm=0;arm<5;arm++)
         {
-            var ribbon=new Vector2[65];
+            var ribbon=_ribbon;
             for(int i=0;i<ribbon.Length;i++)
             {
                 float u=i/(float)(ribbon.Length-1);
