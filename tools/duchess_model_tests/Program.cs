@@ -372,10 +372,10 @@ foreach (int triggerCount in new[] { 0, 1, 2 })
 }
 volleyActive.SetValue(volleyBalance, false);
 var featherBalance = ModelDb.Card<Featherstep>().ToMutable();
-if (featherBalance.EnergyCost.Canonical != 2 || featherBalance.DynamicVars.Cards.IntValue != 1)
-    throw new Exception("Featherstep must cost 2 and draw 1.");
+if (featherBalance.EnergyCost.Canonical != 1 || featherBalance.DynamicVars.Cards.IntValue != 1)
+    throw new Exception("Featherstep must cost 1 and draw 1.");
 featherBalance.UpgradeInternal();
-if (featherBalance.EnergyCost.GetResolved() != 1 || featherBalance.DynamicVars.Cards.IntValue != 1)
+if (featherBalance.EnergyCost.GetResolved() != 0 || featherBalance.DynamicVars.Cards.IntValue != 1)
     throw new Exception("Featherstep upgrade must only reduce cost.");
 var packBalance = ModelDb.Card<PackUp>().ToMutable();
 if (packBalance.DynamicVars.Cards.IntValue != 2) throw new Exception("Pack Up must discard up to 2.");
@@ -388,7 +388,7 @@ if (teamBalance.EnergyCost.CostsX || teamBalance.EnergyCost.Canonical != 1 || te
 teamBalance.UpgradeInternal();
 if (teamBalance.EnergyCost.GetResolved() != 0 || teamBalance.DynamicVars["AllyDodgeDrawX"].IntValue != 2)
     throw new Exception("Duchess multiplayer upgrade must reduce cost to 0 without changing count.");
-Console.WriteLine("PASS: revised X cards, calculated volley damage, Featherstep 2/1, Pack Up 2/3, and multiplayer Duchess 1/0 Rare.");
+Console.WriteLine("PASS: revised X cards, calculated volley damage, Featherstep 1/0, Pack Up 2/3, and multiplayer Duchess 1/0 Rare.");
 var wraithJar = ModelDb.Potion<WraithJar>().ToMutable();
 if (wraithJar.TargetType != TargetType.AnyEnemy || wraithJar.DynamicVars.Damage.BaseValue != 30)
     throw new Exception("Wraith Jar must target an enemy and deal 30 damage.");
