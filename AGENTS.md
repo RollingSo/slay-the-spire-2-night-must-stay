@@ -37,6 +37,7 @@
 - Before creating or revising character combat animations, video-generation prompts, transparent frame sequences, or Mod animation playback, read [角色战斗动画制作与 Mod 适配工作流](design/角色战斗动画制作与Mod适配工作流.md) completely.
 - Use its original-game timing references, production stages, and validation requirements together with the target character's identity and combat-scale specifications.
 - Record source duration, release marker, actual command wait, and resulting in-game playback duration separately. Preview normal, fast, and instant modes, repeated triggers, and interruptions before final integration.
+- For Revenant and family animation work, use [复仇者与家人：动画视频制作清单](design/复仇者与家人_动画视频制作清单.md) to claim task IDs, follow reference requirements, and record handoff and validation status.
 
 ## Character-select backgrounds
 
