@@ -6,7 +6,8 @@
     "source_sha256_matches": true,
     "resource_regions_valid": true,
     "alpha_corners_zero": true,
-    "manual_opacity_probes_passed": 10
+    "manual_opacity_probes_passed": 10,
+    "dense_sleeve_patch_pixels": 165
   },
   "爪击攻击": {
     "frame_count": 110,

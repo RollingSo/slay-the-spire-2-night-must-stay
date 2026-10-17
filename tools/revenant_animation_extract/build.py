@@ -38,6 +38,11 @@ def opaque_interior(rgb,a):
  # cannot be distinguished from the background by color distance alone.
  central=(xx>350)&(xx<590)&(yy>250)&(yy<650)&(a>.025)
  core |= ndi.binary_erosion(central,iterations=1)
+ # Recover actual holes (alpha == 0) erased inside the opaque garment. The
+ # protected region follows the torso/sleeve and excludes the lyre aperture.
+ garment=((xx>350)&(xx<590)&(yy>=300)&(yy<900))|((xx>350)&(xx<530)&(yy>220)&(yy<300))
+ enclosed=ndi.binary_fill_holes(a>.05)
+ core |= ndi.binary_erosion(enclosed & garment,iterations=1)
  fixed=np.maximum(a,core.astype(np.float32))
  return fixed,core
 
@@ -159,7 +164,7 @@ def main():
  idle_indices=[int(round((1-np.cos(2*np.pi*i/96))*.5*(len(segment)-1))) for i in range(96)]
  idle=[segment[k] for k in idle_indices]
  attack=allframes['爪击攻击'][:110] # 0..4.5417: return to lyre, omit final hold
- metadata={'status':'user-approved material v3: opaque arm repair plus skirt patch color correction; engine and combat validation pending','color_correction':'claw skirt warm patch only; source-luminance-preserving cool-grey chroma; no alpha/geometry changes by color stage','fps':24,'canvas':[416,560],'source_canvas':[832,1120],'alpha_model':'isnet-general-use keyframes every 3 frames plus bidirectional optical-flow mask propagation; source-color opaque interior restoration v2','opaque_interior':{'version':2,'mask_threshold':.025,'source_bg_rgb_distance_min':18,'erosion_pixels':1,'applied_after_optical_flow':True},'source':{},'actions':{},'known_limits':['Model alpha may lose hair/lyre strings and retain pale background gaps; inspect supplied light/dark checker review.','Idle uses cosine-eased ping-pong of low-amplitude motion; reverse cloth motion remains a stylized compromise.','No production scene or command delay changes.']}
+ metadata={'status':'user-approved material v4: enclosed sleeve-hole repair; engine and combat validation pending','color_correction':'claw skirt warm patch only; source-luminance-preserving cool-grey chroma; no alpha/geometry changes by color stage','fps':24,'canvas':[416,560],'source_canvas':[832,1120],'alpha_model':'isnet-general-use keyframes every 3 frames plus bidirectional optical-flow mask propagation; source-color opaque interior restoration v2','opaque_interior':{'version':2,'mask_threshold':.025,'source_bg_rgb_distance_min':18,'erosion_pixels':1,'applied_after_optical_flow':True},'source':{},'actions':{},'known_limits':['Model alpha may lose hair/lyre strings and retain pale background gaps; inspect supplied light/dark checker review.','Idle uses cosine-eased ping-pong of low-amplitude motion; reverse cloth motion remains a stylized compromise.','No production scene or command delay changes.']}
  for n,frames,loop in [('战斗待机',idle,True),('爪击攻击',attack,False)]:
   tiles,bounds,pages,indices=atlas(frames,n);resource(n,tiles,pages,loop,indices)
   # Animated lossless WebP preserves alpha; ZIP retains per-frame RGBA master.

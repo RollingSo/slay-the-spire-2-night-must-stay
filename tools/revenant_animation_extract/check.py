@@ -47,6 +47,14 @@ for name,groups in probes.items():
   for x,y in group['background']:
    assert frame[y//2,x//2,3]<=40,(name,i,x,y,'background filled',int(frame[y//2,x//2,3]))
  report[name]['manual_opacity_probes_passed']=count
+# Dense, manually reviewed garment patch regression. This sleeve area had
+# fully transparent holes even while the old point probes passed.
+action=meta['actions']['战斗待机'];k=action['atlas_indices'][24]
+page=Image.open(OUT/action['atlas_pages'][k//16])
+frame=np.asarray(page.crop((k%4*416,k%16//4*560,k%4*416+416,k%16//4*560+560)))
+patch=frame[365//2:430//2,426//2:436//2,3]
+assert patch.min()>=250,('opaque sleeve patch contains holes',int(patch.min()))
+report['战斗待机']['dense_sleeve_patch_pixels']=int(patch.size)
 assert hashlib.sha256((HERE/'reference.png').read_bytes()).hexdigest()==hashlib.sha256((ROOT/'revenant_assets/combat/revenant_idle.png').read_bytes()).hexdigest()
 if '--write-report' in sys.argv:(OUT/'动画提取检查.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(report,ensure_ascii=False,indent=2))

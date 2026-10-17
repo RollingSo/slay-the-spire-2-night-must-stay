@@ -31,3 +31,7 @@ The initial delivery left arm/hand/sleeve interiors translucent. The extractor n
 ## Approved skirt color repair v3
 
 User approved the local preview on 2026-10-17. `clothing_color.py` recolors only the generated warm skirt patch, preserving source luminance and matching the surrounding cool grey-white fabric. Component selection excludes detached hands and stops above bare lower legs. Original videos are unchanged. See `爪击攻击_衣料修色对比.jpg` (left original, right corrected). The atlas images include both opacity v2 and color v3 repairs; engine/game validation remains pending.
+
+## Approved enclosed garment-hole repair v4
+
+User approved the updated local preview on 2026-10-17. Fully transparent holes erased inside the sleeve/shoulder are now recovered inside the protected garment region; the lyre aperture remains excluded. A dense 165-pixel sleeve patch regression supplements the earlier arm/hand point probes, which missed these holes. See `手臂遮罩修正对比.jpg` (pink indicates background; left previous, right repaired).
