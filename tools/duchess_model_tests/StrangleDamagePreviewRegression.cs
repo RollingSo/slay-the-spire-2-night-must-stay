@@ -16,6 +16,8 @@ internal static class StrangleDamagePreviewRegression
         var harmony = new HarmonyLib.Harmony("night-must-stay.tests.strangle-damage-preview");
         harmony.Patch(AccessTools.PropertyGetter(typeof(CombatManager), nameof(CombatManager.IsInProgress)),
             prefix: new HarmonyMethod(typeof(ReversalStepRegression), nameof(ReversalStepRegression.InCombat)));
+        harmony.Patch(AccessTools.PropertyGetter(typeof(CardModel), nameof(CardModel.CombatState)),
+            prefix: new HarmonyMethod(typeof(MajestyRegression), nameof(MajestyRegression.CombatStateFixture)));
         harmony.Patch(AccessTools.Method(typeof(Sts2BranchCompat), nameof(Sts2BranchCompat.ModifyDamage)),
             prefix: new HarmonyMethod(typeof(StrangleDamagePreviewRegression), nameof(Damage)));
         try
