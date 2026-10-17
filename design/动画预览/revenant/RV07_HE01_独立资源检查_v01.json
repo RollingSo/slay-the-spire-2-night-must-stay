@@ -1,0 +1,18 @@
+[
+	{
+		"action": "HE01_待机",
+		"fps": 24.0,
+		"frame_count": 96,
+		"loadable": true,
+		"loop": true,
+		"saved": true
+	},
+	{
+		"action": "RV07_死亡",
+		"fps": 24.0,
+		"frame_count": 78,
+		"loadable": true,
+		"loop": false,
+		"saved": true
+	}
+]

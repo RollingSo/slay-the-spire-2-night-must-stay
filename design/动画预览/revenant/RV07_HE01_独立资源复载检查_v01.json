@@ -1,0 +1,16 @@
+[
+	{
+		"action": "HE01_待机",
+		"embedded_atlas": true,
+		"frames": 96,
+		"passed": true,
+		"separate_process": true
+	},
+	{
+		"action": "RV07_死亡",
+		"embedded_atlas": true,
+		"frames": 78,
+		"passed": true,
+		"separate_process": true
+	}
+]

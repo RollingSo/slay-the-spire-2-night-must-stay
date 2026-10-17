@@ -1,0 +1,64 @@
+{
+  "reference": "revenant_assets/families/animations/helen/idle.png",
+  "reference_sha256": "7f19621451fb63cc1311056040888d939659fc48d0385192bd623c6713003fe4",
+  "method": "fixed luminance-conditioned CIELAB chroma offsets; luminance and alpha unchanged",
+  "L_knots": [
+    0.0,
+    15.0,
+    30.0,
+    45.0,
+    60.0,
+    75.0,
+    90.0,
+    100.0
+  ],
+  "ab_offsets": [
+    [
+      3.2,
+      -8.8
+    ],
+    [
+      8.0,
+      -22.0
+    ],
+    [
+      5.140625,
+      -22.0
+    ],
+    [
+      3.484375,
+      -22.0
+    ],
+    [
+      1.15625,
+      -15.96875
+    ],
+    [
+      -0.078125,
+      -8.671875
+    ],
+    [
+      -0.265625,
+      -4.546875
+    ],
+    [
+      -0.1875,
+      -2.390625
+    ]
+  ],
+  "samples": [
+    {
+      "second": 1,
+      "alpha_unchanged": true
+    },
+    {
+      "second": 2,
+      "alpha_unchanged": true
+    },
+    {
+      "second": 4,
+      "alpha_unchanged": true
+    }
+  ],
+  "status": "color review candidate; not production integration"
+}
