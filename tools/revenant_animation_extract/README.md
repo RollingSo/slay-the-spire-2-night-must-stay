@@ -23,3 +23,11 @@ To regenerate: install FFmpeg and the Python dependencies in `requirements.txt`,
 - Model masks every three frames, with bidirectional optical-flow propagation between them; pale dress interior protected. Fine hair, strings and residual pale edges require game-background review.
 - Original master QA checked 206 RGBA frames, fixed canvas and zero-alpha corners. Portable package validation additionally checks source hashes, all atlas frame regions and references. Browser checks covered stepping, playback modes, replay and return to idle.
 - No Godot import/export, production installation or real combat validation performed. No claim of final VFX/damage synchronization. Atlas uncompressed RGBA total is about 142 MiB before runtime import/compression; final memory optimization remains.
+
+## Opacity repair v2
+
+The initial delivery left arm/hand/sleeve interiors translucent. The extractor now restores source-color-supported solid interiors after every frame's flow propagation, keeps a one-pixel border for antialiasing, and recomputes colors from the original RGB at the repaired alpha. Versioned v2 key-mask caches avoid silently retaining stale mattes. `opacity_probes.json` contains independently selected solid arm/hand/sleeve points and real background openings across idle, extension and raised-arm poses; `check.py` requires opaque interiors and transparent openings. The corrected atlas images supersede the original commit's extraction.
+
+## Approved skirt color repair v3
+
+User approved the local preview on 2026-10-17. `clothing_color.py` recolors only the generated warm skirt patch, preserving source luminance and matching the surrounding cool grey-white fabric. Component selection excludes detached hands and stops above bare lower legs. Original videos are unchanged. See `爪击攻击_衣料修色对比.jpg` (left original, right corrected). The atlas images include both opacity v2 and color v3 repairs; engine/game validation remains pending.

@@ -10,6 +10,7 @@ import numpy as np
 from PIL import Image,ImageDraw
 from rembg import new_session,remove
 from scipy import ndimage as ndi
+from clothing_color import correct as correct_clothing_color
 ROOT=Path(__file__).resolve().parents[2]
 SOURCE=Path(__file__).resolve().parent
 OUT=ROOT/'revenant_assets/combat/sequence_candidates'
@@ -20,6 +21,26 @@ FPS=24; W=832;H=1120
 def decode(path):
  raw=subprocess.check_output(['ffmpeg','-v','error','-i',str(path),'-vf','fps=24','-f','rawvideo','-pix_fmt','rgb24','-'])
  return np.frombuffer(raw,np.uint8).reshape(-1,H,W,3)
+
+def opaque_interior(rgb,a):
+ # Restore solid material interiors using both the existing subject mask and
+ # source color evidence. Background openings must satisfy neither condition.
+ # Erode the support to keep silhouette antialiasing and finger gaps untouched.
+ bg=np.median(rgb[:25,:25].reshape(-1,3),axis=0)
+ distance=np.linalg.norm(rgb.astype(np.float32)-bg,axis=2)
+ support=(a>.025)&(distance>18)
+ yy,xx=np.indices(a.shape)
+ closed=ndi.binary_closing(support,iterations=2)
+ # Do not bridge the thin strings or their background gaps in the lyre window.
+ support=np.where((xx<590)|(yy>400),closed,support)
+ core=ndi.binary_erosion(support,iterations=1)
+ # Central opaque costume/forearm protection includes near-white wraps which
+ # cannot be distinguished from the background by color distance alone.
+ central=(xx>350)&(xx<590)&(yy>250)&(yy<650)&(a>.025)
+ core |= ndi.binary_erosion(central,iterations=1)
+ fixed=np.maximum(a,core.astype(np.float32))
+ return fixed,core
+
 
 def matte(rgb,session):
  # Model segmentation protects opaque pale clothing. Remove near-background only
@@ -35,6 +56,7 @@ def matte(rgb,session):
  core |= filled & (yy>460) & (xx<700)
  interior=ndi.binary_erosion(core,iterations=1)
  a=np.maximum(a,ndi.gaussian_filter((interior & (yy>350) & (xx>330) & (xx<680)).astype(float),.5))
+ a,_=opaque_interior(rgb,a)
  # White exterior gaps in lyre need separate review; retain model results here.
  a[:3]=0;a[-3:]=0;a[:,:3]=0;a[:,-3:]=0
  # Watermark is outside the feet at far lower right, not a subject feature.
@@ -91,7 +113,7 @@ def resource(name,frames,pages,loop,indices):
  (OUT/f'{name}_动画.tres').write_text('\n'.join(lines)+'\n')
 
 def main():
- ap=argparse.ArgumentParser();ap.add_argument('--samples',action='store_true');args=ap.parse_args()
+ ap=argparse.ArgumentParser();ap.add_argument('--samples',action='store_true');ap.add_argument('--preview-only',action='store_true');args=ap.parse_args()
  print('Loading segmentation model',flush=True);session=new_session('isnet-general-use',providers=['CPUExecutionProvider'])
  clips={n:decode(SOURCE/f'{n}_源视频.mp4') for n in ['战斗待机','爪击攻击']}
  if args.samples:
@@ -106,7 +128,7 @@ def main():
   keys=sorted(set(list(range(0,len(fs),3))+[len(fs)-1]))
   masks={}
   for i in keys:
-   p=folder/f'key_{i:03}.png'
+   p=folder/f'key_v2_{i:03}.png'
    if not p.exists():matte(fs[i],session).save(p)
    masks[i]=np.asarray(Image.open(p).convert('RGBA'))[:,:,3].astype(np.float32)/255
    print(n,'alpha key',i,'/',len(fs),flush=True)
@@ -121,6 +143,8 @@ def main():
    else:
     lo=max(k for k in keys if k<i);hi=min(k for k in keys if k>i);t=(i-lo)/(hi-lo)
     a=warp(i,lo)*(1-t)+warp(i,hi)*t
+   a,solid=opaque_interior(rgb,a)
+   if n=='爪击攻击':rgb,_=correct_clothing_color(rgb)
    bg=np.median(rgb[:25,:25].reshape(-1,3),axis=0)
    color=np.clip((rgb.astype(float)-bg*(1-a[...,None]))/np.maximum(a[...,None],.08),0,255)
    rgba=np.dstack([color,a*255]).astype(np.uint8);rgba[a<.01]=0
@@ -135,15 +159,16 @@ def main():
  idle_indices=[int(round((1-np.cos(2*np.pi*i/96))*.5*(len(segment)-1))) for i in range(96)]
  idle=[segment[k] for k in idle_indices]
  attack=allframes['爪击攻击'][:110] # 0..4.5417: return to lyre, omit final hold
- metadata={'status':'preview extraction; engine and combat validation pending','fps':24,'canvas':[416,560],'source_canvas':[832,1120],'alpha_model':'isnet-general-use keyframes every 3 frames plus bidirectional optical-flow mask propagation','source':{},'actions':{},'known_limits':['Model alpha may lose hair/lyre strings and retain pale background gaps; inspect supplied light/dark checker review.','Idle uses cosine-eased ping-pong of low-amplitude motion; reverse cloth motion remains a stylized compromise.','No production scene or command delay changes.']}
+ metadata={'status':'user-approved material v3: opaque arm repair plus skirt patch color correction; engine and combat validation pending','color_correction':'claw skirt warm patch only; source-luminance-preserving cool-grey chroma; no alpha/geometry changes by color stage','fps':24,'canvas':[416,560],'source_canvas':[832,1120],'alpha_model':'isnet-general-use keyframes every 3 frames plus bidirectional optical-flow mask propagation; source-color opaque interior restoration v2','opaque_interior':{'version':2,'mask_threshold':.025,'source_bg_rgb_distance_min':18,'erosion_pixels':1,'applied_after_optical_flow':True},'source':{},'actions':{},'known_limits':['Model alpha may lose hair/lyre strings and retain pale background gaps; inspect supplied light/dark checker review.','Idle uses cosine-eased ping-pong of low-amplitude motion; reverse cloth motion remains a stylized compromise.','No production scene or command delay changes.']}
  for n,frames,loop in [('战斗待机',idle,True),('爪击攻击',attack,False)]:
   tiles,bounds,pages,indices=atlas(frames,n);resource(n,tiles,pages,loop,indices)
   # Animated lossless WebP preserves alpha; ZIP retains per-frame RGBA master.
-  tiles[0].save(CACHE/f'{n}_透明预览.webp',save_all=True,append_images=tiles[1:],duration=1000/24,loop=0 if loop else 1,lossless=True)
-  import zipfile,io
-  with zipfile.ZipFile(CACHE/f'{n}_透明帧.zip','w',zipfile.ZIP_DEFLATED) as z:
-   for i,im in enumerate(frames):
-    buf=io.BytesIO();im.save(buf,format='PNG');z.writestr(f'{n}_{i:03}.png',buf.getvalue())
+  if not args.preview_only:
+   tiles[0].save(CACHE/f'{n}_透明预览.webp',save_all=True,append_images=tiles[1:],duration=1000/24,loop=0 if loop else 1,lossless=True)
+   import zipfile,io
+   with zipfile.ZipFile(CACHE/f'{n}_透明帧.zip','w',zipfile.ZIP_DEFLATED) as z:
+    for i,im in enumerate(frames):
+     buf=io.BytesIO();im.save(buf,format='PNG');z.writestr(f'{n}_{i:03}.png',buf.getvalue())
   # First, middle and last against all backgrounds.
   review([(f'{n} {k}',frames[k]) for k in [0,len(frames)//2,len(frames)-1]],SOURCE/f'{n}_透明边缘审查.jpg')
   metadata['actions'][n]={'frame_count':len(frames),'atlas_indices':indices,'resource_duration':len(frames)/24,'loop':loop,'bounds':bounds,'atlas_pages':[p.name for p in pages],'decoded_rgba_mib':len(pages)*1664*2240*4/1048576}

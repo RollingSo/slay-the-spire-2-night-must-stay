@@ -1,6 +1,6 @@
 """Validate portable candidate atlas resources without local caches or game files."""
 from pathlib import Path
-import hashlib,json,re
+import hashlib,json,re,sys
 import numpy as np
 from PIL import Image
 ROOT=Path(__file__).resolve().parents[2]
@@ -30,5 +30,23 @@ for name,action in meta['actions'].items():
   assert a[0,0]==a[0,-1]==a[-1,0]==a[-1,-1]==0
   assert a.max()==255 and (a>0).sum()>1000
  report[name]={'frame_count':len(regions),'duration_seconds':action['resource_duration'],'atlas_pages':len(pages),'source_sha256_matches':True,'resource_regions_valid':True,'alpha_corners_zero':True}
+# Regression: manually chosen solid arm/hand/sleeve interiors must be opaque,
+# while nearby finger/lyre openings and exterior background remain transparent.
+probes=json.loads((HERE/'opacity_probes.json').read_text())
+for name,groups in probes.items():
+ if name=='description':continue
+ action=meta['actions'][name]
+ pages=[Image.open(OUT/p) for p in action['atlas_pages']]
+ count=0
+ for group in groups:
+  i=group['frame'];k=action['atlas_indices'][i]
+  frame=np.asarray(pages[k//16].crop((k%4*416,k%16//4*560,k%4*416+416,k%16//4*560+560)))
+  for x,y in group['opaque']:
+   assert frame[y//2,x//2,3]>=250,(name,i,x,y,'arm interior translucent',int(frame[y//2,x//2,3]))
+   count+=1
+  for x,y in group['background']:
+   assert frame[y//2,x//2,3]<=40,(name,i,x,y,'background filled',int(frame[y//2,x//2,3]))
+ report[name]['manual_opacity_probes_passed']=count
 assert hashlib.sha256((HERE/'reference.png').read_bytes()).hexdigest()==hashlib.sha256((ROOT/'revenant_assets/combat/revenant_idle.png').read_bytes()).hexdigest()
+if '--write-report' in sys.argv:(OUT/'动画提取检查.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(report,ensure_ascii=False,indent=2))
