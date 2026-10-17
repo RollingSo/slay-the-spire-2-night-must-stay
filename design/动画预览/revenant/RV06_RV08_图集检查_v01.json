@@ -1,0 +1,32 @@
+{
+  "RV06_受击": {
+    "frames": 20,
+    "duration": 0.8333333333333334,
+    "atlas_references_valid": true,
+    "corner_alpha_zero": true,
+    "alpha_area_range": [
+      97238,
+      116745
+    ]
+  },
+  "RV08_商店待机": {
+    "frames": 96,
+    "duration": 4.0,
+    "atlas_references_valid": true,
+    "corner_alpha_zero": true,
+    "alpha_area_range": [
+      95856,
+      101785
+    ]
+  },
+  "context_idle": {
+    "frames": 1,
+    "duration": 0.041666666666666664,
+    "atlas_references_valid": true,
+    "corner_alpha_zero": true,
+    "alpha_area_range": [
+      105767,
+      105767
+    ]
+  }
+}
