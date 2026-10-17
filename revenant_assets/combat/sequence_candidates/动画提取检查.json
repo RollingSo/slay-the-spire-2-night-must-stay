@@ -1,0 +1,42 @@
+{
+  "战斗待机": {
+    "frames": 96,
+    "rgba_canvas": [
+      832,
+      1120
+    ],
+    "alpha_corners_zero": true,
+    "area_min_max": [
+      395609,
+      422834
+    ],
+    "max_adjacent_alpha_area_change_ratio": 0.013686728662469436,
+    "bounds_union": [
+      90,
+      4,
+      811,
+      1098
+    ],
+    "resource_references_and_pages_complete": true
+  },
+  "爪击攻击": {
+    "frames": 110,
+    "rgba_canvas": [
+      832,
+      1120
+    ],
+    "alpha_corners_zero": true,
+    "area_min_max": [
+      392533,
+      449672
+    ],
+    "max_adjacent_alpha_area_change_ratio": 0.014192139737991267,
+    "bounds_union": [
+      29,
+      12,
+      816,
+      1103
+    ],
+    "resource_references_and_pages_complete": true
+  }
+}
