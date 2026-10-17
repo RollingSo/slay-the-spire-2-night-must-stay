@@ -54,5 +54,14 @@
   "DUCHESS.description": "拨动怀表的时刻，以闪避与反应穿行于牌堆，在精准的节拍中给予致命一击。",
   "DUCHESS.aromaPrinciple": "[sine]如果这能帮助各位，我愿意一试。[/sine]",
   "DUCHESS.eventDeathPrevention": "还有人在等我。我不能停在这里。",
-  "DUCHESS.goldMonologue": "[sine]足够准备下一段路了。也该为各位留一些。[/sine]"
+  "DUCHESS.goldMonologue": "[sine]足够准备下一段路了。也该为各位留一些。[/sine]",
+  "WYLDER.title": "追踪者",
+  "WYLDER.titleObject": "追踪者",
+  "WYLDER.pronounSubject": "他",
+  "WYLDER.pronounObject": "他",
+  "WYLDER.pronounPossessive": "他的",
+  "WYLDER.possessiveAdjective": "他的",
+  "WYLDER.cardsModifierTitle": "追踪者",
+  "WYLDER.cardsModifierDescription": "追踪者的卡牌。",
+  "WYLDER.description": "以钩爪进入追击，用攻击打破敌人的架势。"
 }

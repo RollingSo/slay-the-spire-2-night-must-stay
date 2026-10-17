@@ -290,5 +290,11 @@
   "DUCHESS_GRACEFUL_SWORD_DANCE_POWER.title": "优雅剑舞",
   "DUCHESS_GRACEFUL_SWORD_DANCE_POWER.description": "连续打出闪避时，对所有敌人造成{Amount}点伤害。",
   "DUCHESS_PHANTOM_KILLER_POWER.title": "幻影杀机",
-  "DUCHESS_PHANTOM_KILLER_POWER.description": "本场战斗中在[gold]隐匿[/gold]状态下[gold]斩杀[/gold]敌人后，下场战斗开始时获得{Amount}点[gold]力量[/gold]。"
+  "DUCHESS_PHANTOM_KILLER_POWER.description": "本场战斗中在[gold]隐匿[/gold]状态下[gold]斩杀[/gold]敌人后，下场战斗开始时获得{Amount}点[gold]力量[/gold]。",
+  "WYLDER_PURSUIT_POWER.title": "追击",
+  "WYLDER_PURSUIT_POWER.description": "打出攻击牌时，攻击伤害增加50%。\n打出技能牌时，抽1张牌。\n出牌后退出[gold]追击[/gold]，回合结束时不会退出。",
+  "WYLDER_UPPERCUT_STRENGTH_DOWN_POWER.title": "上砍压制",
+  "WYLDER_UPPERCUT_STRENGTH_DOWN_POWER.description": "本回合内减少{Amount}点力量。",
+  "WYLDER_BREAK_DESCRIPTION_POWER.title": "破势",
+  "WYLDER_BREAK_DESCRIPTION_POWER.description": "这张牌实际造成的攻击伤害达到要求时，触发[gold]破势[/gold]的额外效果。\n只计算扣除格挡后的伤害；多段攻击对同一敌人累计。\n任一敌人达标，每次出牌只触发一次。"
 }

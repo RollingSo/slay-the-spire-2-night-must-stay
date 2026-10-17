@@ -1,0 +1,21 @@
+{
+  "cards": {
+    "WYLDER_STRIKE": ["打击", "造成{Damage:diff()}点伤害。", "Strike", "Deal {Damage:diff()} damage."],
+    "WYLDER_DEFEND": ["防御", "获得{Block:diff()}点格挡。", "Defend", "Gain {Block:diff()} Block."],
+    "WYLDER_CLAW_MOVEMENT": ["钩爪移动", "进入[gold]追击[/gold]。", "Claw Movement", "Enter [gold]Pursuit[/gold]."],
+    "WYLDER_DASH_ATTACK": ["冲刺攻击", "造成{Damage:diff()}点伤害。\n[gold]追击[/gold]：给予{Vulnerable:diff()}层易伤。", "Dash Attack", "Deal {Damage:diff()} damage.\n[gold]Pursuit[/gold]: Apply {Vulnerable:diff()} Vulnerable."],
+    "WYLDER_SLIDING_LEAP": ["滑行飞跃", "获得{Block:diff()}点格挡。\n[gold]追击[/gold]：获得{Energy:energyIcons()}。", "Sliding Leap", "Gain {Block:diff()} Block.\n[gold]Pursuit[/gold]: Gain {Energy:energyIcons()}."],
+    "WYLDER_STAMP_UPWARD_CUT": ["箭步：上砍", "造成{Damage:diff()}点伤害。\n[gold]追击[/gold]：本回合内减少该敌人{StrengthLoss:diff()}点力量。", "Stamp: Upward Cut", "Deal {Damage:diff()} damage.\n[gold]Pursuit[/gold]: That enemy loses {StrengthLoss:diff()} Strength this turn."],
+    "WYLDER_STAMP_SWEEP": ["箭步：回旋斩", "造成{Damage:diff()}点伤害。\n[gold]追击[/gold]：改为对所有敌人造成伤害。", "Stamp: Sweep", "Deal {Damage:diff()} damage.\n[gold]Pursuit[/gold]: Target all enemies instead."],
+    "WYLDER_PURSUIT": ["追击", "打出攻击牌时，攻击伤害增加50%。\n打出技能牌时，抽1张牌。\n出牌后退出[gold]追击[/gold]。\n回合结束时不会退出。", "Pursuit", "Your next Attack deals 50% more attack damage.\nYour next Skill draws 1 card.\nExit [gold]Pursuit[/gold] after playing a card, not at the end of your turn."],
+    "WYLDER_BREAK": ["破势", "这张牌实际造成的攻击伤害达到要求时，触发[gold]破势[/gold]的额外效果。", "Break", "When this card's actual attack damage reaches the requirement, trigger its [gold]Break[/gold] effect."]
+  },
+  "relics": {
+    "WYLDER_SINGLE_EARRING": ["单边耳环", "战斗开始时，进入[gold]追击[/gold]。", "Single Earring", "At the start of combat, enter [gold]Pursuit[/gold]."]
+  },
+  "powers": {
+    "WYLDER_BREAK_DESCRIPTION_POWER": ["破势", "这张牌实际造成的攻击伤害达到要求时，触发[gold]破势[/gold]的额外效果。\n只计算扣除格挡后的伤害；多段攻击对同一敌人累计。\n任一敌人达标，每次出牌只触发一次。", "Break", "Trigger the card's [gold]Break[/gold] effect when its actual attack damage reaches the requirement.\nOnly unblocked damage counts; multiple hits accumulate per enemy.\nTrigger once per play when any enemy meets the requirement."],
+    "WYLDER_PURSUIT_POWER": ["追击", "打出攻击牌时，攻击伤害增加50%。\n打出技能牌时，抽1张牌。\n出牌后退出[gold]追击[/gold]，回合结束时不会退出。", "Pursuit", "Your next Attack deals 50% more attack damage.\nYour next Skill draws 1 card.\nExit [gold]Pursuit[/gold] after playing a card, not at turn end."],
+    "WYLDER_UPPERCUT_STRENGTH_DOWN_POWER": ["上砍压制", "本回合内减少{Amount}点力量。", "Uppercut Suppression", "Lose {Amount} Strength this turn."]
+  }
+}

@@ -1,0 +1,53 @@
+using Godot;
+using HarmonyLib;
+using MegaCrit.Sts2.Core.Nodes.Combat;
+using NightMustStay.Core.Models.Characters;
+using NightMustStay.Core.Nodes;
+
+namespace NightMustStay.Core.Patches
+{
+    [HarmonyPatch]
+    public static class WylderAnimationPatch
+    {
+        public static void PlayBlock(MegaCrit.Sts2.Core.Entities.Creatures.Creature creature)
+        {
+            if (creature.GetCreatureNode() is { } node && TryGetRig(node, out Node rig))
+            {
+                rig.Call("play_trigger", "Block");
+            }
+        }
+        [HarmonyPatch(typeof(NCreature), nameof(NCreature.SetAnimationTrigger))]
+        [HarmonyPostfix]
+        public static void SetAnimationTrigger(NCreature __instance, string trigger)
+        {
+            if (TryGetRig(__instance, out Node rig))
+                rig.Call("play_trigger", trigger);
+        }
+
+        [HarmonyPatch(typeof(NCreature), nameof(NCreature.StartDeathAnim))]
+        [HarmonyPrefix]
+        public static void StartDeathAnim(NCreature __instance)
+        {
+            if (TryGetRig(__instance, out Node rig))
+                rig.Call("play_trigger", "Dead");
+        }
+
+        [HarmonyPatch(typeof(NCreature), nameof(NCreature.StartReviveAnim))]
+        [HarmonyPostfix]
+        public static void StartReviveAnim(NCreature __instance)
+        {
+            if (TryGetRig(__instance, out Node rig))
+                rig.Call("play_trigger", "Revive");
+        }
+
+        private static bool TryGetRig(NCreature creature, out Node rig)
+        {
+            rig = null!;
+            if (creature.Entity?.Player?.Character is not Wylder)
+                return false;
+
+            rig = creature.Visuals?.GetNodeOrNull<Node>("Visuals/Prototype")!;
+            return rig != null && rig.HasMethod("play_trigger");
+        }
+    }
+}

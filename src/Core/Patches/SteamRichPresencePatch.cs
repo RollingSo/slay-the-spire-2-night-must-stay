@@ -35,7 +35,8 @@ internal static class SteamRichPresencePatch
             if (character is not Guardian
                 && character is not Ironeye
                 && character is not Revenant
-                && character is not Duchess)
+                && character is not Duchess
+                && character is not Wylder)
                 return;
 
             PlatformUtil.SetRichPresenceValue(

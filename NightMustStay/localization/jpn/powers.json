@@ -290,5 +290,11 @@
   "DUCHESS_GRACEFUL_SWORD_DANCE_POWER.title": "優雅な剣舞",
   "DUCHESS_GRACEFUL_SWORD_DANCE_POWER.description": "回避を連続してプレイしたとき、敵全体に{Amount}ダメージを与える。",
   "DUCHESS_PHANTOM_KILLER_POWER.title": "幻影の殺意",
-  "DUCHESS_PHANTOM_KILLER_POWER.description": "この戦闘中に[gold]隠密[/gold]状態で[gold]リーサル[/gold]を発動したなら、次の戦闘開始時に[gold]筋力[/gold]を{Amount}得る。"
+  "DUCHESS_PHANTOM_KILLER_POWER.description": "この戦闘中に[gold]隠密[/gold]状態で[gold]リーサル[/gold]を発動したなら、次の戦闘開始時に[gold]筋力[/gold]を{Amount}得る。",
+  "WYLDER_PURSUIT_POWER.title": "Pursuit",
+  "WYLDER_PURSUIT_POWER.description": "Your next Attack deals 50% more attack damage.\nYour next Skill draws 1 card.\nExit [gold]Pursuit[/gold] after playing a card, not at turn end.",
+  "WYLDER_UPPERCUT_STRENGTH_DOWN_POWER.title": "Uppercut Suppression",
+  "WYLDER_UPPERCUT_STRENGTH_DOWN_POWER.description": "Lose {Amount} Strength this turn.",
+  "WYLDER_BREAK_DESCRIPTION_POWER.title": "Break",
+  "WYLDER_BREAK_DESCRIPTION_POWER.description": "Trigger the card's [gold]Break[/gold] effect when its actual attack damage reaches the requirement.\nOnly unblocked damage counts; multiple hits accumulate per enemy.\nTrigger once per play when any enemy meets the requirement."
 }

@@ -129,5 +129,7 @@
   "DUCHESS_UNSENT_LETTER.flavor": "折り目は何度も伸ばされている。封だけは、まだ閉じられていない。",
   "DUCHESS_BLUE_RIBBON.title": "青いリボン",
   "DUCHESS_BLUE_RIBBON.description": "最初のターン開始時、[gold]ブロック[/gold]6を得る。",
-  "DUCHESS_BLUE_RIBBON.flavor": "旅立つ前には、襟を正しておきたい。"
+  "DUCHESS_BLUE_RIBBON.flavor": "旅立つ前には、襟を正しておきたい。",
+  "WYLDER_SINGLE_EARRING.title": "Single Earring",
+  "WYLDER_SINGLE_EARRING.description": "At the start of combat, enter [gold]Pursuit[/gold]."
 }

@@ -29,6 +29,13 @@ using System.Text.Json.Serialization;
 
 try
 {
+var dependencyDirectory = Environment.GetEnvironmentVariable("NMS_TEST_GAME_DEPENDENCIES");
+if (!string.IsNullOrWhiteSpace(dependencyDirectory))
+    System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += (context, name) =>
+    {
+        string path = Path.Combine(dependencyDirectory, name.Name + ".dll");
+        return File.Exists(path) ? context.LoadFromAssemblyPath(path) : null;
+    };
 typeof(TestMode).GetProperty("IsOn")!.SetValue(null, true);
 var flags = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
 typeof(ModManager).GetMethod("ResetForTests", flags)!.Invoke(null, null);
@@ -51,6 +58,11 @@ foreach (Type type in typeof(PowerModel).Assembly.GetTypes().Where(type => !type
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+if (args.Contains("--wylder-only"))
+{
+    WylderRegression.Run();
+    return 0;
+}
 if (args.Contains("--strangle-damage-preview-only"))
 {
     StrangleDamagePreviewRegression.Run();
