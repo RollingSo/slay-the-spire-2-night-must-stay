@@ -1,0 +1,54 @@
+{
+	"checks": [
+		{
+			"name": "sprite_frames_loaded",
+			"passed": true
+		},
+		{
+			"name": "two_actions",
+			"passed": true
+		},
+		{
+			"name": "lyre_command_frame_count",
+			"passed": true
+		},
+		{
+			"name": "lyre_command_fps_and_oneshot",
+			"passed": true
+		},
+		{
+			"name": "lyre_command_endpoints",
+			"passed": true
+		},
+		{
+			"name": "lyre_command_alpha_corners",
+			"passed": true
+		},
+		{
+			"name": "lyre_command_playback_start",
+			"passed": true
+		},
+		{
+			"name": "prayer_attack_frame_count",
+			"passed": true
+		},
+		{
+			"name": "prayer_attack_fps_and_oneshot",
+			"passed": true
+		},
+		{
+			"name": "prayer_attack_endpoints",
+			"passed": true
+		},
+		{
+			"name": "prayer_attack_alpha_corners",
+			"passed": true
+		},
+		{
+			"name": "prayer_attack_playback_start",
+			"passed": true
+		}
+	],
+	"failed": 0,
+	"passed": 12
+}
