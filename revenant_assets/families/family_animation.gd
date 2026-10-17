@@ -22,7 +22,18 @@ func play_trigger(trigger: String) -> void:
     _sample()
 
 func _process(delta: float) -> void:
+    sync_native_visual_layer()
     advance(delta)
+
+func sync_native_visual_layer() -> void:
+    if not is_instance_valid(sprite):
+        return
+    # The replacement artwork is a sibling of NCreatureVisuals to preserve its
+    # independently calibrated scale/ground position. Mirror only native tint:
+    # rear-row dimming and creature fade must also affect the replacement.
+    var native_visuals := sprite.get_parent().get_node_or_null("Visuals") as CanvasItem
+    if native_visuals != null:
+        sprite.modulate = native_visuals.modulate
 
 func advance(delta: float) -> void:
     if clip == "idle" or not is_instance_valid(sprite):

@@ -961,7 +961,7 @@ public sealed class RevenantSummonManager
         }
         RefreshFamilyVisualScaleAndPosition();
         _familyVisual.Rotation = 0f;
-        _familyVisual.Modulate = Colors.White;
+        _familyVisual.Modulate = petNode.Visuals.Modulate;
         // Approved family sprites face the enemies on the right.
         _familyVisual.FlipH = false;
         string file = family switch

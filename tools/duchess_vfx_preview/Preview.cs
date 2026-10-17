@@ -10,6 +10,10 @@ public partial class Preview : Node2D
  public override void _Ready()
  {
   ParticleVfxMaterials.AssetRoot=ProjectSettings.GlobalizePath("res://../../images/vfx/particle_remake/");
+  if(Array.Exists(OS.GetCmdlineUserArgs(),arg=>arg=="--equivalence"))
+  {
+   SetProcess(false);AddChild(new EquivalenceCheck());return;
+  }
   if(Array.Exists(OS.GetCmdlineUserArgs(),arg=>arg=="--reverse-time"))
   {
    AddChild(new DuchessReverseTimeVfx());
