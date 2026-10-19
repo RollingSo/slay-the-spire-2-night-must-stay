@@ -927,6 +927,7 @@ public sealed class RevenantSummonManager
         NCreature petNode = FindCreatureNode(_familyCreature);
         if (petNode == null)
             return;
+        NightMustStay.Core.Patches.RevenantNecroGenericHealthBarPatch.Refresh(petNode);
         if (petNode.Body != null)
             petNode.Body.Visible = false;
         if (_familyVisual != null && GodotObject.IsInstanceValid(_familyVisual) &&
