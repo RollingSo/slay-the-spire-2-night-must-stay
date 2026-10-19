@@ -51,6 +51,30 @@ foreach (Type type in typeof(PowerModel).Assembly.GetTypes().Where(type => !type
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+if (args.Contains("--imbalance-threshold-only"))
+{
+    int[][] expected = { new[] { 2, 3, 4, 5, 5 }, new[] { 3, 4, 5, 6, 6 },
+        new[] { 5, 6, 7, 8, 8 }, new[] { 7, 8, 9, 10, 10 } };
+    for (int players = 1; players <= 4; players++)
+        for (int triggers = 0; triggers < 5; triggers++)
+            if (PhantomImbalancePower.GetThreshold(players, triggers) != expected[players - 1][triggers])
+                throw new Exception("Imbalance threshold scaling/cap mismatch.");
+    var player = TrackingArrowRegression.MakePlayer();
+    var creature = new Creature(player, 70, 70) { CombatState = new MegaCrit.Sts2.Core.Combat.CombatState() };
+    var progressMethod = typeof(PhantomImbalancePower).GetMethod("GetProgress", BindingFlags.NonPublic | BindingFlags.Static)!;
+    var progress = progressMethod.Invoke(null, new object[] { creature })!;
+    progress.GetType().GetField("Increases")!.SetValue(progress, 2);
+    // Recreating the visible power must not reset this enemy's resistance.
+    _ = ModelDb.Power<PhantomImbalancePower>().ToMutable();
+    if ((int)progressMethod.Invoke(null, new object[] { creature })!.GetType().GetField("Increases")!.GetValue(progress)! != 2)
+        throw new Exception("Imbalance resistance lost when power recreated.");
+    creature.CombatState = new MegaCrit.Sts2.Core.Combat.CombatState();
+    progressMethod.Invoke(null, new object[] { creature });
+    if ((int)progress.GetType().GetField("Increases")!.GetValue(progress)! != 0)
+        throw new Exception("Imbalance resistance leaked between combats.");
+    Console.WriteLine("PASS: Imbalance 1-4 player thresholds, caps, per-creature persistence and combat reset.");
+    return 0;
+}
 if (args.Contains("--strangle-damage-preview-only"))
 {
     StrangleDamagePreviewRegression.Run();

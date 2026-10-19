@@ -72,7 +72,7 @@
   "LAI_PI_POWER.title": "Lai Pi",
   "LAI_PI_POWER.description": "Whenever you play an Attack, gain {Amount} [gold]Block[/gold].",
   "PHANTOM_IMBALANCE_POWER.title": "Imbalance",
-  "PHANTOM_IMBALANCE_POWER.description": "At {Threshold} stacks, [gold]Stun[/gold] this enemy and remove that much [gold]Imbalance[/gold].",
+  "PHANTOM_IMBALANCE_POWER.description": "At {Threshold} stacks, [gold]Stun[/gold] this enemy and remove that much [gold]Imbalance[/gold].\nEach trigger increases the stacks required for the next Stun by 1, up to {MaxThreshold}.",
   "GUARDIAN_MULTIPLAYER_POWER.title": "Guardian",
   "GUARDIAN_MULTIPLAYER_POWER.description": "Whenever [gold]Fortify[/gold] retains your [gold]Block[/gold], all teammates gain that much [gold]Block[/gold].",
   "PHANTOM_CO_STRIKE_POWER.title": "Phantom Co-Strike",

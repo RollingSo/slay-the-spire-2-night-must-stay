@@ -50,7 +50,7 @@ public sealed class SoulDeparture : CardModel
 
 public sealed class WeepingStrings : CardModel
 {
-    public WeepingStrings() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
+    public WeepingStrings() : base(2, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
     public override string PortraitPath => "res://revenant_assets/cards/weeping_strings.png";
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
     protected override IEnumerable<IHoverTip> ExtraHoverTips => HoverTipFactory.FromCardWithCardHoverTips<NightMustStayLonging>(IsUpgraded);
