@@ -72,7 +72,7 @@
   "LAI_PI_POWER.title": "ライ・ピ",
   "LAI_PI_POWER.description": "アタックをプレイするたび、{Amount}[gold]ブロック[/gold]を得る。",
   "PHANTOM_IMBALANCE_POWER.title": "体勢崩し",
-  "PHANTOM_IMBALANCE_POWER.description": "{Threshold}スタックでこの敵を[gold]スタン[/gold]させ、同量の[gold]体勢崩し[/gold]を取り除く。",
+  "PHANTOM_IMBALANCE_POWER.description": "{Threshold}スタックでこの敵を[gold]スタン[/gold]させ、同量の[gold]体勢崩し[/gold]を取り除く。\n発動するたび、次のスタンに必要なスタック数が1増加する。最大{MaxThreshold}。",
   "GUARDIAN_MULTIPLAYER_POWER.title": "守護者",
   "GUARDIAN_MULTIPLAYER_POWER.description": "[gold]堅守[/gold]によって[gold]ブロック[/gold]を維持するたび、味方全員が同量の[gold]ブロック[/gold]を得る。",
   "PHANTOM_CO_STRIKE_POWER.title": "幻影共撃",

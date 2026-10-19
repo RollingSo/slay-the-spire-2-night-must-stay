@@ -70,7 +70,7 @@
   "LAI_PI_POWER.title": "막무가내",
   "LAI_PI_POWER.description": "공격 카드를 사용할 때마다 [gold]방어도[/gold]를 {Amount} 얻습니다.",
   "PHANTOM_IMBALANCE_POWER.title": "균형 붕괴",
-  "PHANTOM_IMBALANCE_POWER.description": "{Threshold}중첩이 되면 이 적을 [gold]기절[/gold]시키고 같은 양의 [gold]균형 붕괴[/gold]를 제거합니다.",
+  "PHANTOM_IMBALANCE_POWER.description": "{Threshold}중첩이 되면 이 적을 [gold]기절[/gold]시키고 같은 양의 [gold]균형 붕괴[/gold]를 제거합니다.\n발동할 때마다 다음 기절에 필요한 중첩이 1 증가하며, 최대 {MaxThreshold}중첩까지 증가합니다.",
   "GUARDIAN_MULTIPLAYER_POWER.title": "수호자",
   "GUARDIAN_MULTIPLAYER_POWER.description": "[gold]철벽[/gold]으로 [gold]방어도[/gold]를 유지할 때마다 모든 팀원이 같은 양의 [gold]방어도[/gold]를 얻습니다.",
   "PHANTOM_CO_STRIKE_POWER.title": "환영 협공",
