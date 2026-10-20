@@ -13,8 +13,7 @@ namespace NightMustStay.Core.Models.Cards;
 
 public sealed class IroneyeOrigin : CardModel
 {
-    // Temporary existing portrait until origin_v1 artwork is approved.
-    public override string PortraitPath => "res://images/packed/card_portraits/ironeye/reversal_step.png";
+    public override string PortraitPath => "res://images/packed/card_portraits/ironeye/ironeye_origin.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new BlockVar(5m, ValueProp.Unpowered) };
     protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
     {
