@@ -998,9 +998,6 @@ public sealed class RevenantSummonManager
         return 204f * ratio / Math.Max(1, GetFamilyIdleBounds(family).Size.Y);
     }
 
-    private static float GetFamilyBottomOffset(RevenantFamilyId family) =>
-        GetFamilyIdleBounds(family).End.Y - 256f;
-
     private float GetFamilyGrowthScale()
     {
         float maxHp = Math.Max(0f, _familyCreature?.MaxHp ?? 0f);
@@ -1009,8 +1006,11 @@ public sealed class RevenantSummonManager
 
     private Vector2 GetFamilyVisualBasePosition(RevenantFamilyId family)
     {
-        float scale = GetFamilyBaseVisualScale(family) * GetFamilyGrowthScale();
-        return new Vector2(0f, FamilyGroundY - GetFamilyBottomOffset(family) * scale);
+        // Each SpriteFrames clip stores its own canvas size and anchor, and
+        // family_animation.gd turns that into a Sprite2D offset, so the visual
+        // node itself only needs to sit on the ground line. Actions that reach
+        // above or beside the idle silhouette no longer get clipped.
+        return new Vector2(0f, FamilyGroundY);
     }
 
     private void RefreshFamilyVisualScaleAndPosition()
@@ -1047,7 +1047,10 @@ public sealed class RevenantSummonManager
 
     private void PlayFamilyActionAnimation(RevenantFamilyId family, bool first)
     {
-        PlayFamilyFrameAnimation("Attack");
+        // First and Second are two different announced actions (StepStrike/Retreat,
+        // HeavyHammer/Headbutt, Roar/Slam). family_animation.gd falls back to the
+        // A clip when a family has no B clip authored yet.
+        PlayFamilyFrameAnimation(first ? "AttackA" : "AttackB");
     }
 
     public void PlayFamilyHitAnimation()

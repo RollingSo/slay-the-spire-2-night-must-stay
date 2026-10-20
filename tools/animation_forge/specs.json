@@ -1,0 +1,35 @@
+{
+  "canvas_rule": "画布 = 该动作所有帧的并集包围盒 + margin；仍碰到边缘即判失败",
+  "margin": 8,
+  "fps": 24,
+  "characters": {
+    "helen": {
+      "baseline_height": 344,
+      "ground": 480,
+      "canvas_hint": "families/helen.png"
+    },
+    "frederick": {
+      "baseline_height": 325,
+      "ground": 481,
+      "canvas_hint": "families/frederick.png"
+    },
+    "sebastian": {
+      "baseline_height": 331,
+      "ground": 480,
+      "canvas_hint": "families/sebastian.png"
+    },
+    "revenant": {
+      "baseline_height": 216,
+      "ground": 240,
+      "canvas_hint": "rig 0.21×1.2×0.6447"
+    }
+  },
+  "neutral_height_tolerance": 3,
+  "notes": [
+    "neutral_height 取每个动画第 0 帧的可见高；SE04 受击起始姿态比待机塌 6%（312 vs 331），属预期。",
+    "anchor 应落在中立帧的包围盒底边中点附近；水平允许 ±2px。"
+  ],
+  "exceptions": {
+    "SE04": 312
+  }
+}
