@@ -1,4 +1,6 @@
 {
+  "DUCHESS_RADIANT_BLADE_TURNS_POWER.title": "魔法辉剑",
+  "DUCHESS_RADIANT_BLADE_TURNS_POWER.description": "剩余{Amount}回合。\n回合开始时，将1张[gold]辉剑[/gold]加入手牌。",
   "DESPERATE_STRUGGLE_POWER.title": "奋力搏击",
   "DESPERATE_STRUGGLE_POWER.description": "本回合无法再打出攻击牌。",
   "DISTANCE_POWER.maximumReached": "距离已达最大限制。",
@@ -242,7 +244,7 @@
   "DUCHESS_MOMENT_DESCRIPTION_POWER.title": "时刻",
   "DUCHESS_MOMENT_DESCRIPTION_POWER.description": "每回合开始时，时刻重置为0。\n每打出1张牌，时刻+1。\n在对应时刻打出特定卡牌，可触发其时刻效果。\n时刻12之后会回到时刻0。",
   "DUCHESS_REACTION_DESCRIPTION_POWER.title": "反应",
-  "DUCHESS_REACTION_DESCRIPTION_POWER.description": "反应：除每回合固定的起手抽牌外，抽到这张牌时，其在下次打出前耗能-1。",
+  "DUCHESS_REACTION_DESCRIPTION_POWER.description": "回合进行中抽到这张牌时，耗能-1。",
   "DUCHESS_MOMENT_POWER.title": "时刻",
   "DUCHESS_MOMENT_POWER.description": "记录当前时刻。",
   "DUCHESS_REACTION_BLOCK_POWER.title": "镇定",

@@ -1,5 +1,7 @@
 {
   "powers": {
+    "DUCHESS_RADIANT_BLADE_TURNS_POWER.title": ["魔法辉剑","Magic Glintblade","魔術の輝剣"],
+    "DUCHESS_RADIANT_BLADE_TURNS_POWER.description": ["剩余{Amount}回合。\n回合开始时，将1张[gold]辉剑[/gold]加入手牌。","For {Amount} more turns, add 1 [gold]Radiant Blade[/gold] to your hand at the start of your turn.","残り{Amount}ターン。\nターン開始時、[gold]輝剣[/gold]1枚を手札に加える。"],
     "DUCHESS_CONCEALMENT_POWER.title": [
       "隐匿",
       "Concealment",
@@ -136,7 +138,7 @@
       "リアクション"
     ],
     "DUCHESS_REACTION_DESCRIPTION_POWER.description": [
-      "反应：除每回合固定的起手抽牌外，抽到这张牌时，其在下次打出前耗能-1。",
+      "回合进行中抽到这张牌时，耗能-1。",
       "Reaction: When you draw this card outside your normal start-of-turn hand draw, it costs 1 less until played.",
       "リアクション：毎ターンの通常の初手ドロー以外でこのカードを引いた時、次にプレイするまでコストが1減る。"
     ],

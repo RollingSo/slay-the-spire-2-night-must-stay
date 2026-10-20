@@ -1,4 +1,6 @@
 {
+  "DUCHESS_RADIANT_BLADE_TURNS_POWER.title": "Magic Glintblade",
+  "DUCHESS_RADIANT_BLADE_TURNS_POWER.description": "For {Amount} more turns, add 1 [gold]Radiant Blade[/gold] to your hand at the start of your turn.",
   "DESPERATE_STRUGGLE_POWER.title": "Desperate Struggle",
   "DESPERATE_STRUGGLE_POWER.description": "You cannot play any more Attacks this turn.",
   "DISTANCE_POWER.maximumReached": "Distance is already at its maximum.",

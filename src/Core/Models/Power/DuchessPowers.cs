@@ -240,7 +240,7 @@ public sealed class DuchessRadiantBladeTurnsPower : PowerModel
 {
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
-    protected override bool IsVisibleInternal => false;
+    public override int DisplayAmount => Amount;
 
     public override async Task BeforeHandDraw(Player player, PlayerChoiceContext context, ICombatState combatState)
     {

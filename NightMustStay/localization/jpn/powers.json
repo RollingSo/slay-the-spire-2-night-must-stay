@@ -1,4 +1,6 @@
 {
+  "DUCHESS_RADIANT_BLADE_TURNS_POWER.title": "魔術の輝剣",
+  "DUCHESS_RADIANT_BLADE_TURNS_POWER.description": "残り{Amount}ターン。\nターン開始時、[gold]輝剣[/gold]1枚を手札に加える。",
   "DESPERATE_STRUGGLE_POWER.title": "必死の抵抗",
   "DESPERATE_STRUGGLE_POWER.description": "このターン、これ以上アタックをプレイできない。",
   "DISTANCE_POWER.maximumReached": "距離はすでに最大です。",
