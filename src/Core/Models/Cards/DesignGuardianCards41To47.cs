@@ -345,9 +345,11 @@ namespace NightMustStay.Core.Models.Power
             get
             {
                 LocString description = base.Description;
-                int playerCount = Owner?.CombatState?.Players.Count
+                // Hover tips also query the canonical power, which has no owner.
+                Creature owner = IsMutable ? Owner : null;
+                int playerCount = owner?.CombatState?.Players.Count
                     ?? CombatManager.Instance.DebugOnlyGetState()?.Players.Count ?? 1;
-                description.Add("Threshold", GetThreshold(playerCount, Owner == null ? 0 : GetProgress(Owner).Increases));
+                description.Add("Threshold", GetThreshold(playerCount, owner == null ? 0 : GetProgress(owner).Increases));
                 description.Add("MaxThreshold", GetThreshold(playerCount, 3));
                 return description;
             }

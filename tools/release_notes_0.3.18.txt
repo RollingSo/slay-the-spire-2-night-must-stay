@@ -1,0 +1,17 @@
+0.3.18
+
+中文
+• 调整失衡的击晕门槛：单人初始为2层，双人、三人、四人分别为3、5、7层。同一敌人每次触发后，下次门槛增加1层，最多增加3层；新战斗重置。同步修正相关悬停说明。
+• 修正“坚盾”的状态说明，使其与回合开始时将抽牌堆中1张名称带有“防御”的牌加入手牌的实际效果一致。
+• “泣弦”的耗能由1提高至2。
+• 修复“灵魂出窍”的联机群体选牌流程，避免队友的选择界面无法正常开启或选牌流程卡住。
+• 统一复仇者家人与死灵的血条宽度，并修正缩放下血条与格挡图标的对齐。
+• 更新“原点”的卡图。
+
+English
+• Adjusted Imbalance's stun thresholds: initially 2 stacks in solo play, or 3/5/7 stacks with 2/3/4 players. Each stun increases that enemy's next threshold by 1, up to 3 additional stacks. This resets in a new combat. Also corrected its hover-tip description.
+• Corrected Stalwart Shield's status description to match its effect: at turn start, add a card with Defend or Defense in its name from the draw pile to your hand.
+• Increased Weeping Strings' Energy cost from 1 to 2.
+• Fixed Soul Departure's multiplayer group-selection flow to prevent teammates' selection screens failing to open or the selection process getting stuck.
+• Unified health-bar widths for Revenant's family summons and Necros, and corrected health-bar and Block-icon alignment under scaling.
+• Updated Origin's card artwork.
