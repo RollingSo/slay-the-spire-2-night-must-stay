@@ -210,7 +210,7 @@ public abstract class DuchessCard : CardModel
                     yield return new DynamicVar("RestageAoe", effect.Amount);
                     yield return new CalculationBaseVar(0m);
                     yield return new ExtraDamageVar(1m);
-                    yield return new CalculatedDamageVar(ValueProp.Move).WithMultiplier(
+                    yield return new CalculatedDamageVar(ValueProp.Unpowered).WithMultiplier(
                         static (card, _) => decimal.Floor(DuchessMomentPower.DamageDealtThisTurn(card)
                             / card.DynamicVars["RestageAoe"].BaseValue));
                     continue;
@@ -332,9 +332,9 @@ public abstract class DuchessCard : CardModel
                 DynamicVars.Damage.BaseValue += DynamicVars["ShuffleGrowth"].BaseValue;
             var falling = Spec.Effects.FirstOrDefault(effect => effect.Kind == "ShuffleAoeDamage");
             if (falling != null && CombatState.HittableEnemies.Any(enemy => enemy.IsAlive))
-                await DamageCmd.Attack(DynamicVars["ShuffleAoeDamage"].BaseValue)
-                    .CompatFromCard(this).TargetingAllOpponents(CombatState)
-                    .Execute(new BlockingPlayerChoiceContext());
+                await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
+                    new BlockingPlayerChoiceContext(), CombatState.HittableEnemies.Where(enemy => enemy.IsAlive).ToArray(),
+                    DynamicVars["ShuffleAoeDamage"].BaseValue, ValueProp.Unpowered, Owner.Creature, this);
         }
     }
 
@@ -601,8 +601,9 @@ public abstract class DuchessCard : CardModel
                 case "RestageAoe":
                     decimal restageDamage = DynamicVars.CalculatedDamage.Calculate(null);
                     if (restageDamage > 0)
-                        await DamageCmd.Attack(restageDamage).CompatFromCard(this).TargetingAllOpponents(CombatState)
-                            .WithHitVfxNode(target => NightMustStay.Core.Nodes.Vfx.DuchessAttackEffects.Create(this, target)).Execute(context);
+                        await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
+                            context, CombatState.HittableEnemies.Where(enemy => enemy.IsAlive).ToArray(),
+                            restageDamage, ValueProp.Unpowered, Owner.Creature, this);
                     break;
                 case "NextTurnEnergy": await Apply<DuchessNextTurnEnergyPower>(context, Owner.Creature, amount); break;
                 case "NextTurnDraw": await Apply<DuchessNextTurnDrawPower>(context, Owner.Creature, amount); break;

@@ -51,6 +51,12 @@ foreach (Type type in typeof(PowerModel).Assembly.GetTypes().Where(type => !type
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+if (args.Contains("--effect-damage-only"))
+{
+    EffectDamageRegression.Run();
+    Console.WriteLine("PASS effect damage properties and upgrades");
+    return 0;
+}
 if (args.Contains("--imbalance-threshold-only"))
 {
     int[][] expected = { new[] { 2, 3, 4, 5, 5 }, new[] { 3, 4, 5, 6, 6 },
