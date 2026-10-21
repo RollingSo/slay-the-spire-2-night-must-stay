@@ -1283,7 +1283,7 @@ if (composure.Effects.Length != 1 || composure.Effects[0] != new DuchessEffect("
 var fallingMagic = DuchessCardCatalog.All[nameof(DuchessFallingMagic)];
 if (fallingMagic.Type != CardType.Skill || fallingMagic.Rarity != CardRarity.Rare
     || !fallingMagic.Retain || fallingMagic.Effects.Length != 1
-    || fallingMagic.Effects[0] != new DuchessEffect("ShuffleAoeDamage", 6, 9))
+    || fallingMagic.Effects[0] != new DuchessEffect("ShuffleAoeDamage", 12, 16))
     throw new Exception("Falling Magic specification is wrong.");
 if (DuchessCardCatalog.All[nameof(DuchessOpeningMoment)].Cost != 0)
     throw new Exception("Opening Moment must cost 0 Energy.");
