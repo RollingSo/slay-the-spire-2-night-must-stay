@@ -100,6 +100,8 @@ def matte_light(rgb: np.ndarray, wm: np.ndarray | None = None,
     cv2.floodFill(padded, mask, (0, 0), 2)
     free = padded[1:-1, 1:-1]
     alpha = (free != 2).astype(np.uint8)
+    # 最外层是抗锯齿像素，本身混着白底；先削掉 1px，软边交给后面的模糊
+    alpha = cv2.erode(alpha, np.ones((5, 5), np.uint8))
     # 水印文字这类孤立小块：只保留与主体同量级的连通块
     n, labels, stats, _ = cv2.connectedComponentsWithStats(alpha, 8)
     if n > 1:
@@ -110,11 +112,11 @@ def matte_light(rgb: np.ndarray, wm: np.ndarray | None = None,
         alpha = keep[labels].astype(np.float32)
     else:
         alpha = alpha.astype(np.float32)
-    alpha = cv2.GaussianBlur(alpha, (3, 3), 0.6)
-    alpha[alpha < 0.2] = 0
-    rgb_out = rgb.copy()
-    rgb_out[alpha == 0] = 0
-    return np.dstack([rgb_out, np.rint(alpha * 255).astype('uint8')])
+    # 不在 960 上做软边：硬边交给后续缩放生成，边缘颜色只取角色内部，避免白底渗进轮廓
+    alpha = alpha.astype(np.float32)
+    cleaned = rgb.astype(np.float32).copy()
+    cleaned[alpha == 0] = 0
+    return np.dstack([np.rint(cleaned).astype('uint8'), np.rint(alpha * 255).astype('uint8')])
 
 
 def matte(rgb: np.ndarray, wm: np.ndarray | None = None) -> np.ndarray:
