@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Combat;
@@ -173,6 +174,9 @@ public sealed class BlueAmberAmulet : RevenantRelicModel
 
 public sealed class BelieversVowCloth : RevenantRelicModel
 {
+    private sealed class PendingChargeDiscount { }
+    private static readonly ConditionalWeakTable<CardModel, PendingChargeDiscount> PendingDiscounts = new();
+
     protected override string RevenantIconName => "believers_vow_cloth";
     public override RelicRarity Rarity => RelicRarity.Rare;
 
@@ -182,6 +186,23 @@ public sealed class BelieversVowCloth : RevenantRelicModel
             return;
         Flash();
         card.EnergyCost.SetUntilPlayed(0);
+        // Self-charging happens inside this card's OnPlay. Its native cleanup
+        // must not consume the discount just earned for the NEXT play.
+        // Harmony/Preparation Ritual charge a different card in hand, so their
+        // discounts need no restoration after that card is actually played.
+        if (card.Pile?.Type == PileType.Play)
+            PendingDiscounts.GetOrCreateValue(card);
+    }
+
+    internal static bool RestoreChargeDiscountAfterPlayCleanup(CardModel card)
+    {
+        if (card == null || !PendingDiscounts.Remove(card)
+            || card is not IRevenantChargeCard { IsChargeComplete: true }
+            || card.Owner?.GetRelic<BelieversVowCloth>() == null)
+            return false;
+
+        card.EnergyCost.SetUntilPlayed(0);
+        return true;
     }
 }
 

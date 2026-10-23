@@ -581,8 +581,9 @@ public sealed class SpaceRendingFrenzy : CardModel
         _resolvedLifeLoss = lost;
         try
         {
-            await RevenantAttackEffects.Damage(
-                context, target, DynamicVars.CalculatedDamage.Calculate(null), ValueProp.Move, Owner.Creature, this);
+            await DamageCmd.Attack(DynamicVars.CalculatedDamage)
+                .CompatFromCard(this).WithRevenantFx(this, target)
+                .Targeting(target).Execute(context);
         }
         finally { _resolvedLifeLoss = null; }
     }
@@ -701,7 +702,7 @@ public sealed class UnbearableFrenzy : CardModel
         _resolvedLifeLoss = await RevenantCardHelpers.DamageSummons(this, context, DynamicVars["FamilyDamage"].BaseValue);
         try
         {
-            await DamageCmd.Attack(DynamicVars.CalculatedDamage.Calculate(null))
+            await DamageCmd.Attack(DynamicVars.CalculatedDamage)
                 .WithHitCount(DynamicVars.Repeat.IntValue)
                 .CompatFromCard(this).WithRevenantFx(this, cardPlay.Target)
                 .TargetingRandomOpponents(CombatState)

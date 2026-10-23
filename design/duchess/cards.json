@@ -1119,15 +1119,10 @@
     "逃脱",
     "Escape",
     "脱出",
-    0,
+    1,
     "Skill",
     "Uncommon",
     [
-      [
-        "LoseConcealment",
-        1,
-        1
-      ],
       [
         "ExhaustHandUpTo",
         2,
@@ -1135,7 +1130,7 @@
       ],
       [
         "BlockPerExhaust",
-        4,
+        5,
         7
       ]
     ],
@@ -1440,11 +1435,12 @@
       [
         "MomentFiveFirstEnergy",
         1,
-        2
+        1
       ]
     ],
     {
-      "targetSelf": true
+      "targetSelf": true,
+      "upgradeCost": 0
     }
   ],
   [
@@ -1575,7 +1571,7 @@
     "戏法",
     "Sleight of Hand",
     "手品",
-    0,
+    1,
     "Skill",
     "Uncommon",
     [
@@ -1729,17 +1725,17 @@
     "影中剑",
     "Sword in Shadow",
     "影の剣",
-    0,
+    1,
     "Power",
     "Uncommon",
     [
       [
         "ConcealedStrength",
-        2,
+        3,
         3
       ]
     ],
-    {}
+    { "upgradeCost": 0 }
   ],
   [
     "Quietude",
@@ -1768,7 +1764,7 @@
     "平行时空",
     "Parallel Time",
     "並行時空",
-    0,
+    1,
     "Skill",
     "Uncommon",
     [

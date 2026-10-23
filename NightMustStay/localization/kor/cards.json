@@ -70,7 +70,7 @@
   "ANTI_AIR_SHOT.description": "[gold]장거리 사격[/gold].\n피해를 {Damage:diff()} 줍니다.\n[gold]표식[/gold]을 {Mark:diff()} 부여합니다.",
   "ANTI_AIR_SHOT.upgradeDescription": "[gold]장거리 사격[/gold].\n피해를 {Damage:diff()} 줍니다.\n[gold]표식[/gold]을 {Mark:diff()} 부여합니다.",
   "SPIRIT_SHOT.title": "추적 사격",
-"SPIRIT_SHOT.description": "[gold]장거리 사격[/gold].\n피해를 {Damage:diff()} 줍니다.\n[gold]표식[/gold]을 1회 발동합니다.",
+  "SPIRIT_SHOT.description": "[gold]장거리 사격[/gold].\n피해를 {Damage:diff()} 줍니다.\n[gold]표식[/gold]을 1회 발동합니다.",
   "SPIRIT_SHOT.upgradeDescription": "[gold]장거리 사격[/gold].\n피해를 {Damage:diff()} 줍니다.\n[gold]표식[/gold]을 1회 발동합니다.",
   "TRIPLE_VOLLEY.title": "삼연사",
   "TRIPLE_VOLLEY.description": "피해를 {Damage:diff()}씩 {Repeat:diff()}번 줍니다.",
@@ -1326,8 +1326,8 @@
   "DUCHESS_TRANSFORM.description": "Replace the chosen card with the specified card for this combat only. Your deck is unchanged.",
   "DUCHESS_TRANSFORM.title": "변화",
   "DUCHESS_ESCAPE.title": "탈출",
-  "DUCHESS_ESCAPE.description": "[gold]은신[/gold]을 {LoseConcealment:diff()} 잃습니다.\n[gold]손[/gold]에서 최대 {ExhaustHandUpTo:diff()}장을 [gold]소멸[/gold]시킵니다.\n[gold]소멸[/gold]시킨 카드 1장당 [gold]방어도[/gold]를 {Block:diff()} 얻습니다.",
-  "DUCHESS_ESCAPE.upgradeDescription": "[gold]은신[/gold]을 {LoseConcealment:diff()} 잃습니다.\n[gold]손[/gold]에서 최대 {ExhaustHandUpTo:diff()}장을 [gold]소멸[/gold]시킵니다.\n[gold]소멸[/gold]시킨 카드 1장당 [gold]방어도[/gold]를 {Block:diff()} 얻습니다.",
+  "DUCHESS_ESCAPE.description": "[gold]손[/gold]에서 최대 {ExhaustHandUpTo:diff()}장을 [gold]소멸[/gold]시킵니다.\n[gold]소멸[/gold]시킨 카드 1장당 [gold]방어도[/gold]를 {Block:diff()} 얻습니다.",
+  "DUCHESS_ESCAPE.upgradeDescription": "[gold]손[/gold]에서 최대 {ExhaustHandUpTo:diff()}장을 [gold]소멸[/gold]시킵니다.\n[gold]소멸[/gold]시킨 카드 1장당 [gold]방어도[/gold]를 {Block:diff()} 얻습니다.",
   "DUCHESS_CARNIVAL_NIGHT.title": "축제의 밤",
   "DUCHESS_MASQUERADE.title": "가면무도회"
 }

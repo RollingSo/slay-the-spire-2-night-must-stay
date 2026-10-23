@@ -51,6 +51,21 @@ foreach (Type type in typeof(PowerModel).Assembly.GetTypes().Where(type => !type
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+if (args.Contains("--ancient-dragon-faith-only"))
+{
+    AncientDragonFaithRegression.Run();
+    return 0;
+}
+if (args.Contains("--believers-vow-cloth-only"))
+{
+    BelieversVowClothRegression.Run();
+    return 0;
+}
+if (args.Contains("--frenzy-attack-only"))
+{
+    FrenzyAttackRegression.Run();
+    return 0;
+}
 if (args.Contains("--effect-damage-only"))
 {
     EffectDamageRegression.Run();
@@ -1013,7 +1028,7 @@ foreach (string id in new[] { nameof(DuchessSoftLanding), nameof(DuchessDistract
         throw new Exception(id + " must grant 2/3 Concealment.");
 }
 var trick = DuchessCardCatalog.All[nameof(DuchessSleightOfHand)];
-if (!trick.All || trick.Effects.Single(e => e.Kind == "ShuffleHand") != new DuchessEffect("ShuffleHand", 1, 1)
+if (trick.Cost != 1 || !trick.All || trick.Effects.Single(e => e.Kind == "ShuffleHand") != new DuchessEffect("ShuffleHand", 1, 1)
     || trick.Effects.Single(e => e.Kind == "Weak").Amount != 1 || trick.Effects.Single(e => e.Kind == "Weak").Upgraded != 2
     || trick.Effects.Single(e => e.Kind == "Vulnerable").Amount != 1 || trick.Effects.Single(e => e.Kind == "Vulnerable").Upgraded != 2)
     throw new Exception("Sleight of Hand must shuffle 1 and apply 1/2 Weak and Vulnerable to ALL enemies.");
@@ -1021,7 +1036,7 @@ var quiet = DuchessCardCatalog.All[nameof(DuchessQuietude)];
 var parallel = DuchessCardCatalog.All[nameof(DuchessParallelTime)];
 if (quiet.Cost != 0 || quiet.Rarity != CardRarity.Common || quiet.Type != CardType.Skill
     || quiet.Effects[0] != new DuchessEffect("ShuffleHand", 1, 1) || quiet.Effects[1] != new DuchessEffect("Concealment", 1, 2)
-    || parallel.Cost != 0 || parallel.Rarity != CardRarity.Uncommon || parallel.Type != CardType.Skill || parallel.Moment != 3
+    || parallel.Cost != 1 || parallel.Rarity != CardRarity.Uncommon || parallel.Type != CardType.Skill || parallel.Moment != 3
     || !parallel.UpgradeRetain || parallel.Effects[0] != new DuchessEffect("SetMoment", 0, 0) || parallel.Effects[1] != new DuchessEffect("Draw", 2, 2, "moment"))
     throw new Exception("Quietude or Parallel Time specification differs from the supplied table.");
 if (ModelDb.Card<DuchessQuietude>().TargetType != TargetType.Self || ModelDb.Card<DuchessParallelTime>().TargetType != TargetType.Self)
@@ -1096,13 +1111,13 @@ foreach (int stepCount in new[] { 0, 1, 12 })
 }
 var escape = ModelDb.Card<DuchessEscape>().ToMutable();
 if (DuchessCardCatalog.All.ContainsKey("DuchessPerfectRehearsal")
-    || escape.EnergyCost.Canonical != 0 || escape.Type != CardType.Skill
+    || escape.EnergyCost.Canonical != 1 || escape.Type != CardType.Skill
     || escape.Rarity != CardRarity.Uncommon || escape.TargetType != TargetType.Self
-    || escape.DynamicVars["LoseConcealment"].BaseValue != 1
+    || escape.DynamicVars.ContainsKey("LoseConcealment")
     || escape.DynamicVars["ExhaustHandUpTo"].BaseValue != 2
-    || escape.DynamicVars.Block.BaseValue != 4 || !escape.GainsBlock
+    || escape.DynamicVars.Block.BaseValue != 5 || !escape.GainsBlock
     || escape.Keywords.Contains(CardKeyword.Exhaust))
-    throw new Exception("Escape must be a 0-cost skill, lose 1 Concealment, exhaust up to 2 hand cards and gain 4 Block per card.");
+    throw new Exception("Escape must cost 1, exhaust up to 2 hand cards and gain 5 Block per card without losing Concealment.");
 escape.Owner = rewindPlayer;
 var escapeConcealment = (DuchessConcealmentPower)ModelDb.Power<DuchessConcealmentPower>().ToMutable();
 typeof(PowerModel).GetProperty("Owner")!.SetValue(escapeConcealment, rewindCreature);
@@ -1111,29 +1126,28 @@ var escapePowers = (List<PowerModel>)typeof(Creature).GetField("_powers",
 var escapePlayable = typeof(DuchessCard).GetProperty("IsPlayable",
     BindingFlags.Instance | BindingFlags.NonPublic)!;
 bool EscapeIsPlayable() => (bool)escapePlayable.GetValue(escape)!;
-if (EscapeIsPlayable()) throw new Exception("Escape must not be playable without Concealment.");
+if (!EscapeIsPlayable()) throw new Exception("Escape must be playable without Concealment.");
 escapePowers.Add(escapeConcealment);
 foreach (int stacks in new[] { 0, 1, 2, 3 })
 {
     escapeConcealment.SetAmount(stacks, false);
-    if (EscapeIsPlayable() != (stacks >= 1))
-        throw new Exception($"Base Escape must require 1 Concealment; tested {stacks}.");
+    if (!EscapeIsPlayable())
+        throw new Exception($"Base Escape must not require Concealment; tested {stacks}.");
 }
 escape.UpgradeInternal();
-if (escape.DynamicVars["LoseConcealment"].BaseValue != 1
+if (escape.DynamicVars.ContainsKey("LoseConcealment")
     || escape.DynamicVars["ExhaustHandUpTo"].BaseValue != 2
     || escape.DynamicVars.Block.BaseValue != 7 || !escape.GainsBlock
-    || escape.DynamicVars["LoseConcealment"].WasJustUpgraded
     || !escape.DynamicVars.Block.WasJustUpgraded)
-    throw new Exception("Escape upgrade must only increase Block per exhausted card from 4 to 7.");
+    throw new Exception("Escape upgrade must only increase Block per exhausted card from 5 to 7.");
 foreach (int stacks in new[] { 0, 1, 2, 3 })
 {
     escapeConcealment.SetAmount(stacks, false);
-    if (EscapeIsPlayable() != (stacks >= 1))
-        throw new Exception($"Upgraded Escape must require 1 Concealment; tested {stacks}.");
+    if (!EscapeIsPlayable())
+        throw new Exception($"Upgraded Escape must not require Concealment; tested {stacks}.");
 }
 escapePowers.Remove(escapeConcealment);
-Console.WriteLine("PASS: Escape requires sufficient Concealment before play, base and upgraded.");
+Console.WriteLine("PASS: Escape costs 1, needs no Concealment and gains 5/7 Block per exhausted card.");
 foreach (CardModel retained in new[] { ModelDb.Card<DuchessReenactment>().ToMutable(), ModelDb.Card<DuchessParallelTime>().ToMutable() })
 {
     int cost = retained.EnergyCost.Canonical;
@@ -1166,6 +1180,13 @@ if (DuchessCardCatalog.All[nameof(DuchessBackToPast)].Rarity != CardRarity.Commo
     || DuchessCardCatalog.All[nameof(DuchessCarianRetaliation)].Effects[0] != new DuchessEffect("Block", 6, 9)
     || DuchessCardCatalog.All[nameof(DuchessGoldenMoment)].Effects[0] != new DuchessEffect("MomentFiveBlock", 5, 7))
     throw new Exception("October Duchess balance values do not match the requested changes.");
+var beatUpgrade = ModelDb.Card<DuchessBeat>().ToMutable();
+if (beatUpgrade.EnergyCost.GetResolved() != 1 || beatUpgrade.DynamicVars["MomentFiveFirstEnergy"].BaseValue != 1)
+    throw new Exception("Beat must cost 1 and grant 1 Energy.");
+beatUpgrade.UpgradeInternal();
+if (beatUpgrade.EnergyCost.GetResolved() != 0 || beatUpgrade.DynamicVars["MomentFiveFirstEnergy"].BaseValue != 1
+    || beatUpgrade.DynamicVars["MomentFiveFirstEnergy"].WasJustUpgraded)
+    throw new Exception("Beat upgrade must reduce cost to 0 without upgrading its Energy reward.");
 if (typeof(DuchessBeatPower).GetMethod("OnMomentSix") == null
     || typeof(DuchessBeatPower).GetMethod("OnMomentFive") != null
     || typeof(DuchessBeatPower).GetProperty("TriggeredThisTurn") != null
@@ -1179,9 +1200,9 @@ foreach (var retainCard in new CardModel[] { ModelDb.Card<DuchessMomentAndEterni
     if (!retainCard.Keywords.Contains(CardKeyword.Retain)) throw new Exception("New card upgrade must add Retain.");
 }
 var shadow = ModelDb.Card<DuchessShadowSword>().ToMutable();
-if (shadow.DynamicVars["ConcealedStrength"].BaseValue != 2) throw new Exception("Shadow Sword base Strength must be 2.");
+if (shadow.EnergyCost.GetResolved() != 1 || shadow.DynamicVars["ConcealedStrength"].BaseValue != 3) throw new Exception("Shadow Sword must cost 1 and grant 3 Strength.");
 shadow.UpgradeInternal();
-if (shadow.DynamicVars["ConcealedStrength"].BaseValue != 3) throw new Exception("Shadow Sword upgraded Strength must be 3.");
+if (shadow.EnergyCost.GetResolved() != 0 || shadow.DynamicVars["ConcealedStrength"].BaseValue != 3) throw new Exception("Shadow Sword+ must cost 0 and grant 3 Strength.");
 foreach (string name in new[] { nameof(DuchessRestage), nameof(DuchessReenactment), nameof(DuchessFleetingInstant), nameof(DuchessGoldenBlade), nameof(DuchessSilverFlash), nameof(DuchessSilence) })
 {
     var card = (DuchessCard)typeof(ModelDb).GetMethod("Get", flags, null, new[] { typeof(Type) }, null)!
