@@ -94,9 +94,22 @@ def matte_light(rgb: np.ndarray, wm: np.ndarray | None = None,
         barrier = barrier | wm
     barrier = cv2.dilate(barrier.astype(np.uint8), np.ones((3, 3), np.uint8)).astype(bool)
     free = (~barrier).astype(np.uint8)
-    mask = np.zeros((h + 2, w + 2), np.uint8)
-    cv2.floodFill(free, mask, (0, 0), 2)
-    alpha = (free != 2).astype(np.float32)
+    # 角色贴到画面边缘时，边缘外的背景会与 (0,0) 断开；pad 一圈「可通行」边界再灌水
+    padded = np.pad(free, 1, mode='constant', constant_values=1)
+    mask = np.zeros((padded.shape[0] + 2, padded.shape[1] + 2), np.uint8)
+    cv2.floodFill(padded, mask, (0, 0), 2)
+    free = padded[1:-1, 1:-1]
+    alpha = (free != 2).astype(np.uint8)
+    # 水印文字这类孤立小块：只保留与主体同量级的连通块
+    n, labels, stats, _ = cv2.connectedComponentsWithStats(alpha, 8)
+    if n > 1:
+        areas = stats[1:, cv2.CC_STAT_AREA]
+        biggest = int(areas.max())
+        keep = np.zeros(n, bool)
+        keep[1:] = areas >= max(64, biggest * 0.05)
+        alpha = keep[labels].astype(np.float32)
+    else:
+        alpha = alpha.astype(np.float32)
     alpha = cv2.GaussianBlur(alpha, (3, 3), 0.6)
     alpha[alpha < 0.2] = 0
     rgb_out = rgb.copy()
