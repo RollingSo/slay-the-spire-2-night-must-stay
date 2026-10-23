@@ -503,6 +503,7 @@ public static class RevenantAssetPatch
             "res://materials/cards/frames/card_frame_revenant_mat.tres",
             RestVisuals,
             "res://revenant_assets/rest_site/revenant_rest_site.png",
+            "res://revenant_assets/rest_site/camp_idle.res",
             MerchantVisuals,
             "res://revenant_assets/merchant/revenant_merchant.png",
             "res://revenant_assets/multiplayer_hands/revenant_point.png",

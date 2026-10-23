@@ -1,13 +1,13 @@
 [gd_scene load_steps=5 format=3]
 
-[ext_resource type="Texture2D" path="res://revenant_assets/rest_site/revenant_rest_site.png" id="1_texture"]
+[ext_resource type="SpriteFrames" path="res://revenant_assets/rest_site/camp_idle.res" id="1_frames"]
 
 [sub_resource type="Animation" id="Animation_reset"]
 resource_name = "RESET"
 length = 0.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:position")
-tracks/0/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [Vector2(14, -92.096700)]}
+tracks/0/keys = {"times": PackedFloat32Array(0), "transitions": PackedFloat32Array(1), "update": 0, "values": [Vector2(14, 64.01)]}
 
 [sub_resource type="Animation" id="Animation_idle"]
 resource_name = "idle"
@@ -16,21 +16,20 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:position")
 tracks/0/interp = 2
-tracks/0/keys = {"times": PackedFloat32Array(0, 1.7, 3.4), "transitions": PackedFloat32Array(0.5, 0.5, 0.5), "update": 0, "values": [Vector2(14, -92.096700), Vector2(14, -95.596700), Vector2(14, -92.096700)]}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Sprite:rotation")
-tracks/1/interp = 2
-tracks/1/keys = {"times": PackedFloat32Array(0, 1.7, 3.4), "transitions": PackedFloat32Array(0.5, 0.5, 0.5), "update": 0, "values": [-0.003, 0.003, -0.003]}
+tracks/0/keys = {"times": PackedFloat32Array(0, 1.7, 3.4), "transitions": PackedFloat32Array(0.5, 0.5, 0.5), "update": 0, "values": [Vector2(14, 64.01), Vector2(14, 64.01), Vector2(14, 64.01)]}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_main"]
 _data = {&"RESET": SubResource("Animation_reset"), &"idle": SubResource("Animation_idle")}
 
 [node name="RevenantRestVisual" type="Node2D"]
 metadata/revenant_rest_site = true
-[node name="Sprite" type="Sprite2D" parent="."]
-position = Vector2(14, -92.096700)
-scale = Vector2(0.244300000, 0.244300000)
-texture = ExtResource("1_texture")
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(14, 64.01)
+scale = Vector2(0.62232, 0.62232)
+sprite_frames = ExtResource("1_frames")
+animation = &"camp_idle"
+autoplay = "camp_idle"
+offset = Vector2(0, -239)
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {&"": SubResource("AnimationLibrary_main")}
 autoplay = "idle"
