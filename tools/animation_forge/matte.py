@@ -80,11 +80,14 @@ def _corner_background(rgb: np.ndarray, patch: int = 60) -> np.ndarray:
 
 
 def matte_light(rgb: np.ndarray, wm: np.ndarray | None = None,
-                threshold: float = 8.0) -> np.ndarray:
+                threshold: float = 20.0) -> np.ndarray:
     """白/浅色背景：用「与背景色差」当围栏，从画面边缘灌水。
 
     浅色角色（白裙、白灵体）不能用亮度当围栏——裙面本身接近白，会被当成背景；
     也不能用逐行估背景——角色铺满画面时，左右边缘取到的其实是角色像素。
+
+    阈值不要太低：即梦的白底素材常在角色背后压一圈很淡的光晕/暗环，
+    色差只有 8~15，阈值 8 会把这圈保留下来，看起来像角色外面套了个圆环。
     """
     h, w = rgb.shape[:2]
     bg = _corner_background(rgb)
