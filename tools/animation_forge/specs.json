@@ -27,9 +27,11 @@
   "neutral_height_tolerance": 3,
   "notes": [
     "neutral_height 取每个动画第 0 帧的可见高；SE04 受击起始姿态比待机塌 6%（312 vs 331），属预期。",
-    "anchor 应落在中立帧的包围盒底边中点附近；水平允许 ±2px。"
+    "anchor 应落在中立帧的包围盒底边中点附近；水平允许 ±2px。",
+    "RV09 篝火待机按 rest_site 渲染尺寸的 1.6× 制作（474px），不是战斗的 216px。"
   ],
   "exceptions": {
-    "SE04": 312
+    "SE04": 312,
+    "RV09": 474
   }
 }
