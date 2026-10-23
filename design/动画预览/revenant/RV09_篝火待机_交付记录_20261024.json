@@ -1,0 +1,69 @@
+{
+  "name": "篝火待机",
+  "canvas": [
+    436,
+    494
+  ],
+  "anchor": [
+    218,
+    486
+  ],
+  "frames": 107,
+  "fps": 24,
+  "duration": 4.458333333333333,
+  "loop": true,
+  "resource": "RV09_篝火待机_SpriteFrames_20261024.res",
+  "source_sha256": "f8b3589bb635c0a837a3599ab1b1899790952108579d565ecd9d2729d0248075",
+  "status": "user approved material 2026-10-24; existing v03 reused by source hash",
+  "method": "reuse existing v03 self-contained SpriteFrames after source SHA256 match",
+  "source_window": [
+    0.16666666666666666,
+    2.4166666666666665
+  ],
+  "sample": "existing 107-frame eased ping-pong with premultiplied interpolation",
+  "known_limits": [
+    "Reuse includes prior v03 color correction.",
+    "Source canvas already truncates some fabric at the far sides; no reconstruction.",
+    "Not a new natural loop; reverse secondary motion in latter half."
+  ],
+  "actual_command_wait": null,
+  "actual_game_duration": null,
+  "validation": {
+    "engine": "Godot 4.7.2",
+    "result": {
+      "anchor": [
+        218.0,
+        486.0
+      ],
+      "animations": {
+        "camp_idle": {
+          "fps": 24.0,
+          "frames": 107,
+          "loop": true,
+          "neutral_bottom": 485,
+          "neutral_height": 475,
+          "union": [
+            8,
+            8,
+            427,
+            485
+          ]
+        }
+      },
+      "canvas": [
+        436,
+        494
+      ],
+      "file": "RV09_篝火待机_SpriteFrames_20261024.res",
+      "loadable": true
+    },
+    "gate": "tools/animation_forge/forge.py verify passed; no boundary contact, anchor valid; heights within tolerance",
+    "target_engine_4_5": "not tested; rebuild and reload before integration",
+    "game_tested": false
+  },
+  "usage": {
+    "offset": "Vector2(canvas.x / 2 - anchor.x, canvas.y / 2 - anchor.y)",
+    "textures": "embedded in standalone compressed SpriteFrames; no external atlas dependency",
+    "integration": "approved material delivery only; runtime entry unchanged"
+  }
+}

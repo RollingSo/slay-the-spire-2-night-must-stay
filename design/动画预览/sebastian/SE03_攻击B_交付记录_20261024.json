@@ -1,0 +1,105 @@
+{
+  "name": "攻击B",
+  "frames": 29,
+  "fps": 24,
+  "duration": 1.2083333333333333,
+  "loop": false,
+  "source_sha256": "94a63aa2818c186a54a4432da842674a20d46be7c512bbaa7e6831291e3f0b36",
+  "source_frame_indices_24fps": [
+    12,
+    13,
+    14,
+    16,
+    17,
+    18,
+    19,
+    20,
+    22,
+    23,
+    24,
+    25,
+    27,
+    28,
+    29,
+    30,
+    31,
+    33,
+    34,
+    35,
+    36,
+    38,
+    39,
+    40,
+    41,
+    42,
+    44,
+    45,
+    46
+  ],
+  "source_window": [
+    0.5,
+    1.9166666666666667
+  ],
+  "sample": "forward-only arm raise and downward slam; standing/waving tail excluded",
+  "source_duration": 5.016667,
+  "actual_command_wait": null,
+  "actual_game_duration": null,
+  "known_limits": [
+    "User corrected source identity to SE03 attack_b on 2026-10-24. No reverse playback.",
+    "Ends at follow-through; recovery to formal SE01 remains pending.",
+    "Source has saturated blue shadows and some halo; palette not certified against official idle."
+  ],
+  "canvas": [
+    589,
+    625
+  ],
+  "anchor": [
+    276.5,
+    604
+  ],
+  "resource": "SE03_攻击B_SpriteFrames_20261024.res",
+  "neutral_height": 332,
+  "delivery_scale": 1.060897435897436,
+  "status": "user approved action 2026-10-24; material only, no game validation",
+  "source_original_filename": "SE04.mp4",
+  "source_action_correction": "User identified this source as SE03 attack_b, not SE04 hurt.",
+  "release_marker": null,
+  "validation": {
+    "engine": "Godot 4.7.2",
+    "result": {
+      "anchor": [
+        276.5,
+        604.0
+      ],
+      "animations": {
+        "attack_b": {
+          "fps": 24.0,
+          "frames": 29,
+          "loop": false,
+          "neutral_bottom": 604,
+          "neutral_height": 332,
+          "union": [
+            8,
+            8,
+            580,
+            616
+          ]
+        }
+      },
+      "canvas": [
+        589,
+        625
+      ],
+      "file": "SE03_攻击B_SpriteFrames_20261024.res",
+      "loadable": true
+    },
+    "gate": "tools/animation_forge/forge.py verify passed; no boundary contact, anchor valid; heights within tolerance",
+    "target_engine_4_5": "not tested; rebuild and reload before integration",
+    "game_tested": false
+  },
+  "usage": {
+    "offset": "Vector2(canvas.x / 2 - anchor.x, canvas.y / 2 - anchor.y)",
+    "textures": "embedded in standalone compressed SpriteFrames; no external atlas dependency",
+    "integration": "approved material delivery only; runtime entry unchanged"
+  }
+}
