@@ -38,7 +38,7 @@ def character_of(item_id: str) -> str | None:
     return PREFIX.get(item_id[:2])
 
 
-def verify(directory: pathlib.Path, strict: bool = True) -> int:
+def verify(directory: pathlib.Path, strict: bool = True, family: str | None = None) -> int:
     tmp = ROOT / ".tmp"
     tmp.mkdir(exist_ok=True)
     out = tmp / "forge_verify.json"
@@ -54,7 +54,7 @@ def verify(directory: pathlib.Path, strict: bool = True) -> int:
     for entry in sorted(data, key=lambda e: e["file"]):
         name = entry["file"]
         item = name.split("_")[0]
-        char = character_of(item)
+        char = family if family else character_of(item)
         base = SPECS["characters"][char]["baseline_height"] if char else 0
         exp_neutral = exceptions.get(item, base)
         if not entry["loadable"]:
@@ -126,12 +126,13 @@ def main() -> int:
     sub = ap.add_subparsers(dest="cmd", required=True)
     v = sub.add_parser("verify", help="闸门检查一组 .res")
     v.add_argument("--dir", required=True)
+    v.add_argument("--family", default=None, help="运行时目录用：按角色基准校验（helen/frederick/sebastian/revenant）")
     v.add_argument("--no-strict", action="store_true")
     p = sub.add_parser("pack", help="把帧序列打成 SpriteFrames")
     p.add_argument("--config", required=True)
     args = ap.parse_args()
     if args.cmd == "verify":
-        return verify(pathlib.Path(args.dir), strict=not args.no_strict)
+        return verify(pathlib.Path(args.dir), strict=not args.no_strict, family=args.family)
     return pack(pathlib.Path(args.config))
 
 

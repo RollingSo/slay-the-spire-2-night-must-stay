@@ -15,8 +15,8 @@
 # 闸门：复载一组 .res，检查裁剪 / 锚点 / 中立高 / 帧率
 python tools/animation_forge/forge.py verify --dir design/动画预览/revenant/基准_v03
 
-# 也可以检查运行时目录
-python tools/animation_forge/forge.py verify --dir revenant_assets/families/animations/helen
+# 也可以检查运行时目录（文件名不带编号，用 --family 指定角色基准）
+python tools/animation_forge/forge.py verify --dir revenant_assets/families/animations/helen --family helen
 
 # 打包：帧序列 → SpriteFrames（config 里给 frames_dir / cell / anchor / action / loop）
 python tools/animation_forge/forge.py pack --config .tmp/canvas_v03/SE02_咆哮/pack_config.json
