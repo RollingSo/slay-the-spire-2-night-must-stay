@@ -4,11 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Multiplayer;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.TestSupport;
 
 namespace NightMustStay.Core.Models.Cards;
 
@@ -21,49 +25,40 @@ public sealed class SoulDeparture : CardModel
     protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new CardsVar(1) };
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {
-        // Start every participant's native synchronized choice before pausing
-        // the action. ReserveChoiceId must run in the deterministic action
-        // phase, not after one peer has already completed an earlier choice.
-        // Each client opens only its own selection screen; no serial remote
-        // wait can prevent another participant's screen from being opened.
-        var selectionContext = new BlockingPlayerChoiceContext();
-        selectionContext.PushModel(this);
-        var choices = new List<Task<IEnumerable<CardModel>>>();
+        // Each recipient needs their own native hook action. Do not pause the
+        // played card while waiting for choices owned by other player queues.
+        // The synchronous part of SelectAndExhaust reserves the choice ID;
+        // AssignTaskAndWaitForPauseOrCompletion then hands off its continuation.
+        ulong localPlayerId = LocalContext.NetId ?? Owner.NetId;
         foreach (var player in CombatState.Players.Where(player => player.Creature.IsAlive).ToArray())
         {
             var pile = PileType.Draw.GetPile(player);
             int count = Math.Min(DynamicVars.Cards.IntValue, pile.Cards.Count);
             if (count == 0) continue;
-            // Use each recipient as the choice owner so native multiplayer sync
-            // asks that player rather than the card's owner to choose.
-            MegaCrit.Sts2.Core.Logging.Log.Info($"[SoulDeparture] Request choice: player={player.NetId}, draw={pile.Cards.Count}, count={count}");
-            choices.Add(CardSelectCmd.FromCombatPile(selectionContext, pile, player,
-                new CardSelectorPrefs(SelectionScreenPrompt, count)));
+            var recipientContext = new HookPlayerChoiceContext(
+                player, localPlayerId, GameActionType.CombatPlayPhaseOnly);
+            if (!TestMode.IsOn)
+                MegaCrit.Sts2.Core.Logging.Log.Info($"[SoulDeparture] Queue owner choice: player={player.NetId}, draw={pile.Cards.Count}, count={count}");
+            Task choice = SelectAndExhaust(recipientContext, player, count);
+            await recipientContext.AssignTaskAndWaitForPauseOrCompletion(choice);
         }
-        if (choices.Count == 0) return;
-        CardModel[] cardsToExhaust;
-        // Release/Beta differ: newer builds also take the choosing player.
-        var beginChoice = typeof(PlayerChoiceContext).GetMethod(nameof(PlayerChoiceContext.SignalPlayerChoiceBegun));
-        var options = MegaCrit.Sts2.Core.Entities.Multiplayer.PlayerChoiceOptions.CancelPlayCardActions;
-        await (Task)beginChoice.Invoke(context, beginChoice.GetParameters().Length == 2
-            ? new object[] { Owner, options } : new object[] { options });
+    }
+
+    private async Task SelectAndExhaust(HookPlayerChoiceContext context, Player player, int count)
+    {
+        context.PushModel(this);
         try
         {
-            var results = await Task.WhenAll(choices);
-            cardsToExhaust = results.SelectMany(cards => cards).Distinct().ToArray();
+            CardModel[] selected = (await CardSelectCmd.FromCombatPile(
+                context, PileType.Draw.GetPile(player), player,
+                new CardSelectorPrefs(SelectionScreenPrompt, count))).Distinct().ToArray();
+            foreach (CardModel card in selected)
+                if (card.Owner == player && card.Pile?.Type is PileType.Draw or PileType.Hand or PileType.Discard)
+                    await CardCmd.Exhaust(context, card);
+            if (!TestMode.IsOn)
+                MegaCrit.Sts2.Core.Logging.Log.Info($"[SoulDeparture] Owner choice complete: player={player.NetId}, selected={selected.Length}");
         }
-        finally
-        {
-            selectionContext.PopModel(this);
-            await context.SignalPlayerChoiceEnded();
-        }
-        MegaCrit.Sts2.Core.Logging.Log.Info($"[SoulDeparture] All choices complete: selected={cardsToExhaust.Length}");
-        // Exhaust hooks can request further choices. Run them only after all
-        // recipients have selected, using the original action context as usual.
-        foreach (var card in cardsToExhaust)
-            if (card.Pile?.Type is PileType.Draw or PileType.Hand or PileType.Discard)
-                await CardCmd.Exhaust(context, card);
-        MegaCrit.Sts2.Core.Logging.Log.Info("[SoulDeparture] Exhaust complete");
+        finally { context.PopModel(this); }
     }
     protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1);
 }
