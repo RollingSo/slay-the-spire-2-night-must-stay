@@ -39,7 +39,9 @@ public sealed class DuchessMomentPower : PowerModel
     [SavedProperty]
     public bool SkipNextTurnReset { get; set; }
     public const int PocketwatchMoment = 2;
-    private sealed record CardSnapshot(PileType Pile, int Index, int Cost);
+    // Stored inline in the reusable dictionary: capturing a turn must not
+    // allocate one managed object per card, including cards in the draw pile.
+    private readonly record struct CardSnapshot(PileType Pile, int Index, int Cost);
 
     private sealed class Data
     {
@@ -184,14 +186,23 @@ public sealed class DuchessMomentPower : PowerModel
         modifiedCost = originalCost;
         if (card is not DuchessCard duchessCard || card.Owner?.Creature != Owner)
             return false;
+        // Most Duchess cards (including Reverse Time) have no moment/stealth
+        // discount. Native preview/snapshot cost queries still visit this hook.
+        DuchessCardSpec spec = duchessCard.Spec;
+        if (spec.MomentCostReduction == 0 && !spec.MomentCostReductionDynamic
+            && spec.ConcealedCostReduction <= 0)
+        {
+            modifiedCost = Math.Max(0m, originalCost);
+            return modifiedCost != originalCost;
+        }
         int discount = 0;
-        if (duchessCard.IsMomentActive)
-            discount += duchessCard.Spec.MomentCostReduction;
-        if (duchessCard.Spec.MomentCostReductionDynamic)
+        if (spec.MomentCostReduction != 0 && duchessCard.IsMomentActive)
+            discount += spec.MomentCostReduction;
+        if (spec.MomentCostReductionDynamic)
             discount += Current(Owner.Player);
-        if (duchessCard.Spec.ConcealedCostReduction > 0
+        if (spec.ConcealedCostReduction > 0
             && Owner.HasPower<DuchessConcealmentPower>())
-            discount += duchessCard.Spec.ConcealedCostReduction;
+            discount += spec.ConcealedCostReduction;
         modifiedCost = Math.Max(0m, originalCost - discount);
         return modifiedCost != originalCost;
     }
@@ -210,8 +221,12 @@ public sealed class DuchessMomentPower : PowerModel
         if (generatedSinceStart.Length > 0)
             await CardPileCmd.RemoveFromCombat(generatedSinceStart, false);
 
+        // GroupBy already buffers all matching entries before the first move.
+        // Build membership once at the same boundary rather than re-enumerating
+        // every pile for every captured card (quadratic in deck size).
+        var remainingCards = Owner.Player.PlayerCombatState.AllCards.ToHashSet();
         foreach (IGrouping<PileType, KeyValuePair<CardModel, CardSnapshot>> group in data.TurnStart
-                     .Where(pair => pair.Key != source && Owner.Player.PlayerCombatState.AllCards.Contains(pair.Key))
+                     .Where(pair => pair.Key != source && remainingCards.Contains(pair.Key))
                      .GroupBy(pair => pair.Value.Pile))
         {
             foreach (var pair in group.OrderBy(pair => pair.Value.Index))
