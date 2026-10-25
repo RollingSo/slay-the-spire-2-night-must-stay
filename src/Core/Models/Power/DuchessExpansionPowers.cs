@@ -236,10 +236,13 @@ public sealed class DuchessEternalRestagePower : PowerModel
         decimal damage = PendingDamage;
         if (damage <= 0) return;
         Flash();
-        await DamageCmd.Attack(damage).CompatFromCard(source)
-            .TargetingAllOpponents(source.CombatState)
-            .WithHitVfxNode(target => NightMustStay.Core.Nodes.Vfx.DuchessAttackEffects.Create(
-                target, NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Clock, Owner)).Execute(context);
+        foreach (Creature target in source.CombatState.HittableEnemies.Where(enemy => enemy.IsAlive).ToArray())
+        {
+            NightMustStay.Core.Nodes.Vfx.DuchessAttackEffects.PlayEffectDamage(
+                target, NightMustStay.Core.Nodes.Vfx.DuchessAttackVfx.Kind.Clock, Owner);
+            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
+                context, target, damage, ValueProp.Unpowered, Owner, null);
+        }
     }
 }
 

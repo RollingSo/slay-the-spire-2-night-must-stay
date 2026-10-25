@@ -50,6 +50,7 @@ public sealed class GurranqsRock : CardModel
 
 public sealed class FrenziedFlame : CardModel
 {
+    private decimal? _resolvedLifeLoss;
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         new DynamicVar[]
         {
@@ -57,9 +58,9 @@ public sealed class FrenziedFlame : CardModel
             new CalculationBaseVar(0m),
             new ExtraDamageVar(2m),
             new CalculatedDamageVar(ValueProp.Move).WithMultiplier((card, _) =>
-                card.Owner == null ? 0m : RevenantSummonManager.For(card.Owner).GetLivingSummons()
+                ((FrenziedFlame)card)._resolvedLifeLoss ?? (card.Owner == null ? 0m : RevenantSummonManager.For(card.Owner).GetLivingSummons()
                     .Sum(summon => summon.GetPower<BufferPower>() is { Amount: > 0 } ? 0m
-                        : Math.Max(0m, summon.CurrentHp - (summon.GetPower<UndyingMarchPower>() != null ? 1m : 0m))))
+                        : Math.Max(0m, summon.CurrentHp - (summon.GetPower<UndyingMarchPower>() != null ? 1m : 0m)))))
         };
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
         IsUpgraded
@@ -77,10 +78,17 @@ public sealed class FrenziedFlame : CardModel
             return;
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
         if (!cardPlay.Target.IsAlive) return;
-        await DamageCmd.Attack(hpLost * DynamicVars["DamageMultiplier"].BaseValue)
-            .CompatFromCard(this).WithRevenantFx(this, cardPlay.Target)
-            .Targeting(cardPlay.Target)
-            .Execute(context);
+        // Freeze the measured sacrifice before the summons disappear. The native
+        // attack applies Strength/Vigor/Vulnerable once, just like the preview.
+        _resolvedLifeLoss = hpLost;
+        try
+        {
+            await DamageCmd.Attack(DynamicVars.CalculatedDamage)
+                .CompatFromCard(this).WithRevenantFx(this, cardPlay.Target)
+                .Targeting(cardPlay.Target)
+                .Execute(context);
+        }
+        finally { _resolvedLifeLoss = null; }
     }
 
     protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);

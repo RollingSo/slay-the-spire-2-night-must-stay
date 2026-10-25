@@ -314,7 +314,7 @@ public sealed class LansseaxBlade : CardModel
 
 public sealed class LightningStrike : CardModel
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(6m, ValueProp.Move) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(6m, ValueProp.Unpowered) };
     protected override bool IsPlayable => false;
     public override string PortraitPath => "res://revenant_assets/cards/lightning_strike.png";
     public LightningStrike() : base(0, CardType.Attack, CardRarity.Common, TargetType.Self) { }
@@ -324,8 +324,10 @@ public sealed class LightningStrike : CardModel
     {
         if (card != this || !ShouldTriggerOnDiscard(oldPileType, card.Pile?.Type ?? PileType.None)
             || CombatState == null || !CombatState.HittableEnemies.Any(enemy => enemy.IsAlive)) return;
-        await RevenantCardHelpers.DamageRandomEachHit(this, new BlockingPlayerChoiceContext(),
-            DynamicVars.Damage.BaseValue, 1);
+        Creature[] enemies = CombatState.HittableEnemies.Where(enemy => enemy.IsAlive).ToArray();
+        Creature target = Owner.RunState.Rng.CombatTargets.NextItem(enemies);
+        await RevenantAttackEffects.Damage(new BlockingPlayerChoiceContext(), target,
+            DynamicVars.Damage.BaseValue, ValueProp.Unpowered, Owner.Creature, this);
     }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
 }
@@ -579,8 +581,9 @@ public sealed class SpaceRendingFrenzy : CardModel
         _resolvedLifeLoss = lost;
         try
         {
-            await RevenantAttackEffects.Damage(
-                context, target, DynamicVars.CalculatedDamage.Calculate(null), ValueProp.Move, Owner.Creature, this);
+            await DamageCmd.Attack(DynamicVars.CalculatedDamage)
+                .CompatFromCard(this).WithRevenantFx(this, target)
+                .Targeting(target).Execute(context);
         }
         finally { _resolvedLifeLoss = null; }
     }
@@ -699,7 +702,7 @@ public sealed class UnbearableFrenzy : CardModel
         _resolvedLifeLoss = await RevenantCardHelpers.DamageSummons(this, context, DynamicVars["FamilyDamage"].BaseValue);
         try
         {
-            await DamageCmd.Attack(DynamicVars.CalculatedDamage.Calculate(null))
+            await DamageCmd.Attack(DynamicVars.CalculatedDamage)
                 .WithHitCount(DynamicVars.Repeat.IntValue)
                 .CompatFromCard(this).WithRevenantFx(this, cardPlay.Target)
                 .TargetingRandomOpponents(CombatState)

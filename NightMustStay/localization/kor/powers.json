@@ -1,4 +1,6 @@
 {
+  "DUCHESS_RADIANT_BLADE_TURNS_POWER.title": "마술 휘검",
+  "DUCHESS_RADIANT_BLADE_TURNS_POWER.description": "남은 {Amount}턴 동안 턴 시작 시 [gold]휘검[/gold] 1장을 손으로 가져옵니다.",
   "DESPERATE_STRUGGLE_POWER.title": "필사적인 저항",
   "DESPERATE_STRUGGLE_POWER.description": "이번 턴에 더 이상 공격 카드를 사용할 수 없습니다.",
   "DISTANCE_POWER.title": "거리",
