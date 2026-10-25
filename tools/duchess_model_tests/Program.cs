@@ -51,6 +51,62 @@ foreach (Type type in typeof(PowerModel).Assembly.GetTypes().Where(type => !type
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+if (args.Contains("--beetle-stun-only"))
+{
+    SlumberingBeetleRegression.Run();
+    return 0;
+}
+if (args.Contains("--guardian-balance-only"))
+{
+    foreach (bool upgraded in new[] { false, true })
+    {
+        var fearless = ModelDb.Card<Fearless>().ToMutable();
+        var assault = ModelDb.Card<GuardianAssault>().ToMutable();
+        var phantom = ModelDb.Card<PhantomCoStrike>().ToMutable();
+        if (upgraded) { fearless.UpgradeInternal(); assault.UpgradeInternal(); phantom.UpgradeInternal(); }
+        if (fearless.EnergyCost.GetResolved() != (upgraded ? 0 : 1)
+            || fearless.DynamicVars["Strength"].BaseValue != 6m
+            || fearless.DynamicVars["DexterityLoss"].BaseValue != 2m
+            || !fearless.Keywords.Contains(CardKeyword.Retain))
+            throw new Exception("Fearless stats mismatch.");
+        if (assault.Rarity != CardRarity.Uncommon || !assault.Keywords.Contains(CardKeyword.Retain)
+            || assault.DynamicVars.Damage.BaseValue != (upgraded ? 26m : 20m)
+            || assault.DynamicVars["Imbalance"].BaseValue != 1m)
+            throw new Exception("Assault stats mismatch.");
+        if (phantom.DynamicVars.Damage.BaseValue != (upgraded ? 11m : 8m)
+            || phantom.DynamicVars["Imbalance"].BaseValue != 1m)
+            throw new Exception("Phantom Co-Strike stats mismatch.");
+        var poke = ModelDb.Card<ShieldPoke>().ToMutable();
+        if (upgraded) poke.UpgradeInternal();
+        for (int preview = 0; preview < 2; preview++)
+        {
+            poke.DynamicVars.Damage.UpdateCardPreview(poke, CardPreviewMode.Normal, null!, false);
+            poke.DynamicVars.Block.UpdateCardPreview(poke, CardPreviewMode.Normal, null!, false);
+            if (poke.DynamicVars.Damage.PreviewValue != (upgraded ? 5m : 3m)
+                || poke.DynamicVars.Block.PreviewValue != (upgraded ? 5m : 3m))
+                throw new Exception("Shield Poke preview retained obsolete Fearless behavior.");
+        }
+    }
+    if (ModelDb.Card<Advance>().Rarity != CardRarity.Common)
+        throw new Exception("Advance must be Common.");
+    Console.WriteLine("PASS: Guardian balance base/upgraded stats, keywords, and rarity.");
+    return 0;
+}
+if (args.Contains("--defensive-reinforcement-only"))
+{
+    foreach (bool upgraded in new[] { false, true })
+    {
+        var card = ModelDb.Card<DefensiveReinforcement>().ToMutable();
+        if (upgraded) card.UpgradeInternal();
+        if (card.EnergyCost.GetResolved() != 1 || card.Type != CardType.Skill
+            || card.DynamicVars["Fortify"].BaseValue != (upgraded ? 13m : 9m)
+            || !card.Keywords.Contains(CardKeyword.Exhaust)
+            || card.Keywords.Contains(CardKeyword.Retain) || card.GainsBlock)
+            throw new Exception("Defensive Reinforcement base/upgrade mismatch.");
+    }
+    Console.WriteLine("PASS: Defensive Reinforcement costs 1, grants 9/13 Fortify, and exhausts without Retain.");
+    return 0;
+}
 if (args.Contains("--soul-departure-only"))
 {
     SoulDepartureRegression.Run();

@@ -34,7 +34,7 @@ void CheckCostUpgrade<T>(int normal, int upgraded) where T : CardModel
     Assert(card.EnergyCost.GetResolved() == upgraded, typeof(T).Name + " upgraded cost.");
 }
 CheckCostUpgrade<Fearless>(1, 0);
-CheckCostUpgrade<SpearGrinding>(1, 0);
+CheckCostUpgrade<SpearGrinding>(2, 1);
 Assert(ModelDb.Card<Fearless>().Keywords.Contains(CardKeyword.Retain), "Fearless must retain.");
 Assert(ModelDb.Card<EveOfCounterattack>().EnergyCost.GetResolved() == 1, "Counterattack cost.");
 Assert(ModelDb.Card<DuchessUndecidedFate>().Keywords.Contains(CardKeyword.Exhaust), "Fate must exhaust.");
@@ -48,49 +48,18 @@ var halberd = (FinalCurtainHalberd)ModelDb.Card<FinalCurtainHalberd>().MutableCl
 Assert(halberd.DynamicVars["Increase"].BaseValue == 12, "Halberd growth.");
 typeof(FinalCurtainHalberd).GetMethod("OnUpgrade", BindingFlags.Instance | BindingFlags.NonPublic)!.Invoke(halberd, null);
 Assert(halberd.DynamicVars["Increase"].BaseValue == 16, "Halberd upgraded growth.");
-var harmony = new HarmonyLib.Harmony("NightMustStay.ShieldPoke.Preview.Tests");
-// Stub only the existing history query: exercise real mutable card vars and both
-// display paths, without needing a Godot combat room or altering gameplay history.
-harmony.Patch(typeof(Fearless).GetMethod(nameof(Fearless.IsShieldPokeEmpowered))!,
-    prefix: new HarmonyMethod(typeof(BonusFixture).GetMethod(nameof(BonusFixture.Prefix))!));
-try
+var card = (ShieldPoke)ModelDb.Card<ShieldPoke>().MutableClone();
+void Preview(ShieldPoke poke, decimal damage, decimal block)
 {
-    harmony.CreateClassProcessor(typeof(Fearless).Assembly.GetType("NightMustStay.Core.Patches.FearlessDamageBranchPatch")!).Patch();
-    var card = (ShieldPoke)ModelDb.Card<ShieldPoke>().MutableClone();
-    void Preview(ShieldPoke poke, decimal damage, decimal block)
-    {
-        poke.DynamicVars.Damage.UpdateCardPreview(poke, CardPreviewMode.Normal, null!, false);
-        poke.DynamicVars.Block.UpdateCardPreview(poke, CardPreviewMode.Normal, null!, false);
-        Assert(poke.DynamicVars.Damage.PreviewValue==damage,"Wrong dynamic damage preview.");
-        Assert(poke.DynamicVars.Block.PreviewValue==block,"Wrong dynamic block preview.");
-        Assert((decimal)typeof(ShieldPoke).GetMethod("GetDamageBeforeHooks", BindingFlags.Instance|BindingFlags.NonPublic)!.Invoke(poke,null)! == poke.DynamicVars.Damage.BaseValue,
-            "Raw attack must leave final doubling to the native multiplicative hook.");
-    }
-    Preview(card,3,3);
-    BonusFixture.Empowered=true;
-    var multiplierHook = typeof(CardModel).GetMethods().Single(method => method.Name == "ModifyDamageMultiplicative");
-    var hookArgs = multiplierHook.GetParameters().Select(parameter => parameter.ParameterType == typeof(decimal)
-        ? (object)14m : parameter.ParameterType == typeof(MegaCrit.Sts2.Core.ValueProps.ValueProp)
-            ? MegaCrit.Sts2.Core.ValueProps.ValueProp.Move : parameter.ParameterType == typeof(CardModel) ? card : null).ToArray();
-    Assert((decimal)multiplierHook.Invoke(card, hookArgs)! == 2m, "Native final damage multiplier must double damage after Strength.");
-    Preview(card,6,0);
-    Preview(card,6,0); // Repeated redraws must not compound transient damage.
-    Assert(card.DynamicVars.Damage.BaseValue==3 && card.DynamicVars.Block.BaseValue==3,"Preview mutated base values.");
-    var generated=(ShieldPoke)ModelDb.Card<ShieldPoke>().MutableClone();
-    Preview(generated,6,0);
-    Preview(card,6,0);
-    typeof(ShieldPoke).GetMethod("OnUpgrade",BindingFlags.Instance|BindingFlags.NonPublic)!.Invoke(card,null);
-    Preview(card,10,0);
-    BonusFixture.Empowered=false; // Next turn: no permanent bonus remains.
-    Preview(card,5,5);
-    Preview(generated,3,3);
-    Assert(card.DynamicVars.Damage.Name=="Damage" && card.DynamicVars.Block.Name=="Block","Localization placeholders changed.");
+    poke.DynamicVars.Damage.UpdateCardPreview(poke, CardPreviewMode.Normal, null!, false);
+    poke.DynamicVars.Block.UpdateCardPreview(poke, CardPreviewMode.Normal, null!, false);
+    Assert(poke.DynamicVars.Damage.PreviewValue == damage, "Wrong damage preview.");
+    Assert(poke.DynamicVars.Block.PreviewValue == block, "Wrong block preview.");
 }
-finally { harmony.UnpatchAll(harmony.Id); }
-Console.WriteLine("PASS: normal/upgraded/generated Shield Poke, Fearless doubling, repeated previews, turn reset, unchanged base values/keys.");
-
-public static class BonusFixture
-{
-    public static bool Empowered;
-    public static bool Prefix(ref bool __result) { __result=Empowered; return false; }
-}
+Preview(card, 3, 3);
+Preview(card, 3, 3);
+Assert(card.DynamicVars.Damage.BaseValue == 3 && card.DynamicVars.Block.BaseValue == 3, "Preview mutated base values.");
+card.UpgradeInternal();
+Preview(card, 5, 5);
+Preview((ShieldPoke)ModelDb.Card<ShieldPoke>().MutableClone(), 3, 3);
+Console.WriteLine("PASS: Shield Poke base/upgraded previews without obsolete Fearless doubling or block suppression.");

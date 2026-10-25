@@ -211,6 +211,10 @@ namespace NightMustStay.Core.Models.Cards
 
             if (cardPlay.Target.IsAlive)
             {
+                await PowerCmd.Apply<PhantomImbalancePower>(
+                    choiceContext, cardPlay.Target, DynamicVars[ImbalanceKey].BaseValue,
+                    Owner.Creature, this);
+                await PhantomImbalancePower.ResolveThreshold(choiceContext, cardPlay.Target);
                 await PowerCmd.Apply<PhantomCoStrikePower>(
                     choiceContext,
                     cardPlay.Target,

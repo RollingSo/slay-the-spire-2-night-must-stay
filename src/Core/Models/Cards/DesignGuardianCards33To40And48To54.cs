@@ -306,14 +306,14 @@ namespace NightMustStay.Core.Models.Cards
         public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Retain };
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new DamageVar(24m, ValueProp.Move),
+            new DamageVar(20m, ValueProp.Move),
             new PowerVar<PhantomImbalancePower>(ImbalanceKey, 1m)
         };
         protected override IEnumerable<IHoverTip> ExtraHoverTips => new[]
         {
             HoverTipFactory.FromPower<PhantomImbalancePower>()
         };
-        public GuardianAssault() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
+        public GuardianAssault() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
         protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
