@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -8,6 +9,7 @@ using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Models.Monsters;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Cards;
@@ -42,11 +44,7 @@ public sealed class RevenantSummonControllerPower : PowerModel
             return amount;
 
         RevenantSummonManager manager = RevenantSummonManager.For(Owner.Player);
-        bool hasFamily = manager.CurrentFamilyCreature is { IsAlive: true };
-        bool hasNecro = manager
-            .GetLivingNecros()
-            .Any(necro => necro.Creature is { IsAlive: true });
-        if (!hasFamily && !hasNecro)
+        if (!GetDamageGuards(manager).Any())
             return amount;
 
         // Capture the actual HP loss after the Revenant's block and regular
@@ -67,42 +65,18 @@ public sealed class RevenantSummonControllerPower : PowerModel
         decimal remaining = pending.Amount;
         ValueProp routedProps = ValueProp.Unblockable | ValueProp.Unpowered;
 
-        Creature necro = manager
-            .GetLivingNecros()
-            .Select(candidate => candidate.Creature)
-            .FirstOrDefault(creature => creature is { IsAlive: true });
-        if (necro is { IsAlive: true } && remaining > 0m)
+        foreach (Creature summon in GetDamageGuards(manager))
         {
-            bool preventsThisHit = necro.HasPower<BufferPower>();
-            decimal necroDamage = preventsThisHit
-                ? remaining
-                : decimal.Min(remaining, necro.CurrentHp);
-            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
-                new BlockingPlayerChoiceContext(),
-                necro,
-                necroDamage,
-                routedProps,
-                pending.Dealer,
-                pending.CardSource);
-            remaining = preventsThisHit ? 0m : remaining - necroDamage;
-        }
+            if (!summon.IsAlive || remaining <= 0m)
+                continue;
 
-        Creature family = manager.CurrentFamilyCreature;
-        if (family is { IsAlive: true } && remaining > 0m)
-        {
-            bool cannotDieThisTurn = family.HasPower<UndyingMarchPower>();
-            bool preventsThisHit = family.HasPower<BufferPower>();
-            decimal familyDamage = cannotDieThisTurn || preventsThisHit
-                ? remaining
-                : decimal.Min(remaining, family.CurrentHp);
+            bool absorbsWholeHit = summon.HasPower<BufferPower>()
+                || summon.HasPower<UndyingMarchPower>();
+            decimal damage = absorbsWholeHit ? remaining : decimal.Min(remaining, summon.CurrentHp);
             await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
-                new BlockingPlayerChoiceContext(),
-                family,
-                familyDamage,
-                routedProps,
-                pending.Dealer,
-                pending.CardSource);
-            remaining = cannotDieThisTurn || preventsThisHit ? 0m : remaining - familyDamage;
+                new BlockingPlayerChoiceContext(), summon, damage, routedProps,
+                pending.Dealer, pending.CardSource);
+            remaining = absorbsWholeHit ? 0m : remaining - damage;
         }
 
         if (remaining > 0m && Owner.IsAlive)
@@ -115,6 +89,17 @@ public sealed class RevenantSummonControllerPower : PowerModel
                 pending.Dealer,
                 pending.CardSource);
         }
+    }
+
+    private IEnumerable<Creature> GetDamageGuards(RevenantSummonManager manager)
+    {
+        Creature family = manager.CurrentFamilyCreature;
+        var necros = manager.GetLivingNecros().Select(necro => necro.Creature);
+        var osties = Owner.Player.PlayerCombatState?.Pets
+            .Where(pet => pet.Monster is Osty && pet.PetOwner == Owner.Player && pet != family)
+            ?? Enumerable.Empty<Creature>();
+        return necros.Concat(osties).Concat(new[] { family })
+            .Where(creature => creature is { IsAlive: true }).Distinct().ToArray();
     }
 
     public override bool TryModifyEnergyCostInCombat(
