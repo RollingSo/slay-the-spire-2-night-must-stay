@@ -56,6 +56,11 @@ if (args.Contains("--revenant-routing-only"))
     RevenantRoutingRegression.Run();
     return 0;
 }
+if (args.Contains("--reverse-time-performance-only"))
+{
+    ReverseTimePerformanceRegression.Run();
+    return 0;
+}
 if (args.Contains("--beetle-stun-only"))
 {
     SlumberingBeetleRegression.Run();

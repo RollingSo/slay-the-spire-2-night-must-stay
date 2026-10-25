@@ -1,9 +1,14 @@
 <Project Sdk="Godot.NET.Sdk/4.5.1">
- <PropertyGroup><TargetFramework>net9.0</TargetFramework><EnableDynamicLoading>true</EnableDynamicLoading></PropertyGroup>
+ <PropertyGroup><TargetFramework>net9.0</TargetFramework><EnableDynamicLoading>true</EnableDynamicLoading>
+  <Sts2AssemblyDir Condition="'$(Sts2AssemblyDir)' == ''">D:/SteamLibrary/steamapps/common/Slay the Spire 2/data_sts2_windows_x86_64</Sts2AssemblyDir>
+ </PropertyGroup>
  <ItemGroup>
   <Compile Include="../../src/Core/Nodes/Vfx/CombatVfxCanvas.cs" Link="CombatVfxCanvas.cs" />
   <Compile Include="../../src/Core/Nodes/Vfx/DuchessAttackVfx.cs" Link="DuchessAttackVfx.cs" />
   <Compile Include="../../src/Core/Nodes/Vfx/DuchessReverseTimeVfx.cs" Link="DuchessReverseTimeVfx.cs" />
+  <Compile Include="../../src/Core/Nodes/Vfx/DuchessMidnightWaltzVfx.cs" Link="DuchessMidnightWaltzVfx.cs" />
+  <Compile Include="../../src/Core/Nodes/Vfx/CachedVfxGeometry.cs" Link="CachedVfxGeometry.cs" />
   <Compile Include="../../src/Core/Nodes/Vfx/ParticleVfxMaterials.cs" Link="ParticleVfxMaterials.cs" />
  </ItemGroup>
+ <ItemGroup><Reference Include="sts2"><HintPath>$(Sts2AssemblyDir)/sts2.dll</HintPath></Reference></ItemGroup>
 </Project>

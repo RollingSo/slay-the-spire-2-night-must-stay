@@ -11,6 +11,11 @@ public partial class DuchessReverseTimeVfx : CombatVfxCanvas
     private float _age;
     private bool _manual;
     private readonly Vector2[] _ribbon = new Vector2[65];
+    private readonly Vector2[] _pileCurve = new Vector2[29];
+    private readonly Vector2[] _energyCurve = new Vector2[29];
+    private readonly CachedVfxStroke _ribbonStroke = new(65);
+    private readonly CachedVfxStroke _curveStroke = new(29);
+    private static readonly Color Cyan = new("59D9FF"), Core = new("D3F9FF"), Blue = new("2465B4");
     public bool SoundEnabled { get; set; }
     private bool _rewindSound;
     public override void _Ready()
@@ -38,8 +43,9 @@ public partial class DuchessReverseTimeVfx : CombatVfxCanvas
         float unit=Math.Min(size.X/1440f,size.Y/960f);
         float t=Math.Clamp(_age/Lifetime,0,1);
         float fade=Ease(0,.1f,t)*(1-Ease(.72f,1,t));
-        Color cyan=Fade(new Color("59D9FF"),fade*.8f), core=Fade(new Color("D3F9FF"),fade*.85f);
-        Color blue=Fade(new Color("2465B4"),fade*.4f);
+        Color cyan=Fade(Cyan,fade*.8f), core=Fade(Core,fade*.85f);
+        Color blue=Fade(Blue,fade*.4f);
+        Rid canvas=GetCanvasItem();
         DrawRect(new Rect2(Vector2.Zero,size),new Color(.015f,.045f,.12f,fade*.25f));
         // First swell outward over the battlefield; after the cue every trail runs backward.
         float swell=Ease(.04f,.5f,t);
@@ -56,9 +62,9 @@ public partial class DuchessReverseTimeVfx : CombatVfxCanvas
                 float reach=radius*(.14f+.86f*u);
                 ribbon[i]=center+new Vector2(MathF.Cos(angle)*reach,MathF.Sin(angle)*reach*.67f);
             }
-            Stroke(ribbon,(24+arm%2*8)*unit,blue);
-            Stroke(ribbon,(13+arm%2*5)*unit,cyan);
-            Stroke(ribbon,3*unit,core);
+            _ribbonStroke.Draw(canvas,ribbon,(24+arm%2*8)*unit,blue);
+            _ribbonStroke.Draw(canvas,ribbon,(13+arm%2*5)*unit,cyan);
+            _ribbonStroke.Draw(canvas,ribbon,3*unit,core);
         }
         // Backward-running clock marks unify the temporal ribbons with the Duchess.
         float dialRadius=(105+65*swell)*(1-returnPhase*.4f)*unit;
@@ -89,10 +95,18 @@ public partial class DuchessReverseTimeVfx : CombatVfxCanvas
             float u=Ease(RewindCue/Lifetime,.94f,t);
             if(u>.025f)
             {
-                Stroke(Curve(discard,new Vector2(size.X*.5f,size.Y*.61f),drawPile,u),8*unit,cyan);
-                Stroke(Curve(center,new Vector2(size.X*.25f,size.Y*.35f),energy,u),5*unit,core);
+                FillCurve(_pileCurve,discard,new Vector2(size.X*.5f,size.Y*.61f),drawPile,u);
+                _curveStroke.Draw(canvas,_pileCurve,8*unit,cyan);
+                FillCurve(_energyCurve,center,new Vector2(size.X*.25f,size.Y*.35f),energy,u);
+                _curveStroke.Draw(canvas,_energyCurve,5*unit,core);
             }
             DrawArc(energy,22*unit,0,MathF.Tau,48,Fade(core,fade*.8f),3*unit,true);
         }
+    }
+
+    private static void FillCurve(Vector2[] points,Vector2 from,Vector2 control,Vector2 to,float progress)
+    {
+        for(int i=0;i<points.Length;i++)
+        {float u=i/(float)(points.Length-1)*progress;points[i]=from*(1-u)*(1-u)+control*2*u*(1-u)+to*u*u;}
     }
 }
