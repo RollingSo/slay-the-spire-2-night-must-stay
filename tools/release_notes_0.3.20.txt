@@ -1,0 +1,19 @@
+0.3.20
+
+中文
+• 修复坚固钳子与固守的格挡保留冲突：两者同时生效时采用较高的保留上限，并保持壁垒正常保留全部格挡。
+• 调整守护者卡牌：“防御加固”改为获得9/13点固守并消耗；“无畏”改为本回合获得6点力量、失去2点敏捷；“幻影共击”首次攻击也会施加失衡，并调整部分卡牌数值与稀有度。
+• 修复“救世展翼”的减伤结算和敌人伤害意图刷新。
+• 修复“灵魂出窍”的联机选牌交接；复仇者受到的伤害现在依次由死灵、奥斯蒂、家人承担，剩余伤害再由角色承受。
+• 修复沉睡甲虫被击晕后可能无法正常苏醒的问题。
+• 优化女爵逆转时间与“午夜圆舞曲”的性能，保持特效画面与时序不变。
+• 调整复仇者在商店和休息点的显示体型。
+
+English
+• Fixed the Block-retention conflict between Sturdy Clamp and Fortify: when both apply, the higher retention cap is used. Barricade still preserves all Block.
+• Rebalanced Guardian cards. Defend Reinforcement now grants 9/13 Fortify and Exhausts. Fearless now grants 6 temporary Strength and loses 2 temporary Dexterity. Phantom Slash now also applies Imbalance on its first attack. Adjusted several other card values and rarities.
+• Fixed Wings of Salvation's damage reduction and enemy damage-intent refresh.
+• Fixed Soul Departure's multiplayer selection handoff. Damage to Revenant is now absorbed in order by Necros, Osty, and family summons, with remaining damage passed to Revenant.
+• Fixed Slumbering Beetles potentially failing to wake up after being stunned.
+• Optimized Duchess's time reversal and Midnight Waltz while preserving their visuals and timing.
+• Adjusted Revenant's displayed size at shops and rest sites.
