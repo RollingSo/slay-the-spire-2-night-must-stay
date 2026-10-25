@@ -1,0 +1,118 @@
+{
+  "task": "HE03",
+  "source": "/Users/yahoooo/Downloads/HE03-3.mp4",
+  "source_sha256": "1598e82634912a0087db763cab249e7aee868efc93da1cd3510d6f3394926fea",
+  "source_duration": 5.016667,
+  "source_fps": 60,
+  "source_indices": [
+    234,
+    227,
+    220,
+    212,
+    205,
+    198,
+    202,
+    206,
+    210,
+    213,
+    217,
+    221,
+    225,
+    229,
+    232,
+    236,
+    240,
+    244,
+    248,
+    252,
+    256,
+    259,
+    263,
+    267
+  ],
+  "fps": 24,
+  "frames": 24,
+  "duration": 1.0,
+  "canvas": [
+    435,
+    376
+  ],
+  "anchor": [
+    202.0,
+    365
+  ],
+  "method": "reverse source3.90 to3.30 for preparation; forward3.30 to4.45 for cut and recovery; no generated poses, no root translation",
+  "release_marker_candidate_frame": 12,
+  "actual_command_wait": null,
+  "game_duration": null,
+  "limits": [
+    "Weak retreat; this is a short slash candidate.",
+    "Reverse preparation reverses secondary cloth motion.",
+    "Context uses source first-frame pose; formal idle integration untested.",
+    "No game-speed or runtime integration validation."
+  ],
+  "status": "user approved edit on 2026-10-25; asset delivery, not runtime integration",
+  "resource": "HE03_攻击B_SpriteFrames_20261025.res",
+  "loop": false,
+  "animation": "attack_b",
+  "frame_rgba_sha256": [
+    "89a2826473320094f7eb055f6bf2fa7ba98441e4d4e089f49cbcc8788717b5b7",
+    "3818d6de540205c1b48bfa0fba47fa13fe2ee76b8eadd6b62f2b374881efc3a5",
+    "6015bbc55fe4e3d9484a3f5c1f50c329dc0fb798fb20ced12f270f7f0712bbc8",
+    "97be80683a4a2cc17604bd180d78e450a253fde27670cce49c5ce1a2e8d1df2b",
+    "97c557d4f96f7e17b975e6ddf4728aa76f899d8c990b85475de2e28d1f9127ad",
+    "1a02e6e9ee7fffe114815650de2b10af69491b32ffb3e6a6911a0484837db07b",
+    "d7bd2fb52d027fc42321c7577e5a34acc44a8e661bd20f153db4db38e89c6bb0",
+    "377c91b1d278253ed20ad65471b513e66e4b9b0175d666edaae926d211ed0b46",
+    "dc1d037289618879b64d4efc1d2d9b5a45e8364772b97d714818d2f0ba12fc1b",
+    "4ac14369d3e5c155b3ddaa707d270f6f81d09566700930b3ec59cc6a95d3c064",
+    "eadab1095f3538db1738c41c6cc4b1cd364b4b02c496265d59b9c797278e36ac",
+    "f28a6e391611c311561f608191cf63f048f2928a8bca267aa92962274495496a",
+    "8d5ef82019b31ea987c98ad837787140a2a839b3e228e2291662924c40416d29",
+    "bdc7a413cfd76435b9e4ea8dc395a63cf316c6527b1920e7b1c11e1c09cdebd5",
+    "a5acd4ee68094ff716fe0957db5d5c3c376e87cc68f0385dab2a83c36640e407",
+    "89a2826473320094f7eb055f6bf2fa7ba98441e4d4e089f49cbcc8788717b5b7",
+    "8022365bd36ba98937951956d578f13e1a428fc41d8e368f01487f36d2158bfb",
+    "94c94e7f248aa502c4e4dd1bca412afee75987266fba1819b540051d9cce4a36",
+    "c2cca406ebed43be289a1ac89e0f8b1ba111f099e61290a9be04095c4b67e3c9",
+    "023c2458f96ac6c8c9fb4c2937c53161ccc4a8f0116116e20353e96022240136",
+    "c6975eead0fcbb880f26babe97505796c6e5e5b7166217cfc20d199ad834fd22",
+    "62910492a697472854c1bef65b6b7b992a59fd298f29a2ee78a1e0e8f8a5bc3e",
+    "05163b695f57bfc4bc06890ec7bd90fd634e9abb99ce507b9bd5f9395c8a6c29",
+    "d6ff155c364d9fce9d5999fc131ccd9621ee4d8d70880d0003e0cea03a9bc1d3"
+  ],
+  "resource_sha256": "76d2642c2c2f4a9a8a535d6afb18aedc0d3dcfaf6cdb88efae3858283df51890",
+  "regenerate": "python tools/animation_forge/prepare_he03_edit.py --source HE03-3.mp4 --output design/动画预览/helen",
+  "engine": "Godot 4.7.2; project target 4.5 requires reload validation before integration",
+  "offset": "Vector2(canvas.x / 2 - anchor.x, canvas.y / 2 - anchor.y)",
+  "validation": {
+    "anchor": [
+      202.0,
+      365.0
+    ],
+    "animations": {
+      "attack_b": {
+        "fps": 24.0,
+        "frames": 24,
+        "loop": false,
+        "neutral_bottom": 367,
+        "neutral_height": 341,
+        "union": [
+          8,
+          8,
+          426,
+          367
+        ]
+      }
+    },
+    "canvas": [
+      435,
+      376
+    ],
+    "file": "HE03_攻击B_SpriteFrames_20261025.res",
+    "loadable": true,
+    "gate_passed": true,
+    "game_tested": false,
+    "reloaded_pixels_match_approved_preview": true
+  }
+}
