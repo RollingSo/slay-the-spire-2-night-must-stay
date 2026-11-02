@@ -508,12 +508,12 @@ if (retreatBalance.Keywords.Contains(CardKeyword.Exhaust) || retreatBalance.Dyna
     || retreatBalance.DynamicVars.Block.WasJustUpgraded)
     throw new Exception("Retreating Defense upgrade must only remove Exhaust.");
 var probingBalance = ModelDb.Card<ProbingStab>().ToMutable();
-if (probingBalance.DynamicVars.Damage.BaseValue != 6 || probingBalance.DynamicVars["RetainCount"].IntValue != 2)
-    throw new Exception("Probing Stab must deal 6 and retain up to 2 at end of turn.");
+if (probingBalance.DynamicVars.Damage.BaseValue != 7 || probingBalance.DynamicVars.Cards.IntValue != 1)
+    throw new Exception("Probing Stab must deal 7 and draw one defensive card.");
 probingBalance.UpgradeInternal();
-if (probingBalance.DynamicVars.Damage.BaseValue != 8 || probingBalance.DynamicVars["RetainCount"].IntValue != 3)
-    throw new Exception("Probing Stab upgrade must deal 8 and retain up to 3.");
-Console.WriteLine("PASS: World Ending Wings 7/9 AOE, Retreating Defense 4 Block and Exhaust removal, Probing Stab 6/8 and 2/3 retain.");
+if (probingBalance.DynamicVars.Damage.BaseValue != 8 || probingBalance.DynamicVars.Cards.IntValue != 2)
+    throw new Exception("Probing Stab upgrade must deal 8 and draw two defensive cards.");
+Console.WriteLine("PASS: World Ending Wings, Retreating Defense, Probing Stab 7/8 and 1/2 defensive draws.");
 var seeThroughBalance = ModelDb.Card<SeeThrough>().ToMutable();
 var volleyBalance = (SoulChasingVolley)ModelDb.Card<SoulChasingVolley>().ToMutable();
 var halberdBalance = ModelDb.Card<ThousandWeightHalberd>().ToMutable();
@@ -1612,7 +1612,7 @@ if (switcheroo.Type != CardType.Power || switcheroo.Rarity != CardRarity.Rare
 var pocket = DuchessCardCatalog.All[nameof(DuchessHiddenPocket)];
 if (pocket.Type != CardType.Skill || pocket.Rarity != CardRarity.Uncommon
     || pocket.Cost != 1 || pocket.Effects.Length != 1
-    || pocket.Effects[0] != new DuchessEffect("HandToDrawTopBlock", 3, 4))
+    || pocket.Effects[0] != new DuchessEffect("HandToDrawTopBlock", 5, 7))
     throw new Exception("Hidden Pocket specification is wrong.");
 var finale = DuchessCardCatalog.All[nameof(DuchessFinale)];
 if (finale.Type != CardType.Skill || finale.Rarity != CardRarity.Rare
