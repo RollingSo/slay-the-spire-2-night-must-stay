@@ -47,7 +47,7 @@ public sealed class Skybreaker : CardModel
         await PowerCmd.Apply<SkybreakerPower>(
             choiceContext,
             Owner.Creature,
-            1m,
+            2m,
             Owner.Creature,
             this);
     }

@@ -54,12 +54,12 @@ namespace NightMustStay.Core.Models.Cards
     }
 
     // Card-table ID 22: 穿心箭
-    public sealed class HeartpiercingArrow : CardModel, ILongShotCard
+public sealed class HeartpiercingArrow : CardModel, ILongShotCard
     {
         protected override IEnumerable<DynamicVar> CanonicalVars =>
             new DynamicVar[]
             {
-                new DamageVar(6m, ValueProp.Move),
+                new DamageVar(8m, ValueProp.Move),
                 new ExtraDamageVar(3m),
             };
 
@@ -107,7 +107,7 @@ namespace NightMustStay.Core.Models.Cards
         }
 
         protected override void OnUpgrade() =>
-            DynamicVars.ExtraDamage.UpgradeValueBy(1m);
+            DynamicVars.Damage.UpgradeValueBy(3m);
     }
 
     // Card-table ID 23: 乱箭

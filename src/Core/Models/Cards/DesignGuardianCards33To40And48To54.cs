@@ -140,7 +140,8 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override void OnUpgrade()
         {
-            DynamicVars.Damage.UpgradeValueBy(4m);
+            DynamicVars.Damage.UpgradeValueBy(2m);
+            DynamicVars[ImbalanceKey].UpgradeValueBy(1m);
             DynamicVars[WeakKey].UpgradeValueBy(1m);
         }
     }
@@ -326,7 +327,7 @@ namespace NightMustStay.Core.Models.Cards
                 this);
             await PhantomImbalancePower.ResolveThreshold(context, cardPlay.Target);
         }
-        protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(6m);
+        protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(4m); DynamicVars[ImbalanceKey].UpgradeValueBy(1m); }
     }
 
     // Card-table ID 50: 攻守易形
@@ -422,7 +423,7 @@ namespace NightMustStay.Core.Models.Cards
     // Card-table ID 54: 漫步咒魂
     public sealed class WanderingSpellSoul : CardModel
     {
-        protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(6m, ValueProp.Unpowered) };
+        protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(5m, ValueProp.Unpowered) };
         public WanderingSpellSoul() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) { }
         protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay) =>
             await PowerCmd.Apply<WanderingSpellSoulPower>(context, Owner.Creature, DynamicVars.Damage.BaseValue, Owner.Creature, this);

@@ -366,7 +366,7 @@ namespace NightMustStay.Core.Models.Cards
     public sealed class SpiritShot : CardModel, ILongShotCard
     {
         protected override IEnumerable<DynamicVar> CanonicalVars =>
-            new[] { new DamageVar(8m, ValueProp.Move) };
+            new DynamicVar[] { new DamageVar(8m, ValueProp.Move), new DynamicVar("MarkTriggers", 1m) };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
             new IHoverTip[]
@@ -398,13 +398,16 @@ namespace NightMustStay.Core.Models.Cards
             if (cardPlay.Target.IsAlive)
             {
                 NightMustStayMarkPower mark = cardPlay.Target.GetPower<NightMustStayMarkPower>();
-                if (mark != null)
+                for (int i = 0; i < DynamicVars["MarkTriggers"].IntValue && mark != null && cardPlay.Target.IsAlive; i++)
                     await mark.TriggerOne(context, Owner.Creature, this);
             }
         }
 
-        protected override void OnUpgrade() =>
-            DynamicVars.Damage.UpgradeValueBy(3m);
+        protected override void OnUpgrade()
+        {
+            DynamicVars.Damage.UpgradeValueBy(1m);
+            DynamicVars["MarkTriggers"].UpgradeValueBy(1m);
+        }
     }
 
     // Card-table ID 11: 三箭齐射

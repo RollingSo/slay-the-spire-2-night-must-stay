@@ -51,6 +51,54 @@ foreach (Type type in typeof(PowerModel).Assembly.GetTypes().Where(type => !type
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+if (args.Contains("--revenant-november-only"))
+{
+    foreach (bool upgraded in new[] { false, true })
+    {
+        var halo = (Halo)ModelDb.Card<Halo>().ToMutable();
+        var burn = ModelDb.Card<BurnLife>().ToMutable();
+        var chant = ModelDb.Card<ChantingBlessing>().ToMutable();
+        var gaze = ModelDb.Card<GazeBeyond>().ToMutable();
+        var updatedPocket = ModelDb.Card<DuchessHiddenPocket>().ToMutable();
+        var claw = ModelDb.Card<CursedClawCombo>().ToMutable();
+        if (upgraded) { halo.UpgradeInternal(); burn.UpgradeInternal(); chant.UpgradeInternal(); gaze.UpgradeInternal(); updatedPocket.UpgradeInternal(); claw.UpgradeInternal(); }
+        if (halo.DynamicVars.Damage.BaseValue != 6 || halo.DynamicVars["Growth"].BaseValue != (upgraded ? 7 : 4)
+            || !halo.Keywords.Contains(CardKeyword.Ethereal)) throw new Exception("Halo rules");
+        halo.IncreaseDamageForCurrentCombat(); halo.IncreaseDamageForCurrentCombat();
+        if (halo.DynamicVars.Damage.BaseValue != (upgraded ? 20 : 14)) throw new Exception("Halo cumulative growth");
+        if (burn.DynamicVars.Block.BaseValue != (upgraded ? 9 : 8) || burn.DynamicVars.Energy.IntValue != (upgraded ? 3 : 2)) throw new Exception("Burn Life upgrade");
+        if (chant.DynamicVars.Block.BaseValue != (upgraded ? 7 : 5)) throw new Exception("Chanting Blessing");
+        if (gaze.DynamicVars["Vulnerable"].BaseValue != (upgraded ? 3 : 2)) throw new Exception("Gaze Beyond");
+        if (updatedPocket.DynamicVars["HandToDrawTopBlock"].BaseValue != (upgraded ? 7 : 5)) throw new Exception("Hidden Pocket");
+        if (claw.DynamicVars.Damage.BaseValue != (upgraded ? 7 : 5) || !claw.Keywords.Contains(CardKeyword.Ethereal)) throw new Exception("Cursed Claw Combo");
+    }
+    Console.WriteLine("PASS: six card base/upgraded values and repeated Halo growth.");
+    return 0;
+}
+if (args.Contains("--guardian-november-only"))
+{
+    foreach (var (model, basic, upgraded) in new (CardModel, decimal, decimal)[] {
+        (ModelDb.Card<ProbingStab>(), 7, 8), (ModelDb.Card<PhantomSpear>(), 9, 10),
+        (ModelDb.Card<CycloneHalberd>(), 12, 14), (ModelDb.Card<GuardianAssault>(), 20, 24),
+        (ModelDb.Card<HalberdWingCombo>(), 9, 12), (ModelDb.Card<WardingGale>(), 8, 12),
+        (ModelDb.Card<WanderingSpellSoul>(), 5, 7), (ModelDb.Card<GreatShieldShock>(), 3, 4) })
+    {
+        var card = model.ToMutable();
+        if (card.DynamicVars.Damage.BaseValue != basic) throw new Exception(model.Id + " base damage");
+        card.UpgradeInternal();
+        if (card.DynamicVars.Damage.BaseValue != upgraded) throw new Exception(model.Id + " upgraded damage");
+        if (card is PhantomSpear or CycloneHalberd or GuardianAssault)
+            if (card.DynamicVars["Imbalance"].BaseValue != 2) throw new Exception("Imbalance upgrade");
+        if (card is ProbingStab && card.DynamicVars.Cards.IntValue != 2) throw new Exception("Probing draw upgrade");
+        if (card is CycloneHalberd && card.DynamicVars["Weak"].BaseValue != 3) throw new Exception("Cyclone Weak upgrade");
+    }
+    var hold = ModelDb.Card<HoldTheLine>().ToMutable();
+    if (!hold.Keywords.Contains(CardKeyword.Exhaust) || hold.GainsBlock) throw new Exception("Hold base rules");
+    hold.UpgradeInternal();
+    if (hold.Keywords.Contains(CardKeyword.Exhaust)) throw new Exception("Hold upgrade must remove Exhaust");
+    Console.WriteLine("PASS: nine Guardian cards base/upgraded damage, draw, debuffs and Exhaust.");
+    return 0;
+}
 if (args.Contains("--revenant-routing-only"))
 {
     RevenantRoutingRegression.Run();

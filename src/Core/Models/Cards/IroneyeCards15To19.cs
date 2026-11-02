@@ -196,7 +196,7 @@ namespace NightMustStay.Core.Models.Cards
             DynamicVars.Damage.UpgradeValueBy(2m);
     }
 
-    public sealed class IroneyePoisonArrow : CardModel, ILongShotCard
+public sealed class IroneyePoisonArrow : CardModel, ILongShotCard
     {
         private const string HiddenPoisonKey = "HiddenPoison";
 
@@ -204,7 +204,7 @@ namespace NightMustStay.Core.Models.Cards
             new DynamicVar[]
             {
                 new DamageVar(7m, ValueProp.Move),
-                new PowerVar<HiddenPoisonPower>(HiddenPoisonKey, 3m),
+                new PowerVar<HiddenPoisonPower>(HiddenPoisonKey, 2m),
             };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -220,7 +220,7 @@ namespace NightMustStay.Core.Models.Cards
             ImageHelper.GetImagePath("packed/card_portraits/ironeye/poison_arrow.png");
 
         public IroneyePoisonArrow()
-            : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
+            : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy)
         {
         }
 
