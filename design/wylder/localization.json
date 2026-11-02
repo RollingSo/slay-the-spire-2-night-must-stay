@@ -1,21 +1,322 @@
 {
   "cards": {
-    "WYLDER_STRIKE": ["打击", "造成{Damage:diff()}点伤害。", "Strike", "Deal {Damage:diff()} damage."],
-    "WYLDER_DEFEND": ["防御", "获得{Block:diff()}点格挡。", "Defend", "Gain {Block:diff()} Block."],
-    "WYLDER_CLAW_MOVEMENT": ["钩爪移动", "进入[gold]追击[/gold]。", "Claw Movement", "Enter [gold]Pursuit[/gold]."],
-    "WYLDER_DASH_ATTACK": ["冲刺攻击", "造成{Damage:diff()}点伤害。\n[gold]追击[/gold]：给予{Vulnerable:diff()}层易伤。", "Dash Attack", "Deal {Damage:diff()} damage.\n[gold]Pursuit[/gold]: Apply {Vulnerable:diff()} Vulnerable."],
-    "WYLDER_SLIDING_LEAP": ["滑行飞跃", "获得{Block:diff()}点格挡。\n[gold]追击[/gold]：获得{Energy:energyIcons()}。", "Sliding Leap", "Gain {Block:diff()} Block.\n[gold]Pursuit[/gold]: Gain {Energy:energyIcons()}."],
-    "WYLDER_STAMP_UPWARD_CUT": ["箭步：上砍", "造成{Damage:diff()}点伤害。\n[gold]追击[/gold]：本回合内减少该敌人{StrengthLoss:diff()}点力量。", "Stamp: Upward Cut", "Deal {Damage:diff()} damage.\n[gold]Pursuit[/gold]: That enemy loses {StrengthLoss:diff()} Strength this turn."],
-    "WYLDER_STAMP_SWEEP": ["箭步：回旋斩", "造成{Damage:diff()}点伤害。\n[gold]追击[/gold]：改为对所有敌人造成伤害。", "Stamp: Sweep", "Deal {Damage:diff()} damage.\n[gold]Pursuit[/gold]: Target all enemies instead."],
-    "WYLDER_PURSUIT": ["追击", "打出攻击牌时，攻击伤害增加50%。\n打出技能牌时，抽1张牌。\n出牌后退出[gold]追击[/gold]。\n回合结束时不会退出。", "Pursuit", "Your next Attack deals 50% more attack damage.\nYour next Skill draws 1 card.\nExit [gold]Pursuit[/gold] after playing a card, not at the end of your turn."],
-    "WYLDER_BREAK": ["破势", "这张牌实际造成的攻击伤害达到要求时，触发[gold]破势[/gold]的额外效果。", "Break", "When this card's actual attack damage reaches the requirement, trigger its [gold]Break[/gold] effect."]
+    "WYLDER_STRIKE": [
+      "打击",
+      "造成{Damage:diff()}点伤害。",
+      "Strike",
+      "Deal {Damage:diff()} damage."
+    ],
+    "WYLDER_DEFEND": [
+      "防御",
+      "获得{Block:diff()}点[gold]格挡[/gold]。",
+      "Defend",
+      "Gain {Block:diff()} [gold]Block[/gold]."
+    ],
+    "WYLDER_CLAW_MOVEMENT": [
+      "钩爪移动",
+      "进入[gold]追击[/gold]。",
+      "Claw Movement",
+      "Enter [gold]Pursuit[/gold]."
+    ],
+    "WYLDER_DASH_ATTACK": [
+      "冲刺攻击",
+      "造成{Damage:diff()}点伤害。\n[gold]追击[/gold]：给予{Vulnerable:diff()}层[gold]易伤[/gold]。",
+      "Dash Attack",
+      "Deal {Damage:diff()} damage.\n[gold]Pursuit[/gold]: Apply {Vulnerable:diff()} [gold]Vulnerable[/gold]."
+    ],
+    "WYLDER_SLIDING_LEAP": [
+      "滑行飞跃",
+      "获得{Block:diff()}点[gold]格挡[/gold]。\n[gold]追击[/gold]：获得{Energy:energyIcons()}。",
+      "Sliding Leap",
+      "Gain {Block:diff()} [gold]Block[/gold].\n[gold]Pursuit[/gold]: Gain {Energy:energyIcons()}."
+    ],
+    "WYLDER_STAMP_UPWARD_CUT": [
+      "箭步：上砍",
+      "造成{Damage:diff()}点伤害。\n[gold]追击[/gold]：本回合内减少该敌人{StrengthLoss:diff()}点[gold]力量[/gold]。",
+      "Stamp: Upward Cut",
+      "Deal {Damage:diff()} damage.\n[gold]Pursuit[/gold]: That enemy loses {StrengthLoss:diff()} [gold]Strength[/gold] this turn."
+    ],
+    "WYLDER_STAMP_SWEEP": [
+      "箭步：回旋斩",
+      "造成{Damage:diff()}点伤害。\n[gold]追击[/gold]：改为对所有敌人造成伤害。",
+      "Stamp: Sweep",
+      "Deal {Damage:diff()} damage.\n[gold]Pursuit[/gold]: Target all enemies instead."
+    ],
+    "WYLDER_FLAME_CHASE_SLASH": [
+      "燃火追斩",
+      "造成{Damage:diff()}点伤害。\n将{Cards:diff()}张[gold]附火{IfUpgraded:show:+|}[/gold]添加到手牌。\n保持[gold]追击[/gold]。",
+      "Flame Chase Slash",
+      "Deal {Damage:diff()} damage.\nAdd {Cards:diff()} [gold]Fire Coating{IfUpgraded:show:+|}[/gold] to your hand.\nKeep [gold]Pursuit[/gold]."
+    ],
+    "WYLDER_EOCHAIDS_DANCING_BLADE": [
+      "欧赫剑舞",
+      "造成{Damage:diff()}点伤害{IfUpgraded:show:X+{Repeat:diff()}|X}次。\n[gold]破势[/gold]{Break:diff()}：造成伤害次数翻倍。",
+      "Eochaid's Dancing Blade",
+      "Deal {Damage:diff()} damage {IfUpgraded:show:X+{Repeat:diff()}|X} times.\n[gold]Break[/gold] {Break:diff()}: Double the number of hits."
+    ],
+    "WYLDER_CRITICAL_STRIKE": [
+      "致命一击",
+      "造成{Damage:diff()}点伤害。\n[gold]击晕[/gold]敌人时，将这张牌加入手牌，并在下次打出前耗能变为0。",
+      "Critical Strike",
+      "Deal {Damage:diff()} damage.\nWhen an enemy is [gold]Stunned[/gold], return this card to your hand. It costs 0 until played."
+    ],
+    "WYLDER_VACUUM_SLICE": [
+      "真空斩",
+      "对所有敌人造成{Damage:diff()}点伤害。\n[gold]破势[/gold]{Break:diff()}：给予{Weak:diff()}层[gold]虚弱[/gold]。",
+      "Vacuum Slice",
+      "Deal {Damage:diff()} damage to ALL enemies.\n[gold]Break[/gold] {Break:diff()}: Apply {Weak:diff()} [gold]Weak[/gold]."
+    ],
+    "WYLDER_STORM_BLADE": [
+      "风暴刃",
+      "造成{Damage:diff()}点伤害。\n[gold]追击[/gold]：额外攻击{Repeat:diff()}次。",
+      "Storm Blade",
+      "Deal {Damage:diff()} damage.\n[gold]Pursuit[/gold]: Attack {Repeat:diff()} additional times."
+    ],
+    "WYLDER_FLAMING_STRIKE": [
+      "炎击",
+      "造成{Damage:diff()}点伤害。\n将{Cards:diff()}张[gold]附火{IfUpgraded:show:+|}[/gold]添加到手牌。\n[gold]追击[/gold]：[gold]重放[/gold]{Repeat:diff()}次。",
+      "Flaming Strike",
+      "Deal {Damage:diff()} damage.\nAdd {Cards:diff()} [gold]Fire Coating{IfUpgraded:show:+|}[/gold] to your hand.\n[gold]Pursuit[/gold]: [gold]Replay[/gold] {Repeat:diff()} time."
+    ],
+    "WYLDER_FIRE_COATING": [
+      "附火",
+      "获得{Vigor:diff()}点[gold]活力[/gold]。",
+      "Fire Coating",
+      "Gain {Vigor:diff()} [gold]Vigor[/gold]."
+    ],
+    "WYLDER_FLAME_OF_REDMANES": [
+      "红狮子火焰",
+      "对所有敌人造成{Damage:diff()}点伤害。\n获得{Vigor:diff()}点[gold]活力[/gold]。",
+      "Flame of the Redmanes",
+      "Deal {Damage:diff()} damage to ALL enemies.\nGain {Vigor:diff()} [gold]Vigor[/gold]."
+    ],
+    "WYLDER_BLOODHOUNDS_FINESSE": [
+      "猎犬剑技",
+      "造成{Damage:diff()}点伤害。\n获得{Block:diff()}点[gold]格挡[/gold]。\n进入[gold]追击[/gold]。",
+      "Bloodhound's Finesse",
+      "Deal {Damage:diff()} damage.\nGain {Block:diff()} [gold]Block[/gold].\nEnter [gold]Pursuit[/gold]."
+    ],
+    "WYLDER_LIONS_CLAW": [
+      "狮子斩",
+      "造成{Damage:diff()}点伤害。\n[gold]破势[/gold]{Break:diff()}：给予{Imbalance:diff()}层[gold]失衡[/gold]。",
+      "Lion's Claw",
+      "Deal {Damage:diff()} damage.\n[gold]Break[/gold] {Break:diff()}: Apply {Imbalance:diff()} [gold]Imbalance[/gold]."
+    ],
+    "WYLDER_SPINNING_SLASH": [
+      "回旋斩",
+      "对所有敌人造成{Damage:diff()}点伤害{Repeat:diff()}次。\n[gold]破势[/gold]{Break:diff()}：抽{Cards:diff()}张牌。",
+      "Spinning Slash",
+      "Deal {Damage:diff()} damage to ALL enemies {Repeat:diff()} times.\n[gold]Break[/gold] {Break:diff()}: Draw {Cards:diff()} card."
+    ],
+    "WYLDER_FLAME_READY": [
+      "引火架势",
+      "获得{Block:diff()}点[gold]格挡[/gold]。\n获得{Vigor:diff()}点[gold]活力[/gold]。",
+      "Flame Ready",
+      "Gain {Block:diff()} [gold]Block[/gold].\nGain {Vigor:diff()} [gold]Vigor[/gold]."
+    ],
+    "WYLDER_SPINE_SHOCK": [
+      "剑脊震击",
+      "造成{Damage:diff()}点伤害。\n[gold]破势[/gold]{Break:diff()}：给予目标{Weak:diff()}层[gold]虚弱[/gold]。",
+      "Spine Shock",
+      "Deal {Damage:diff()} damage.\n[gold]Break[/gold] {Break:diff()}: Apply {Weak:diff()} [gold]Weak[/gold] to the target."
+    ],
+    "WYLDER_FLAME_MOMENTUM": [
+      "火势借力",
+      "获得{Block:diff()}点[gold]格挡[/gold]。\n若你拥有至少{VigorThreshold:diff()}点[gold]活力[/gold]，获得{Energy:energyIcons()}；否则，获得{Vigor:diff()}点[gold]活力[/gold]。",
+      "Flame Momentum",
+      "Gain {Block:diff()} [gold]Block[/gold].\nIf you have at least {VigorThreshold:diff()} [gold]Vigor[/gold], gain {Energy:energyIcons()}; otherwise, gain {Vigor:diff()} [gold]Vigor[/gold]."
+    ],
+    "WYLDER_CLIFFBREAKER": [
+      "断崖重击",
+      "造成{Damage:diff()}点伤害。\n[gold]破势[/gold]{Break:diff()}：获得{Vigor:diff()}点[gold]活力[/gold]。",
+      "Cliffbreaker",
+      "Deal {Damage:diff()} damage.\n[gold]Break[/gold] {Break:diff()}: Gain {Vigor:diff()} [gold]Vigor[/gold]."
+    ],
+    "WYLDER_DUAL_GREATSWORD_LEAP": [
+      "双剑跳劈",
+      "[gold]收招[/gold]。\n造成{Damage:diff()}点伤害{Repeat:diff()}次。",
+      "Dual Greatsword Leap",
+      "[gold]Follow Through[/gold].\nDeal {Damage:diff()} damage {Repeat:diff()} times."
+    ],
+    "WYLDER_GHOSTFLAME_EXPLOSION": [
+      "灵火爆炸",
+      "造成{Damage:diff()}点伤害。\n[gold]破势[/gold]{Break:diff()}：给予{Freeze:diff()}层[gold]冻伤[/gold]。",
+      "Ghostflame Explosion",
+      "Deal {Damage:diff()} damage.\n[gold]Break[/gold] {Break:diff()}: Apply {Freeze:diff()} [gold]Freeze[/gold]."
+    ],
+    "WYLDER_TURNING_GUARD": [
+      "转身防御",
+      "获得{Block:diff()}点[gold]格挡[/gold]。\n若本回合此前打出过攻击牌，进入[gold]追击[/gold]。",
+      "Turning Defense",
+      "Gain {Block:diff()} [gold]Block[/gold].\nIf you played an Attack earlier this turn, enter [gold]Pursuit[/gold]."
+    ],
+    "WYLDER_SHIELD_PRESS": [
+      "持盾下压",
+      "获得{Block:diff()}点[gold]格挡[/gold]。\n若本回合此前打出过技能牌，获得{Vigor:diff()}点[gold]活力[/gold]。",
+      "Shield Press",
+      "Gain {Block:diff()} [gold]Block[/gold].\nIf you played a Skill earlier this turn, gain {Vigor:diff()} [gold]Vigor[/gold]."
+    ],
+    "WYLDER_SLIDING_THRUST": [
+      "滑步突刺",
+      "造成{Damage:diff()}点伤害。\n若这是你本回合打出的第一张牌，进入[gold]追击[/gold]。",
+      "Sliding Thrust",
+      "Deal {Damage:diff()} damage.\nIf this is your first card played this turn, enter [gold]Pursuit[/gold]."
+    ],
+    "WYLDER_STEADY_BREATH": [
+      "稳住呼吸",
+      "获得{Block:diff()}点[gold]格挡[/gold]。\n若本回合此前未打出过攻击牌，进入[gold]追击[/gold]。",
+      "Steady Breath",
+      "Gain {Block:diff()} [gold]Block[/gold].\nIf you have not played an Attack earlier this turn, enter [gold]Pursuit[/gold]."
+    ],
+    "WYLDER_GRAPPLE_SWING": [
+      "钩索摆荡",
+      "获得{Block:diff()}点[gold]格挡[/gold]。\n若本回合此前打出过攻击牌，获得{Energy:energyIcons()}；否则，获得{Vigor:diff()}点[gold]活力[/gold]。",
+      "Grapple Swing",
+      "Gain {Block:diff()} [gold]Block[/gold].\nIf you played an Attack earlier this turn, gain {Energy:energyIcons()}; otherwise, gain {Vigor:diff()} [gold]Vigor[/gold]."
+    ],
+    "WYLDER_LIGHT_STEP_GUARD": [
+      "轻步格挡",
+      "获得{CalculatedBlock:diff()}点[gold]格挡[/gold]。\n从手牌打出此牌时，若打出前手牌不超过{HandThreshold:diff()}张，基础格挡增加{CalculationExtra:diff()}点（已计入）。",
+      "Light Step Guard",
+      "Gain {CalculatedBlock:diff()} [gold]Block[/gold].\nWhen played from your hand, if you had at most {HandThreshold:diff()} cards before playing it, its base Block is increased by {CalculationExtra:diff()} (already included)."
+    ],
+    "WYLDER_LOW_STANCE": [
+      "压低身位",
+      "获得{Block:diff()}点[gold]格挡[/gold]。\n从手牌打出此牌时，若打出前手牌不超过{HandThreshold:diff()}张，获得{Energy:energyIcons()}。",
+      "Low Stance",
+      "Gain {Block:diff()} [gold]Block[/gold].\nWhen played from your hand, if you had at most {HandThreshold:diff()} cards before playing it, gain {Energy:energyIcons()}."
+    ],
+    "WYLDER_AERIAL_ROLL": [
+      "飞身翻滚",
+      "在手牌中，若你的手牌不超过{HandThreshold:diff()}张，此牌耗能减少{CostReduction:diff()}。\n获得{Block:diff()}点[gold]格挡[/gold]。",
+      "Aerial Roll",
+      "While in your hand, if you have at most {HandThreshold:diff()} cards, this card costs {CostReduction:diff()} less.\nGain {Block:diff()} [gold]Block[/gold]."
+    ],
+    "WYLDER_PURSUIT_SLASH": [
+      "追身斩",
+      "造成{Damage:diff()}点伤害。\n[gold]追击[/gold]：若从手牌打出此牌，且打出前手牌不超过{HandThreshold:diff()}张，获得{Energy:energyIcons()}。",
+      "Pursuit Slash",
+      "Deal {Damage:diff()} damage.\n[gold]Pursuit[/gold]: If played from your hand and you had at most {HandThreshold:diff()} cards before playing it, gain {Energy:energyIcons()}."
+    ],
+    "WYLDER_GROUND_DASH": [
+      "贴地疾行",
+      "获得{Block:diff()}点[gold]格挡[/gold]。\n若从手牌打出此牌，且打出前手牌不超过{HandThreshold:diff()}张，获得{Vigor:diff()}点[gold]活力[/gold]。",
+      "Ground Dash",
+      "Gain {Block:diff()} [gold]Block[/gold].\nIf played from your hand and you had at most {HandThreshold:diff()} cards before playing it, gain {Vigor:diff()} [gold]Vigor[/gold]."
+    ],
+    "WYLDER_VERTICAL_PRESSURE": [
+      "纵势斩",
+      "造成{Damage:diff()}点伤害。\n[gold]破势[/gold]{Break:diff()}：抽{Cards:diff()}张牌。",
+      "Vertical Pressure",
+      "Deal {Damage:diff()} damage.\n[gold]Break[/gold] {Break:diff()}: Draw {Cards:diff()} cards."
+    ],
+    "WYLDER_GHOSTFLAME_CINDERS": [
+      "灵火余烬",
+      "获得{Block:diff()}点[gold]格挡[/gold]。\n给予目标{Freeze:diff()}层[gold]冻伤[/gold]。",
+      "Ghostflame Cinders",
+      "Gain {Block:diff()} [gold]Block[/gold].\nApply {Freeze:diff()} [gold]Freeze[/gold] to the target."
+    ],
+    "WYLDER_FLEET_FOOTWORK": [
+      "足下生风",
+      "获得{Block:diff()}点[gold]格挡[/gold]。\n抽{Cards:diff()}张牌。\n若本回合此前打出过攻击牌，再抽{Cards:diff()}张牌。",
+      "Fleet Footwork",
+      "Gain {Block:diff()} [gold]Block[/gold].\nDraw {Cards:diff()} card.\nIf you played an Attack earlier this turn, draw {Cards:diff()} more card."
+    ],
+    "WYLDER_OFFENSIVE_SHIFT": [
+      "攻势转换",
+      "获得{Block:diff()}点[gold]格挡[/gold]。\n若打出此牌前你处于[gold]追击[/gold]，获得{Vigor:diff()}点[gold]活力[/gold]；否则，进入[gold]追击[/gold]。",
+      "Offensive Shift",
+      "Gain {Block:diff()} [gold]Block[/gold].\nIf you were in [gold]Pursuit[/gold] before playing this, gain {Vigor:diff()} [gold]Vigor[/gold]; otherwise, enter [gold]Pursuit[/gold]."
+    ],
+    "WYLDER_LAST_STAND_GUARD": [
+      "背水盾势",
+      "在手牌中，若你的手牌不超过{HandThreshold:diff()}张，此牌耗能减少{CostReduction:diff()}。\n获得{Block:diff()}点[gold]格挡[/gold]。",
+      "Last Stand Guard",
+      "While in your hand, if you have at most {HandThreshold:diff()} cards, this card costs {CostReduction:diff()} less.\nGain {Block:diff()} [gold]Block[/gold]."
+    ],
+    "WYLDER_PATIENT_FOCUS": [
+      "凝神待机",
+      "若本回合此前打出过攻击牌，获得{Block:diff()}点[gold]格挡[/gold]；否则，获得{Vigor:diff()}点[gold]活力[/gold]。",
+      "Patient Focus",
+      "If you played an Attack earlier this turn, gain {Block:diff()} [gold]Block[/gold]; otherwise, gain {Vigor:diff()} [gold]Vigor[/gold]."
+    ],
+    "WYLDER_TWIN_EDGE_COMBO": [
+      "双刃连斩",
+      "造成{Damage:diff()}点伤害{Repeat:diff()}次。\n若本牌消耗了[gold]追击[/gold]，在整次攻击结束后重新进入[gold]追击[/gold]。",
+      "Twin Edge Combo",
+      "Deal {Damage:diff()} damage {Repeat:diff()} times.\nIf this card consumed [gold]Pursuit[/gold], re-enter [gold]Pursuit[/gold] after the entire attack."
+    ],
+    "WYLDER_ASSAULT_STAKE": [
+      "袭击桩柱",
+      "[gold]绝境[/gold]。\n对所有敌人造成{Damage:diff()}点伤害。\n[gold]击晕[/gold]所有敌人。",
+      "Assault Stake",
+      "[gold]Desperation[/gold].\nDeal {Damage:diff()} damage to ALL enemies.\n[gold]Stun[/gold] ALL enemies."
+    ],
+    "WYLDER_BRAVE_BLESSING": [
+      "勇武加护",
+      "获得{Block:diff()}点[gold]格挡[/gold]。\n若你拥有至少{VigorThreshold:diff()}点[gold]活力[/gold]，抽{Cards:diff()}张牌；否则，获得{Vigor:diff()}点[gold]活力[/gold]。",
+      "Brave Blessing",
+      "Gain {Block:diff()} [gold]Block[/gold].\nIf you have at least {VigorThreshold:diff()} [gold]Vigor[/gold], draw {Cards:diff()} cards; otherwise, gain {Vigor:diff()} [gold]Vigor[/gold]."
+    ],
+    "WYLDER_FINAL_GUARD": [
+      "终幕盾势",
+      "获得{Block:diff()}点[gold]格挡[/gold]。\n从手牌打出此牌时，若打出前你的手牌恰好有{HandCount:diff()}张，获得{Energy:energyIcons()}。",
+      "Final Guard",
+      "Gain {Block:diff()} [gold]Block[/gold].\nWhen played from your hand, if you had exactly {HandCount:diff()} cards before playing it, gain {Energy:energyIcons()}."
+    ],
+    "WYLDER_WILD_BREATH": [
+      "暴烈呼吸",
+      "获得{Vigor:diff()}点[gold]活力[/gold]。\n若本回合此前打出过攻击牌，抽{Cards:diff()}张牌。",
+      "Wild Breath",
+      "Gain {Vigor:diff()} [gold]Vigor[/gold].\nIf you played an Attack earlier this turn, draw {Cards:diff()} cards."
+    ],
+    "WYLDER_HAND_CONDITION": [
+      "手牌数量判定",
+      "手牌数量包含此牌。\n条件奖励使用打出前的手牌数量，仅在从手牌打出时生效。\n额外基础格挡与原值合并计算，敏捷等修正只结算一次。",
+      "Hand Count",
+      "Hand size includes this card.\nConditional rewards use hand size before play and only apply when played from your hand.\nAdditional base Block is combined before modifiers such as Dexterity are applied once."
+    ],
+    "WYLDER_PURSUIT": [
+      "追击",
+      "打出攻击牌时，攻击伤害增加50%。\n打出技能牌时，获得1点能量并抽1张牌。",
+      "Pursuit",
+      "When you play an Attack, its attack damage is increased by 50%.\nWhen you play a Skill, gain 1 Energy and draw 1 card."
+    ],
+    "WYLDER_BREAK": [
+      "破势",
+      "这张牌造成的攻击伤害达到要求时，触发[gold]破势[/gold]的额外效果。",
+      "Break",
+      "When this card's attack damage reaches the requirement, trigger its additional [gold]Break[/gold] effect."
+    ]
   },
   "relics": {
-    "WYLDER_SINGLE_EARRING": ["单边耳环", "战斗开始时，进入[gold]追击[/gold]。", "Single Earring", "At the start of combat, enter [gold]Pursuit[/gold]."]
+    "WYLDER_SINGLE_EARRING": [
+      "单边耳环",
+      "战斗开始时，进入[gold]追击[/gold]。",
+      "Single Earring",
+      "At the start of combat, enter [gold]Pursuit[/gold].",
+      "边缘已有磨痕的单只耳环。",
+      "A lone earring, its edges worn smooth."
+    ]
   },
   "powers": {
-    "WYLDER_BREAK_DESCRIPTION_POWER": ["破势", "这张牌实际造成的攻击伤害达到要求时，触发[gold]破势[/gold]的额外效果。\n只计算扣除格挡后的伤害；多段攻击对同一敌人累计。\n任一敌人达标，每次出牌只触发一次。", "Break", "Trigger the card's [gold]Break[/gold] effect when its actual attack damage reaches the requirement.\nOnly unblocked damage counts; multiple hits accumulate per enemy.\nTrigger once per play when any enemy meets the requirement."],
-    "WYLDER_PURSUIT_POWER": ["追击", "打出攻击牌时，攻击伤害增加50%。\n打出技能牌时，抽1张牌。\n出牌后退出[gold]追击[/gold]，回合结束时不会退出。", "Pursuit", "Your next Attack deals 50% more attack damage.\nYour next Skill draws 1 card.\nExit [gold]Pursuit[/gold] after playing a card, not at turn end."],
-    "WYLDER_UPPERCUT_STRENGTH_DOWN_POWER": ["上砍压制", "本回合内减少{Amount}点力量。", "Uppercut Suppression", "Lose {Amount} Strength this turn."]
+    "WYLDER_BREAK_DESCRIPTION_POWER": [
+      "破势",
+      "这张牌造成的攻击伤害达到要求时，触发[gold]破势[/gold]的额外效果。",
+      "Break",
+      "When this card's attack damage reaches the requirement, trigger its additional [gold]Break[/gold] effect."
+    ],
+    "WYLDER_PURSUIT_POWER": [
+      "追击",
+      "打出攻击牌时，攻击伤害增加50%。\n打出技能牌时，获得1点能量并抽1张牌。",
+      "Pursuit",
+      "When you play an Attack, its attack damage is increased by 50%.\nWhen you play a Skill, gain 1 Energy and draw 1 card."
+    ],
+    "WYLDER_UPPERCUT_STRENGTH_DOWN_POWER": [
+      "上砍压制",
+      "本回合内减少{Amount}点力量。",
+      "Uppercut Suppression",
+      "Lose {Amount} Strength this turn."
+    ]
   }
 }

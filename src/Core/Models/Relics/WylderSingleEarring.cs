@@ -17,6 +17,6 @@ public sealed class WylderSingleEarring : RelicModel
     public override async Task BeforeCombatStart()
     {
         Flash();
-        await WylderPursuitPower.Enter(new BlockingPlayerChoiceContext(), Owner.Creature, null);
+        await WylderPursuitPower.Enter(new BlockingPlayerChoiceContext(), Owner.Creature, null, WylderEffectSource.RelicEffect);
     }
 }

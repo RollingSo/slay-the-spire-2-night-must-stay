@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-27",
+  "generator": "built-in imagegen",
+  "status": "rejected_by_user",
+  "runtime_promoted": true,
+  "output_dir": "design/卡图预览/wylder/eochaid_20261027",
+  "pose_contract": "design/wylder/EOCHAID_POSE_CONTRACT_20261027.md",
+  "assets": [
+    {
+      "key": "wylder_eochaids_dancing_blade",
+      "name": "欧赫剑舞",
+      "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-5c23d4ab-e076-4512-b716-8c0ec4be40a0.png",
+      "ref": null,
+      "ref_provenance": "Latest user conversation attachment, followed by viewed Wylder idle identity and original STS2 Phantom Blades style sample. Passed with num_last_images_to_include=3. The historical clipboard file no longer exists.",
+      "prompt": "Use case: illustration-story. ONE 1000x760 landscape game-card ARTWORK only. Of the last 3 images: first is USER'S STRICT Eochaid pose/action reference (naked mannequin, red flying sword), second is ONLY Wylder armor/helmet/straight sword identity, third is ONLY flat graphic color-block style. Replace mannequin in first with Wylder while keeping exact pose: medium-close SIDE/REAR three-quarter figure hunched and twisting, head looking DOWN-LEFT, torso centered lower half, hips turned right, knees spread/staggered low at bottom edge. Exactly TWO empty gloved hands, NO hand holds any weapon: anatomical RIGHT shoulder at screen-left near viewer, right arm extends down-left, elbow slightly bent, open right palm near bottom-left. Anatomical LEFT shoulder at upper-right, left elbow lifted and bent, left forearm crosses IN FRONT of helmet toward lower-left, open left hand near center-left, like first reference. Coherent shoulder/elbow/wrist/palm chains, no extra hand. Wylder has closed SILVER FEATHER-WING HELMET, dark metal visor, black scarf, navy split skirt with sparse WHITE flowing ornament, grouped silver scales, brown leather gloves; simplify all metal engraving. ONE straight greatsword flies by telekinesis in UPPER-RIGHT, no hand touches it. Navy grip and sculptural OPEN FORKED silver pommel toward mid-upper-right, compact guard then broad STRAIGHT steel blade pointing to upper-right corner; pommel/grip/guard/blade axis are one ruler-straight diagonal. Sword remains visibly steel, NOT a curved energy ribbon. A powerful SCARLET RED wide diagonal trail runs from lower-left behind the torso to upper-right around flying sword, narrow pale-red helical ribbons tightly spiral around blade's longitudinal axis, showing spinning thrust. This is one sword rotating/advancing, not multiple swords or hand-swing attack. Keep BOTH open hands readable and separate from trail. Background LIGHT warm grey/ivory quiet negative fields, one broad muted charcoal shadow shape below; no dark-blue jagged wallpaper, no white storm crescents, no fiery explosion, no flame tongues. Finite palette navy/silver/brown, SCARLET and pale grey; black shapes define torso/arms. Graphic flat 2D fantasy card art, chunky silhouettes, large clean color blocks, 2-3 HARD-EDGED CEL planes per material, exaggerated perspective, no photo texture, intricate scales, cinematic lighting or painterly rendering. Single clear event: empty-handed Wylder remotely sends a red-spiraling flying sword diagonally forward. No text/UI/frame, no sword in either hand, no naked person, no second weapon, no floating disembodied hands.",
+      "runtime_path": "images/packed/card_portraits/wylder/wylder_eochaids_dancing_blade.png",
+      "approved_sha256": "DA257C57639D7EFDD5F0F3DF50516B5383F4560703BE16F89E0F2DFE3C5382ED",
+      "status": "rejected_by_user",
+      "user_rejected_date": "2026-10-28",
+      "user_rejected_reason": "肢体动作与参考图不符"
+    }
+  ],
+  "review": "design/wylder/EOCHAID_REVISION_20261027.md",
+  "validation": {
+    "build": "0 warnings, 0 errors",
+    "native_eochaid_tests": "227 passed with actual native AttackCommand.Execute/MoveNext and hit-budget patch; damage/animation UI stubbed",
+    "wylder_regressions": "all passed",
+    "card_text_format": "pass",
+    "portrait_paths": "532 passed",
+    "godot_import": "pass; exit0, no ERROR/SCRIPT ERROR",
+    "godot_warnings": [
+      "WARNING: Detected another project.godot at res://official_style_export. The folder will be ignored."
+    ],
+    "godot_log": "build/eochaid_import_20261027.log",
+    "texture_cache_and_sha256": "pass",
+    "exported_or_installed": false
+  },
+  "user_rejected_date": "2026-10-28"
+}

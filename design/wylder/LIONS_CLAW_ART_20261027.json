@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-27",
+  "generator": "built-in imagegen",
+  "status": "rejected_by_user",
+  "runtime_promoted": true,
+  "output_dir": "design/卡图预览/wylder/lions_claw_landing_20261027",
+  "pose_contract": "design/wylder/LIONS_CLAW_POSE_CONTRACT_20261027.md",
+  "assets": [
+    {
+      "key": "wylder_lions_claw",
+      "name": "狮子斩",
+      "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-25365e2b-3aa7-4412-b64e-0217e1733a31.png",
+      "ref": "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/skills_20261022/wylder_lions_claw_reference.png",
+      "prompt": "Use case: illustration-story. 1000x760 landscape game-card ARTWORK ONLY. IMAGE1 is a STRICT POSE reference of Lion's Claw's forward-flip SLAM LANDING. IMAGE2 is ONLY Wylder helmet/armor/sword identity. IMAGE3 is flat graphic game-card style. Dress the figure in IMAGE1 as Wylder and preserve the reference's LOW CROUCHED LANDING silhouette: hips at left, arched shoulders to right, helmet at RIGHT of shoulders looking DOWN-RIGHT, torso pitched forward almost horizontally, front knee deeply folded under chest with front boot planted bottom-center, rear leg extending backward off screen-left. Not airborne, not upright, not an overhead preparing pose. TWO arms bend DOWN in front: near right shoulder -> lowered elbow -> right hand at lower-center, far left shoulder -> tucked elbow -> left hand beside right hand on the SAME ONE grip. Hands low, close to ground, visible separate glove silhouettes. Exactly two arms/two legs. Wylder closed silver feather-wing helmet, dark metal visor, black scarf, navy split skirt with sparse WHITE flowing motifs, grouped silver scales, brown wrapped gloves and boots. NO horned helmet from image1. Scarf and skirt lift upward/backwards from landing inertia, don't cover hands. ONE normal Wylder LONG STRAIGHT greatsword points toward screen-right along a LOW NEAR-HORIZONTAL axis just above ground, like reference1. Keep blue grip, compact silver guard and sculptural FORKED pommel. Pommel center, grip, guard center, blade ridge and tip must be ONE ruler-straight line. No curved Bloodhound blade, no multiple grips. One VERY BROAD ivory-white slash band descends from above behind shoulders DOWN the RIGHT side toward low blade tip, expressing the completed forward flip and falling weight. This is an open VERTICAL falling slash curtain, not a ring around the character. Tiny 2-3 ground contact strokes at right, not debris/explosion. Subject fills center-left 75% of frame, grounded and compressed. Minimal dark desaturated RUSSET/CHARCOAL background with one broad quiet empty field left, one flat ground plane below; no pillars, radial shards or blue neon ring. Silver/navy/brown character, pale ivory stroke, only small muted ochre rim. Flat graphic 2D fantasy card art, bold black shadow shapes, chunky angular silhouettes, only 2-3 HARD-EDGE CEL color planes per material, minimal engraving, no texture. No text/UI/card frame, realistic metal, cinematic fog, fire or dusty battlefield. Pose and weapon geometry more important than decoration.",
+      "previous_runtime_portrait": "res://images/packed/card_portraits/ironclad/tear_asunder.png",
+      "runtime_path": "images/packed/card_portraits/wylder/wylder_lions_claw.png",
+      "approved_sha256": "AC6A80E8E9DC2E44E1F8CB1A93CAC60F4D6AD2223A85D233A6828FB03E3A5022",
+      "status": "rejected_by_user",
+      "user_rejected_date": "2026-10-28",
+      "user_rejected_reason": "肢体动作不符"
+    }
+  ],
+  "validation": {
+    "build": "0 warnings, 0 errors",
+    "wylder_regressions": "pass; 42 dedicated Lions Claw checks plus existing suites",
+    "card_text_format": "pass",
+    "portrait_paths": "527 passed",
+    "godot_import": "pass",
+    "godot_log": "build/lions_claw_revision_import_20261027.log",
+    "exported_or_installed": false
+  },
+  "user_rejected_date": "2026-10-28"
+}

@@ -1,0 +1,120 @@
+{
+  "cards": {
+    "WYLDER_JUMPING_HEAVY": [
+      "跳跃重击",
+      "获得{Block:diff()}点格挡。\n进入[gold]追击[/gold]。",
+      "Jumping Heavy",
+      "Gain {Block:diff()} Block.\nEnter [gold]Pursuit[/gold]."
+    ],
+    "WYLDER_AERIAL_STAKE": [
+      "空袭桩柱",
+      "造成{Damage:diff()}点伤害。\n[gold]破势[/gold]{Break:diff()}：进入[gold]追击[/gold]。",
+      "Aerial Stake",
+      "Deal {Damage:diff()} damage.\n[gold]Break[/gold] {Break:diff()}: Enter [gold]Pursuit[/gold]."
+    ],
+    "WYLDER_COUNTER_RUSH": [
+      "反冲袭击",
+      "获得{Block:diff()}点格挡。\n造成{Damage:diff()}点伤害。",
+      "Counter Rush",
+      "Gain {Block:diff()} Block.\nDeal {Damage:diff()} damage."
+    ],
+    "WYLDER_DEBUT": [
+      "登场",
+      "进入[gold]追击[/gold]。\n获得{Energy:energyIcons()}。",
+      "Debut",
+      "Enter [gold]Pursuit[/gold].\nGain {Energy:energyIcons()}."
+    ],
+    "WYLDER_SIXTH_SENSE": [
+      "第六感",
+      "受到致命伤害时，将这张牌移除出卡组，恢复最大生命值的{HealPercent:diff()}%。",
+      "Sixth Sense",
+      "When you would die, remove this card from your deck and heal {HealPercent:diff()}% of your maximum HP."
+    ],
+    "WYLDER_CLAW_REND": [
+      "钩爪撕扯",
+      "[gold]收招[/gold]。\n造成{Damage:diff()}点伤害。\n给予{Vulnerable:diff()}层[gold]易伤[/gold]。",
+      "Claw Rend",
+      "[gold]Follow Through[/gold].\nDeal {Damage:diff()} damage.\nApply {Vulnerable:diff()} [gold]Vulnerable[/gold]."
+    ],
+    "WYLDER_MOTION_AND_STILLNESS": [
+      "动与静",
+      "抽{Cards:diff()}张牌。\n[gold]追击[/gold]：获得{Block:diff()}点格挡。",
+      "Motion and Stillness",
+      "Draw {Cards:diff()} cards.\n[gold]Pursuit[/gold]: Gain {Block:diff()} Block."
+    ],
+    "WYLDER_EXECUTION": [
+      "处决",
+      "击晕一个敌人。",
+      "Execution",
+      "[gold]Stun[/gold] an enemy."
+    ],
+    "WYLDER_DESPERATE_SURVIVAL": [
+      "绝处逢生",
+      "[gold]绝境[/gold]。\n造成{Damage:diff()}点伤害。\n获得{Block:diff()}点格挡。",
+      "Desperate Survival",
+      "[gold]Desperation[/gold].\nDeal {Damage:diff()} damage.\nGain {Block:diff()} Block."
+    ],
+    "WYLDER_WILDFIRE": [
+      "燎原",
+      "对所有敌人造成{Damage:diff()}点伤害。\n[gold]破势[/gold]{Break:diff()}：获得{Vigor:diff()}点[gold]活力[/gold]。",
+      "Wildfire",
+      "Deal {Damage:diff()} damage to ALL enemies.\n[gold]Break[/gold] {Break:diff()}: Gain {Vigor:diff()} [gold]Vigor[/gold]."
+    ],
+    "WYLDER_BOLDNESS": [
+      "果敢",
+      "造成超过20点的攻击伤害时，获得{Block:diff()}点格挡。",
+      "Boldness",
+      "Whenever an attack hit deals more than 20 damage, gain {Block:diff()} Block."
+    ],
+    "WYLDER_NIGHT_FORM": [
+      "黑夜形态",
+      "进入[gold]追击[/gold]时，获得{Energy:energyIcons()}。\n退出[gold]追击[/gold]时，获得{Block:diff()}点格挡。",
+      "Night Form",
+      "Whenever you enter [gold]Pursuit[/gold], gain {Energy:energyIcons()}.\nWhenever you leave [gold]Pursuit[/gold], gain {Block:diff()} Block."
+    ],
+    "WYLDER_REMAINING_EMBER": [
+      "余火",
+      "触发[gold]破势[/gold]后，对所有敌人造成{Damage:diff()}点伤害。",
+      "Remaining Ember",
+      "Whenever you trigger [gold]Break[/gold], deal {Damage:diff()} damage to ALL enemies."
+    ],
+    "WYLDER_UNDYING": [
+      "不灭",
+      "每回合首次触发[gold]破势[/gold]后，恢复{Heal:diff()}点生命。",
+      "Undying",
+      "The first time you trigger [gold]Break[/gold] each turn, heal {Heal:diff()} HP."
+    ],
+    "WYLDER_FOLLOW_THROUGH": [
+      "收招",
+      "退出[gold]追击[/gold]状态时，如果此牌在手牌中则自动打出。",
+      "Follow Through",
+      "When you leave [gold]Pursuit[/gold], automatically play this card if it is in your hand."
+    ]
+  },
+  "powers": {
+    "WYLDER_BOLDNESS_POWER": [
+      "果敢",
+      "单次攻击伤害超过20点时，获得5点格挡（升级为7点）。\n伤害在扣除格挡前计算。",
+      "Boldness",
+      "When an attack hit deals more than 20 damage before Block, gain 5 Block (7 when upgraded)."
+    ],
+    "WYLDER_NIGHT_FORM_POWER": [
+      "黑夜形态",
+      "进入[gold]追击[/gold]时，每层获得1点能量。\n退出[gold]追击[/gold]时，获得6点格挡（升级为9点）。",
+      "Night Form",
+      "When you enter [gold]Pursuit[/gold], gain 1 Energy per stack.\nWhen you leave it, gain 6 Block (9 when upgraded)."
+    ],
+    "WYLDER_REMAINING_EMBER_POWER": [
+      "余火",
+      "触发[gold]破势[/gold]后，对所有敌人造成4点伤害（升级为6点）。",
+      "Remaining Ember",
+      "Whenever you trigger [gold]Break[/gold], deal 4 damage to ALL enemies (6 when upgraded)."
+    ],
+    "WYLDER_UNDYING_POWER": [
+      "不灭",
+      "每回合首次触发[gold]破势[/gold]后，恢复2点生命（升级为3点）。",
+      "Undying",
+      "The first time you trigger [gold]Break[/gold] each turn, heal 2 HP (3 when upgraded)."
+    ]
+  }
+}

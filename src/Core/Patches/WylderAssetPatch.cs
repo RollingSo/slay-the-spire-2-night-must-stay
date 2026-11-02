@@ -225,27 +225,27 @@ namespace NightMustStay.Core.Patches
             Line2D inner = trail.GetNodeOrNull<Line2D>("Trails/InnerTrail");
             if (outer != null)
             {
-                outer.Modulate = new Color("C78A45D2");
+                outer.Modulate = new Color("52648DD2");
                 outer.Gradient = new Gradient
                 {
                     Colors = new[]
                     {
-                        new Color("37211500"),
-                        new Color("CF936EB8"),
-                        new Color("FFE7B2FF"),
+                        new Color("11182700"),
+                        new Color("52648DB8"),
+                        new Color("CBD5EAFF"),
                     },
                 };
             }
             if (inner != null)
             {
-                inner.Modulate = new Color("FFD5A2CC");
+                inner.Modulate = new Color("8694B4CC");
                 inner.Gradient = new Gradient
                 {
                     Colors = new[]
                     {
-                        new Color("B87C6100"),
-                        new Color("FFC392CF"),
-                        new Color("FFF5DFFF"),
+                        new Color("252E4A00"),
+                        new Color("8694B4CF"),
+                        new Color("E5EBF8FF"),
                     },
                 };
             }
@@ -266,7 +266,7 @@ namespace NightMustStay.Core.Patches
                 else if (child is Sprite2D sprite)
                 {
                     sprite.Texture = emblem;
-                    sprite.Modulate = new Color("FFE0B9CC");
+                    sprite.Modulate = new Color("CBD5EACC");
                     sprite.Scale = Vector2.One * 0.68f;
                 }
             }
@@ -358,7 +358,9 @@ namespace NightMustStay.Core.Patches
             {
                 CombatVisualsPath,
                 "res://wylder_assets/combat_rig/wylder_combat_character.png",
+                "res://wylder_assets/combat_rig/wylder_pursuit_idle.png",
                 "res://wylder_assets/combat_rig/wylder_attack.png",
+                "res://wylder_assets/combat_rig/wylder_pursuit_attack.png",
                 "res://wylder_assets/combat_rig/wylder_hit.png",
                 "res://wylder_assets/combat_rig/wylder_block.png",
                 "res://wylder_assets/combat_rig/wylder_death.png",

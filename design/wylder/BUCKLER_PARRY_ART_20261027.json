@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-27",
+  "generator": "built-in imagegen",
+  "status": "rejected_by_user",
+  "runtime_promoted": true,
+  "output_dir": "design/卡图预览/wylder/buckler_parry_20261027",
+  "pose_contract": "design/wylder/BUCKLER_PARRY_POSE_CONTRACT_20261027.md",
+  "assets": [
+    {
+      "key": "wylder_parry",
+      "name": "小圆盾格挡",
+      "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-ba38acc8-bece-424f-b498-e60625809af4.png",
+      "ref": "D:/sts-2-mod/design/艾尔登法环黑夜君临_图标合集_2026-07-15/03_战技_Skills/085 - Buckler Parry.png",
+      "prompt": "Use case: illustration-story. 1000x760 LANDSCAPE game-card ARTWORK ONLY. IMAGE1 is STRICT POSE: back-view Buckler Parry. IMAGE2 is ONLY Wylder outfit/helmet and SMALL ROUND SHIELD identity, NOT its front-facing idle pose or sword. IMAGE3 is graphic card art STYLE. Dress the figure in IMAGE1 as Wylder while preserving the BACK VIEW: center body, helmet looking AWAY from us, back of shoulders and back of navy tunic clearly visible. Anatomical LEFT shoulder at screen-left connects to an arm extending diagonally UP-LEFT, elbow nearly straight, left hand behind a SMALL ROUND BUCKLER lifted high in UPPER-LEFT. Shield must be visibly connected to left wrist/hand. Anatomical RIGHT shoulder screen-right, right arm slopes DOWN-RIGHT, empty brown-gloved right fist near lower-right. Exactly TWO arms, no sword or other weapon. Head/neck/back from behind, no front V-shaped breastplate, no front belt medallion on back. Closed silver feather-wing helmet from rear with blue nape panel, black scarf, navy split skirt with a FEW white flowing motifs, grouped silver scale sleeves, brown glove wraps. Back cloth must not hide raised left shoulder/elbow connection. Buckler from IMAGE2: small navy wooden circular face, SILVER rim and center boss, three simple curling silver arms around boss, recognizable compact round shield, not tower shield or plain giant disk. Stance upright with slight twist, hips below shoulders, no squat/jump. Frame from raised shield down to thighs, main arm joints and shield fully inside canvas; the shield occupies upper-left and has priority over fine decoration. Single broad OPEN chalk-white parry trail sweeps from shield diagonally behind back toward lower-right, matching IMAGE1, not a circular halo around body. Backdrop PALE DESATURATED STONE BLUE, only2 broad low-contrast slate cloud shapes and a calm negative space upper-right. Dominant navy/silver character against light quiet background; sparse white motion trace. Graphic FLAT 2D, heavy black silhouettes, 2-3 hard-edged CEL tone planes per material, simplified details, few scales, no etched metal texture. One clear event: back-view knight raises small buckler high to deflect. No front view, sword, enemies, extra hands, full battlefield, particles, explosions, fire, neon ring, realistic metal, painterly texture, UI, text or card border.",
+      "previous_runtime_portrait": "res://images/packed/card_portraits/silent/deflect.png",
+      "runtime_path": "images/packed/card_portraits/wylder/wylder_parry.png",
+      "approved_sha256": "4181080E58FAD5C26D30910DB116D76CC9DC7947D009B67A578AD57CE91EAC10",
+      "status": "rejected_by_user",
+      "user_rejected_date": "2026-10-28",
+      "user_rejected_reason": "头盔不是背面"
+    }
+  ],
+  "validation": {
+    "build": "0 warnings, 0 errors",
+    "wylder_regressions": "pass; 109 dedicated Buckler Parry checks plus existing suites",
+    "card_text_format": "pass",
+    "portrait_paths": "528 passed",
+    "godot_import": "pass",
+    "godot_log": "build/buckler_parry_import_20261027.log",
+    "exported_or_installed": false
+  },
+  "user_rejected_date": "2026-10-28"
+}

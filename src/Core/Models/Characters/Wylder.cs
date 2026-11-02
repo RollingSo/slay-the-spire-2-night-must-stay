@@ -15,12 +15,12 @@ public sealed class Wylder : CharacterModel
 {
     public override CharacterGender Gender => CharacterGender.Masculine;
     protected override CharacterModel UnlocksAfterRunAs => null;
-    public override Color NameColor => new("E2AE72");
+    public override Color NameColor => new("A6B3D1");
     protected override string CharacterSelectIconPath => "res://wylder_assets/char_select_wylder.png";
     protected override string CharacterSelectLockedIconPath => "res://wylder_assets/char_select_wylder_locked.png";
     protected override string IconPath => "res://wylder_assets/character_icon_wylder.tscn";
     protected override string MapMarkerPath => "res://wylder_assets/map_marker_wylder.png";
-    public override int StartingHp => 80;
+    public override int StartingHp => 78;
     public override int StartingGold => 99;
     public override CardPoolModel CardPool => ModelDb.CardPool<WylderCardPool>();
     public override PotionPoolModel PotionPool => ModelDb.PotionPool<WylderPotionPool>();
@@ -38,12 +38,12 @@ public sealed class Wylder : CharacterModel
     public override string CharacterTransitionSfx => "event:/sfx/ui/wipe_map";
     public override float AttackAnimDelay => 0.15f;
     public override float CastAnimDelay => 0.25f;
-    public override Color EnergyLabelOutlineColor => new("17243D");
-    public override Color DialogueColor => new("253654");
+    public override Color EnergyLabelOutlineColor => new("111827");
+    public override Color DialogueColor => NightMustStay.Core.CharacterThemeColors.Wylder;
     public override VfxColor SpeechBubbleColor => VfxColor.Purple;
     public override Color MapDrawingColor => NightMustStay.Core.CharacterThemeColors.Wylder;
-    public override Color RemoteTargetingLineColor => new("EEAE62");
-    public override Color RemoteTargetingLineOutline => new("17243D");
+    public override Color RemoteTargetingLineColor => new("8694B4");
+    public override Color RemoteTargetingLineOutline => new("111827");
     public override List<string> GetArchitectAttackVfx() => new()
     { "vfx/vfx_flying_slash", "vfx/vfx_dramatic_stab", "vfx/vfx_dagger_throw", "vfx/vfx_attack_slash" };
 }

@@ -55,9 +55,9 @@ portrait=source('portrait')
 icon=fit(portrait,(128,128),6)
 save(icon,'wylder_assets/character_icon_wylder.png');save(outline(icon),'wylder_assets/character_icon_wylder_outline.png')
 save(fit(portrait,(80,80),4),'wylder_assets/map_marker_wylder.png')
-button=Image.new('RGBA',(288,400),'#A96738')
+button=Image.new('RGBA',(132,195),'#252E4A')
 head=portrait.crop(portrait.getbbox());head=head.crop((int(head.width*.3),0,head.width,head.height))
-head=ImageOps.contain(head,(264,376),Image.Resampling.LANCZOS);button.alpha_composite(head,((288-head.width)//2,(400-head.height)//2))
+head=ImageOps.contain(head,(132,195),Image.Resampling.LANCZOS);button.alpha_composite(head,((132-head.width)//2,(195-head.height)//2))
 save(button,'wylder_assets/char_select_wylder.png')
 locked=ImageOps.grayscale(button).convert('RGBA');locked.putalpha(button.getchannel('A'));save(locked,'wylder_assets/char_select_wylder_locked.png')
 save(source('background').convert('RGB').resize((2560,1200),Image.Resampling.LANCZOS),'wylder_assets/character_select_wylder_bg.png')
@@ -98,3 +98,20 @@ for i,(name,im) in enumerate(entries):
 PREVIEW.mkdir(parents=True,exist_ok=True);sheet.save(PREVIEW/'review.jpg')
 (ROOT/'design/wylder/asset_report.json').write_text(json.dumps(REPORT,indent=2),encoding='utf-8')
 print(f'Prepared {len(REPORT)} draft assets. Local alpha cleanup: {opts.clean_alpha}')
+# Approved combat originals always win over the historical generation cache.
+if (ROOT/'design/wylder/approved_combat_assets.json').exists():
+    import subprocess, sys
+    subprocess.run([sys.executable, str(ROOT/'tools/promote_wylder_combat_assets.py')], check=True)
+selection_manifest = ROOT/'design/wylder/selection_assets.json'
+if selection_manifest.exists() and json.loads(selection_manifest.read_text(encoding='utf-8')).get('approved'):
+    import subprocess, sys
+    subprocess.run([sys.executable, str(ROOT/'tools/prepare_wylder_selection.py'), '--promote'], check=True)
+if (ROOT/'design/wylder/SCENE_HANDS_APPROVED.json').exists():
+    import subprocess, sys
+    subprocess.run([sys.executable, str(ROOT/'tools/promote_wylder_scene_hands.py')], check=True)
+if (ROOT/'design/wylder/CARD_ART_20261020.json').exists() and json.loads((ROOT/'design/wylder/CARD_ART_20261020.json').read_text(encoding='utf-8')).get('approved_for_testing'):
+    import subprocess, sys
+    subprocess.run([sys.executable, str(ROOT/'tools/promote_wylder_card_art.py')], check=True)
+if (ROOT/'wylder_assets/approved_sources/energy_white_water.png').exists():
+    import subprocess, sys
+    subprocess.run([sys.executable, str(ROOT/'tools/promote_wylder_ui_20261021.py')], check=True)

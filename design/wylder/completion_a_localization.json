@@ -1,0 +1,114 @@
+{
+  "cards": {
+    "WYLDER_MOLTEN_SWEEP": [
+      "熔火横斩",
+      "对所有敌人造成{Damage:diff()}点伤害。\n若本牌消耗了[gold]活力[/gold]，获得{Block:diff()}点[gold]格挡[/gold]。",
+      "Molten Sweep",
+      "Deal {Damage:diff()} damage to ALL enemies.\nIf this card consumed [gold]Vigor[/gold], gain {Block:diff()} [gold]Block[/gold]."
+    ],
+    "WYLDER_CLAW_PULL": [
+      "钩爪拖拽",
+      "给予{Vulnerable:diff()}层[gold]易伤[/gold]。\n进入[gold]追击[/gold]。",
+      "Claw Pull",
+      "Apply {Vulnerable:diff()} [gold]Vulnerable[/gold].\nEnter [gold]Pursuit[/gold]."
+    ],
+    "WYLDER_PARRY": [
+      "小圆盾格挡",
+      "[gold]绝境[/gold]。\n击晕一个意图为攻击的敌人。",
+      "Buckler Parry",
+      "[gold]Desperation[/gold].\n[gold]Stun[/gold] an enemy that intends to attack."
+    ],
+    "WYLDER_DESPERATION": [
+      "绝境",
+      "回合结束时，若此牌为手里唯一的牌则自动打出。",
+      "Desperation",
+      "At the end of your turn, if this is the only card in your hand, play it automatically."
+    ],
+    "WYLDER_STEPPING_SKEWER": [
+      "连步穿斩",
+      "造成{Damage:diff()}点伤害{Repeat:diff()}次。\n若本牌消耗了[gold]活力[/gold]，获得{Energy:energyIcons()}。",
+      "Stepping Skewer",
+      "Deal {Damage:diff()} damage {Repeat:diff()} times.\nIf this card consumed [gold]Vigor[/gold], gain {Energy:energyIcons()}."
+    ],
+    "WYLDER_FLAMETONGUE_SWEEP": [
+      "火舌扫击",
+      "对所有敌人造成{Damage:diff()}点伤害。\n若本牌消耗了[gold]活力[/gold]，在本次攻击结束后进入[gold]追击[/gold]。",
+      "Flametongue Sweep",
+      "Deal {Damage:diff()} damage to ALL enemies.\nIf this card consumed [gold]Vigor[/gold], enter [gold]Pursuit[/gold] after this attack finishes."
+    ],
+    "WYLDER_RELENTLESS_ADVANCE": [
+      "步步紧逼",
+      "获得{Block:diff()}点[gold]格挡[/gold]。\n若你本回合上一张打出的牌是攻击牌，进入[gold]追击[/gold]。",
+      "Relentless Advance",
+      "Gain {Block:diff()} [gold]Block[/gold].\nIf the previous card you played this turn was an Attack, enter [gold]Pursuit[/gold]."
+    ],
+    "WYLDER_RAMPART_BREAKER": [
+      "壁垒破坏",
+      "造成{CalculatedDamage:diff()}点伤害。\n若目标拥有[gold]格挡[/gold]，此牌的基础伤害增加{ExtraDamage:diff()}点。\n[gold]破势[/gold]{Break:diff()}：给予目标{Vulnerable:diff()}层[gold]易伤[/gold]。",
+      "Rampart Breaker",
+      "Deal {CalculatedDamage:diff()} damage.\nIf the enemy has [gold]Block[/gold], this card's base damage increases by {ExtraDamage:diff()}.\n[gold]Break[/gold] {Break:diff()}: Apply {Vulnerable:diff()} [gold]Vulnerable[/gold] to that enemy."
+    ],
+    "WYLDER_SWIFT_RETREAT": [
+      "疾速回撤",
+      "获得{Block:diff()}点[gold]格挡[/gold]。\n使你[gold]手牌[/gold]中耗能最高的另一张技能牌本回合耗能减少{CostReduction:diff()}。",
+      "Swift Retreat",
+      "Gain {Block:diff()} [gold]Block[/gold].\nReduce the cost of the other highest-cost Skill in your [gold]hand[/gold] by {CostReduction:diff()} this turn."
+    ],
+    "WYLDER_HILT_GUARD": [
+      "护手格挡",
+      "获得{Block:diff()}点[gold]格挡[/gold]。\n[gold]追击[/gold]：给予所有意图攻击的敌人{Weak:diff()}层[gold]虚弱[/gold]。",
+      "Hilt Guard",
+      "Gain {Block:diff()} [gold]Block[/gold].\n[gold]Pursuit[/gold]: Apply {Weak:diff()} [gold]Weak[/gold] to ALL enemies that intend to attack."
+    ],
+    "WYLDER_SIDESTEP": [
+      "侧身避让",
+      "获得{Block:diff()}点[gold]格挡[/gold]。\n若你本回合上一张打出的牌是攻击牌，随机给予一名意图攻击的敌人{Weak:diff()}层[gold]虚弱[/gold]。",
+      "Sidestep",
+      "Gain {Block:diff()} [gold]Block[/gold].\nIf the previous card you played this turn was an Attack, apply {Weak:diff()} [gold]Weak[/gold] to a random enemy that intends to attack."
+    ],
+    "WYLDER_TWIN_FEINT": [
+      "双刃试探",
+      "造成{Damage:diff()}点伤害{Repeat:diff()}次。\n若本牌消耗了[gold]活力[/gold]，在本次攻击结束后抽{Cards:diff()}张牌。",
+      "Twin Feint",
+      "Deal {Damage:diff()} damage {Repeat:diff()} times.\nIf this card consumed [gold]Vigor[/gold], draw {Cards:diff()} card after this attack finishes."
+    ],
+    "WYLDER_OPENING_PRESSURE": [
+      "先手压制",
+      "造成{CalculatedDamage:diff()}点伤害。\n若本回合此前未打出过攻击牌，此牌的基础伤害增加{ExtraDamage:diff()}点。\n[gold]破势[/gold]{Break:diff()}：使你[gold]手牌[/gold]中耗能最高的另一张攻击牌本回合耗能减少{CostReduction:diff()}。",
+      "Opening Pressure",
+      "Deal {CalculatedDamage:diff()} damage.\nIf you have not played any Attacks earlier this turn, this card's base damage increases by {ExtraDamage:diff()}.\n[gold]Break[/gold] {Break:diff()}: Reduce the cost of the other highest-cost Attack in your [gold]hand[/gold] by {CostReduction:diff()} this turn."
+    ],
+    "WYLDER_CORPSE_WAX_CUTTER": [
+      "尸蜡斩击",
+      "对所有敌人造成{Damage:diff()}点伤害。\n[gold]破势[/gold]{Break:diff()}：给予所有敌人{Vulnerable:diff()}层[gold]易伤[/gold]和{Weak:diff()}层[gold]虚弱[/gold]。",
+      "Corpse Wax Cutter",
+      "Deal {Damage:diff()} damage to ALL enemies.\n[gold]Break[/gold] {Break:diff()}: Apply {Vulnerable:diff()} [gold]Vulnerable[/gold] and {Weak:diff()} [gold]Weak[/gold] to ALL enemies."
+    ],
+    "WYLDER_MEASURED_RETREAT": [
+      "进退有据",
+      "获得{CalculatedBlock:diff()}点[gold]格挡[/gold]。\n从[gold]手牌[/gold]打出此牌时，若打出前你的[gold]手牌[/gold]不超过{HandThreshold:diff()}张，此牌的基础[gold]格挡[/gold]增加等同于你当前[gold]活力[/gold]的数值。",
+      "Measured Retreat",
+      "Gain {CalculatedBlock:diff()} [gold]Block[/gold].\nWhen played from your [gold]hand[/gold], if you had at most {HandThreshold:diff()} cards in [gold]hand[/gold] before playing it, this card's base [gold]Block[/gold] increases by your current [gold]Vigor[/gold]."
+    ],
+    "WYLDER_CRISIS_POISE": [
+      "临危定力",
+      "获得{CalculatedBlock:diff()}点[gold]格挡[/gold]。\n每有一名意图攻击的敌人，此牌的基础[gold]格挡[/gold]增加{CalculationExtra:diff()}点，至多增加{MaxExtraBlock:diff()}点。",
+      "Crisis Poise",
+      "Gain {CalculatedBlock:diff()} [gold]Block[/gold].\nThis card's base [gold]Block[/gold] increases by {CalculationExtra:diff()} for each enemy that intends to attack, up to {MaxExtraBlock:diff()}."
+    ],
+    "WYLDER_FLAME_STRIDE": [
+      "踏焰而行",
+      "获得{Vigor:diff()}点[gold]活力[/gold]。\n使你[gold]手牌[/gold]中耗能最高的一张攻击牌本回合耗能减少{CostReduction:diff()}。",
+      "Flame Stride",
+      "Gain {Vigor:diff()} [gold]Vigor[/gold].\nReduce the cost of the highest-cost Attack in your [gold]hand[/gold] by {CostReduction:diff()} this turn."
+    ]
+  },
+  "powers": {
+    "WYLDER_CORPSE_WAX_POWER": [
+      "尸蜡",
+      "敌方回合结束时，失去{Amount}点生命。\n每份[gold]尸蜡[/gold]独立持续2个敌方回合。\n此效果无视[gold]格挡[/gold]，不属于攻击伤害。",
+      "Corpse Wax",
+      "At the end of the enemy turn, lose {Amount} HP.\nEach application of [gold]Corpse Wax[/gold] lasts for 2 enemy turns independently.\nThis ignores [gold]Block[/gold] and is not attack damage."
+    ]
+  }
+}

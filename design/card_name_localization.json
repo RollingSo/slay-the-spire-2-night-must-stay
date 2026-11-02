@@ -2,10 +2,41 @@
   "schemaVersion": 1,
   "notes": "Confirmed card-name audit, 2026-10-02. Composite names retain mod wording with official terminology; IDs and mechanics are unchanged.",
   "cards": {
-    "WYLDER_DEFEND": {"zhs": "防御", "eng": "Defend", "jpn": "防御", "kor": "수비", "reference": "Wylder starter Defend; preserve canonical name membership"},
-    "COOPERATIVE_DEFENSE": {"zhs": "协同防御", "eng": "Cooperative Defense", "jpn": "協同防御", "kor": "협동 수비", "reference": "User-requested replacement for Shared Great Shield"},
-    "DUCHESS_CARNIVAL_NIGHT": {"zhs": "狂欢夜", "eng": "Carnival Night", "jpn": "狂歓の夜", "kor": "축제의 밤", "reference": "User-provided multiplayer card table screenshot"},
-    "DUCHESS_MASQUERADE": {"zhs": "面具舞会", "eng": "Masquerade", "jpn": "仮面舞踏会", "kor": "가면무도회", "reference": "User-provided multiplayer card table screenshot"},
+    "WYLDER_DEFEND": {
+      "zhs": "防御",
+      "eng": "Defend",
+      "jpn": "防御",
+      "kor": "수비",
+      "reference": "Wylder starter Defend; preserve canonical name membership"
+    },
+    "WYLDER_TURNING_GUARD": {
+      "zhs": "转身防御",
+      "eng": "Turning Defense",
+      "jpn": "振り向き防御",
+      "kor": "회전 수비",
+      "reference": "Wylder P002 planner card; preserve canonical Chinese Defend-name membership"
+    },
+    "COOPERATIVE_DEFENSE": {
+      "zhs": "协同防御",
+      "eng": "Cooperative Defense",
+      "jpn": "協同防御",
+      "kor": "협동 수비",
+      "reference": "User-requested replacement for Shared Great Shield"
+    },
+    "DUCHESS_CARNIVAL_NIGHT": {
+      "zhs": "狂欢夜",
+      "eng": "Carnival Night",
+      "jpn": "狂歓の夜",
+      "kor": "축제의 밤",
+      "reference": "User-provided multiplayer card table screenshot"
+    },
+    "DUCHESS_MASQUERADE": {
+      "zhs": "面具舞会",
+      "eng": "Masquerade",
+      "jpn": "仮面舞踏会",
+      "kor": "가면무도회",
+      "reference": "User-provided multiplayer card table screenshot"
+    },
     "SOUL_DEPARTURE": {
       "zhs": "灵魂出窍",
       "eng": "Soul Departure",
@@ -676,6 +707,7 @@
     "DEFENSIVE_REINFORCEMENT",
     "DUCHESS_DEFEND",
     "WYLDER_DEFEND",
+    "WYLDER_TURNING_GUARD",
     "EMERGENCY_DEFEND",
     "EVOLVED_DEFEND",
     "GUARD_COUNTER_CARD",

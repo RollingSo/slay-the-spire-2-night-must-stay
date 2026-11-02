@@ -5,6 +5,12 @@ var _return_to_idle := false
 var _block_tween: Tween
 var _block_sprite: Sprite2D
 var _death_sprite: Sprite2D
+var _defeated := false
+var _pursuit_active := false
+@onready var _normal_idle_texture: Texture2D = $PoseRoot/Idle.texture
+@onready var _pursuit_idle_texture: Texture2D = load("res://wylder_assets/combat_rig/wylder_pursuit_idle.png")
+@onready var _normal_attack_texture: Texture2D = $PoseRoot/Attack.texture
+@onready var _pursuit_attack_texture: Texture2D = load("res://wylder_assets/combat_rig/wylder_pursuit_attack.png")
 
 func _ready() -> void:
 	_block_sprite = Sprite2D.new()
@@ -23,6 +29,8 @@ func _ready() -> void:
 	animation_player.play("idle_loop")
 
 func play_trigger(trigger: String) -> void:
+	if _defeated and trigger != "Revive":
+		return
 	if _block_tween != null and _block_tween.is_running():
 		if trigger in ["Cast", "Idle", "Relaxed"]:
 			return
@@ -32,12 +40,16 @@ func play_trigger(trigger: String) -> void:
 		"Block":
 			_play_block()
 		"Attack":
+			# Latch the state at attack start. Consuming pursuit during this
+			# one-shot must not replace its already-selected two-handed pose.
+			$PoseRoot/Attack.texture = _pursuit_attack_texture if _pursuit_active else _normal_attack_texture
 			_play_one_shot("attack")
 		"Hit":
 			_play_one_shot("hit")
 		"Cast":
 			_play_one_shot("cast")
 		"Dead":
+			_defeated = true
 			_return_to_idle = false
 			animation_player.play("RESET")
 			animation_player.advance(0)
@@ -46,7 +58,13 @@ func play_trigger(trigger: String) -> void:
 				if sprite is Sprite2D:
 					sprite.visible = sprite == _death_sprite
 		"Idle", "Relaxed", "Revive":
+			_defeated = false
 			_play_idle()
+
+func set_pursuit_active(active: bool) -> void:
+	_pursuit_active = active
+	# Ongoing one-shots retain their attack-start texture; death stays untouched.
+	$PoseRoot/Idle.texture = _pursuit_idle_texture if active else _normal_idle_texture
 
 func _play_one_shot(animation_name: StringName) -> void:
 	_return_to_idle = true

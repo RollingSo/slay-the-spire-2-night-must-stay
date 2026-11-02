@@ -3,6 +3,32 @@ from pathlib import Path
 import json, re
 ROOT=Path(__file__).resolve().parents[1]
 source=json.loads((ROOT/'design/wylder/localization.json').read_text(encoding='utf-8'))
+for fragment_name in ['completion_a_localization.json', 'completion_b_localization.json', 'power_expansion_localization.json', 'sheet_20261029_localization.json']:
+    fragment_path = ROOT/'design/wylder'/fragment_name
+    if fragment_path.exists():
+        for table, entries in json.loads(fragment_path.read_text(encoding='utf-8')).items():
+            for key, value in entries.items():
+                if key in source.setdefault(table, {}):
+                    raise ValueError(f'Duplicate Wylder localization source: {table}.{key}')
+                source[table][key] = value
+name_overrides=json.loads((ROOT/'design/card_name_localization.json').read_text(encoding='utf-8'))['cards']
+
+def highlight_card_terms(text, chinese):
+    # Preserve authored gold spans and runtime placeholders. Conditional clauses
+    # and glossary text need the same highlighting as the primary effect line.
+    terms = ['合成', '固守', '防御反击', '盾戳', '失衡', '藏锋', '虚弱', '格挡',
+             '手牌', '弃牌堆', '抽牌堆', '保留', '消耗', '力量', '敏捷', '眩晕'] if chinese else [
+             'Synthesize', 'Synthesis', 'Concealed Edge', 'Fortify', 'Guard Counter',
+             'Shield Poke', 'Imbalance', 'Weak', 'Block', 'Blocking', 'hand',
+             'discard pile', 'draw pile', 'Retain', 'Retained', 'Exhaust',
+             'Exhausted', 'Strength', 'Dexterity', 'Stun']
+    pattern = '|'.join(re.escape(term) for term in terms)
+    if not chinese:
+        pattern = r'(?<![A-Za-z])(?:'+pattern+r')(?![A-Za-z])'
+    parts = re.split(r'(\[gold\].*?\[/gold\]|\{[^{}]*\})', text, flags=re.S)
+    return ''.join(part if part.startswith(('[gold]', '{')) else
+        re.sub(pattern, lambda match: '[gold]'+match[0]+'[/gold]', part,
+               flags=0 if chinese else re.I) for part in parts)
 def merge(path,entries):
     # Preserve existing order, formatting and even legacy duplicate keys outside
     # this character. A JSON round-trip silently drops such legacy entries.
@@ -20,10 +46,14 @@ for locale in ['zhs','eng','jpn','kor']:
         p=ROOT/f'NightMustStay/localization/{locale}/{table}.json'
         data={}
         for key,values in entries.items():
-            data[key+'.title']=values[offset]
-            data[key+'.description']=values[offset+1]
-            if table=='cards' and key not in ['WYLDER_PURSUIT','WYLDER_BREAK']:
-                data[key+'.upgradeDescription']=values[offset+1]
+            data[key+'.title']=name_overrides.get(key, {}).get(locale, values[offset])
+            description=highlight_card_terms(values[offset+1], locale=='zhs') if table=='cards' else values[offset+1]
+            data[key+'.description']=description
+            if table=='relics':
+                # Native inspection and all shipping locale gates need flavor.
+                data[key+'.flavor']=values[4 if locale=='zhs' else 5]
+            if table=='cards' and key not in ['WYLDER_PURSUIT','WYLDER_BREAK','WYLDER_HAND_CONDITION']:
+                data[key+'.upgradeDescription']=description
         merge(p,data)
         if table=='cards' and locale in ['jpn','kor']:
             merge(p,{'WYLDER_DEFEND.title':'防御' if locale=='jpn' else '수비'})
@@ -41,3 +71,5 @@ for locale in ['zhs','eng','jpn','kor']:
     data['POOL_WYLDER_TIP']=name
     merge(p,data)
 print('Wylder localization synchronized; Japanese/Korean use explicit English fallbacks.')
+import subprocess, sys
+subprocess.run([sys.executable, str(ROOT/'tools/sync_wylder_ancients.py')], check=True)

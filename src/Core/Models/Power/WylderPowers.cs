@@ -23,42 +23,61 @@ public sealed class WylderBreakDescriptionPower : PowerModel
 
 public sealed class WylderPursuitPower : PowerModel
 {
-    private sealed class Data { public CardPlay Play; public bool Reentered; }
+    private sealed class Data { public readonly Dictionary<CardPlay, bool> Plays = new(); public readonly HashSet<CardPlay> Kept = new(); }
     protected override object InitInternalData() => new Data();
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
     public static bool IsActive(Creature owner) => owner?.HasPower<WylderPursuitPower>() == true;
-    public static Task Enter(PlayerChoiceContext context, Creature owner, CardModel source)
+    public static async Task Enter(PlayerChoiceContext context, Creature owner, CardModel source,
+        WylderEffectSource sourceKind = WylderEffectSource.CardEffect)
     {
         // A fresh entry during the consuming card must survive that card.
         if (owner.GetPower<WylderPursuitPower>() is { } existing)
         {
-            existing.GetInternalData<Data>().Reentered = true;
-            return Task.CompletedTask;
+            foreach (CardPlay play in existing.GetInternalData<Data>().Plays.Keys.ToArray())
+                existing.GetInternalData<Data>().Plays[play] = true;
         }
-        return PowerCmd.Apply<WylderPursuitPower>(context, owner, 1m, owner, source);
+        else await PowerCmd.Apply<WylderPursuitPower>(context, owner, 1m, owner, source);
+        if (IsActive(owner)) await WylderCombatEvents.RegisterEntry(context, owner, source, sourceKind);
     }
     internal decimal AttackMultiplier(Creature dealer, ValueProp props, CardModel source) =>
         dealer == Owner && source?.Type == CardType.Attack && props.IsPoweredAttack() ? 1.5m : 1m;
+    internal void KeepFor(CardPlay play)
+    {
+        var data = GetInternalData<Data>();
+        if (data.Plays.ContainsKey(play)) { data.Kept.Add(play); WylderCombatEvents.RegisterKeptPursuit(play); }
+    }
+    // The engine chooses the total before its native CardPlay/Replay loop.
+    // Each replay then deals damage and generates Fire Coating normally.
+    public override int ModifyCardPlayCount(CardModel card, Creature target, int playCount) =>
+        card is WylderFlamingStrike && card.Owner?.Creature == Owner
+            ? playCount + card.DynamicVars.Repeat.IntValue : playCount;
     public override Task BeforeCardPlayed(CardPlay play)
     {
         if (play.Card.Owner.Creature == Owner)
         {
             Data data = GetInternalData<Data>();
-            data.Play = play;
-            data.Reentered = false;
+            data.Plays.TryAdd(play, false);
         }
         return Task.CompletedTask;
     }
     public override async Task AfterCardPlayedLate(PlayerChoiceContext context, CardPlay play)
     {
-        if (play.Card.Owner.Creature != Owner || GetInternalData<Data>().Play != play) return;
-        GetInternalData<Data>().Play = null;
+        if (play.Card.Owner.Creature != Owner || !GetInternalData<Data>().Plays.Remove(play, out bool reentered)) return;
+        if (GetInternalData<Data>().Kept.Remove(play)) return;
         bool draw = play.Card.Type == CardType.Skill;
-        bool reentered = GetInternalData<Data>().Reentered;
-        GetInternalData<Data>().Reentered = false;
-        if (!reentered) await PowerCmd.Remove(this);
-        if (draw) await CardPileCmd.Draw(context, 1m, Owner.Player);
+        WylderCombatEvents.RegisterOldPursuitConsumption(play);
+        if (!reentered)
+        {
+            var followThrough = WylderFollowThroughCard.Snapshot(Owner.Player);
+            await PowerCmd.Remove(this);
+            WylderCombatEvents.QueuePursuitExit(play, followThrough);
+        }
+        if (draw)
+        {
+            await PlayerCmd.GainEnergy(1, Owner.Player);
+            await CardPileCmd.Draw(context, 1m, Owner.Player);
+        }
     }
     // Deliberately no turn-end hook: pursuit survives ending a turn.
 }

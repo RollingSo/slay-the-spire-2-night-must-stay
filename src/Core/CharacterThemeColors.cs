@@ -8,6 +8,7 @@ public static class CharacterThemeColors
     public static Color Guardian => new("6F4A2F");
     public static Color Ironeye => new("68734A");
     public static Color Revenant => new("5C7689");
-    public static Color Wylder => new("B7753F");
+    // Deep navy sampled from Wylder's approved split coat; shared by frame/map/deck.
+    public static Color Wylder => new("252E4A");
     public static Color Duchess => new("48B9ED");
 }

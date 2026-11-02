@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-28",
+  "generator": "built-in imagegen",
+  "status": "user_approved",
+  "runtime_promoted": true,
+  "output_dir": "design/卡图预览/wylder/wylder_assault_stake_20261028",
+  "assets": [
+    {
+      "key": "wylder_assault_stake",
+      "name": "袭击桩柱",
+      "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-26902414-e277-416d-a123-f5b5c468e0ff.png",
+      "ref": null,
+      "ref_provenance": "用户附件技能图标与四张渡夜者大招风格图；首稿直接使用最近5张对话图片。",
+      "prompt": "Use case: illustration-story. Asset: 1000x760 LANDSCAPE game-card artwork only. Last 5 images: first is user Assault Stake SKILL ICON, STRICT SHAPE and direction reference; next four are existing companion Nightfarer ULTIMATE CARD ART style references (gold winged emblem, green arrow, blue drapery, pale spirit hood); learn shared graphic emblem language, NOT their specific subjects. Build Wylder's ultimate symbol as one huge foreshortened SILVER-WHITE rigid HARPOON STAKE / grappling launcher angled from LOWER-RIGHT towards UPPER-LEFT like first icon, pointed piercing tip upper-left; a coherent straight long shaft widens into a recognizable compact mechanical gripping claw / hinged armature at lower-right, with a distinct transverse hooked side arm. The device is an OBJECT EMBLEM, not an arrow or a person; no knight, no hands, no face. Keep stake tip, shaft and mechanical base on a single rigid straight diagonal axis. Upper-left behind tip has sharply radiating straight silver-white IMPACT BEAMS, 5-7 tapered spokes and 2 slim dark wedges, expressing piercing force, like user icon. Leave ample quiet deep navy dark areas around silhouette. Background main EXACT visual color #252E4A with deeper ink-blue flat shadow planes; pale silver, ice-blue, white, dark blue only, small 3-4 stylized white star accents. Wide graphic event, strong silhouette occupying 65-80%, bold black cutout outlines and 2-3 HARD-EDGED CEL planes, very clean 2D vector-like fantasy card illustration. Use angular geometry and abstract thin trajectory arcs sparingly, no enclosing icon circle, no circular halo, no green palette, no photographic metal, no fine engraving, no fire/flames, no dust or battlefield, no tiny mechanical clutter, no text/UI/card frame or watermark. Distinguish the green arrow companion art via opposite main axis (bottom-right to upper-left), mechanical hooked launcher base, dominant upper-left straight beams instead of loops. Entire image fills horizontal frame.",
+      "runtime_path": "images/packed/card_portraits/wylder/wylder_assault_stake.png",
+      "approved_sha256": "B969B68E071EC7327C91A691F4867EF7C38C7B0ACD14F6B6BD5B5904337880EF",
+      "status": "self_reviewed_approved"
+    }
+  ],
+  "validation": {
+    "build": "0 warnings, 0 errors",
+    "new_revision_checks": "56 passed, including generated-card hover preview and pursuit event handling",
+    "card_text_format": "pass",
+    "portrait_paths": "534 passed",
+    "godot_import": "pass; no ERROR/SCRIPT ERROR",
+    "godot_log": "build/wylder_redraw_20261028.log",
+    "texture_cache_and_sha256": "pass",
+    "exported_or_installed": false
+  },
+  "user_approved_date": "2026-10-28"
+}

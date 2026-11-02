@@ -10,7 +10,7 @@ void fragment() {
     float cover = 1.0 - smoothstep(edge - 0.018, edge, diagonal);
     float slash = (1.0 - smoothstep(0.0, 0.012, abs(diagonal - edge)))
         * smoothstep(0.02, 0.13, threshold) * (1.0 - smoothstep(0.75, 0.97, threshold));
-    COLOR = vec4(vec3(0.95, 0.48, 0.12) * slash, max(cover, slash));
+    COLOR = vec4(vec3(0.525490, 0.580392, 0.705882) * slash, max(cover, slash));
     if (threshold <= 0.0) { COLOR = vec4(0.0); }
     if (threshold >= 1.0) { COLOR = vec4(0.0, 0.0, 0.0, 1.0); }
 }

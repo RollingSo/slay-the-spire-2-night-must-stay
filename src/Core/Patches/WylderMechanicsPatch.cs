@@ -28,7 +28,7 @@ internal static class WylderSweepTargetPatch
     [HarmonyPostfix]
     private static void Target(CardModel __instance, ref TargetType __result)
     {
-        if (__instance is WylderStampSweep)
+        if (__instance is WylderStampSweep && __instance.IsMutable)
             __result = WylderPursuitPower.IsActive(__instance.Owner?.Creature)
                 ? TargetType.AllEnemies : TargetType.AnyEnemy;
     }

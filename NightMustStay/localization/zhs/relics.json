@@ -131,5 +131,6 @@
   "DUCHESS_BLUE_RIBBON.description": "第一回合开始时，获得6点[gold]格挡[/gold]。",
   "DUCHESS_BLUE_RIBBON.flavor": "出发前，总要把衣襟整理妥当。",
   "WYLDER_SINGLE_EARRING.title": "单边耳环",
-  "WYLDER_SINGLE_EARRING.description": "战斗开始时，进入[gold]追击[/gold]。"
+  "WYLDER_SINGLE_EARRING.description": "战斗开始时，进入[gold]追击[/gold]。",
+  "WYLDER_SINGLE_EARRING.flavor": "边缘已有磨痕的单只耳环。"
 }

@@ -19,14 +19,7 @@ public abstract class WylderCard : CardModel
 {
     protected WylderCard(int cost, CardType type, CardRarity rarity, TargetType target)
         : base(cost, type, rarity, target) { }
-    // Only the two Stamp cards have bespoke art commissioned in this batch.
-    public override string PortraitPath => this switch
-    {
-        WylderStampUpwardCut or WylderStampSweep => $"res://images/packed/card_portraits/wylder/{Id.Entry.ToLowerInvariant()}.png",
-        WylderDefend or WylderSlidingLeap => "res://images/packed/card_portraits/ironclad/defend_ironclad.png",
-        WylderClawMovement => "res://images/packed/card_portraits/ironclad/barricade.png",
-        _ => "res://images/packed/card_portraits/ironclad/strike_ironclad.png",
-    };
+    public override string PortraitPath => $"res://images/packed/card_portraits/wylder/{Id.Entry.ToLowerInvariant()}.png";
     protected bool Pursuing => Owner?.Creature?.HasPower<WylderPursuitPower>() == true;
     protected virtual bool HasPursuitCondition => false;
     protected override bool ShouldGlowGoldInternal => HasPursuitCondition && Pursuing;
@@ -35,29 +28,44 @@ public abstract class WylderCard : CardModel
         HoverTipFactory.FromPower<WylderPursuitPower>(),
         HoverTipFactory.FromPower<WylderBreakDescriptionPower>(),
     };
-    // Future Break cards override these two members. Counters are per CardPlay,
+    // Break counters are per CardPlay,
     // per target, and only direct attack damage from this card is counted.
     protected virtual decimal BreakThreshold => 0m;
+    public bool HasBreak => BreakThreshold > 0m;
     protected virtual Task OnBreak(PlayerChoiceContext context) => Task.CompletedTask;
+    protected CardPlay ResolvingPlay => BreakStates.GetOrCreateValue(this).Play;
+    protected Creature BrokenTarget => BreakStates.GetOrCreateValue(this).Target;
+    protected bool BrokeThisPlay => BreakStates.GetOrCreateValue(this).Triggered;
+    protected bool LowHand(int threshold) => WylderHandPlayContext.IsLowHand(this, ResolvingPlay, threshold);
+    protected int? SourceHandCount => WylderHandPlayContext.HandCount(this, ResolvingPlay);
     private sealed class BreakData
     {
         public readonly Dictionary<Creature, decimal> Damage = new();
         public bool Triggered;
         public bool Resolving;
+        public CardPlay Play;
+        public Creature Target;
     }
     private static readonly ConditionalWeakTable<WylderCard, BreakData> BreakStates = new();
     public override Task BeforeCardPlayed(CardPlay play)
     {
         if (play.Card == this)
         {
+            WylderCombatEvents.BeginCard(play);
             BreakData data = BreakStates.GetOrCreateValue(this);
-            data.Damage.Clear(); data.Triggered = false; data.Resolving = true;
+            data.Damage.Clear(); data.Triggered = false; data.Resolving = true; data.Play = play; data.Target = null;
         }
         return Task.CompletedTask;
     }
     public override Task AfterCardPlayedLate(PlayerChoiceContext context, CardPlay play)
     {
-        if (play.Card == this) BreakStates.GetOrCreateValue(this).Resolving = false;
+        if (play.Card == this)
+        {
+            BreakData data = BreakStates.GetOrCreateValue(this);
+            data.Resolving = false;
+            data.Play = null;
+            data.Target = null;
+        }
         return Task.CompletedTask;
     }
     public override async Task AfterDamageGiven(PlayerChoiceContext context, Creature dealer,
@@ -67,10 +75,12 @@ public abstract class WylderCard : CardModel
         if (cardSource != this || dealer != Owner.Creature || !props.IsPoweredAttack()
             || BreakThreshold <= 0 || !data.Resolving || data.Triggered || target.Side == dealer.Side) return;
         data.Damage.TryGetValue(target, out decimal total);
-        total += result.UnblockedDamage;
+        total += result.TotalDamage;
         data.Damage[target] = total;
-        if (total < BreakThreshold) return;
+        if (total < WylderCombatEvents.EffectiveBreak(this, data.Play, BreakThreshold)) return;
         data.Triggered = true; // Consume before awaiting to prevent reentrant triggers.
+        data.Target = target;
+        WylderCombatEvents.RegisterBreak(data.Play);
         await OnBreak(context);
     }
 }
@@ -96,7 +106,7 @@ public sealed class WylderDefend : WylderCard
 }
 public sealed class WylderClawMovement : WylderCard
 {
-    public WylderClawMovement() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self) { }
+    public WylderClawMovement() : base(1, CardType.Attack, CardRarity.Basic, TargetType.Self) { }
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Retain };
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
         WylderPursuitPower.Enter(context, Owner.Creature, this);
@@ -123,21 +133,21 @@ public sealed class WylderSlidingLeap : WylderCard
     protected override bool HasPursuitCondition => true;
     public override bool GainsBlock => true;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        { new BlockVar(7m, ValueProp.Move), new EnergyVar(1) };
+        { new BlockVar(8m, ValueProp.Move), new EnergyVar(1) };
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         bool pursuit = Pursuing;
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block.BaseValue, ValueProp.Move, play);
         if (pursuit) await PlayerCmd.GainEnergy(1, Owner);
     }
-    protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3m);
+    protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(2m);
 }
 public sealed class WylderStampUpwardCut : WylderCard
 {
     public WylderStampUpwardCut() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
     protected override bool HasPursuitCondition => true;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        { new DamageVar(16m, ValueProp.Move), new DynamicVar("StrengthLoss", 10m) };
+        { new DamageVar(16m, ValueProp.Move), new DynamicVar("StrengthLoss", 5m) };
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         bool pursuit = Pursuing;
@@ -146,7 +156,7 @@ public sealed class WylderStampUpwardCut : WylderCard
             await PowerCmd.Apply<WylderUppercutStrengthDownPower>(context, play.Target,
                 DynamicVars["StrengthLoss"].BaseValue, Owner.Creature, this);
     }
-    protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(2m); DynamicVars["StrengthLoss"].UpgradeValueBy(3m); }
+    protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(2m); DynamicVars["StrengthLoss"].UpgradeValueBy(1m); }
 }
 public sealed class WylderStampSweep : WylderCard
 {

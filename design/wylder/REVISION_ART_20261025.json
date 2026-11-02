@@ -1,0 +1,23 @@
+{
+  "output_dir": "design/卡图预览/wylder/revisions_20261025",
+  "generator": "built-in imagegen",
+  "approved": false,
+  "assets": [
+    {
+      "key": "wylder_ghostflame_explosion",
+      "name": "灵火爆炸·去除第三只手",
+      "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-4a9def16-4bff-4e19-b486-6f1f73d37c54.png",
+      "ref": "design/卡图预览/wylder/flames_20261022/wylder_ghostflame_ignition.png",
+      "prompt": "Precise edit: remove the entire downward extra arm below the right shoulder; retain exactly the sword-gripping raised arm and backward-reaching free arm. Preserve straight sword, forked pommel, helmet, composition, flat hard-edge cel shading and cyan ghostflame explosion. No added objects or limbs."
+    },
+    {
+      "key": "wylder_claw_movement",
+      "status": "superseded_by_ground_anchored_left_hand_slide",
+      "superseded_by": "design/wylder/CLAW_GROUND_ART_20261027.json",
+      "name": "钩爪移动·低身牵引",
+      "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-5448ae62-aaad-4d63-bab6-25b5ae209dcb.png",
+      "ref": "C:/Users/wenti/AppData/Local/Temp/codex-clipboard-061cf368-0fc0-4e78-b47a-3aa247e76ce5.png",
+      "prompt": "Reference screenshot crouched grapple movement: side/rear three-quarter, compressed low torso and bent knees, extended forearm-mounted grappling launcher, taut thin cable pulling forward-up. Closed silver feather-wing helmet, black scarf, silver V breastplate, navy split skirt, brown gloves, rope boots, round buckler. Graphic flat blocks, hard cel planes, black shapes and cyan rim; abstract navy backdrop. Second pass replaces incorrectly blade-shaped cable with thin wire from forearm launcher, closed fist. Exactly two arms and legs, no duplicate limbs, no card props, text or UI. 1000x760 landscape."
+    }
+  ]
+}

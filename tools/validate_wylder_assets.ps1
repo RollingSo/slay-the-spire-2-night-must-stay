@@ -3,11 +3,15 @@ $root = Split-Path -Parent $PSScriptRoot
 Add-Type -AssemblyName System.Drawing
 $report = Get-Content (Join-Path $root 'design/wylder/asset_report.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 $checked = 0
+$uiSizes = @{'wylder_assets/character_icon_wylder.png' = @(88,88); 'wylder_assets/character_icon_wylder_outline.png' = @(64,64); 'wylder_assets/map_marker_wylder.png' = @(49,64)}
 foreach ($entry in $report.PSObject.Properties) {
     $path = Join-Path $root $entry.Name
     if (-not (Test-Path -LiteralPath $path)) { throw "Missing Wylder asset: $path" }
     $image = [Drawing.Bitmap]::FromFile($path)
     try {
+        if ($uiSizes.ContainsKey($entry.Name) -and ($image.Width -ne $uiSizes[$entry.Name][0] -or $image.Height -ne $uiSizes[$entry.Name][1])) {
+            throw "Wylder UI head must match the four-role standard: $path"
+        }
         if ($image.Width -ne $entry.Value.size[0] -or $image.Height -ne $entry.Value.size[1]) {
             throw "Wrong Wylder asset size: $path"
         }
@@ -29,4 +33,4 @@ foreach ($power in @('wylder_pursuit_power','wylder_break_description_power','wy
         throw "Wylder compact/flash power icon mismatch: $power"
     }
 }
-Write-Output "Wylder source asset validation passed ($checked draft assets)."
+Write-Output "Wylder source asset validation passed ($checked assets)."

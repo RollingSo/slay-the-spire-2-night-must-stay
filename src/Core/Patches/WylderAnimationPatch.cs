@@ -9,6 +9,16 @@ namespace NightMustStay.Core.Patches
     [HarmonyPatch]
     public static class WylderAnimationPatch
     {
+        [HarmonyPatch(typeof(NCreature), nameof(NCreature._Ready))]
+        [HarmonyPostfix]
+        public static void AttachStatusVisual(NCreature __instance)
+        {
+            if (__instance.Entity?.Player?.Character is Wylder
+                && __instance.GetNodeOrNull<Node>("WylderStatusVisual") == null)
+                __instance.AddChild(new NightMustStay.Core.Nodes.Vfx.WylderStatusVisual {
+                    Name = "WylderStatusVisual", CreatureNode = __instance });
+        }
+
         public static void PlayBlock(MegaCrit.Sts2.Core.Entities.Creatures.Creature creature)
         {
             if (creature.GetCreatureNode() is { } node && TryGetRig(node, out Node rig))
@@ -47,7 +57,13 @@ namespace NightMustStay.Core.Patches
                 return false;
 
             rig = creature.Visuals?.GetNodeOrNull<Node>("Visuals/Prototype")!;
-            return rig != null && rig.HasMethod("play_trigger");
+            if (rig == null || !rig.HasMethod("play_trigger")) return false;
+            // Synchronize before a trigger as well as on frames, avoiding stale
+            // idle art when entry/removal and animation happen in the same frame.
+            if (rig.HasMethod("set_pursuit_active"))
+                rig.Call("set_pursuit_active",
+                    NightMustStay.Core.Models.Power.WylderPursuitPower.IsActive(creature.Entity));
+            return true;
         }
     }
 }

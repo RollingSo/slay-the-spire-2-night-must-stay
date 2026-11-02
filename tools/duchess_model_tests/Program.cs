@@ -58,9 +58,23 @@ foreach (Type type in typeof(PowerModel).Assembly.GetTypes().Where(type => !type
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+if (args.Contains("--card-pool-audit"))
+{
+    foreach (var character in new CharacterModel[] { ModelDb.Character<Guardian>(), ModelDb.Character<Ironeye>(), ModelDb.Character<Revenant>(), duchess, ModelDb.Character<Wylder>() })
+    {
+        var cards = character.CardPool.AllCards.ToArray();
+        Console.WriteLine(character.GetType().Name + ": " + cards.Length + " registered cards; rarities="
+            + string.Join(", ", cards.GroupBy(c => c.Rarity).Select(g => g.Key + "=" + g.Count()))
+            + "; types=" + string.Join(", ", cards.GroupBy(c => c.Type).Select(g => g.Key + "=" + g.Count())));
+    }
+    return 0;
+}
+WylderDialogueRegression.Run();
 if (args.Contains("--wylder-only"))
 {
+    WylderSheetManifestRegression.Run();
     WylderRegression.Run();
+    WylderBattleArtRegression.Run();
     return 0;
 }
 if (args.Contains("--strangle-damage-preview-only"))

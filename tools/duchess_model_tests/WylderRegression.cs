@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Cards;
 using NightMustStay.Core.Models.Characters;
@@ -20,6 +21,8 @@ internal static class WylderRegression
         var h=new HarmonyLib.Harmony("night-must-stay.tests.wylder");
         h.CreateClassProcessor(typeof(Wylder).Assembly.GetType("NightMustStay.Core.Patches.WylderPursuitDamageBranchPatch")!).Patch();
         h.CreateClassProcessor(typeof(Wylder).Assembly.GetType("NightMustStay.Core.Patches.WylderSweepTargetPatch")!).Patch();
+        h.CreateClassProcessor(typeof(Wylder).Assembly.GetType("NightMustStay.Core.Patches.WylderSmallShopPoolPatch")!).Patch();
+        h.CreateClassProcessor(typeof(Wylder).Assembly.GetType("NightMustStay.Core.Patches.WylderSmallRewardPoolPatch")!).Patch();
         h.Patch(typeof(PowerCmd).GetMethods().Single(m=>m.Name=="Remove" && !m.IsGenericMethod),
             prefix:new HarmonyMethod(typeof(WylderRegression),nameof(Remove)));
         h.Patch(typeof(CardPileCmd).GetMethods().Single(m=>m.Name=="Draw" && m.GetParameters().Length==4),
@@ -31,25 +34,67 @@ internal static class WylderRegression
         try
         {
             var character=ModelDb.Character<Wylder>();
+            Check(character.StartingHp == 78, "Wylder starting HP is 78");
+            var defendFilter = AccessTools.Method(typeof(Wylder).Assembly.GetType("NightMustStay.Core.Models.GuardianCardFilters"),
+                "HasDefendInName", new[] { typeof(string), typeof(string), typeof(bool) });
+            Check((bool)defendFilter.Invoke(null, new object[] { "WYLDER_TURNING_GUARD", "Turning Defense", true })!,
+                "Turning Defense canonical Defend membership survives localization");
+            Check(!(bool)defendFilter.Invoke(null, new object[] { "WYLDER_STEADY_BREATH", "Defend", true })!,
+                "Unrelated Wylder cards cannot enter Defend set through translated title");
+            Check(ModelDb.Card<WylderStampSweep>().TargetType == TargetType.AnyEnemy, "Canonical sweep library target is safe");
+            var authoredPool = character.CardPool.AllCards.Where(c => c.Rarity == CardRarity.Common).ToArray();
+            var shopRepair = AccessTools.Method(typeof(Wylder).Assembly.GetType("NightMustStay.Core.Patches.WylderSmallShopPoolPatch"), "Restore");
+            foreach (var requested in new[] { CardType.Attack, CardType.Skill, CardType.Power })
+            {
+                object[] repairArgs = { authoredPool, Array.Empty<CardModel>(), requested };
+                shopRepair.Invoke(null, repairArgs);
+                var repaired = ((IEnumerable<CardModel>)repairArgs[1]).ToArray();
+                Check(repaired.Any(c => c.Type == (CardType)repairArgs[2] && c.Rarity == CardRarity.Common), "Exhausted shop slot fallback " + requested);
+                Check(repaired.All(c => c is WylderCard && c.Rarity != CardRarity.Basic), "Shop fallback stays in authored pool");
+            }
+            var rewardRepair = AccessTools.Method(typeof(Wylder).Assembly.GetType("NightMustStay.Core.Patches.WylderSmallRewardPoolPatch"), "Restore");
+            object[] rewardArgs = { authoredPool, character.CardPool.AllCards.ToArray() };
+            rewardRepair.Invoke(null, rewardArgs);
+            Check(!((IEnumerable<CardModel>)rewardArgs[1]).Any(), "Reward pool exhaustion resets blacklist");
+            Check(character.MapDrawingColor == character.CardPool.DeckEntryCardColor
+                && character.MapDrawingColor == new Godot.Color("252E4A"), "Coat-navy shared theme");
             var deck=character.StartingDeck.ToArray();
             Check(deck.Length==10 && deck.Count(c=>c is WylderStrike)==4 && deck.Count(c=>c is WylderDefend)==4
                 && deck.Count(c=>c is WylderClawMovement)==1 && deck.Count(c=>c is WylderDashAttack)==1,"Starting deck");
-            Check(character.CardPool.AllCards.Count(c=>c.Rarity==CardRarity.Common)==3,"Three droppable common cards");
+            Check(character.CardPool.AllCards.Count()==39,"37 named sheet rows plus Strike and Defend");
+            Check(character.CardPool.AllCards.Select(c=>c.Id).Distinct().Count()==39,"Unique registered IDs");
             foreach(bool up in new[]{false,true})
             {
                 foreach(var canonical in character.CardPool.AllCards)
                 {
-                    var c=canonical.ToMutable(); if(up)c.UpgradeInternal();
-                    int cost=c switch { WylderClawMovement => up?0:1, WylderStampUpwardCut=>2, _=>1 };
+                    var c=canonical.ToMutable(); if(up && c.MaxUpgradeLevel > 0)c.UpgradeInternal();
+                    int cost=c switch { WylderClawMovement => up?0:1,
+                        WylderRuinousGhostflame => 1,
+                        WylderDebut or WylderSixthSense => 0,
+                        WylderExecution => up?1:2,
+                        WylderNightForm => 3,
+                        WylderAerialStake or WylderDesperateSurvival or WylderRemainingEmber => 2,
+                        WylderParry => 4,
+                        WylderSidestep or WylderRelentlessAdvance or WylderForcedBreakout or WylderNightRespite => 0,
+                        WylderAssaultDrop or WylderCriticalStrike => 3,
+                        WylderCorpseWaxCutter or WylderAirCleavingChase or WylderTakersFlames or WylderInfernalSlash
+                            or WylderCounteroffensive or WylderCliffStep or WylderAllInDuel or WylderBattlefieldMight
+                            or WylderPursuitStance or WylderNightEdge => 2,
+                        WylderShieldPress or WylderLightStepGuard or WylderGroundDash or WylderPatientFocus or WylderStormBlade or WylderEochaidsDancingBlade => 0,
+                        WylderAssaultStake => 3,
+                        WylderStampUpwardCut
+                            or WylderLionsClaw or WylderCliffbreaker
+                            or WylderDualGreatswordLeap or WylderGhostflameExplosion or WylderVerticalPressure
+                            or WylderLastStandGuard or WylderFinalGuard => 2, _=>1 };
                     Check(c.EnergyCost.GetResolved()==cost,"Cost "+c.GetType().Name);
                     if(c is WylderClawMovement)Check(c.Keywords.Contains(CardKeyword.Retain),"Claw retains");
                     decimal damage=c switch { WylderStrike=>up?9:6, WylderDashAttack=>up?11:9,
                         WylderStampUpwardCut=>up?18:16, WylderStampSweep=>up?13:10, _=>0 };
                     if(damage>0)Check(c.DynamicVars.Damage.BaseValue==damage,"Damage "+c.GetType().Name);
                     if(c is WylderDefend or WylderSlidingLeap)
-                        Check(c.DynamicVars.Block.BaseValue==(c is WylderDefend?(up?8:5):(up?10:7)),"Block");
+                        Check(c.DynamicVars.Block.BaseValue==(c is WylderDefend?(up?8:5):(up?10:8)),"Block");
                     if(c is WylderDashAttack)Check(c.DynamicVars["Vulnerable"].BaseValue==(up?2:1),"Vulnerable");
-                    if(c is WylderStampUpwardCut)Check(c.DynamicVars["StrengthLoss"].BaseValue==(up?13:10),"Strength loss");
+                    if(c is WylderStampUpwardCut)Check(c.DynamicVars["StrengthLoss"].BaseValue==(up?6:5),"Strength loss");
                     if(c is WylderSlidingLeap)Check(!c.DynamicVars["Energy"].WasJustUpgraded,"Unchanged energy not green");
                 }
             }
@@ -96,12 +141,12 @@ internal static class WylderRegression
             p.BeforeCardPlayed(play).GetAwaiter().GetResult();
             WylderPursuitPower.Enter(null!,creature,claw).GetAwaiter().GetResult();
             p.AfterCardPlayedLate(null!,play).GetAwaiter().GetResult();
-            Check(_removes==2 && _draws==2 && creature.HasPower<WylderPursuitPower>(),"Claw re-entry survives but old pursuit draws");
+            Check(_removes==2 && _draws==1 && creature.HasPower<WylderPursuitPower>(),"Attack-type Claw re-entry survives without skill draw");
             // A newly applied pursuit was not present for BeforeCardPlayed.
             ((List<PowerModel>)AccessTools.Field(typeof(Creature),"_powers").GetValue(creature)!).Clear();
             p=Power();p.AfterCardPlayedLate(null!,play).GetAwaiter().GetResult();
-            Check(_removes==2 && _draws==2,"New pursuit not consumed by granting skill");
-            Console.WriteLine("PASS: Wylder 10-card deck, 3 common drops, all 7 base/upgraded costs/stats, unchanged upgrade color, pursuit damage/turn retention/skill draw/re-entry.");
+            Check(_removes==2 && _draws==1,"New pursuit not consumed by granting skill");
+            Console.WriteLine("PASS: Wylder unchanged 10-card starting deck, 39 unique cards, revised rarity/type counts, base/upgraded costs/stats and pursuit retention/skill draw/re-entry.");
             var inject=typeof(ModelDb).GetMethod("Inject",BindingFlags.Static|BindingFlags.Public|BindingFlags.NonPublic)!;
             inject.Invoke(null,new object[]{typeof(WylderBreakProbe)});
             WylderBreakProbe Probe()
@@ -124,11 +169,11 @@ internal static class WylderRegression
                 var result=new DamageResult(target,props){UnblockedDamage=raw,BlockedDamage=blocked};
                 card.AfterDamageGiven(null!,creature,result,props,target,source??card).GetAwaiter().GetResult();
             }
-            Hit(probe,a,7,100);Hit(probe,b,8);
-            Check(probe.Triggers==0,"Break does not count blocked damage or combine separate enemies");
+            Hit(probe,a,2,5);Hit(probe,b,0,8);
+            Check(probe.Triggers==0,"Break counts pre-block damage per enemy, not across enemies");
             Hit(copy,a,10);Hit(probe,a,7);
             Check(probe.Triggers==0 && copy.Triggers==0,"Break copies have independent ledgers");
-            Hit(probe,a,1);Hit(probe,a,20);Hit(probe,b,30);
+            Hit(probe,a,0,1);Hit(probe,a,20);Hit(probe,b,30);
             Check(probe.Triggers==1,"Break exact threshold and only once per play");
             probe.BeforeCardPlayed(probePlay).GetAwaiter().GetResult();
             Hit(probe,a,20,source:strike);Hit(probe,a,20,props:ValueProp.Unpowered);
@@ -136,7 +181,9 @@ internal static class WylderRegression
             Hit(probe,a,15);Check(probe.Triggers==2,"Break resets next play");
             probe.AfterCardPlayedLate(null!,probePlay).GetAwaiter().GetResult();
             Hit(probe,a,100);Check(probe.Triggers==2,"Break only while resolving");
-            Console.WriteLine("PASS: Break unblocked damage, exact threshold, same-target multihit accumulation, separate AOE targets, once per play, isolated copies, reset and source/passive filtering.");
+            probe.BeforeCardPlayed(probePlay).GetAwaiter().GetResult();
+            Hit(probe,a,0,15);Check(probe.Triggers==3,"Fully blocked attack meets Break threshold");
+            Console.WriteLine("PASS: Break pre-block damage including fully blocked hits, exact threshold, same-target multihit accumulation, separate AOE targets, once per play, isolated copies, reset and source/passive filtering.");
         }
         finally{h.UnpatchAll(h.Id);}
     }
