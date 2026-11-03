@@ -13,16 +13,7 @@ namespace NightMustStay.Core.Models.Cards
 {
     public sealed class HoldTheLine : CardModel
     {
-        private bool _pending;
-        private CardPlay _grantingPlay;
         public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
-        public override decimal ModifyBlockMultiplicative(MegaCrit.Sts2.Core.Entities.Creatures.Creature target, decimal block, ValueProp props, CardModel cardSource, CardPlay cardPlay) =>
-            _pending && target == Owner.Creature && cardSource?.Owner == Owner && cardPlay != _grantingPlay ? 2m : 1m;
-        public override Task AfterCardPlayed(PlayerChoiceContext context, CardPlay play)
-        {
-            if (_pending && play.Card.Owner == Owner && play != _grantingPlay) _pending = false;
-            return Task.CompletedTask;
-        }
 
         public HoldTheLine()
             : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
@@ -32,8 +23,9 @@ namespace NightMustStay.Core.Models.Cards
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             await PowerCmd.Apply<MegaCrit.Sts2.Core.Models.Powers.RetainHandPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
-            _grantingPlay = cardPlay;
-            _pending = true;
+            var power = await PowerCmd.Apply<NightMustStay.Core.Models.Power.HoldTheLinePower>(
+                choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+            if (power != null) power.GrantingPlay = cardPlay;
         }
 
         protected override void OnUpgrade()

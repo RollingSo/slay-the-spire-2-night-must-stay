@@ -1,4 +1,6 @@
 {
+  "HOLD_THE_LINE_POWER.title": "堅守",
+  "HOLD_THE_LINE_POWER.description": "次にプレイするカードから得る[gold]ブロック[/gold]が2倍になる。",
   "DUCHESS_RADIANT_BLADE_TURNS_POWER.title": "魔術の輝剣",
   "DUCHESS_RADIANT_BLADE_TURNS_POWER.description": "残り{Amount}ターン。\nターン開始時、[gold]輝剣[/gold]1枚を手札に加える。",
   "DESPERATE_STRUGGLE_POWER.title": "必死の抵抗",

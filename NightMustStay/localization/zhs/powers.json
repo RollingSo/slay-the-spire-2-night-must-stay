@@ -1,4 +1,6 @@
 {
+  "HOLD_THE_LINE_POWER.title": "据守",
+  "HOLD_THE_LINE_POWER.description": "你打出的下张卡牌获得的[gold]格挡[/gold]翻倍。",
   "DUCHESS_RADIANT_BLADE_TURNS_POWER.title": "魔法辉剑",
   "DUCHESS_RADIANT_BLADE_TURNS_POWER.description": "剩余{Amount}回合。\n回合开始时，将1张[gold]辉剑[/gold]加入手牌。",
   "DESPERATE_STRUGGLE_POWER.title": "奋力搏击",

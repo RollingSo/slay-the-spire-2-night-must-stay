@@ -355,7 +355,7 @@ namespace NightMustStay.Core.Models.Power
                 int playerCount = owner?.CombatState?.Players.Count
                     ?? CombatManager.Instance.DebugOnlyGetState()?.Players.Count ?? 1;
                 description.Add("Threshold", GetThreshold(playerCount, owner == null ? 0 : GetProgress(owner).Increases));
-                description.Add("MaxThreshold", GetThreshold(playerCount, 3));
+                description.Add("MaxThreshold", GetThreshold(playerCount, 4));
                 return description;
             }
         }
@@ -364,7 +364,7 @@ namespace NightMustStay.Core.Models.Power
         {
             playerCount = Math.Max(1, playerCount);
             int initial = playerCount == 1 ? StacksPerPlayer : StacksPerPlayer * playerCount - 1;
-            return initial + Math.Clamp(increases, 0, 3);
+            return initial + Math.Clamp(increases, 0, 4);
         }
 
         public static async Task ResolveThreshold(PlayerChoiceContext context, Creature target)
@@ -380,7 +380,7 @@ namespace NightMustStay.Core.Models.Power
             try
             {
                 await CreatureCmd.Stun(target);
-                progress.Increases = Math.Min(3, progress.Increases + 1);
+                progress.Increases = Math.Min(4, progress.Increases + 1);
                 await PowerCmd.ModifyAmount(context, imbalance, -stunThreshold, imbalance.Applier, null);
             }
             finally { progress.Resolving = false; }

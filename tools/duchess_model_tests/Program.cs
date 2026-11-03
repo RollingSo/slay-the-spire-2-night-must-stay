@@ -203,10 +203,10 @@ if (args.Contains("--effect-damage-only"))
 }
 if (args.Contains("--imbalance-threshold-only"))
 {
-    int[][] expected = { new[] { 2, 3, 4, 5, 5 }, new[] { 3, 4, 5, 6, 6 },
-        new[] { 5, 6, 7, 8, 8 }, new[] { 7, 8, 9, 10, 10 } };
+    int[][] expected = { new[] { 2, 3, 4, 5, 6, 6 }, new[] { 3, 4, 5, 6, 7, 7 },
+        new[] { 5, 6, 7, 8, 9, 9 }, new[] { 7, 8, 9, 10, 11, 11 } };
     for (int players = 1; players <= 4; players++)
-        for (int triggers = 0; triggers < 5; triggers++)
+        for (int triggers = 0; triggers < 6; triggers++)
             if (PhantomImbalancePower.GetThreshold(players, triggers) != expected[players - 1][triggers])
                 throw new Exception("Imbalance threshold scaling/cap mismatch.");
     var player = TrackingArrowRegression.MakePlayer();
