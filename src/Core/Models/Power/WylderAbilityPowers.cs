@@ -1,3 +1,9 @@
+using System.Linq;
+using System.Threading.Tasks;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
+using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Saves.Runs;
@@ -35,7 +41,25 @@ public sealed class WylderVeteranEdgePower : WylderAbilityPower { }
 public sealed class WylderUnyieldingSpiritPower : WylderAbilityPower { }
 public sealed class WylderNightEdgePower : WylderAbilityPower { }
 public sealed class WylderBoldnessPower : WylderAbilityPower { }
-public sealed class WylderNightFormPower : WylderAbilityPower { }
+public sealed class WylderNightFormPower : WylderAbilityPower
+{
+    public override PowerStackType StackType => PowerStackType.Single;
+}
+public sealed class WylderEruptionPower : WylderAbilityPower { }
 public sealed class WylderRemainingEmberPower : WylderAbilityPower { }
 public sealed class WylderUndyingPower : WylderAbilityPower { }
 
+
+public sealed class WylderWildfirePower : WylderAbilityPower
+{
+    public override async Task AfterPowerAmountChanged(PlayerChoiceContext context, PowerModel power,
+        decimal amount, Creature applier, CardModel cardSource)
+    {
+        if (amount <= 0 || power is not VigorPower || power.Owner != Owner) return;
+        var enemies = Owner.CombatState.GetOpponentsOf(Owner).Where(enemy => enemy.IsAlive && enemy.IsHittable).ToArray();
+        if (enemies.Length == 0) return;
+        var target = Owner.Player.RunState.Rng.CombatTargets.NextItem(enemies);
+        Flash();
+        await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(context, target, amount * Copies, ValueProp.Unpowered, Owner, null);
+    }
+}

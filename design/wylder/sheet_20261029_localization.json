@@ -8,15 +8,15 @@
     ],
     "WYLDER_AERIAL_STAKE": [
       "空袭桩柱",
-      "造成{Damage:diff()}点伤害。\n[gold]破势[/gold]{Break:diff()}：进入[gold]追击[/gold]。",
+      "[gold]追击[/gold]：造成{Damage:diff()}点伤害。\n[gold]击晕[/gold]该敌人。",
       "Aerial Stake",
-      "Deal {Damage:diff()} damage.\n[gold]Break[/gold] {Break:diff()}: Enter [gold]Pursuit[/gold]."
+      "[gold]Pursuit[/gold]: Deal {Damage:diff()} damage and [gold]Stun[/gold] the enemy."
     ],
     "WYLDER_COUNTER_RUSH": [
-      "反冲袭击",
-      "获得{Block:diff()}点格挡。\n造成{Damage:diff()}点伤害。",
-      "Counter Rush",
-      "Gain {Block:diff()} Block.\nDeal {Damage:diff()} damage."
+      "反冲桩柱",
+      "[gold]绝境[/gold]。\n造成{Damage:diff()}点伤害。\n给予{Imbalance:diff()}层[gold]失衡[/gold]。",
+      "Recoil Stake",
+      "[gold]Desperation[/gold].\nDeal {Damage:diff()} damage.\nApply {Imbalance:diff()} [gold]Imbalance[/gold]."
     ],
     "WYLDER_DEBUT": [
       "登场",
@@ -38,9 +38,9 @@
     ],
     "WYLDER_MOTION_AND_STILLNESS": [
       "动与静",
-      "抽{Cards:diff()}张牌。\n[gold]追击[/gold]：获得{Block:diff()}点格挡。",
+      "[gold]收招[/gold]。\n若上张打出的牌为非攻击牌，获得{Block:diff()}点[gold]格挡[/gold]。\n若上张打出的牌为攻击牌，获得{Vigor:diff()}点[gold]活力[/gold]。",
       "Motion and Stillness",
-      "Draw {Cards:diff()} cards.\n[gold]Pursuit[/gold]: Gain {Block:diff()} Block."
+      "[gold]Follow Through[/gold].\nIf the last card you played was not an Attack, gain {Block:diff()} [gold]Block[/gold].\nIf it was an Attack, gain {Vigor:diff()} [gold]Vigor[/gold]."
     ],
     "WYLDER_EXECUTION": [
       "处决",
@@ -50,15 +50,15 @@
     ],
     "WYLDER_DESPERATE_SURVIVAL": [
       "绝处逢生",
-      "[gold]绝境[/gold]。\n造成{Damage:diff()}点伤害。\n获得{Block:diff()}点格挡。",
+      "[gold]绝境[/gold]。\n斩杀一个生命不足{Threshold:diff()}的敌人。",
       "Desperate Survival",
-      "[gold]Desperation[/gold].\nDeal {Damage:diff()} damage.\nGain {Block:diff()} Block."
+      "[gold]Desperation[/gold].\nKill an enemy with less than {Threshold:diff()} HP."
     ],
     "WYLDER_WILDFIRE": [
-      "燎原",
-      "对所有敌人造成{Damage:diff()}点伤害。\n[gold]破势[/gold]{Break:diff()}：获得{Vigor:diff()}点[gold]活力[/gold]。",
-      "Wildfire",
-      "Deal {Damage:diff()} damage to ALL enemies.\n[gold]Break[/gold] {Break:diff()}: Gain {Vigor:diff()} [gold]Vigor[/gold]."
+      "燎原地火",
+      "每当你获得[gold]活力[/gold]时，对一名随机敌人造成等同于本次获得层数的伤害。",
+      "Spreading Wildfire",
+      "Whenever you gain [gold]Vigor[/gold], deal damage equal to the stacks gained to a random enemy."
     ],
     "WYLDER_BOLDNESS": [
       "果敢",
@@ -68,27 +68,39 @@
     ],
     "WYLDER_NIGHT_FORM": [
       "黑夜形态",
-      "进入[gold]追击[/gold]时，获得{Energy:energyIcons()}。\n退出[gold]追击[/gold]时，获得{Block:diff()}点格挡。",
+      "[gold]追击[/gold]的效果翻倍。",
       "Night Form",
-      "Whenever you enter [gold]Pursuit[/gold], gain {Energy:energyIcons()}.\nWhenever you leave [gold]Pursuit[/gold], gain {Block:diff()} Block."
+      "Double the effects of [gold]Pursuit[/gold]."
     ],
     "WYLDER_REMAINING_EMBER": [
       "余火",
-      "触发[gold]破势[/gold]后，对所有敌人造成{Damage:diff()}点伤害。",
+      "进入[gold]追击[/gold]状态时，将1张[gold]附火{IfUpgraded:show:+|}[/gold]添加到手牌。",
       "Remaining Ember",
-      "Whenever you trigger [gold]Break[/gold], deal {Damage:diff()} damage to ALL enemies."
+      "Whenever you enter [gold]Pursuit[/gold], add 1 [gold]Fire Coating{IfUpgraded:show:+|}[/gold] to your hand."
     ],
     "WYLDER_UNDYING": [
       "不灭",
-      "每回合首次触发[gold]破势[/gold]后，恢复{Heal:diff()}点生命。",
+      "[gold]活力[/gold]触发后，保留一半层数。",
       "Undying",
-      "The first time you trigger [gold]Break[/gold] each turn, heal {Heal:diff()} HP."
+      "When [gold]Vigor[/gold] triggers, keep half its stacks."
     ],
     "WYLDER_FOLLOW_THROUGH": [
       "收招",
       "退出[gold]追击[/gold]状态时，如果此牌在手牌中则自动打出。",
       "Follow Through",
       "When you leave [gold]Pursuit[/gold], automatically play this card if it is in your hand."
+    ],
+    "WYLDER_ERUPTION": [
+      "迸发",
+      "触发[gold]破势[/gold]后，对所有敌人造成{Damage:diff()}点伤害。",
+      "Eruption",
+      "Whenever you trigger [gold]Break[/gold], deal {Damage:diff()} damage to ALL enemies."
+    ],
+    "WYLDER_VALOR": [
+      "预备反击",
+      "获得{Block:diff()}点[gold]格挡[/gold]。\n在本回合获得{Strength:diff()}点[gold]力量[/gold]。",
+      "Ready to Counter",
+      "Gain {Block:diff()} [gold]Block[/gold].\nGain {Strength:diff()} [gold]Strength[/gold] this turn."
     ]
   },
   "powers": {
@@ -100,21 +112,33 @@
     ],
     "WYLDER_NIGHT_FORM_POWER": [
       "黑夜形态",
-      "进入[gold]追击[/gold]时，每层获得1点能量。\n退出[gold]追击[/gold]时，获得6点格挡（升级为9点）。",
+      "[gold]追击[/gold]的效果翻倍。\n追击的攻击伤害加成提高至100%，打出技能牌时获得2点能量并抽2张牌。",
       "Night Form",
-      "When you enter [gold]Pursuit[/gold], gain 1 Energy per stack.\nWhen you leave it, gain 6 Block (9 when upgraded)."
+      "Double the effects of [gold]Pursuit[/gold].\nPursuit grants 100% bonus attack damage, or 2 Energy and 2 cards when you play a Skill."
     ],
     "WYLDER_REMAINING_EMBER_POWER": [
       "余火",
-      "触发[gold]破势[/gold]后，对所有敌人造成4点伤害（升级为6点）。",
+      "进入[gold]追击[/gold]状态时，每层将1张[gold]附火[/gold]添加到手牌（升级层生成[gold]附火+[/gold]）。",
       "Remaining Ember",
-      "Whenever you trigger [gold]Break[/gold], deal 4 damage to ALL enemies (6 when upgraded)."
+      "Whenever you enter [gold]Pursuit[/gold], add 1 [gold]Fire Coating[/gold] to your hand per stack (upgraded stacks add [gold]Fire Coating+[/gold])."
     ],
     "WYLDER_UNDYING_POWER": [
       "不灭",
-      "每回合首次触发[gold]破势[/gold]后，恢复2点生命（升级为3点）。",
+      "[gold]活力[/gold]触发后，保留一半层数。",
       "Undying",
-      "The first time you trigger [gold]Break[/gold] each turn, heal 2 HP (3 when upgraded)."
+      "When [gold]Vigor[/gold] triggers, keep half its stacks."
+    ],
+    "WYLDER_ERUPTION_POWER": [
+      "迸发",
+      "触发[gold]破势[/gold]后，对所有敌人造成7点伤害（升级为9点）。",
+      "Eruption",
+      "Whenever you trigger [gold]Break[/gold], deal 7 damage to ALL enemies (9 when upgraded)."
+    ],
+    "WYLDER_WILDFIRE_POWER": [
+      "燎原地火",
+      "每当你获得[gold]活力[/gold]时，对一名随机敌人造成等同于本次获得层数的伤害。",
+      "Spreading Wildfire",
+      "Whenever you gain [gold]Vigor[/gold], deal damage equal to the stacks gained to a random enemy."
     ]
   }
 }

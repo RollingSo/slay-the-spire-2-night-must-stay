@@ -5,7 +5,7 @@ using NightMustStay.Core.Models.Cards;
 
 namespace NightMustStay.Core.Patches;
 
-// IsValidTarget is nonvirtual. Restrict only Parry after native side/alive rules.
+// IsValidTarget is nonvirtual. Restrict conditional targets after native side/alive rules.
 [HarmonyPatch(typeof(CardModel), nameof(CardModel.IsValidTarget))]
 internal static class WylderParryTargetPatch
 {
@@ -14,5 +14,7 @@ internal static class WylderParryTargetPatch
     {
         if (__result && __instance is WylderParry)
             __result = WylderCompletionRules.IsAttacking(target);
+        else if (__result && __instance is WylderDesperateSurvival survival)
+            __result = survival.CanExecute(target);
     }
 }

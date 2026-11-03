@@ -162,16 +162,14 @@ public static class WylderCombatEvents
             int draw = data.BreakDraw;
             Queue(play, c => CardPileCmd.Draw(c, draw, player));
         }
-        if (Power<WylderRemainingEmberPower>(player) is { } ember)
+        if (Power<WylderEruptionPower>(player) is { } eruption)
         {
-            int damage = ember.Sum(4, 6);
+            int damage = eruption.Sum(WylderEruption.BaseDamage, WylderEruption.UpgradedDamage);
             Queue(play, async c => {
                 var enemies = player.Creature.CombatState.GetOpponentsOf(player.Creature).Where(e => e.IsAlive).ToArray();
                 if (enemies.Length > 0) await CreatureCmd.Damage(c, enemies, damage, ValueProp.Unpowered, player.Creature);
             });
         }
-        if (First(player, "UndyingBreak") && Power<WylderUndyingPower>(player) is { } undying)
-        { int heal = undying.Sum(2, 3); Queue(play, _ => CreatureCmd.Heal(player.Creature, heal, false)); }
         if (!PlayerTurn(player)) return;
         int count = ++For(player).Breaks;
         if (count == 1)
@@ -195,9 +193,20 @@ public static class WylderCombatEvents
     public static async Task RegisterEntry(PlayerChoiceContext context, Creature owner, CardModel card, WylderEffectSource source)
     {
         Player player = owner.Player;
-        if (!Eligible(player) || !PlayerTurn(player)) return;
-        if (Power<WylderNightFormPower>(player) is { } night)
-            await QueueOrRun(context, player, _ => PlayerCmd.GainEnergy(night.Copies, player));
+        if (!Eligible(player)) return;
+        if (Power<WylderRemainingEmberPower>(player) is { } ember)
+        {
+            int basic = ember.BasicCopies, total = ember.Copies;
+            await QueueOrRun(context, player, async _ => {
+                for (int i = 0; i < total; i++)
+                {
+                    var coating = owner.CombatState.CreateCard<WylderFireCoating>(player);
+                    if (i >= basic) CardCmd.Upgrade(coating);
+                    await CardPileCmd.AddGeneratedCardToCombat(coating, PileType.Hand, player);
+                }
+            });
+        }
+        if (!PlayerTurn(player)) return;
         if (Power<WylderWindwardStancePower>(player) is { } wind && First(player, "WindwardDeployedEntry"))
         {
             int amount = wind.Sum(4, 6); CardPlay play = Current(player);
@@ -215,9 +224,6 @@ public static class WylderCombatEvents
     }
     public static void QueuePursuitExit(CardPlay play, CardModel[] cards)
     {
-        var player = play.Card.Owner;
-        if (Power<WylderNightFormPower>(player) is { } night)
-        { int block = night.Sum(6, 9); Queue(play, c => Block(c, player, block, play)); }
         Queue(play, c => WylderFollowThroughCard.PlaySnapshot(c, cards));
     }
     public static void RegisterOldPursuitConsumption(CardPlay play)

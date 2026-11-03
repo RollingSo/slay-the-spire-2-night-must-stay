@@ -135,22 +135,19 @@ public sealed class WylderTwinEdgeCombo : WylderCard
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2m);
 }
 
-public sealed class WylderAssaultStake : WylderCard
+public sealed class WylderAssaultStake : WylderDesperationCard
 {
     public WylderAssaultStake() : base(3, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) { }
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
     protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new DamageVar(28m, ValueProp.Move) };
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new[]
-        { WylderDesperation.HoverTip, HoverTipFactory.Static(StaticHoverTip.Stun) });
+        { HoverTipFactory.Static(StaticHoverTip.Stun) });
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).TargetingAllOpponents(CombatState).Execute(context);
         foreach (var enemy in CombatState.GetOpponentsOf(Owner.Creature).Where(enemy => enemy.IsAlive).ToArray())
             await CreatureCmd.Stun(enemy);
     }
-    public override Task BeforeSideTurnEnd(PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> participants) =>
-        side == CombatSide.Player && participants.Contains(Owner.Creature)
-            ? WylderDesperation.AutoPlayUntargeted(context, this) : Task.CompletedTask;
     protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);
 }
 

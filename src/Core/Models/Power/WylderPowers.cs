@@ -40,8 +40,9 @@ public sealed class WylderPursuitPower : PowerModel
         else await PowerCmd.Apply<WylderPursuitPower>(context, owner, 1m, owner, source);
         if (IsActive(owner)) await WylderCombatEvents.RegisterEntry(context, owner, source, sourceKind);
     }
+    private int EffectMultiplier => Owner.HasPower<WylderNightFormPower>() ? 2 : 1;
     internal decimal AttackMultiplier(Creature dealer, ValueProp props, CardModel source) =>
-        dealer == Owner && source?.Type == CardType.Attack && props.IsPoweredAttack() ? 1.5m : 1m;
+        dealer == Owner && source?.Type == CardType.Attack && props.IsPoweredAttack() ? 1m + 0.5m * EffectMultiplier : 1m;
     internal void KeepFor(CardPlay play)
     {
         var data = GetInternalData<Data>();
@@ -65,7 +66,7 @@ public sealed class WylderPursuitPower : PowerModel
     {
         if (play.Card.Owner.Creature != Owner || !GetInternalData<Data>().Plays.Remove(play, out bool reentered)) return;
         if (GetInternalData<Data>().Kept.Remove(play)) return;
-        bool draw = play.Card.Type == CardType.Skill;
+        int skillReward = play.Card.Type == CardType.Skill ? EffectMultiplier : 0;
         WylderCombatEvents.RegisterOldPursuitConsumption(play);
         if (!reentered)
         {
@@ -73,10 +74,10 @@ public sealed class WylderPursuitPower : PowerModel
             await PowerCmd.Remove(this);
             WylderCombatEvents.QueuePursuitExit(play, followThrough);
         }
-        if (draw)
+        if (skillReward > 0)
         {
-            await PlayerCmd.GainEnergy(1, Owner.Player);
-            await CardPileCmd.Draw(context, 1m, Owner.Player);
+            await PlayerCmd.GainEnergy(skillReward, Owner.Player);
+            await CardPileCmd.Draw(context, skillReward, Owner.Player);
         }
     }
     // Deliberately no turn-end hook: pursuit survives ending a turn.

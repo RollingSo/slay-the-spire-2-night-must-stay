@@ -61,6 +61,18 @@ internal static class WylderParryRegression
                 Check(AutoPlays.Count == 1, "No second automatic play from discard");
 
                 Fixture(pursuit); parry = Card(upgraded); Put(parry, PileType.Hand);
+                var second = Card(upgraded);
+                Put(second, PileType.Hand);
+                SetIntent(Enemies[1], true);
+                var originalHand = PileType.Hand.GetPile(Owner).Cards.ToArray();
+                End(originalHand[0]);
+                End(originalHand[1]);
+                Check(AutoPlays.Select(play => play.Card).SequenceEqual(originalHand),
+                    "All Desperation cards play exactly once in original hand order");
+                Check(AutoPlays.Select(play => play.Target).Distinct().Count() == 2,
+                    "The second Parry selects a still-attacking enemy");
+
+                Fixture(pursuit); parry = Card(upgraded); Put(parry, PileType.Hand);
                 Put(Other(), PileType.Hand);
                 End(parry);
                 Check(AutoPlays.Count == 0 && !Enemies[0].IsStunned, "Two cards in hand cannot trigger Desperation");

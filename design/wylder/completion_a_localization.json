@@ -8,9 +8,9 @@
     ],
     "WYLDER_CLAW_PULL": [
       "钩爪拖拽",
-      "给予{Vulnerable:diff()}层[gold]易伤[/gold]。\n进入[gold]追击[/gold]。",
+      "给予{Weak:diff()}层[gold]虚弱[/gold]。\n进入[gold]追击[/gold]。",
       "Claw Pull",
-      "Apply {Vulnerable:diff()} [gold]Vulnerable[/gold].\nEnter [gold]Pursuit[/gold]."
+      "Apply {Weak:diff()} [gold]Weak[/gold].\nEnter [gold]Pursuit[/gold]."
     ],
     "WYLDER_PARRY": [
       "小圆盾格挡",
@@ -20,9 +20,9 @@
     ],
     "WYLDER_DESPERATION": [
       "绝境",
-      "回合结束时，若此牌为手里唯一的牌则自动打出。",
+      "回合结束时，若手牌中只有[gold]绝境[/gold]牌，则自动打出所有[gold]绝境[/gold]牌。",
       "Desperation",
-      "At the end of your turn, if this is the only card in your hand, play it automatically."
+      "At the end of your turn, if your hand contains only [gold]Desperation[/gold] cards, automatically play them all."
     ],
     "WYLDER_STEPPING_SKEWER": [
       "连步穿斩",

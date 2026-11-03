@@ -26,9 +26,9 @@
     ],
     "WYLDER_SLIDING_LEAP": [
       "滑行飞跃",
-      "获得{Block:diff()}点[gold]格挡[/gold]。\n[gold]追击[/gold]：获得{Energy:energyIcons()}。",
+      "[gold]收招[/gold]。\n进入[gold]追击[/gold]。",
       "Sliding Leap",
-      "Gain {Block:diff()} [gold]Block[/gold].\n[gold]Pursuit[/gold]: Gain {Energy:energyIcons()}."
+      "[gold]Follow Through[/gold].\nEnter [gold]Pursuit[/gold]."
     ],
     "WYLDER_STAMP_UPWARD_CUT": [
       "箭步：上砍",
@@ -44,9 +44,9 @@
     ],
     "WYLDER_FLAME_CHASE_SLASH": [
       "燃火追斩",
-      "造成{Damage:diff()}点伤害。\n将{Cards:diff()}张[gold]附火{IfUpgraded:show:+|}[/gold]添加到手牌。\n保持[gold]追击[/gold]。",
+      "造成{Damage:diff()}点伤害。\n将{Cards:diff()}张[gold]附火{IfUpgraded:show:+|}[/gold]添加到手牌。",
       "Flame Chase Slash",
-      "Deal {Damage:diff()} damage.\nAdd {Cards:diff()} [gold]Fire Coating{IfUpgraded:show:+|}[/gold] to your hand.\nKeep [gold]Pursuit[/gold]."
+      "Deal {Damage:diff()} damage.\nAdd {Cards:diff()} [gold]Fire Coating{IfUpgraded:show:+|}[/gold] to your hand."
     ],
     "WYLDER_EOCHAIDS_DANCING_BLADE": [
       "欧赫剑舞",
@@ -134,9 +134,9 @@
     ],
     "WYLDER_DUAL_GREATSWORD_LEAP": [
       "双剑跳劈",
-      "[gold]收招[/gold]。\n造成{Damage:diff()}点伤害{Repeat:diff()}次。",
+      "造成{Damage:diff()}点伤害{Repeat:diff()}次。\n[gold]追击[/gold]：耗能变为0。",
       "Dual Greatsword Leap",
-      "[gold]Follow Through[/gold].\nDeal {Damage:diff()} damage {Repeat:diff()} times."
+      "Deal {Damage:diff()} damage {Repeat:diff()} times.\n[gold]Pursuit[/gold]: Costs 0 Energy."
     ],
     "WYLDER_GHOSTFLAME_EXPLOSION": [
       "灵火爆炸",
@@ -287,6 +287,12 @@
       "这张牌造成的攻击伤害达到要求时，触发[gold]破势[/gold]的额外效果。",
       "Break",
       "When this card's attack damage reaches the requirement, trigger its additional [gold]Break[/gold] effect."
+    ],
+    "WYLDER_CENTERING_BREATH": [
+      "调息",
+      "获得{Block:diff()}点[gold]格挡[/gold]。\n[gold]追击[/gold]：获得{Energy:energyIcons()}。",
+      "Centering Breath",
+      "Gain {Block:diff()} [gold]Block[/gold].\n[gold]Pursuit[/gold]: Gain {Energy:energyIcons()}."
     ]
   },
   "relics": {

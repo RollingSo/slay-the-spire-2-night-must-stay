@@ -69,36 +69,30 @@ public sealed class WylderClawPull : WylderCard
     public WylderClawPull() : base(1, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy) { }
     public override string PortraitPath => "res://images/packed/card_portraits/wylder/wylder_claw_pull.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        { new PowerVar<VulnerablePower>("Vulnerable", 1m) };
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new[] { HoverTipFactory.FromPower<VulnerablePower>() });
+        { new PowerVar<WeakPower>("Weak", 1m) };
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new[] { HoverTipFactory.FromPower<WeakPower>() });
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         if (play.Target?.IsAlive == true)
-            await PowerCmd.Apply<VulnerablePower>(context, play.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<WeakPower>(context, play.Target, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
         await WylderPursuitPower.Enter(context, Owner.Creature, this);
     }
-    protected override void OnUpgrade() => DynamicVars["Vulnerable"].UpgradeValueBy(1m);
+    protected override void OnUpgrade() => DynamicVars["Weak"].UpgradeValueBy(1m);
 }
 
-public sealed class WylderParry : WylderCard
+public sealed class WylderParry : WylderDesperationCard
 {
     public WylderParry() : base(4, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy) { }
     protected override bool IsPlayable => CombatState == null || WylderCompletionRules.AttackingEnemies(this).Length > 0;
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new[]
-        { WylderDesperation.HoverTip, HoverTipFactory.Static(StaticHoverTip.Stun) });
+        { HoverTipFactory.Static(StaticHoverTip.Stun) });
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         if (!WylderCompletionRules.IsAttacking(play.Target)) return;
         await CreatureCmd.Stun(play.Target);
         if (play.Target.IsStunned) await WylderCombatEvents.RegisterSkillStun(context, play);
     }
-    public override Task BeforeSideTurnEnd(PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> participants)
-    {
-        // OnTurnEndInHandWrapper moves to Play and always discards afterwards;
-        // use the earlier side-end hook so the real hand and Retain stay intact.
-        if (side != CombatSide.Player || !participants.Contains(Owner.Creature)) return Task.CompletedTask;
-        return WylderDesperation.AutoPlayTargeted(context, this, WylderCompletionRules.AttackingEnemies(this));
-    }
+    protected override IEnumerable<Creature> LegalDesperationTargets() => WylderCompletionRules.AttackingEnemies(this);
     protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);
 }
 
@@ -264,7 +258,7 @@ public sealed class WylderCorpseWaxCutter : WylderCard
     public WylderCorpseWaxCutter() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) { }
     public override string PortraitPath => "res://images/packed/card_portraits/wylder/wylder_corpse_wax_cutter.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        { new DamageVar(9m, ValueProp.Move), new DynamicVar("Break", 20m), new PowerVar<VulnerablePower>("Vulnerable", 2m), new PowerVar<WeakPower>("Weak", 2m) };
+        { new DamageVar(10m, ValueProp.Move), new DynamicVar("Break", 20m), new PowerVar<VulnerablePower>("Vulnerable", 2m), new PowerVar<WeakPower>("Weak", 2m) };
     protected override decimal BreakThreshold => DynamicVars["Break"].BaseValue;
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new[] { HoverTipFactory.FromPower<VulnerablePower>(), HoverTipFactory.FromPower<WeakPower>() });
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
@@ -277,7 +271,12 @@ public sealed class WylderCorpseWaxCutter : WylderCard
             await PowerCmd.Apply<WeakPower>(context, enemies, DynamicVars["Weak"].BaseValue, Owner.Creature, this);
         }
     }
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
+    protected override void OnUpgrade()
+    {
+        DynamicVars.Damage.UpgradeValueBy(4m);
+        DynamicVars["Vulnerable"].UpgradeValueBy(1m);
+        DynamicVars["Weak"].UpgradeValueBy(1m);
+    }
 }
 
 public sealed class WylderMeasuredRetreat : WylderCard

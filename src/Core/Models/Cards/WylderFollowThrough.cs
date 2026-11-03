@@ -12,7 +12,7 @@ namespace NightMustStay.Core.Models.Cards;
 
 public abstract class WylderFollowThroughCard : WylderCard
 {
-    protected WylderFollowThroughCard(int cost, CardRarity rarity) : base(cost, CardType.Attack, rarity, TargetType.AnyEnemy) { }
+    protected WylderFollowThroughCard(int cost, CardRarity rarity, CardType type = CardType.Attack, TargetType target = TargetType.AnyEnemy) : base(cost, type, rarity, target) { }
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new IHoverTip[] {
         new HoverTip(new LocString("cards", "WYLDER_FOLLOW_THROUGH.title"), new LocString("cards", "WYLDER_FOLLOW_THROUGH.description")) });
 
@@ -26,7 +26,7 @@ public abstract class WylderFollowThroughCard : WylderCard
             if (card.Pile?.Type != PileType.Hand) continue;
             var enemies = card.CombatState.GetOpponentsOf(card.Owner.Creature).Where(e => e.IsAlive).ToArray();
             if (enemies.Length == 0) break;
-            await CardCmd.AutoPlay(context, card, card.Owner.RunState.Rng.CombatTargets.NextItem(enemies));
+            await CardCmd.AutoPlay(context, card, card.TargetType == TargetType.Self ? card.Owner.Creature : card.Owner.RunState.Rng.CombatTargets.NextItem(enemies));
         }
     }
 }

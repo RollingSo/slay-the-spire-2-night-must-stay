@@ -336,9 +336,13 @@
   "WYLDER_BOLDNESS_POWER.title": "Boldness",
   "WYLDER_BOLDNESS_POWER.description": "When an attack hit deals more than 20 damage before Block, gain 5 Block (7 when upgraded).",
   "WYLDER_NIGHT_FORM_POWER.title": "Night Form",
-  "WYLDER_NIGHT_FORM_POWER.description": "When you enter [gold]Pursuit[/gold], gain 1 Energy per stack.\nWhen you leave it, gain 6 Block (9 when upgraded).",
+  "WYLDER_NIGHT_FORM_POWER.description": "Double the effects of [gold]Pursuit[/gold].\nPursuit grants 100% bonus attack damage, or 2 Energy and 2 cards when you play a Skill.",
   "WYLDER_REMAINING_EMBER_POWER.title": "Remaining Ember",
-  "WYLDER_REMAINING_EMBER_POWER.description": "Whenever you trigger [gold]Break[/gold], deal 4 damage to ALL enemies (6 when upgraded).",
+  "WYLDER_REMAINING_EMBER_POWER.description": "Whenever you enter [gold]Pursuit[/gold], add 1 [gold]Fire Coating[/gold] to your hand per stack (upgraded stacks add [gold]Fire Coating+[/gold]).",
   "WYLDER_UNDYING_POWER.title": "Undying",
-  "WYLDER_UNDYING_POWER.description": "The first time you trigger [gold]Break[/gold] each turn, heal 2 HP (3 when upgraded)."
+  "WYLDER_UNDYING_POWER.description": "When [gold]Vigor[/gold] triggers, keep half its stacks.",
+  "WYLDER_ERUPTION_POWER.title": "Eruption",
+  "WYLDER_ERUPTION_POWER.description": "Whenever you trigger [gold]Break[/gold], deal 7 damage to ALL enemies (9 when upgraded).",
+  "WYLDER_WILDFIRE_POWER.title": "Spreading Wildfire",
+  "WYLDER_WILDFIRE_POWER.description": "Whenever you gain [gold]Vigor[/gold], deal damage equal to the stacks gained to a random enemy."
 }

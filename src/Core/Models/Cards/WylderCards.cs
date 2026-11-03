@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
@@ -12,6 +13,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
+using NightMustStay.Core.Nodes.Vfx;
 
 namespace NightMustStay.Core.Models.Cards;
 
@@ -22,7 +24,25 @@ public abstract class WylderCard : CardModel
     public override string PortraitPath => $"res://images/packed/card_portraits/wylder/{Id.Entry.ToLowerInvariant()}.png";
     protected bool Pursuing => Owner?.Creature?.HasPower<WylderPursuitPower>() == true;
     protected virtual bool HasPursuitCondition => false;
-    protected override bool ShouldGlowGoldInternal => HasPursuitCondition && Pursuing;
+    protected override bool ShouldGlowGoldInternal => (HasPursuitCondition && Pursuing) || CanBreakFromHand();
+
+    private bool CanBreakFromHand()
+    {
+        if (!IsMutable || Pile?.Type != PileType.Hand || !HasBreak || CombatState == null) return false;
+        decimal threshold = WylderCombatEvents.EffectiveBreak(this, null, BreakThreshold);
+        int hits = DynamicVars.TryGetValue("Repeat", out var repeat) ? repeat.IntValue : 1;
+        if (EnergyCost.CostsX) hits += MegaCrit.Sts2.Core.Hooks.Hook.ModifyXValue(CombatState, this, Owner.PlayerCombatState.Energy);
+        if (hits <= 0) return false;
+        foreach (Creature enemy in CombatState.GetOpponentsOf(Owner.Creature))
+        {
+            if (!enemy.IsHittable || !enemy.IsAlive) continue;
+            decimal amount = DynamicVars.TryGetValue("CalculatedDamage", out _)
+                ? DynamicVars.CalculatedDamage.Calculate(enemy) : DynamicVars.Damage.BaseValue;
+            decimal perHit = Math.Floor(AttackVfxDamage.Preview(enemy, Owner.Creature, amount, ValueProp.Move, this));
+            if (perHit * hits >= threshold) return true;
+        }
+        return false;
+    }
     protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
     {
         HoverTipFactory.FromPower<WylderPursuitPower>(),
@@ -127,20 +147,32 @@ public sealed class WylderDashAttack : WylderCard
     }
     protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(2m); DynamicVars["Vulnerable"].UpgradeValueBy(1m); }
 }
-public sealed class WylderSlidingLeap : WylderCard
+public sealed class WylderSlidingLeap : WylderFollowThroughCard
 {
-    public WylderSlidingLeap() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+    public WylderSlidingLeap() : base(2, CardRarity.Common, CardType.Skill, TargetType.Self) { }
+    public override int MaxUpgradeLevel => 0;
+    protected override Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
+        WylderPursuitPower.Enter(context, Owner.Creature, this);
+}
+
+public sealed class WylderCenteringBreath : WylderCard
+{
+    public WylderCenteringBreath() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
     protected override bool HasPursuitCondition => true;
     public override bool GainsBlock => true;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        { new BlockVar(8m, ValueProp.Move), new EnergyVar(1) };
+        { new BlockVar(6m, ValueProp.Move), new EnergyVar(1) };
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         bool pursuit = Pursuing;
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block.BaseValue, ValueProp.Move, play);
-        if (pursuit) await PlayerCmd.GainEnergy(1, Owner);
+        if (pursuit) await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
     }
-    protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(2m);
+    protected override void OnUpgrade()
+    {
+        DynamicVars.Block.UpgradeValueBy(1m);
+        DynamicVars.Energy.UpgradeValueBy(1m);
+    }
 }
 public sealed class WylderStampUpwardCut : WylderCard
 {

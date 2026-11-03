@@ -42,12 +42,12 @@ internal static class WylderNewRevisionsRegression
                 var flame = Card<WylderFlameChaseSlash>(up);
                 Check(flame.EnergyCost.GetResolved() == 1 && flame.Rarity == CardRarity.Uncommon && flame.Type == CardType.Attack, "Flame Chase metadata");
                 Play(flame);
-                Check(Damage.Single() == Math.Floor((up ? 8m : 7m) * (pursuit ? 1.5m : 1m)), "Flame Chase damage and Pursuit bonus");
+                Check(Damage.Single() == Math.Floor((up ? 9m : 7m) * (pursuit ? 1.5m : 1m)), "Flame Chase damage and Pursuit bonus");
                 var coating = Generated.Single();
                 Check(coating is WylderFireCoating && coating.IsUpgraded == up && coating.DynamicVars["Vigor"].BaseValue == (up ? 6 : 4), "Generated correct Fire Coating version");
-                Check(Owner.Creature.HasPower<WylderPursuitPower>() == pursuit, "Keep old Pursuit without creating new Pursuit");
+                Check(!Owner.Creature.HasPower<WylderPursuitPower>(), "Flame Chase consumes old Pursuit normally");
                 var followup = Card<WylderStrike>(false); Play(followup);
-                Check(Damage.Last() == (pursuit ? 9 : 6) && !Owner.Creature.HasPower<WylderPursuitPower>(), "Next attack uses and consumes preserved Pursuit");
+                Check(Damage.Last() == 6 && !Owner.Creature.HasPower<WylderPursuitPower>(), "Next attack gets no Pursuit bonus");
 
                 Fixture(pursuit); var stake = Card<WylderAssaultStake>(up);
                 Check(stake.EnergyCost.GetResolved() == 3 && stake.Rarity == CardRarity.Rare && stake.TargetType == TargetType.AllEnemies, "Assault Stake 3-cost rare AOE");
@@ -66,21 +66,9 @@ internal static class WylderNewRevisionsRegression
             }
             Fixture(); var lethal = Card<WylderAssaultStake>(false); Enemies[0].SetCurrentHpInternal(0); Play(lethal);
             Check(Rewards.Count(r => r.Kind == "Stun") == 1 && Rewards.Single().Target == Enemies[1], "Dead enemy excluded from stun");
-            Fixture(true);
-            var kept = Card<WylderFlameChaseSlash>(false);
-            var play = TrackingArrowRegression.MakePlay(kept, Owner);
-            typeof(CardPlay).GetProperty(nameof(CardPlay.Target))!.SetValue(play, Enemies[0]);
-            kept.BeforeCardPlayed(play).GetAwaiter().GetResult();
-            var power = Owner.Creature.GetPower<WylderPursuitPower>()!;
-            power.BeforeCardPlayed(play).GetAwaiter().GetResult();
-            ((Task)AccessTools.Method(kept.GetType(), "OnPlay").Invoke(kept, new object?[] { null, play })!).GetAwaiter().GetResult();
-            power.AfterCardPlayedLate(null!, play).GetAwaiter().GetResult();
-            WylderCombatEvents.RegisterOldPursuitConsumption(play);
-            Check(!WylderCombatEvents.ConsumedOldPursuit(play) && Owner.Creature.HasPower<WylderPursuitPower>(),
-                "Keeping Pursuit is not reported as consumption by the stable event hook");
             HoverPreviews(h);
             LocalizedText();
-            Console.WriteLine($"PASS: {_checks} Flame Chase and Assault Stake checks: upgrades, generation, pursuit retention, AOE, stun and sole-hand autoplay.");
+            Console.WriteLine($"PASS: {_checks} Flame Chase and Assault Stake checks: upgrades, generation, pursuit consumption, AOE, stun and sole-hand autoplay.");
         }
         finally { h.UnpatchAll(h.Id); }
     }

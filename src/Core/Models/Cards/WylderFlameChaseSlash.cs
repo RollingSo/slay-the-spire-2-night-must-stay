@@ -7,7 +7,6 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
-using NightMustStay.Core.Models.Power;
 
 namespace NightMustStay.Core.Models.Cards;
 
@@ -23,7 +22,6 @@ public sealed class WylderFlameChaseSlash : WylderCard
         var coating = CombatState.CreateCard<WylderFireCoating>(Owner);
         if (IsUpgraded) CardCmd.Upgrade(coating);
         await CardPileCmd.AddGeneratedCardToCombat(coating, PileType.Hand, Owner);
-        Owner.Creature.GetPower<WylderPursuitPower>()?.KeepFor(play);
     }
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(1m);
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2m);
 }

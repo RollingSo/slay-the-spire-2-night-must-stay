@@ -336,9 +336,13 @@
   "WYLDER_BOLDNESS_POWER.title": "果敢",
   "WYLDER_BOLDNESS_POWER.description": "单次攻击伤害超过20点时，获得5点格挡（升级为7点）。\n伤害在扣除格挡前计算。",
   "WYLDER_NIGHT_FORM_POWER.title": "黑夜形态",
-  "WYLDER_NIGHT_FORM_POWER.description": "进入[gold]追击[/gold]时，每层获得1点能量。\n退出[gold]追击[/gold]时，获得6点格挡（升级为9点）。",
+  "WYLDER_NIGHT_FORM_POWER.description": "[gold]追击[/gold]的效果翻倍。\n追击的攻击伤害加成提高至100%，打出技能牌时获得2点能量并抽2张牌。",
   "WYLDER_REMAINING_EMBER_POWER.title": "余火",
-  "WYLDER_REMAINING_EMBER_POWER.description": "触发[gold]破势[/gold]后，对所有敌人造成4点伤害（升级为6点）。",
+  "WYLDER_REMAINING_EMBER_POWER.description": "进入[gold]追击[/gold]状态时，每层将1张[gold]附火[/gold]添加到手牌（升级层生成[gold]附火+[/gold]）。",
   "WYLDER_UNDYING_POWER.title": "不灭",
-  "WYLDER_UNDYING_POWER.description": "每回合首次触发[gold]破势[/gold]后，恢复2点生命（升级为3点）。"
+  "WYLDER_UNDYING_POWER.description": "[gold]活力[/gold]触发后，保留一半层数。",
+  "WYLDER_ERUPTION_POWER.title": "迸发",
+  "WYLDER_ERUPTION_POWER.description": "触发[gold]破势[/gold]后，对所有敌人造成7点伤害（升级为9点）。",
+  "WYLDER_WILDFIRE_POWER.title": "燎原地火",
+  "WYLDER_WILDFIRE_POWER.description": "每当你获得[gold]活力[/gold]时，对一名随机敌人造成等同于本次获得层数的伤害。"
 }

@@ -113,9 +113,17 @@ public sealed class WylderCliffbreaker : WylderCard
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(5m);
 }
 
-public sealed class WylderDualGreatswordLeap : WylderFollowThroughCard
+public sealed class WylderDualGreatswordLeap : WylderCard
 {
-    public WylderDualGreatswordLeap() : base(2, CardRarity.Common) { }
+    public WylderDualGreatswordLeap() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
+    protected override bool HasPursuitCondition => true;
+    public override bool TryModifyEnergyCostInCombat(MegaCrit.Sts2.Core.Models.CardModel card, decimal originalCost, out decimal modifiedCost)
+    {
+        modifiedCost = originalCost;
+        if (card != this || !Pursuing) return false;
+        modifiedCost = 0;
+        return true;
+    }
     public override string PortraitPath => "res://images/packed/card_portraits/wylder/wylder_dual_greatsword_leap.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         { new DamageVar(6m, ValueProp.Move), new RepeatVar(2) };
@@ -124,7 +132,7 @@ public sealed class WylderDualGreatswordLeap : WylderFollowThroughCard
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(play.Target)
             .WithHitCount(DynamicVars.Repeat.IntValue).Execute(context);
     }
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2m);
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
 }
 
 public sealed class WylderGhostflameExplosion : WylderCard
