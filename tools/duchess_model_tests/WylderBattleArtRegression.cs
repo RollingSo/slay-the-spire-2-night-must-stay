@@ -84,6 +84,8 @@ internal static class WylderBattleArtRegression
         Patch(AccessTools.Method(typeof(CreatureCmd), nameof(CreatureCmd.Stun), new[] { typeof(Creature), typeof(string) }), nameof(Stun));
         try
         {
+            Patch(AccessTools.PropertyGetter(typeof(CombatManager), nameof(CombatManager.IsEnding)), nameof(NotEnding));
+            SparkAndRollingAttack();
             MetadataAndText();
             foreach (bool upgraded in new[] { false, true })
             foreach (Spec spec in Specs())
@@ -706,6 +708,32 @@ internal static class WylderBattleArtRegression
         CombatManager.Instance.History.CardPlayStarted(_combat, TrackingArrowRegression.MakePlay(otherAttack, other));
         Play(Card(ModelDb.Card<WylderTurningGuard>(), false));
         Check(!_owner.Creature.HasPower<WylderPursuitPower>(), "Ally attack does not satisfy owner's prior attack condition");
+    }
+
+    public static bool NotEnding(ref bool __result) { __result = false; return false; }
+
+    private static void SparkAndRollingAttack()
+    {
+        foreach (bool up in new[] { false, true })
+        foreach (bool pursuit in new[] { false, true })
+        {
+            Fixture(pursuit);
+            var spark = Card(ModelDb.Card<WylderSpark>(), up);
+            Check(spark.EnergyCost.GetResolved() == 0 && spark.Type == CardType.Skill && spark.Rarity == CardRarity.Common && spark.TargetType == TargetType.Self, "Spark metadata");
+            Play(spark);
+            Check(Rewards.Single(r => r.Kind == nameof(VigorPower)).Amount == (up ? 4 : 3), "Spark actual vigor");
+            Check(!_owner.Creature.HasPower<WylderPursuitPower>(), "Spark follows normal skill Pursuit consumption");
+            Fixture(pursuit);
+            var roll = Card(ModelDb.Card<WylderRollingAttack>(), up);
+            Check(roll.EnergyCost.GetResolved() == 1 && roll.Type == CardType.Attack && roll.Rarity == CardRarity.Common && roll.TargetType == TargetType.AnyEnemy, "Rolling Attack metadata");
+            roll.DynamicVars.Damage.UpdateCardPreview(roll, CardPreviewMode.Normal, _enemies[0], true);
+            Check(roll.DynamicVars.Damage.BaseValue == (up ? 10 : 9) && roll.DynamicVars.Cards.BaseValue == (up ? 3 : 2), "Rolling Attack upgrade values");
+            Play(roll);
+            Check(ResolvedDamage.Single() == Math.Floor((up ? 10m : 9m) * (pursuit ? 1.5m : 1m)), "Rolling Attack actual damage");
+            Check(Rewards.Where(r => r.Kind == "Draw").Sum(r => r.Amount) == (pursuit ? (up ? 3 : 2) : 0), "Rolling Attack conditional draw");
+            Check(!_owner.Creature.HasPower<WylderPursuitPower>(), "Rolling Attack consumes Pursuit normally");
+        }
+        Console.WriteLine("PASS: Spark and Rolling Attack base/upgraded, Pursuit on/off actual resolution.");
     }
 
     private static void MetadataAndText()

@@ -11,6 +11,8 @@ public sealed class WylderCardPool : CardPoolModel
     public override Color EnergyOutlineColor => new("111827");
     public override bool IsColorless => false;
     protected override CardModel[] GenerateAllCards() => new CardModel[] {
+        ModelDb.Card<WylderSpark>(),
+        ModelDb.Card<WylderRollingAttack>(),
         ModelDb.Card<WylderStrike>(),
         ModelDb.Card<WylderDefend>(),
         ModelDb.Card<WylderClawMovement>(),

@@ -32,7 +32,7 @@ internal static class WylderSheetManifestRegression
             else if(row[2].GetString()=="X" && !card.EnergyCost.CostsX)throw new Exception("Missing X cost: "+name);
             count++;
         }
-        if(count!=35 || pool.Length!=count+5)throw new Exception("Sheet named-card coverage mismatch");
+        if(count!=35 || pool.Length!=count+7)throw new Exception("Sheet named-card coverage mismatch");
         var hashes = new HashSet<string>();
         var artManifest = new List<object>();
         foreach (var card in pool.Append(ModelDb.Card<WylderFireCoating>()))

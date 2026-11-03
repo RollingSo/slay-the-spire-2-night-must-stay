@@ -63,8 +63,8 @@ internal static class WylderRegression
             var deck=character.StartingDeck.ToArray();
             Check(deck.Length==10 && deck.Count(c=>c is WylderStrike)==4 && deck.Count(c=>c is WylderDefend)==4
                 && deck.Count(c=>c is WylderClawMovement)==1 && deck.Count(c=>c is WylderDashAttack)==1,"Starting deck");
-            Check(character.CardPool.AllCards.Count()==40,"40 registered cards");
-            Check(character.CardPool.AllCards.Select(c=>c.Id).Distinct().Count()==40,"Unique registered IDs");
+            Check(character.CardPool.AllCards.Count()==42,"42 registered cards");
+            Check(character.CardPool.AllCards.Select(c=>c.Id).Distinct().Count()==42,"Unique registered IDs");
             Check(!character.CardPool.AllCards.Any(c=>c is WylderExecution or WylderJumpingHeavy),"Removed cards excluded from pool");
             foreach(bool up in new[]{false,true})
             {
@@ -73,7 +73,7 @@ internal static class WylderRegression
                     var c=canonical.ToMutable(); if(up && c.MaxUpgradeLevel > 0)c.UpgradeInternal();
                     int cost=c switch { WylderClawMovement => up?0:1,
                         WylderRuinousGhostflame => 1,
-                        WylderDebut or WylderSixthSense => 0,
+                        WylderSpark or WylderDebut or WylderSixthSense => 0,
                         WylderExecution => up?1:2,
                         WylderUndying => up?0:1,
                         WylderNightForm => 3,

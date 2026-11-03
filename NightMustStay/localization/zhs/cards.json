@@ -1675,5 +1675,11 @@
   "WYLDER_ERUPTION.upgradeDescription": "触发[gold]破势[/gold]后，对所有敌人造成{Damage:diff()}点伤害。",
   "WYLDER_VALOR.title": "预备反击",
   "WYLDER_VALOR.description": "获得{Block:diff()}点[gold]格挡[/gold]。\n在本回合获得{Strength:diff()}点[gold]力量[/gold]。",
-  "WYLDER_VALOR.upgradeDescription": "获得{Block:diff()}点[gold]格挡[/gold]。\n在本回合获得{Strength:diff()}点[gold]力量[/gold]。"
+  "WYLDER_VALOR.upgradeDescription": "获得{Block:diff()}点[gold]格挡[/gold]。\n在本回合获得{Strength:diff()}点[gold]力量[/gold]。",
+  "WYLDER_SPARK.title": "星火",
+  "WYLDER_SPARK.description": "获得{Vigor:diff()}点[gold]活力[/gold]。",
+  "WYLDER_SPARK.upgradeDescription": "获得{Vigor:diff()}点[gold]活力[/gold]。",
+  "WYLDER_ROLLING_ATTACK.title": "翻滚攻击",
+  "WYLDER_ROLLING_ATTACK.description": "造成{Damage:diff()}点伤害。\n[gold]追击[/gold]：抽{Cards:diff()}张牌。",
+  "WYLDER_ROLLING_ATTACK.upgradeDescription": "造成{Damage:diff()}点伤害。\n[gold]追击[/gold]：抽{Cards:diff()}张牌。"
 }
