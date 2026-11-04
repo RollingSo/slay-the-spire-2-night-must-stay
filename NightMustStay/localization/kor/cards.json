@@ -1677,5 +1677,11 @@
   "WYLDER_ERUPTION.upgradeDescription": "Whenever you trigger [gold]Break[/gold], deal {Damage:diff()} damage to ALL enemies.",
   "WYLDER_VALOR.title": "Ready to Counter",
   "WYLDER_VALOR.description": "Gain {Block:diff()} [gold]Block[/gold].\nGain {Strength:diff()} [gold]Strength[/gold] this turn.",
-  "WYLDER_VALOR.upgradeDescription": "Gain {Block:diff()} [gold]Block[/gold].\nGain {Strength:diff()} [gold]Strength[/gold] this turn."
+  "WYLDER_VALOR.upgradeDescription": "Gain {Block:diff()} [gold]Block[/gold].\nGain {Strength:diff()} [gold]Strength[/gold] this turn.",
+  "WYLDER_SPARK.title": "Spark",
+  "WYLDER_SPARK.description": "Gain {Vigor:diff()} [gold]Vigor[/gold].",
+  "WYLDER_SPARK.upgradeDescription": "Gain {Vigor:diff()} [gold]Vigor[/gold].",
+  "WYLDER_ROLLING_ATTACK.title": "Rolling Attack",
+  "WYLDER_ROLLING_ATTACK.description": "Deal {Damage:diff()} damage.\n[gold]Pursuit[/gold]: Draw {Cards:diff()} cards.",
+  "WYLDER_ROLLING_ATTACK.upgradeDescription": "Deal {Damage:diff()} damage.\n[gold]Pursuit[/gold]: Draw {Cards:diff()} cards."
 }
