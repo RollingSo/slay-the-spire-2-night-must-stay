@@ -1,0 +1,15 @@
+0.3.22
+
+中文
+• 据守：将下一张牌格挡翻倍的待触发效果改为独立状态，增加图标及说明，便于查看是否仍然生效；1费、本回合保留全部手牌、普通版消耗及升级移除消耗不变。
+• 归尘斩：普通/升级伤害9/12→11/14；对击晕敌人的伤害倍率3倍→4倍，对应伤害27/36→44/56。卡面动态预览同步更新。
+• 通灵形态：由不可叠加改为可叠加。回合开始时每层分别使全部召唤物获得6点最大生命和当前生命，并触发1次共鸣；例如2层共提升12点生命并共鸣2次。单层效果不变。
+• 咒爪连击：补齐从抽牌堆选择1张牌丢弃的选牌提示，攻击伤害、攻击次数和选牌数量不变。
+• 失衡：每次击晕后增加1层下次触发门槛的规则不变，累计增加上限由3层提高到4层。单人/双人/三人/四人的最高门槛由5/6/8/10提高至6/7/9/11，初始门槛仍为2/3/5/7。
+
+English
+• Defend the Line: moved the pending double-Block effect for the next card into a separate status, with an icon and description to show whether it remains active. Its 1-Energy cost, whole-hand Retain this turn, base Exhaust and upgrade removing Exhaust are unchanged.
+• Dust Return Slash: base/upgraded damage 9/12 → 11/14. Damage against stunned enemies increases from triple to quadruple, giving 44/56 instead of 27/36. Dynamic damage previews have been updated accordingly.
+• Spirit Form: now stacks. At turn start, each stack separately grants all summons 6 maximum and current HP and triggers Resonance once. For example, 2 stacks grant 12 HP and trigger Resonance twice. The single-stack effect is unchanged.
+• Cursed Claw Combo: added the missing selection prompt for choosing 1 card in the draw pile to discard. Damage, hit count and selection count are unchanged.
+• Imbalance: each stun still raises the next threshold by 1, but the cumulative increase cap is now 4 instead of 3. Maximum thresholds for 1/2/3/4 players rise from 5/6/8/10 to 6/7/9/11; initial thresholds remain 2/3/5/7.
