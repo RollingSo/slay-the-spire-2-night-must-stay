@@ -202,7 +202,7 @@
   "SOULGUARD_POWER.title": "魂の守り",
   "SOULGUARD_POWER.description": "カードが[gold]捨て札[/gold]から[gold]手札[/gold]へ移動するたび、{Amount}[gold]ブロック[/gold]を得る。",
   "SPIRIT_FORM_POWER.title": "霊体",
-  "SPIRIT_FORM_POWER.description": "ターン開始時、自分の召喚物すべての最大HPと現在HPを6増加させ、[gold]共鳴[/gold]する。",
+  "SPIRIT_FORM_POWER.description": "1スタックにつき：ターン開始時、自分の召喚物すべての最大HPと現在HPを6増加させ、[gold]共鳴[/gold]する。",
   "ANCIENT_DRAGON_FAITH_POWER.title": "古竜の信仰",
   "ANCIENT_DRAGON_FAITH_POWER.description": "ターン開始時、[gold]捨て札[/gold]からカードを{Amount}枚[gold]手札[/gold]へ移動する。",
   "BEAST_CLAW_MARK_POWER.title": "獣爪の痕",

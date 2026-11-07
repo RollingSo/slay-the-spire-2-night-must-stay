@@ -202,7 +202,7 @@
   "SOULGUARD_POWER.title": "Soulguard",
   "SOULGUARD_POWER.description": "Whenever a card is moved from your [gold]Discard Pile[/gold] to your [gold]Hand[/gold], gain {Amount} [gold]Block[/gold].",
   "SPIRIT_FORM_POWER.title": "Spirit Form",
-  "SPIRIT_FORM_POWER.description": "At the start of your turn, increase all your summons' Max HP and current HP by 6, then trigger [gold]Resonance[/gold].",
+  "SPIRIT_FORM_POWER.description": "Per stack: At the start of your turn, increase all your summons' Max HP and current HP by 6, then trigger [gold]Resonance[/gold].",
   "ANCIENT_DRAGON_FAITH_POWER.title": "Ancient Dragon Faith",
   "ANCIENT_DRAGON_FAITH_POWER.description": "At the start of your turn, move {Amount} {Amount:plural:card|cards} from your [gold]Discard Pile[/gold] to your [gold]Hand[/gold].",
   "BEAST_CLAW_MARK_POWER.title": "Beast Claw Mark",

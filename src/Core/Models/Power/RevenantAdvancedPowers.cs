@@ -60,7 +60,7 @@ public sealed class SpiritFormPower : PowerModel
 {
     public const int FamilyHpGain = 6;
     public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Single;
+    public override PowerStackType StackType => PowerStackType.Counter;
 
     public override async Task AfterPlayerTurnStartLate(
         PlayerChoiceContext context,
@@ -70,8 +70,12 @@ public sealed class SpiritFormPower : PowerModel
             return;
 
         RevenantSummonManager manager = RevenantSummonManager.For(Owner.Player);
-        await manager.IncreaseSummonsMaxAndCurrentHp(FamilyHpGain);
-        await manager.TriggerResonance(context);
+        int stacks = Amount;
+        for (int i = 0; i < stacks; i++)
+        {
+            await manager.IncreaseSummonsMaxAndCurrentHp(FamilyHpGain);
+            await manager.TriggerResonance(context);
+        }
     }
 }
 

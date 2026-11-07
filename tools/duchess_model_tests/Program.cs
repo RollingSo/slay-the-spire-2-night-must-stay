@@ -51,6 +51,11 @@ foreach (Type type in typeof(PowerModel).Assembly.GetTypes().Where(type => !type
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+if (args.Contains("--spirit-form-stack-only"))
+{
+    SpiritFormStackRegression.Run();
+    return 0;
+}
 if (args.Contains("--revenant-november-only"))
 {
     foreach (bool upgraded in new[] { false, true })
