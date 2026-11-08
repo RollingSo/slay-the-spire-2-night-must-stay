@@ -1,0 +1,16 @@
+{
+  "character": "ironeye",
+  "layout": "animations/ironeye",
+  "assets": [
+    {"action":"idle","file":"main/ironeye_sequences.res","animation":"idle","frames":64,"fps":24,"loop":true,"canvas":null,"anchor":null},
+    {"action":"attack","file":"main/ironeye_sequences.res","animation":"attack","frames":24,"fps":24,"loop":false,"canvas":null,"anchor":null},
+    {"action":"cast","file":"main/ironeye_sequences.res","animation":"cast","frames":24,"fps":24,"loop":false,"canvas":null,"anchor":null},
+    {"action":"dagger","file":"main/ironeye_sequences.res","animation":"dagger","frames":18,"fps":24,"loop":false,"canvas":null,"anchor":null},
+    {"action":"hurt","file":"main/ironeye_sequences.res","animation":"hurt","frames":12,"fps":24,"loop":false,"canvas":null,"anchor":null},
+    {"action":"merchant_idle","file":"main/merchant_idle/ironeye_merchant_idle.tres","animation":"relaxed_loop","frames":120,"fps":60,"loop":true,"canvas":null,"anchor":null}
+  ],
+  "missing": [
+    {"action":"death","note":"No separate death animation in this repository snapshot; verify rig fallback."},
+    {"action":"camp_idle","note":"No separate camp idle animation in this repository snapshot."}
+  ]
+}

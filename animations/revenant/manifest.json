@@ -1,0 +1,360 @@
+{
+  "character": "revenant",
+  "layout": "animations/revenant",
+  "assets": [
+    {
+      "anchor": [
+        88.0,
+        223.0
+      ],
+      "animation": "combat_idle",
+      "canvas": [
+        159,
+        231
+      ],
+      "code": "RV01",
+      "file": "main/combat_idle.res",
+      "fps": 24.0,
+      "frames": 96,
+      "loop": true,
+      "role": "main",
+      "seconds": 4.0
+    },
+    {
+      "anchor": [
+        99.0,
+        223.0
+      ],
+      "animation": "claw_attack",
+      "canvas": [
+        171,
+        232
+      ],
+      "code": "RV02",
+      "file": "main/claw_attack.res",
+      "fps": 24.0,
+      "frames": 110,
+      "loop": false,
+      "role": "main",
+      "seconds": 4.5833
+    },
+    {
+      "anchor": [
+        86.0,
+        224.0
+      ],
+      "animation": "lyre_command",
+      "canvas": [
+        160,
+        232
+      ],
+      "code": "RV03",
+      "file": "main/lyre_command.res",
+      "fps": 24.0,
+      "frames": 32,
+      "loop": false,
+      "role": "main",
+      "seconds": 1.3333
+    },
+    {
+      "anchor": [
+        90.0,
+        224.0
+      ],
+      "animation": "prayer_attack",
+      "canvas": [
+        164,
+        232
+      ],
+      "code": "RV04",
+      "file": "main/prayer_attack.res",
+      "fps": 24.0,
+      "frames": 44,
+      "loop": false,
+      "role": "main",
+      "seconds": 1.8333
+    },
+    {
+      "anchor": [
+        105.0,
+        222.0
+      ],
+      "animation": "hurt",
+      "canvas": [
+        180,
+        230
+      ],
+      "code": "RV06",
+      "file": "main/hurt.res",
+      "fps": 24.0,
+      "frames": 20,
+      "loop": false,
+      "role": "main",
+      "seconds": 0.8333
+    },
+    {
+      "anchor": [
+        86.0,
+        225.0
+      ],
+      "animation": "death",
+      "canvas": [
+        162,
+        233
+      ],
+      "code": "RV07",
+      "file": "main/death.res",
+      "fps": 24.0,
+      "frames": 78,
+      "loop": false,
+      "role": "main",
+      "seconds": 3.25
+    },
+    {
+      "anchor": [
+        85.0,
+        223.0
+      ],
+      "animation": "merchant_idle",
+      "canvas": [
+        154,
+        231
+      ],
+      "code": "RV08",
+      "file": "main/merchant_idle.res",
+      "fps": 24.0,
+      "frames": 96,
+      "loop": true,
+      "role": "main",
+      "seconds": 4.0
+    },
+    {
+      "anchor": [
+        218.0,
+        486.0
+      ],
+      "animation": "camp_idle",
+      "canvas": [
+        436,
+        494
+      ],
+      "code": "RV09",
+      "file": "main/camp_idle.res",
+      "fps": 24.0,
+      "frames": 107,
+      "loop": true,
+      "role": "main",
+      "seconds": 4.4583
+    },
+    {
+      "anchor": [
+        178.0,
+        359.0
+      ],
+      "animation": "idle",
+      "canvas": [
+        366,
+        367
+      ],
+      "code": "HE01",
+      "file": "derived/helen/idle.res",
+      "fps": 24.0,
+      "frames": 96,
+      "loop": true,
+      "role": "helen",
+      "seconds": 4.0
+    },
+    {
+      "anchor": [
+        243.0,
+        493.0
+      ],
+      "animation": "attack_a",
+      "canvas": [
+        500,
+        502
+      ],
+      "code": "HE02",
+      "file": "derived/helen/attack_a.res",
+      "fps": 24.0,
+      "frames": 89,
+      "loop": false,
+      "role": "helen",
+      "seconds": 3.7083
+    },
+    {
+      "anchor": [
+        202.0,
+        365.0
+      ],
+      "animation": "attack_b",
+      "canvas": [
+        435,
+        376
+      ],
+      "code": "HE03",
+      "file": "derived/helen/attack_b.res",
+      "fps": 24.0,
+      "frames": 24,
+      "loop": false,
+      "role": "helen",
+      "seconds": 1.0
+    },
+    {
+      "anchor": [
+        175.0,
+        353.0
+      ],
+      "animation": "hurt",
+      "canvas": [
+        431,
+        362
+      ],
+      "code": "HE04",
+      "file": "derived/helen/hurt.res",
+      "fps": 24.0,
+      "frames": 17,
+      "loop": false,
+      "role": "helen",
+      "seconds": 0.7083
+    },
+    {
+      "anchor": [
+        192.0,
+        349.0
+      ],
+      "animation": "idle",
+      "canvas": [
+        402,
+        357
+      ],
+      "code": "FR01",
+      "file": "derived/frederick/idle.res",
+      "fps": 24.0,
+      "frames": 58,
+      "loop": true,
+      "role": "frederick",
+      "seconds": 2.4167
+    },
+    {
+      "anchor": [
+        185.0,
+        354.0
+      ],
+      "animation": "attack_a",
+      "canvas": [
+        414,
+        362
+      ],
+      "code": "FR02",
+      "file": "derived/frederick/attack_a.res",
+      "fps": 24.0,
+      "frames": 37,
+      "loop": false,
+      "role": "frederick",
+      "seconds": 1.5417
+    },
+    {
+      "anchor": [
+        194.0,
+        355.0
+      ],
+      "animation": "hurt",
+      "canvas": [
+        415,
+        363
+      ],
+      "code": "FR04",
+      "file": "derived/frederick/hurt.res",
+      "fps": 24.0,
+      "frames": 29,
+      "loop": false,
+      "role": "frederick",
+      "seconds": 1.2083
+    },
+    {
+      "anchor": [
+        223.0,
+        396.0
+      ],
+      "animation": "idle",
+      "canvas": [
+        449,
+        405
+      ],
+      "code": "SE01",
+      "file": "derived/sebastian/idle.res",
+      "fps": 24.0,
+      "frames": 99,
+      "loop": true,
+      "role": "sebastian",
+      "seconds": 4.125
+    },
+    {
+      "anchor": [
+        228.0,
+        560.0
+      ],
+      "animation": "attack_a",
+      "canvas": [
+        465,
+        572
+      ],
+      "code": "SE02",
+      "file": "derived/sebastian/attack_a.res",
+      "fps": 24.0,
+      "frames": 117,
+      "loop": false,
+      "role": "sebastian",
+      "seconds": 4.875
+    },
+    {
+      "anchor": [
+        276.5,
+        604.0
+      ],
+      "animation": "attack_b",
+      "canvas": [
+        589,
+        625
+      ],
+      "code": "SE03",
+      "file": "derived/sebastian/attack_b.res",
+      "fps": 24.0,
+      "frames": 29,
+      "loop": false,
+      "role": "sebastian",
+      "seconds": 1.2083
+    },
+    {
+      "anchor": [
+        234.0,
+        480.0
+      ],
+      "animation": "hurt",
+      "canvas": [
+        462,
+        489
+      ],
+      "code": "SE04",
+      "file": "derived/sebastian/hurt.res",
+      "fps": 24.0,
+      "frames": 23,
+      "loop": false,
+      "role": "sebastian",
+      "seconds": 0.9583
+    }
+  ],
+  "missing": [
+    {
+      "code": "FR03",
+      "action": "attack_b",
+      "note": "Frederick headbutt not generated; see checklist"
+    },
+    {
+      "code": "RV05",
+      "action": "support_cast",
+      "note": "reuses RV03 lyre_command by design"
+    }
+  ]
+}
