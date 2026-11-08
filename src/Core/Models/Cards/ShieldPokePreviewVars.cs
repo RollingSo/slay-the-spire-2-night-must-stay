@@ -32,22 +32,16 @@ internal sealed class ShieldPokeDamageVar(decimal damage) : DamageVar(damage, Va
                 raw += enchantment.EnchantDamageAdditive(raw, Props);
                 raw *= enchantment.EnchantDamageMultiplicative(raw, Props);
             }
-            PreviewValue = Fearless.IsShieldPokeEmpowered(card) ? raw * 2m : raw;
+            PreviewValue = raw;
         }
     }
 }
 
-/// <summary>Fearless skips GainBlock entirely, so even Dexterity cannot turn its preview above zero.</summary>
+/// <summary>Uses the native block preview, including temporary Dexterity changes.</summary>
 internal sealed class ShieldPokeBlockVar(decimal block) : BlockVar(block, ValueProp.Move)
 {
     public override void UpdateCardPreview(CardModel card, CardPreviewMode previewMode, Creature target, bool runGlobalHooks)
     {
-        if (Fearless.IsShieldPokeEmpowered(card))
-        {
-            base.UpdateCardPreview(card, previewMode, target, runGlobalHooks: false);
-            PreviewValue = 0m;
-            return;
-        }
         base.UpdateCardPreview(card, previewMode, target, runGlobalHooks);
     }
 }

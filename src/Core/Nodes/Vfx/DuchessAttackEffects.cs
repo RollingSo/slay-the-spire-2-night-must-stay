@@ -9,6 +9,12 @@ namespace NightMustStay.Core.Nodes.Vfx;
 
 public static class DuchessAttackEffects
 {
+    public static void PlayEffectDamage(Creature target, DuchessAttackVfx.Kind kind, Creature attacker)
+    {
+        if (TestMode.IsOn || target.GetVfxContainer() is not { } container) return;
+        if (Create(target, kind, attacker) is { } effect) container.AddChildSafely(effect);
+    }
+
     public static DuchessAttackVfx.Kind? KindFor(CardModel card) => card.GetType().Name switch
     {
         "DuchessRadiantBlade" => DuchessAttackVfx.Kind.Glintblade,

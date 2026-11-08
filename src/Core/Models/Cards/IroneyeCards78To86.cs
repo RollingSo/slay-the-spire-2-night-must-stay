@@ -217,6 +217,7 @@ public sealed class ReversalStep : CardModel
 // Card-table ID 81: 回身一箭
 public sealed class TurningArrow : CardModel
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Retain };
     protected override IEnumerable<DynamicVar> CanonicalVars =>
         new DynamicVar[]
         {

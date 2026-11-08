@@ -44,7 +44,7 @@ public sealed class BurnLife : CardModel
         await PlayerCmd.GainEnergy(DynamicVars.Energy.IntValue, Owner);
     }
 
-    protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3m);
+    protected override void OnUpgrade() { DynamicVars.Block.UpgradeValueBy(1m); DynamicVars.Energy.UpgradeValueBy(1m); }
 }
 
 public sealed class SoulChargingClaw : CardModel, IRevenantChargeCard
@@ -138,15 +138,15 @@ public sealed class GazeBeyond : CardModel
 {
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new PowerVar<VulnerablePower>("Vulnerable", 1m),
-        new PowerVar<WeakPower>("Weak", 1m),
+        new PowerVar<VulnerablePower>("Vulnerable", 2m),
+
     };
 
     public override string PortraitPath => "res://revenant_assets/cards/gaze_beyond.png";
     protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
     {
         HoverTipFactory.FromPower<VulnerablePower>(),
-        HoverTipFactory.FromPower<WeakPower>(),
+
     };
 
     public GazeBeyond() : base(3, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
@@ -159,15 +159,10 @@ public sealed class GazeBeyond : CardModel
             DynamicVars["Vulnerable"].BaseValue,
             Owner.Creature,
             this);
-        await PowerCmd.Apply<WeakPower>(
-            context,
-            CombatState.HittableEnemies,
-            DynamicVars["Weak"].BaseValue,
-            Owner.Creature,
-            this);
+
     }
 
-    public override Task AfterCardChangedPiles(CardModel card, PileType oldPileType, AbstractModel source) =>
+    public override Task AfterCardChangedPilesLate(CardModel card, PileType oldPileType, AbstractModel source) =>
         card == this
             ? RevenantCardHelpers.AutoPlayWhenRecovered(this, oldPileType)
             : Task.CompletedTask;
@@ -175,6 +170,6 @@ public sealed class GazeBeyond : CardModel
     protected override void OnUpgrade()
     {
         DynamicVars["Vulnerable"].UpgradeValueBy(1m);
-        DynamicVars["Weak"].UpgradeValueBy(1m);
+
     }
 }

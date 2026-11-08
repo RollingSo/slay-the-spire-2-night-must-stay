@@ -48,7 +48,6 @@ namespace NightMustStay.Core.Models.Cards
     public sealed class GiantHunter : CardModel
     {
         private const string ImbalanceKey = "Imbalance";
-        private const string HpThresholdKey = "HpThreshold";
 
         public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
 
@@ -56,8 +55,7 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new PowerVar<PhantomImbalancePower>(ImbalanceKey, 2m),
-            new DynamicVar(HpThresholdKey, 50m)
+            new PowerVar<PhantomImbalancePower>(ImbalanceKey, 3m)
         };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips => new[]
@@ -71,8 +69,6 @@ namespace NightMustStay.Core.Models.Cards
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target);
             decimal amount = DynamicVars[ImbalanceKey].BaseValue;
-            if (cardPlay.Target.CurrentHp < DynamicVars[HpThresholdKey].BaseValue)
-                amount *= 2m;
 
             await PowerCmd.Apply<PhantomImbalancePower>(
                 context,
@@ -83,7 +79,7 @@ namespace NightMustStay.Core.Models.Cards
             await PhantomImbalancePower.ResolveThreshold(context, cardPlay.Target);
         }
 
-        protected override void OnUpgrade() => DynamicVars[HpThresholdKey].UpgradeValueBy(20m);
+        protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
     }
 
     // Card-table ID 58: 盾牌冲击

@@ -13,33 +13,24 @@ namespace NightMustStay.Core.Models.Cards
 {
     public sealed class HoldTheLine : CardModel
     {
-        public override bool GainsBlock => true;
-
-        protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        {
-            new BlockVar(6m, ValueProp.Move)
-        };
+        public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
 
         public HoldTheLine()
-            : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+            : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
         {
         }
 
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
-            await CreatureCmd.GainBlock(base.Owner.Creature, base.DynamicVars.Block, cardPlay);
-
-            CardModel defendCard = PileType.Draw.GetPile(base.Owner).Cards
-                .FirstOrDefault(GuardianCardFilters.HasDefendInName);
-            if (defendCard != null)
-            {
-                await CardPileCmd.Add(defendCard, PileType.Hand);
-            }
+            await PowerCmd.Apply<MegaCrit.Sts2.Core.Models.Powers.RetainHandPower>(choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+            var power = await PowerCmd.Apply<NightMustStay.Core.Models.Power.HoldTheLinePower>(
+                choiceContext, Owner.Creature, 1m, Owner.Creature, this);
+            if (power != null) power.GrantingPlay = cardPlay;
         }
 
         protected override void OnUpgrade()
         {
-            base.DynamicVars.Block.UpgradeValueBy(3m);
+            RemoveKeyword(CardKeyword.Exhaust);
         }
     }
 }

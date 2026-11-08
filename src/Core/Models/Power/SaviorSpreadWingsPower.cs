@@ -7,6 +7,8 @@ using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.TestSupport;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace NightMustStay.Core.Models.Power;
@@ -24,6 +26,25 @@ public sealed class SaviorSpreadWingsPower : PowerModel
         dealer == Owner && dealer?.Side == CombatSide.Enemy && props.IsPoweredAttack()
             ? Math.Clamp((100m - Amount) / 100m, 0m, 1m)
             : 1m;
+
+    public override Task AfterPowerAmountChanged(
+        PlayerChoiceContext context, PowerModel power, decimal amount,
+        Creature applier, CardModel cardSource) =>
+        power == this ? RefreshEnemyIntent() : Task.CompletedTask;
+
+    public override Task AfterRemoved(Creature remover) => RefreshEnemyIntent();
+
+    private async Task RefreshEnemyIntent()
+    {
+        // The status is enemy-owned. Recalculate its intention for each local
+        // recipient after adding/changing/removing the outgoing multiplier;
+        // multiplayer clients must not keep an intention from before application.
+        if (TestMode.IsOn || Owner == null || !Owner.IsAlive || Owner.CombatState == null)
+            return;
+        var node = NCombatRoom.Instance?.GetCreatureNode(Owner);
+        if (node != null)
+            await node.RefreshIntents();
+    }
 
     public override async Task AfterSideTurnEnd(
         PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> creatures)

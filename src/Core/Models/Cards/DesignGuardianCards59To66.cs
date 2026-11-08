@@ -98,9 +98,14 @@ namespace NightMustStay.Core.Models.Cards
     {
         public override string PortraitPath => "res://packed/card_portraits/guardian/spear_grinding.png";
 
-        protected override IEnumerable<IHoverTip> ExtraHoverTips => new[] { HoverTipFactory.FromCard<ShieldPoke>() };
+        protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
+        {
+            HoverTipFactory.FromCard<ShieldPoke>(),
+            HoverTipFactory.FromPower<StrengthPower>(),
+            HoverTipFactory.FromPower<DexterityPower>()
+        };
 
-        public SpearGrinding() : base(1, CardType.Power, CardRarity.Rare, TargetType.Self) { }
+        public SpearGrinding() : base(2, CardType.Power, CardRarity.Rare, TargetType.Self) { }
 
         protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
         {
@@ -227,13 +232,7 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new DynamicVar("ExtraPlays", 2m),
-            new DynamicVar("GuardCounter", 8m)
-        };
-
-        protected override IEnumerable<IHoverTip> ExtraHoverTips => new[]
-        {
-            HoverTipFactory.FromPower<GuardCounterPower>()
+            new DynamicVar("ExtraPlays", 2m)
         };
 
         public UnbreakableStance() : base(1, CardType.Skill, CardRarity.Ancient, TargetType.Self) { }
@@ -241,13 +240,11 @@ namespace NightMustStay.Core.Models.Cards
         protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
         {
             await PowerCmd.Apply<UnbreakableStancePower>(context, Owner.Creature, DynamicVars["ExtraPlays"].BaseValue, Owner.Creature, this);
-            await PowerCmd.Apply<GuardCounterPower>(context, Owner.Creature, DynamicVars["GuardCounter"].BaseValue, Owner.Creature, this);
         }
 
         protected override void OnUpgrade()
         {
             EnergyCost.UpgradeBy(-1);
-            DynamicVars["GuardCounter"].UpgradeValueBy(4m);
         }
     }
 }

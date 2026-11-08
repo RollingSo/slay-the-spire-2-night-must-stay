@@ -1,0 +1,15 @@
+0.3.17
+
+中文
+• 铁之眼的“乱箭”替换为新能力牌“原点”：距离变回0时获得格挡；“箭雨”的基础伤害提高至8。
+• 为“谢幕”增加当前攻击次数预览，修正“绞杀指令”与“刃影无双”配合时，“回身一箭”和“刀锋滑行”的伤害预览。
+• 修复复仇者家人在联机后排与淡出时未同步变暗、透明度的问题，并补齐“磨枪”临时敏捷的状态图标。
+• 优化女爵攻击与逆转时间特效的内存分配，保持原有视觉效果不变。
+• 更新“贯穿射击”的卡图。
+
+English
+• Replaced Ironeye's Disorderly Arrows with Origin, a new Power card that grants Block when Distance returns to 0. Increased Rain of Arrows' base damage to 8.
+• Added a current hit-count preview to Curtain Call. Corrected Turning Arrow and Blade Glide damage previews when Strangle Command and Unmatched Blade Shadow are active.
+• Fixed Revenant's family summons not inheriting rear-row dimming and fade transparency in multiplayer, and added the status icon for Spear Grinding's temporary Dexterity.
+• Reduced memory allocations in Duchess's attack and reverse-time effects while preserving their visuals.
+• Updated the card artwork for Through and Through.

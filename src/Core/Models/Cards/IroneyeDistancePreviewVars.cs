@@ -101,7 +101,14 @@ internal sealed class PostDistanceCalculatedDamageVar : CalculatedDamageVar
                 card.Owner.Creature.HasPower<BladeShadowUnmatchedPower>()
                     ? 2m
                     : 1m;
-            return -distance * multiplier;
+            decimal contribution = -distance * multiplier;
+            // Strangle duplicates the owner's positive Distance contribution,
+            // including Blade Shadow's multiplier. Its runtime Refresh removes
+            // that duplicate at zero/positive Distance, so preview the same delta.
+            if (card.Owner.Creature.HasPower<StrangleCommandPower>())
+                contribution += StrangleCommandPower.PositiveDistanceStrength(
+                    distance, card.Owner.Creature.HasPower<BladeShadowUnmatchedPower>());
+            return contribution;
         }
 
         return 0m;

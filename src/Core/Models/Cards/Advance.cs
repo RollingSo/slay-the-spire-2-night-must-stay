@@ -25,7 +25,7 @@ namespace NightMustStay.Core.Models.Cards
         };
 
         public Advance()
-            : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
+            : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
         {
         }
 

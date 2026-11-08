@@ -54,12 +54,12 @@ namespace NightMustStay.Core.Models.Cards
     }
 
     // Card-table ID 22: 穿心箭
-    public sealed class HeartpiercingArrow : CardModel, ILongShotCard
+public sealed class HeartpiercingArrow : CardModel, ILongShotCard
     {
         protected override IEnumerable<DynamicVar> CanonicalVars =>
             new DynamicVar[]
             {
-                new DamageVar(6m, ValueProp.Move),
+                new DamageVar(8m, ValueProp.Move),
                 new ExtraDamageVar(3m),
             };
 
@@ -107,41 +107,10 @@ namespace NightMustStay.Core.Models.Cards
         }
 
         protected override void OnUpgrade() =>
-            DynamicVars.ExtraDamage.UpgradeValueBy(1m);
+            DynamicVars.Damage.UpgradeValueBy(3m);
     }
 
     // Card-table ID 23: 乱箭
-    public sealed class DisorderlyArrows : CardModel
-    {
-        protected override IEnumerable<DynamicVar> CanonicalVars =>
-            new[] { new DamageVar(4m, ValueProp.Unpowered) };
-
-        protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
-
-        public override string PortraitPath =>
-            ImageHelper.GetImagePath("packed/card_portraits/ironeye/disorderly_arrows.png");
-
-        public DisorderlyArrows()
-            : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)
-        {
-        }
-
-        protected override async Task OnPlay(
-            PlayerChoiceContext context,
-            CardPlay cardPlay)
-        {
-            await PowerCmd.Apply<DisorderlyArrowsPower>(
-                context,
-                Owner.Creature,
-                DynamicVars.Damage.BaseValue,
-                Owner.Creature,
-                this);
-        }
-
-        protected override void OnUpgrade() =>
-            DynamicVars.Damage.UpgradeValueBy(2m);
-    }
 
     // Card-table ID 24: 散射
     public sealed class Scatter : CardModel

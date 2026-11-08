@@ -45,7 +45,15 @@ public sealed class CursedClawCombo : CardModel
             .WithHitCount(2)
             .Execute(context);
 
-        await RevenantCardHelpers.DiscardFromDrawTopWithShuffle(this, context, 2);
+        var draw = PileType.Draw.GetPile(Owner);
+        if (draw.Cards.Count > 0)
+        {
+            var selected = await CardSelectCmd.FromCombatPile(context, draw, Owner,
+                new CardSelectorPrefs(SelectionScreenPrompt, 1));
+            foreach (var card in selected)
+                if (card.Owner == Owner && card.Pile?.Type == PileType.Draw)
+                    await CardCmd.Discard(context, card);
+        }
     }
 
     protected override void OnUpgrade() =>
@@ -57,8 +65,8 @@ public sealed class Halo : CardModel
     private ICombatState _lastCombatState;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
-        new DamageVar(7m, ValueProp.Move),
-        new DynamicVar("Growth", 2m),
+        new DamageVar(6m, ValueProp.Move),
+        new DynamicVar("Growth", 4m),
     };
 
     public override IEnumerable<CardKeyword> CanonicalKeywords =>
@@ -82,7 +90,7 @@ public sealed class Halo : CardModel
         if (!ReferenceEquals(_lastCombatState, CombatState))
         {
             _lastCombatState = CombatState;
-            DynamicVars.Damage.BaseValue = 7m;
+            DynamicVars.Damage.BaseValue = 6m;
         }
 
         ArgumentNullException.ThrowIfNull(cardPlay.Target);
@@ -98,5 +106,5 @@ public sealed class Halo : CardModel
         DynamicVars.Damage.BaseValue += DynamicVars["Growth"].BaseValue;
 
     protected override void OnUpgrade() =>
-        DynamicVars["Growth"].UpgradeValueBy(1m);
+        DynamicVars["Growth"].UpgradeValueBy(3m);
 }

@@ -60,7 +60,7 @@ namespace NightMustStay.Core.Models.Cards
         };
 
         public Featherstep()
-            : base(2, CardType.Power, CardRarity.Rare, TargetType.Self)
+            : base(1, CardType.Power, CardRarity.Rare, TargetType.Self)
         {
         }
 
@@ -77,7 +77,7 @@ namespace NightMustStay.Core.Models.Cards
 
     public sealed class DustReturnSlash : CardModel
     {
-        private const int StunnedDamageMultiplier = 3;
+        private const int StunnedDamageMultiplier = 4;
 
         public override string PortraitPath =>
             "res://packed/card_portraits/guardian/dust_return_slash.png";
@@ -87,8 +87,8 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new CalculationBaseVar(9m),
-            new ExtraDamageVar(18m),
+            new CalculationBaseVar(11m),
+            new ExtraDamageVar(33m),
             new CalculatedDamageVar(ValueProp.Move).WithMultiplier(static (_, target) =>
                 target?.IsStunned == true ? 1m : 0m)
         };

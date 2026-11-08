@@ -6,6 +6,21 @@ namespace NightMustStay.Core.Nodes.Vfx;
 /// <summary>Deterministic drawing primitives. Each attack owns its silhouette and timing.</summary>
 public abstract partial class CombatVfxCanvas : Node2D
 {
+    // Godot copies polygon data into its draw command synchronously. Per-instance
+    // scratch arrays can therefore be reused without changing submitted geometry.
+    private readonly Vector2[] _triangle = new Vector2[3];
+    private readonly Vector2[] _quad = new Vector2[4];
+    private readonly System.Collections.Generic.Dictionary<int, Vector2[]> _strokeOutlines = new();
+    protected void Poly(Color c,Vector2 a,Vector2 b,Vector2 d)
+    {
+        _triangle[0]=a;_triangle[1]=b;_triangle[2]=d;
+        Poly(c,_triangle);
+    }
+    protected void Poly(Color c,Vector2 a,Vector2 b,Vector2 d,Vector2 e)
+    {
+        _quad[0]=a;_quad[1]=b;_quad[2]=d;_quad[3]=e;
+        Poly(c,_quad);
+    }
     protected static float Ease(float a,float b,float t)
     { t=Math.Clamp((t-a)/(b-a),0,1);return t*t*(3-2*t); }
     protected static Color Fade(Color c,float a)=>new(c.R,c.G,c.B,Math.Clamp(a,0,1));
@@ -31,10 +46,13 @@ public abstract partial class CombatVfxCanvas : Node2D
             float w=inner?width*(taper?MathF.Pow(Math.Max(0,MathF.Sin(u*MathF.PI)),.65f):1):0;
             return p+new Vector2(MathF.Cos(a)*(radii.X-w),MathF.Sin(a)*(radii.Y-w)).Rotated(angle);
         }
+        Vector2 outer=At(0,false),inner=At(0,true);
         for(int i=0;i<count;i++)
         {
-            float u=i/(float)count,v=(i+1)/(float)count;
-            Poly(c,At(u,false),At(v,false),At(v,true));Poly(c,At(u,false),At(v,true),At(u,true));
+            float v=(i+1)/(float)count;
+            Vector2 nextOuter=At(v,false),nextInner=At(v,true);
+            Poly(c,outer,nextOuter,nextInner);Poly(c,outer,nextInner,inner);
+            outer=nextOuter;inner=nextInner;
         }
     }
     protected void Stroke(Vector2[] points,float width,Color c,bool taper=true)
@@ -46,7 +64,9 @@ public abstract partial class CombatVfxCanvas : Node2D
         }
         // Shared ribbon edges avoid round-cap overdraw. Triangles also remain valid
         // while a wide stroke is first being revealed along a very short curve.
-        var outline=new Vector2[points.Length*2];
+        int outlineLength=points.Length*2;
+        if(!_strokeOutlines.TryGetValue(outlineLength,out var outline))
+            _strokeOutlines[outlineLength]=outline=new Vector2[outlineLength];
         for(int i=0;i<points.Length;i++)
         {
             Vector2 tangent=points[Math.Min(points.Length-1,i+1)]-points[Math.Max(0,i-1)];

@@ -927,6 +927,7 @@ public sealed class RevenantSummonManager
         NCreature petNode = FindCreatureNode(_familyCreature);
         if (petNode == null)
             return;
+        NightMustStay.Core.Patches.RevenantNecroGenericHealthBarPatch.Refresh(petNode);
         if (petNode.Body != null)
             petNode.Body.Visible = false;
         if (_familyVisual != null && GodotObject.IsInstanceValid(_familyVisual) &&
@@ -961,7 +962,7 @@ public sealed class RevenantSummonManager
         }
         RefreshFamilyVisualScaleAndPosition();
         _familyVisual.Rotation = 0f;
-        _familyVisual.Modulate = Colors.White;
+        _familyVisual.Modulate = petNode.Visuals.Modulate;
         // Approved family sprites face the enemies on the right.
         _familyVisual.FlipH = false;
         string file = family switch

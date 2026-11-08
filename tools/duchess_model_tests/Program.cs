@@ -51,6 +51,242 @@ foreach (Type type in typeof(PowerModel).Assembly.GetTypes().Where(type => !type
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+if (args.Contains("--spirit-form-stack-only"))
+{
+    SpiritFormStackRegression.Run();
+    return 0;
+}
+if (args.Contains("--revenant-november-only"))
+{
+    foreach (bool upgraded in new[] { false, true })
+    {
+        var halo = (Halo)ModelDb.Card<Halo>().ToMutable();
+        var burn = ModelDb.Card<BurnLife>().ToMutable();
+        var chant = ModelDb.Card<ChantingBlessing>().ToMutable();
+        var gaze = ModelDb.Card<GazeBeyond>().ToMutable();
+        var updatedPocket = ModelDb.Card<DuchessHiddenPocket>().ToMutable();
+        var claw = ModelDb.Card<CursedClawCombo>().ToMutable();
+        if (upgraded) { halo.UpgradeInternal(); burn.UpgradeInternal(); chant.UpgradeInternal(); gaze.UpgradeInternal(); updatedPocket.UpgradeInternal(); claw.UpgradeInternal(); }
+        if (halo.DynamicVars.Damage.BaseValue != 6 || halo.DynamicVars["Growth"].BaseValue != (upgraded ? 7 : 4)
+            || !halo.Keywords.Contains(CardKeyword.Ethereal)) throw new Exception("Halo rules");
+        halo.IncreaseDamageForCurrentCombat(); halo.IncreaseDamageForCurrentCombat();
+        if (halo.DynamicVars.Damage.BaseValue != (upgraded ? 20 : 14)) throw new Exception("Halo cumulative growth");
+        if (burn.DynamicVars.Block.BaseValue != (upgraded ? 9 : 8) || burn.DynamicVars.Energy.IntValue != (upgraded ? 3 : 2)) throw new Exception("Burn Life upgrade");
+        if (chant.DynamicVars.Block.BaseValue != (upgraded ? 7 : 5)) throw new Exception("Chanting Blessing");
+        if (gaze.DynamicVars["Vulnerable"].BaseValue != (upgraded ? 3 : 2)) throw new Exception("Gaze Beyond");
+        if (updatedPocket.DynamicVars["HandToDrawTopBlock"].BaseValue != (upgraded ? 7 : 5)) throw new Exception("Hidden Pocket");
+        if (claw.DynamicVars.Damage.BaseValue != (upgraded ? 7 : 5) || !claw.Keywords.Contains(CardKeyword.Ethereal)) throw new Exception("Cursed Claw Combo");
+    }
+    Console.WriteLine("PASS: six card base/upgraded values and repeated Halo growth.");
+    return 0;
+}
+if (args.Contains("--guardian-november-only"))
+{
+    foreach (var (model, basic, upgraded) in new (CardModel, decimal, decimal)[] {
+        (ModelDb.Card<ProbingStab>(), 7, 8), (ModelDb.Card<PhantomSpear>(), 9, 10),
+        (ModelDb.Card<CycloneHalberd>(), 12, 14), (ModelDb.Card<GuardianAssault>(), 20, 24),
+        (ModelDb.Card<HalberdWingCombo>(), 9, 12), (ModelDb.Card<WardingGale>(), 8, 12),
+        (ModelDb.Card<WanderingSpellSoul>(), 5, 7), (ModelDb.Card<GreatShieldShock>(), 3, 4) })
+    {
+        var card = model.ToMutable();
+        if (card.DynamicVars.Damage.BaseValue != basic) throw new Exception(model.Id + " base damage");
+        card.UpgradeInternal();
+        if (card.DynamicVars.Damage.BaseValue != upgraded) throw new Exception(model.Id + " upgraded damage");
+        if (card is PhantomSpear or CycloneHalberd or GuardianAssault)
+            if (card.DynamicVars["Imbalance"].BaseValue != 2) throw new Exception("Imbalance upgrade");
+        if (card is ProbingStab && card.DynamicVars.Cards.IntValue != 2) throw new Exception("Probing draw upgrade");
+        if (card is CycloneHalberd && card.DynamicVars["Weak"].BaseValue != 3) throw new Exception("Cyclone Weak upgrade");
+    }
+    var hold = ModelDb.Card<HoldTheLine>().ToMutable();
+    if (!hold.Keywords.Contains(CardKeyword.Exhaust) || hold.GainsBlock) throw new Exception("Hold base rules");
+    hold.UpgradeInternal();
+    if (hold.Keywords.Contains(CardKeyword.Exhaust)) throw new Exception("Hold upgrade must remove Exhaust");
+    Console.WriteLine("PASS: nine Guardian cards base/upgraded damage, draw, debuffs and Exhaust.");
+    return 0;
+}
+if (args.Contains("--revenant-routing-only"))
+{
+    RevenantRoutingRegression.Run();
+    return 0;
+}
+if (args.Contains("--reverse-time-performance-only"))
+{
+    ReverseTimePerformanceRegression.Run();
+    return 0;
+}
+if (args.Contains("--beetle-stun-only"))
+{
+    SlumberingBeetleRegression.Run();
+    return 0;
+}
+if (args.Contains("--guardian-balance-only"))
+{
+    foreach (bool upgraded in new[] { false, true })
+    {
+        var fearless = ModelDb.Card<Fearless>().ToMutable();
+        var assault = ModelDb.Card<GuardianAssault>().ToMutable();
+        var phantom = ModelDb.Card<PhantomCoStrike>().ToMutable();
+        if (upgraded) { fearless.UpgradeInternal(); assault.UpgradeInternal(); phantom.UpgradeInternal(); }
+        if (fearless.EnergyCost.GetResolved() != (upgraded ? 0 : 1)
+            || fearless.DynamicVars["Strength"].BaseValue != 6m
+            || fearless.DynamicVars["DexterityLoss"].BaseValue != 2m
+            || !fearless.Keywords.Contains(CardKeyword.Retain))
+            throw new Exception("Fearless stats mismatch.");
+        if (assault.Rarity != CardRarity.Uncommon || !assault.Keywords.Contains(CardKeyword.Retain)
+            || assault.DynamicVars.Damage.BaseValue != (upgraded ? 26m : 20m)
+            || assault.DynamicVars["Imbalance"].BaseValue != 1m)
+            throw new Exception("Assault stats mismatch.");
+        if (phantom.DynamicVars.Damage.BaseValue != (upgraded ? 11m : 8m)
+            || phantom.DynamicVars["Imbalance"].BaseValue != 1m)
+            throw new Exception("Phantom Co-Strike stats mismatch.");
+        var poke = ModelDb.Card<ShieldPoke>().ToMutable();
+        if (upgraded) poke.UpgradeInternal();
+        for (int preview = 0; preview < 2; preview++)
+        {
+            poke.DynamicVars.Damage.UpdateCardPreview(poke, CardPreviewMode.Normal, null!, false);
+            poke.DynamicVars.Block.UpdateCardPreview(poke, CardPreviewMode.Normal, null!, false);
+            if (poke.DynamicVars.Damage.PreviewValue != (upgraded ? 5m : 3m)
+                || poke.DynamicVars.Block.PreviewValue != (upgraded ? 5m : 3m))
+                throw new Exception("Shield Poke preview retained obsolete Fearless behavior.");
+        }
+    }
+    if (ModelDb.Card<Advance>().Rarity != CardRarity.Common)
+        throw new Exception("Advance must be Common.");
+    Console.WriteLine("PASS: Guardian balance base/upgraded stats, keywords, and rarity.");
+    return 0;
+}
+if (args.Contains("--defensive-reinforcement-only"))
+{
+    foreach (bool upgraded in new[] { false, true })
+    {
+        var card = ModelDb.Card<DefensiveReinforcement>().ToMutable();
+        if (upgraded) card.UpgradeInternal();
+        if (card.EnergyCost.GetResolved() != 1 || card.Type != CardType.Skill
+            || card.DynamicVars["Fortify"].BaseValue != (upgraded ? 13m : 9m)
+            || !card.Keywords.Contains(CardKeyword.Exhaust)
+            || card.Keywords.Contains(CardKeyword.Retain) || card.GainsBlock)
+            throw new Exception("Defensive Reinforcement base/upgrade mismatch.");
+    }
+    Console.WriteLine("PASS: Defensive Reinforcement costs 1, grants 9/13 Fortify, and exhausts without Retain.");
+    return 0;
+}
+if (args.Contains("--soul-departure-only"))
+{
+    SoulDepartureRegression.Run();
+    return 0;
+}
+if (args.Contains("--savior-wings-only"))
+{
+    SaviorWingsRegression.Run();
+    return 0;
+}
+if (args.Contains("--fortify-retention-only"))
+{
+    FortifyRetentionRegression.Run();
+    return 0;
+}
+if (args.Contains("--ancient-dragon-faith-only"))
+{
+    AncientDragonFaithRegression.Run();
+    return 0;
+}
+if (args.Contains("--believers-vow-cloth-only"))
+{
+    BelieversVowClothRegression.Run();
+    return 0;
+}
+if (args.Contains("--frenzy-attack-only"))
+{
+    FrenzyAttackRegression.Run();
+    return 0;
+}
+if (args.Contains("--effect-damage-only"))
+{
+    EffectDamageRegression.Run();
+    Console.WriteLine("PASS effect damage properties and upgrades");
+    return 0;
+}
+if (args.Contains("--imbalance-threshold-only"))
+{
+    int[][] expected = { new[] { 2, 3, 4, 5, 6, 6 }, new[] { 3, 4, 5, 6, 7, 7 },
+        new[] { 5, 6, 7, 8, 9, 9 }, new[] { 7, 8, 9, 10, 11, 11 } };
+    for (int players = 1; players <= 4; players++)
+        for (int triggers = 0; triggers < 6; triggers++)
+            if (PhantomImbalancePower.GetThreshold(players, triggers) != expected[players - 1][triggers])
+                throw new Exception("Imbalance threshold scaling/cap mismatch.");
+    var player = TrackingArrowRegression.MakePlayer();
+    var creature = new Creature(player, 70, 70) { CombatState = new MegaCrit.Sts2.Core.Combat.CombatState() };
+    var progressMethod = typeof(PhantomImbalancePower).GetMethod("GetProgress", BindingFlags.NonPublic | BindingFlags.Static)!;
+    var progress = progressMethod.Invoke(null, new object[] { creature })!;
+    progress.GetType().GetField("Increases")!.SetValue(progress, 2);
+    // Recreating the visible power must not reset this enemy's resistance.
+    _ = ModelDb.Power<PhantomImbalancePower>().ToMutable();
+    if ((int)progressMethod.Invoke(null, new object[] { creature })!.GetType().GetField("Increases")!.GetValue(progress)! != 2)
+        throw new Exception("Imbalance resistance lost when power recreated.");
+    creature.CombatState = new MegaCrit.Sts2.Core.Combat.CombatState();
+    progressMethod.Invoke(null, new object[] { creature });
+    if ((int)progress.GetType().GetField("Increases")!.GetValue(progress)! != 0)
+        throw new Exception("Imbalance resistance leaked between combats.");
+    Console.WriteLine("PASS: Imbalance 1-4 player thresholds, caps, per-creature persistence and combat reset.");
+    return 0;
+}
+if (args.Contains("--strangle-damage-preview-only"))
+{
+    StrangleDamagePreviewRegression.Run();
+    Console.WriteLine("PASS: Turning Arrow/Blade Glide previews with Strangle and Blade Shadow combinations.");
+    return 0;
+}
+if (args.Contains("--curtain-call-only"))
+{
+    CurtainCallRegression.Run();
+    Console.WriteLine("PASS: Curtain Call base/upgraded hit preview, permanent/temporary retain and self exclusion.");
+    return 0;
+}
+if (args.Contains("--origin-only"))
+{
+    if (typeof(IroneyeOrigin).Assembly.GetType("NightMustStay.Core.Models.Cards.DisorderlyArrows") != null
+        || typeof(IroneyeOrigin).Assembly.GetType("NightMustStay.Core.Models.Power.DisorderlyArrowsPower") != null)
+        throw new Exception("Disorderly Arrows must be removed.");
+    var predicate = typeof(IroneyeOriginPower).GetMethod("IsReturningToOrigin", BindingFlags.Static | BindingFlags.NonPublic)!;
+    foreach (var (before, after, expected) in new[] { (0m, 0m, false), (1m, 0m, true), (-5m, 0m, true), (3m, -3m, false), (0m, 2m, false) })
+        if ((bool)predicate.Invoke(null, new object[] { before, after })! != expected)
+            throw new Exception("Origin transition boundary mismatch.");
+    foreach (bool upgraded in new[] { false, true })
+    {
+        var origin = ModelDb.Card<IroneyeOrigin>().ToMutable();
+        if (upgraded) origin.UpgradeInternal();
+        if (origin.Type != CardType.Power || origin.TargetType != TargetType.Self
+            || origin.Rarity != CardRarity.Uncommon || origin.EnergyCost.GetResolved() != 1
+            || origin.DynamicVars.Block.BaseValue != (upgraded ? 7 : 5))
+            throw new Exception("Origin base/upgrade mismatch.");
+    }
+    Console.WriteLine("PASS: Origin transition boundaries and base/upgraded stats.");
+    return 0;
+}
+if (args.Contains("--recovery-order-only"))
+{
+    foreach (var type in new[] { typeof(GazeBeyond), typeof(FlannSaxLightningSpear) })
+    {
+        if (type.GetMethod(nameof(CardModel.AfterCardChangedPiles))!.DeclaringType != typeof(CardModel)
+            && type.GetMethod(nameof(CardModel.AfterCardChangedPiles))!.DeclaringType == type)
+            throw new Exception("Recovery auto-play must not run before recovery listeners.");
+        if (type.GetMethod(nameof(CardModel.AfterCardChangedPilesLate))!.DeclaringType != type)
+            throw new Exception("Recovery auto-play must use native late pile-change hook.");
+    }
+    if (typeof(SoulCursingBell).GetMethod(nameof(CardModel.AfterCardChangedPiles))!.DeclaringType != typeof(SoulCursingBell))
+        throw new Exception("Bell recovery must remain in the early hook.");
+    foreach (bool upgraded in new[] { false, true })
+    {
+        var giant = ModelDb.Card<GiantHunter>().ToMutable();
+        if (upgraded) giant.UpgradeInternal();
+        if (giant.DynamicVars["Imbalance"].BaseValue != 3
+            || giant.EnergyCost.GetResolved() != (upgraded ? 0 : 1)
+            || giant.TargetType != TargetType.AnyEnemy || !giant.Keywords.Contains(CardKeyword.Exhaust))
+            throw new Exception("Giant Hunter stats/target/upgrade mismatch.");
+    }
+    Console.WriteLine("PASS: recovery hook ordering and Giant Hunter base/upgraded stats.");
+    return 0;
+}
 if (args.Contains("--cooperative-defense-only"))
 {
     CooperativeDefenseRegression.Run();
@@ -277,12 +513,12 @@ if (retreatBalance.Keywords.Contains(CardKeyword.Exhaust) || retreatBalance.Dyna
     || retreatBalance.DynamicVars.Block.WasJustUpgraded)
     throw new Exception("Retreating Defense upgrade must only remove Exhaust.");
 var probingBalance = ModelDb.Card<ProbingStab>().ToMutable();
-if (probingBalance.DynamicVars.Damage.BaseValue != 6 || probingBalance.DynamicVars["RetainCount"].IntValue != 2)
-    throw new Exception("Probing Stab must deal 6 and retain up to 2 at end of turn.");
+if (probingBalance.DynamicVars.Damage.BaseValue != 7 || probingBalance.DynamicVars.Cards.IntValue != 1)
+    throw new Exception("Probing Stab must deal 7 and draw one defensive card.");
 probingBalance.UpgradeInternal();
-if (probingBalance.DynamicVars.Damage.BaseValue != 8 || probingBalance.DynamicVars["RetainCount"].IntValue != 3)
-    throw new Exception("Probing Stab upgrade must deal 8 and retain up to 3.");
-Console.WriteLine("PASS: World Ending Wings 7/9 AOE, Retreating Defense 4 Block and Exhaust removal, Probing Stab 6/8 and 2/3 retain.");
+if (probingBalance.DynamicVars.Damage.BaseValue != 8 || probingBalance.DynamicVars.Cards.IntValue != 2)
+    throw new Exception("Probing Stab upgrade must deal 8 and draw two defensive cards.");
+Console.WriteLine("PASS: World Ending Wings, Retreating Defense, Probing Stab 7/8 and 1/2 defensive draws.");
 var seeThroughBalance = ModelDb.Card<SeeThrough>().ToMutable();
 var volleyBalance = (SoulChasingVolley)ModelDb.Card<SoulChasingVolley>().ToMutable();
 var halberdBalance = ModelDb.Card<ThousandWeightHalberd>().ToMutable();
@@ -315,10 +551,10 @@ foreach (int triggerCount in new[] { 0, 1, 2 })
 }
 volleyActive.SetValue(volleyBalance, false);
 var featherBalance = ModelDb.Card<Featherstep>().ToMutable();
-if (featherBalance.EnergyCost.Canonical != 2 || featherBalance.DynamicVars.Cards.IntValue != 1)
-    throw new Exception("Featherstep must cost 2 and draw 1.");
+if (featherBalance.EnergyCost.Canonical != 1 || featherBalance.DynamicVars.Cards.IntValue != 1)
+    throw new Exception("Featherstep must cost 1 and draw 1.");
 featherBalance.UpgradeInternal();
-if (featherBalance.EnergyCost.GetResolved() != 1 || featherBalance.DynamicVars.Cards.IntValue != 1)
+if (featherBalance.EnergyCost.GetResolved() != 0 || featherBalance.DynamicVars.Cards.IntValue != 1)
     throw new Exception("Featherstep upgrade must only reduce cost.");
 var packBalance = ModelDb.Card<PackUp>().ToMutable();
 if (packBalance.DynamicVars.Cards.IntValue != 2) throw new Exception("Pack Up must discard up to 2.");
@@ -331,7 +567,7 @@ if (teamBalance.EnergyCost.CostsX || teamBalance.EnergyCost.Canonical != 1 || te
 teamBalance.UpgradeInternal();
 if (teamBalance.EnergyCost.GetResolved() != 0 || teamBalance.DynamicVars["AllyDodgeDrawX"].IntValue != 2)
     throw new Exception("Duchess multiplayer upgrade must reduce cost to 0 without changing count.");
-Console.WriteLine("PASS: revised X cards, calculated volley damage, Featherstep 2/1, Pack Up 2/3, and multiplayer Duchess 1/0 Rare.");
+Console.WriteLine("PASS: revised X cards, calculated volley damage, Featherstep 1/0, Pack Up 2/3, and multiplayer Duchess 1/0 Rare.");
 var wraithJar = ModelDb.Potion<WraithJar>().ToMutable();
 if (wraithJar.TargetType != TargetType.AnyEnemy || wraithJar.DynamicVars.Damage.BaseValue != 30)
     throw new Exception("Wraith Jar must target an enemy and deal 30 damage.");
@@ -926,7 +1162,7 @@ foreach (string id in new[] { nameof(DuchessSoftLanding), nameof(DuchessDistract
         throw new Exception(id + " must grant 2/3 Concealment.");
 }
 var trick = DuchessCardCatalog.All[nameof(DuchessSleightOfHand)];
-if (!trick.All || trick.Effects.Single(e => e.Kind == "ShuffleHand") != new DuchessEffect("ShuffleHand", 1, 1)
+if (trick.Cost != 1 || !trick.All || trick.Effects.Single(e => e.Kind == "ShuffleHand") != new DuchessEffect("ShuffleHand", 1, 1)
     || trick.Effects.Single(e => e.Kind == "Weak").Amount != 1 || trick.Effects.Single(e => e.Kind == "Weak").Upgraded != 2
     || trick.Effects.Single(e => e.Kind == "Vulnerable").Amount != 1 || trick.Effects.Single(e => e.Kind == "Vulnerable").Upgraded != 2)
     throw new Exception("Sleight of Hand must shuffle 1 and apply 1/2 Weak and Vulnerable to ALL enemies.");
@@ -934,7 +1170,7 @@ var quiet = DuchessCardCatalog.All[nameof(DuchessQuietude)];
 var parallel = DuchessCardCatalog.All[nameof(DuchessParallelTime)];
 if (quiet.Cost != 0 || quiet.Rarity != CardRarity.Common || quiet.Type != CardType.Skill
     || quiet.Effects[0] != new DuchessEffect("ShuffleHand", 1, 1) || quiet.Effects[1] != new DuchessEffect("Concealment", 1, 2)
-    || parallel.Cost != 0 || parallel.Rarity != CardRarity.Uncommon || parallel.Type != CardType.Skill || parallel.Moment != 3
+    || parallel.Cost != 1 || parallel.Rarity != CardRarity.Uncommon || parallel.Type != CardType.Skill || parallel.Moment != 3
     || !parallel.UpgradeRetain || parallel.Effects[0] != new DuchessEffect("SetMoment", 0, 0) || parallel.Effects[1] != new DuchessEffect("Draw", 2, 2, "moment"))
     throw new Exception("Quietude or Parallel Time specification differs from the supplied table.");
 if (ModelDb.Card<DuchessQuietude>().TargetType != TargetType.Self || ModelDb.Card<DuchessParallelTime>().TargetType != TargetType.Self)
@@ -1009,13 +1245,13 @@ foreach (int stepCount in new[] { 0, 1, 12 })
 }
 var escape = ModelDb.Card<DuchessEscape>().ToMutable();
 if (DuchessCardCatalog.All.ContainsKey("DuchessPerfectRehearsal")
-    || escape.EnergyCost.Canonical != 0 || escape.Type != CardType.Skill
+    || escape.EnergyCost.Canonical != 1 || escape.Type != CardType.Skill
     || escape.Rarity != CardRarity.Uncommon || escape.TargetType != TargetType.Self
-    || escape.DynamicVars["LoseConcealment"].BaseValue != 1
+    || escape.DynamicVars.ContainsKey("LoseConcealment")
     || escape.DynamicVars["ExhaustHandUpTo"].BaseValue != 2
-    || escape.DynamicVars.Block.BaseValue != 4 || !escape.GainsBlock
+    || escape.DynamicVars.Block.BaseValue != 5 || !escape.GainsBlock
     || escape.Keywords.Contains(CardKeyword.Exhaust))
-    throw new Exception("Escape must be a 0-cost skill, lose 1 Concealment, exhaust up to 2 hand cards and gain 4 Block per card.");
+    throw new Exception("Escape must cost 1, exhaust up to 2 hand cards and gain 5 Block per card without losing Concealment.");
 escape.Owner = rewindPlayer;
 var escapeConcealment = (DuchessConcealmentPower)ModelDb.Power<DuchessConcealmentPower>().ToMutable();
 typeof(PowerModel).GetProperty("Owner")!.SetValue(escapeConcealment, rewindCreature);
@@ -1024,29 +1260,28 @@ var escapePowers = (List<PowerModel>)typeof(Creature).GetField("_powers",
 var escapePlayable = typeof(DuchessCard).GetProperty("IsPlayable",
     BindingFlags.Instance | BindingFlags.NonPublic)!;
 bool EscapeIsPlayable() => (bool)escapePlayable.GetValue(escape)!;
-if (EscapeIsPlayable()) throw new Exception("Escape must not be playable without Concealment.");
+if (!EscapeIsPlayable()) throw new Exception("Escape must be playable without Concealment.");
 escapePowers.Add(escapeConcealment);
 foreach (int stacks in new[] { 0, 1, 2, 3 })
 {
     escapeConcealment.SetAmount(stacks, false);
-    if (EscapeIsPlayable() != (stacks >= 1))
-        throw new Exception($"Base Escape must require 1 Concealment; tested {stacks}.");
+    if (!EscapeIsPlayable())
+        throw new Exception($"Base Escape must not require Concealment; tested {stacks}.");
 }
 escape.UpgradeInternal();
-if (escape.DynamicVars["LoseConcealment"].BaseValue != 1
+if (escape.DynamicVars.ContainsKey("LoseConcealment")
     || escape.DynamicVars["ExhaustHandUpTo"].BaseValue != 2
     || escape.DynamicVars.Block.BaseValue != 7 || !escape.GainsBlock
-    || escape.DynamicVars["LoseConcealment"].WasJustUpgraded
     || !escape.DynamicVars.Block.WasJustUpgraded)
-    throw new Exception("Escape upgrade must only increase Block per exhausted card from 4 to 7.");
+    throw new Exception("Escape upgrade must only increase Block per exhausted card from 5 to 7.");
 foreach (int stacks in new[] { 0, 1, 2, 3 })
 {
     escapeConcealment.SetAmount(stacks, false);
-    if (EscapeIsPlayable() != (stacks >= 1))
-        throw new Exception($"Upgraded Escape must require 1 Concealment; tested {stacks}.");
+    if (!EscapeIsPlayable())
+        throw new Exception($"Upgraded Escape must not require Concealment; tested {stacks}.");
 }
 escapePowers.Remove(escapeConcealment);
-Console.WriteLine("PASS: Escape requires sufficient Concealment before play, base and upgraded.");
+Console.WriteLine("PASS: Escape costs 1, needs no Concealment and gains 5/7 Block per exhausted card.");
 foreach (CardModel retained in new[] { ModelDb.Card<DuchessReenactment>().ToMutable(), ModelDb.Card<DuchessParallelTime>().ToMutable() })
 {
     int cost = retained.EnergyCost.Canonical;
@@ -1079,6 +1314,13 @@ if (DuchessCardCatalog.All[nameof(DuchessBackToPast)].Rarity != CardRarity.Commo
     || DuchessCardCatalog.All[nameof(DuchessCarianRetaliation)].Effects[0] != new DuchessEffect("Block", 6, 9)
     || DuchessCardCatalog.All[nameof(DuchessGoldenMoment)].Effects[0] != new DuchessEffect("MomentFiveBlock", 5, 7))
     throw new Exception("October Duchess balance values do not match the requested changes.");
+var beatUpgrade = ModelDb.Card<DuchessBeat>().ToMutable();
+if (beatUpgrade.EnergyCost.GetResolved() != 1 || beatUpgrade.DynamicVars["MomentFiveFirstEnergy"].BaseValue != 1)
+    throw new Exception("Beat must cost 1 and grant 1 Energy.");
+beatUpgrade.UpgradeInternal();
+if (beatUpgrade.EnergyCost.GetResolved() != 0 || beatUpgrade.DynamicVars["MomentFiveFirstEnergy"].BaseValue != 1
+    || beatUpgrade.DynamicVars["MomentFiveFirstEnergy"].WasJustUpgraded)
+    throw new Exception("Beat upgrade must reduce cost to 0 without upgrading its Energy reward.");
 if (typeof(DuchessBeatPower).GetMethod("OnMomentSix") == null
     || typeof(DuchessBeatPower).GetMethod("OnMomentFive") != null
     || typeof(DuchessBeatPower).GetProperty("TriggeredThisTurn") != null
@@ -1092,9 +1334,9 @@ foreach (var retainCard in new CardModel[] { ModelDb.Card<DuchessMomentAndEterni
     if (!retainCard.Keywords.Contains(CardKeyword.Retain)) throw new Exception("New card upgrade must add Retain.");
 }
 var shadow = ModelDb.Card<DuchessShadowSword>().ToMutable();
-if (shadow.DynamicVars["ConcealedStrength"].BaseValue != 2) throw new Exception("Shadow Sword base Strength must be 2.");
+if (shadow.EnergyCost.GetResolved() != 1 || shadow.DynamicVars["ConcealedStrength"].BaseValue != 3) throw new Exception("Shadow Sword must cost 1 and grant 3 Strength.");
 shadow.UpgradeInternal();
-if (shadow.DynamicVars["ConcealedStrength"].BaseValue != 3) throw new Exception("Shadow Sword upgraded Strength must be 3.");
+if (shadow.EnergyCost.GetResolved() != 0 || shadow.DynamicVars["ConcealedStrength"].BaseValue != 3) throw new Exception("Shadow Sword+ must cost 0 and grant 3 Strength.");
 foreach (string name in new[] { nameof(DuchessRestage), nameof(DuchessReenactment), nameof(DuchessFleetingInstant), nameof(DuchessGoldenBlade), nameof(DuchessSilverFlash), nameof(DuchessSilence) })
 {
     var card = (DuchessCard)typeof(ModelDb).GetMethod("Get", flags, null, new[] { typeof(Type) }, null)!
@@ -1196,7 +1438,7 @@ if (composure.Effects.Length != 1 || composure.Effects[0] != new DuchessEffect("
 var fallingMagic = DuchessCardCatalog.All[nameof(DuchessFallingMagic)];
 if (fallingMagic.Type != CardType.Skill || fallingMagic.Rarity != CardRarity.Rare
     || !fallingMagic.Retain || fallingMagic.Effects.Length != 1
-    || fallingMagic.Effects[0] != new DuchessEffect("ShuffleAoeDamage", 6, 9))
+    || fallingMagic.Effects[0] != new DuchessEffect("ShuffleAoeDamage", 12, 16))
     throw new Exception("Falling Magic specification is wrong.");
 if (DuchessCardCatalog.All[nameof(DuchessOpeningMoment)].Cost != 0)
     throw new Exception("Opening Moment must cost 0 Energy.");
@@ -1375,7 +1617,7 @@ if (switcheroo.Type != CardType.Power || switcheroo.Rarity != CardRarity.Rare
 var pocket = DuchessCardCatalog.All[nameof(DuchessHiddenPocket)];
 if (pocket.Type != CardType.Skill || pocket.Rarity != CardRarity.Uncommon
     || pocket.Cost != 1 || pocket.Effects.Length != 1
-    || pocket.Effects[0] != new DuchessEffect("HandToDrawTopBlock", 3, 4))
+    || pocket.Effects[0] != new DuchessEffect("HandToDrawTopBlock", 5, 7))
     throw new Exception("Hidden Pocket specification is wrong.");
 var finale = DuchessCardCatalog.All[nameof(DuchessFinale)];
 if (finale.Type != CardType.Skill || finale.Rarity != CardRarity.Rare

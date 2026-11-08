@@ -60,7 +60,7 @@ public sealed class SpiritFormPower : PowerModel
 {
     public const int FamilyHpGain = 6;
     public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Single;
+    public override PowerStackType StackType => PowerStackType.Counter;
 
     public override async Task AfterPlayerTurnStartLate(
         PlayerChoiceContext context,
@@ -70,8 +70,12 @@ public sealed class SpiritFormPower : PowerModel
             return;
 
         RevenantSummonManager manager = RevenantSummonManager.For(Owner.Player);
-        await manager.IncreaseSummonsMaxAndCurrentHp(FamilyHpGain);
-        await manager.TriggerResonance(context);
+        int stacks = Amount;
+        for (int i = 0; i < stacks; i++)
+        {
+            await manager.IncreaseSummonsMaxAndCurrentHp(FamilyHpGain);
+            await manager.TriggerResonance(context);
+        }
     }
 }
 
@@ -121,25 +125,28 @@ public sealed class AncientDragonFaithPower : PowerModel
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Counter;
 
-    public override async Task AfterSideTurnStart(
-        CombatSide side,
-        IReadOnlyList<Creature> creatures,
-        ICombatState combatState)
+    public override async Task AfterPlayerTurnStart(
+        PlayerChoiceContext context,
+        MegaCrit.Sts2.Core.Entities.Players.Player player)
     {
-        if (side != Owner.Side || !creatures.Contains(Owner)) return;
+        // Turn setup supplies a HookPlayerChoiceContext scoped to this player.
+        // Awaiting a fresh Blocking context in AfterSideTurnStart holds the
+        // shared turn-start task and prevents every teammate entering play.
+        if (player != Owner.Player || !Owner.IsAlive) return;
         CardPile discard = PileType.Discard.GetPile(Owner.Player);
         int count = System.Math.Min((int)Amount, discard.Cards.Count);
         if (count <= 0)
             return;
 
         IReadOnlyList<CardModel> selected = (await CardSelectCmd.FromCombatPile(
-            new BlockingPlayerChoiceContext(),
+            context,
             discard,
             Owner.Player,
             new CardSelectorPrefs(new LocString("cards", "REVENANT_RECOVER_CARDS"), count))).ToArray();
         foreach (CardModel card in selected)
         {
-            await CardPileCmd.Add(card, PileType.Hand);
+            if (card.Owner == player && card.Pile == discard)
+                await CardPileCmd.Add(card, PileType.Hand);
         }
     }
 }

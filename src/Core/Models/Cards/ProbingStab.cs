@@ -19,13 +19,12 @@ namespace NightMustStay.Core.Models.Cards
 {
     public sealed class ProbingStab : CardModel
     {
-        private const string RetainCountKey = "RetainCount";
-        private int _pendingRetainCount;
+
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new DamageVar(6m, ValueProp.Move),
-            new DynamicVar(RetainCountKey, 2m),
+            new DamageVar(7m, ValueProp.Move),
+            new CardsVar(1),
         };
 
         public ProbingStab()
@@ -43,25 +42,18 @@ namespace NightMustStay.Core.Models.Cards
                 .WithGuardianWeaponFx()
                 .Execute(choiceContext);
 
-            _pendingRetainCount += DynamicVars[RetainCountKey].IntValue;
-        }
-
-        public override async Task BeforeFlushLate(PlayerChoiceContext context, Player player)
-        {
-            if (player != Owner || _pendingRetainCount <= 0) return;
-            int count = _pendingRetainCount;
-            _pendingRetainCount = 0;
-            if (!MegaCrit.Sts2.Core.Hooks.Hook.ShouldFlush(player.Creature.CombatState, player)) return;
-            var selected = await CardSelectCmd.FromHand(context, player,
-                new CardSelectorPrefs(new LocString("cards", "PROBING_STAB.selectionScreenPrompt"), 0, count),
-                card => !card.ShouldRetainThisTurn, this);
-            foreach (CardModel card in selected.ToArray()) card.GiveSingleTurnRetain();
+            var matches = PileType.Draw.GetPile(Owner).Cards.Where(GuardianCardFilters.HasDefendInName).Take(DynamicVars.Cards.IntValue).ToArray();
+            foreach (var card in matches)
+            {
+                await CardPileCmd.Add(card, PileType.Draw, CardPilePosition.Top);
+                await CardPileCmd.Draw(choiceContext, 1m, Owner);
+            }
         }
 
         protected override void OnUpgrade()
         {
-            base.DynamicVars.Damage.UpgradeValueBy(2m);
-            base.DynamicVars[RetainCountKey].UpgradeValueBy(1m);
+            base.DynamicVars.Damage.UpgradeValueBy(1m);
+            base.DynamicVars.Cards.UpgradeValueBy(1m);
         }
     }
 }

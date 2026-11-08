@@ -27,6 +27,34 @@ public partial class DuchessMidnightWaltzVfx : Node2D
     private Phase _phase;
     private float _age;
     private Vector2 _focus;
+    private bool _manual;
+    private CachedVfxArc _outerRing, _moonRing, _impactRing;
+    private readonly Vector2[] _clockTicks = new Vector2[22];
+    // AOE impacts share immutable angle tables. Allocate only the vertex buffers
+    // for the phase this instance actually draws, not all three arcs per enemy.
+    private static readonly Vector2[] OuterRingDirections = CachedVfxArc.Directions(0f, Mathf.Tau, 96);
+    private static readonly Vector2[] MoonRingDirections = CachedVfxArc.Directions(-2.7f, 1.15f, 58);
+    private static readonly Vector2[] ImpactRingDirections = CachedVfxArc.Directions(-2.75f, 1.25f, 48);
+    private static readonly Vector2[] TickDirections = MakeDirections(12, i => -Mathf.Pi / 2f + i * Mathf.Tau / 12f);
+    private static readonly Vector2[] SlashDirections = MakeDirections(4, i => -0.85f + i * 0.55f);
+    private static readonly Vector2[] SparkDirections = MakeDirections(12, i => i * Mathf.Tau / 12f + 0.25f);
+
+    // Deterministic offline checks do not instantiate any native production VFX.
+    internal void Seek(float progress, bool impact, Vector2 focus)
+    {
+        _manual = true;
+        _phase = impact ? Phase.Impact : Phase.Prelude;
+        _focus = focus;
+        _age = Mathf.Clamp(progress, 0f, 1f) * (impact ? 0.7f : NGrandFinaleVfx.totalAnticipationDuration);
+        QueueRedraw();
+    }
+
+    private static Vector2[] MakeDirections(int count, Func<int, float> angle)
+    {
+        var result = new Vector2[count];
+        for (int i = 0; i < count; i++) result[i] = Vector2.FromAngle(angle(i));
+        return result;
+    }
 
     public static async Task PlayPrelude(Creature owner)
     {
@@ -78,6 +106,7 @@ public partial class DuchessMidnightWaltzVfx : Node2D
 
     public override void _Process(double delta)
     {
+        if (_manual) return;
         _age += (float)delta;
         float lifetime = _phase == Phase.Prelude
             ? NGrandFinaleVfx.totalAnticipationDuration + 0.12f
@@ -108,21 +137,28 @@ public partial class DuchessMidnightWaltzVfx : Node2D
         DrawRect(new Rect2(Vector2.Zero, size), new Color(Night, 0.12f + swell * 0.34f));
 
         float ringRadius = Mathf.Lerp(185f, 78f, swell);
-        DrawArc(_focus, ringRadius, 0f, Mathf.Tau, 96,
-            new Color(Blue, 0.2f + 0.65f * swell), 4f + 4f * swell, true);
-        DrawArc(_focus, ringRadius + 14f, -2.7f, 1.15f, 58,
-            new Color(Moon, 0.15f + 0.72f * swell), 7f, true);
+        (_outerRing ??= new CachedVfxArc(OuterRingDirections)).Draw(this, _focus, ringRadius,
+            new Color(Blue, 0.2f + 0.65f * swell), 4f + 4f * swell);
+        (_moonRing ??= new CachedVfxArc(MoonRingDirections)).Draw(this, _focus, ringRadius + 14f,
+            new Color(Moon, 0.15f + 0.72f * swell), 7f);
 
         for (int i = 0; i < 12; i++)
         {
-            float angle = -Mathf.Pi / 2f + i * Mathf.Tau / 12f;
-            Vector2 direction = Vector2.FromAngle(angle);
+            Vector2 direction = TickDirections[i];
             float tick = i == 0 ? 22f : 13f;
-            DrawLine(_focus + direction * (ringRadius - tick),
-                _focus + direction * (ringRadius + 4f),
-                new Color(i == 0 ? Gold : Moon, 0.25f + 0.7f * swell),
-                i == 0 ? 5f : 3f, true);
+            Vector2 from = _focus + direction * (ringRadius - tick);
+            Vector2 to = _focus + direction * (ringRadius + 4f);
+            if (i == 0)
+                DrawLine(from, to, new Color(Gold, 0.25f + 0.7f * swell), 5f, true);
+            else
+            {
+                _clockTicks[(i - 1) * 2] = from;
+                _clockTicks[(i - 1) * 2 + 1] = to;
+            }
         }
+        // These eleven disjoint marks share style and retain their original
+        // order, so they can use one native multiline command without overlap.
+        DrawMultiline(_clockTicks, new Color(Moon, 0.25f + 0.7f * swell), 3f, true);
 
         float sweep = Mathf.Lerp(-size.X * 0.2f, size.X * 1.1f, t);
         for (int i = 0; i < 3; i++)
@@ -143,13 +179,12 @@ public partial class DuchessMidnightWaltzVfx : Node2D
 
         DrawCircle(_focus, Mathf.Lerp(12f, 72f, t),
             new Color(Moon, 0.28f * fade));
-        DrawArc(_focus, Mathf.Lerp(28f, 145f, t), -2.75f, 1.25f, 48,
-            new Color(Blue, 0.9f * fade), 9f * fade + 2f, true);
+        (_impactRing ??= new CachedVfxArc(ImpactRingDirections)).Draw(this, _focus, Mathf.Lerp(28f, 145f, t),
+            new Color(Blue, 0.9f * fade), 9f * fade + 2f);
 
         for (int i = 0; i < 4; i++)
         {
-            float angle = -0.85f + i * 0.55f;
-            Vector2 direction = Vector2.FromAngle(angle);
+            Vector2 direction = SlashDirections[i];
             Vector2 normal = new(-direction.Y, direction.X);
             Vector2 center = _focus + normal * ((i - 1.5f) * 18f);
             DrawLine(center - direction * reach, center + direction * reach,
@@ -160,8 +195,7 @@ public partial class DuchessMidnightWaltzVfx : Node2D
 
         for (int i = 0; i < 12; i++)
         {
-            float angle = i * Mathf.Tau / 12f + 0.25f;
-            Vector2 p = _focus + Vector2.FromAngle(angle) * Mathf.Lerp(34f, 176f, t);
+            Vector2 p = _focus + SparkDirections[i] * Mathf.Lerp(34f, 176f, t);
             DrawCircle(p, 2.5f + (i % 3), new Color(i % 3 == 0 ? Gold : Moon, fade));
         }
     }

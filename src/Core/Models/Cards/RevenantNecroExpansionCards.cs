@@ -179,6 +179,8 @@ public sealed class BoneCoin : CardModel
 
 public sealed class Harmony : CardModel
 {
+    public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Retain };
+
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
         new DamageVar(9m, ValueProp.Move),

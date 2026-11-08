@@ -47,7 +47,7 @@ namespace NightMustStay.Core.Models.CardPools
                 ModelDb.Card<IroneyePoisonArrow>(),
                 ModelDb.Card<PierceTheWillow>(),
                 ModelDb.Card<HeartpiercingArrow>(),
-                ModelDb.Card<DisorderlyArrows>(),
+                ModelDb.Card<IroneyeOrigin>(),
                 ModelDb.Card<Scatter>(),
                 ModelDb.Card<FrightenedBird>(),
                 ModelDb.Card<EagleEye>(),

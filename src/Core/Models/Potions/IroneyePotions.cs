@@ -44,14 +44,14 @@ public sealed class PoisonGrease : PotionModel
 
 public sealed class ThrownArrowPotion : PotionModel
 {
-    public override PotionRarity Rarity => PotionRarity.Uncommon;
+    public override PotionRarity Rarity => PotionRarity.Rare;
 
     public override PotionUsage Usage => PotionUsage.CombatOnly;
 
     public override TargetType TargetType => TargetType.AnyEnemy;
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new[] { new PowerVar<NightMustStayMarkPower>(1m) };
+        new[] { new PowerVar<NightMustStayMarkPower>(3m) };
 
     public override IEnumerable<IHoverTip> ExtraHoverTips =>
         new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
@@ -76,7 +76,7 @@ public sealed class ThrownArrowPotion : PotionModel
 
 public sealed class PickledTurtleNeckMeat : PotionModel
 {
-    public override PotionRarity Rarity => PotionRarity.Rare;
+    public override PotionRarity Rarity => PotionRarity.Uncommon;
 
     public override PotionUsage Usage => PotionUsage.CombatOnly;
 

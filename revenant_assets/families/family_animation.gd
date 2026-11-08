@@ -67,7 +67,20 @@ func has_clip(key: String) -> bool:
 
 
 func _process(delta: float) -> void:
+	sync_native_visual_layer()
 	advance(delta)
+
+
+func sync_native_visual_layer() -> void:
+	if not is_instance_valid(sprite):
+		return
+	var parent := sprite.get_parent()
+	if parent == null:
+		return
+	# The replacement sprite is a sibling of Visuals. Match its rear-row tint and fade.
+	var native_visuals := parent.get_node_or_null("Visuals") as CanvasItem
+	if native_visuals != null:
+		sprite.modulate = native_visuals.modulate
 
 
 func advance(delta: float) -> void:

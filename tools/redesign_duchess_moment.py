@@ -138,7 +138,7 @@ support["powers"] = {
     ],
     "DUCHESS_REACTION_DESCRIPTION_POWER.title": ["反应", "Reaction", "リアクション"],
     "DUCHESS_REACTION_DESCRIPTION_POWER.description": [
-        "在回合进行中抽到此牌时，其耗能减少1直到打出。",
+        "回合进行中抽到这张牌时，耗能-1。",
         "When drawn during your turn, this card costs 1 less until played.",
         "自分のターン中に引いた時、プレイするまでコストが1減少する。",
     ],

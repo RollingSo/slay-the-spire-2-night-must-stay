@@ -47,8 +47,9 @@ public sealed class DuchessGracefulSwordDancePower : PowerModel
         data.PreviousWasDodge = dodge;
         if (!trigger || !CombatState.HittableEnemies.Any(enemy => enemy.IsAlive)) return;
         Flash();
-        await DamageCmd.Attack(Amount).CompatFromCard(play.Card)
-            .TargetingAllOpponents(CombatState).Execute(context);
+        await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
+            context, CombatState.HittableEnemies.Where(enemy => enemy.IsAlive).ToArray(),
+            Amount, ValueProp.Unpowered, Owner, null);
     }
 }
 

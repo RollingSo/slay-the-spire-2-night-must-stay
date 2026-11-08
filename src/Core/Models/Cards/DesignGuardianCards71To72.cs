@@ -12,6 +12,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace NightMustStay.Core.Models.Cards
@@ -89,19 +90,37 @@ namespace NightMustStay.Core.Models.Cards
     public sealed class Fearless : CardModel
     {
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            new[] { HoverTipFactory.FromCard<ShieldPoke>() };
+            new[] { HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.FromPower<DexterityPower>() };
+
+        protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
+        {
+            new DynamicVar("Strength", 6m),
+            new DynamicVar("DexterityLoss", 2m)
+        };
 
         public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Retain };
 
         public Fearless() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
 
-        public static bool IsShieldPokeEmpowered(CardModel card) =>
-            card?.CombatState != null && card.Owner != null
-            && CombatManager.Instance.History.CardPlaysFinished.Any(entry =>
-                entry.HappenedThisTurn(card.CombatState)
-                && entry.CardPlay.Card.Owner == card.Owner
-                && entry.CardPlay.Card is Fearless);
+        protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
+        {
+            await PowerCmd.Apply<FearlessStrengthPower>(context, Owner.Creature,
+                DynamicVars["Strength"].BaseValue, Owner.Creature, this);
+            await PowerCmd.Apply<FearlessDexterityDownPower>(context, Owner.Creature,
+                DynamicVars["DexterityLoss"].BaseValue, Owner.Creature, this);
+        }
 
         protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+    }
+
+    public sealed class FearlessStrengthPower : TemporaryStrengthPower
+    {
+        public override AbstractModel OriginModel => ModelDb.Card<Fearless>();
+    }
+
+    public sealed class FearlessDexterityDownPower : TemporaryDexterityPower
+    {
+        public override AbstractModel OriginModel => ModelDb.Card<Fearless>();
+        protected override bool IsPositive => false;
     }
 }

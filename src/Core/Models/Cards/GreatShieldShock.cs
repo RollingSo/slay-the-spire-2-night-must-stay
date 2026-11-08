@@ -15,7 +15,7 @@ namespace NightMustStay.Core.Models.Cards
         {
             // The power deals unpowered damage, not an attack. Its preview
             // must use the same flags so Strength/Weak cannot modify it.
-            new DamageVar(4m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered | MegaCrit.Sts2.Core.ValueProps.ValueProp.SkipHurtAnim)
+            new DamageVar(3m, MegaCrit.Sts2.Core.ValueProps.ValueProp.Unpowered | MegaCrit.Sts2.Core.ValueProps.ValueProp.SkipHurtAnim)
         };
 
         public GreatShieldShock()
@@ -30,7 +30,7 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override void OnUpgrade()
         {
-            base.DynamicVars.Damage.UpgradeValueBy(2m);
+            base.DynamicVars.Damage.UpgradeValueBy(1m);
         }
     }
 }

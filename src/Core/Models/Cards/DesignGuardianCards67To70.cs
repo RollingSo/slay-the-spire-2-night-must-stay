@@ -55,7 +55,7 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
-            new DamageVar(10m, ValueProp.Unpowered)
+            new DamageVar(8m, ValueProp.Unpowered)
         };
 
         public WardingGale() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self)

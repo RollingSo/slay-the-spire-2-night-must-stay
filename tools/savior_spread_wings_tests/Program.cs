@@ -22,7 +22,9 @@ typeof(TestMode).GetProperty("IsOn")!.SetValue(null, true);
 typeof(ModManager).GetMethod("ResetForTests", statics)!.Invoke(null, null);
 var state = typeof(ModManager).GetProperty("State")!;
 state.SetValue(null, Enum.Parse(state.PropertyType, "Skipped"));
-typeof(ModelDb).GetMethod("Init", statics)!.Invoke(null, null);
+var init = typeof(ModelDb).GetMethod("Init", statics)!;
+init.Invoke(null, init.GetParameters().Length == 0 ? null : new object[] {
+    new[] { typeof(SaviorSpreadWings), typeof(SaviorSpreadWingsPower), typeof(IncomingDamageReductionThisTurnPower) } });
 foreach (var type in new[] { typeof(SaviorSpreadWings), typeof(SaviorSpreadWingsPower), typeof(IncomingDamageReductionThisTurnPower) })
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", statics)!.Invoke(null, [type]);
 Creature Creature(CombatSide side)
@@ -36,7 +38,7 @@ var teammate = Creature(CombatSide.Player);
 var enemy = Creature(CombatSide.Enemy);
 var summonedEnemy = Creature(CombatSide.Enemy);
 var power = (SaviorSpreadWingsPower)ModelDb.Power<SaviorSpreadWingsPower>().ToMutable();
-typeof(PowerModel).GetProperty("Owner")!.SetValue(power, guardian);
+typeof(PowerModel).GetProperty("Owner")!.SetValue(power, enemy);
 power.SetAmount(50, false);
 var legacy = (IncomingDamageReductionThisTurnPower)ModelDb.Power<IncomingDamageReductionThisTurnPower>().ToMutable();
 typeof(PowerModel).GetProperty("Owner")!.SetValue(legacy, guardian);
@@ -59,7 +61,7 @@ try
     foreach (var target in new[] { guardian, teammate })
     {
         Assert(Multiplier(power,target,enemy,ValueProp.Move)==.5m,"Enemy attack did not protect every player.");
-        Assert(Multiplier(power,target,summonedEnemy,ValueProp.Move)==.5m,"Late summon bypassed aura.");
+        Assert(Multiplier(power,target,summonedEnemy,ValueProp.Move)==1m,"Enemy-owned debuff affected an unmarked enemy.");
         Assert(Multiplier(power,target,enemy,ValueProp.Unpowered)==1m,"Non-attack damage was reduced.");
         Assert(Multiplier(power,target,null,ValueProp.Move)==1m,"Unattributed damage was reduced.");
     }
@@ -82,7 +84,7 @@ try
     await power.AfterSideTurnEnd(new BlockingPlayerChoiceContext(),CombatSide.Enemy,[enemy,summonedEnemy]);
     Assert(RemovalFixture.Count==1 && ReferenceEquals(RemovalFixture.Removed,power),"Did not expire after enemy turn.");
 
-    var card = (SaviorSpreadWings)ModelDb.Card<SaviorSpreadWings>().MutableClone();
+    var card = (SaviorSpreadWings)ModelDb.Card<SaviorSpreadWings>().ToMutable();
     Assert(card.DynamicVars.Damage.BaseValue==18 && card.DynamicVars["DamageReduction"].BaseValue==50,"Base values changed.");
     typeof(CardModel).GetMethod("UpgradeInternal",instance)!.Invoke(card,null);
     Assert(card.DynamicVars.Damage.BaseValue==22 && card.DynamicVars["DamageReduction"].BaseValue==75,"Upgrade values changed.");
@@ -98,7 +100,7 @@ try
     }
 }
 finally { harmony.UnpatchAll(harmony.Id); }
-Console.WriteLine("PASS: live damage hook protects self/teammates/late summons; attack-only filter; 50/75 percent; stack clamp; enemy-turn expiry; legacy unchanged; card upgrade and three locales.");
+Console.WriteLine("PASS: enemy-owned damage hook protects self/teammates; excludes unmarked enemies; attack-only filter; 50/75 percent; stack clamp; enemy-turn expiry; legacy unchanged; card upgrade and three locales.");
 
 public static class RemovalFixture
 {

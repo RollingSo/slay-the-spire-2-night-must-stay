@@ -1,0 +1,53 @@
+0.3.21
+
+中文（数值“普通/升级”）
+守护者
+• 试探刺击：伤害6/8→7/8；移除回合结束时保留至多2/3张牌，改为从抽牌堆抽取1/2张名称带有“防御”的牌。
+• 据守：移除获得6/9格挡并从抽牌堆将1张防御牌加入手牌的效果。改为本回合保留全部手牌，下一张打出的牌提供的格挡翻倍；普通版有消耗，升级移除消耗，费用仍为1。
+• 风旋戟：升级伤害增量+4→+2，伤害12/16→12/14；升级现在额外增加1层失衡（1/2），虚弱仍为2/3。
+• 突击：升级伤害增量+6→+4，伤害20/26→20/24；升级现在额外增加1层失衡（1/2）。
+• 幻影枪：升级伤害增量+3→+1，伤害9/12→9/10；升级现在额外增加1层失衡（1/2）。
+• 漫步咒魂：每次触发伤害6/8→5/7，触发条件不变。
+• 护身烈风：回合结束群体伤害10/14→8/12，未打出攻击牌的条件不变。
+• 巨盾震击：触发伤害4/6→3/4。
+• 戟翼连打：伤害7/10→9/12，防御牌后施加虚弱的效果不变。
+• 无畏：恢复临时力量、临时敏捷降低对应的状态图标；效果与数值不变。
+铁之眼
+• 宿灵射击：伤害8/11→8/9；主动触发标记层数1/1→1/2。
+• 毒箭：费用2→1；施加隐毒的基础层数3→2，伤害与升级增量不变。
+• 贯穿射击：基础伤害6→8；升级由提高后续伤害增量（3→4）改为初始伤害+3（8→11）。每次命中后的增量现在普通、升级均为3。
+• 破空：每次远射触发获得的力量1→2；升级先天效果不变。
+复仇者
+• 咒爪连击：由从抽牌堆顶部丢弃2张牌，改为从抽牌堆选择1张牌丢弃；两次攻击与虚无不变。
+• 光环：初始伤害7→6；每次回收的伤害成长2/3→4/7，仍只在本场战斗累计。
+• 燃命：普通版仍获得8格挡、2能量；升级由11格挡、2能量改为9格挡、3能量，召唤物牺牲效果不变。
+• 彼岸凝望：全体易伤1/2→2/3；移除全体虚弱1/2。回收时自动打出效果不变。
+• 咏唱庇佑：蓄力后获得的格挡6/9→5/7。
+女爵
+• 隐藏口袋：每将1张手牌放回抽牌堆顶部获得的格挡3/4→5/7，其余效果不变。
+
+English (values shown as base/upgraded)
+Guardian
+• Probing Stab: damage 6/8 → 7/8. Replaced retaining up to 2/3 cards at turn end with drawing 1/2 cards whose names contain Defend or Defense from the draw pile.
+• Defend the Line: removed 6/9 Block and adding a defensive card from the draw pile to hand. Now retains the entire hand this turn and doubles Block from the next card played. Base version Exhausts; upgrading removes Exhaust. Cost remains 1.
+• Cyclone Halberd: upgraded damage bonus +4 → +2, giving 12/14 damage instead of 12/16. Upgrading now also adds 1 Imbalance (1/2); Weak remains 2/3.
+• Charge Forth: upgraded damage bonus +6 → +4, giving 20/24 damage instead of 20/26. Upgrading now also adds 1 Imbalance (1/2).
+• Spectral Lance: upgraded damage bonus +3 → +1, giving 9/10 damage instead of 9/12. Upgrading now also adds 1 Imbalance (1/2).
+• Wandering Spell Soul: triggered damage 6/8 → 5/7; trigger condition unchanged.
+• Warding Gale: end-turn area damage 10/14 → 8/12; still requires playing no Attacks that turn.
+• Great Shield Shock: triggered damage 4/6 → 3/4.
+• Halberd Wing Combo: damage 7/10 → 9/12; its Weak effect after a defensive card is unchanged.
+• Fearless: restored icons for temporary Strength and temporary Dexterity loss. Mechanics and values are unchanged.
+Ironeye
+• Enchanted Shot: damage 8/11 → 8/9; directly triggered Mark stacks 1/1 → 1/2.
+• Poison Arrow: cost 2 → 1; base Hidden Poison 3 → 2. Damage and upgrade increments are unchanged.
+• Through and Through: base damage 6 → 8. Upgrading now adds 3 initial damage (8 → 11), instead of increasing the damage increment after each hit from 3 to 4. Both versions now increase subsequent hits by 3.
+• Skybreaker: Strength gained per Long Shot trigger 1 → 2. The Innate upgrade is unchanged.
+Revenant
+• Cursed Claw Combo: replaced discarding the top 2 cards of the draw pile with choosing 1 card in the draw pile to discard. Its two attacks and Ethereal keyword are unchanged.
+• Discus of Light: initial damage 7 → 6; damage growth per recovery 2/3 → 4/7, still lasting for the current combat only.
+• Burn Life: base version still grants 8 Block and 2 Energy. Upgraded version changed from 11 Block and 2 Energy to 9 Block and 3 Energy. Summon sacrifice is unchanged.
+• Gaze Beyond: Vulnerable to all enemies 1/2 → 2/3; removed its 1/2 Weak to all enemies. Automatic play on recovery is unchanged.
+• Chanting Blessing: Block after Charging 6/9 → 5/7.
+Duchess
+• Hidden Pocket: Block per card returned from hand to the top of the draw pile 3/4 → 5/7. Other effects are unchanged.

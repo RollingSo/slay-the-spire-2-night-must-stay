@@ -1,0 +1,15 @@
+0.3.16
+
+中文
+• 调整守护者多张卡牌的耗能与稀有度。“奋力搏击”现在获得能量并抽牌，但本回合无法再打出攻击牌；“不破架势”不再额外获得防御反击。
+• “狩猎巨人”改为直接施加3层失衡，升级降低耗能；“磨枪”现在同时提供本回合的力量与敏捷；“荡天神”改为根据目标虚弱层数降低其力量。
+• 调整铁之眼多张卡牌与药水的平衡。“宿灵射击”不再需要触发远射即可触发标记；“不怒自威”改为固定降低敌人力量；调整“穿云箭”“回身一箭”等牌的能量与保留效果。
+• 修复复仇者“彼岸凝望”和“弗尔桑克斯的雷枪”回收时的自动打出顺序，确保回收触发效果先结算。
+• 修正守护者对话气泡的位置，并修正女爵联机指向手势图中的手套细节。
+
+English
+• Adjusted the costs and rarities of several Guardian cards. Desperate Struggle now grants Energy and draws a card, but prevents further Attack cards from being played that turn. Unbreakable Stance no longer grants additional Guard Counter.
+• Giant Hunt now directly applies 3 Imbalance and costs less when upgraded. Spear Grinding now grants both temporary Strength and Dexterity. Sky-Sweeping God now reduces the target's Strength based on its Weak stacks.
+• Rebalanced several Ironeye cards and potions. Enchanted Shot no longer requires Long Shot to trigger Mark. Imposing Presence now applies a fixed Strength reduction. Adjusted the Energy and Retain effects of cards including Cloud-Piercing Arrow and Turning Arrow.
+• Fixed the automatic-play order when recovering Revenant's Gaze Beyond and Fortissax's Lightning Spear, ensuring recovery-triggered effects resolve first.
+• Corrected Guardian's speech-bubble position and the glove detail in Duchess's multiplayer pointing-hand artwork.

@@ -41,8 +41,7 @@ namespace NightMustStay.Core.Models.Cards
             ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
 
             decimal damage = GetDamageBeforeHooks();
-            if (!Fearless.IsShieldPokeEmpowered(this))
-                await CreatureCmd.GainBlock(base.Owner.Creature, base.DynamicVars.Block, cardPlay);
+            await CreatureCmd.GainBlock(base.Owner.Creature, base.DynamicVars.Block, cardPlay);
             await DamageCmd.Attack(damage)
                 .CompatFromCard(this)
                 .Targeting(cardPlay.Target)

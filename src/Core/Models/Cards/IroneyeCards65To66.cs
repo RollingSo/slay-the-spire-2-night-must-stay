@@ -74,7 +74,7 @@ public sealed class PoisonScheme : CardModel
         ImageHelper.GetImagePath("packed/card_portraits/ironeye/poison_scheme.png");
 
     public PoisonScheme()
-        : base(1, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy)
+        : base(0, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy)
     {
     }
 
@@ -100,6 +100,5 @@ public sealed class PoisonScheme : CardModel
     protected override void OnUpgrade()
     {
         DynamicVars[HiddenPoisonKey].UpgradeValueBy(1m);
-        DynamicVars[RetainCardsKey].UpgradeValueBy(1m);
     }
 }

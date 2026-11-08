@@ -162,7 +162,8 @@ namespace NightMustStay.Core.Models.Cards
 
         protected override void OnUpgrade()
         {
-            base.DynamicVars.Damage.UpgradeValueBy(3m);
+            base.DynamicVars.Damage.UpgradeValueBy(1m);
+            DynamicVars[ImbalanceKey].UpgradeValueBy(1m);
         }
     }
 
@@ -211,6 +212,10 @@ namespace NightMustStay.Core.Models.Cards
 
             if (cardPlay.Target.IsAlive)
             {
+                await PowerCmd.Apply<PhantomImbalancePower>(
+                    choiceContext, cardPlay.Target, DynamicVars[ImbalanceKey].BaseValue,
+                    Owner.Creature, this);
+                await PhantomImbalancePower.ResolveThreshold(choiceContext, cardPlay.Target);
                 await PowerCmd.Apply<PhantomCoStrikePower>(
                     choiceContext,
                     cardPlay.Target,
@@ -237,7 +242,7 @@ namespace NightMustStay.Core.Models.Cards
         };
 
         public SlowDefend()
-            : base(1, CardType.Skill, CardRarity.Common, TargetType.Self)
+            : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
         {
         }
 
@@ -313,7 +318,28 @@ namespace NightMustStay.Core.Models.Power
 {
     public sealed class PhantomImbalancePower : PowerModel
     {
-        public const int StacksPerPlayer = 3;
+        public const int StacksPerPlayer = 2;
+        private sealed class StunProgress
+        {
+            public ICombatState Combat;
+            public int Increases;
+            public bool Resolving;
+        }
+        // The power disappears when all stacks are consumed. Keep resistance
+        // on the creature instead, shared by every player, for this combat only.
+        private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<Creature, StunProgress> Progress = new();
+
+        private static StunProgress GetProgress(Creature target)
+        {
+            var progress = Progress.GetValue(target, static _ => new StunProgress());
+            if (!ReferenceEquals(progress.Combat, target.CombatState))
+            {
+                progress.Combat = target.CombatState;
+                progress.Increases = 0;
+                progress.Resolving = false;
+            }
+            return progress;
+        }
 
         public override PowerType Type => PowerType.Debuff;
 
@@ -324,30 +350,40 @@ namespace NightMustStay.Core.Models.Power
             get
             {
                 LocString description = base.Description;
-                int playerCount = CombatManager.Instance.DebugOnlyGetState()?.Players.Count ?? 1;
-                description.Add("Threshold", GetThreshold(playerCount));
+                // Hover tips also query the canonical power, which has no owner.
+                Creature owner = IsMutable ? Owner : null;
+                int playerCount = owner?.CombatState?.Players.Count
+                    ?? CombatManager.Instance.DebugOnlyGetState()?.Players.Count ?? 1;
+                description.Add("Threshold", GetThreshold(playerCount, owner == null ? 0 : GetProgress(owner).Increases));
+                description.Add("MaxThreshold", GetThreshold(playerCount, 4));
                 return description;
             }
         }
 
-        public static int GetThreshold(int playerCount)
+        public static int GetThreshold(int playerCount, int increases = 0)
         {
             playerCount = Math.Max(1, playerCount);
-            return playerCount == 1
-                ? StacksPerPlayer
-                : StacksPerPlayer * playerCount - 2;
+            int initial = playerCount == 1 ? StacksPerPlayer : StacksPerPlayer * playerCount - 1;
+            return initial + Math.Clamp(increases, 0, 4);
         }
 
         public static async Task ResolveThreshold(PlayerChoiceContext context, Creature target)
         {
             PhantomImbalancePower imbalance = target.GetPower<PhantomImbalancePower>();
+            var progress = GetProgress(target);
             int playerCount = Math.Max(1, target.CombatState?.Players.Count ?? 1);
-            int stunThreshold = GetThreshold(playerCount);
-            if (imbalance == null || imbalance.Amount < stunThreshold)
+            int stunThreshold = GetThreshold(playerCount, progress.Increases);
+            if (progress.Resolving || imbalance == null || imbalance.Amount < stunThreshold)
                 return;
 
-            await CreatureCmd.Stun(target);
-            await PowerCmd.ModifyAmount(context, imbalance, -stunThreshold, imbalance.Applier, null);
+            progress.Resolving = true;
+            try
+            {
+                await CreatureCmd.Stun(target);
+                progress.Increases = Math.Min(4, progress.Increases + 1);
+                await PowerCmd.ModifyAmount(context, imbalance, -stunThreshold, imbalance.Applier, null);
+            }
+            finally { progress.Resolving = false; }
         }
     }
 

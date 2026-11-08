@@ -76,7 +76,7 @@ internal static class MajestyRegression
                 _stunnedTarget = new Creature(player, 70, 70);
                 foreach (Creature? target in new Creature?[] { null, normalTarget, _stunnedTarget })
                 {
-                    decimal expected = (upgraded ? 12m : 9m) * (target == _stunnedTarget ? 3 : 1);
+                    decimal expected = (upgraded ? 14m : 11m) * (target == _stunnedTarget ? 4 : 1);
                     dust.DynamicVars.CalculatedDamage.UpdateCardPreview(dust, CardPreviewMode.Normal, target, false);
                     if (dust.DynamicVars.CalculatedDamage.PreviewValue != expected
                         || dust.DynamicVars.CalculatedDamage.Calculate(target) != expected)

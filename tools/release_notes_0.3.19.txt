@@ -1,0 +1,17 @@
+0.3.19
+
+中文
+• 调整女爵多张卡牌的耗能与升级效果。“天降魔力”的伤害提高至12/16；“逃脱”改为1费、不再需要隐匿，每消耗1张牌获得5/7点格挡。
+• 修复女爵与复仇者的部分效果伤害错误受到攻击修正影响的问题，并修正癫火系列攻击的伤害结算，使预览与实际结算一致。
+• 修复“信徒的立誓布”在卡牌自身完成蓄力后，下一次打出的0费折扣可能被提前清除的问题。
+• 修复“古龙信仰”在联机回合开始时的回收选牌阻塞队友行动的问题。
+• 增加铁之眼攻击牌可触发标记时的高亮提示。
+• 为“魔法辉剑”增加剩余回合显示和状态图标，补充烟雾瓶的隐匿说明，并优化反应关键词说明。
+
+English
+• Adjusted the costs and upgrade effects of several Duchess cards. Magic Downpour now deals 12/16 damage. Escape now costs 1 Energy, no longer requires Concealment, and grants 5/7 Block per card exhausted.
+• Fixed some Duchess and Revenant effect damage incorrectly using attack modifiers. Corrected Frenzied Flame attacks' damage resolution to match their previews.
+• Fixed Believer's Vow Cloth's 0-Energy discount for the next play being cleared prematurely when a card completes its own charge.
+• Fixed Ancient Dragon Faith's turn-start recovery selection blocking teammates' actions in multiplayer.
+• Added a highlight to Ironeye attacks that can trigger Mark.
+• Added a remaining-turn display and status icon for Magic Glintblade, added the Concealment explanation to Smoke Bottle, and clarified the Reaction keyword description.

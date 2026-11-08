@@ -177,6 +177,9 @@ namespace NightMustStay.Core.Models.Power
                     Owner,
                     cardSource);
             }
+            if (IroneyeOriginPower.IsReturningToOrigin(oldDistance, newDistance)
+                && Owner.GetPower<IroneyeOriginPower>() is { } origin)
+                await origin.ReturnToOrigin(choiceContext, cardSource);
         }
 
         private decimal GetStrengthContribution(decimal distance)
@@ -511,41 +514,6 @@ namespace NightMustStay.Core.Models.Power
             new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
     }
 
-    public sealed class DisorderlyArrowsPower : PowerModel
-    {
-        public override PowerType Type => PowerType.Buff;
-
-        public override PowerStackType StackType => PowerStackType.Counter;
-
-        protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            new[] { HoverTipFactory.FromPower<NightMustStayMarkPower>() };
-
-        public override async Task AfterPowerAmountChanged(
-            PlayerChoiceContext choiceContext,
-            PowerModel power,
-            decimal amount,
-            Creature applier,
-            CardModel cardSource)
-        {
-            if (power is not NightMustStayMarkPower
-                || amount <= 0m
-                || applier != Owner
-                || !power.Owner.IsAlive)
-            {
-                return;
-            }
-
-            Flash();
-            IroneyeAttackEffects.Play(power.Owner, IroneyeAttackVfx.Kind.Shot, Owner);
-            await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
-                choiceContext,
-                power.Owner,
-                Amount,
-                ValueProp.Unpowered,
-                Owner,
-                null);
-        }
-    }
 
     public sealed class EagleEyePower : PowerModel
     {
@@ -699,35 +667,45 @@ namespace NightMustStay.Core.Models.Power
             Creature dealer,
             CardModel cardSource)
         {
-            decimal expandedRange =
-                dealer?.GetPower<PierceTheWillowPower>()?.Amount ?? 0m;
-            expandedRange += dealer?.Player?.GetRelic<SacredRhythmBlade>()
-                ?.TriggerRangeIncrease ?? 0m;
-            decimal remainder = result.TotalDamage % TriggerInterval;
-            decimal distanceToMultiple = decimal.Min(
-                decimal.Abs(remainder),
-                TriggerInterval - decimal.Abs(remainder));
-            bool standardTrigger = result.TotalDamage > 0m
-                && distanceToMultiple <= expandedRange;
-            FatalBladeEdgePower fatalBlade = dealer?.GetPower<FatalBladeEdgePower>();
-            decimal distance = dealer?.GetPower<DistancePower>()?.Amount ?? 0m;
-            bool fatalBladeTrigger = result.TotalDamage > 0m
-                && fatalBlade != null
-                && distance <= -fatalBlade.Amount;
-            bool heavenlyEyeTrigger = result.TotalDamage > 0m
-                && dealer?.GetPower<NowhereToHidePower>()
-                    ?.GuaranteesMarkTrigger(cardSource) == true;
             if (target != Owner
                 || dealer == null
                 || dealer.Side != CombatSide.Player
                 || cardSource?.Type != CardType.Attack
                 || !props.HasFlag(ValueProp.Move)
-                || (!standardTrigger && !fatalBladeTrigger && !heavenlyEyeTrigger))
-            {
+                || !CanTriggerFromDamage(dealer, cardSource, result.TotalDamage))
                 return;
-            }
 
             await TriggerOne(choiceContext, dealer, cardSource, result.TotalDamage);
+        }
+
+        internal static bool CanTriggerFromDamage(
+            Creature dealer, CardModel cardSource, decimal damage, bool preview = false)
+        {
+            decimal expandedRange =
+                dealer?.GetPower<PierceTheWillowPower>()?.Amount ?? 0m;
+            expandedRange += dealer?.Player?.GetRelic<SacredRhythmBlade>()
+                ?.TriggerRangeIncrease ?? 0m;
+            decimal remainder = damage % TriggerInterval;
+            decimal distanceToMultiple = decimal.Min(
+                decimal.Abs(remainder),
+                TriggerInterval - decimal.Abs(remainder));
+            bool standardTrigger = damage > 0m
+                && distanceToMultiple <= expandedRange;
+            FatalBladeEdgePower fatalBlade = dealer?.GetPower<FatalBladeEdgePower>();
+            decimal distance = dealer?.GetPower<DistancePower>()?.Amount ?? 0m;
+            // These attacks move before dealing damage.
+            if (preview && cardSource is NightMustStay.Core.Models.Cards.TurningArrow)
+                distance = -distance;
+            if (preview && cardSource is NightMustStay.Core.Models.Cards.BladeGlide)
+                distance = 0m;
+            bool fatalBladeTrigger = damage > 0m
+                && fatalBlade != null
+                && distance <= -fatalBlade.Amount;
+            var heavenlyEye = dealer?.GetPower<NowhereToHidePower>();
+            bool heavenlyEyeTrigger = damage > 0m && heavenlyEye != null
+                && (heavenlyEye.GuaranteesMarkTrigger(cardSource)
+                    || (preview && heavenlyEye.CanGuaranteeNextAttack(cardSource)));
+            return standardTrigger || fatalBladeTrigger || heavenlyEyeTrigger;
         }
 
         public async Task TriggerOne(

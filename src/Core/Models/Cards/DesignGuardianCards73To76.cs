@@ -113,7 +113,7 @@ namespace NightMustStay.Core.Models.Cards
         };
 
         public SkySweepingGod()
-            : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
+            : base(1, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy)
         {
         }
 
@@ -128,12 +128,12 @@ namespace NightMustStay.Core.Models.Cards
                 .WithGuardianWeaponFx()
                 .Execute(context);
 
-            if (weak > 0m)
+            if (weak > 0m && cardPlay.Target.IsAlive)
             {
                 await PowerCmd.Apply<StrengthPower>(
                     context,
-                    Owner.Creature,
-                    weak * DynamicVars[StrengthKey].BaseValue,
+                    cardPlay.Target,
+                    -weak * DynamicVars[StrengthKey].BaseValue,
                     Owner.Creature,
                     this);
             }

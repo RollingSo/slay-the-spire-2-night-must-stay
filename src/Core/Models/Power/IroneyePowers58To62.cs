@@ -78,6 +78,10 @@ public sealed class NowhereToHidePower : PowerModel
 
     public bool GuaranteesMarkTrigger(CardModel card) =>
         card != null && ReferenceEquals(GetInternalData<Data>().GuaranteedTriggerCard, card);
+
+    internal bool CanGuaranteeNextAttack(CardModel card) =>
+        Amount > 0m && card?.Owner?.Creature == Owner
+        && card.Type == CardType.Attack && !GetInternalData<Data>().TriggeredAttackThisTurn;
 }
 
 public sealed class VolatilePoisonPower : PowerModel, IPoisonBurstTriggerPower

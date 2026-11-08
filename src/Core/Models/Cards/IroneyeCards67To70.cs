@@ -22,7 +22,16 @@ namespace NightMustStay.Core.Models.Cards;
 public sealed class CurtainCall : CardModel
 {
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new[] { new DamageVar(5m, ValueProp.Move) };
+        new DynamicVar[]
+        {
+            new DamageVar(5m, ValueProp.Move),
+            new CalculationBaseVar(0m),
+            new CalculationExtraVar(1m),
+            new CalculatedVar("CalculatedHits").WithMultiplier(static (card, _) =>
+                card.Owner?.PlayerCombatState == null ? 0m :
+                    PileType.Hand.GetPile(card.Owner).Cards.Count(other =>
+                        other != card && other.ShouldRetainThisTurn)),
+        };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         new[] { HoverTipFactory.FromKeyword(CardKeyword.Retain) };
@@ -39,8 +48,7 @@ public sealed class CurtainCall : CardModel
         PlayerChoiceContext context,
         CardPlay cardPlay)
     {
-        int retainedCards = PileType.Hand.GetPile(Owner).Cards.Count(
-            card => card.ShouldRetainThisTurn);
+        int retainedCards = (int)((CalculatedVar)DynamicVars["CalculatedHits"]).Calculate(null);
 
         if (retainedCards > 0)
         {
@@ -118,7 +126,7 @@ public sealed class ImposingPresence : CardModel
     private const string MarkKey = "Mark";
 
     protected override IEnumerable<DynamicVar> CanonicalVars =>
-        new[] { new PowerVar<NightMustStayMarkPower>(MarkKey, 1m) };
+        new DynamicVar[] { new PowerVar<NightMustStayMarkPower>(MarkKey, 1m), new DynamicVar("StrengthLoss", 4m) };
 
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         new IHoverTip[]
@@ -151,21 +159,20 @@ public sealed class ImposingPresence : CardModel
 
         foreach (Creature enemy in enemies.Where(enemy => enemy.IsAlive))
         {
-            decimal markAmount = enemy.GetPower<NightMustStayMarkPower>()?.Amount ?? 0m;
-            if (markAmount <= 0m)
-                continue;
-
             await PowerCmd.Apply<ImposingPresenceStrengthDownPower>(
                 context,
                 enemy,
-                markAmount,
+                DynamicVars["StrengthLoss"].BaseValue,
                 Owner.Creature,
                 this);
         }
     }
 
-    protected override void OnUpgrade() =>
+    protected override void OnUpgrade()
+    {
         DynamicVars[MarkKey].UpgradeValueBy(1m);
+        DynamicVars["StrengthLoss"].UpgradeValueBy(2m);
+    }
 }
 
 // Card-table ID 70: 看破

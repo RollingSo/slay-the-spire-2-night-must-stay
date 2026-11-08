@@ -18,6 +18,9 @@ public partial class DuchessAttackVfx : CombatVfxCanvas
     private int _nextSound;
     private Sprite2D _impact;
     private Sprite2D _wake;
+    private readonly Vector2[] _clockOutline = new Vector2[65];
+    private readonly Vector2[] _clockLid = new Vector2[49];
+    private readonly Vector2[] _clockSegment = new Vector2[9];
     public override void _Ready()
     {
         _soundCues = DuchessAudio.AttackCues(AttackKind);
@@ -254,11 +257,11 @@ public partial class DuchessAttackVfx : CombatVfxCanvas
             {
                 Vector2 offset=new(-echo*16,-echo*10);
                 Color ink=Fade(white,white.A*(echo==0?.9f:.13f));
-                Vector2[] outline=new Vector2[65];
+                Vector2[] outline=_clockOutline;
                 for(int i=0;i<outline.Length;i++)outline[i]=Oval(i*MathF.Tau/64)+offset;
                 Stroke(outline,echo==0?4:2,ink,false);
             }
-            Vector2[] inner=new Vector2[65];
+            Vector2[] inner=_clockOutline;
             for(int i=0;i<inner.Length;i++)inner[i]=Oval(i*MathF.Tau/64,.83f);
             Stroke(inner,1.5f,ghost,false);
             for(int i=0;i<60;i++)
@@ -274,7 +277,7 @@ public partial class DuchessAttackVfx : CombatVfxCanvas
             DrawArc(new Vector2(0,-88),13,0,MathF.Tau,24,white,3,true);
             DrawLine(new Vector2(-8,-73),new Vector2(8,-73),white,5,true);
             // Open watch cover on the left; no solid opaque clock face.
-            Vector2[] lid=new Vector2[49];
+            Vector2[] lid=_clockLid;
             for(int i=0;i<lid.Length;i++){float a=i*MathF.Tau/48;lid[i]=new Vector2(-125+MathF.Cos(a)*35,-28+MathF.Sin(a)*78).Rotated(-.2f);}
             Stroke(lid,3,ghost,false);
             for(int i=0;i<4;i++)DrawArc(new Vector2(18+i*19,-95-i*3),10,0,MathF.Tau,20,ghost,2,true);
@@ -287,7 +290,7 @@ public partial class DuchessAttackVfx : CombatVfxCanvas
             {
                 float angle=i*MathF.Tau/12;
                 Vector2 drift=Vector2.FromAngle(angle)*(u*135);
-                Vector2[] segment=new Vector2[9];
+                Vector2[] segment=_clockSegment;
                 for(int j=0;j<9;j++)segment[j]=Oval(angle+j*.045f).Rotated(u*(i%2==0?1:-1)) + drift;
                 Stroke(segment,3,fragment,false);
                 Shard(Oval(angle)*(.7f+u),18*(1-u*.6f),5,angle+u*3,fragment);
