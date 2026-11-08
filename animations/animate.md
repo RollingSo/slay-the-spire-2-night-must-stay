@@ -35,6 +35,11 @@ animations/
 │   │   └── derived/{helen,frederick,sebastian}/
 │   ├── manifest.json
 │   └── checklist.md
+├── guardian/
+│   ├── main/
+│   ├── preview/
+│   ├── manifest.json
+│   └── checklist.md
 └── duchess/
     ├── main/
     │   ├── combat_idle.res
