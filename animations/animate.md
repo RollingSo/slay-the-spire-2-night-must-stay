@@ -1,6 +1,6 @@
 # Animation Assets Layout
 
-This directory is the single source of truth for character animation assets that will be packaged into the mod. All file and folder names under `animations/` must be English. Only actual animation resources, checklists, manifests, and later the built mod files belong here; source videos, preview GIFs, extracted frame folders, and temporary records are not committed.
+This directory is the single source of truth for character animation assets that will be packaged into the mod. All file and folder names under `animations/` must be English. The repository keeps production resources, checklists, manifests, per-character preview folders, and later the built mod files. Preview content is for human review only and is never used by the mod. Extracted frame folders and temporary build caches are still not committed.
 
 ## Directory tree
 
@@ -13,6 +13,7 @@ animations/
 │   │   └── merchant_idle/
 │   │       ├── ironeye_merchant_idle.tres
 │   │       └── atlas_*.png
+│   ├── preview/
 │   ├── manifest.json
 │   └── checklist.md
 ├── revenant/
@@ -29,6 +30,9 @@ animations/
 │   │   ├── helen/{idle,attack_a,attack_b,hurt}.res
 │   │   ├── frederick/{idle,attack_a,hurt}.res
 │   │   └── sebastian/{idle,attack_a,attack_b,hurt}.res
+│   ├── preview/
+│   │   ├── main/
+│   │   └── derived/{helen,frederick,sebastian}/
 │   ├── manifest.json
 │   └── checklist.md
 └── duchess/
@@ -52,6 +56,7 @@ animations/
 - `main/`: the character's own animation resources that can be used directly by the mod. Prefer `.res`; keep `.tres` only when an existing engine sequence cannot be packed into `.res` without changing behavior.
 - `derived/`: animations owned by a character but performed by another actor or layer. For Revenant this is the family set: Helen, Frederick, and Sebastian. Omit this directory for characters that have no derivative animations.
 - `checklist.md`: the production checklist for this character. It records action IDs, intended gameplay use, target duration, loop flag, current status, source/adoption notes, and the mapping from action to resource file.
+- `preview/`: human-review previews only (GIF, MP4, HTML, keyframes). This folder is **not** mod input and is never packaged. Preview files may be historical and may not match the current `.res` exactly; always use `main/`/`derived/` for production. File names are English.
 - `manifest.json`: machine-readable mapping of action → resource → frame count → duration → canvas/anchor → integration scale. Each character has one; keep it in sync with `checklist.md`.
 - `mod/`: reserved per character for the built mod files (`.pck`, exported resources, or patch files). It is created when the mod is actually built and is not part of the animation source layout.
 

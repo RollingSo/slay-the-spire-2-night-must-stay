@@ -1,5 +1,7 @@
 # Ironeye Animation Checklist
 
+**Preview: `animations/ironeye/preview/`（仅供预览，不用于 Mod 接入或制作）。**
+
 Layout: `animations/ironeye/main/`. No derivative animation set is present, so `derived/` is intentionally absent. Built mod files should later go under `animations/ironeye/mod/`.
 
 ## Main animations

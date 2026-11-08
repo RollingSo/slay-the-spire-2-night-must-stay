@@ -1,5 +1,7 @@
 # 复仇者与家人：动画视频制作清单
 
+**Preview: `animations/revenant/preview/`（仅供预览，不用于 Mod 接入或制作；部分 GIF 是历史对比图）。**
+
 **2026-11-09 布局：canonical assets are under `animations/revenant/main/` and `animations/revenant/derived/`; all filenames are English action names. The rows below keep their historical production notes and design-path references. Machine-readable map: `manifest.json`. Missing: FR03 (Frederick headbutt) and RV05 reuses RV03 by design.**
 
 
