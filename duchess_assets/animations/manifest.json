@@ -1,0 +1,24 @@
+{
+  "character": "duchess",
+  "generated": "2026-11-09",
+  "combat_parent_scale": 0.711914088,
+  "combat_final_height": 307.546886,
+  "notes": [
+    "Combat textures are authored at 432px visible height; under Visuals 0.711914088 they render at 307.546886.",
+    "Shop and camp textures are authored at their scene sizes and are used at scale 1.0.",
+    "DU09 has a separate phantom_dial effect resource sharing the same frame index.",
+    "DU10 dagger thrust is deferred; DU02 is used for the current short-sword attack."
+  ],
+  "assets": [
+    {"code":"DU01","action":"combat_idle","file":"duchess_combat_idle.res","animation":"combat_idle","frames":100,"fps":24,"loop":true,"seconds":4.1667,"canvas":[268,443],"anchor":[135.384,438.654],"texture_visible_height":432,"final_visible_height":307.546886,"integration_scale":1.0},
+    {"code":"DU02","action":"dagger_slash","file":"duchess_dagger_slash.res","animation":"dagger_slash","frames":24,"fps":24,"loop":false,"seconds":0.9917,"canvas":[458,444],"anchor":[208.322,437.63],"texture_visible_height":432,"final_visible_height":307.546886,"integration_scale":1.0},
+    {"code":"DU03","action":"dodge_defend","file":"duchess_dodge_defend.res","animation":"dodge_defend","frames":22,"fps":24,"loop":false,"seconds":0.9167,"canvas":[368,443],"anchor":[153.01,437.1],"texture_visible_height":432,"final_visible_height":307.546886,"integration_scale":1.0},
+    {"code":"DU04","action":"cast","file":"duchess_cast.res","animation":"cast","frames":31,"fps":24,"loop":false,"seconds":1.2917,"canvas":[372,455],"anchor":[143.658,442.584],"texture_visible_height":432,"final_visible_height":307.546886,"integration_scale":1.0},
+    {"code":"DU05","action":"hurt","file":"duchess_hurt.res","animation":"hurt","frames":24,"fps":24,"loop":false,"seconds":1.0,"canvas":[322,441],"anchor":[189.447,436.085],"texture_visible_height":432,"final_visible_height":307.546886,"integration_scale":1.0},
+    {"code":"DU06","action":"death","file":"duchess_death.res","animation":"death","frames":60,"fps":24,"loop":false,"seconds":2.5,"canvas":[289,458],"anchor":[139.223,435.583],"texture_visible_height":432,"final_visible_height":307.546886,"integration_scale":1.0},
+    {"code":"DU07","action":"merchant_idle","file":"duchess_merchant_idle.res","animation":"merchant_idle","frames":80,"fps":24,"loop":true,"seconds":3.875,"canvas":[211,537],"anchor":[112.94,531.63],"texture_visible_height":526.6405,"final_visible_height":526.6405,"integration_scale":1.0},
+    {"code":"DU08","action":"camp_idle","file":"duchess_camp_idle.res","animation":"camp_idle","frames":190,"fps":24,"loop":true,"seconds":7.9167,"canvas":[450,548],"anchor":[224.89,542.86],"texture_visible_height":526.6151,"final_visible_height":526.6151,"integration_scale":1.0},
+    {"code":"DU09","action":"time_command","file":"duchess_time_command.res","animation":"time_command","frames":121,"fps":24,"loop":false,"seconds":5.0167,"canvas":[296,455],"anchor":[170.209,443.024],"texture_visible_height":432,"final_visible_height":307.546886,"integration_scale":1.0},
+    {"code":"DU09","action":"phantom_dial","file":"duchess_phantom_dial.res","animation":"phantom_dial","frames":121,"fps":24,"loop":false,"seconds":5.0167,"canvas":[213,221],"anchor":[276.673,455.308],"texture_visible_height":null,"final_visible_height":null,"integration_scale":1.0,"type":"effect"}
+  ]
+}
