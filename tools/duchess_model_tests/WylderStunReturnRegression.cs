@@ -58,13 +58,40 @@ internal static class WylderStunReturnRegression
             Check(playing.Pile?.Type == PileType.Hand && playing.EnergyCost.GetResolved() == 0, "Deferred copy returns after cleanup with a fresh next-play discount");
             playing.AfterCardChangedPilesLate(playing, PileType.Discard, null!).GetAwaiter().GetResult();
             Check(Returned.Count == 3, "Deferred move callback cannot recurse or duplicate");
+            Fixture();
+            var endTurn = Card(PileType.Discard);
+            Type granted = typeof(Wylder).Assembly.GetType("NightMustStay.Core.Models.Cards.WylderGrantedDesperation")!;
+            object batches = AccessTools.Field(granted, "Batches").GetValue(null)!;
+            object batch = AccessTools.Method(batches.GetType(), "GetOrCreateValue")!.Invoke(batches, new object[] { Combat })!;
+            var resolving = (ISet<Player>)AccessTools.Field(batch.GetType(), "Resolving").GetValue(batch)!;
+            resolving.Add(Owner);
+            endTurn.OnEnemyStunned().GetAwaiter().GetResult();
+            Check(endTurn.Pile?.Type == PileType.Discard && Returned.Count == 0,
+                "Desperation Stun defers return until native end-turn discard has finished");
+            resolving.Remove(Owner);
+            endTurn.AfterSideTurnEnd(null!, CombatSide.Player, new[] { Owner.Creature }).GetAwaiter().GetResult();
+            Check(endTurn.Pile?.Type == PileType.Hand && endTurn.EnergyCost.GetResolved() == 0 && Returned.Count == 1,
+                "Deferred Desperation return enters hand after the discard node with next-play0");
+            Fixture();
+            var triumph = Triumph(PileType.Discard);
+            batches = AccessTools.Field(granted, "Batches").GetValue(null)!;
+            batch = AccessTools.Method(batches.GetType(), "GetOrCreateValue")!.Invoke(batches, new object[] { Combat })!;
+            resolving = (ISet<Player>)AccessTools.Field(batch.GetType(), "Resolving").GetValue(batch)!;
+            resolving.Add(Owner);
+            triumph.OnEnemyStunned().GetAwaiter().GetResult();
+            Check(triumph.Pile?.Type == PileType.Discard && Returned.Count == 0,
+                "Desperation Stun defers Triumph until native end-turn discard has finished");
+            resolving.Remove(Owner);
+            triumph.AfterSideTurnEnd(null!, CombatSide.Player, new[] { Owner.Creature }).GetAwaiter().GetResult();
+            Check(triumph.Pile?.Type == PileType.Hand && Returned.Count == 1,
+                "Deferred Triumph return enters hand after the discard node");
             Fixture(); var untouched = Card(PileType.Discard); var dead = Enemy(); dead.SetCurrentHpInternal(0);
             CreatureCmd.Stun(dead, _ => Task.CompletedTask, "NOTHING").GetAwaiter().GetResult();
             Check(untouched.Pile?.Type == PileType.Discard && untouched.EnergyCost.GetResolved() == 3 && Returned.Count == 0, "Dead enemy Stun does not trigger return");
             Fixture(); untouched = Card(PileType.Discard); Creature ally = Enemy(CombatSide.Player);
             CreatureCmd.Stun(ally, _ => Task.CompletedTask, "NOTHING").GetAwaiter().GetResult();
             Check(untouched.Pile?.Type == PileType.Discard && Returned.Count == 0, "Stunning a same-side creature does not trigger enemy return");
-            Console.WriteLine($"PASS: {_checks} Critical Strike stun-return checks: successful native Stun, combat piles/same instances, next-play cost lifetime, deferred resolving copy and invalid targets.");
+            Console.WriteLine($"PASS: {_checks} Critical Strike stun-return checks: successful native Stun, combat piles/same instances, next-play cost lifetime, play cleanup, post-discard Desperation return and invalid targets.");
         }
         finally { h.UnpatchAll(h.Id); }
     }
@@ -79,6 +106,8 @@ internal static class WylderStunReturnRegression
     }
     private static WylderCriticalStrike Card(PileType pile)
     { var card = (WylderCriticalStrike)ModelDb.Card<WylderCriticalStrike>().ToMutable(); AccessTools.Field(typeof(CardModel), "_owner").SetValue(card, Owner); Put(card, pile); return card; }
+    private static WylderTriumph Triumph(PileType pile)
+    { var card = (WylderTriumph)ModelDb.Card<WylderTriumph>().ToMutable(); AccessTools.Field(typeof(CardModel), "_owner").SetValue(card, Owner); Put(card, pile); return card; }
     private static void Put(CardModel card, PileType pile)
     {
         if (pile == PileType.Deck) ((List<CardModel>)AccessTools.Field(typeof(CardPile), "_cards").GetValue(Owner.Deck)!).Add(card);

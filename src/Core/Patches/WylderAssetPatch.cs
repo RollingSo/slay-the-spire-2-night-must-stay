@@ -12,6 +12,7 @@ using MegaCrit.Sts2.Core.Nodes.RestSite;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Screens.Shops;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
+using NightMustStay.Core.Models.Cards;
 using NightMustStay.Core.Models.Characters;
 using NightMustStay.Core.Models.Power;
 
@@ -30,6 +31,85 @@ namespace NightMustStay.Core.Patches
             "res://wylder_assets/multiplayer_hands";
         private const string WylderTrailPath =
             "res://wylder_assets/card_trail_wylder.tscn";
+
+        private static bool TryGetWylderTemporaryStatPowerIconPaths(
+            PowerModel power,
+            out string iconPath,
+            out string bigIconPath)
+        {
+            string id = power switch
+            {
+                WylderValorStrengthPower => "wylder_valor_strength_power",
+                WylderLoneCouragePower => "wylder_lone_courage_power",
+                WylderAgilityPower => "wylder_agility_power",
+                WylderUppercutStrengthDownPower => "wylder_uppercut_strength_down_power",
+                _ => string.Empty,
+            };
+            if (id.Length == 0)
+            {
+                iconPath = string.Empty;
+                bigIconPath = string.Empty;
+                return false;
+            }
+
+            iconPath = $"res://images/atlases/power_atlas.sprites/{id}.tres";
+            bigIconPath = $"res://images/powers/{id}.png";
+            return true;
+        }
+
+        [HarmonyPatch(
+            typeof(PowerModel),
+            nameof(PowerModel.ResolvedBigIconPath),
+            MethodType.Getter)]
+        [HarmonyPrefix]
+        public static bool ResolveWylderTemporaryStatPowerBigIconPath(
+            PowerModel __instance,
+            ref string __result)
+        {
+            if (!TryGetWylderTemporaryStatPowerIconPaths(__instance, out _, out string resolvedPath))
+                return true;
+
+            // TemporaryStrengthPower/TemporaryDexterityPower can permanently
+            // cache the missing-icon fallback after their first lookup. Return
+            // the verified Wylder resource directly for both compact and flash
+            // presentations instead of allowing that cache to be poisoned.
+            __result = resolvedPath;
+            return false;
+        }
+
+        [HarmonyPatch(typeof(PowerModel), nameof(PowerModel.Icon), MethodType.Getter)]
+        [HarmonyPrefix]
+        public static bool ResolveWylderTemporaryStatPowerIcon(
+            PowerModel __instance,
+            ref Texture2D __result)
+        {
+            if (!TryGetWylderTemporaryStatPowerIconPaths(__instance, out string iconPath, out _))
+                return true;
+
+            Texture2D texture = GD.Load<Texture2D>(iconPath);
+            if (texture == null)
+                return true;
+
+            __result = texture;
+            return false;
+        }
+
+        [HarmonyPatch(typeof(PowerModel), nameof(PowerModel.BigIcon), MethodType.Getter)]
+        [HarmonyPrefix]
+        public static bool ResolveWylderTemporaryStatPowerBigIcon(
+            PowerModel __instance,
+            ref Texture2D __result)
+        {
+            if (!TryGetWylderTemporaryStatPowerIconPaths(__instance, out _, out string bigIconPath))
+                return true;
+
+            Texture2D texture = GD.Load<Texture2D>(bigIconPath);
+            if (texture == null)
+                return true;
+
+            __result = texture;
+            return false;
+        }
 
         [HarmonyPatch(typeof(CharacterModel), nameof(CharacterModel.CharacterSelectBg), MethodType.Getter)]
         [HarmonyPostfix]

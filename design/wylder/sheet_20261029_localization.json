@@ -62,9 +62,9 @@
     ],
     "WYLDER_BOLDNESS": [
       "果敢",
-      "造成超过20点的攻击伤害时，获得{Block:diff()}点格挡。",
+      "造成不低于20点的攻击伤害时，获得{Block:diff()}点格挡。",
       "Boldness",
-      "Whenever an attack hit deals more than 20 damage, gain {Block:diff()} Block."
+      "Whenever an attack hit deals at least 20 damage, gain {Block:diff()} Block."
     ],
     "WYLDER_NIGHT_FORM": [
       "黑夜形态",
@@ -147,7 +147,7 @@
     "WYLDER_GRAPPLE_SHOT": [
       "钩爪射击",
       "造成{Damage:diff()}点伤害。\n进入[gold]追击[/gold]。",
-      "Grapple Shot",
+      "Claw Shot",
       "Deal {Damage:diff()} damage.\nEnter [gold]Pursuit[/gold]."
     ],
     "WYLDER_INTENSE_BURNING": [
@@ -345,16 +345,16 @@
     "WYLDER_SILURIA_VORTEX": [
       "志留亚的漩涡",
       "造成{CalculatedDamage:diff()}点伤害。\n本场战斗中每击晕过1次敌人，这张牌的伤害增加{ExtraDamage:diff()}点。",
-      "Siluria’s Vortex",
+      "Siluria's Woe",
       "Deal {CalculatedDamage:diff()} damage.\nDeals {ExtraDamage:diff()} additional damage for each time an enemy has been Stunned this combat."
     ]
   },
   "powers": {
     "WYLDER_BOLDNESS_POWER": [
       "果敢",
-      "单次攻击伤害超过20点时，获得5点格挡（升级为7点）。\n伤害在扣除格挡前计算。",
+      "单次攻击伤害不低于20点时，获得5点格挡（升级为7点）。\n伤害在扣除格挡前计算。",
       "Boldness",
-      "When an attack hit deals more than 20 damage before Block, gain 5 Block (7 when upgraded)."
+      "When an attack hit deals at least 20 damage before Block, gain 5 Block (7 when upgraded)."
     ],
     "WYLDER_NIGHT_FORM_POWER": [
       "黑夜形态",

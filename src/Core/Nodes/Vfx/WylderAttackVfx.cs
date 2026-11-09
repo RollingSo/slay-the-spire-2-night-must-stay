@@ -10,7 +10,8 @@ public partial class WylderAttackVfx : Node2D
     public enum Kind
     {
         Greatsword, Claw, FireExplosion, FlameSlash, StormBlade, VacuumSlice,
-        CorpseWax, OrdovisVortex, SiluriaVortex, TakersFlames, GhostflameExplosion
+        CorpseWax, OrdovisVortex, SiluriaVortex, TakersFlames, GhostflameExplosion,
+        BucklerImpact, RetreatGuard, Execution
     }
 
     private static readonly Color Steel = new("EAF2FF");
@@ -23,10 +24,12 @@ public partial class WylderAttackVfx : Node2D
 
     public Kind AttackKind { get; set; }
     public Vector2 Origin { get; set; } = new(-260f, 0f);
+    public Action? OnStart { get; set; }
     public float Duration => AttackKind == Kind.FireExplosion ? .82f : AttackKind == Kind.GhostflameExplosion ? .78f : .62f;
 
     public override void _Ready()
     {
+        OnStart?.Invoke();
         SetProcess(true);
         QueueRedraw();
     }
@@ -55,6 +58,23 @@ public partial class WylderAttackVfx : Node2D
             case Kind.SiluriaVortex: DrawVortex(t, fade, new Color("F6C56B"), true); break;
             case Kind.TakersFlames: DrawBurst(t, fade, Red, Flame, 9); DrawArc(Vector2.Zero, 75f + 95f * t, -2.8f, .25f, 34, new Color(Flame, fade), 13f, true); break;
             case Kind.GhostflameExplosion: DrawBurst(t, fade, Ghost, Wind, 11); break;
+            case Kind.BucklerImpact:
+                DrawArc(Vector2.Zero, Mathf.Lerp(35f, 145f, Mathf.Sqrt(t)), -2.3f, 1.0f, 36,
+                    new Color(Steel, fade), 13f, true);
+                DrawArc(Vector2.Zero, Mathf.Lerp(20f, 110f, Mathf.Sqrt(t)), -2.15f, .85f, 30,
+                    new Color(Wind, .75f * fade), 6f, true);
+                DrawBurst(t, fade, Steel, Gold, 6);
+                break;
+            case Kind.RetreatGuard:
+                for (int i = 0; i < 3; i++)
+                    DrawArc(Vector2.Zero, Mathf.Lerp(28f + i * 18f, 145f + i * 24f, Mathf.Sqrt(t)),
+                        -2.55f, -.6f, 34, new Color(i == 1 ? Wind : Steel, fade * (1f - i * .18f)),
+                        10f - i * 2f, true);
+                break;
+            case Kind.Execution:
+                DrawSlash(t, fade, new Color(Red, .95f), 230f, -.7f);
+                DrawBurst(t, fade, Red, Steel, 8);
+                break;
         }
     }
 

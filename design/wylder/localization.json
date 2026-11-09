@@ -33,20 +33,20 @@
     "WYLDER_STAMP_UPWARD_CUT": [
       "箭步：上砍",
       "造成{Damage:diff()}点伤害。\n[gold]追击[/gold]：本回合内减少该敌人{StrengthLoss:diff()}点[gold]力量[/gold]。",
-      "Stamp: Upward Cut",
+      "Stamp (Upward Cut)",
       "Deal {Damage:diff()} damage.\n[gold]Pursuit[/gold]: That enemy loses {StrengthLoss:diff()} [gold]Strength[/gold] this turn."
     ],
     "WYLDER_STAMP_SWEEP": [
       "箭步：回旋斩",
       "造成{Damage:diff()}点伤害。\n[gold]追击[/gold]：改为对所有敌人造成伤害。",
-      "Stamp: Sweep",
+      "Stamp (Sweep)",
       "Deal {Damage:diff()} damage.\n[gold]Pursuit[/gold]: Target all enemies instead."
     ],
     "WYLDER_FLAME_CHASE_SLASH": [
       "燃火追斩",
-      "造成{Damage:diff()}点伤害。\n将{Cards:diff()}张[gold]附火{IfUpgraded:show:+|}[/gold]添加到手牌。",
+      "[gold]收招[/gold]。\n造成{Damage:diff()}点伤害。\n将{Cards:diff()}张[gold]附火{IfUpgraded:show:+|}[/gold]添加到手牌。",
       "Flame Chase Slash",
-      "Deal {Damage:diff()} damage.\nAdd {Cards:diff()} [gold]Fire Coating{IfUpgraded:show:+|}[/gold] to your hand."
+      "[gold]Follow Through[/gold].\nDeal {Damage:diff()} damage.\nAdd {Cards:diff()} [gold]Fire Coating{IfUpgraded:show:+|}[/gold] to your hand."
     ],
     "WYLDER_EOCHAIDS_DANCING_BLADE": [
       "欧赫剑舞",
@@ -249,7 +249,7 @@
     "WYLDER_ASSAULT_STAKE": [
       "袭击桩柱",
       "[gold]绝境[/gold]。\n对所有敌人造成{Damage:diff()}点伤害。\n[gold]击晕[/gold]所有敌人。",
-      "Assault Stake",
+      "Onslaught Stake",
       "[gold]Desperation[/gold].\nDeal {Damage:diff()} damage to ALL enemies.\n[gold]Stun[/gold] ALL enemies."
     ],
     "WYLDER_BRAVE_BLESSING": [
@@ -293,6 +293,12 @@
       "获得{Block:diff()}点[gold]格挡[/gold]。\n[gold]追击[/gold]：获得{Energy:energyIcons()}。",
       "Centering Breath",
       "Gain {Block:diff()} [gold]Block[/gold].\n[gold]Pursuit[/gold]: Gain {Energy:energyIcons()}."
+    ],
+    "WYLDER_BIDE_THE_MOMENT": [
+      "伺机而动",
+      "[gold]追击[/gold]：获得{Block:diff()}点[gold]格挡[/gold]。",
+      "Bide the Moment",
+      "[gold]Pursuit[/gold]: Gain {Block:diff()} [gold]Block[/gold]."
     ]
   },
   "relics": {

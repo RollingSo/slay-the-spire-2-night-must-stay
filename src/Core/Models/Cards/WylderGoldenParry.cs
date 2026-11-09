@@ -13,6 +13,8 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
+using NightMustStay.Core.Nodes.Vfx;
+using NightMustStay.Core.Patches;
 
 namespace NightMustStay.Core.Models.Cards;
 
@@ -23,8 +25,10 @@ public sealed class WylderGoldenParry : WylderDesperationCard
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Append(HoverTipFactory.FromPower<PhantomImbalancePower>());
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
+        WylderAnimationPatch.PlayBlock(Owner.Creature);
         foreach (var enemy in CombatState.GetOpponentsOf(Owner.Creature).Where(e => e.IsAlive).ToArray())
         {
+            WylderAttackEffects.Play(enemy, WylderAttackVfx.Kind.BucklerImpact, Owner.Creature);
             await PowerCmd.Apply<PhantomImbalancePower>(context, enemy, DynamicVars["Imbalance"].BaseValue, Owner.Creature, this);
             await PhantomImbalancePower.ResolveThreshold(context, enemy);
         }

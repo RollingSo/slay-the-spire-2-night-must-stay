@@ -17,6 +17,7 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using NightMustStay.Core.Models.Cards;
 using NightMustStay.Core.Models.Power;
+using NightMustStay.Core.Patches;
 
 internal static partial class WylderBattleArtRegression
 {
@@ -25,6 +26,7 @@ internal static partial class WylderBattleArtRegression
  private static void NovemberCards()
  {
   int start=_checks;
+  NovemberTemporaryStatPowerIcons();
   NovemberMultiplayer();
   NovemberText();
   foreach(bool up in new[]{false,true})
@@ -64,10 +66,12 @@ internal static partial class WylderBattleArtRegression
     Play(strike);Check(ResolvedDamage.Single()==(handCount<=3?(up?9:7):6),"Forget Sword actual native damage multiplier");
    }
    Fixture();var aura=Card(ModelDb.Card<WylderMurderousAura>(),up);Play(aura);var power=_owner.Creature.GetPower<WylderMurderousAuraPower>()!;
-   Check(power.StatGain==(up?3:2)&&power.ModifyHandDraw(_owner,5)==4&&power.ModifyHandDraw(_owner,0)==0,"Aura draw and upgrade");
-   Rewards.Clear();power.AfterPlayerTurnStartLate(null!,_owner).GetAwaiter().GetResult();
-   Check(Rewards.Count==2&&Rewards.All(r=>r.Amount==(up?3:2)),"Aura next-turn Strength and Dexterity");
-   power.AfterPlayerTurnStartLate(null!,_owner).GetAwaiter().GetResult();Check(Rewards.Count==4,"Aura repeats each turn");
+   Check(power.ModifyHandDraw(_owner,5)==4&&power.ModifyHandDraw(_owner,0)==0,"Aura persistent draw penalty");
+   Check(Rewards.Count(r=>r.Kind is nameof(StrengthPower) or nameof(DexterityPower))==2
+      && Rewards.Any(r=>r.Kind==nameof(StrengthPower)&&r.Amount==(up?3:2))
+      && Rewards.Any(r=>r.Kind==nameof(DexterityPower)&&r.Amount==(up?3:2))
+      && Rewards.Any(r=>r.Kind==nameof(WylderMurderousAuraPower)&&r.Amount==1),
+      "Aura grants Strength and Dexterity once on play and keeps only the draw-penalty power");
    Check(ModelDb.Card<WylderPassTheFlame>().MultiplayerConstraint==CardMultiplayerConstraint.MultiplayerOnly&&ModelDb.Card<WylderPassTheFlame>().TargetType==TargetType.AnyPlayer,"Pass Flame multiplayer target");
    var pass=Card(ModelDb.Card<WylderPassTheFlame>(),up);Check(pass.DynamicVars.Cards.IntValue==(up?3:2),"Pass Flame upgrade");
    var heroes=Card(ModelDb.Card<WylderHeroesAssemble>(),up);Check(heroes.EnergyCost.GetResolved()==(up?0:1)&&heroes.MultiplayerConstraint==CardMultiplayerConstraint.MultiplayerOnly,"Heroes metadata");
@@ -101,6 +105,29 @@ internal static partial class WylderBattleArtRegression
    }
   }finally{h.UnpatchAll(h.Id);}
   Console.WriteLine($"PASS: {_checks-start} new November card checks: damage, thresholds, hand selection, empty hand, temporary stats, draw penalty, discounts, copies, multiplayer metadata and turn-end order.");
+ }
+
+ private static void NovemberTemporaryStatPowerIcons()
+ {
+  var specs=new (PowerModel Power,string Id)[]
+  {
+   (ModelDb.Power<WylderValorStrengthPower>().ToMutable(),"wylder_valor_strength_power"),
+   (ModelDb.Power<WylderLoneCouragePower>().ToMutable(),"wylder_lone_courage_power"),
+   (ModelDb.Power<WylderAgilityPower>().ToMutable(),"wylder_agility_power"),
+   (ModelDb.Power<WylderUppercutStrengthDownPower>().ToMutable(),"wylder_uppercut_strength_down_power")
+  };
+  foreach(var spec in specs)
+  {
+   string resolved="missing";
+   Check(!WylderAssetPatch.ResolveWylderTemporaryStatPowerBigIconPath(spec.Power,ref resolved)
+    && resolved==$"res://images/powers/{spec.Id}.png","Temporary stat big/flash icon is explicitly resolved "+spec.Id);
+   Check(File.Exists($"images/powers/{spec.Id}.png")
+    && File.Exists($"powers/{spec.Id}.png")
+    && File.Exists($"images/atlases/power_atlas.sprites/{spec.Id}.tres"),"Temporary stat compact and flash icon files exist "+spec.Id);
+  }
+  string untouched="unchanged";
+  Check(WylderAssetPatch.ResolveWylderTemporaryStatPowerBigIconPath(ModelDb.Power<StrengthPower>().ToMutable(),ref untouched)
+   && untouched=="unchanged","Native Strength icon resolution remains native");
  }
 
 

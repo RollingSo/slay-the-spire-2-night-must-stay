@@ -23,11 +23,19 @@ internal static class WylderLatestBatchRegression
             var seamless = ModelDb.Card<WylderSeamless>().ToMutable();
             var moonlight = ModelDb.Card<WylderMoonlightSword>().ToMutable();
             var twin = ModelDb.Card<WylderTwinToken>().ToMutable();
+            var inspire = ModelDb.Card<WylderInspire>().ToMutable();
+            var flamelight = ModelDb.Card<WylderFlamelightOnSnow>().ToMutable();
+            var triumph = ModelDb.Card<WylderTriumph>().ToMutable();
+            var judgment = ModelDb.Card<WylderFatesJudgment>().ToMutable();
             if (upgraded)
             {
                 seamless.UpgradeInternal();
                 moonlight.UpgradeInternal();
                 twin.UpgradeInternal();
+                inspire.UpgradeInternal();
+                flamelight.UpgradeInternal();
+                triumph.UpgradeInternal();
+                judgment.UpgradeInternal();
             }
 
             Check(seamless.Type == CardType.Power && seamless.Rarity == CardRarity.Rare
@@ -40,10 +48,27 @@ internal static class WylderLatestBatchRegression
                 && twin.TargetType == TargetType.AnyPlayer
                 && twin.MultiplayerConstraint == CardMultiplayerConstraint.MultiplayerOnly
                 && twin.EnergyCost.GetResolved() == (upgraded ? 0 : 1), "Twin Token metadata and upgrade");
+            Check(inspire.Type == CardType.Skill && inspire.Rarity == CardRarity.Uncommon
+                && inspire.TargetType == TargetType.Self && inspire.EnergyCost.GetResolved() == 1
+                && inspire.DynamicVars.Cards.BaseValue == (upgraded ? 3 : 2)
+                && inspire.DynamicVars["HandThreshold"].BaseValue == 2, "Inspire metadata and upgrade");
+            Check(flamelight.Type == CardType.Power && flamelight.Rarity == CardRarity.Rare
+                && flamelight.EnergyCost.GetResolved() == (upgraded ? 1 : 2)
+                && flamelight.DynamicVars["Freeze"].BaseValue == 1
+                && flamelight.DynamicVars["Vigor"].BaseValue == 3, "Flamelight on Snow metadata and upgrade");
+            Check(triumph.Type == CardType.Skill && triumph.Rarity == CardRarity.Rare
+                && triumph.EnergyCost.GetResolved() == 0
+                && triumph.DynamicVars.Energy.BaseValue == (upgraded ? 2 : 1)
+                && triumph.CanonicalKeywords.Contains(CardKeyword.Exhaust), "Triumph metadata and upgrade");
+            Check(judgment.Type == CardType.Power && judgment.Rarity == CardRarity.Rare
+                && judgment.EnergyCost.GetResolved() == 1
+                && judgment.DynamicVars["Vulnerable"].BaseValue == (upgraded ? 3 : 2)
+                && judgment.DynamicVars["Freeze"].BaseValue == (upgraded ? 3 : 2), "Fate's Judgment metadata and upgrade");
         }
 
-        Check(ModelDb.Card<WylderHoarfrostStomp>() is WylderFollowThroughCard,
-            "Hoarfrost Stomp must participate in Follow Through");
+        Check(ModelDb.Card<WylderHoarfrostStomp>() is WylderFollowThroughCard
+            && ModelDb.Card<WylderHoarfrostStomp>().Rarity == CardRarity.Common,
+            "Hoarfrost Stomp must be Common and participate in Follow Through");
 
         var owner = TrackingArrowRegression.MakePlayer();
         AccessTools.Field(typeof(Player), "<Character>k__BackingField").SetValue(owner, ModelDb.Character<Wylder>());
@@ -60,6 +85,11 @@ internal static class WylderLatestBatchRegression
         moonlightPower.UpgradedCopies = 1;
         Check(moonlightPower.BasicCopies == 1 && moonlightPower.Copies == 2,
             "Moonlight Sword mixed copies preserve individual triggers");
+        var judgmentPower = (WylderFatesJudgmentPower)ModelDb.Power<WylderFatesJudgmentPower>().ToMutable();
+        AccessTools.Property(typeof(PowerModel), nameof(PowerModel.Owner)).SetValue(judgmentPower, creature);
+        judgmentPower.SetAmount(2, true);
+        judgmentPower.UpgradedCopies = 1;
+        Check(judgmentPower.Sum(2, 3) == 5, "Fate's Judgment mixed copies preserve upgraded contribution");
 
         ((List<PowerModel>)AccessTools.Field(typeof(Creature), "_powers").GetValue(creature)!).Add(seamlessPower);
         var hand = CardPile.Get(PileType.Hand, owner) ?? throw new Exception("Missing test hand pile");
@@ -81,17 +111,21 @@ internal static class WylderLatestBatchRegression
         {
             using var cards = JsonDocument.Parse(File.ReadAllText($"NightMustStay/localization/{locale}/cards.json"));
             using var powers = JsonDocument.Parse(File.ReadAllText($"NightMustStay/localization/{locale}/powers.json"));
-            foreach (string id in new[] { "WYLDER_SEAMLESS", "WYLDER_MOONLIGHT_SWORD", "WYLDER_TWIN_TOKEN" })
+            foreach (string id in new[] { "WYLDER_SEAMLESS", "WYLDER_MOONLIGHT_SWORD", "WYLDER_TWIN_TOKEN", "WYLDER_INSPIRE",
+                "WYLDER_FLAMELIGHT_ON_SNOW", "WYLDER_TRIUMPH", "WYLDER_FATES_JUDGMENT" })
             {
                 Check(cards.RootElement.TryGetProperty(id + ".title", out _), $"{locale} {id} title");
                 Check(cards.RootElement.TryGetProperty(id + ".description", out _), $"{locale} {id} description");
                 Check(cards.RootElement.TryGetProperty(id + ".upgradeDescription", out _), $"{locale} {id} upgrade description");
             }
-            foreach (string id in new[] { "WYLDER_SEAMLESS_POWER", "WYLDER_MOONLIGHT_SWORD_POWER" })
+            foreach (string id in new[] { "WYLDER_SEAMLESS_POWER", "WYLDER_MOONLIGHT_SWORD_POWER",
+                "WYLDER_FLAMELIGHT_ON_SNOW_POWER", "WYLDER_FATES_JUDGMENT_POWER" })
             {
                 Check(powers.RootElement.TryGetProperty(id + ".title", out _), $"{locale} {id} title");
                 Check(powers.RootElement.TryGetProperty(id + ".description", out _), $"{locale} {id} description");
             }
+            string remainingEmber = powers.RootElement.GetProperty("WYLDER_REMAINING_EMBER_POWER.description").GetString()!;
+            Check(!remainingEmber.Contains('(') && !remainingEmber.Contains('（'), $"{locale} Remaining Ember has no parenthetical text");
         }
 
         Console.WriteLine("PASS: latest Wylder cards, upgrades, Follow Through inheritance, mixed power copies and localization parity.");

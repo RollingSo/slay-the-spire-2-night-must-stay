@@ -122,8 +122,9 @@ public sealed class WylderDualGreatswordLeap : WylderCard
     private bool _returnAfterPlay;
     public WylderDualGreatswordLeap() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        { new DamageVar(9m, ValueProp.Move), new RepeatVar(2), new DynamicVar("Break", 20m), new EnergyVar(2) };
+        { new DamageVar(9m, ValueProp.Move), new RepeatVar(2), new DynamicVar("Break", 20m), new EnergyVar(1) };
     protected override decimal BreakThreshold => DynamicVars["Break"].BaseValue;
+    protected override int BreakHitCount => DynamicVars.Repeat.IntValue;
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(play.Target)
@@ -146,7 +147,7 @@ public sealed class WylderGhostflameExplosion : WylderCard
     public WylderGhostflameExplosion() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
     public override string PortraitPath => "res://images/packed/card_portraits/wylder/wylder_ghostflame_explosion.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        { new DamageVar(15m, ValueProp.Move), new DynamicVar("Break", 30m), new PowerVar<FreezePower>("Freeze", 3m) };
+        { new DamageVar(15m, ValueProp.Move), new DynamicVar("Break", 30m), new PowerVar<FreezePower>("Freeze", 6m) };
     protected override decimal BreakThreshold => DynamicVars["Break"].BaseValue;
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         base.ExtraHoverTips.Concat(new[] { HoverTipFactory.FromPower<FreezePower>() });

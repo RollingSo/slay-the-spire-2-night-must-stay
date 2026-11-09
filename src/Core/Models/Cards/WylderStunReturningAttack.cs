@@ -1,6 +1,11 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 
 namespace NightMustStay.Core.Models.Cards;
@@ -9,6 +14,7 @@ namespace NightMustStay.Core.Models.Cards;
 public abstract class WylderStunReturningAttack : WylderCard, IWylderStunReturn
 {
     private bool _returnAfterPlay;
+    private bool _returnAfterTurnDiscard;
 
     protected WylderStunReturningAttack(int cost, CardRarity rarity)
         : base(cost, CardType.Attack, rarity, TargetType.AnyEnemy) { }
@@ -16,6 +22,13 @@ public abstract class WylderStunReturningAttack : WylderCard, IWylderStunReturn
     public async Task OnEnemyStunned()
     {
         if (Owner?.PlayerCombatState == null || Owner.Creature.IsDead || Pile == null || !Pile.Type.IsCombatPile()) return;
+        if (WylderGrantedDesperation.IsResolving(Owner))
+        {
+            // End-turn Desperation cards resolve before the native hand-discard
+            // node. Returning now would put Critical Strike into that discard.
+            _returnAfterTurnDiscard = true;
+            return;
+        }
         if (Pile.Type == PileType.Play)
         {
             // Preserve the native play/Replay cleanup. Returning now would let
@@ -24,6 +37,17 @@ public abstract class WylderStunReturningAttack : WylderCard, IWylderStunReturn
             return;
         }
         await ReturnToHand();
+    }
+
+    public override async Task AfterSideTurnEnd(
+        PlayerChoiceContext context,
+        CombatSide side,
+        IEnumerable<Creature> participants)
+    {
+        if (!_returnAfterTurnDiscard || Owner?.PlayerCombatState == null
+            || side != CombatSide.Player || !participants.Contains(Owner.Creature)) return;
+        _returnAfterTurnDiscard = false;
+        if (Pile != null && Pile.Type.IsCombatPile()) await ReturnToHand();
     }
 
     public override async Task AfterCardChangedPilesLate(CardModel card, PileType oldPileType, AbstractModel clonedBy)

@@ -90,6 +90,7 @@ internal static partial class WylderBattleArtRegression
             FinalThreeCards();
             NovemberCards();
             SparkAndRollingAttack();
+            InspireRevision();
             MetadataAndText();
             foreach (bool upgraded in new[] { false, true })
             foreach (Spec spec in Specs())
@@ -113,7 +114,7 @@ internal static partial class WylderBattleArtRegression
                     Check(Rewards.Single().Kind == "VigorPower" && Rewards.Single().Amount == (upgraded ? 5 : 4),
                         "Redmanes gains Vigor once after AOE, not per enemy or Break");
                 if (card is WylderSpinningSlash)
-                    Check(Rewards.Count(r => r.Kind == "Draw") == (pursuit || upgraded ? 1 : 0), "Spinning AOE Break draw once, not per enemy");
+                    Check(Rewards.Count(r => r.Kind == "Draw") == 0, "Spinning requires every hit to reach Break12");
                 if (card is WylderBloodhoundsFinesse)
                 {
                     Check(Rewards.Single().Kind == "Block" && Rewards.Single().Amount == (upgraded ? 6 : 4), "Finesse native Block");
@@ -181,12 +182,18 @@ internal static partial class WylderBattleArtRegression
             Fixture(true);_sheetAutoPlays=0;
             var follow=Card(ModelDb.Card<WylderDualGreatswordLeap>(),false);Put(follow,PileType.Hand);
             var rend=Card(ModelDb.Card<WylderClawRend>(),false);Put(rend,PileType.Hand);
+            var flame=Card(ModelDb.Card<WylderFlameChaseSlash>(),false);Put(flame,PileType.Hand);
             var strike=Card(ModelDb.Card<WylderStrike>(),false);Put(strike,PileType.Hand);
             Play(strike);SettleSheetPlay();
-            Check(_sheetAutoPlays==1 && follow.Pile?.Type==PileType.Hand && rend.Pile?.Type==PileType.Discard,"Pursuit exit plays Claw Rend but not Dual Leap");
+            Check(_sheetAutoPlays==2 && follow.Pile?.Type==PileType.Hand && rend.Pile?.Type==PileType.Discard
+                && flame.Pile?.Type==PileType.Discard,"Pursuit exit plays Claw Rend and Flame Chase but not Dual Leap");
             Fixture(true);_sheetAutoPlays=0;
             Put(Card(ModelDb.Card<WylderDualGreatswordLeap>(),false),PileType.Hand);
-            Play(Card(ModelDb.Card<WylderClawMovement>(),false));SettleSheetPlay();
+            var claw=Card(ModelDb.Card<WylderClawMovement>(),false);
+            Play(claw);SettleSheetPlay();
+            Check(Rewards.Count(r=>r.Kind=="Energy")==1 && Rewards.Count(r=>r.Kind=="Draw")==1
+                && _owner.Creature.HasPower<WylderPursuitPower>(),
+                "Claw Movement receives the old Pursuit Skill reward and keeps its new Pursuit");
             Check(_sheetAutoPlays==0,"Pursuit reentry does not trigger Follow Through");
             foreach(bool up in new[]{false,true})
             {
@@ -230,7 +237,7 @@ internal static partial class WylderBattleArtRegression
             Check(_owner.Creature.GetPowerAmount<WylderValorStrengthPower>()==(up?3:2), "Valor uses native temporary Strength");
             Fixture();
             var claw = Card(ModelDb.Card<WylderClawMovement>(), up);
-            Check(claw.Type == CardType.Attack && claw.TargetType == TargetType.Self, "Sheet Claw is an untargeted Attack");
+            Check(claw.Type == CardType.Skill && claw.TargetType == TargetType.Self, "Claw is a self-targeted Skill");
             var veteran = Card(ModelDb.Card<WylderVeteranEdge>(), up);
             Check(veteran.EnergyCost.GetResolved() == 1 && veteran.Keywords.Contains(CardKeyword.Innate) == up, "Veteran cost and native Innate upgrade");
             Play(Card(ModelDb.Card<WylderClawPull>(), up));
@@ -259,7 +266,7 @@ internal static partial class WylderBattleArtRegression
             Check(Attacks.Single().Raw == 6 && _enemies[0].GetPowerAmount<VulnerablePower>()==(up ? 2 : 1), "Claw Rend damage/Vulnerable");
             Fixture(true); AddPower<StrengthPower>(_owner.Creature,5); _fullyBlocked=true;
             var wax = Card(ModelDb.Card<WylderCorpseWaxCutter>(),up);
-            Check(wax.Rarity==CardRarity.Rare && wax.TargetType==TargetType.AllEnemies,"Corpse Wax sheet metadata");
+            Check(wax.Rarity==CardRarity.Uncommon && wax.TargetType==TargetType.AllEnemies,"Corpse Wax revised metadata");
             Play(wax);
             Check(Attacks.Single().Aoe && Attacks.Single().Raw==(up?14:10) && _enemies.All(e=>e.GetPowerAmount<VulnerablePower>()==(up?3:2) && e.GetPowerAmount<WeakPower>()==(up?3:2)),"Corpse Wax group Break applies both debuffs once");
             Fixture();
@@ -274,8 +281,10 @@ internal static partial class WylderBattleArtRegression
             Fixture();
             var bold=AddPower<WylderBoldnessPower>(_owner.Creature,1);bold.UpgradedCopies=up?1:0;
             attack=Card(ModelDb.Card<WylderStrike>(),false);
-            WylderCombatEvents.AfterDamage(null!,_owner.Creature,_enemies[0],new DamageResult(_enemies[0],ValueProp.Move){BlockedDamage=21},ValueProp.Move,attack).GetAwaiter().GetResult();
-            Check(Rewards.Single(r=>r.Kind=="Block").Amount==(up?7:5),"Boldness includes blocked attack damage");
+            WylderCombatEvents.AfterDamage(null!,_owner.Creature,_enemies[0],new DamageResult(_enemies[0],ValueProp.Move){BlockedDamage=19},ValueProp.Move,attack).GetAwaiter().GetResult();
+            Check(!Rewards.Any(r=>r.Kind=="Block"),"Boldness does not trigger below 20 damage");
+            WylderCombatEvents.AfterDamage(null!,_owner.Creature,_enemies[0],new DamageResult(_enemies[0],ValueProp.Move){BlockedDamage=20},ValueProp.Move,attack).GetAwaiter().GetResult();
+            Check(Rewards.Single(r=>r.Kind=="Block").Amount==(up?7:5),"Boldness triggers at exact 20 and includes blocked attack damage");
             Fixture();
             var sense=Card(ModelDb.Card<WylderSixthSense>(),up);
             Put(sense,PileType.Hand);
@@ -398,11 +407,11 @@ internal static partial class WylderBattleArtRegression
             Check(Attacks.Single() == (false, 2, upgraded ? 10m : 9m), "Dual Leap native two hits");
             Check(ResolvedDamage.Count == 2 && ResolvedDamage.All(d => d == Math.Floor((upgraded ? 10m : 9m) * (pursuit ? 1.5m : 1m))), "Both Leap hits use old Pursuit state only");
             Check(!_owner.Creature.HasPower<WylderPursuitPower>(), "Dual Leap consumes old Pursuit");
-            Check(Rewards.Where(r => r.Kind == "Energy").Sum(r => r.Amount) == (pursuit || upgraded ? 2 : 0), "Dual Leap Break20 energy once including full Block");
+            Check(Rewards.Where(r => r.Kind == "Energy").Sum(r => r.Amount) == 0, "Dual Leap cannot sum two sub-threshold hits into Break20");
             AccessTools.Method(typeof(CombatState), "AddCard", new[] { typeof(CardModel) }).Invoke(_combat, new object[] { leap });
             Put(leap, PileType.Discard);
             leap.AfterCardChangedPilesLate(leap, PileType.Play, null!).GetAwaiter().GetResult();
-            Check(leap.Pile!.Type == (pursuit || upgraded ? PileType.Hand : PileType.Discard), "Dual Leap returns only after Break and cleanup");
+            Check(leap.Pile!.Type == PileType.Discard, "Dual Leap returns only when every hit independently reaches Break20");
 
             Fixture(pursuit); _fullyBlocked = fullyBlocked;
             Play(Card(ModelDb.Card<WylderGhostflameExplosion>(), upgraded));
@@ -413,6 +422,14 @@ internal static partial class WylderBattleArtRegression
         Fixture(); AddPower<StrengthPower>(_owner.Creature, 20);
         Play(Card(ModelDb.Card<WylderDualGreatswordLeap>(), false));
         Check(ResolvedDamage.SequenceEqual(new[] { 29m, 29m }) && !_owner.Creature.HasPower<WylderPursuitPower>(), "Dual Leap native Strength on both hits");
+        Check(Rewards.Where(r => r.Kind == "Energy").Sum(r => r.Amount) == 1, "Dual Leap Breaks once when both hits independently meet the threshold");
+        Fixture();
+        var lethalLeap = Card(ModelDb.Card<WylderDualGreatswordLeap>(), false);
+        var lethalLeapPlay = TrackingArrowRegression.MakePlay(lethalLeap, _owner);
+        lethalLeap.BeforeCardPlayed(lethalLeapPlay).GetAwaiter().GetResult();
+        Hit(lethalLeap, _enemies[0], 20, false, killed: true);
+        Check((bool)AccessTools.Property(typeof(WylderCard), "BrokeThisPlay").GetValue(lethalLeap)!,
+            "Dual Leap qualifying lethal first hit completes Break when the second hit is cancelled");
         Fixture(true); AddPower<VigorPower>(_owner.Creature, 3);
         Play(Card(ModelDb.Card<WylderCliffbreaker>(), false));
         Check(ResolvedDamage.Single() == 30 && _owner.Creature.GetPowerAmount<VigorPower>() == 3, "Native old Vigor consumption precedes fresh Cliffbreaker Vigor");
@@ -426,14 +443,14 @@ internal static partial class WylderBattleArtRegression
             Fixture(); _fullyBlocked = blocked;
             AddPower<StrengthPower>(_owner.Creature, totalDamage - (upgraded ? 17 : 15));
             Play(Card(ModelDb.Card<WylderGhostflameExplosion>(), upgraded));
-            Check(_enemies[0].GetPowerAmount<FreezePower>() == (totalDamage >= 30 ? upgraded ? 4 : 3 : 0), "Ghostflame exact pre-block Break boundary and upgrade");
+            Check(_enemies[0].GetPowerAmount<FreezePower>() == (totalDamage >= 30 ? upgraded ? 7 : 6 : 0), "Ghostflame exact pre-block Break boundary and upgrade");
             Check(!_enemies[1].HasPower<FreezePower>(), "Ghostflame Break only affects selected enemy");
         }
         Fixture(); AddPower<FreezePower>(_enemies[0], 3); AddPower<StrengthPower>(_owner.Creature, 20);
         Play(Card(ModelDb.Card<WylderGhostflameExplosion>(), false));
-        Check(_enemies[0].GetPowerAmount<FreezePower>() == 6, "Ghostflame stacks existing Freeze after Break");
+        Check(_enemies[0].GetPowerAmount<FreezePower>() == 9, "Ghostflame stacks existing Freeze after Break");
         _enemies[0].GetPower<FreezePower>()!.AfterSideTurnEnd(null!, CombatSide.Enemy, _enemies).GetAwaiter().GetResult();
-        Check(_enemies[0].GetPowerAmount<FreezePower>() == 5, "Ghostflame reuses native project Freeze decay");
+        Check(_enemies[0].GetPowerAmount<FreezePower>() == 8, "Ghostflame reuses native project Freeze decay");
         HistoryCards();
         HandSourceCards();
         Console.WriteLine($"PASS: {_checks - before} reviewed planner checks: sixteen cards; four-locale upgrades/energy icons, Vigor, Dexterity once, Pursuit/Break timing, native play history, pre-move hand snapshots, replay isolation and reversible native cost discounts (UI commands stubbed).");
@@ -764,6 +781,41 @@ internal static partial class WylderBattleArtRegression
         Console.WriteLine("PASS: Spark and Rolling Attack base/upgraded, Pursuit on/off actual resolution.");
     }
 
+    private static void InspireRevision()
+    {
+        foreach (bool upgraded in new[] { false, true })
+        foreach (int handCount in new[] { 1, 2, 3, 4 })
+        {
+            Fixture();
+            var inspire = Card(ModelDb.Card<WylderInspire>(), upgraded);
+            Hand(inspire, handCount);
+            bool shouldTrigger = handCount - 1 <= 2;
+            Check((bool)AccessTools.PropertyGetter(typeof(WylderInspire), "ShouldGlowGoldInternal").Invoke(inspire, null)! == shouldTrigger,
+                "Inspire glow previews the post-play hand condition");
+            Play(inspire);
+            Check(_owner.Creature.HasPower<WylderPursuitPower>(), "Inspire always enters Pursuit");
+            decimal expectedDraw = shouldTrigger ? upgraded ? 3m : 2m : 0m;
+            Check(Rewards.Where(r => r.Kind == "Draw").Sum(r => r.Amount) == expectedDraw,
+                "Inspire uses the post-play hand count and upgrades draw 2 to 3");
+        }
+
+        foreach (int handCount in new[] { 0, 1, 2, 3 })
+        {
+            Fixture();
+            for (int i = 0; i < handCount; i++)
+                Put(Card(ModelDb.Card<WylderDefend>(), false), PileType.Hand);
+            var fromDraw = Card(ModelDb.Card<WylderInspire>(), false);
+            Put(fromDraw, PileType.Draw);
+            Check(!(bool)AccessTools.PropertyGetter(typeof(WylderInspire), "ShouldGlowGoldInternal").Invoke(fromDraw, null)!,
+                "Inspire only glows while it is in hand");
+            Play(fromDraw);
+            decimal expectedDraw = handCount <= 2 ? 2m : 0m;
+            Check(_owner.Creature.HasPower<WylderPursuitPower>()
+                && Rewards.Where(r => r.Kind == "Draw").Sum(r => r.Amount) == expectedDraw,
+                "Inspire reads the actual post-play hand count even when played from another pile");
+        }
+    }
+
     private static void MetadataAndText()
     {
         var formatter = new SmartFormatter();
@@ -978,8 +1030,10 @@ internal static partial class WylderBattleArtRegression
             Hit(lion, _enemies[0], 39, blocked);
             Check(!_enemies[0].HasPower<PhantomImbalancePower>(), "39 pre-block damage cannot trigger Break40");
             Hit(lion, _enemies[0], 1, blocked);
+            Check(!_enemies[0].HasPower<PhantomImbalancePower>(), "Sub-threshold hits do not accumulate into Break40");
+            Hit(lion, _enemies[0], 40, blocked);
             Check(_enemies[0].GetPowerAmount<PhantomImbalancePower>() == 2 && !_enemies[1].HasPower<PhantomImbalancePower>(),
-                "Exactly40 cumulative damage applies2 Imbalance only to the damaged enemy");
+                "One hit at exactly40 applies2 Imbalance only to the damaged enemy");
             Hit(lion, _enemies[0], 100, blocked); Hit(lion, _enemies[1], 100, blocked);
             Check(Rewards.Count == 1 && Rewards[0].Kind == nameof(PhantomImbalancePower), "Break triggers once per CardPlay, no self Block");
             lion.AfterCardPlayedLate(null!, play).GetAwaiter().GetResult();
@@ -1084,6 +1138,8 @@ internal static partial class WylderBattleArtRegression
             Hit(card, _enemies[1], 19, blocked);
             Check(Rewards.Count == 0, "Vacuum does not sum damage across targets");
             Hit(card, _enemies[0], 1, blocked);
+            Check(Rewards.Count == 0, "Vacuum does not accumulate sub-threshold hits on one target");
+            Hit(card, _enemies[0], 20, blocked);
             Check(Rewards.Count == 2 && Rewards.All(r => r.Kind == nameof(WeakPower)
                 && r.Amount == (upgraded ? 3 : 2)), "Vacuum exact pre-block20 applies Weak to every living enemy");
             Hit(card, _enemies[1], 1, blocked);
@@ -1108,7 +1164,7 @@ internal static partial class WylderBattleArtRegression
             "Both targets exceeding20 while blocked gives only one Weak application per enemy and no energy refund");
         Check(ModelDb.Card<WylderVacuumSlice>().PortraitPath == "res://images/packed/card_portraits/wylder/wylder_vacuum_slice.png",
             "Vacuum uses reviewed upright wind-blade portrait");
-        Console.WriteLine($"PASS: {_checks-before} revised Vacuum Slice checks: AOE target, base/upgraded Weak, pre-block threshold, per-enemy accumulation, once-per-play, lethal target and native blocked AOE.");
+        Console.WriteLine($"PASS: {_checks-before} revised Vacuum Slice checks: AOE target, base/upgraded Weak, per-hit pre-block threshold, no accumulation, once-per-play, lethal target and native blocked AOE.");
     }
 
     private static void BreakBoundaries()
@@ -1119,12 +1175,19 @@ internal static partial class WylderBattleArtRegression
             var card = Card(spec.Model, false);
             var play = TrackingArrowRegression.MakePlay(card, _owner);
             card.BeforeCardPlayed(play).GetAwaiter().GetResult();
-            Hit(card, _enemies[0], spec.Break - 1, true);
-            Hit(card, _enemies[1], spec.Break - 1, true);
-            Check(Rewards.Count == 0, "No cross-target accumulation / threshold minus one " + card.Id);
-            Hit(card, _enemies[0], 1, true);
+            int requiredHits = card is WylderSpinningSlash ? 2 : 1;
+            for (int i = 0; i < requiredHits; i++) Hit(card, _enemies[0], spec.Break - 1, true);
+            for (int i = 0; i < requiredHits; i++) Hit(card, _enemies[1], spec.Break, true);
+            Check(Rewards.Count == (card is WylderSpinningSlash ? 1 : card is WylderVacuumSlice ? 2 : 1),
+                "Each target is checked independently and sub-threshold hits never accumulate " + card.Id);
+            card.AfterCardPlayedLate(null!, play).GetAwaiter().GetResult();
+
+            Rewards.Clear();
+            play = TrackingArrowRegression.MakePlay(card, _owner);
+            card.BeforeCardPlayed(play).GetAwaiter().GetResult();
+            for (int i = 0; i < requiredHits; i++) Hit(card, _enemies[0], spec.Break, true);
             int count = card is WylderVacuumSlice ? 2 : 1;
-            Check(Rewards.Count == count, "Exact fully blocked Break reward " + card.Id);
+            Check(Rewards.Count == count, "Every required hit at the exact fully blocked threshold Breaks " + card.Id);
             if (card is WylderVacuumSlice) Check(Rewards.All(reward => reward.Kind == nameof(WeakPower) && reward.Amount == 2)
                 && Rewards.Select(reward => reward.Target).Distinct().Count() == 2, "Vacuum Weak2 once to all living opponents");
             if (card is WylderLionsClaw) Check(Rewards.Single().Kind == nameof(PhantomImbalancePower)
@@ -1136,12 +1199,15 @@ internal static partial class WylderBattleArtRegression
             Hit(card, _enemies[0], 100, false);
             Check(Rewards.Count == count, "No reward outside resolution");
             card.BeforeCardPlayed(play).GetAwaiter().GetResult();
-            Hit(card, _enemies[1], spec.Break, false);
+            for (int i = 0; i < requiredHits; i++) Hit(card, _enemies[1], spec.Break, false);
             Check(Rewards.Count == count * 2, "Independent replay/next-play reset " + card.Id);
         }
         Fixture(true); _fullyBlocked = true;
         Play(Card(ModelDb.Card<WylderSpinningSlash>(), false));
-        Check(Rewards.Count(r => r.Kind == "Draw") == 1, "Fully blocked native AOE multihit Break once");
+        Check(Rewards.Count(r => r.Kind == "Draw") == 0, "Fully blocked sub-threshold native AOE hits do not accumulate");
+        Fixture(true); _fullyBlocked = true; AddPower<StrengthPower>(_owner.Creature, 4);
+        Play(Card(ModelDb.Card<WylderSpinningSlash>(), false));
+        Check(Rewards.Count(r => r.Kind == "Draw") == 1, "Native AOE multi-hit Breaks once when every hit reaches the threshold");
     }
 
     private static void Fixture(bool pursuit = false)
@@ -1191,9 +1257,14 @@ internal static partial class WylderBattleArtRegression
         card.AfterCardPlayedLate(null!, play).GetAwaiter().GetResult();
         foreach (var power in _owner.Creature.Powers.OfType<WylderPursuitPower>().ToArray()) power.AfterCardPlayedLate(null!, play).GetAwaiter().GetResult();
     }
-    private static void Hit(CardModel card, Creature target, decimal amount, bool blocked)
+    private static void Hit(CardModel card, Creature target, decimal amount, bool blocked, bool killed = false)
     {
-        var result = new DamageResult(target, ValueProp.Move) { UnblockedDamage = blocked ? 0 : (int)amount, BlockedDamage = blocked ? (int)amount : 0 };
+        var result = new DamageResult(target, ValueProp.Move)
+        {
+            UnblockedDamage = blocked ? 0 : (int)amount,
+            BlockedDamage = blocked ? (int)amount : 0,
+            WasTargetKilled = killed
+        };
         card.AfterDamageGiven(null!, _owner.Creature, result, ValueProp.Move, target, card).GetAwaiter().GetResult();
     }
     private static T AddPower<T>(Creature target, int amount) where T : PowerModel
@@ -1296,4 +1367,3 @@ internal static partial class WylderBattleArtRegression
     private static void Check(bool condition, string message)
     { _checks++; if (!condition) throw new Exception("Wylder battle arts: " + message); }
 }
-

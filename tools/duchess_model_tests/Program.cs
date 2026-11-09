@@ -74,6 +74,7 @@ if (args.Contains("--wylder-models-only")) { WylderRegression.Run(); return 0; }
 if (args.Contains("--wylder-new-cards-only")) { WylderNewCardsRegression.Run(); return 0; }
 if (args.Contains("--wylder-multiplayer-batch-only")) { WylderMultiplayerBatchRegression.Run(); return 0; }
 if (args.Contains("--wylder-latest-batch-only")) { WylderLatestBatchRegression.Run(); return 0; }
+if (args.Contains("--wylder-takers-flames-only")) { WylderCompletionBRegression.Run(takersFlamesOnly: true); return 0; }
 WylderDialogueRegression.Run();
 if (args.Contains("--wylder-only"))
 {

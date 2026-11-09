@@ -12,10 +12,10 @@ using NightMustStay.Core.Patches;
 
 namespace NightMustStay.Core.Models.Cards;
 
-public sealed class WylderFlameChaseSlash : WylderCard
+public sealed class WylderFlameChaseSlash : WylderFollowThroughCard
 {
-    public WylderFlameChaseSlash() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(7m, ValueProp.Move), new CardsVar(1) };
+    public WylderFlameChaseSlash() : base(2, CardRarity.Uncommon, CardType.Attack, TargetType.AnyEnemy) { }
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(9m, ValueProp.Move), new CardsVar(1) };
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(
         HoverTipFactory.FromCardWithCardHoverTips<WylderFireCoating>(IsUpgraded));
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)

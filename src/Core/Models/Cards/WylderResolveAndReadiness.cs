@@ -31,6 +31,33 @@ public sealed class WylderRouse : WylderCard
     protected override void OnUpgrade() => DynamicVars.Energy.UpgradeValueBy(1m);
 }
 
+public sealed class WylderInspire : WylderCard
+{
+    public WylderInspire() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
+    public override string PortraitPath => "res://images/packed/card_portraits/wylder/wylder_inspire.png";
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
+        { new CardsVar(2), new DynamicVar("HandThreshold", 2m) };
+    protected override bool ShouldGlowGoldInternal =>
+        base.ShouldGlowGoldInternal || WillHaveLowHandAfterPlay;
+
+    private bool WillHaveLowHandAfterPlay => IsMutable
+        && Owner != null
+        && Pile?.Type == PileType.Hand
+        && PileType.Hand.GetPile(Owner).Cards.Count - 1 <= DynamicVars["HandThreshold"].IntValue;
+
+    private bool HasLowHandAfterPlay => IsMutable
+        && Owner != null
+        && PileType.Hand.GetPile(Owner).Cards.Count <= DynamicVars["HandThreshold"].IntValue;
+
+    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
+    {
+        await WylderPursuitPower.Enter(context, Owner.Creature, this);
+        if (HasLowHandAfterPlay)
+            await CardPileCmd.Draw(context, DynamicVars.Cards.BaseValue, Owner);
+    }
+    protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1m);
+}
+
 public sealed class WylderBattleReadiness : WylderCard
 {
  public WylderBattleReadiness() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }

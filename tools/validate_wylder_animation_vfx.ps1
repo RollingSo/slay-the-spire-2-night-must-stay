@@ -6,11 +6,15 @@ $requiredRoutes = [ordered]@{
     'src/Core/Models/Cards/WylderBattleArtCards.cs' = @('Kind.VacuumSlice', 'Kind.StormBlade', 'Kind.FlameSlash', 'Kind.FireExplosion')
     'src/Core/Models/Cards/WylderGrappleShot.cs' = @('"ClawShot"', 'Kind.Claw')
     'src/Core/Models/Cards/WylderFlameChaseSlash.cs' = @('Kind.FlameSlash')
-    'src/Core/Models/Cards/WylderCompletionCardsA.cs' = @('Kind.CorpseWax')
+    'src/Core/Models/Cards/WylderCompletionCardsA.cs' = @('Kind.CorpseWax', 'PlayBlock', 'Kind.BucklerImpact')
     'src/Core/Models/Cards/WylderCompletionCardsB.cs' = @('Kind.TakersFlames')
     'src/Core/Models/Cards/WylderPlannerCards.cs' = @('Kind.GhostflameExplosion')
     'src/Core/Models/Cards/WylderVortexBatch.cs' = @('Kind.OrdovisVortex', 'Kind.SiluriaVortex')
-    'src/Core/Models/Cards/WylderNovemberBatch.cs' = @('PlayPrelude', 'WithEndTheNightFx')
+    'src/Core/Models/Cards/WylderNovemberBatch.cs' = @('PlayPrelude', 'WithEndTheNightFx', 'Kind.Greatsword', 'AttackTwoHand')
+    'src/Core/Models/Cards/WylderGoldenParry.cs' = @('PlayBlock', 'Kind.BucklerImpact')
+    'src/Core/Models/Cards/WylderTacticalRetreat.cs' = @('PlayBlock', 'Kind.RetreatGuard')
+    'src/Core/Models/Cards/WylderSheetCards.cs' = @('Kind.Execution', 'AttackTwoHand')
+    'src/Core/Nodes/Vfx/WylderAttackEffects.cs' = @('slash_attack.mp3', 'heavy_attack.mp3', 'dagger_throw.mp3', 'STS_SFX_BurnCard_v1.mp3')
 }
 
 foreach ($entry in $requiredRoutes.GetEnumerator()) {
@@ -42,4 +46,4 @@ foreach ($relative in @('wylder_assets/combat_rig/wylder_claw_shot.png', 'wylder
     finally { $bitmap.Dispose() }
 }
 
-Write-Output 'PASS: Wylder five motion triggers, eleven bounded VFX families, End the Night staging, route markers and transparent pose assets.'
+Write-Output 'PASS: Wylder five motion triggers, fourteen bounded VFX families, Desperation action/audio routes, End the Night staging, route markers and transparent pose assets.'

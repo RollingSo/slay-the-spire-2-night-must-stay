@@ -26,13 +26,13 @@ internal static class WylderSheetManifestRegression
             var card=matches[0].ToMutable();
             var type=row[3].GetString() switch {"攻击牌"=>CardType.Attack,"技能牌"=>CardType.Skill,"能力牌"=>CardType.Power,_=>throw new Exception("Unknown sheet type")};
             var rarity=row[4].GetString() switch {"初始"=>CardRarity.Basic,"普通"=>CardRarity.Common,"罕见"=>CardRarity.Uncommon,"稀有"=>CardRarity.Rare,_=>throw new Exception("Unknown sheet rarity")};
-            if(card.Type!=(card switch { WylderJumpingHeavy => CardType.Attack, WylderDesperateSurvival => CardType.Skill, WylderWildfire => CardType.Power, _ => type }) || card.Rarity!=(card is WylderJumpingHeavy ? CardRarity.Common : card is WylderCriticalStrike or WylderCounterRush ? CardRarity.Uncommon : card is WylderNightForm ? CardRarity.Rare : card is WylderDualGreatswordLeap or WylderAerialStake or WylderWildfire or WylderRuinousGhostflame ? CardRarity.Uncommon : rarity))throw new Exception("Sheet type/rarity mismatch: "+name);
+            if(card.Type!=(card switch { WylderClawMovement or WylderDesperateSurvival => CardType.Skill, WylderJumpingHeavy => CardType.Attack, WylderWildfire => CardType.Power, _ => type }) || card.Rarity!=(card is WylderJumpingHeavy ? CardRarity.Common : card is WylderCriticalStrike or WylderCounterRush or WylderCorpseWaxCutter ? CardRarity.Uncommon : card is WylderNightForm ? CardRarity.Rare : card is WylderDualGreatswordLeap or WylderAerialStake or WylderWildfire or WylderRuinousGhostflame ? CardRarity.Uncommon : rarity))throw new Exception("Sheet type/rarity mismatch: "+name);
             if(row[2].ValueKind==JsonValueKind.Number)
-            {if(card.EnergyCost.CostsX || card.EnergyCost.GetResolved()!=(card switch { WylderCorpseWaxCutter => 1, WylderJumpingHeavy => 2, WylderAerialStake => 3, WylderSlidingLeap => 2, WylderCounterRush => 3, WylderDesperateSurvival => 4, WylderRemainingEmber => 1, _ => row[2].GetInt32() }))throw new Exception("Sheet cost mismatch: "+name);}
+            {if(card.EnergyCost.CostsX || card.EnergyCost.GetResolved()!=(card switch { WylderCorpseWaxCutter => 1, WylderJumpingHeavy => 2, WylderAerialStake => 3, WylderSlidingLeap => 2, WylderCounterRush => 3, WylderDesperateSurvival => 4, WylderRemainingEmber => 1, WylderFlameChaseSlash => 2, _ => row[2].GetInt32() }))throw new Exception("Sheet cost mismatch: "+name);}
             else if(row[2].GetString()=="X" && !card.EnergyCost.CostsX)throw new Exception("Missing X cost: "+name);
             count++;
         }
-        if(count!=36 || pool.Length!=count+49)throw new Exception("Sheet named-card coverage mismatch");
+        if(count!=36 || pool.Length!=count+54)throw new Exception("Sheet named-card coverage mismatch");
         var hashes = new HashSet<string>();
         var artManifest = new List<object>();
         foreach (var card in pool.Append(ModelDb.Card<WylderFireCoating>()))
@@ -53,6 +53,6 @@ internal static class WylderSheetManifestRegression
         Directory.CreateDirectory("build");
         File.WriteAllText("build/wylder_card_art_manifest.json", JsonSerializer.Serialize(artManifest, new JsonSerializerOptions { WriteIndented=true }));
         Console.WriteLine("PASS: All Wylder portraits are dedicated, unique PNGs with rarity-appropriate dimensions.");
-        Console.WriteLine("PASS: all retained named workbook rows match runtime names, costs, types and rarity; the pool includes 49 additional authored cards.");
+        Console.WriteLine("PASS: all retained named workbook rows match runtime names, costs, types and rarity; the pool includes 54 additional authored cards.");
     }
 }

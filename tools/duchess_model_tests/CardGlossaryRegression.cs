@@ -37,7 +37,7 @@ internal static class CardGlossaryRegression
         try
         {
             var pools = new CardPoolModel[] { ModelDb.CardPool<GuardianCardPool>(), ModelDb.CardPool<IroneyeCardPool>(),
-                ModelDb.CardPool<RevenantCardPool>(), ModelDb.CardPool<DuchessCardPool>() };
+                ModelDb.CardPool<RevenantCardPool>(), ModelDb.CardPool<DuchessCardPool>(), ModelDb.CardPool<WylderCardPool>() };
             foreach (string locale in new[] { "zhs", "eng", "jpn", "kor" })
             {
                 Load(locale);

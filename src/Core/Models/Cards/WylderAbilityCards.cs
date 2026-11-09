@@ -14,7 +14,6 @@ namespace NightMustStay.Core.Models.Cards;
 public abstract class WylderAbilityCard<T> : WylderCard where T : WylderAbilityPower
 {
     protected WylderAbilityCard(int cost, CardRarity rarity) : base(cost, CardType.Power, rarity, TargetType.Self) { }
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new[] { HoverTipFactory.FromPower<T>() });
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         T power = await PowerCmd.Apply<T>(context, Owner.Creature, 1, Owner.Creature, this);

@@ -7,23 +7,27 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
-using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
 using NightMustStay.Core.Nodes.Vfx;
 using NightMustStay.Core.Patches;
 namespace NightMustStay.Core.Models.Cards;
 public sealed class WylderGrappleShot : WylderCard
 {
-    public WylderGrappleShot() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
-    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new DamageVar(9m, ValueProp.Move) };
+    public WylderGrappleShot() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) { }
+    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new PowerVar<VulnerablePower>("Vulnerable", 2m) };
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Append(HoverTipFactory.FromPower<VulnerablePower>());
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        WylderAnimationPatch.QueueAttackMotion(Owner.Creature, "ClawShot");
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(play.Target)
-            .WithWylderFx(WylderAttackVfx.Kind.Claw, Owner.Creature).Execute(context);
-        await WylderPursuitPower.Enter(context, Owner.Creature, this);
+        WylderAnimationPatch.PlayImmediate(Owner.Creature, "ClawShot");
+        if (play.Target == Owner.Creature)
+            await WylderPursuitPower.Enter(context, Owner.Creature, this);
+        else if (play.Target?.IsAlive == true)
+        {
+            WylderAttackEffects.Play(play.Target, WylderAttackVfx.Kind.Claw, Owner.Creature);
+            await PowerCmd.Apply<VulnerablePower>(context, play.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
+        }
     }
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
+    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }
 public sealed class WylderIntenseBurning : WylderCard
 {

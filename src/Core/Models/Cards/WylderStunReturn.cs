@@ -21,6 +21,7 @@ internal static class WylderStunReturn
             if (player.Creature.Side == target.Side || player.Creature.IsDead || player.PlayerCombatState == null) continue;
             WylderStunHistory.Record(player);
             if (player.Creature.GetPower<WylderEndlessWillPower>() is { } will) await will.Trigger();
+            if (player.Creature.GetPower<WylderFatesJudgmentPower>() is { } judgment) await judgment.Trigger(target);
             foreach (var card in player.PlayerCombatState.AllCards.OfType<IWylderStunReturn>().ToArray())
                 await card.OnEnemyStunned();
         }

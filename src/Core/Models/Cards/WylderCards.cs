@@ -40,7 +40,7 @@ public abstract class WylderCard : CardModel
             decimal amount = DynamicVars.TryGetValue("CalculatedDamage", out _)
                 ? DynamicVars.CalculatedDamage.Calculate(enemy) : DynamicVars.Damage.BaseValue;
             decimal perHit = Math.Floor(AttackVfxDamage.Preview(enemy, Owner.Creature, amount, ValueProp.Move, this));
-            if (perHit * hits >= threshold) return true;
+            if (perHit >= threshold) return true;
         }
         return false;
     }
@@ -48,14 +48,14 @@ public abstract class WylderCard : CardModel
     {
         get
         {
-            yield return HoverTipFactory.FromPower<WylderPursuitPower>();
             if (HasBreak || this is WylderVeteranEdge or WylderEruption or WylderMultiplayerCard)
                 yield return HoverTipFactory.FromPower<WylderBreakDescriptionPower>();
         }
     }
-    // Break counters are per CardPlay,
-    // per target, and only direct attack damage from this card is counted.
+    // Break checks are per CardPlay and per target. A multi-hit attack only
+    // Breaks when every native hit independently reaches the threshold.
     protected virtual decimal BreakThreshold => 0m;
+    protected virtual int BreakHitCount => 1;
     public bool HasBreak => BreakThreshold > 0m;
     protected virtual Task OnBreak(PlayerChoiceContext context) => Task.CompletedTask;
     protected CardPlay ResolvingPlay => BreakStates.GetOrCreateValue(this).Play;
@@ -65,7 +65,7 @@ public abstract class WylderCard : CardModel
     protected int? SourceHandCount => WylderHandPlayContext.HandCount(this, ResolvingPlay);
     private sealed class BreakData
     {
-        public readonly Dictionary<Creature, decimal> Damage = new();
+        public readonly Dictionary<Creature, List<decimal>> Damage = new();
         public bool Triggered;
         public bool Resolving;
         public CardPlay Play;
@@ -99,10 +99,32 @@ public abstract class WylderCard : CardModel
         BreakData data = BreakStates.GetOrCreateValue(this);
         if (cardSource != this || dealer != Owner.Creature || !props.IsPoweredAttack()
             || BreakThreshold <= 0 || !data.Resolving || data.Triggered || target.Side == dealer.Side) return;
-        data.Damage.TryGetValue(target, out decimal total);
-        total += result.TotalDamage;
-        data.Damage[target] = total;
-        if (total < WylderCombatEvents.EffectiveBreak(this, data.Play, BreakThreshold)) return;
+        if (!data.Damage.TryGetValue(target, out List<decimal> hits))
+        {
+            hits = new List<decimal>();
+            data.Damage[target] = hits;
+        }
+        hits.Add(result.TotalDamage);
+        int requiredHits = BreakHitCount;
+        if (requiredHits <= 0) return;
+
+        // Native multi-hit attacks stop as soon as their target dies. A lethal
+        // qualifying hit therefore completes Break even when the remaining
+        // scheduled hits are cancelled; every hit that actually occurred must
+        // still meet the per-hit threshold.
+        bool endedByLethalHit = result.WasTargetKilled;
+        if (hits.Count < requiredHits && !endedByLethalHit) return;
+        decimal threshold = WylderCombatEvents.EffectiveBreak(this, data.Play, BreakThreshold);
+        if (requiredHits == 1)
+        {
+            if (result.TotalDamage < threshold) return;
+        }
+        else
+        {
+            int hitsToCheck = Math.Min(hits.Count, requiredHits);
+            for (int i = 0; i < hitsToCheck; i++)
+                if (hits[i] < threshold) return;
+        }
         data.Triggered = true; // Consume before awaiting to prevent reentrant triggers.
         data.Target = target;
         WylderCombatEvents.RegisterBreak(data.Play);
@@ -138,7 +160,7 @@ public sealed class WylderDefend : WylderCard
 }
 public sealed class WylderClawMovement : WylderCard
 {
-    public WylderClawMovement() : base(1, CardType.Attack, CardRarity.Basic, TargetType.Self) { }
+    public WylderClawMovement() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self) { }
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Retain };
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
         WylderPursuitPower.Enter(context, Owner.Creature, this);
@@ -171,11 +193,11 @@ public sealed class WylderSlidingLeap : WylderFollowThroughCard
 
 public sealed class WylderCenteringBreath : WylderCard
 {
-    public WylderCenteringBreath() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
+    public WylderCenteringBreath() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }
     protected override bool HasPursuitCondition => true;
     public override bool GainsBlock => true;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        { new BlockVar(6m, ValueProp.Move), new EnergyVar(1) };
+        { new BlockVar(6m, ValueProp.Move), new EnergyVar(2) };
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         bool pursuit = Pursuing;

@@ -15,8 +15,8 @@ internal static class WylderNewCardsRegression
     public static void Run()
     {
         var shot=ModelDb.Card<WylderGrappleShot>().ToMutable();
-        Check(shot.EnergyCost.GetResolved()==1 && shot.Type==CardType.Attack && shot.TargetType==TargetType.AnyEnemy && shot.Rarity==CardRarity.Common && shot.DynamicVars.Damage.BaseValue==9,"Grapple Shot base");
-        shot.UpgradeInternal(); Check(shot.DynamicVars.Damage.BaseValue==12,"Grapple Shot upgrade");
+        Check(shot.EnergyCost.GetResolved()==1 && shot.Type==CardType.Skill && shot.TargetType==TargetType.AnyEnemy && shot.Rarity==CardRarity.Uncommon && shot.DynamicVars["Vulnerable"].BaseValue==2,"Grapple Shot base");
+        shot.UpgradeInternal(); Check(shot.EnergyCost.GetResolved()==0 && shot.DynamicVars["Vulnerable"].BaseValue==2,"Grapple Shot upgrade");
         var aerial=ModelDb.Card<WylderAerialStake>().ToMutable();
         Check(aerial.EnergyCost.GetResolved()==3 && aerial.DynamicVars.Damage.BaseValue==20 && aerial.DynamicVars["Imbalance"].BaseValue==3,"Aerial base");
         aerial.UpgradeInternal(); Check(aerial.EnergyCost.GetResolved()==2 && aerial.DynamicVars.Damage.BaseValue==20 && aerial.DynamicVars["Imbalance"].BaseValue==3,"Aerial cost-only upgrade");

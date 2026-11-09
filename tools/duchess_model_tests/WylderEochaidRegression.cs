@@ -63,30 +63,30 @@ internal static class WylderEochaidRegression
                     && card.DynamicVars.Repeat.WasJustUpgraded == up, "Only X bonus changes on upgrade");
                 Play(card);
                 int initial = x + (up ? 1 : 0), hitDamage = pursuit ? 13 : 9;
-                int expected = initial * (initial * hitDamage >= 20 ? 2 : 1);
+                int expected = initial;
                 Check(DamageValues.Count == expected && DamageValues.All(v => v == hitDamage),
                     $"Actual native loop: X{x}, up{up}, pursuit{pursuit}, blocked{blocked} -> {expected} hits");
                 Check(!Owner.Creature.HasPower<WylderPursuitPower>(), "Pursuit exits after entire attack");
             }
-            foreach (int[] firstHits in new[] { new[] { 10, 9 }, new[] { 10, 10 }, new[] { 0, 0 } })
+            foreach (int[] firstHits in new[] { new[] { 20, 19 }, new[] { 20, 20 }, new[] { 0, 0 } })
             {
                 Fixture(); foreach (int n in firstHits) ForcedDamage.Enqueue(n);
                 Play(Card(false, 2));
-                Check(DamageValues.Count == (firstHits.Sum() >= 20 ? 4 : 2), "Exact19/20/zero real damage boundary, no predicted false Break");
+                Check(DamageValues.Count == (firstHits.All(n => n >= 20) ? 4 : 2), "Every original hit must independently reach Break20");
             }
-            Fixture(); ForcedDamage.Enqueue(0); ForcedDamage.Enqueue(10); ForcedDamage.Enqueue(10);
+            Fixture(); ForcedDamage.Enqueue(20); ForcedDamage.Enqueue(20); ForcedDamage.Enqueue(20);
             Play(Card(false, 3));
             Check(DamageValues.Count == 6, "Break on the final original hit still grants the full extra hit budget");
             Fixture(true);
             AccessTools.Method(Shared, "AddPower").MakeGenericMethod(typeof(VigorPower)).Invoke(null, new object[] { Owner.Creature, 2 });
             var vigor = Card(false, 2); Play(vigor);
-            Check(DamageValues.SequenceEqual(new[] { 16, 16, 16, 16 }) && !Owner.Creature.HasPower<VigorPower>(),
-                "Vigor and Pursuit remain active through dynamically added hits and clear at attack/play end");
+            Check(DamageValues.SequenceEqual(new[] { 16, 16 }) && !Owner.Creature.HasPower<VigorPower>(),
+                "Vigor and Pursuit remain active through all original hits and clear at attack/play end");
             Fixture(); _xBonus = 2;
             Play(Card(false, 1));
-            Check(DamageValues.Count == 6, "ResolveEnergyXValue honors engine X modifiers before doubling");
+            Check(DamageValues.Count == 3, "ResolveEnergyXValue honors engine X modifiers without summing sub-threshold hits");
             Fixture(); var replay = Card(false, 3); Play(replay); DamageValues.Clear(); Play(replay);
-            Check(DamageValues.Count == 6, "A later play of the same copy resets Break and does not quadruple");
+            Check(DamageValues.Count == 3, "A later play of the same copy resets the per-hit Break ledger");
             Fixture(); var a = Card(false, 3); Play(a); DamageValues.Clear(); Play(Card(false, 2));
             Check(DamageValues.Count == 2, "Other copies do not inherit successful Break");
             Fixture(); _killAttacker = true; Play(Card(false, 4));
@@ -105,7 +105,7 @@ internal static class WylderEochaidRegression
             Play(lethalVortex);Check(DamageValues.Count==1,"Ordovis stops added hits after target death");
             LocalizedText();
             Check(File.Exists(ModelDb.Card<WylderEochaidsDancingBlade>().PortraitPath.Replace("res://", "")), "Custom portrait resolves");
-            Console.WriteLine($"PASS: {_checks} Eochaid checks using the real native attack loop: X0-4, upgrades, Pursuit, full block, 19/20, last-hit doubling, actual-zero damage, Vigor, X modifiers, reset/copy isolation and death exits.");
+            Console.WriteLine($"PASS: {_checks} Eochaid checks using the real native attack loop: every original hit must reach Break20, with upgrades, Pursuit, full block, last-hit doubling, Vigor, X modifiers, reset/copy isolation and death exits.");
         }
         finally { h.UnpatchAll(h.Id); }
     }

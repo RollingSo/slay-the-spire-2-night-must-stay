@@ -330,7 +330,7 @@ public static class WylderCombatEvents
     public static async Task AfterDamage(PlayerChoiceContext context, Creature dealer, Creature target, DamageResult result, ValueProp props, CardModel card)
     {
         if (props.IsPoweredAttack() && card?.Type == CardType.Attack && dealer?.Player is { } boldPlayer
-            && Eligible(boldPlayer) && target.Side != dealer.Side && result.TotalDamage > 20
+            && Eligible(boldPlayer) && target.Side != dealer.Side && result.TotalDamage >= 20
             && Power<WylderBoldnessPower>(boldPlayer) is { } bold)
             await InPowerScope(boldPlayer, () => Block(context, boldPlayer, bold.Sum(5,7), Current(boldPlayer)));
         if (props.IsPoweredAttack() && card?.Type == CardType.Attack && dealer?.Player is { } attacker && Eligible(attacker)

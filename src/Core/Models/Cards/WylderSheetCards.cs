@@ -166,8 +166,13 @@ public sealed class WylderDesperateSurvival : WylderDesperationCard
     protected override IEnumerable<Creature> LegalDesperationTargets() =>
         CombatState.GetOpponentsOf(Owner.Creature).Where(CanExecute);
     protected override bool IsPlayable => CombatState == null || LegalDesperationTargets().Any();
-    protected override Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
-        CanExecute(play.Target) ? CreatureCmd.Kill(play.Target) : Task.CompletedTask;
+    protected override Task OnPlay(PlayerChoiceContext context, CardPlay play)
+    {
+        if (!CanExecute(play.Target)) return Task.CompletedTask;
+        WylderAnimationPatch.PlayImmediate(Owner.Creature, "AttackTwoHand");
+        WylderAttackEffects.Play(play.Target, WylderAttackVfx.Kind.Execution, Owner.Creature);
+        return CreatureCmd.Kill(play.Target);
+    }
     protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);
 }
 public sealed class WylderWildfire : WylderAbilityCard<WylderWildfirePower>

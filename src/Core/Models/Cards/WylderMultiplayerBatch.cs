@@ -61,7 +61,7 @@ public sealed class WylderBreakthrough : WylderCard
 }
 public sealed class WylderHoarfrostStomp : WylderFollowThroughCard
 {
-    public WylderHoarfrostStomp() : base(1, CardRarity.Uncommon, CardType.Skill, TargetType.Self) { }
+    public WylderHoarfrostStomp() : base(1, CardRarity.Common, CardType.Skill, TargetType.Self) { }
     protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new PowerVar<FreezePower>("Freeze", 2m) };
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Append(HoverTipFactory.FromPower<FreezePower>());
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)

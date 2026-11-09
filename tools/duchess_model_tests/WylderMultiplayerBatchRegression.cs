@@ -25,7 +25,7 @@ internal static class WylderMultiplayerBatchRegression
    (ModelDb.Card<WylderTinder>(),0,CardType.Skill,CardRarity.Common),
    (ModelDb.Card<WylderDefiance>(),2,CardType.Skill,CardRarity.Common),
    (ModelDb.Card<WylderBreakthrough>(),0,CardType.Skill,CardRarity.Common),
-   (ModelDb.Card<WylderHoarfrostStomp>(),1,CardType.Skill,CardRarity.Uncommon),
+   (ModelDb.Card<WylderHoarfrostStomp>(),1,CardType.Skill,CardRarity.Common),
    (ModelDb.Card<WylderOffensiveInstinct>(),1,CardType.Power,CardRarity.Uncommon)})
   {
    var c=model.ToMutable();Check(c.EnergyCost.GetResolved()==cost && c.Type==type && c.Rarity==rarity,"Metadata "+c.Id);
@@ -102,4 +102,3 @@ internal static class WylderMultiplayerBatchRegression
  public static bool Upgrade(CardModel card){card.UpgradeInternal();return false;}
  public static bool Add(CardModel __0,PileType __1,Player __2,ref Task<CardPileAddResult> __result){Check(__1==PileType.Hand&&__0.Owner==__2,"Generated hand destination and owner");Generated.Add(__0);__result=Task.FromResult(new CardPileAddResult{success=true,cardAdded=__0});return false;}
 }
-

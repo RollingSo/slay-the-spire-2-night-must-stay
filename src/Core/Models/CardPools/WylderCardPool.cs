@@ -11,6 +11,9 @@ public sealed class WylderCardPool : CardPoolModel
     public override Color EnergyOutlineColor => new("111827");
     public override bool IsColorless => false;
     protected override CardModel[] GenerateAllCards() => new CardModel[] {
+        ModelDb.Card<WylderFlamelightOnSnow>(),
+        ModelDb.Card<WylderTriumph>(),
+        ModelDb.Card<WylderFatesJudgment>(),
         ModelDb.Card<WylderSeamless>(),
         ModelDb.Card<WylderMoonlightSword>(),
         ModelDb.Card<WylderTwinToken>(),
@@ -45,6 +48,7 @@ public sealed class WylderCardPool : CardPoolModel
         ModelDb.Card<WylderBreakthrough>(),
         ModelDb.Card<WylderHoarfrostStomp>(),
         ModelDb.Card<WylderOffensiveInstinct>(),
+        ModelDb.Card<WylderBideTheMoment>(),
         ModelDb.Card<WylderGrappleShot>(),
         ModelDb.Card<WylderIntenseBurning>(),
         ModelDb.Card<WylderLifeFromDeath>(),
@@ -55,6 +59,7 @@ public sealed class WylderCardPool : CardPoolModel
         ModelDb.Card<WylderResolve>(),
         ModelDb.Card<WylderBattleReadiness>(),
         ModelDb.Card<WylderSpark>(),
+        ModelDb.Card<WylderInspire>(),
         ModelDb.Card<WylderRollingAttack>(),
         ModelDb.Card<WylderStrike>(),
         ModelDb.Card<WylderDefend>(),

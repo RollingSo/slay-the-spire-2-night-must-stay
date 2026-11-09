@@ -92,6 +92,8 @@ public sealed class WylderParry : WylderDesperationCard
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         if (!WylderCompletionRules.IsAttacking(play.Target)) return;
+        WylderAnimationPatch.PlayBlock(Owner.Creature);
+        WylderAttackEffects.Play(play.Target, WylderAttackVfx.Kind.BucklerImpact, Owner.Creature);
         await CreatureCmd.Stun(play.Target);
         if (play.Target.IsStunned) await WylderCombatEvents.RegisterSkillStun(context, play);
     }
@@ -258,7 +260,7 @@ public sealed class WylderOpeningPressure : WylderCard
 
 public sealed class WylderCorpseWaxCutter : WylderCard
 {
-    public WylderCorpseWaxCutter() : base(1, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) { }
+    public WylderCorpseWaxCutter() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies) { }
     public override string PortraitPath => "res://images/packed/card_portraits/wylder/wylder_corpse_wax_cutter.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         { new DamageVar(10m, ValueProp.Move), new DynamicVar("Break", 20m), new PowerVar<VulnerablePower>("Vulnerable", 2m), new PowerVar<WeakPower>("Weak", 2m) };

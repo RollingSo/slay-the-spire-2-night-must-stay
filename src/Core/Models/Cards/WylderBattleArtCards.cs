@@ -160,6 +160,7 @@ public sealed class WylderSpinningSlash : WylderCard
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         { new DamageVar(4m, ValueProp.Move), new RepeatVar(2), new DynamicVar("Break", 12m), new CardsVar(1) };
     protected override decimal BreakThreshold => DynamicVars["Break"].BaseValue;
+    protected override int BreakHitCount => DynamicVars.Repeat.IntValue;
     protected override async Task OnBreak(PlayerChoiceContext context) => await CardPileCmd.Draw(context, DynamicVars.Cards.BaseValue, Owner);
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).TargetingAllOpponents(CombatState)

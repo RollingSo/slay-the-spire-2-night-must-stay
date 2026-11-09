@@ -26,7 +26,13 @@ public sealed class WylderDesperateFlurry : WylderDesperationCard
 {
     public WylderDesperateFlurry() : base(3, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(9m, ValueProp.Move), new RepeatVar(3) };
-    protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p) => await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(p.Target).WithHitCount(3).Execute(c);
+    protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
+    {
+        WylderAnimationPatch.QueueAttackMotion(Owner.Creature, "AttackTwoHand");
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(p.Target)
+            .WithHitCount(DynamicVars.Repeat.IntValue)
+            .WithWylderFx(WylderAttackVfx.Kind.Greatsword, Owner.Creature).Execute(c);
+    }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2m);
 }
 public sealed class WylderEndTheNight : WylderDesperationCard
@@ -138,16 +144,18 @@ public sealed class WylderMurderousAura : WylderCard
     public WylderMurderousAura() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) { }
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new PowerVar<StrengthPower>("Strength", 2m), new PowerVar<DexterityPower>("Dexterity", 2m) };
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new[] { HoverTipFactory.FromPower<StrengthPower>(), HoverTipFactory.FromPower<DexterityPower>() });
-    protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p) { var power = await PowerCmd.Apply<WylderMurderousAuraPower>(c, Owner.Creature, 1m, Owner.Creature, this); if (power != null) power.StatGain += DynamicVars["Strength"].IntValue; }
+    protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
+    {
+        await PowerCmd.Apply<StrengthPower>(c, Owner.Creature, DynamicVars["Strength"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<DexterityPower>(c, Owner.Creature, DynamicVars["Dexterity"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<WylderMurderousAuraPower>(c, Owner.Creature, 1m, Owner.Creature, this);
+    }
     protected override void OnUpgrade() { DynamicVars["Strength"].UpgradeValueBy(1m); DynamicVars["Dexterity"].UpgradeValueBy(1m); }
 }
 public sealed class WylderMurderousAuraPower : PowerModel
 {
-    [SavedProperty] public int StatGain { get; set; }
-    public override MegaCrit.Sts2.Core.Localization.LocString Description { get { var description = base.Description; description.Add("StatGain", StatGain); return description; } }
     public override PowerType Type => PowerType.Buff; public override PowerStackType StackType => PowerStackType.Counter;
     public override decimal ModifyHandDraw(Player p, decimal count) => p == Owner.Player ? Math.Max(0m, count - Amount) : count;
-    public override async Task AfterPlayerTurnStartLate(PlayerChoiceContext c, Player player) { if (player != Owner.Player) return; await PowerCmd.Apply<StrengthPower>(c, Owner, StatGain, Owner, null); await PowerCmd.Apply<DexterityPower>(c, Owner, StatGain, Owner, null); }
 }
 public sealed class WylderForgetTheSword : WylderCard
 {
@@ -180,4 +188,3 @@ public sealed class WylderTrueFlame : WylderCard
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p) { SpentEntries = WylderPursuitHistory.Count(Owner); await PowerCmd.Apply<VigorPower>(c, Owner.Creature, DynamicVars["Vigor"].BaseValue, Owner.Creature, this); }
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }
-

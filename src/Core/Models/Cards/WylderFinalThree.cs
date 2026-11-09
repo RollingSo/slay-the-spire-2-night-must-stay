@@ -64,25 +64,43 @@ public sealed class WylderShriekOfMilosPower : PowerModel
 internal static class WylderGrantedDesperation
 {
     private sealed class Tag { }
-    private sealed class Batch { public readonly Dictionary<MegaCrit.Sts2.Core.Entities.Players.Player, int> Round = new(); }
+    private sealed class Batch
+    {
+        public readonly Dictionary<MegaCrit.Sts2.Core.Entities.Players.Player, int> Round = new();
+        public readonly HashSet<MegaCrit.Sts2.Core.Entities.Players.Player> Resolving = new();
+    }
     private static readonly ConditionalWeakTable<CardModel, Tag> Tags = new();
     private static readonly ConditionalWeakTable<object, Batch> Batches = new();
     internal static bool Is(CardModel card) => card is WylderDesperationCard || Tags.TryGetValue(card, out _);
     internal static void Grant(CardModel card) => Tags.GetOrCreateValue(card);
+    internal static bool IsResolving(MegaCrit.Sts2.Core.Entities.Players.Player player)
+    {
+        object state = player?.Creature?.CombatState;
+        return state != null && Batches.TryGetValue(state, out Batch batch) && batch.Resolving.Contains(player);
+    }
     internal static bool Start(CardModel card) { var state = card.Owner.Creature.CombatState; var b = Batches.GetOrCreateValue(state); if (b.Round.TryGetValue(card.Owner, out int round) && round == state.RoundNumber) return false; b.Round[card.Owner] = state.RoundNumber; return true; }
     internal static async Task Run(CardModel first, PlayerChoiceContext c, CombatSide side, IEnumerable<Creature> participants)
     {
         if (side != CombatSide.Player || first.Owner?.PlayerCombatState == null || !participants.Contains(first.Owner.Creature)) return;
         var hand = PileType.Hand.GetPile(first.Owner);
         if (hand.Cards.FirstOrDefault() != first || hand.Cards.Any(x => !Is(x)) || !Start(first)) return;
-        foreach (var card in hand.Cards.ToArray())
+        Batch batch = Batches.GetOrCreateValue(first.Owner.Creature.CombatState);
+        batch.Resolving.Add(first.Owner);
+        try
         {
-            if (card.Pile != hand) continue;
-            var enemies = card.Owner.Creature.CombatState.GetOpponentsOf(card.Owner.Creature).Where(e => e.IsAlive).ToArray(); if (enemies.Length == 0) break;
-            Creature target = null;
-            if (card.TargetType == TargetType.AnyEnemy) { var legal = card is WylderDesperationCard d ? d.GrantedLegalTargets().ToArray() : enemies.Where(card.IsValidTarget).ToArray(); if (legal.Length == 0) continue; target = card.Owner.RunState.Rng.CombatTargets.NextItem(legal); }
-            if (card.TargetType == TargetType.AnyPlayer) target = card.Owner.Creature;
-            await CardCmd.AutoPlay(c, card, target);
+            foreach (var card in hand.Cards.ToArray())
+            {
+                if (card.Pile != hand) continue;
+                var enemies = card.Owner.Creature.CombatState.GetOpponentsOf(card.Owner.Creature).Where(e => e.IsAlive).ToArray(); if (enemies.Length == 0) break;
+                Creature target = null;
+                if (card.TargetType == TargetType.AnyEnemy) { var legal = card is WylderDesperationCard d ? d.GrantedLegalTargets().ToArray() : enemies.Where(card.IsValidTarget).ToArray(); if (legal.Length == 0) continue; target = card.Owner.RunState.Rng.CombatTargets.NextItem(legal); }
+                if (card.TargetType == TargetType.AnyPlayer) target = card.Owner.Creature;
+                await CardCmd.AutoPlay(c, card, target);
+            }
+        }
+        finally
+        {
+            batch.Resolving.Remove(first.Owner);
         }
     }
 }
