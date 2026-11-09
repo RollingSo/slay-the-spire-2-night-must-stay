@@ -67,6 +67,7 @@ animations/
 
 ## Asset rules
 
+- **Animation sources must be video.** Every action must first exist as a generated or recorded video; extract frames from that video to build the `.res`. Do not synthesize an animation directly from a still image and do not generate a GIF as the animation source. GIFs under `preview/` are derived review files only.
 - Resources are authored at the character's real in-game final size. Do not use an arbitrary 1x/2x guess in the file name or metadata.
 - For Duchess combat, the texture visible height is 432 and the parent `Visuals` scale is `0.711914088`, giving the final 307.546886. Shop and camp use their scene sizes at scale 1.0.
 - For Revenant and IronEye, follow each rig's own parent scale and the per-action canvas/anchor in the checklist; do not copy Duchess scale values to them.

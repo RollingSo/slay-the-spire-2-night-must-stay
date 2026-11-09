@@ -1,26 +1,193 @@
 {
   "character": "guardian",
   "layout": "animations/guardian",
-  "status": "planned",
+  "status": "in_progress",
   "assets": [
-    {"id":"GD01","action":"combat_idle","animation":"combat_idle","file":"main/combat_idle.res","exists":false,"priority":"P0","target_seconds":[2,4],"loop":true,"status":"planned"},
-    {"id":"GD02","action":"halberd_attack","animation":"halberd_attack","file":"main/halberd_attack.res","exists":false,"priority":"P0","target_seconds":[0.9,1.5],"loop":false,"status":"planned"},
-    {"id":"GD03","action":"guard","animation":"guard","file":"main/guard.res","exists":false,"priority":"P0","target_seconds":[0.6,1.0],"loop":false,"status":"planned"},
-    {"id":"GD04","action":"hurt","animation":"hurt","file":"main/hurt.res","exists":false,"priority":"P0","target_seconds":[0.7,1.0],"loop":false,"status":"planned"},
-    {"id":"GD05","action":"death","animation":"death","file":"main/death.res","exists":false,"priority":"P0","target_seconds":[1.9,2.5],"loop":false,"status":"planned"},
-    {"id":"GD06","action":"steel_guard","animation":"steel_guard","file":"main/steel_guard.res","exists":false,"priority":"P1","target_seconds":[0.8,1.2],"loop":false,"status":"planned"},
-    {"id":"GD07","action":"guard_counter","animation":"guard_counter","file":"main/guard_counter.res","exists":false,"priority":"P1","target_seconds":[1.0,1.5],"loop":false,"status":"planned"},
-    {"id":"GD08","action":"wing_command","animation":"wing_command","file":"main/wing_command.res","exists":false,"priority":"P1","target_seconds":[1.0,1.8],"loop":false,"status":"planned"},
-    {"id":"GD09","action":"merchant_idle","animation":"merchant_idle","file":"main/merchant_idle.res","exists":false,"priority":"P2","target_seconds":[4,8],"loop":true,"status":"planned"},
-    {"id":"GD10","action":"camp_idle","animation":"camp_idle","file":"main/camp_idle.res","exists":false,"priority":"P2","target_seconds":[4,8],"loop":true,"status":"planned"}
+    {
+      "id": "GD01",
+      "action": "combat_idle",
+      "animation": "combat_idle",
+      "file": "main/combat_idle.res",
+      "exists": true,
+      "priority": "P0",
+      "target_seconds": [
+        2,
+        4
+      ],
+      "loop": true,
+      "status": "packed_pending_integration",
+      "frames": 48,
+      "fps": 24,
+      "seconds": 2.0417,
+      "canvas": [
+        414,
+        631
+      ],
+      "anchor": [
+        202.612,
+        624.164
+      ],
+      "texture_visible_height": 616,
+      "final_visible_height": 308.331,
+      "loop_source_frames": [
+        0,
+        24
+      ],
+      "endpoint_duration_units": 2.0,
+      "source_video": "SY-待机.mp4",
+      "actual_visible_height": 618,
+      "integration_scale": 0.4989,
+      "resource_bytes": 20704651,
+      "quality_policy": "2x_final"
+    },
+    {
+      "id": "GD02",
+      "action": "halberd_attack",
+      "animation": "halberd_attack",
+      "file": "main/halberd_attack.res",
+      "exists": false,
+      "priority": "P0",
+      "target_seconds": [
+        0.9,
+        1.5
+      ],
+      "loop": false,
+      "status": "planned"
+    },
+    {
+      "id": "GD03",
+      "action": "guard",
+      "animation": "guard",
+      "file": "main/guard.res",
+      "exists": false,
+      "priority": "P0",
+      "target_seconds": [
+        0.6,
+        1.0
+      ],
+      "loop": false,
+      "status": "planned"
+    },
+    {
+      "id": "GD04",
+      "action": "hurt",
+      "animation": "hurt",
+      "file": "main/hurt.res",
+      "exists": false,
+      "priority": "P0",
+      "target_seconds": [
+        0.7,
+        1.0
+      ],
+      "loop": false,
+      "status": "planned"
+    },
+    {
+      "id": "GD05",
+      "action": "death",
+      "animation": "death",
+      "file": "main/death.res",
+      "exists": false,
+      "priority": "P0",
+      "target_seconds": [
+        1.9,
+        2.5
+      ],
+      "loop": false,
+      "status": "planned"
+    },
+    {
+      "id": "GD06",
+      "action": "steel_guard",
+      "animation": "steel_guard",
+      "file": "main/steel_guard.res",
+      "exists": false,
+      "priority": "P1",
+      "target_seconds": [
+        0.8,
+        1.2
+      ],
+      "loop": false,
+      "status": "planned"
+    },
+    {
+      "id": "GD07",
+      "action": "guard_counter",
+      "animation": "guard_counter",
+      "file": "main/guard_counter.res",
+      "exists": false,
+      "priority": "P1",
+      "target_seconds": [
+        1.0,
+        1.5
+      ],
+      "loop": false,
+      "status": "planned"
+    },
+    {
+      "id": "GD08",
+      "action": "wing_command",
+      "animation": "wing_command",
+      "file": "main/wing_command.res",
+      "exists": false,
+      "priority": "P1",
+      "target_seconds": [
+        1.0,
+        1.8
+      ],
+      "loop": false,
+      "status": "planned"
+    },
+    {
+      "id": "GD09",
+      "action": "merchant_idle",
+      "animation": "merchant_idle",
+      "file": "main/merchant_idle.res",
+      "exists": false,
+      "priority": "P2",
+      "target_seconds": [
+        4,
+        8
+      ],
+      "loop": true,
+      "status": "planned"
+    },
+    {
+      "id": "GD10",
+      "action": "camp_idle",
+      "animation": "camp_idle",
+      "file": "main/camp_idle.res",
+      "exists": false,
+      "priority": "P2",
+      "target_seconds": [
+        4,
+        8
+      ],
+      "loop": true,
+      "status": "planned"
+    }
   ],
   "optional": [
-    {"action":"low_health_idle","animation":"low_health_idle","note":"may reuse combat_idle initially"},
-    {"action":"relaxed_idle","animation":"relaxed_idle","note":"may reuse combat_idle initially"},
-    {"action":"dodge_step","animation":"dodge_step","note":"add only if Steel Guard step needs a separate trigger"}
+    {
+      "action": "low_health_idle",
+      "animation": "low_health_idle",
+      "note": "may reuse combat_idle initially"
+    },
+    {
+      "action": "relaxed_idle",
+      "animation": "relaxed_idle",
+      "note": "may reuse combat_idle initially"
+    },
+    {
+      "action": "dodge_step",
+      "animation": "dodge_step",
+      "note": "add only if Steel Guard step needs a separate trigger"
+    }
   ],
   "derived": [],
   "missing": [
-    {"note":"No Guardian-specific .res exists yet; current runtime uses Ironclad placeholders."}
+    {
+      "note": "No Guardian-specific .res exists yet; current runtime uses Ironclad placeholders."
+    }
   ]
 }
