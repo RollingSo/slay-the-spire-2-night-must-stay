@@ -15,6 +15,8 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
+using NightMustStay.Core.Nodes.Vfx;
+using NightMustStay.Core.Patches;
 
 namespace NightMustStay.Core.Models.Cards;
 
@@ -57,7 +59,8 @@ public sealed class WylderMoltenSweep : WylderCard
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new[] { HoverTipFactory.FromPower<VigorPower>() });
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).TargetingAllOpponents(CombatState).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).TargetingAllOpponents(CombatState)
+            .WithWylderFx(WylderAttackVfx.Kind.FlameSlash, Owner.Creature).Execute(context);
         if (WylderCombatEvents.ConsumedVigor(play))
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block.BaseValue, ValueProp.Move, play);
     }
@@ -255,7 +258,7 @@ public sealed class WylderOpeningPressure : WylderCard
 
 public sealed class WylderCorpseWaxCutter : WylderCard
 {
-    public WylderCorpseWaxCutter() : base(2, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) { }
+    public WylderCorpseWaxCutter() : base(1, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) { }
     public override string PortraitPath => "res://images/packed/card_portraits/wylder/wylder_corpse_wax_cutter.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         { new DamageVar(10m, ValueProp.Move), new DynamicVar("Break", 20m), new PowerVar<VulnerablePower>("Vulnerable", 2m), new PowerVar<WeakPower>("Weak", 2m) };
@@ -263,7 +266,9 @@ public sealed class WylderCorpseWaxCutter : WylderCard
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new[] { HoverTipFactory.FromPower<VulnerablePower>(), HoverTipFactory.FromPower<WeakPower>() });
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).TargetingAllOpponents(CombatState).Execute(context);
+        WylderAnimationPatch.QueueAttackMotion(Owner.Creature, "AttackTwoHand");
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).TargetingAllOpponents(CombatState)
+            .WithWylderFx(WylderAttackVfx.Kind.CorpseWax, Owner.Creature).Execute(context);
         if (BrokeThisPlay)
         {
             var enemies = CombatState.GetOpponentsOf(Owner.Creature).Where(e => e.IsAlive).ToArray();

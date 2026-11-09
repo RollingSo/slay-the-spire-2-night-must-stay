@@ -13,6 +13,8 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
+using NightMustStay.Core.Nodes.Vfx;
+using NightMustStay.Core.Patches;
 
 namespace NightMustStay.Core.Models.Cards;
 
@@ -49,7 +51,9 @@ public sealed class WylderTakersFlames : WylderCard
     protected override decimal BreakThreshold => DynamicVars["Break"].BaseValue;
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).TargetingAllOpponents(CombatState).Execute(context);
+        WylderAnimationPatch.QueueAttackMotion(Owner.Creature, "AttackTwoHand");
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).TargetingAllOpponents(CombatState)
+            .WithWylderFx(WylderAttackVfx.Kind.TakersFlames, Owner.Creature).Execute(context);
         // A successful Break remains valid even if its target died. Heal once,
         // after every native AOE target, never once per damaged enemy.
         if (BrokeThisPlay) await CreatureCmd.Heal(Owner.Creature, DynamicVars["Heal"].BaseValue);

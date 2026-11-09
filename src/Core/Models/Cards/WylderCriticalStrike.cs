@@ -13,7 +13,7 @@ namespace NightMustStay.Core.Models.Cards;
 
 public sealed class WylderCriticalStrike : WylderStunReturningAttack
 {
-    public WylderCriticalStrike() : base(3, CardRarity.Common) { }
+    public WylderCriticalStrike() : base(3, CardRarity.Uncommon) { }
     protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new DamageVar(16m, ValueProp.Move) };
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new[]
         { HoverTipFactory.Static(StaticHoverTip.Stun) });

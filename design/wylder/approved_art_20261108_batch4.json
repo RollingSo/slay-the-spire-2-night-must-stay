@@ -1,0 +1,19 @@
+{
+  "approved_at": "2026-11-08",
+  "cards": [
+    {
+      "name": "无暇律法",
+      "source": "design/卡图预览/追踪者卡牌修订_20261108/无暇律法.png",
+      "runtime": "images/packed/card_portraits/wylder/wylder_flawless_sword.png",
+      "sha256": "0D178B0E7CE7BAF057E8B108BE4E6F51518D50B83A917CBBAB0BA1961CC8428D",
+      "approved": true
+    },
+    {
+      "name": "天衣无缝",
+      "source": "design/卡图预览/追踪者卡牌修订_20261108/天衣无缝.png",
+      "runtime": "images/packed/card_portraits/wylder/wylder_seamless.png",
+      "sha256": "3980F4B6E40CE11B511B2074449683483F7E1B258A893FBE32C348B8DAF77A23",
+      "approved": true
+    }
+  ]
+}

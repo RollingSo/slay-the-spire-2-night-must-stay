@@ -134,9 +134,9 @@
     ],
     "WYLDER_DUAL_GREATSWORD_LEAP": [
       "双剑跳劈",
-      "造成{Damage:diff()}点伤害{Repeat:diff()}次。\n[gold]追击[/gold]：耗能变为0。",
+      "造成{Damage:diff()}点伤害{Repeat:diff()}次。\n[gold]破势[/gold]{Break:diff()}：获得{Energy:diff()}[energy:1]，将这张牌放回你的[gold]手牌[/gold]。",
       "Dual Greatsword Leap",
-      "Deal {Damage:diff()} damage {Repeat:diff()} times.\n[gold]Pursuit[/gold]: Costs 0 Energy."
+      "Deal {Damage:diff()} damage {Repeat:diff()} times.\n[gold]Break[/gold] {Break:diff()}: Gain {Energy:diff()}[energy:1] and return this card to your [gold]hand[/gold]."
     ],
     "WYLDER_GHOSTFLAME_EXPLOSION": [
       "灵火爆炸",

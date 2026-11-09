@@ -5,8 +5,10 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.Core.Entities.Powers;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Saves.Runs;
+using NightMustStay.Core.Models.Cards;
 
 namespace NightMustStay.Core.Models.Power;
 
@@ -48,6 +50,19 @@ public sealed class WylderNightFormPower : WylderAbilityPower
 public sealed class WylderEruptionPower : WylderAbilityPower { }
 public sealed class WylderRemainingEmberPower : WylderAbilityPower { }
 public sealed class WylderUndyingPower : WylderAbilityPower { }
+public sealed class WylderSeamlessPower : WylderAbilityPower
+{
+    public override LocString Description
+    {
+        get
+        {
+            var description = base.Description;
+            description.Add("Block", Sum(WylderSeamless.BaseBlock, WylderSeamless.UpgradedBlock));
+            return description;
+        }
+    }
+}
+public sealed class WylderMoonlightSwordPower : WylderAbilityPower { }
 
 
 public sealed class WylderWildfirePower : WylderAbilityPower

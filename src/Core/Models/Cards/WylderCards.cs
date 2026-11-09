@@ -14,6 +14,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
 using NightMustStay.Core.Nodes.Vfx;
+using NightMustStay.Core.Patches;
 
 namespace NightMustStay.Core.Models.Cards;
 
@@ -43,11 +44,15 @@ public abstract class WylderCard : CardModel
         }
         return false;
     }
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[]
+    protected override IEnumerable<IHoverTip> ExtraHoverTips
     {
-        HoverTipFactory.FromPower<WylderPursuitPower>(),
-        HoverTipFactory.FromPower<WylderBreakDescriptionPower>(),
-    };
+        get
+        {
+            yield return HoverTipFactory.FromPower<WylderPursuitPower>();
+            if (HasBreak || this is WylderVeteranEdge or WylderEruption or WylderMultiplayerCard)
+                yield return HoverTipFactory.FromPower<WylderBreakDescriptionPower>();
+        }
+    }
     // Break counters are per CardPlay,
     // per target, and only direct attack damage from this card is counted.
     protected virtual decimal BreakThreshold => 0m;
@@ -110,8 +115,12 @@ public sealed class WylderStrike : WylderCard
     public WylderStrike() : base(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy) { }
     protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Strike };
     protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new DamageVar(6m, ValueProp.Move) };
-    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(play.Target).Execute(context);
+    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
+    {
+        WylderAnimationPatch.QueueAttackMotion(Owner.Creature, Pursuing ? "AttackTwoHand" : "AttackSingle");
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(play.Target)
+            .WithWylderFx(WylderAttackVfx.Kind.Greatsword, Owner.Creature).Execute(context);
+    }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
 }
 public sealed class WylderDefend : WylderCard
@@ -120,8 +129,11 @@ public sealed class WylderDefend : WylderCard
     protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Defend };
     public override bool GainsBlock => true;
     protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new BlockVar(5m, ValueProp.Move) };
-    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
+    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
+    {
+        WylderAnimationPatch.PlayBlock(Owner.Creature);
         await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block.BaseValue, ValueProp.Move, play);
+    }
     protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3m);
 }
 public sealed class WylderClawMovement : WylderCard
@@ -141,7 +153,9 @@ public sealed class WylderDashAttack : WylderCard
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         bool pursuit = Pursuing;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(play.Target).Execute(context);
+        WylderAnimationPatch.QueueAttackMotion(Owner.Creature, pursuit ? "AttackTwoHand" : "AttackSingle");
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(play.Target)
+            .WithWylderFx(WylderAttackVfx.Kind.Greatsword, Owner.Creature).Execute(context);
         if (pursuit && play.Target.IsAlive)
             await PowerCmd.Apply<VulnerablePower>(context, play.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
     }
@@ -150,7 +164,7 @@ public sealed class WylderDashAttack : WylderCard
 public sealed class WylderSlidingLeap : WylderFollowThroughCard
 {
     public WylderSlidingLeap() : base(2, CardRarity.Common, CardType.Skill, TargetType.Self) { }
-    public override int MaxUpgradeLevel => 0;
+    protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
         WylderPursuitPower.Enter(context, Owner.Creature, this);
 }

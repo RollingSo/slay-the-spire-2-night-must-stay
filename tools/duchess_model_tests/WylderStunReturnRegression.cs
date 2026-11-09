@@ -34,6 +34,8 @@ internal static class WylderStunReturnRegression
                 CreatureCmd.Stun(enemy, _ => Task.CompletedTask, "NOTHING").GetAwaiter().GetResult();
                 Check(enemy.IsStunned && card.Pile?.Type == PileType.Hand && card.EnergyCost.GetResolved() == 0,
                     "Successful native leaf Stun returns same instance and sets next-play0 from " + source);
+                var history=typeof(Wylder).Assembly.GetType("NightMustStay.Core.Models.Cards.WylderStunHistory")!;
+                Check((int)AccessTools.Method(history,"Count").Invoke(null,new object[]{Owner})! == 1,"Successful native stun records combat history");
                 Check(Returned.Count == (source == PileType.Hand ? 0 : 1), "Already-hand copy is discounted without duplicate move");
                 card.EnergyCost.EndOfTurnCleanup();
                 Check(card.EnergyCost.GetResolved() == 0, "Native next-play0 survives turn end");
@@ -41,6 +43,7 @@ internal static class WylderStunReturnRegression
                 Check(card.EnergyCost.GetResolved() == 3, "Native cleanup restores original3 after one play");
                 CreatureCmd.Stun(enemy, _ => Task.CompletedTask, "NOTHING").GetAwaiter().GetResult();
                 Check(card.EnergyCost.GetResolved() == 3, "An unchanged already-stunned state is not a new successful Stun");
+                Check((int)AccessTools.Method(history,"Count").Invoke(null,new object[]{Owner})! == 1,"Already-stunned state does not add combat history");
             }
             Fixture();
             var a = Card(PileType.Draw); var b = Card(PileType.Discard); var playing = Card(PileType.Play); var deck = Card(PileType.Deck);

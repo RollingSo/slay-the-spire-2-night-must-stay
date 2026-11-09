@@ -364,6 +364,8 @@ namespace NightMustStay.Core.Patches
                 "res://wylder_assets/combat_rig/wylder_hit.png",
                 "res://wylder_assets/combat_rig/wylder_block.png",
                 "res://wylder_assets/combat_rig/wylder_death.png",
+                "res://wylder_assets/combat_rig/wylder_claw_shot.png",
+                "res://wylder_assets/combat_rig/wylder_ultimate.png",
                 "res://wylder_assets/combat_rig/wylder_combat_rig.gd",
                 "res://wylder_assets/combat_rig/wylder_combat_rig.tscn",
                 "res://wylder_assets/character_icon_wylder.png",

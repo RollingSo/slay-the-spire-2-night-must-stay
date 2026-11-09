@@ -43,5 +43,6 @@ internal static class WylderEochaidHitBudgetPatch
 
     private static bool Continue(decimal index, decimal nativeHitCount, AttackCommand command) =>
         index < (command.ModelSource is WylderEochaidsDancingBlade card && card.DoublesHitBudget(command)
-            ? nativeHitCount * 2m : nativeHitCount);
+            ? nativeHitCount * 2m : command.ModelSource is WylderOrdovisVortex ordovis && ordovis.AddsHits(command)
+                ? nativeHitCount + ordovis.DynamicVars.Repeat.BaseValue : nativeHitCount);
 }

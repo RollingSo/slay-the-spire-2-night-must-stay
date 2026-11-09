@@ -1,5 +1,7 @@
 using Godot;
 using HarmonyLib;
+using System.Runtime.CompilerServices;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using NightMustStay.Core.Models.Characters;
 using NightMustStay.Core.Nodes;
@@ -9,6 +11,9 @@ namespace NightMustStay.Core.Patches
     [HarmonyPatch]
     public static class WylderAnimationPatch
     {
+        private sealed class PendingMotion { public string Trigger = "Attack"; }
+        private static readonly ConditionalWeakTable<Creature, PendingMotion> PendingAttackMotions = new();
+
         [HarmonyPatch(typeof(NCreature), nameof(NCreature._Ready))]
         [HarmonyPostfix]
         public static void AttachStatusVisual(NCreature __instance)
@@ -23,15 +28,35 @@ namespace NightMustStay.Core.Patches
         {
             if (creature.GetCreatureNode() is { } node && TryGetRig(node, out Node rig))
             {
-                rig.Call("play_trigger", "Block");
+                rig.Call("play_trigger", "BucklerBlock");
             }
+        }
+
+        public static void QueueAttackMotion(Creature creature, string trigger)
+        {
+            if (creature == null) return;
+            PendingAttackMotions.Remove(creature);
+            PendingAttackMotions.Add(creature, new PendingMotion { Trigger = trigger });
+        }
+
+        public static void PlayImmediate(Creature creature, string trigger)
+        {
+            if (creature?.GetCreatureNode() is { } node && TryGetRig(node, out Node rig))
+                rig.Call("play_trigger", trigger);
         }
         [HarmonyPatch(typeof(NCreature), nameof(NCreature.SetAnimationTrigger))]
         [HarmonyPostfix]
         public static void SetAnimationTrigger(NCreature __instance, string trigger)
         {
-            if (TryGetRig(__instance, out Node rig))
-                rig.Call("play_trigger", trigger);
+            if (!TryGetRig(__instance, out Node rig)) return;
+            string resolved = trigger;
+            Creature creature = __instance.Entity;
+            if (trigger == "Attack" && creature != null && PendingAttackMotions.TryGetValue(creature, out PendingMotion pending))
+            {
+                resolved = pending.Trigger;
+                PendingAttackMotions.Remove(creature);
+            }
+            rig.Call("play_trigger", resolved);
         }
 
         [HarmonyPatch(typeof(NCreature), nameof(NCreature.StartDeathAnim))]

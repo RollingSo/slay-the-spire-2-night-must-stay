@@ -28,7 +28,7 @@ using SmartFormat.Extensions;
 
 // Exercise actual card callbacks, native damage/block previews and attack
 // builders. Only UI-dependent command execution/power mutation is stubbed.
-internal static class WylderBattleArtRegression
+internal static partial class WylderBattleArtRegression
 {
     private record Spec(CardModel Model, int Cost, CardRarity Rarity, int Damage, int UpgradeDamage,
         int Break = 0, int Hits = 1, int Block = 0, int UpgradeBlock = 0, bool Aoe = false);
@@ -46,7 +46,7 @@ internal static class WylderBattleArtRegression
     private static Spec[] Specs() => new[]
     {
         new Spec(ModelDb.Card<WylderVacuumSlice>(), 1, CardRarity.Common, 9, 12, 20, Aoe: true),
-        new Spec(ModelDb.Card<WylderCriticalStrike>(), 3, CardRarity.Common, 16, 21),
+        new Spec(ModelDb.Card<WylderCriticalStrike>(), 3, CardRarity.Uncommon, 16, 21),
         new Spec(ModelDb.Card<WylderStormBlade>(), 0, CardRarity.Uncommon, 4, 5),
         new Spec(ModelDb.Card<WylderFlamingStrike>(), 1, CardRarity.Uncommon, 8, 8),
         new Spec(ModelDb.Card<WylderFlameOfRedmanes>(), 1, CardRarity.Common, 6, 7, Aoe: true),
@@ -85,6 +85,10 @@ internal static class WylderBattleArtRegression
         try
         {
             Patch(AccessTools.PropertyGetter(typeof(CombatManager), nameof(CombatManager.IsEnding)), nameof(NotEnding));
+            VortexCards();
+            KickAndPoiseCards();
+            FinalThreeCards();
+            NovemberCards();
             SparkAndRollingAttack();
             MetadataAndText();
             foreach (bool upgraded in new[] { false, true })
@@ -236,16 +240,20 @@ internal static class WylderBattleArtRegression
             Check(Attacks.Single().Raw == (up ? 14 : 12) && Rewards.Any(r => r.Kind == nameof(PhantomImbalancePower) && r.Target == _enemies[0] && r.Amount == (up ? 3 : 2)), "Recoil Stake damage and applied Imbalance");
             Fixture();
             Play(Card(ModelDb.Card<WylderJumpingHeavy>(),up));
-            Check(Rewards.Single(r=>r.Kind=="Block").Amount == (up ? 12 : 9) && _owner.Creature.HasPower<WylderPursuitPower>(), "Jumping Heavy Skill grants Block and Pursuit");
+            Check(Attacks.Single().Raw == (up ? 17 : 13), "Jumping Heavy damage upgrade");
+            var jump = Card(ModelDb.Card<WylderJumpingHeavy>(), up);
+            Check(!jump.TryModifyEnergyCostInCombat(jump, 2, out var normalCost) && normalCost == 2, "Jumping Heavy normal cost");
+            Fixture(true); jump = Card(ModelDb.Card<WylderJumpingHeavy>(), up);
+            Check(jump.TryModifyEnergyCostInCombat(jump, 2, out var pursuitCost) && pursuitCost == 0, "Jumping Heavy Pursuit zero cost");
             Fixture();
             Play(Card(ModelDb.Card<WylderDebut>(),up));
             Check(Rewards.Single(r=>r.Kind=="Energy").Amount == (up ? 3 : 2) && _owner.Creature.HasPower<WylderPursuitPower>(), "Debut entry and energy");
             Fixture();
             Play(Card(ModelDb.Card<WylderAerialStake>(),up));
-            Check(!Attacks.Any() && !Rewards.Any(r => r.Kind == "Stun"), "Aerial Stake requires Pursuit for both effects");
+            Check(!Attacks.Any() && !Rewards.Any(r => r.Kind == nameof(PhantomImbalancePower)), "Aerial Stake requires Pursuit for both effects");
             Fixture(true);
             Play(Card(ModelDb.Card<WylderAerialStake>(),up));
-            Check(Attacks.Single().Raw == (up ? 20 : 15) && Rewards.Single(r => r.Kind == "Stun").Target == _enemies[0], "Aerial Stake pursuit damage and stun");
+            Check(Attacks.Single().Raw == 20 && Rewards.Any(r => r.Kind == nameof(PhantomImbalancePower) && r.Target == _enemies[0] && r.Amount == 3), "Aerial Stake pursuit damage and three Imbalance");
             Fixture();
             Play(Card(ModelDb.Card<WylderClawRend>(),up));
             Check(Attacks.Single().Raw == 6 && _enemies[0].GetPowerAmount<VulnerablePower>()==(up ? 2 : 1), "Claw Rend damage/Vulnerable");
@@ -306,7 +314,7 @@ internal static class WylderBattleArtRegression
                 Check(card.EnergyCost.GetResolved() == (heavy ? 2 : card is WylderShieldPress or WylderLightStepGuard or WylderGroundDash ? 0 : 1), "Reviewed planner cost");
                 Check(card.Type == (attack ? CardType.Attack : CardType.Skill), "Reviewed planner type");
                 Check(card.TargetType == (attack ? TargetType.AnyEnemy : TargetType.Self), "Reviewed planner target");
-                Check(card.Rarity == (card is WylderGhostflameExplosion ? CardRarity.Rare : card is WylderFlameMomentum or WylderGrappleSwing or WylderAerialRoll ? CardRarity.Uncommon : CardRarity.Common), "Reviewed planner rarity");
+                Check(card.Rarity == (card is WylderGhostflameExplosion ? CardRarity.Rare : card is WylderDualGreatswordLeap or WylderFlameMomentum or WylderGrappleSwing or WylderAerialRoll ? CardRarity.Uncommon : CardRarity.Common), "Reviewed planner rarity");
                 foreach (var pair in card.DynamicVars)
                     Check(pair.Value.WasJustUpgraded == (upgraded && (pair.Key == "Block" || pair.Key == "Damage" || (card is WylderLightStepGuard && pair.Key is "CalculationBase" or "CalculatedBlock") || (card is WylderFlameReady && pair.Key == "Vigor") || (card is WylderGhostflameExplosion && pair.Key == "Freeze"))), "Reviewed planner only changed values green " + card.Id + " " + pair.Key);
             }
@@ -385,11 +393,16 @@ internal static class WylderBattleArtRegression
 
             Fixture(pursuit); _fullyBlocked = fullyBlocked;
             var leap = Card(ModelDb.Card<WylderDualGreatswordLeap>(), upgraded);
-            Check(leap.TryModifyEnergyCostInCombat(leap, 2, out var leapCost) == pursuit && leapCost == (pursuit ? 0 : 2), "Dual Leap Pursuit cost");
+            Check(leap.EnergyCost.GetResolved() == 2 && leap.Rarity == CardRarity.Uncommon, "Dual Leap cost and rarity");
             Play(leap);
-            Check(Attacks.Single() == (false, 2, upgraded ? 9m : 6m), "Dual Leap native two hits");
-            Check(ResolvedDamage.Count == 2 && ResolvedDamage.All(d => d == Math.Floor((upgraded ? 9m : 6m) * (pursuit ? 1.5m : 1m))), "Both Leap hits use old Pursuit state only");
-            Check(!_owner.Creature.HasPower<WylderPursuitPower>(), "Dual Leap consumes old Pursuit and has no Break reward");
+            Check(Attacks.Single() == (false, 2, upgraded ? 10m : 9m), "Dual Leap native two hits");
+            Check(ResolvedDamage.Count == 2 && ResolvedDamage.All(d => d == Math.Floor((upgraded ? 10m : 9m) * (pursuit ? 1.5m : 1m))), "Both Leap hits use old Pursuit state only");
+            Check(!_owner.Creature.HasPower<WylderPursuitPower>(), "Dual Leap consumes old Pursuit");
+            Check(Rewards.Where(r => r.Kind == "Energy").Sum(r => r.Amount) == (pursuit || upgraded ? 2 : 0), "Dual Leap Break20 energy once including full Block");
+            AccessTools.Method(typeof(CombatState), "AddCard", new[] { typeof(CardModel) }).Invoke(_combat, new object[] { leap });
+            Put(leap, PileType.Discard);
+            leap.AfterCardChangedPilesLate(leap, PileType.Play, null!).GetAwaiter().GetResult();
+            Check(leap.Pile!.Type == (pursuit || upgraded ? PileType.Hand : PileType.Discard), "Dual Leap returns only after Break and cleanup");
 
             Fixture(pursuit); _fullyBlocked = fullyBlocked;
             Play(Card(ModelDb.Card<WylderGhostflameExplosion>(), upgraded));
@@ -399,7 +412,7 @@ internal static class WylderBattleArtRegression
         }
         Fixture(); AddPower<StrengthPower>(_owner.Creature, 20);
         Play(Card(ModelDb.Card<WylderDualGreatswordLeap>(), false));
-        Check(ResolvedDamage.SequenceEqual(new[] { 26m, 26m }) && !_owner.Creature.HasPower<WylderPursuitPower>(), "Dual Leap has no obsolete Break reward");
+        Check(ResolvedDamage.SequenceEqual(new[] { 29m, 29m }) && !_owner.Creature.HasPower<WylderPursuitPower>(), "Dual Leap native Strength on both hits");
         Fixture(true); AddPower<VigorPower>(_owner.Creature, 3);
         Play(Card(ModelDb.Card<WylderCliffbreaker>(), false));
         Check(ResolvedDamage.Single() == 30 && _owner.Creature.GetPowerAmount<VigorPower>() == 3, "Native old Vigor consumption precedes fresh Cliffbreaker Vigor");
@@ -718,10 +731,25 @@ internal static class WylderBattleArtRegression
         foreach (bool pursuit in new[] { false, true })
         {
             Fixture(pursuit);
+            var retreat = Card(ModelDb.Card<WylderTacticalRetreat>(), up);
+            Check(retreat.EnergyCost.GetResolved() == 4 && retreat.Type == CardType.Skill && retreat.Rarity == CardRarity.Uncommon && retreat.TargetType == TargetType.Self && retreat.Keywords.SetEquals(new[] { CardKeyword.Exhaust }), "Tactical Retreat metadata and Exhaust");
+            AddPower<DexterityPower>(_owner.Creature, 3);
+            retreat.DynamicVars.Block.UpdateCardPreview(retreat, CardPreviewMode.Normal, null!, true);
+            Check(retreat.DynamicVars.Block.PreviewValue == (up ? 33 : 23), "Tactical Retreat native Block preview");
+            Play(retreat);
+            Check(Rewards.Single(r => r.Kind == "Block").Amount == (up ? 33 : 23), "Tactical Retreat actual Block with Dexterity once");
+            Fixture(pursuit);
+            var golden = Card(ModelDb.Card<WylderGoldenParry>(), up);
+            Check(golden.EnergyCost.GetResolved() == 3 && golden.Type == CardType.Skill && golden.Rarity == CardRarity.Uncommon && golden.TargetType == TargetType.AllEnemies && golden.Keywords.Contains(CardKeyword.Retain) == up, "Golden Parry metadata and Retain upgrade");
+            Play(golden);
+            Check(_enemies.All(e => Rewards.Any(r => r.Kind == nameof(PhantomImbalancePower) && r.Target == e && r.Amount == 3)), "Golden Parry applies three Imbalance to every enemy");
+            Fixture(pursuit);
             var spark = Card(ModelDb.Card<WylderSpark>(), up);
             Check(spark.EnergyCost.GetResolved() == 0 && spark.Type == CardType.Skill && spark.Rarity == CardRarity.Common && spark.TargetType == TargetType.Self, "Spark metadata");
+            Check(spark.Keywords.Contains(CardKeyword.Exhaust), "Spark exhausts");
             Play(spark);
-            Check(Rewards.Single(r => r.Kind == nameof(VigorPower)).Amount == (up ? 4 : 3), "Spark actual vigor");
+            Check(Rewards.Where(r => r.Kind == "Draw").Sum(r => r.Amount) == (pursuit ? 2 : 1), "Spark draws one plus Pursuit reward");
+            Check(Rewards.Single(r => r.Kind == nameof(VigorPower)).Amount == (up ? 5 : 3), "Spark actual vigor");
             Check(!_owner.Creature.HasPower<WylderPursuitPower>(), "Spark follows normal skill Pursuit consumption");
             Fixture(pursuit);
             var roll = Card(ModelDb.Card<WylderRollingAttack>(), up);
@@ -825,17 +853,17 @@ internal static class WylderBattleArtRegression
             Fixture(pursuit);
             var coating = Card(ModelDb.Card<WylderFireCoating>(), upgraded);
             Check(coating.Type == CardType.Skill && coating.Rarity == CardRarity.Token && coating.TargetType == TargetType.Self
-                && coating.EnergyCost.GetResolved() == 1, "Coating generated Skill metadata");
+                && coating.EnergyCost.GetResolved() == 0, "Coating generated Skill metadata");
             Check(coating.Pool is TokenCardPool && coating.VisualCardPool is ColorlessCardPool,
                 "Coating uses native token pool and colorless frame");
             Check(!ModelDb.Character<Wylder>().CardPool.AllCards.Any(c => c is WylderFireCoating), "Coating excluded from character reward pool");
             Check(coating.Keywords.SetEquals(new[] { CardKeyword.Retain, CardKeyword.Exhaust }), "Coating native Retain/Exhaust exactly once");
-            Check(coating.DynamicVars["Vigor"].BaseValue == (upgraded ? 6 : 4), "Coating upgrade Vigor 4 to 6");
+            Check(coating.DynamicVars["Vigor"].BaseValue == (upgraded ? 5 : 3), "Coating upgrade Vigor 3 to 5");
             Play(coating);
-            Check(_owner.Creature.GetPowerAmount<VigorPower>() == (upgraded ? 6 : 4), "Coating applies original native Vigor");
+            Check(_owner.Creature.GetPowerAmount<VigorPower>() == (upgraded ? 5 : 3), "Coating applies original native Vigor");
             Check(Rewards.Count(r => r.Kind == "Draw") == (pursuit ? 1 : 0), "Colorless Skill also consumes Pursuit and draws once");
             Play(Card(ModelDb.Card<WylderStrike>(), false));
-            Check(ResolvedDamage.Last() == 6 + (upgraded ? 6 : 4), "Native coating Vigor increases next attack damage");
+            Check(ResolvedDamage.Last() == 6 + (upgraded ? 5 : 3), "Native coating Vigor increases next attack damage");
             Check(!_owner.Creature.HasPower<VigorPower>(), "Native Vigor consumed by next attack");
 
             Fixture(pursuit);
@@ -865,7 +893,7 @@ internal static class WylderBattleArtRegression
                     .Invoke(previewSource, null)!;
                 var generatedPreview = tips.OfType<CardHoverTip>().Single().Card;
                 Check(generatedPreview is WylderFireCoating && generatedPreview.IsUpgraded == upgraded
-                    && generatedPreview.DynamicVars["Vigor"].BaseValue == (upgraded ? 6 : 4), "Flaming Strike hover matches generated coating upgrade");
+                    && generatedPreview.DynamicVars["Vigor"].BaseValue == (upgraded ? 5 : 3), "Flaming Strike hover matches generated coating upgrade");
             }
         }
         finally { hoverFixture.UnpatchAll(hoverFixture.Id); }
@@ -883,7 +911,7 @@ internal static class WylderBattleArtRegression
                 return formatter.Format(System.Globalization.CultureInfo.InvariantCulture, text,
                     coating.DynamicVars.ToDictionary(p => p.Key, p => (object)p.Value));
             }
-            Check(Render(false).Contains('4') && Render(true).Contains('6'), "Four-locale coating upgrade renders real values");
+            Check(Render(false).Contains('3') && Render(true).Contains('5'), "Four-locale coating upgrade renders real values");
             Check(text == json.RootElement.GetProperty("WYLDER_FIRE_COATING.upgradeDescription").GetString(), "Coating upgrade copy synced");
             Check(!text.Contains("消耗") && !text.Contains("保留") && !text.Contains("Exhaust") && !text.Contains("Retain"),
                 "Coating keywords only from native model, never duplicated in body");
@@ -1192,7 +1220,7 @@ internal static class WylderBattleArtRegression
     public static bool Attack(AttackCommand __instance, PlayerChoiceContext choiceContext, ref Task<AttackCommand> __result)
     {
         // Eochaid's changing hit budget must exercise the real engine loop.
-        if (__instance.ModelSource is WylderEochaidsDancingBlade) return true;
+        if (__instance.ModelSource is WylderEochaidsDancingBlade or WylderOrdovisVortex) return true;
         __result = Resolve(__instance, choiceContext); return false;
     }
     private static async Task<AttackCommand> Resolve(AttackCommand attack, PlayerChoiceContext context)
@@ -1206,8 +1234,9 @@ internal static class WylderBattleArtRegression
         for (int i = 0; i < hits; i++)
         foreach (var target in attack.IsMultiTargeted ? _enemies.Where(c => c.IsAlive) : new[] { (Creature)AccessTools.Field(typeof(AttackCommand), "_singleTarget").GetValue(attack)! })
         {
-            card.DynamicVars.Damage.UpdateCardPreview(card, CardPreviewMode.Normal, target, true);
-            decimal damage = Math.Floor(card.DynamicVars.Damage.PreviewValue);
+            DynamicVar preview = card is WylderSiluriaVortex ? card.DynamicVars.CalculatedDamage : card.DynamicVars.Damage;
+            preview.UpdateCardPreview(card, CardPreviewMode.Normal, target, true);
+            decimal damage = Math.Floor(preview.PreviewValue);
             ResolvedDamage.Add(damage);
             var result = new DamageResult(target, attack.DamageProps) { UnblockedDamage = _fullyBlocked ? 0 : (int)damage, BlockedDamage = _fullyBlocked ? (int)damage : 0 };
             await card.AfterDamageGiven(context, attack.Attacker!, result, attack.DamageProps, target, card);
@@ -1267,3 +1296,4 @@ internal static class WylderBattleArtRegression
     private static void Check(bool condition, string message)
     { _checks++; if (!condition) throw new Exception("Wylder battle arts: " + message); }
 }
+

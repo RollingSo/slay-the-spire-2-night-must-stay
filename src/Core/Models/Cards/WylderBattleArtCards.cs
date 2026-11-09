@@ -11,6 +11,8 @@ using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
+using NightMustStay.Core.Nodes.Vfx;
+using NightMustStay.Core.Patches;
 
 namespace NightMustStay.Core.Models.Cards;
 
@@ -26,8 +28,12 @@ public sealed class WylderVacuumSlice : WylderCard
     protected override async Task OnBreak(PlayerChoiceContext context) =>
         await PowerCmd.Apply<WeakPower>(context, CombatState.GetOpponentsOf(Owner.Creature).Where(enemy => enemy.IsAlive).ToArray(),
             DynamicVars["Weak"].BaseValue, Owner.Creature, this);
-    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).TargetingAllOpponents(CombatState).Execute(context);
+    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
+    {
+        WylderAnimationPatch.QueueAttackMotion(Owner.Creature, "AttackTwoHand");
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).TargetingAllOpponents(CombatState)
+            .WithWylderFx(WylderAttackVfx.Kind.VacuumSlice, Owner.Creature).Execute(context);
+    }
     protected override void OnUpgrade()
     {
         DynamicVars.Damage.UpgradeValueBy(3m);
@@ -44,8 +50,9 @@ public sealed class WylderStormBlade : WylderCard
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         int hits = 1 + (Pursuing ? DynamicVars.Repeat.IntValue : 0);
+        WylderAnimationPatch.QueueAttackMotion(Owner.Creature, "AttackSingle");
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(play.Target)
-            .WithHitCount(hits).Execute(context);
+            .WithHitCount(hits).WithWylderFx(WylderAttackVfx.Kind.StormBlade, Owner.Creature).Execute(context);
     }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(1m);
 }
@@ -63,7 +70,9 @@ public sealed class WylderFlamingStrike : WylderCard
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         // One attack and one generated card per native CardPlay, including Replay.
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(play.Target).Execute(context);
+        WylderAnimationPatch.QueueAttackMotion(Owner.Creature, "AttackSingle");
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(play.Target)
+            .WithWylderFx(WylderAttackVfx.Kind.FlameSlash, Owner.Creature).Execute(context);
         var coating = CombatState.CreateCard<WylderFireCoating>(Owner);
         if (IsUpgraded) CardCmd.Upgrade(coating);
         await CardPileCmd.AddGeneratedCardToCombat(coating, PileType.Hand, Owner);
@@ -73,12 +82,12 @@ public sealed class WylderFlamingStrike : WylderCard
 // Generated colorless Skill, excluded from Wylder's reward pool.
 public sealed class WylderFireCoating : CardModel
 {
-    public WylderFireCoating() : base(1, CardType.Skill, CardRarity.Token, TargetType.Self) { }
+    public WylderFireCoating() : base(0, CardType.Skill, CardRarity.Token, TargetType.Self) { }
     public override CardPoolModel Pool => ModelDb.CardPool<TokenCardPool>();
     public override CardPoolModel VisualCardPool => ModelDb.CardPool<ColorlessCardPool>();
     public override string PortraitPath => "res://images/packed/card_portraits/wylder/wylder_fire_coating.png";
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust, CardKeyword.Retain };
-    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new PowerVar<VigorPower>("Vigor", 4m) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new PowerVar<VigorPower>("Vigor", 3m) };
     protected override IEnumerable<IHoverTip> ExtraHoverTips => new[] { HoverTipFactory.FromPower<VigorPower>() };
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
         await PowerCmd.Apply<VigorPower>(context, Owner.Creature, DynamicVars["Vigor"].BaseValue, Owner.Creature, this);
@@ -93,7 +102,9 @@ public sealed class WylderFlameOfRedmanes : WylderCard
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new[] { HoverTipFactory.FromPower<VigorPower>() });
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).TargetingAllOpponents(CombatState).Execute(context);
+        WylderAnimationPatch.QueueAttackMotion(Owner.Creature, "AttackSingle");
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).TargetingAllOpponents(CombatState)
+            .WithWylderFx(WylderAttackVfx.Kind.FireExplosion, Owner.Creature).Execute(context);
         await PowerCmd.Apply<VigorPower>(context, Owner.Creature, DynamicVars["Vigor"].BaseValue, Owner.Creature, this);
     }
     protected override void OnUpgrade()

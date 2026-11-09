@@ -44,7 +44,7 @@ internal static class WylderNewRevisionsRegression
                 Play(flame);
                 Check(Damage.Single() == Math.Floor((up ? 9m : 7m) * (pursuit ? 1.5m : 1m)), "Flame Chase damage and Pursuit bonus");
                 var coating = Generated.Single();
-                Check(coating is WylderFireCoating && coating.IsUpgraded == up && coating.DynamicVars["Vigor"].BaseValue == (up ? 6 : 4), "Generated correct Fire Coating version");
+                Check(coating is WylderFireCoating && coating.IsUpgraded == up && coating.DynamicVars["Vigor"].BaseValue == (up ? 5 : 3), "Generated correct Fire Coating version");
                 Check(!Owner.Creature.HasPower<WylderPursuitPower>(), "Flame Chase consumes old Pursuit normally");
                 var followup = Card<WylderStrike>(false); Play(followup);
                 Check(Damage.Last() == 6 && !Owner.Creature.HasPower<WylderPursuitPower>(), "Next attack gets no Pursuit bonus");
@@ -94,7 +94,7 @@ internal static class WylderNewRevisionsRegression
             Fixture(); var card = Card<WylderFlameChaseSlash>(up);
             var tips = (IEnumerable<IHoverTip>)AccessTools.PropertyGetter(typeof(WylderFlameChaseSlash), "ExtraHoverTips").Invoke(card, null)!;
             var preview = tips.OfType<CardHoverTip>().Single().Card;
-            Check(preview is WylderFireCoating && preview.IsUpgraded == up && preview.DynamicVars["Vigor"].BaseValue == (up ? 6 : 4),
+            Check(preview is WylderFireCoating && preview.IsUpgraded == up && preview.DynamicVars["Vigor"].BaseValue == (up ? 5 : 3),
                 "Generated Fire Coating hover preview matches actual base/upgraded card");
         }
     }

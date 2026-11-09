@@ -7,6 +7,8 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.ValueProps;
+using NightMustStay.Core.Nodes.Vfx;
+using NightMustStay.Core.Patches;
 
 namespace NightMustStay.Core.Models.Cards;
 
@@ -18,7 +20,9 @@ public sealed class WylderFlameChaseSlash : WylderCard
         HoverTipFactory.FromCardWithCardHoverTips<WylderFireCoating>(IsUpgraded));
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(play.Target).Execute(context);
+        WylderAnimationPatch.QueueAttackMotion(Owner.Creature, "AttackTwoHand");
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(play.Target)
+            .WithWylderFx(WylderAttackVfx.Kind.FlameSlash, Owner.Creature).Execute(context);
         var coating = CombatState.CreateCard<WylderFireCoating>(Owner);
         if (IsUpgraded) CardCmd.Upgrade(coating);
         await CardPileCmd.AddGeneratedCardToCombat(coating, PileType.Hand, Owner);

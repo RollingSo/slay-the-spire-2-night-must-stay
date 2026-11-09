@@ -93,6 +93,16 @@ internal static class WylderEochaidRegression
             Check(DamageValues.Count == 1, "Native attacker-death exit retained");
             Fixture(); Enemies[0].SetCurrentHpInternal(15); Play(Card(false, 4));
             Check(DamageValues.Count == 2 && Enemies[0].IsDead, "No damage is dealt to a dead target for remaining/bonus hits");
+            foreach(bool up in new[]{false,true})foreach(int firstDamage in new[]{0,19,20,21})foreach(bool blocked in new[]{false,true})
+            {
+                Fixture();_blocked=blocked;ForcedDamage.Enqueue(firstDamage);
+                var vortex=(WylderOrdovisVortex)AccessTools.Method(Shared,"Card").Invoke(null,new object[]{ModelDb.Card<WylderOrdovisVortex>(),up})!;
+                Play(vortex);Check(DamageValues.Count==(firstDamage>=20?3:1),"Ordovis native loop exact19/20 blocked boundary");
+                DamageValues.Clear();Play(vortex);Check(DamageValues.Count==1,"Ordovis later play resets added hit budget");
+            }
+            Fixture();Enemies[0].SetCurrentHpInternal(1);ForcedDamage.Enqueue(20);
+            var lethalVortex=(WylderOrdovisVortex)AccessTools.Method(Shared,"Card").Invoke(null,new object[]{ModelDb.Card<WylderOrdovisVortex>(),false})!;
+            Play(lethalVortex);Check(DamageValues.Count==1,"Ordovis stops added hits after target death");
             LocalizedText();
             Check(File.Exists(ModelDb.Card<WylderEochaidsDancingBlade>().PortraitPath.Replace("res://", "")), "Custom portrait resolves");
             Console.WriteLine($"PASS: {_checks} Eochaid checks using the real native attack loop: X0-4, upgrades, Pursuit, full block, 19/20, last-hit doubling, actual-zero damage, Vigor, X modifiers, reset/copy isolation and death exits.");
@@ -117,8 +127,8 @@ internal static class WylderEochaidRegression
     public static bool Damage(IEnumerable<Creature> targets, decimal amount, ValueProp props, Creature dealer,
         CardModel? cardSource, ref Task<IEnumerable<DamageResult>> __result)
     {
-        if (cardSource is not WylderEochaidsDancingBlade card) return true;
-        __result = ResolveDamage(targets, props, dealer, card); return false;
+        if (cardSource is not WylderEochaidsDancingBlade and not WylderOrdovisVortex) return true;
+        __result = ResolveDamage(targets, props, dealer, cardSource); return false;
     }
     private static async Task<IEnumerable<DamageResult>> ResolveDamage(IEnumerable<Creature> targets, ValueProp props, Creature dealer, CardModel card)
     {
