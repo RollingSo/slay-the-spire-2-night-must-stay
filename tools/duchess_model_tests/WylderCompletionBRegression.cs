@@ -34,7 +34,7 @@ internal static class WylderCompletionBRegression
         typeof(WylderForcedBreakout), typeof(WylderSpendReserves), typeof(WylderCliffStep), typeof(WylderNightRespite),
         typeof(WylderWindChase), typeof(WylderSprintAfterimage), typeof(WylderLastEmber), typeof(WylderAllInDuel), typeof(WylderLongNightOath) };
 
-    public static void Run()
+    public static void Run(bool takersFlamesOnly = false)
     {
         var harmony = new HarmonyLib.Harmony("NightMustStay.Wylder.CompletionB.Regression");
         void Shared(MethodBase method, string name) => harmony.Patch(method,
@@ -75,6 +75,13 @@ internal static class WylderCompletionBRegression
                 Check(Sum("Heal") == (upgraded ? 8 : 6) && Rewards.Count(r => r.Kind == "Heal") == 1, "P053 pre-block Break heals once");
                 Fixture(); Add<StrengthPower>(14); _killTargets = true; flames = Card<WylderTakersFlames>(upgraded); Play(flames);
                 Check(Sum("Heal") == (upgraded ? 8 : 6) && Enemies.All(e => !e.IsAlive), "P053 successful lethal Break remains eligible");
+                Rewards.Clear();
+                AccessTools.Field(typeof(WylderTakersFlames), "_pendingBreakHeal").SetValue(flames, true);
+                flames.AfterCombatEnd(null!).GetAwaiter().GetResult();
+                flames.AfterCombatEnd(null!).GetAwaiter().GetResult();
+                Check(Sum("Heal") == (upgraded ? 8 : 6) && Rewards.Count(r => r.Kind == "Heal") == 1,
+                    "P053 combat-end fallback settles the pending heal exactly once");
+                if (takersFlamesOnly) continue;
                 foreach (int vigor in new[] { 0, 3, 4, 7 })
                 foreach (bool hand in new[] { false, true })
                 {
@@ -88,7 +95,9 @@ internal static class WylderCompletionBRegression
                 Fixture(); var drop = Card<WylderAssaultDrop>(upgraded); Play(drop);
                 Check(Damage.Count == 4 && Sum("PhantomImbalancePower") == 0, "P055 AOE two native hits without false Break");
                 Fixture(); Add<StrengthPower>(6); drop = Card<WylderAssaultDrop>(upgraded); Play(drop);
-                Check(Sum("PhantomImbalancePower") == 2, "P055 cumulative per-enemy Break awards each survivor once");
+                Check(Sum("PhantomImbalancePower") == 0, "P055 two sub-threshold hits never accumulate into Break");
+                Fixture(); Add<StrengthPower>(22); drop = Card<WylderAssaultDrop>(upgraded); Play(drop);
+                Check(Sum("PhantomImbalancePower") == 2, "P055 every hit reaching Break awards each survivor once");
                 foreach (int block in new[] { 0, 4, 5, 20, 35 })
                 {
                     Fixture(true); Owner.Creature.GainBlockInternal(block); var counter = Card<WylderCounteroffensive>(upgraded);
@@ -125,7 +134,9 @@ internal static class WylderCompletionBRegression
                 }
                 SourceAndPending(upgraded);
             }
-            Console.WriteLine($"PASS: {_checks} Wylder B-completion checks: 16 cards, reviewed upgrades and user-final Taker's Flames, calculated previews, native AOE/multihit/Break, Vigor consumption, hand sources, pending discounts and next-turn rewards (UI commands stubbed).");
+            Console.WriteLine(takersFlamesOnly
+                ? $"PASS: {_checks} Taker's Flames checks, including lethal Break and exactly-once combat-end healing."
+                : $"PASS: {_checks} Wylder B-completion checks: 16 cards, reviewed upgrades and user-final Taker's Flames, calculated previews, native AOE/multihit/Break, Vigor consumption, hand sources, pending discounts and next-turn rewards (UI commands stubbed).");
         }
         finally { harmony.UnpatchAll(harmony.Id); }
     }
@@ -139,7 +150,11 @@ internal static class WylderCompletionBRegression
             Fixture(); var card = Card(type, upgraded);
             Check(text.RootElement.GetProperty("cards").TryGetProperty(card.Id.Entry, out _), "B source localization exists " + card.Id);
             Check(card.Rarity == (card is WylderLongNightOath ? CardRarity.Ancient : CardRarity.Rare), "B rarity " + card.Id);
-            Check(File.Exists(card.PortraitPath.Replace("res://", "D:/STS2/")), "B test portrait exists " + card.Id);
+            string relativePortrait = card.PortraitPath.StartsWith("res://", StringComparison.Ordinal)
+                ? card.PortraitPath["res://".Length..] : card.PortraitPath;
+            string projectPortrait = Path.Combine(Directory.GetCurrentDirectory(), relativePortrait);
+            string extractedGamePortrait = Path.Combine("D:/STS2", relativePortrait);
+            Check(File.Exists(projectPortrait) || File.Exists(extractedGamePortrait), "B test portrait exists " + card.Id);
             if (card is WylderTakersFlames or WylderAssaultDrop) Check(card.TargetType == TargetType.AllEnemies, "B native AOE metadata");
             if (card is WylderFlameWard) Check(card.Keywords.Contains(CardKeyword.Retain) == upgraded && card.Keywords.Contains(CardKeyword.Exhaust), "P057 upgrade native Retain and Exhaust");
             if (card is WylderNightRespite) Check(card.Keywords.Contains(CardKeyword.Retain) && card.Keywords.Contains(CardKeyword.Exhaust), "P065 native keywords");

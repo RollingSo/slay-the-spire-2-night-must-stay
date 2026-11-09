@@ -40,11 +40,15 @@ internal static class WylderNewRevisionsRegression
             {
                 Fixture(pursuit);
                 var flame = Card<WylderFlameChaseSlash>(up);
-                Check(flame.EnergyCost.GetResolved() == 1 && flame.Rarity == CardRarity.Uncommon && flame.Type == CardType.Attack, "Flame Chase metadata");
+                Check(flame is WylderFollowThroughCard && flame.EnergyCost.GetResolved() == 2
+                    && flame.Rarity == CardRarity.Uncommon && flame.Type == CardType.Attack, "Flame Chase metadata and Follow Through");
+                Check(flame.DynamicVars.Damage.BaseValue == (up ? 11m : 9m)
+                    && flame.DynamicVars.Damage.WasJustUpgraded == up
+                    && !flame.DynamicVars.Cards.WasJustUpgraded, "Only Flame Chase damage upgrades");
                 Play(flame);
-                Check(Damage.Single() == Math.Floor((up ? 9m : 7m) * (pursuit ? 1.5m : 1m)), "Flame Chase damage and Pursuit bonus");
+                Check(Damage.Single() == Math.Floor((up ? 11m : 9m) * (pursuit ? 1.5m : 1m)), "Flame Chase damage and Pursuit bonus");
                 var coating = Generated.Single();
-                Check(coating is WylderFireCoating && coating.IsUpgraded == up && coating.DynamicVars["Vigor"].BaseValue == (up ? 6 : 4), "Generated correct Fire Coating version");
+                Check(coating is WylderFireCoating && coating.IsUpgraded == up && coating.DynamicVars["Vigor"].BaseValue == (up ? 5 : 3), "Generated correct Fire Coating version");
                 Check(!Owner.Creature.HasPower<WylderPursuitPower>(), "Flame Chase consumes old Pursuit normally");
                 var followup = Card<WylderStrike>(false); Play(followup);
                 Check(Damage.Last() == 6 && !Owner.Creature.HasPower<WylderPursuitPower>(), "Next attack gets no Pursuit bonus");
@@ -66,9 +70,24 @@ internal static class WylderNewRevisionsRegression
             }
             Fixture(); var lethal = Card<WylderAssaultStake>(false); Enemies[0].SetCurrentHpInternal(0); Play(lethal);
             Check(Rewards.Count(r => r.Kind == "Stun") == 1 && Rewards.Single().Target == Enemies[1], "Dead enemy excluded from stun");
+            foreach (bool up in new[] { false, true })
+            foreach (bool pursuit in new[] { false, true })
+            {
+                Fixture(pursuit);
+                var bide = Card<WylderBideTheMoment>(up);
+                Check(bide.EnergyCost.GetResolved() == 0 && bide.Type == CardType.Skill
+                    && bide.Rarity == CardRarity.Common && bide.TargetType == TargetType.Self
+                    && bide.GainsBlock, "Bide the Moment metadata");
+                Check(bide.DynamicVars.Block.BaseValue == (up ? 11m : 8m)
+                    && bide.DynamicVars.Block.WasJustUpgraded == up, "Bide the Moment block upgrade");
+                Play(bide);
+                Check(Rewards.Where(r => r.Kind == "Block").Sum(r => r.Amount) == (pursuit ? (up ? 11m : 8m) : 0m),
+                    "Bide the Moment only grants Block during Pursuit");
+                Check(!Owner.Creature.HasPower<WylderPursuitPower>(), "Bide the Moment consumes prior Pursuit as a Skill");
+            }
             HoverPreviews(h);
             LocalizedText();
-            Console.WriteLine($"PASS: {_checks} Flame Chase and Assault Stake checks: upgrades, generation, pursuit consumption, AOE, stun and sole-hand autoplay.");
+            Console.WriteLine($"PASS: {_checks} Flame Chase, Assault Stake and Bide the Moment checks: upgrades, generation, Pursuit conditions, AOE, stun and sole-hand autoplay.");
         }
         finally { h.UnpatchAll(h.Id); }
     }
@@ -94,7 +113,7 @@ internal static class WylderNewRevisionsRegression
             Fixture(); var card = Card<WylderFlameChaseSlash>(up);
             var tips = (IEnumerable<IHoverTip>)AccessTools.PropertyGetter(typeof(WylderFlameChaseSlash), "ExtraHoverTips").Invoke(card, null)!;
             var preview = tips.OfType<CardHoverTip>().Single().Card;
-            Check(preview is WylderFireCoating && preview.IsUpgraded == up && preview.DynamicVars["Vigor"].BaseValue == (up ? 6 : 4),
+            Check(preview is WylderFireCoating && preview.IsUpgraded == up && preview.DynamicVars["Vigor"].BaseValue == (up ? 5 : 3),
                 "Generated Fire Coating hover preview matches actual base/upgraded card");
         }
     }
@@ -115,7 +134,11 @@ internal static class WylderNewRevisionsRegression
                 return formatter.Format(System.Globalization.CultureInfo.InvariantCulture, text, vars);
             }
             Check(!Render(false).Contains('+') && Render(true).Contains('+') && Render(true, true).Contains('+'), "Base/upgraded/preview generated-card naming");
+            Check(text.Contains(locale == "zhs" ? "收招" : "Follow Through"), "Follow Through text present");
             Check(json.RootElement.GetProperty("WYLDER_ASSAULT_STAKE.description").GetString()!.Contains(locale == "zhs" ? "绝境" : "Desperation"), "Desperation text present");
+            string bide = json.RootElement.GetProperty("WYLDER_BIDE_THE_MOMENT.description").GetString()!;
+            Check(bide.Contains(locale == "zhs" ? "追击" : "Pursuit") && bide.Contains("{Block:diff()}"),
+                "Bide the Moment Pursuit and dynamic Block text");
         }
     }
     private static void Check(bool ok, string reason) { _checks++; if (!ok) throw new Exception(reason); }

@@ -53,9 +53,11 @@ public sealed class WylderPursuitPower : PowerModel
     public override int ModifyCardPlayCount(CardModel card, Creature target, int playCount) =>
         card is WylderFlamingStrike && card.Owner?.Creature == Owner
             ? playCount + card.DynamicVars.Repeat.IntValue : playCount;
+    internal static bool ConsumesOnPlay(CardType type) =>
+        type is CardType.Attack or CardType.Skill;
     public override Task BeforeCardPlayed(CardPlay play)
     {
-        if (play.Card.Owner.Creature == Owner)
+        if (play.Card.Owner.Creature == Owner && ConsumesOnPlay(play.Card.Type))
         {
             Data data = GetInternalData<Data>();
             data.Plays.TryAdd(play, false);

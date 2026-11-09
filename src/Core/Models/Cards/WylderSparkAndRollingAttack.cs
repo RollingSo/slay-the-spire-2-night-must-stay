@@ -15,11 +15,15 @@ namespace NightMustStay.Core.Models.Cards;
 public sealed class WylderSpark : WylderCard
 {
     public WylderSpark() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new PowerVar<VigorPower>("Vigor", 3m) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new PowerVar<VigorPower>("Vigor", 3m), new CardsVar(1) };
+    public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Append(HoverTipFactory.FromPower<VigorPower>());
-    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
+    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
+    {
         await PowerCmd.Apply<VigorPower>(context, Owner.Creature, DynamicVars["Vigor"].BaseValue, Owner.Creature, this);
-    protected override void OnUpgrade() => DynamicVars["Vigor"].UpgradeValueBy(1m);
+        await CardPileCmd.Draw(context, DynamicVars.Cards.BaseValue, Owner);
+    }
+    protected override void OnUpgrade() => DynamicVars["Vigor"].UpgradeValueBy(2m);
 }
 
 public sealed class WylderRollingAttack : WylderCard

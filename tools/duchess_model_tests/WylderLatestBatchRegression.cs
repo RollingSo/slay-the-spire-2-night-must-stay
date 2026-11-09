@@ -1,0 +1,133 @@
+using System.Text.Json;
+using HarmonyLib;
+using MegaCrit.Sts2.Core.Combat;
+using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
+using MegaCrit.Sts2.Core.Models;
+using NightMustStay.Core.Models.Cards;
+using NightMustStay.Core.Models.Characters;
+using NightMustStay.Core.Models.Power;
+
+internal static class WylderLatestBatchRegression
+{
+    private static void Check(bool condition, string label)
+    {
+        if (!condition) throw new Exception(label);
+    }
+
+    public static void Run()
+    {
+        foreach (bool upgraded in new[] { false, true })
+        {
+            var seamless = ModelDb.Card<WylderSeamless>().ToMutable();
+            var moonlight = ModelDb.Card<WylderMoonlightSword>().ToMutable();
+            var twin = ModelDb.Card<WylderTwinToken>().ToMutable();
+            var inspire = ModelDb.Card<WylderInspire>().ToMutable();
+            var flamelight = ModelDb.Card<WylderFlamelightOnSnow>().ToMutable();
+            var triumph = ModelDb.Card<WylderTriumph>().ToMutable();
+            var judgment = ModelDb.Card<WylderFatesJudgment>().ToMutable();
+            if (upgraded)
+            {
+                seamless.UpgradeInternal();
+                moonlight.UpgradeInternal();
+                twin.UpgradeInternal();
+                inspire.UpgradeInternal();
+                flamelight.UpgradeInternal();
+                triumph.UpgradeInternal();
+                judgment.UpgradeInternal();
+            }
+
+            Check(seamless.Type == CardType.Power && seamless.Rarity == CardRarity.Rare
+                && seamless.EnergyCost.GetResolved() == 1
+                && seamless.DynamicVars.Block.BaseValue == (upgraded ? 14 : 10), "Seamless metadata and upgrade");
+            Check(moonlight.Type == CardType.Power && moonlight.Rarity == CardRarity.Rare
+                && moonlight.EnergyCost.GetResolved() == 1
+                && moonlight.DynamicVars["Freeze"].BaseValue == (upgraded ? 3 : 2), "Moonlight Sword metadata and upgrade");
+            Check(twin.Type == CardType.Skill && twin.Rarity == CardRarity.Uncommon
+                && twin.TargetType == TargetType.AnyPlayer
+                && twin.MultiplayerConstraint == CardMultiplayerConstraint.MultiplayerOnly
+                && twin.EnergyCost.GetResolved() == (upgraded ? 0 : 1), "Twin Token metadata and upgrade");
+            Check(inspire.Type == CardType.Skill && inspire.Rarity == CardRarity.Uncommon
+                && inspire.TargetType == TargetType.Self && inspire.EnergyCost.GetResolved() == 1
+                && inspire.DynamicVars.Cards.BaseValue == (upgraded ? 3 : 2)
+                && inspire.DynamicVars["HandThreshold"].BaseValue == 2, "Inspire metadata and upgrade");
+            Check(flamelight.Type == CardType.Power && flamelight.Rarity == CardRarity.Rare
+                && flamelight.EnergyCost.GetResolved() == (upgraded ? 1 : 2)
+                && flamelight.DynamicVars["Freeze"].BaseValue == 1
+                && flamelight.DynamicVars["Vigor"].BaseValue == 3, "Flamelight on Snow metadata and upgrade");
+            Check(triumph.Type == CardType.Skill && triumph.Rarity == CardRarity.Rare
+                && triumph.EnergyCost.GetResolved() == 0
+                && triumph.DynamicVars.Energy.BaseValue == (upgraded ? 2 : 1)
+                && triumph.CanonicalKeywords.Contains(CardKeyword.Exhaust), "Triumph metadata and upgrade");
+            Check(judgment.Type == CardType.Power && judgment.Rarity == CardRarity.Rare
+                && judgment.EnergyCost.GetResolved() == 1
+                && judgment.DynamicVars["Vulnerable"].BaseValue == (upgraded ? 3 : 2)
+                && judgment.DynamicVars["Freeze"].BaseValue == (upgraded ? 3 : 2), "Fate's Judgment metadata and upgrade");
+        }
+
+        Check(ModelDb.Card<WylderHoarfrostStomp>() is WylderFollowThroughCard
+            && ModelDb.Card<WylderHoarfrostStomp>().Rarity == CardRarity.Common,
+            "Hoarfrost Stomp must be Common and participate in Follow Through");
+
+        var owner = TrackingArrowRegression.MakePlayer();
+        AccessTools.Field(typeof(Player), "<Character>k__BackingField").SetValue(owner, ModelDb.Character<Wylder>());
+        var creature = new Creature(owner, 50, 50) { CombatState = new CombatState() };
+        AccessTools.Field(typeof(Player), "<Creature>k__BackingField").SetValue(owner, creature);
+        var seamlessPower = (WylderSeamlessPower)ModelDb.Power<WylderSeamlessPower>().ToMutable();
+        AccessTools.Property(typeof(PowerModel), nameof(PowerModel.Owner)).SetValue(seamlessPower, creature);
+        seamlessPower.SetAmount(2, true);
+        seamlessPower.UpgradedCopies = 1;
+        Check(seamlessPower.Sum(10, 14) == 24, "Seamless mixed copies preserve upgraded contribution");
+        var moonlightPower = (WylderMoonlightSwordPower)ModelDb.Power<WylderMoonlightSwordPower>().ToMutable();
+        AccessTools.Property(typeof(PowerModel), nameof(PowerModel.Owner)).SetValue(moonlightPower, creature);
+        moonlightPower.SetAmount(2, true);
+        moonlightPower.UpgradedCopies = 1;
+        Check(moonlightPower.BasicCopies == 1 && moonlightPower.Copies == 2,
+            "Moonlight Sword mixed copies preserve individual triggers");
+        var judgmentPower = (WylderFatesJudgmentPower)ModelDb.Power<WylderFatesJudgmentPower>().ToMutable();
+        AccessTools.Property(typeof(PowerModel), nameof(PowerModel.Owner)).SetValue(judgmentPower, creature);
+        judgmentPower.SetAmount(2, true);
+        judgmentPower.UpgradedCopies = 1;
+        Check(judgmentPower.Sum(2, 3) == 5, "Fate's Judgment mixed copies preserve upgraded contribution");
+
+        ((List<PowerModel>)AccessTools.Field(typeof(Creature), "_powers").GetValue(creature)!).Add(seamlessPower);
+        var hand = CardPile.Get(PileType.Hand, owner) ?? throw new Exception("Missing test hand pile");
+        var lastCard = ModelDb.Card<WylderStrike>().ToMutable();
+        AccessTools.Field(typeof(CardModel), "_owner").SetValue(lastCard, owner);
+        hand.AddInternal(lastCard, silent: true);
+        var play = TrackingArrowRegression.MakePlay(lastCard, owner);
+        var handContext = typeof(Wylder).Assembly.GetType("NightMustStay.Core.Models.Cards.WylderHandPlayContext")!;
+        AccessTools.Method(handContext, "CaptureWrapper").Invoke(null, new object[] { lastCard });
+        AccessTools.Method(handContext, "Record").Invoke(null, new object[] { play });
+        WylderCombatEvents.BeginCard(play);
+        var ledger = AccessTools.Field(typeof(WylderCombatEvents), "Plays").GetValue(null)!;
+        object?[] lookup = { play, null };
+        ledger.GetType().GetMethod("TryGetValue")!.Invoke(ledger, lookup);
+        Check((int)AccessTools.Field(lookup[1]!.GetType(), "SeamlessBlock").GetValue(lookup[1])! == 24,
+            "Seamless snapshots the exact pre-play last-card state and mixed-copy Block");
+
+        foreach (string locale in new[] { "zhs", "eng", "jpn", "kor" })
+        {
+            using var cards = JsonDocument.Parse(File.ReadAllText($"NightMustStay/localization/{locale}/cards.json"));
+            using var powers = JsonDocument.Parse(File.ReadAllText($"NightMustStay/localization/{locale}/powers.json"));
+            foreach (string id in new[] { "WYLDER_SEAMLESS", "WYLDER_MOONLIGHT_SWORD", "WYLDER_TWIN_TOKEN", "WYLDER_INSPIRE",
+                "WYLDER_FLAMELIGHT_ON_SNOW", "WYLDER_TRIUMPH", "WYLDER_FATES_JUDGMENT" })
+            {
+                Check(cards.RootElement.TryGetProperty(id + ".title", out _), $"{locale} {id} title");
+                Check(cards.RootElement.TryGetProperty(id + ".description", out _), $"{locale} {id} description");
+                Check(cards.RootElement.TryGetProperty(id + ".upgradeDescription", out _), $"{locale} {id} upgrade description");
+            }
+            foreach (string id in new[] { "WYLDER_SEAMLESS_POWER", "WYLDER_MOONLIGHT_SWORD_POWER",
+                "WYLDER_FLAMELIGHT_ON_SNOW_POWER", "WYLDER_FATES_JUDGMENT_POWER" })
+            {
+                Check(powers.RootElement.TryGetProperty(id + ".title", out _), $"{locale} {id} title");
+                Check(powers.RootElement.TryGetProperty(id + ".description", out _), $"{locale} {id} description");
+            }
+            string remainingEmber = powers.RootElement.GetProperty("WYLDER_REMAINING_EMBER_POWER.description").GetString()!;
+            Check(!remainingEmber.Contains('(') && !remainingEmber.Contains('（'), $"{locale} Remaining Ember has no parenthetical text");
+        }
+
+        Console.WriteLine("PASS: latest Wylder cards, upgrades, Follow Through inheritance, mixed power copies and localization parity.");
+    }
+}

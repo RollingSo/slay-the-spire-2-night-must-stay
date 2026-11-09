@@ -13,6 +13,8 @@ using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
+using NightMustStay.Core.Nodes.Vfx;
+using NightMustStay.Core.Patches;
 
 namespace NightMustStay.Core.Models.Cards;
 
@@ -20,39 +22,54 @@ namespace NightMustStay.Core.Models.Cards;
 // Dedicated artwork reviewed and integrated on 2026-10-29.
 public sealed class WylderJumpingHeavy : WylderCard
 {
-    public WylderJumpingHeavy() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
-    public override string PortraitPath => "res://images/packed/card_portraits/wylder/wylder_jumping_heavy.png";
-    public override bool GainsBlock => true;
-    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new BlockVar(9m, ValueProp.Move) };
-    protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
-    { await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block.BaseValue, ValueProp.Move, p); await WylderPursuitPower.Enter(c, Owner.Creature, this); }
-    protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(3m);
+    public WylderJumpingHeavy() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
+    protected override bool HasPursuitCondition => true;
+    public override bool TryModifyEnergyCostInCombat(MegaCrit.Sts2.Core.Models.CardModel card, decimal originalCost, out decimal modifiedCost)
+    {
+        modifiedCost = originalCost;
+        if (card != this || !Pursuing) return false;
+        modifiedCost = 0;
+        return true;
+    }
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(13m, ValueProp.Move) };
+    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
+    {
+        WylderAnimationPatch.QueueAttackMotion(Owner.Creature, "AttackTwoHand");
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(play.Target)
+            .WithWylderFx(WylderAttackVfx.Kind.Greatsword, Owner.Creature).Execute(context);
+    }
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);
 }
 public sealed class WylderAerialStake : WylderCard
 {
-    public WylderAerialStake() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
+    public WylderAerialStake() : base(3, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
     protected override bool HasPursuitCondition => true;
-    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new DamageVar(15m, ValueProp.Move) };
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => new IHoverTip[] {
-        HoverTipFactory.FromPower<WylderPursuitPower>(), HoverTipFactory.Static(StaticHoverTip.Stun) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(20m, ValueProp.Move), new PowerVar<PhantomImbalancePower>("Imbalance", 3m) };
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Append(HoverTipFactory.FromPower<PhantomImbalancePower>());
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         if (!Pursuing) return;
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(play.Target).Execute(context);
-        if (play.Target.IsAlive) await CreatureCmd.Stun(play.Target);
+        WylderAnimationPatch.QueueAttackMotion(Owner.Creature, "Ultimate");
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(play.Target)
+            .WithWylderFx(WylderAttackVfx.Kind.FireExplosion, Owner.Creature).Execute(context);
+        if (!play.Target.IsAlive) return;
+        await PowerCmd.Apply<PhantomImbalancePower>(context, play.Target, DynamicVars["Imbalance"].BaseValue, Owner.Creature, this);
+        await PhantomImbalancePower.ResolveThreshold(context, play.Target);
     }
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(5m);
+    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }
 public sealed class WylderCounterRush : WylderDesperationCard
 {
-    public WylderCounterRush() : base(3, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
+    public WylderCounterRush() : base(3, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         { new DamageVar(12m, ValueProp.Move), new PowerVar<PhantomImbalancePower>("Imbalance", 2m) };
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         base.ExtraHoverTips.Append(HoverTipFactory.FromPower<PhantomImbalancePower>());
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(play.Target).Execute(context);
+        WylderAnimationPatch.QueueAttackMotion(Owner.Creature, "Ultimate");
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(play.Target)
+            .WithWylderFx(WylderAttackVfx.Kind.FireExplosion, Owner.Creature).Execute(context);
         if (!play.Target.IsAlive) return;
         await PowerCmd.Apply<PhantomImbalancePower>(context, play.Target, DynamicVars["Imbalance"].BaseValue, Owner.Creature, this);
         await PhantomImbalancePower.ResolveThreshold(context, play.Target);
@@ -100,7 +117,7 @@ public sealed class WylderClawRend : WylderFollowThroughCard
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(6m, ValueProp.Move), new PowerVar<VulnerablePower>("Vulnerable", 1m) };
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new[] { HoverTipFactory.FromPower<VulnerablePower>() });
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
-    { await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(p.Target).Execute(c); if (p.Target.IsAlive) await PowerCmd.Apply<VulnerablePower>(c, p.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this); }
+    { WylderAnimationPatch.QueueAttackMotion(Owner.Creature, "ClawShot"); await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(p.Target).WithWylderFx(WylderAttackVfx.Kind.Claw, Owner.Creature).Execute(c); if (p.Target.IsAlive) await PowerCmd.Apply<VulnerablePower>(c, p.Target, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this); }
     protected override void OnUpgrade() => DynamicVars["Vulnerable"].UpgradeValueBy(1m);
 }
 public sealed class WylderMotionAndStillness : WylderFollowThroughCard
@@ -149,8 +166,13 @@ public sealed class WylderDesperateSurvival : WylderDesperationCard
     protected override IEnumerable<Creature> LegalDesperationTargets() =>
         CombatState.GetOpponentsOf(Owner.Creature).Where(CanExecute);
     protected override bool IsPlayable => CombatState == null || LegalDesperationTargets().Any();
-    protected override Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
-        CanExecute(play.Target) ? CreatureCmd.Kill(play.Target) : Task.CompletedTask;
+    protected override Task OnPlay(PlayerChoiceContext context, CardPlay play)
+    {
+        if (!CanExecute(play.Target)) return Task.CompletedTask;
+        WylderAnimationPatch.PlayImmediate(Owner.Creature, "AttackTwoHand");
+        WylderAttackEffects.Play(play.Target, WylderAttackVfx.Kind.Execution, Owner.Creature);
+        return CreatureCmd.Kill(play.Target);
+    }
     protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);
 }
 public sealed class WylderWildfire : WylderAbilityCard<WylderWildfirePower>

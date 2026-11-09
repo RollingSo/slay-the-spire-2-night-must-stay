@@ -12,11 +12,13 @@ namespace NightMustStay.Core.Models.Cards;
 public sealed class WylderEochaidsDancingBlade : WylderCard
 {
     private AttackCommand _resolvingAttack;
+    private int _breakHitCount;
     public WylderEochaidsDancingBlade() : base(0, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
     protected override bool HasEnergyCostX => true;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         { new DamageVar(9m, ValueProp.Move), new DynamicVar("Break", 20m), new RepeatVar(0) };
     protected override decimal BreakThreshold => DynamicVars["Break"].BaseValue;
+    protected override int BreakHitCount => _breakHitCount;
 
     // The engine loop asks this after each hit. Scope it to this exact command,
     // so nested damage, other copies and later replays cannot inherit doubling.
@@ -26,6 +28,7 @@ public sealed class WylderEochaidsDancingBlade : WylderCard
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         int hits = ResolveEnergyXValue() + DynamicVars.Repeat.IntValue;
+        _breakHitCount = hits;
         _resolvingAttack = DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this)
             .Targeting(play.Target).WithHitCount(hits);
         try { await _resolvingAttack.Execute(context); }

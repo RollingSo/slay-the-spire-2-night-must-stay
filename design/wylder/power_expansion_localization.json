@@ -190,9 +190,9 @@
     ],
     "WYLDER_VETERAN_EDGE_POWER": [
       "百战砺芒",
-      "每次触发[gold]破势[/gold]后，每层此能力获得1点[gold]力量[/gold]。",
+      "每次触发[gold]破势[/gold]后，每层此能力获得2点[gold]力量[/gold]。",
       "Veteran Edge",
-      "Whenever you trigger [gold]Break[/gold], gain 1 [gold]Strength[/gold] per stack."
+      "Whenever you trigger [gold]Break[/gold], gain 2 [gold]Strength[/gold] per stack."
     ],
     "WYLDER_UNYIELDING_SPIRIT_POWER": [
       "不屈斗志",

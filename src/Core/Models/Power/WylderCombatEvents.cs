@@ -38,7 +38,7 @@ public static class WylderCombatEvents
     {
         internal readonly Queue<Func<PlayerChoiceContext, Task>> Rewards = new();
         internal bool Begun, Completed, Draining, OldPursuit, ConsumedPursuit, KeptPursuit, VigorConsumed, Broke, HalfVigor;
-        internal int ThresholdReduction, BreakDraw;
+        internal int ThresholdReduction, BreakDraw, SeamlessBlock;
         internal WylderEffectSource ParentSource;
     }
     private static readonly ConditionalWeakTable<Player, State> States = new();
@@ -111,7 +111,10 @@ public static class WylderCombatEvents
         state.Source = WylderEffectSource.CardEffect;
         state.Stack.Add(play);
         data.OldPursuit = WylderPursuitPower.IsActive(player.Creature);
-        bool hand = WylderHandPlayContext.HandCount(play.Card, play).HasValue;
+        int? sourceHandCount = WylderHandPlayContext.HandCount(play.Card, play);
+        bool hand = sourceHandCount.HasValue;
+        if (sourceHandCount == 1 && Power<WylderSeamlessPower>(player) is { } seamless)
+            data.SeamlessBlock = seamless.Sum(WylderSeamless.BaseBlock, WylderSeamless.UpgradedBlock);
         if (play.Card.Type == CardType.Attack)
         {
             data.HalfVigor = state.HalfVigor; state.HalfVigor = false;
@@ -162,6 +165,19 @@ public static class WylderCombatEvents
             int draw = data.BreakDraw;
             Queue(play, c => CardPileCmd.Draw(c, draw, player));
         }
+        if (Power<WylderMultiplayerPower>(player) is { } team)
+        {
+            int basic = team.BasicCopies, total = team.Copies;
+            Queue(play, async _ => {
+                foreach (var ally in player.Creature.CombatState.Players.Where(p => p != player && p.Creature.IsAlive))
+                    for (int i = 0; i < total; i++)
+                    {
+                        var coating = player.Creature.CombatState.CreateCard<WylderFireCoating>(ally);
+                        if (i >= basic) CardCmd.Upgrade(coating);
+                        await CardPileCmd.AddGeneratedCardToCombat(coating, PileType.Hand, ally);
+                    }
+            });
+        }
         if (Power<WylderEruptionPower>(player) is { } eruption)
         {
             int damage = eruption.Sum(WylderEruption.BaseDamage, WylderEruption.UpgradedDamage);
@@ -186,14 +202,43 @@ public static class WylderCombatEvents
         }
         if (Power<WylderVeteranEdgePower>(player) is { } veteran)
         {
-            int amount = veteran.Copies;
+            int amount = 2 * veteran.Copies;
             Queue(play, c => Strength(c, player, amount, play.Card));
         }
     }
     public static async Task RegisterEntry(PlayerChoiceContext context, Creature owner, CardModel card, WylderEffectSource source)
     {
         Player player = owner.Player;
+        if (player != null) WylderPursuitHistory.Enter(player);
         if (!Eligible(player)) return;
+        if (Power<WylderOffensiveInstinctPower>(player) is { } instinct)
+        {
+            int copies = instinct.Copies;
+            await QueueOrRun(context, player, async c => {
+                for (int i = 0; i < copies; i++)
+                {
+                    var enemies = owner.CombatState.GetOpponentsOf(owner).Where(e => e.IsAlive && e.IsHittable).ToArray();
+                    if (enemies.Length == 0) return;
+                    var target = player.RunState.Rng.CombatTargets.NextItem(enemies);
+                    await PowerCmd.Apply<VulnerablePower>(c, target, 1, owner, card);
+                }
+            });
+        }
+        if (Power<WylderMoonlightSwordPower>(player) is { } moonlight)
+        {
+            int basic = moonlight.BasicCopies, total = moonlight.Copies;
+            await QueueOrRun(context, player, async c => {
+                for (int i = 0; i < total; i++)
+                {
+                    var enemies = owner.CombatState.GetOpponentsOf(owner)
+                        .Where(e => e.IsAlive && e.IsHittable).ToArray();
+                    if (enemies.Length == 0) return;
+                    var target = player.RunState.Rng.CombatTargets.NextItem(enemies);
+                    int freeze = i < basic ? WylderMoonlightSword.BaseFreeze : WylderMoonlightSword.UpgradedFreeze;
+                    await PowerCmd.Apply<FreezePower>(c, target, freeze, owner, card);
+                }
+            });
+        }
         if (Power<WylderRemainingEmberPower>(player) is { } ember)
         {
             int basic = ember.BasicCopies, total = ember.Copies;
@@ -285,7 +330,7 @@ public static class WylderCombatEvents
     public static async Task AfterDamage(PlayerChoiceContext context, Creature dealer, Creature target, DamageResult result, ValueProp props, CardModel card)
     {
         if (props.IsPoweredAttack() && card?.Type == CardType.Attack && dealer?.Player is { } boldPlayer
-            && Eligible(boldPlayer) && target.Side != dealer.Side && result.TotalDamage > 20
+            && Eligible(boldPlayer) && target.Side != dealer.Side && result.TotalDamage >= 20
             && Power<WylderBoldnessPower>(boldPlayer) is { } bold)
             await InPowerScope(boldPlayer, () => Block(context, boldPlayer, bold.Sum(5,7), Current(boldPlayer)));
         if (props.IsPoweredAttack() && card?.Type == CardType.Attack && dealer?.Player is { } attacker && Eligible(attacker)
@@ -314,6 +359,12 @@ public static class WylderCombatEvents
             // append to this same queue; drain to a fixed point before hand tests.
             while (data.Rewards.Count > 0)
             { var reward = data.Rewards.Dequeue(); await InPowerScope(player, () => reward(context)); }
+            if (data.SeamlessBlock > 0)
+            {
+                int block = data.SeamlessBlock;
+                data.SeamlessBlock = 0;
+                await InPowerScope(player, () => Block(context, player, block, play));
+            }
             if (WylderHandPlayContext.HandCount(play.Card, play).HasValue && PlayerTurn(player))
             {
                 var hand = PileType.Hand.GetPile(player).Cards;

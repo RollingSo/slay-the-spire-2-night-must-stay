@@ -44,9 +44,9 @@
     ],
     "WYLDER_FLAME_CHASE_SLASH": [
       "燃火追斩",
-      "造成{Damage:diff()}点伤害。\n将{Cards:diff()}张[gold]附火{IfUpgraded:show:+|}[/gold]添加到手牌。",
+      "[gold]收招[/gold]。\n造成{Damage:diff()}点伤害。\n将{Cards:diff()}张[gold]附火{IfUpgraded:show:+|}[/gold]添加到手牌。",
       "Flame Chase Slash",
-      "Deal {Damage:diff()} damage.\nAdd {Cards:diff()} [gold]Fire Coating{IfUpgraded:show:+|}[/gold] to your hand."
+      "[gold]Follow Through[/gold].\nDeal {Damage:diff()} damage.\nAdd {Cards:diff()} [gold]Fire Coating{IfUpgraded:show:+|}[/gold] to your hand."
     ],
     "WYLDER_EOCHAIDS_DANCING_BLADE": [
       "欧赫剑舞",
@@ -134,9 +134,9 @@
     ],
     "WYLDER_DUAL_GREATSWORD_LEAP": [
       "双剑跳劈",
-      "造成{Damage:diff()}点伤害{Repeat:diff()}次。\n[gold]追击[/gold]：耗能变为0。",
+      "造成{Damage:diff()}点伤害{Repeat:diff()}次。\n[gold]破势[/gold]{Break:diff()}：获得{Energy:diff()}[energy:1]，将这张牌放回你的[gold]手牌[/gold]。",
       "Dual Greatsword Leap",
-      "Deal {Damage:diff()} damage {Repeat:diff()} times.\n[gold]Pursuit[/gold]: Costs 0 Energy."
+      "Deal {Damage:diff()} damage {Repeat:diff()} times.\n[gold]Break[/gold] {Break:diff()}: Gain {Energy:diff()}[energy:1] and return this card to your [gold]hand[/gold]."
     ],
     "WYLDER_GHOSTFLAME_EXPLOSION": [
       "灵火爆炸",
@@ -293,6 +293,12 @@
       "获得{Block:diff()}点[gold]格挡[/gold]。\n[gold]追击[/gold]：获得{Energy:energyIcons()}。",
       "Centering Breath",
       "Gain {Block:diff()} [gold]Block[/gold].\n[gold]Pursuit[/gold]: Gain {Energy:energyIcons()}."
+    ],
+    "WYLDER_BIDE_THE_MOMENT": [
+      "伺机而动",
+      "[gold]追击[/gold]：获得{Block:diff()}点[gold]格挡[/gold]。",
+      "Bide the Moment",
+      "[gold]Pursuit[/gold]: Gain {Block:diff()} [gold]Block[/gold]."
     ]
   },
   "relics": {
