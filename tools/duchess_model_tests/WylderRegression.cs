@@ -128,7 +128,8 @@ internal static class WylderRegression
                     if(c is WylderCorpseWaxCutter)Check(c.Rarity==CardRarity.Uncommon && c.DynamicVars.Damage.BaseValue==(up?14:10) && c.DynamicVars["Break"].BaseValue==20 && c.DynamicVars["Vulnerable"].BaseValue==(up?3:2) && c.DynamicVars["Weak"].BaseValue==(up?3:2),"Corpse Wax Cutter rarity and values");
                     if(c is WylderWildfire)Check(c.TargetType==TargetType.Self && c.Keywords.Contains(CardKeyword.Innate)==up,"Spreading Wildfire target and Innate upgrade");
                     if(c is WylderNightForm)Check(c.Rarity==CardRarity.Rare && c.Keywords.Contains(CardKeyword.Retain)==up,"Night Form Retain upgrade");
-                    if(c is WylderClawMovement)Check(c.Keywords.Contains(CardKeyword.Retain),"Claw retains");
+                    if(c is WylderClawMovement)Check(c.Type==CardType.Skill && c.TargetType==TargetType.Self
+                        && c.Keywords.Contains(CardKeyword.Retain),"Claw is a self-targeted retained Skill");
                     decimal damage=c switch { WylderStrike=>up?9:6, WylderDashAttack=>up?11:9,
                         WylderStampUpwardCut=>up?18:16, WylderStampSweep=>up?13:10, _=>0 };
                     if(damage>0)Check(c.DynamicVars.Damage.BaseValue==damage,"Damage "+c.GetType().Name);
@@ -218,17 +219,18 @@ internal static class WylderRegression
             p.BeforeCardPlayed(play).GetAwaiter().GetResult();
             WylderPursuitPower.Enter(null!,creature,claw).GetAwaiter().GetResult();
             p.AfterCardPlayedLate(null!,play).GetAwaiter().GetResult();
-            Check(_removes==2 && _draws==1 && creature.HasPower<WylderPursuitPower>(),"Attack-type Claw re-entry survives without skill draw");
+            Check(_removes==2 && _draws==2 && _energy==2 && creature.HasPower<WylderPursuitPower>(),
+                "Claw triggers the old Pursuit Skill reward and preserves its re-entered Pursuit");
             // A newly applied pursuit was not present for BeforeCardPlayed.
             ((List<PowerModel>)AccessTools.Field(typeof(Creature),"_powers").GetValue(creature)!).Clear();
             p=Power();p.AfterCardPlayedLate(null!,play).GetAwaiter().GetResult();
-            Check(_removes==2 && _draws==1,"New pursuit not consumed by granting skill");
+            Check(_removes==2 && _draws==2 && _energy==2,"New pursuit not consumed by granting skill");
             Attach<WylderNightFormPower>(1);
             Check((decimal)nativeModifier.Invoke(p,modifierArgs)! == 2m,"Night Form doubles Pursuit damage bonus");
             play=TrackingArrowRegression.MakePlay(skill,owner);
             p.BeforeCardPlayed(play).GetAwaiter().GetResult();
             p.AfterCardPlayedLate(null!,play).GetAwaiter().GetResult();
-            Check(_draws==3 && _energy==3,"Night Form grants two cards and two energy from Pursuit");
+            Check(_draws==4 && _energy==4,"Night Form grants two cards and two energy from Pursuit");
             Console.WriteLine("PASS: Wylder unchanged 10-card starting deck, 90 unique cards, revised rarity/type counts, base/upgraded costs/stats and Attack/Skill-only Pursuit consumption.");
             var inject=typeof(ModelDb).GetMethod("Inject",BindingFlags.Static|BindingFlags.Public|BindingFlags.NonPublic)!;
             inject.Invoke(null,new object[]{typeof(WylderBreakProbe)});
@@ -247,9 +249,11 @@ internal static class WylderRegression
             var probePlay=TrackingArrowRegression.MakePlay(probe,owner);
             probe.BeforeCardPlayed(probePlay).GetAwaiter().GetResult();
             copy.BeforeCardPlayed(TrackingArrowRegression.MakePlay(copy,owner)).GetAwaiter().GetResult();
-            void Hit(WylderBreakProbe card,Creature target,int raw,int blocked=0,CardModel? source=null,ValueProp props=ValueProp.Move)
+            void Hit(WylderBreakProbe card,Creature target,int raw,int blocked=0,CardModel? source=null,ValueProp props=ValueProp.Move,bool killed=false)
             {
-                var result=new DamageResult(target,props){UnblockedDamage=raw,BlockedDamage=blocked};
+                var result=new DamageResult(target,props){UnblockedDamage=raw,BlockedDamage=blocked,WasTargetKilled=killed};
+                Check(result.WasTargetKilled==killed,"Break regression fixture preserves lethal-hit metadata");
+                Check(result.TotalDamage==raw+blocked,"Break regression fixture preserves pre-block damage");
                 card.AfterDamageGiven(null!,creature,result,props,target,source??card).GetAwaiter().GetResult();
             }
             Hit(probe,a,2,5);Hit(probe,b,0,8);
@@ -266,7 +270,20 @@ internal static class WylderRegression
             Hit(probe,a,100);Check(probe.Triggers==2,"Break only while resolving");
             probe.BeforeCardPlayed(probePlay).GetAwaiter().GetResult();
             Hit(probe,a,0,15);Check(probe.Triggers==3,"Fully blocked attack meets Break threshold");
-            Console.WriteLine("PASS: Break uses pre-block damage including fully blocked hits, requires one qualifying hit for single-hit cards, never accumulates sub-threshold hits, and preserves target/copy/play isolation.");
+            var lethalMulti=Probe();lethalMulti.RequiredHits=2;
+            Check((int)AccessTools.Property(typeof(WylderCard),"BreakHitCount").GetValue(lethalMulti)! == 2,
+                "Break regression fixture uses the configured multi-hit count");
+            lethalMulti.BeforeCardPlayed(TrackingArrowRegression.MakePlay(lethalMulti,owner)).GetAwaiter().GetResult();
+            Hit(lethalMulti,a,15,killed:true);
+            Check(lethalMulti.Triggers==1,"A qualifying lethal hit completes multi-hit Break when later hits are cancelled");
+            var mixedMulti=Probe();mixedMulti.RequiredHits=2;
+            mixedMulti.BeforeCardPlayed(TrackingArrowRegression.MakePlay(mixedMulti,owner)).GetAwaiter().GetResult();
+            Hit(mixedMulti,a,14);Hit(mixedMulti,a,20,killed:true);
+            Check(mixedMulti.Triggers==0,"A lethal final hit does not forgive an earlier sub-threshold hit");
+            var breakCards=ModelDb.Character<Wylder>().CardPool.AllCards.OfType<WylderCard>().Where(card=>card.HasBreak).ToArray();
+            Check(breakCards.Length>0 && breakCards.All(card=>card.GetType().GetMethod(nameof(CardModel.AfterDamageGiven))?.DeclaringType==typeof(WylderCard)),
+                "Every Break card uses the shared lethal-aware resolution path");
+            Console.WriteLine($"PASS: Break uses pre-block damage, handles lethal cancellation for multi-hit attacks, preserves threshold/isolation rules, and all {breakCards.Length} Break cards share the fixed resolver.");
         }
         finally{h.UnpatchAll(h.Id);}
     }
@@ -286,8 +303,10 @@ internal static class WylderRegression
 public sealed class WylderBreakProbe : WylderCard
 {
     public int Triggers;
+    public int RequiredHits=1;
     public WylderBreakProbe():base(0,CardType.Attack,CardRarity.Common,TargetType.AnyEnemy){}
     protected override decimal BreakThreshold=>15m;
+    protected override int BreakHitCount=>RequiredHits;
     protected override Task OnBreak(PlayerChoiceContext context){Triggers++;return Task.CompletedTask;}
     protected override Task OnPlay(PlayerChoiceContext context,CardPlay play)=>Task.CompletedTask;
 }

@@ -106,15 +106,25 @@ public abstract class WylderCard : CardModel
         }
         hits.Add(result.TotalDamage);
         int requiredHits = BreakHitCount;
-        if (requiredHits <= 0 || hits.Count < requiredHits) return;
+        if (requiredHits <= 0) return;
+
+        // Native multi-hit attacks stop as soon as their target dies. A lethal
+        // qualifying hit therefore completes Break even when the remaining
+        // scheduled hits are cancelled; every hit that actually occurred must
+        // still meet the per-hit threshold.
+        bool endedByLethalHit = result.WasTargetKilled;
+        if (hits.Count < requiredHits && !endedByLethalHit) return;
         decimal threshold = WylderCombatEvents.EffectiveBreak(this, data.Play, BreakThreshold);
         if (requiredHits == 1)
         {
             if (result.TotalDamage < threshold) return;
         }
         else
-        for (int i = 0; i < requiredHits; i++)
-            if (hits[i] < threshold) return;
+        {
+            int hitsToCheck = Math.Min(hits.Count, requiredHits);
+            for (int i = 0; i < hitsToCheck; i++)
+                if (hits[i] < threshold) return;
+        }
         data.Triggered = true; // Consume before awaiting to prevent reentrant triggers.
         data.Target = target;
         WylderCombatEvents.RegisterBreak(data.Play);
@@ -150,7 +160,7 @@ public sealed class WylderDefend : WylderCard
 }
 public sealed class WylderClawMovement : WylderCard
 {
-    public WylderClawMovement() : base(1, CardType.Attack, CardRarity.Basic, TargetType.Self) { }
+    public WylderClawMovement() : base(1, CardType.Skill, CardRarity.Basic, TargetType.Self) { }
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Retain };
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
         WylderPursuitPower.Enter(context, Owner.Creature, this);

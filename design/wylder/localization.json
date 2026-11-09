@@ -33,13 +33,13 @@
     "WYLDER_STAMP_UPWARD_CUT": [
       "箭步：上砍",
       "造成{Damage:diff()}点伤害。\n[gold]追击[/gold]：本回合内减少该敌人{StrengthLoss:diff()}点[gold]力量[/gold]。",
-      "Stamp: Upward Cut",
+      "Stamp (Upward Cut)",
       "Deal {Damage:diff()} damage.\n[gold]Pursuit[/gold]: That enemy loses {StrengthLoss:diff()} [gold]Strength[/gold] this turn."
     ],
     "WYLDER_STAMP_SWEEP": [
       "箭步：回旋斩",
       "造成{Damage:diff()}点伤害。\n[gold]追击[/gold]：改为对所有敌人造成伤害。",
-      "Stamp: Sweep",
+      "Stamp (Sweep)",
       "Deal {Damage:diff()} damage.\n[gold]Pursuit[/gold]: Target all enemies instead."
     ],
     "WYLDER_FLAME_CHASE_SLASH": [
@@ -249,7 +249,7 @@
     "WYLDER_ASSAULT_STAKE": [
       "袭击桩柱",
       "[gold]绝境[/gold]。\n对所有敌人造成{Damage:diff()}点伤害。\n[gold]击晕[/gold]所有敌人。",
-      "Assault Stake",
+      "Onslaught Stake",
       "[gold]Desperation[/gold].\nDeal {Damage:diff()} damage to ALL enemies.\n[gold]Stun[/gold] ALL enemies."
     ],
     "WYLDER_BRAVE_BLESSING": [

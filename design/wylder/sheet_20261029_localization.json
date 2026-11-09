@@ -147,7 +147,7 @@
     "WYLDER_GRAPPLE_SHOT": [
       "钩爪射击",
       "造成{Damage:diff()}点伤害。\n进入[gold]追击[/gold]。",
-      "Grapple Shot",
+      "Claw Shot",
       "Deal {Damage:diff()} damage.\nEnter [gold]Pursuit[/gold]."
     ],
     "WYLDER_INTENSE_BURNING": [
@@ -345,7 +345,7 @@
     "WYLDER_SILURIA_VORTEX": [
       "志留亚的漩涡",
       "造成{CalculatedDamage:diff()}点伤害。\n本场战斗中每击晕过1次敌人，这张牌的伤害增加{ExtraDamage:diff()}点。",
-      "Siluria’s Vortex",
+      "Siluria's Woe",
       "Deal {CalculatedDamage:diff()} damage.\nDeals {ExtraDamage:diff()} additional damage for each time an enemy has been Stunned this combat."
     ]
   },

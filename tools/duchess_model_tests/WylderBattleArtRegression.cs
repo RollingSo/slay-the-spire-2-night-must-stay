@@ -189,7 +189,11 @@ internal static partial class WylderBattleArtRegression
                 && flame.Pile?.Type==PileType.Discard,"Pursuit exit plays Claw Rend and Flame Chase but not Dual Leap");
             Fixture(true);_sheetAutoPlays=0;
             Put(Card(ModelDb.Card<WylderDualGreatswordLeap>(),false),PileType.Hand);
-            Play(Card(ModelDb.Card<WylderClawMovement>(),false));SettleSheetPlay();
+            var claw=Card(ModelDb.Card<WylderClawMovement>(),false);
+            Play(claw);SettleSheetPlay();
+            Check(Rewards.Count(r=>r.Kind=="Energy")==1 && Rewards.Count(r=>r.Kind=="Draw")==1
+                && _owner.Creature.HasPower<WylderPursuitPower>(),
+                "Claw Movement receives the old Pursuit Skill reward and keeps its new Pursuit");
             Check(_sheetAutoPlays==0,"Pursuit reentry does not trigger Follow Through");
             foreach(bool up in new[]{false,true})
             {
@@ -233,7 +237,7 @@ internal static partial class WylderBattleArtRegression
             Check(_owner.Creature.GetPowerAmount<WylderValorStrengthPower>()==(up?3:2), "Valor uses native temporary Strength");
             Fixture();
             var claw = Card(ModelDb.Card<WylderClawMovement>(), up);
-            Check(claw.Type == CardType.Attack && claw.TargetType == TargetType.Self, "Sheet Claw is an untargeted Attack");
+            Check(claw.Type == CardType.Skill && claw.TargetType == TargetType.Self, "Claw is a self-targeted Skill");
             var veteran = Card(ModelDb.Card<WylderVeteranEdge>(), up);
             Check(veteran.EnergyCost.GetResolved() == 1 && veteran.Keywords.Contains(CardKeyword.Innate) == up, "Veteran cost and native Innate upgrade");
             Play(Card(ModelDb.Card<WylderClawPull>(), up));
@@ -419,6 +423,13 @@ internal static partial class WylderBattleArtRegression
         Play(Card(ModelDb.Card<WylderDualGreatswordLeap>(), false));
         Check(ResolvedDamage.SequenceEqual(new[] { 29m, 29m }) && !_owner.Creature.HasPower<WylderPursuitPower>(), "Dual Leap native Strength on both hits");
         Check(Rewards.Where(r => r.Kind == "Energy").Sum(r => r.Amount) == 1, "Dual Leap Breaks once when both hits independently meet the threshold");
+        Fixture();
+        var lethalLeap = Card(ModelDb.Card<WylderDualGreatswordLeap>(), false);
+        var lethalLeapPlay = TrackingArrowRegression.MakePlay(lethalLeap, _owner);
+        lethalLeap.BeforeCardPlayed(lethalLeapPlay).GetAwaiter().GetResult();
+        Hit(lethalLeap, _enemies[0], 20, false, killed: true);
+        Check((bool)AccessTools.Property(typeof(WylderCard), "BrokeThisPlay").GetValue(lethalLeap)!,
+            "Dual Leap qualifying lethal first hit completes Break when the second hit is cancelled");
         Fixture(true); AddPower<VigorPower>(_owner.Creature, 3);
         Play(Card(ModelDb.Card<WylderCliffbreaker>(), false));
         Check(ResolvedDamage.Single() == 30 && _owner.Creature.GetPowerAmount<VigorPower>() == 3, "Native old Vigor consumption precedes fresh Cliffbreaker Vigor");
@@ -1246,9 +1257,14 @@ internal static partial class WylderBattleArtRegression
         card.AfterCardPlayedLate(null!, play).GetAwaiter().GetResult();
         foreach (var power in _owner.Creature.Powers.OfType<WylderPursuitPower>().ToArray()) power.AfterCardPlayedLate(null!, play).GetAwaiter().GetResult();
     }
-    private static void Hit(CardModel card, Creature target, decimal amount, bool blocked)
+    private static void Hit(CardModel card, Creature target, decimal amount, bool blocked, bool killed = false)
     {
-        var result = new DamageResult(target, ValueProp.Move) { UnblockedDamage = blocked ? 0 : (int)amount, BlockedDamage = blocked ? (int)amount : 0 };
+        var result = new DamageResult(target, ValueProp.Move)
+        {
+            UnblockedDamage = blocked ? 0 : (int)amount,
+            BlockedDamage = blocked ? (int)amount : 0,
+            WasTargetKilled = killed
+        };
         card.AfterDamageGiven(null!, _owner.Creature, result, ValueProp.Move, target, card).GetAwaiter().GetResult();
     }
     private static T AddPower<T>(Creature target, int amount) where T : PowerModel

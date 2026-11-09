@@ -371,7 +371,7 @@
   "WYLDER_SHRIEK_OF_MILOS_POWER.description": "Your next {Amount} Attacks deal double damage.",
   "WYLDER_SEAMLESS_POWER.title": "Seamless",
   "WYLDER_SEAMLESS_POWER.description": "Whenever you play the last card in your hand, gain {Block} [gold]Block[/gold].",
-  "WYLDER_MOONLIGHT_SWORD_POWER.title": "Moonlight Sword",
+  "WYLDER_MOONLIGHT_SWORD_POWER.title": "Moonlight Greatsword",
   "WYLDER_MOONLIGHT_SWORD_POWER.description": "Whenever you enter [gold]Pursuit[/gold], apply 2 [gold]Freeze[/gold] to a random enemy {Amount} times.\nUpgraded copies apply 3 instead.",
   "WYLDER_FLAMELIGHT_ON_SNOW_POWER.title": "Flamelight on Snow",
   "WYLDER_FLAMELIGHT_ON_SNOW_POWER.description": "Whenever you gain [gold]Vigor[/gold], apply {Freeze} [gold]Freeze[/gold] to a random enemy.\nAfter dealing Attack damage to an enemy with [gold]Freeze[/gold], gain {Vigor} [gold]Vigor[/gold].",
