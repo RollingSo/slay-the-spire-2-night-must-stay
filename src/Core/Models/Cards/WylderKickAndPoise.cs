@@ -21,9 +21,9 @@ public sealed class WylderKick:WylderCard
   get
   {
    if(!IsMutable||Owner==null||CombatState==null||Pile?.Type!=PileType.Hand)return false;
-   int threshold=PhantomImbalancePower.GetThreshold(CombatState.Players.Count);
    decimal applied=DynamicVars["Imbalance"].BaseValue;
-   return CombatState.GetOpponentsOf(Owner.Creature).Any(enemy=>enemy.IsAlive&&enemy.IsHittable&&!enemy.IsStunned&&enemy.GetPowerAmount<PhantomImbalancePower>()+applied>=threshold);
+   return CombatState.GetOpponentsOf(Owner.Creature).Any(enemy=>enemy.IsAlive&&enemy.IsHittable&&!enemy.IsStunned
+    && enemy.GetPowerAmount<PhantomImbalancePower>()+applied>=PhantomImbalancePower.GetThreshold(enemy));
   }
  }
  protected override async Task OnPlay(PlayerChoiceContext c,CardPlay p)

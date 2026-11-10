@@ -39,10 +39,11 @@ internal static partial class WylderBattleArtRegression
     var target=(Creature)AccessTools.Method(typeof(WylderStunReturnRegression),"Enemy").Invoke(null,new object[]{MegaCrit.Sts2.Core.Combat.CombatSide.Enemy})!;
     if(stacks>0)AddPower<PhantomImbalancePower>(target,stacks);
     var card=Card(ModelDb.Card<WylderKick>(),up);Hand(card,1);
-    bool shouldGlow=stacks+(up?2:1)>=3;
+    int threshold=PhantomImbalancePower.GetThreshold(target);
+    bool shouldGlow=stacks+(up?2:1)>=threshold;
     Check(((bool)AccessTools.PropertyGetter(typeof(WylderCard),"ShouldGlowGoldInternal").Invoke(card,null)!)==shouldGlow,"Kick glow follows potential Stun threshold");
     Play(card,target:target);
-    bool refund=!deny&&stacks+(up?2:1)>=3;
+    bool refund=!deny&&stacks+(up?2:1)>=threshold;
     Check(card.Type==CardType.Skill&&card.Rarity==CardRarity.Uncommon&&card.TargetType==TargetType.AnyEnemy&&card.EnergyCost.GetResolved()==1,"Kick metadata");
     Check(Rewards.Where(r=>r.Kind=="Energy").Sum(r=>r.Amount)==(refund?1:0)&&Rewards.Where(r=>r.Kind=="Draw").Sum(r=>r.Amount)==(refund?1:0),$"Kick refund up={up}, stacks={stacks}, deny={deny}, stunned={target.IsStunned}, alive={target.IsAlive}, rewards={string.Join(",",Rewards.Select(r=>r.Kind+":"+r.Amount))}");
     Check(target.IsStunned==refund,"Kick native enemy Stun state");

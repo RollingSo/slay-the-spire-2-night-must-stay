@@ -367,12 +367,17 @@ namespace NightMustStay.Core.Models.Power
             return initial + Math.Clamp(increases, 0, 4);
         }
 
+        public static int GetThreshold(Creature target)
+        {
+            int playerCount = Math.Max(1, target?.CombatState?.Players.Count ?? 1);
+            return GetThreshold(playerCount, target == null ? 0 : GetProgress(target).Increases);
+        }
+
         public static async Task ResolveThreshold(PlayerChoiceContext context, Creature target)
         {
             PhantomImbalancePower imbalance = target.GetPower<PhantomImbalancePower>();
             var progress = GetProgress(target);
-            int playerCount = Math.Max(1, target.CombatState?.Players.Count ?? 1);
-            int stunThreshold = GetThreshold(playerCount, progress.Increases);
+            int stunThreshold = GetThreshold(target);
             if (progress.Resolving || imbalance == null || imbalance.Amount < stunThreshold)
                 return;
 
