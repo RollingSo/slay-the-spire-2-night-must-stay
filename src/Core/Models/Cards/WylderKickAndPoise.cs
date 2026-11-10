@@ -12,7 +12,7 @@ using NightMustStay.Core.Models.Power;
 namespace NightMustStay.Core.Models.Cards;
 public sealed class WylderKick:WylderCard
 {
- public WylderKick():base(1,CardType.Skill,CardRarity.Uncommon,TargetType.AnyEnemy){}
+ public WylderKick():base(0,CardType.Skill,CardRarity.Uncommon,TargetType.AnyEnemy){}
  protected override IEnumerable<DynamicVar> CanonicalVars=>new DynamicVar[]{new PowerVar<PhantomImbalancePower>("Imbalance",1m),new EnergyVar(1),new CardsVar(1)};
  protected override IEnumerable<IHoverTip> ExtraHoverTips=>base.ExtraHoverTips.Append(HoverTipFactory.FromPower<PhantomImbalancePower>()).Append(HoverTipFactory.Static(StaticHoverTip.Stun));
  protected override bool ShouldGlowGoldInternal=>base.ShouldGlowGoldInternal||CanStunAnyEnemy;
@@ -21,9 +21,8 @@ public sealed class WylderKick:WylderCard
   get
   {
    if(!IsMutable||Owner==null||CombatState==null||Pile?.Type!=PileType.Hand)return false;
-   int threshold=PhantomImbalancePower.GetThreshold(CombatState.Players.Count);
    decimal applied=DynamicVars["Imbalance"].BaseValue;
-   return CombatState.GetOpponentsOf(Owner.Creature).Any(enemy=>enemy.IsAlive&&enemy.IsHittable&&!enemy.IsStunned&&enemy.GetPowerAmount<PhantomImbalancePower>()+applied>=threshold);
+   return CombatState.GetOpponentsOf(Owner.Creature).Any(enemy=>enemy.IsAlive&&enemy.IsHittable&&!enemy.IsStunned&&enemy.GetPowerAmount<PhantomImbalancePower>()+applied>=PhantomImbalancePower.GetThreshold(enemy));
   }
  }
  protected override async Task OnPlay(PlayerChoiceContext c,CardPlay p)

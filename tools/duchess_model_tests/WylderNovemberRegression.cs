@@ -100,7 +100,7 @@ internal static partial class WylderBattleArtRegression
     Fixture();_sequence.Clear();var keep=Card(ModelDb.Card<WylderEndTheNight>(),false);Put(keep,PileType.Hand);Put(Card(ModelDb.Card<WylderStrike>(),false),PileType.Hand);Put(Card(ModelDb.Card<WylderDefend>(),false),PileType.Hand);
     var gamble=Card(ModelDb.Card<WylderGamble>(),up);Play(gamble);
     Check(Rewards.First().Kind=="Draw"&&Rewards.First().Amount==(up?6:4),"Gamble draws first");
-    Check(_sequence.SequenceEqual(new[]{"Discard","Discard","End"})&&PileType.Hand.GetPile(_owner).Cards.SequenceEqual(new[]{keep}),"Gamble preserves only Desperation then ends turn");
+    Check(_sequence.SequenceEqual(new[]{"Discard","Discard","End"})&&PileType.Hand.GetPile(_owner).Cards.SequenceEqual(new[]{keep})&&!keep.Keywords.Contains(CardKeyword.Retain),"Gamble retains only Desperation through turn end without making Retain permanent");
     Check(gamble.Keywords.Contains(CardKeyword.Exhaust)&&gamble.EnergyCost.GetResolved()==0,"Gamble Exhaust and free cost");
    }
   }finally{h.UnpatchAll(h.Id);}
@@ -204,5 +204,5 @@ internal static partial class WylderBattleArtRegression
  public static bool NovemberSelect(Func<CardModel,bool>? filter,ref Task<IEnumerable<CardModel>> __result){__result=Task.FromResult<IEnumerable<CardModel>>(_payment==null||(filter!=null&&!filter(_payment))?Array.Empty<CardModel>():new[]{_payment});return false;}
  public static bool NovemberExhaust(CardModel card,ref Task __result){Check(card==_payment,"Exhaust selection");_sequence.Add("Exhaust");Put(card,PileType.Exhaust);__result=Task.CompletedTask;return false;}
  public static bool NovemberDiscard(CardModel card,ref Task __result){_sequence.Add("Discard");Put(card,PileType.Discard);__result=Task.CompletedTask;return false;}
- public static bool NovemberEnd(){_sequence.Add("End");return false;}
+ public static bool NovemberEnd(Func<Task>? __2){_sequence.Add("End");__2?.Invoke().GetAwaiter().GetResult();return false;}
 }

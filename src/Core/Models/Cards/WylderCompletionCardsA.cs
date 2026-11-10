@@ -86,6 +86,7 @@ public sealed class WylderClawPull : WylderCard
 public sealed class WylderParry : WylderDesperationCard
 {
     public WylderParry() : base(4, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy) { }
+    public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
     protected override bool IsPlayable => CombatState == null || WylderCompletionRules.AttackingEnemies(this).Length > 0;
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new[]
         { HoverTipFactory.Static(StaticHoverTip.Stun) });

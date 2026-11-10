@@ -101,7 +101,8 @@ internal static class WylderRegression
                     int cost=c switch { WylderFlamelightOnSnow => up?1:2, WylderTriumph => 0,
                         WylderSiluriaVortex or WylderVerticalCleave => 2, WylderEndlessWill or WylderLastResort or WylderShriekOfMilos or WylderTwinToken or WylderGrappleShot => up?0:1, WylderGamble or WylderLoneCourage or WylderAgility => 0, WylderHeroesAssemble => up?0:1, WylderEndTheNight => 5, WylderTrueFlame => up?4:5, WylderDesperateFlurry => 3, WylderClawMovement or WylderAncientClawLeap or WylderMagnanimity or WylderOffensiveInstinct => up?0:1,
                         WylderRuinousGhostflame => 1,
-                        WylderSpark or WylderResolve or WylderDebut or WylderSixthSense or WylderBideTheMoment => 0,
+                        WylderSpark or WylderResolve or WylderDebut or WylderBideTheMoment or WylderKick => 0,
+                        WylderSixthSense => 4,
                         WylderExecution => up?1:2,
                         WylderUndying => up?1:2,
                         WylderGoldenParry or WylderNightForm => 3, WylderMartialMastery => up?1:2, WylderDefiance => 2, WylderMultiplayerCard or WylderTinder or WylderBreakthrough or WylderLifeFromDeath => 0,
@@ -147,6 +148,7 @@ internal static class WylderRegression
                 }
             }
             var owner=TrackingArrowRegression.MakePlayer();
+            AccessTools.Field(typeof(Player), "<Character>k__BackingField").SetValue(owner, character);
             var creature=new Creature(owner,80,80){CombatState=new CombatState()};
             AccessTools.Field(typeof(Player),"<Creature>k__BackingField").SetValue(owner,creature);
             CardModel Card<T>() where T:CardModel
@@ -227,12 +229,23 @@ internal static class WylderRegression
             ((List<PowerModel>)AccessTools.Field(typeof(Creature),"_powers").GetValue(creature)!).Clear();
             p=Power();p.AfterCardPlayedLate(null!,play).GetAwaiter().GetResult();
             Check(_removes==2 && _draws==2 && _energy==2,"New pursuit not consumed by granting skill");
-            Attach<WylderNightFormPower>(1);
-            Check((decimal)nativeModifier.Invoke(p,modifierArgs)! == 2m,"Night Form doubles Pursuit damage bonus");
+            ((List<PowerModel>)AccessTools.Field(typeof(Creature),"_powers").GetValue(creature)!).Clear();
+            AccessTools.Property(typeof(CombatState), nameof(CombatState.CurrentSide)).SetValue(creature.CombatState, CombatSide.Player);
+            Attach<WylderNightFormPower>(1); p=Power(); WylderCombatEvents.StartTurn(owner);
+            WylderPursuitPower.Enter(null!,creature,skill).GetAwaiter().GetResult();
+            Check((decimal)nativeModifier.Invoke(p,modifierArgs)! == 2m,"Night Form doubles only the first Pursuit entry each turn");
             play=TrackingArrowRegression.MakePlay(skill,owner);
             p.BeforeCardPlayed(play).GetAwaiter().GetResult();
             p.AfterCardPlayedLate(null!,play).GetAwaiter().GetResult();
             Check(_draws==4 && _energy==4,"Night Form grants two cards and two energy from Pursuit");
+            ((List<PowerModel>)AccessTools.Field(typeof(Creature),"_powers").GetValue(creature)!).Clear();
+            Attach<WylderNightFormPower>(1); p=Power();
+            WylderPursuitPower.Enter(null!,creature,skill).GetAwaiter().GetResult();
+            Check((decimal)nativeModifier.Invoke(p,modifierArgs)! == 1.5m,"Later Pursuit entries keep their normal effect");
+            play=TrackingArrowRegression.MakePlay(skill,owner);
+            p.BeforeCardPlayed(play).GetAwaiter().GetResult();
+            p.AfterCardPlayedLate(null!,play).GetAwaiter().GetResult();
+            Check(_draws==5 && _energy==5,"Later Pursuit Skill reward stays at one card and one energy");
             Console.WriteLine("PASS: Wylder unchanged 10-card starting deck, 90 unique cards, revised rarity/type counts, base/upgraded costs/stats and Attack/Skill-only Pursuit consumption.");
             var inject=typeof(ModelDb).GetMethod("Inject",BindingFlags.Static|BindingFlags.Public|BindingFlags.NonPublic)!;
             inject.Invoke(null,new object[]{typeof(WylderBreakProbe)});

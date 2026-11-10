@@ -48,7 +48,9 @@ public sealed class WylderAerialStake : WylderCard
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Append(HoverTipFactory.FromPower<PhantomImbalancePower>());
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        if (!Pursuing) return;
+        // Pursuit may be consumed by another listener during the same CardPlay.
+        // Use the state captured before resolution so the card cannot become a no-op.
+        if (!Pursuing && !WylderCombatEvents.WasPursuingAtPlayStart(play)) return;
         WylderAnimationPatch.QueueAttackMotion(Owner.Creature, "Ultimate");
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(play.Target)
             .WithWylderFx(WylderAttackVfx.Kind.FireExplosion, Owner.Creature).Execute(context);
@@ -93,7 +95,7 @@ public sealed class WylderDebut : WylderCard
 public sealed class WylderSixthSense : WylderDesperationCard
 {
     private bool _spent;
-    public WylderSixthSense() : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
+    public WylderSixthSense() : base(4, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
     public override string PortraitPath => "res://images/packed/card_portraits/wylder/wylder_sixth_sense.png";
     public override bool GainsBlock => true;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]

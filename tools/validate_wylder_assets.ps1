@@ -33,4 +33,20 @@ foreach ($power in @('wylder_pursuit_power','wylder_break_description_power','wy
         throw "Wylder compact/flash power icon mismatch: $power"
     }
 }
+$pointingHandPath = Join-Path $root 'wylder_assets/multiplayer_hands/multiplayer_hand_wylder_point.png'
+$pointingHand = [Drawing.Bitmap]::FromFile($pointingHandPath)
+try {
+    $tip = $null
+    for ($y = 0; $y -lt 100 -and $null -eq $tip; $y++) {
+        for ($x = 0; $x -lt $pointingHand.Width; $x++) {
+            if ($pointingHand.GetPixel($x, $y).A -gt 32) {
+                $tip = @($x, $y)
+                break
+            }
+        }
+    }
+    if ($null -eq $tip -or $tip[0] -lt 140 -or $tip[0] -gt 160 -or $tip[1] -lt 35 -or $tip[1] -gt 50) {
+        throw "Wylder multiplayer pointing-hand cursor hotspot is misaligned: $($tip -join ',')"
+    }
+} finally { $pointingHand.Dispose() }
 Write-Output "Wylder source asset validation passed ($checked assets)."

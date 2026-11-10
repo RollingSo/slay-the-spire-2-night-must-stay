@@ -43,7 +43,7 @@ public sealed class SoulDeparture : CardModel
         // Exhaust hooks can request further choices. Run them only after all
         // recipients have selected, using the original action context as usual.
         foreach (var card in cardsToExhaust)
-            if (card.Pile?.Type == PileType.Draw) await CardCmd.Exhaust(context, card);
+            if (card.Pile?.Type == PileType.Draw) await NightMustStay.Core.Compatibility.Sts2BranchCompat.Exhaust(context, card);
     }
     protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(1);
 }

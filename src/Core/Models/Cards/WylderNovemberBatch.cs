@@ -20,6 +20,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
 using NightMustStay.Core.Nodes.Vfx;
 using NightMustStay.Core.Patches;
+using NightMustStay.Core.Compatibility;
 namespace NightMustStay.Core.Models.Cards;
 
 public sealed class WylderDesperateFlurry : WylderDesperationCard
@@ -64,10 +65,13 @@ public abstract class WylderHandPaymentCard : WylderCard
     // As with native Burning Pact, an empty hand skips selection, not later effects.
     protected async Task<bool> Pay(PlayerChoiceContext c)
     {
+        if (PileType.Hand.GetPile(Owner).Cards.Count == 0)
+            return false;
+
         var prefs = new CardSelectorPrefs(ExhaustPayment ? CardSelectorPrefs.ExhaustSelectionPrompt : CardSelectorPrefs.DiscardSelectionPrompt, 1);
         var selected = (await (ExhaustPayment ? CardSelectCmd.FromHand(c, Owner, prefs, null, this) : CardSelectCmd.FromHandForDiscard(c, Owner, prefs, null, this))).FirstOrDefault();
         if (selected == null) return false;
-        if (ExhaustPayment) await CardCmd.Exhaust(c, selected); else await CardCmd.Discard(c, selected);
+        if (ExhaustPayment) await Sts2BranchCompat.Exhaust(c, selected); else await CardCmd.Discard(c, selected);
         return true;
     }
 }
@@ -114,7 +118,27 @@ public sealed class WylderGamble : WylderCard
     public WylderGamble() : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new CardsVar(4) };
-    protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p) { await CardPileCmd.Draw(c, DynamicVars.Cards.BaseValue, Owner); foreach (var card in PileType.Hand.GetPile(Owner).Cards.Where(x => !WylderGrantedDesperation.Is(x)).ToArray()) await CardCmd.Discard(c, card); PlayerCmd.EndTurn(Owner, false, null); }
+    protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
+    {
+        await CardPileCmd.Draw(c, DynamicVars.Cards.BaseValue, Owner);
+        CardModel[] desperationCards = PileType.Hand.GetPile(Owner).Cards
+            .Where(WylderGrantedDesperation.Is).ToArray();
+        foreach (CardModel card in PileType.Hand.GetPile(Owner).Cards
+                     .Where(x => !WylderGrantedDesperation.Is(x)).ToArray())
+            await CardCmd.Discard(c, card);
+
+        CardModel[] temporaryRetain = desperationCards
+            .Where(card => !card.Keywords.Contains(CardKeyword.Retain)).ToArray();
+        foreach (CardModel card in temporaryRetain)
+            CardCmd.ApplyKeyword(card, CardKeyword.Retain);
+
+        PlayerCmd.EndTurn(Owner, false, () =>
+        {
+            foreach (CardModel card in temporaryRetain)
+                card.RemoveKeyword(CardKeyword.Retain);
+            return Task.CompletedTask;
+        });
+    }
     protected override void OnUpgrade() => DynamicVars.Cards.UpgradeValueBy(2m);
 }
 public sealed class WylderPassTheFlame : WylderCard

@@ -30,10 +30,12 @@ public sealed class WylderEndlessWillPower : PowerModel
 public sealed class WylderLastResort : WylderCard
 {
     public WylderLastResort() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
+    protected override bool IsPlayable => Owner == null || PileType.Hand.GetPile(Owner).Cards.Any(card => card != this);
     protected override IEnumerable<MegaCrit.Sts2.Core.HoverTips.IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Append(new MegaCrit.Sts2.Core.HoverTips.HoverTip(new MegaCrit.Sts2.Core.Localization.LocString("cards", "WYLDER_DESPERATION.title"), new MegaCrit.Sts2.Core.Localization.LocString("cards", "WYLDER_DESPERATION.description")));
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
+        if (!PileType.Hand.GetPile(Owner).Cards.Any(card => card != this)) return;
         var card = (await CardSelectCmd.FromHand(c, Owner, new CardSelectorPrefs(new MegaCrit.Sts2.Core.Localization.LocString("cards", "WYLDER_LAST_RESORT_SELECT.title"), 1), null, this)).FirstOrDefault();
         if (card == null) return;
         WylderGrantedDesperation.Grant(card);
@@ -76,7 +78,13 @@ internal static class WylderGrantedDesperation
     internal static bool IsResolving(MegaCrit.Sts2.Core.Entities.Players.Player player)
     {
         object state = player?.Creature?.CombatState;
-        return state != null && Batches.TryGetValue(state, out Batch batch) && batch.Resolving.Contains(player);
+        // End-turn Desperation uses one shared player-side resolution window.
+        // In multiplayer, a teammate's autoplay can Stun an enemy and trigger
+        // hand returns for every player. Those returns must wait until every
+        // currently resolving Desperation batch has finished, otherwise the
+        // newly inserted hand cards can interrupt another player's autoplay.
+        return state != null && Batches.TryGetValue(state, out Batch batch)
+            && batch.Resolving.Count > 0;
     }
     internal static bool Start(CardModel card) { var state = card.Owner.Creature.CombatState; var b = Batches.GetOrCreateValue(state); if (b.Round.TryGetValue(card.Owner, out int round) && round == state.RoundNumber) return false; b.Round[card.Owner] = state.RoundNumber; return true; }
     internal static async Task Run(CardModel first, PlayerChoiceContext c, CombatSide side, IEnumerable<Creature> participants)

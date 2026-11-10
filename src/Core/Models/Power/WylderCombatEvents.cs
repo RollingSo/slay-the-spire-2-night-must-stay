@@ -87,6 +87,11 @@ public static class WylderCombatEvents
     }
 
     public static bool ConsumedVigor(CardPlay play) => play != null && Plays.TryGetValue(play, out var state) && state.VigorConsumed;
+    public static bool WasPursuingAtPlayStart(CardPlay play) =>
+        play != null && Plays.TryGetValue(play, out var state) && state.OldPursuit;
+    public static bool ShouldDoublePursuitEntry(Player player) =>
+        Eligible(player) && Power<WylderNightFormPower>(player) != null
+        && First(player, "NightFormPursuitEntry");
     public static bool ConsumedOldPursuit(CardPlay play) => play != null && Plays.TryGetValue(play, out var state) && state.OldPursuit && !state.KeptPursuit;
     public static void PreserveHalfVigor(Player player) => For(player).HalfVigor = true;
     public static void SetNextHandAttackDiscount(Player player, int amount) => For(player).AttackDiscount = Math.Max(For(player).AttackDiscount, amount);

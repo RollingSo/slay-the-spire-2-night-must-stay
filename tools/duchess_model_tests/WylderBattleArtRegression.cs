@@ -289,9 +289,9 @@ internal static partial class WylderBattleArtRegression
             Fixture();
             var sense=Card(ModelDb.Card<WylderSixthSense>(),up);
             Put(sense,PileType.Hand);
-            Check(!sense.ShouldDie(_owner.Creature) && sense.ShouldDie(_enemies[0])
+            Check(sense.EnergyCost.GetResolved()==4 && !sense.ShouldDie(_owner.Creature) && sense.ShouldDie(_enemies[0])
                 && !sense.Keywords.Contains(CardKeyword.Unplayable) && sense is WylderDesperationCard,
-                "Sixth Sense death prevention owner and Desperation");
+                "Sixth Sense 4-cost death prevention owner and Desperation");
             Play(sense);
             Check(Rewards.Single(r=>r.Kind=="Block").Amount==10 && sense.DynamicVars.Block.BaseValue==10,
                 "Sixth Sense gains 10 Block");
@@ -1042,9 +1042,9 @@ internal static partial class WylderBattleArtRegression
             Check(Rewards.Any(r => r.Kind == nameof(PhantomImbalancePower) && r.Amount == (upgraded ? 3 : 2)
                     && r.Target == _enemies[0]) && !_enemies[1].HasPower<PhantomImbalancePower>(),
                 "One hit at exactly40 applies the upgraded Imbalance only to the damaged enemy");
-            Check(upgraded ? Rewards.Any(r => r.Kind == "Stun") && !_enemies[0].HasPower<PhantomImbalancePower>()
-                    : _enemies[0].GetPowerAmount<PhantomImbalancePower>() == 2,
-                "Upgraded Imbalance3 reaches the native solo Stun threshold");
+            Check(Rewards.Any(r => r.Kind == "Stun")
+                    && _enemies[0].GetPowerAmount<PhantomImbalancePower>() == (upgraded ? 1 : 0),
+                "Imbalance2/3 reaches the dynamic solo Stun threshold and preserves overflow");
             int rewardCount = Rewards.Count;
             Hit(lion, _enemies[0], 100, blocked); Hit(lion, _enemies[1], 100, blocked);
             Check(Rewards.Count == rewardCount && Rewards[0].Kind == nameof(PhantomImbalancePower), "Break triggers once per CardPlay, no self Block");
@@ -1060,8 +1060,8 @@ internal static partial class WylderBattleArtRegression
             Hit(lion, _enemies[0], 40, blocked);
             Check(Rewards.Count(r => r.Kind == "Stun") == 1 && Rewards.Single(r => r.Kind == "Stun").Target == _enemies[0],
                 "Existing1 plus new2 uses existing Imbalance threshold to Stun once");
-            Check(_enemies[0].GetPowerAmount<PhantomImbalancePower>() == (upgraded ? 1 : 0),
-                "Stun consumes the native three-stack threshold and preserves any upgraded excess");
+            Check(_enemies[0].GetPowerAmount<PhantomImbalancePower>() == (upgraded ? 2 : 1),
+                "Stun consumes the current two-stack threshold and preserves excess");
         }
         Fixture();
         var lethal = Card(ModelDb.Card<WylderLionsClaw>(), false);
@@ -1074,8 +1074,8 @@ internal static partial class WylderBattleArtRegression
         {
             _imbalancePlayerCount = players;
             Fixture();
-            int threshold = players == 2 ? 4 : 7;
-            Check(PhantomImbalancePower.GetThreshold(players) == threshold, "Existing multiplayer Imbalance threshold retained");
+            int threshold = players == 2 ? 3 : 5;
+            Check(PhantomImbalancePower.GetThreshold(players) == threshold, "Dynamic multiplayer Imbalance threshold retained");
             AddPower<PhantomImbalancePower>(_enemies[0], threshold - 2);
             var multiplayerLion = Card(ModelDb.Card<WylderLionsClaw>(), false);
             var multiplayerPlay = TrackingArrowRegression.MakePlay(multiplayerLion, _owner);

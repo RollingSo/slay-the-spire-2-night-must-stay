@@ -22,9 +22,12 @@ public sealed class WylderMultiplayerCard : WylderAbilityCard<WylderMultiplayerP
 public sealed class WylderTinder : WylderCard
 {
     public WylderTinder() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+    protected override bool IsPlayable => Owner == null || PileType.Hand.GetPile(Owner).Cards
+        .Any(card => card != this && card.IsTransformable);
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(HoverTipFactory.FromCardWithCardHoverTips<WylderFireCoating>(IsUpgraded));
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
+        if (!PileType.Hand.GetPile(Owner).Cards.Any(card => card != this && card.IsTransformable)) return;
         var selected = (await CardSelectCmd.FromHand(context, Owner,
             new CardSelectorPrefs(CardSelectorPrefs.TransformSelectionPrompt, 1), c => c.IsTransformable, this)).FirstOrDefault();
         if (selected == null) return;

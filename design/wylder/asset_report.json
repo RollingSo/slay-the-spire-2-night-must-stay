@@ -437,15 +437,15 @@
   },
   "wylder_assets/multiplayer_hands/multiplayer_hand_wylder_point.png": {
     "size": [
-      512,
-      768
+      422,
+      1200
     ],
     "mode": "RGBA",
     "bounds": [
-      18,
-      14,
-      441,
-      756
+      58,
+      38,
+      406,
+      1198
     ],
     "corners_alpha": [
       0,
@@ -458,15 +458,15 @@
   },
   "wylder_assets/multiplayer_hands/multiplayer_hand_wylder_rock.png": {
     "size": [
-      512,
-      768
+      422,
+      1200
     ],
     "mode": "RGBA",
     "bounds": [
-      98,
-      12,
-      493,
-      756
+      81,
+      18,
+      406,
+      1180
     ],
     "corners_alpha": [
       0,
@@ -479,15 +479,15 @@
   },
   "wylder_assets/multiplayer_hands/multiplayer_hand_wylder_paper.png": {
     "size": [
-      512,
-      768
+      422,
+      1200
     ],
     "mode": "RGBA",
     "bounds": [
-      126,
-      17,
-      408,
-      756
+      104,
+      26,
+      336,
+      1181
     ],
     "corners_alpha": [
       0,
@@ -500,15 +500,15 @@
   },
   "wylder_assets/multiplayer_hands/multiplayer_hand_wylder_scissors.png": {
     "size": [
-      512,
-      768
+      422,
+      1200
     ],
     "mode": "RGBA",
     "bounds": [
-      109,
-      12,
-      495,
-      756
+      90,
+      18,
+      407,
+      1181
     ],
     "corners_alpha": [
       0,

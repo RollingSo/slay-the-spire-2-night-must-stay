@@ -53,7 +53,13 @@ internal static class WylderMultiplayerBatchRegression
    var combat=new CombatState();
    Player Make(){var p=TrackingArrowRegression.MakePlayer();AccessTools.Field(typeof(Player),"<Character>k__BackingField").SetValue(p,ModelDb.Character<Wylder>());AccessTools.Field(typeof(Player),"_runState").SetValue(p,NullRunState.Instance);var cr=new Creature(p,50,50){CombatState=combat};AccessTools.Field(typeof(Player),"<Creature>k__BackingField").SetValue(p,cr);((List<Creature>)AccessTools.Field(typeof(CombatState),"_allies").GetValue(combat)!).Add(cr);return p;}
    var owner=Make();var ally1=Make();var ally2=Make();
+   var loneTinder=ModelDb.Card<WylderTinder>().ToMutable();AccessTools.Field(typeof(CardModel),"_owner").SetValue(loneTinder,owner);
+   ((List<CardModel>)AccessTools.Field(typeof(CardPile),"_cards").GetValue(PileType.Hand.GetPile(owner))!).Add(loneTinder);
+   Check(!(bool)AccessTools.PropertyGetter(typeof(CardModel),"IsPlayable").Invoke(loneTinder,null)!,"Tinder cannot open an empty transform selector when it is the sole hand card");
+   ((List<CardModel>)AccessTools.Field(typeof(CardPile),"_cards").GetValue(PileType.Hand.GetPile(owner))!).Clear();
    Selected=ModelDb.Card<WylderStrike>().ToMutable();AccessTools.Field(typeof(CardModel),"_owner").SetValue(Selected,owner);
+   ((List<CardModel>)AccessTools.Field(typeof(CardPile),"_cards").GetValue(PileType.Hand.GetPile(owner))!).Add(Selected);
+   Check((bool)AccessTools.PropertyGetter(typeof(CardModel),"IsPlayable").Invoke(loneTinder,null)!,"Tinder is playable with another transformable hand card");
    foreach(bool upgraded in new[]{false,true}) {
     var tinder=ModelDb.Card<WylderTinder>().ToMutable();AccessTools.Field(typeof(CardModel),"_owner").SetValue(tinder,owner);if(upgraded)tinder.UpgradeInternal();
     ((Task)AccessTools.Method(typeof(WylderTinder),"OnPlay").Invoke(tinder,new object?[]{null,TrackingArrowRegression.MakePlay(tinder,owner)})!).GetAwaiter().GetResult();

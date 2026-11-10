@@ -24,6 +24,10 @@ internal static partial class WylderBattleArtRegression
   h.Patch(AccessTools.Method(typeof(CardCmd),nameof(CardCmd.AutoPlay)),prefix:new HarmonyMethod(typeof(WylderBattleArtRegression),nameof(FinalAutoPlay)));
   try
   {
+   Fixture();var loneLastResort=Card(ModelDb.Card<WylderLastResort>(),false);Put(loneLastResort,PileType.Hand);
+   Check(!(bool)AccessTools.PropertyGetter(typeof(CardModel),"IsPlayable").Invoke(loneLastResort,null)!,"Last Resort cannot open an empty selector as the sole hand card");
+   var lastResortTarget=Card(ModelDb.Card<WylderStrike>(),false);Put(lastResortTarget,PileType.Hand);
+   Check((bool)AccessTools.PropertyGetter(typeof(CardModel),"IsPlayable").Invoke(loneLastResort,null)!,"Last Resort is playable with another hand card");
    foreach(bool up in new[]{false,true})
    {
     foreach(var model in new CardModel[]{ModelDb.Card<WylderEndlessWill>(),ModelDb.Card<WylderLastResort>(),ModelDb.Card<WylderShriekOfMilos>()})

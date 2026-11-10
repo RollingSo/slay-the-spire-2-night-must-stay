@@ -32,10 +32,12 @@ public static class Sts2BranchCompat
 
     private static readonly MethodInfo ExhaustMethod =
         typeof(CardCmd).GetMethods(BindingFlags.Public | BindingFlags.Static)
-            .Single(method => method.Name == nameof(CardCmd.Exhaust)
-                && method.GetParameters().Length == 4
+            .Where(method => method.Name == nameof(CardCmd.Exhaust)
+                && method.GetParameters().Length >= 2
                 && method.GetParameters()[0].ParameterType == typeof(PlayerChoiceContext)
-                && method.GetParameters()[1].ParameterType == typeof(CardModel));
+                && method.GetParameters()[1].ParameterType == typeof(CardModel))
+            .OrderBy(method => method.GetParameters().Length)
+            .First();
 
     public static AttackCommand AttackFromCard(AttackCommand command, CardModel card) =>
         (AttackCommand)AttackFromCardMethod.Invoke(
@@ -136,10 +138,13 @@ public static class Sts2BranchCompat
     public static Task Exhaust(PlayerChoiceContext context, CardModel card)
     {
         ParameterInfo[] parameters = ExhaustMethod.GetParameters();
-        return (Task)ExhaustMethod.Invoke(null, new object?[]
+        object?[] arguments = parameters.Select((parameter, index) => index switch
         {
-            context, card, parameters[2].DefaultValue, parameters[3].DefaultValue,
-        })!;
+            0 => context,
+            1 => card,
+            _ => parameter.DefaultValue,
+        }).ToArray();
+        return (Task)ExhaustMethod.Invoke(null, arguments)!;
     }
 
     public static decimal ModifyDamage(

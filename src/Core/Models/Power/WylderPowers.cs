@@ -23,7 +23,13 @@ public sealed class WylderBreakDescriptionPower : PowerModel
 
 public sealed class WylderPursuitPower : PowerModel
 {
-    private sealed class Data { public readonly Dictionary<CardPlay, bool> Plays = new(); public readonly HashSet<CardPlay> Kept = new(); }
+    private sealed class Data
+    {
+        public readonly Dictionary<CardPlay, bool> Plays = new();
+        public readonly Dictionary<CardPlay, int> Multipliers = new();
+        public readonly HashSet<CardPlay> Kept = new();
+        public bool DoubleEffect;
+    }
     protected override object InitInternalData() => new Data();
     public override PowerType Type => PowerType.Buff;
     public override PowerStackType StackType => PowerStackType.Single;
@@ -31,6 +37,7 @@ public sealed class WylderPursuitPower : PowerModel
     public static async Task Enter(PlayerChoiceContext context, Creature owner, CardModel source,
         WylderEffectSource sourceKind = WylderEffectSource.CardEffect)
     {
+        bool doubleEffect = WylderCombatEvents.ShouldDoublePursuitEntry(owner.Player);
         // A fresh entry during the consuming card must survive that card.
         if (owner.GetPower<WylderPursuitPower>() is { } existing)
         {
@@ -38,9 +45,11 @@ public sealed class WylderPursuitPower : PowerModel
                 existing.GetInternalData<Data>().Plays[play] = true;
         }
         else await PowerCmd.Apply<WylderPursuitPower>(context, owner, 1m, owner, source);
+        if (doubleEffect && owner.GetPower<WylderPursuitPower>() is { } pursuit)
+            pursuit.GetInternalData<Data>().DoubleEffect = true;
         if (IsActive(owner)) await WylderCombatEvents.RegisterEntry(context, owner, source, sourceKind);
     }
-    private int EffectMultiplier => Owner.HasPower<WylderNightFormPower>() ? 2 : 1;
+    private int EffectMultiplier => GetInternalData<Data>().DoubleEffect ? 2 : 1;
     internal decimal AttackMultiplier(Creature dealer, ValueProp props, CardModel source) =>
         dealer == Owner && source?.Type == CardType.Attack && props.IsPoweredAttack() ? 1m + 0.5m * EffectMultiplier : 1m;
     internal void KeepFor(CardPlay play)
@@ -60,15 +69,17 @@ public sealed class WylderPursuitPower : PowerModel
         if (play.Card.Owner.Creature == Owner && ConsumesOnPlay(play.Card.Type))
         {
             Data data = GetInternalData<Data>();
-            data.Plays.TryAdd(play, false);
+            if (data.Plays.TryAdd(play, false)) data.Multipliers[play] = EffectMultiplier;
         }
         return Task.CompletedTask;
     }
     public override async Task AfterCardPlayedLate(PlayerChoiceContext context, CardPlay play)
     {
-        if (play.Card.Owner.Creature != Owner || !GetInternalData<Data>().Plays.Remove(play, out bool reentered)) return;
-        if (GetInternalData<Data>().Kept.Remove(play)) return;
-        int skillReward = play.Card.Type == CardType.Skill ? EffectMultiplier : 0;
+        Data data = GetInternalData<Data>();
+        if (play.Card.Owner.Creature != Owner || !data.Plays.Remove(play, out bool reentered)) return;
+        int effectMultiplier = data.Multipliers.Remove(play, out int captured) ? captured : 1;
+        if (data.Kept.Remove(play)) return;
+        int skillReward = play.Card.Type == CardType.Skill ? effectMultiplier : 0;
         WylderCombatEvents.RegisterOldPursuitConsumption(play);
         if (!reentered)
         {

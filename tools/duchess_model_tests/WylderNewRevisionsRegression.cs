@@ -57,7 +57,7 @@ internal static class WylderNewRevisionsRegression
                 Check(stake.EnergyCost.GetResolved() == 3 && stake.Rarity == CardRarity.Rare && stake.TargetType == TargetType.AllEnemies, "Assault Stake 3-cost rare AOE");
                 Check(stake.Keywords.Contains(CardKeyword.Exhaust) && stake.Keywords.Contains(CardKeyword.Retain) == up, "Exhaust and upgraded Retain");
                 Play(stake);
-                Check(Damage.SequenceEqual(new[] { pursuit ? 42m : 28m, pursuit ? 42m : 28m }), "AOE hits both enemies with fixed28 and Pursuit");
+                Check(Damage.SequenceEqual(new[] { pursuit ? 30m : 20m, pursuit ? 30m : 20m }), "AOE hits both enemies with fixed20 and Pursuit");
                 Check(Rewards.Count(r => r.Kind == "Stun") == 2 && Rewards.All(r => r.Kind == "Stun"), "Stuns all living enemies after damage, no obsolete rewards");
 
                 Fixture(pursuit); stake = Card<WylderAssaultStake>(up); Put(stake, PileType.Hand);

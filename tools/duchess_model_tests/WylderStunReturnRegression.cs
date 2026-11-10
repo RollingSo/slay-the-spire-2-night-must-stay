@@ -85,6 +85,25 @@ internal static class WylderStunReturnRegression
             triumph.AfterSideTurnEnd(null!, CombatSide.Player, new[] { Owner.Creature }).GetAwaiter().GetResult();
             Check(triumph.Pile?.Type == PileType.Hand && Returned.Count == 1,
                 "Deferred Triumph return enters hand after the discard node");
+            Fixture();
+            endTurn = Card(PileType.Discard);
+            triumph = Triumph(PileType.Discard);
+            batches = AccessTools.Field(granted, "Batches").GetValue(null)!;
+            batch = AccessTools.Method(batches.GetType(), "GetOrCreateValue")!.Invoke(batches, new object[] { Combat })!;
+            resolving = (ISet<Player>)AccessTools.Field(batch.GetType(), "Resolving").GetValue(batch)!;
+            Player teammate = TrackingArrowRegression.MakePlayer();
+            resolving.Add(teammate);
+            endTurn.OnEnemyStunned().GetAwaiter().GetResult();
+            triumph.OnEnemyStunned().GetAwaiter().GetResult();
+            Check(Returned.Count == 0 && endTurn.Pile?.Type == PileType.Discard
+                    && triumph.Pile?.Type == PileType.Discard,
+                "A teammate's Desperation batch defers every player's Stun-return cards");
+            resolving.Remove(teammate);
+            endTurn.AfterSideTurnEnd(null!, CombatSide.Player, new[] { Owner.Creature }).GetAwaiter().GetResult();
+            triumph.AfterSideTurnEnd(null!, CombatSide.Player, new[] { Owner.Creature }).GetAwaiter().GetResult();
+            Check(Returned.Count == 2 && endTurn.Pile?.Type == PileType.Hand
+                    && triumph.Pile?.Type == PileType.Hand,
+                "Multiplayer-deferred Stun returns enter hand only after Desperation resolution");
             Fixture(); var untouched = Card(PileType.Discard); var dead = Enemy(); dead.SetCurrentHpInternal(0);
             CreatureCmd.Stun(dead, _ => Task.CompletedTask, "NOTHING").GetAwaiter().GetResult();
             Check(untouched.Pile?.Type == PileType.Discard && untouched.EnergyCost.GetResolved() == 3 && Returned.Count == 0, "Dead enemy Stun does not trigger return");

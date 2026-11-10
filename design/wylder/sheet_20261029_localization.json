@@ -8,9 +8,9 @@
     ],
     "WYLDER_AERIAL_STAKE": [
       "空袭桩柱",
-      "[gold]追击[/gold]：造成{Damage:diff()}点伤害。\n给予{Imbalance:diff()}层[gold]失衡[/gold]。",
+      "[gold]追击[/gold]：造成{Damage:diff()}点伤害并给予{Imbalance:diff()}层[gold]失衡[/gold]。",
       "Aerial Stake",
-      "[gold]Pursuit[/gold]: Deal {Damage:diff()} damage.\nApply {Imbalance:diff()} [gold]Imbalance[/gold]."
+      "[gold]Pursuit[/gold]: Deal {Damage:diff()} damage and apply {Imbalance:diff()} [gold]Imbalance[/gold]."
     ],
     "WYLDER_COUNTER_RUSH": [
       "反冲桩柱",
@@ -68,9 +68,9 @@
     ],
     "WYLDER_NIGHT_FORM": [
       "黑夜形态",
-      "[gold]追击[/gold]的效果翻倍。",
+      "每回合首次触发[gold]追击[/gold]时，其效果翻倍。",
       "Night Form",
-      "Double the effects of [gold]Pursuit[/gold]."
+      "The first time you enter [gold]Pursuit[/gold] each turn, double its effects."
     ],
     "WYLDER_REMAINING_EMBER": [
       "余火",
@@ -230,7 +230,7 @@
     ],
     "WYLDER_MURDEROUS_AURA": [
       "杀气四溢",
-      "回合开始时，抽牌数减1，获得{Strength:diff()}点[gold]力量[/gold]和{Dexterity:diff()}点[gold]敏捷[/gold]。",
+      "回合开始时，少抽1张牌。\n获得{Strength:diff()}点[gold]力量[/gold]和{Dexterity:diff()}点[gold]敏捷[/gold]。",
       "Murderous Aura",
       "At the start of each turn, draw 1 fewer card and gain {Strength:diff()} [gold]Strength[/gold] and {Dexterity:diff()} [gold]Dexterity[/gold]."
     ],
@@ -358,9 +358,9 @@
     ],
     "WYLDER_NIGHT_FORM_POWER": [
       "黑夜形态",
-      "[gold]追击[/gold]的效果翻倍。\n追击的攻击伤害加成提高至100%，打出技能牌时获得2点能量并抽2张牌。",
+      "每回合首次触发的[gold]追击[/gold]效果翻倍。",
       "Night Form",
-      "Double the effects of [gold]Pursuit[/gold].\nPursuit grants 100% bonus attack damage, or 2 Energy and 2 cards when you play a Skill."
+      "Double the effects of the first [gold]Pursuit[/gold] you enter each turn."
     ],
     "WYLDER_REMAINING_EMBER_POWER": [
       "余火",

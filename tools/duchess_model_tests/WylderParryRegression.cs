@@ -47,7 +47,10 @@ internal static class WylderParryRegression
                 var parry = Card(upgraded);
                 Put(parry, PileType.Hand);
                 Check(parry.EnergyCost.GetResolved() == 4 && parry.Type == CardType.Skill && parry.Rarity == CardRarity.Common, "4-cost Common Skill base/upgraded");
-                Check(parry.Keywords.Contains(CardKeyword.Retain) == upgraded && parry.ShouldRetainThisTurn == upgraded, "Upgrade adds real native Retain");
+                Check(parry.Keywords.Contains(CardKeyword.Exhaust)
+                    && parry.Keywords.Contains(CardKeyword.Retain) == upgraded
+                    && parry.ShouldRetainThisTurn == upgraded,
+                    "Base card has native Exhaust and upgrade adds native Retain");
                 Check(!parry.HasTurnEndInHandEffect, "Do not use native in-hand wrapper that moves/discards before this condition");
                 Check(parry.IsValidTarget(Enemies[0]) && !parry.IsValidTarget(Enemies[1]) && !parry.IsValidTarget(Owner.Creature), "Only living attacking enemies are manually targetable");
                 Owner.PlayerCombatState!.Energy = 0;

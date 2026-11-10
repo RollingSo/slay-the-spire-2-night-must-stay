@@ -141,7 +141,7 @@ public sealed class WylderAssaultStake : WylderDesperationCard
 {
     public WylderAssaultStake() : base(3, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) { }
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
-    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new DamageVar(28m, ValueProp.Move) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new DamageVar(20m, ValueProp.Move) };
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new[]
         { HoverTipFactory.Static(StaticHoverTip.Stun) });
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
