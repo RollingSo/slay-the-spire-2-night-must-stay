@@ -114,13 +114,6 @@
       "kor": "멸망의 영혼 불",
       "reference": "Official ELDEN RING weapon skill localization"
     },
-    "WYLDER_RUINOUS_GHOSTFLAME_POWER": {
-      "zhs": "唤起灵火",
-      "eng": "Ruinous Ghostflame",
-      "jpn": "滅びの霊炎",
-      "kor": "멸망의 영혼 불",
-      "reference": "Power title mirrors the source card's official weapon skill localization"
-    },
     "WYLDER_EOCHAIDS_DANCING_BLADE": {
       "zhs": "欧赫剑舞",
       "eng": "Eochaid's Dancing Blade",
@@ -170,13 +163,6 @@
       "kor": "미에로스의 절규",
       "reference": "Official ELDEN RING weapon skill localization"
     },
-    "WYLDER_SHRIEK_OF_MILOS_POWER": {
-      "zhs": "灭洛斯的嚎叫",
-      "eng": "Shriek of Milos",
-      "jpn": "ミエロスの絶叫",
-      "kor": "미에로스의 절규",
-      "reference": "Power title mirrors the source card's official weapon skill localization"
-    },
     "WYLDER_KICK": {
       "zhs": "踢击",
       "eng": "Kick",
@@ -204,13 +190,6 @@
       "jpn": "月光剣",
       "kor": "월광검",
       "reference": "Official ELDEN RING weapon skill localization"
-    },
-    "WYLDER_MOONLIGHT_SWORD_POWER": {
-      "zhs": "月光剑",
-      "eng": "Moonlight Greatsword",
-      "jpn": "月光剣",
-      "kor": "월광검",
-      "reference": "Power title mirrors the source card's official weapon skill localization"
     },
     "COOPERATIVE_DEFENSE": {
       "zhs": "协同防御",
