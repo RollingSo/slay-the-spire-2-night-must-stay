@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3]
+
+[ext_resource type="Shader" path="res://shaders/nightreign_card_frame.gdshader" id="1_shader"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_shader")
+shader_parameter/frame_shadow = Color(0.066667, 0.094118, 0.152941, 1)
+shader_parameter/frame_mid = Color(0.145098, 0.180392, 0.290196, 1)
+shader_parameter/frame_highlight = Color(0.525490, 0.580392, 0.705882, 1)
+shader_parameter/panel_shadow = Color(0.047059, 0.066667, 0.117647, 1)
+shader_parameter/panel_mid = Color(0.101961, 0.133333, 0.219608, 1)
+shader_parameter/frame_saturation_threshold = 0.16
+shader_parameter/contrast = 1.12

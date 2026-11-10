@@ -1,0 +1,286 @@
+{
+  "zhs": {
+    "NEOW": [
+      [
+        "……陌生的气息……你在追什么……",
+        "……先告诉我，路通向哪里。"
+      ],
+      [
+        "……又回来了……还没有停下么……",
+        "气息还在。不能停。"
+      ],
+      [
+        "……到了这里……你还记得来时的路么……",
+        "记得。事情办完，还要回去。",
+        "……那就……再走一程……"
+      ]
+    ],
+    "DARV": [
+      [
+        "好一把用旧的剑！来，看看有什么能帮上你。",
+        "先让我看看刃口。"
+      ],
+      [
+        "又是你！这次想找什么？",
+        "结实些的。路还长。"
+      ],
+      [
+        "这些旧东西也陪我走过不少地方。你不嫌弃吧？",
+        "能用就行。我会保养。",
+        "哈哈，那它们可找对人了！"
+      ]
+    ],
+    "NONUPEIPE": [
+      [
+        "独行的骑士，接受力量，再向上走吧。",
+        "……先说代价。"
+      ],
+      [
+        "你仍然把手留在剑柄上。还不肯放松吗？",
+        "直觉不让我放手。"
+      ],
+      [
+        "你已经走过很远的路，还要继续吗？",
+        "前面还有气息。",
+        "那么便带上力量，继续追寻。"
+      ]
+    ],
+    "OROBAS": [
+      [
+        "亮亮的甲！尖尖的剑！让我看看！？",
+        "……手别碰剑刃。"
+      ],
+      [
+        "又来了！又来了！这次也不摘头盔吗！？",
+        "这样就够了。"
+      ],
+      [
+        "只有一边！只有一边！另一只耳环呢！？",
+        "……这个不用你管。",
+        "好！好！眼睛看别处！"
+      ]
+    ],
+    "PAEL": [
+      [
+        "累了吧……把脚步停一会儿……",
+        "睡一会儿。剑放在手边。"
+      ],
+      [
+        "你的手还在动……梦里也握着剑吗……",
+        "……习惯了。"
+      ],
+      [
+        "梦里吹来的风……让你想起哪里……",
+        "一个还能回去的地方。",
+        "那就记着它……好好歇一会儿……"
+      ]
+    ],
+    "TANX": [
+      [
+        "背着大剑的家伙！过来，让我试试你的本事！",
+        "来。别留手。"
+      ],
+      [
+        "又来啦！这回还要靠钩爪抢先手吗？",
+        "管用就够。"
+      ],
+      [
+        "好！这一下比上次更重！还有力气吗？",
+        "你站稳。再来。",
+        "痛快！拿上它，下次接着打！"
+      ]
+    ],
+    "TEZCATARA": [
+      [
+        "银色的盔甲，冷冰冰的脸。需要一点火吗，亲爱的？",
+        "留给剑。"
+      ],
+      [
+        "还不肯让我看看头盔下面吗？",
+        "不用看。剑在这里。"
+      ],
+      [
+        "火能烧掉许多东西。你有什么不愿留下的吗？",
+        "刃口上的锈。别的不用。",
+        "好吧，只照看你的剑。"
+      ]
+    ],
+    "VAKUU": [
+      [
+        "一把旧剑，一身伤痕。你的执念能卖个好价钱。",
+        "不卖。"
+      ],
+      [
+        "你追得这样紧，就不怕前面什么也没有？",
+        "我会自己看。"
+      ],
+      [
+        "再往前，可没人保证你还能回头。",
+        "……那就走快些。",
+        "去吧。看看你的脚步能把你带到哪里。"
+      ]
+    ],
+    "THE_ARCHITECT": [
+      [
+        "凭一把剑和一只钩爪，你便走到了这里。",
+        "还差最后一段。"
+      ],
+      [
+        "你追了一路。",
+        "若前面再无路可走呢？",
+        "那就由我开路。"
+      ],
+      [
+        "到了这里，你还不肯停下。",
+        "气息就在前面。",
+        "那么，自己过来取吧。"
+      ],
+      [
+        "又想从这里过去？",
+        "……让开。"
+      ]
+    ]
+  },
+  "eng": {
+    "NEOW": [
+      [
+        "...An unfamiliar scent... What do you pursue...?",
+        "...First, tell me where this path leads."
+      ],
+      [
+        "...Back again... Still moving...?",
+        "The scent remains. I can't stop."
+      ],
+      [
+        "...This far... Do you remember the way you came...?",
+        "I do. When it's done, I'm going back.",
+        "...Then... walk a little further..."
+      ]
+    ],
+    "DARV": [
+      [
+        "Now that's a well-used sword! Come, see what might help you.",
+        "Let me check the edge first."
+      ],
+      [
+        "You again! What are you looking for this time?",
+        "Something sturdy. It's a long road."
+      ],
+      [
+        "These old things have traveled a fair way with me. You don't mind, do you?",
+        "If they work. I'll maintain them.",
+        "Ha! Then they've found the right hands!"
+      ]
+    ],
+    "NONUPEIPE": [
+      [
+        "Lone knight, accept this strength and climb onward.",
+        "...Tell me the price first."
+      ],
+      [
+        "Your hand still rests on the hilt. Can you not relax?",
+        "My instincts won't let me."
+      ],
+      [
+        "You have come a long way. Will you keep going?",
+        "There's still a scent ahead.",
+        "Then take this strength and follow it."
+      ]
+    ],
+    "OROBAS": [
+      [
+        "Shiny armor! Pointy sword! Let me see!?",
+        "...Keep your hands off the edge."
+      ],
+      [
+        "Back again! Back again! Still keeping the helmet on!?",
+        "This will do."
+      ],
+      [
+        "Only one! Only one! Where's the other earring!?",
+        "...None of your business.",
+        "Right! Right! Eyes elsewhere!"
+      ]
+    ],
+    "PAEL": [
+      [
+        "Tired...? Let your feet rest awhile...",
+        "For a while. The sword stays close."
+      ],
+      [
+        "Your hands still move... Holding a sword in your dreams, too...?",
+        "...Habit."
+      ],
+      [
+        "The wind in your dreams... Where does it take you...?",
+        "Somewhere I can still return to.",
+        "Remember it, then... Rest well..."
+      ]
+    ],
+    "TANX": [
+      [
+        "You with the greatsword! Come show me what you've got!",
+        "Come on. Don't hold back."
+      ],
+      [
+        "Back again! Going to steal the first move with that claw?",
+        "It works."
+      ],
+      [
+        "Good! Harder than last time! Any strength left?",
+        "Steady your feet. Again.",
+        "That's the spirit! Take it, and we'll fight again!"
+      ]
+    ],
+    "TEZCATARA": [
+      [
+        "Silver armor and a cold face. Need a little fire, darling?",
+        "For the sword."
+      ],
+      [
+        "Still won't show me what's beneath that helmet?",
+        "No need. The sword is here."
+      ],
+      [
+        "Fire can burn away so much. Anything you wish to leave behind?",
+        "Rust on the edge. Nothing else.",
+        "Very well. Just your sword, then."
+      ]
+    ],
+    "VAKUU": [
+      [
+        "An old sword and a body full of scars. Your obsession could fetch a fine price.",
+        "Not for sale."
+      ],
+      [
+        "You chase so hard. What if nothing waits ahead?",
+        "I'll see for myself."
+      ],
+      [
+        "Further on, no one can promise you'll be able to turn back.",
+        "...Then I'd better move faster.",
+        "Go on. See where those feet take you."
+      ]
+    ],
+    "THE_ARCHITECT": [
+      [
+        "A sword and a grappling claw brought you this far.",
+        "One stretch left."
+      ],
+      [
+        "You have followed this trail all the way.",
+        "What if no path remains ahead?",
+        "Then I'll make one."
+      ],
+      [
+        "Even here, you refuse to stop.",
+        "The scent is just ahead.",
+        "Then come and claim it yourself."
+      ],
+      [
+        "You would pass through here again?",
+        "...Move."
+      ]
+    ]
+  }
+}

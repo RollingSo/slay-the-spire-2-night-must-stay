@@ -129,5 +129,8 @@
   "DUCHESS_UNSENT_LETTER.flavor": "The creases have been smoothed many times. The envelope remains unsealed.",
   "DUCHESS_BLUE_RIBBON.title": "Blue Ribbon",
   "DUCHESS_BLUE_RIBBON.description": "At the start of your first turn, gain 6 [gold]Block[/gold].",
-  "DUCHESS_BLUE_RIBBON.flavor": "There is always time to straighten one's collar before leaving."
+  "DUCHESS_BLUE_RIBBON.flavor": "There is always time to straighten one's collar before leaving.",
+  "WYLDER_SINGLE_EARRING.title": "Single Earring",
+  "WYLDER_SINGLE_EARRING.description": "At the start of combat, enter [gold]Pursuit[/gold].",
+  "WYLDER_SINGLE_EARRING.flavor": "A lone earring, its edges worn smooth."
 }

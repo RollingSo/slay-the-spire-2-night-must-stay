@@ -108,12 +108,24 @@ if (Test-Path -LiteralPath (Join-Path $root 'src/Core/Models/Characters/Duchess.
 }
 
 # Keep the compact icon and the large applied/triggered power flash in sync.
+if (Test-Path -LiteralPath (Join-Path $root 'src/Core/Models/Characters/Wylder.cs')) {
+    & (Join-Path $PSScriptRoot 'validate_wylder_assets.ps1')
+    & (Join-Path $PSScriptRoot 'validate_wylder_ancients.ps1')
+    # The general model test entry does not run Wylder's dedicated card suite.
+    # Run it explicitly so new card registration, native costs and conditional
+    # rewards cannot pass export on the strength of the other roles' tests.
+    dotnet run --project (Join-Path $PSScriptRoot 'duchess_model_tests') --no-build --no-restore -- --wylder-only
+    if ($LASTEXITCODE -ne 0) {
+        throw "Wylder card model regression failed with exit code $LASTEXITCODE"
+    }
+}
 & (Join-Path $PSScriptRoot 'validate_card_portraits.ps1')
 
 # These standalone Ironeye icons previously existed in the source tree but
 # were exported as raw PNGs without import metadata. Build a focused manifest
 # so the isolated PCK check below verifies actual Texture2D loading.
 & (Join-Path $PSScriptRoot 'validate_ironeye_power_icons.ps1')
+& (Join-Path $PSScriptRoot 'validate_wylder_power_icons.ps1')
 & (Join-Path $PSScriptRoot 'validate_item_icons.ps1')
 
 & (Join-Path $PSScriptRoot 'sync_guardian_power_icons.ps1')
@@ -151,6 +163,9 @@ if ($powerIconCheckExitCode -ne 0) {
     throw "Exported Ironeye power icon validation failed with exit code $powerIconCheckExitCode. See build/ironeye_power_icon_validation.log"
 }
 
+$wylderIconCheck = Invoke-GodotAndWait @('--headless', '--path', (Join-Path $PSScriptRoot 'card_portrait_validation'), '--log-file', (Join-Path $buildDirectory 'wylder_power_icon_validation.log'), '--script', 'res://validate.gd', '--', $packPath, (Join-Path $buildDirectory 'wylder_power_icon_paths.json'))
+if ($wylderIconCheck -ne 0) { throw "Exported Wylder power icon validation failed: $wylderIconCheck" }
+
 $necroCheckExitCode = Invoke-GodotAndWait @('--headless', '--path', (Join-Path $PSScriptRoot 'card_portrait_validation'), '--log-file', (Join-Path $buildDirectory 'necro_action_validation.log'), '--script', 'res://validate_necro_actions.gd', '--', $packPath)
 if ($necroCheckExitCode -ne 0) {
     throw "Exported Necro action icon validation failed: $necroCheckExitCode. See build/necro_action_validation.log"
@@ -172,6 +187,13 @@ if ($handCheckExitCode -ne 0) {
     throw "Exported multiplayer hand validation failed: $handCheckExitCode. See build/multiplayer_hand_validation.log"
 }
 
+# Validate the new character inside an isolated project with the exported PCK.
+if (Test-Path -LiteralPath (Join-Path $root 'src/Core/Models/Characters/Wylder.cs')) {
+    $wylderCheckExitCode = Invoke-GodotAndWait @('--headless', '--path', (Join-Path $PSScriptRoot 'card_portrait_validation'), '--log-file', (Join-Path $buildDirectory 'wylder_resources.log'), '--script', (Join-Path $PSScriptRoot 'validate_wylder_resources.gd'), '--', $packPath, (Join-Path $root 'design/wylder/asset_report.json'))
+    if ($wylderCheckExitCode -ne 0) {
+        throw "Exported Wylder resource validation failed: $wylderCheckExitCode"
+    }
+}
 # Godot remaps .tscn/.tres and imported PNGs inside a PCK. Export the same
 # preset as ZIP to inspect its directory before installing an unopenable mod.
 $inspectionZipPath = Join-Path $buildDirectory "$modId-inspect.zip"

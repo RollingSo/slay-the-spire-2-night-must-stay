@@ -54,5 +54,14 @@
   "DUCHESS.description": "懐中時計の時刻を操り、回避とリアクションで山札を巡り、完璧な瞬間に致命の一撃を放つ。",
   "DUCHESS.aromaPrinciple": "[sine]皆さんの助けになるのなら、試してみましょう。[/sine]",
   "DUCHESS.eventDeathPrevention": "まだ、待っている人がいます。ここで終わるわけにはいきません。",
-  "DUCHESS.goldMonologue": "[sine]これで次の旅支度ができます。皆さんの分も残しておきましょう。[/sine]"
+  "DUCHESS.goldMonologue": "[sine]これで次の旅支度ができます。皆さんの分も残しておきましょう。[/sine]",
+  "WYLDER.title": "Wylder",
+  "WYLDER.titleObject": "Wylder",
+  "WYLDER.pronounSubject": "he",
+  "WYLDER.pronounObject": "him",
+  "WYLDER.pronounPossessive": "his",
+  "WYLDER.possessiveAdjective": "his",
+  "WYLDER.cardsModifierTitle": "Wylder",
+  "WYLDER.cardsModifierDescription": "Wylder cards",
+  "WYLDER.description": "Enter Pursuit with a claw and break the enemy stance with attacks."
 }

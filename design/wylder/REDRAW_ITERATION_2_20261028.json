@@ -1,0 +1,70 @@
+[
+  {
+    "key": "up",
+    "filename": "exec-71bb3cea-873b-491c-9b0a-d742612390a7.png",
+    "prompt": "One 1000x760 landscape STS2-style graphic card illustration. Wylder: closed feather-wing silver helmet, black scarf, dark navy clothing, white flow embroidery, simplified silver scales and brown wraps. Exactly two coherent arms and legs; no extra hands. Strong black silhouettes, simple flat hard-edged cel planes and limited colors. One straight rigid greatsword, pommel/grip/guard/blade/tip exactly collinear except where reference explicitly shows a curved weapon. No UI, text, borders, photorealism or intricate texture. Correct ONLY the inverted sword: reference2 raised right hand holds an UPWARD sword. The blue grip must be BELOW the right hand and pommel BELOW the grip, crossguard immediately ABOVE the glove and the long rigid straight steel blade continuing UP from guard and exiting the top edge. NEVER place blade below hand. Preserve upright centered body, raised left fist and large upward slash arc, no added limbs. Distinct open forked pommel.",
+    "inputs": [
+      "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-4fdd204d-d652-481a-9225-b93fc8d8ba1f.png",
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/stamp_pose_20261027/wylder_stamp_upward_cut_reference.png",
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/wylder_assets/approved_sources/idle.png"
+    ]
+  },
+  {
+    "key": "sweep",
+    "filename": "exec-f5df4e14-2c37-4623-ae98-e1d9f316703a.png",
+    "prompt": "One 1000x760 landscape STS2-style graphic card illustration. Wylder: closed feather-wing silver helmet, black scarf, dark navy clothing, white flow embroidery, simplified silver scales and brown wraps. Exactly two coherent arms and legs; no extra hands. Strong black silhouettes, simple flat hard-edged cel planes and limited colors. One straight rigid greatsword, pommel/grip/guard/blade/tip exactly collinear except where reference explicitly shows a curved weapon. No UI, text, borders, photorealism or intricate texture. Fix camera and limb anatomy to match image2: show Wylder BACK, not breastplate, his body twists toward screen right; right shoulder and RIGHT arm reach backward toward screen-left, right hand grips one sword pointing down-left; LEFT shoulder and LEFT arm extend forward screen-right, left fist empty in front of him. Two independent anatomical arm chains. Deep crouch, front knee bent, exactly two legs. Preserve plum background and flat white horizontal sweep. No mirrors or front-facing torso.",
+    "inputs": [
+      "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-2fe2c6ff-f406-47ff-82e6-ce096fa9daae.png",
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/stamp_pose_20261027/wylder_stamp_sweep_reference.png",
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/wylder_assets/approved_sources/idle.png"
+    ]
+  },
+  {
+    "key": "lion",
+    "filename": "exec-e948abc8-a86c-48b6-afb0-b18684acbc89.png",
+    "prompt": "One 1000x760 landscape STS2-style graphic card illustration. Wylder: closed feather-wing silver helmet, black scarf, dark navy clothing, white flow embroidery, simplified silver scales and brown wraps. Exactly two coherent arms and legs; no extra hands. Strong black silhouettes, simple flat hard-edged cel planes and limited colors. One straight rigid greatsword, pommel/grip/guard/blade/tip exactly collinear except where reference explicitly shows a curved weapon. No UI, text, borders, photorealism or intricate texture. Correct anatomy to match image2 crouched somersault-landing: torso bent forward almost horizontal, helmet at upper right pointing down, hips left, rear leg extended left, front knee folded with foot planted below chest. Exactly two visible distinct shoulders -> elbows -> forearms -> hands. BOTH hands grip the SAME straight sword handle low near ground; one hand near guard, the other toward forked pommel. One straight steel blade points horizontally right. No spare fingers or hair; black scarf only. Preserve rust background and vertical slash.",
+    "inputs": [
+      "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-4e6b91a5-6161-4088-a5c1-08c10d6bc7e8.png",
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/lions_claw_landing_20261027/wylder_lions_claw_reference.png",
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/wylder_assets/approved_sources/idle.png"
+    ]
+  },
+  {
+    "key": "finesse",
+    "filename": "exec-579f115c-34e5-48d6-8b87-7012f82400ae.png",
+    "prompt": "One 1000x760 landscape STS2-style graphic card illustration. Wylder: closed feather-wing silver helmet, black scarf, dark navy clothing, white flow embroidery, simplified silver scales and brown wraps. Exactly two coherent arms and legs; no extra hands. Strong black silhouettes, simple flat hard-edged cel planes and limited colors. One straight rigid greatsword, pommel/grip/guard/blade/tip exactly collinear except where reference explicitly shows a curved weapon. No UI, text, borders, photorealism or intricate texture. Change body pose to EXACT image2's inverted somersault: hips high above helmet, head low at screen-left, knees bent and feet high on right, torso CURLED and TWISTED with armored back facing viewer. Two coherent arms: one reaches down to grip ONE long Bloodhound curved fang weapon, other extended to side with empty hand. Not lying flat on back, not a flying Superman. Preserve giant pale circular slash and muted grey background.",
+    "inputs": [
+      "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-e4d19c55-6447-4295-9ccb-4a562d1ac43f.png",
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/finesse_curved_20261027/wylder_bloodhounds_finesse_reference.png",
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/wylder_assets/approved_sources/idle.png"
+    ]
+  },
+  {
+    "key": "vacuum",
+    "filename": "exec-bdf4fe4a-2d35-4d8d-8dd2-4bbda349043e.png",
+    "prompt": "One 1000x760 landscape STS2-style graphic card illustration. Wylder: closed feather-wing silver helmet, black scarf, dark navy clothing, white flow embroidery, simplified silver scales and brown wraps. Exactly two coherent arms and legs; no extra hands. Strong black silhouettes, simple flat hard-edged cel planes and limited colors. One straight rigid greatsword, pommel/grip/guard/blade/tip exactly collinear except where reference explicitly shows a curved weapon. No UI, text, borders, photorealism or intricate texture. Fix ONLY physical sword. It currently contains an impossible extra BLUE GRIP/handle on the blade side of its guard. Remove the extra blue grip and replace it with a clean continuous silver steel blade. Keep one navy grip behind guard where BOTH hands hold it, an open forked pommel behind those hands, one guard perpendicular to blade. Pommel, single grip, guard, blade ridge, and actual tip touching ground at lower-right must lie on ONE rigid straight axis. No bends, duplicate handles or objects. Preserve crouched pose and huge white upright vacuum crescent.",
+    "inputs": [
+      "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-6cdae9c8-cfe1-4943-a06c-60c74bca1069.png",
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/vacuum_slice_20261027/wylder_vacuum_slice_reference.png",
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/wylder_assets/approved_sources/idle.png"
+    ]
+  },
+  {
+    "key": "eochaid",
+    "filename": "exec-2f26497f-5199-4959-80f4-1f8f96770215.png",
+    "prompt": "One 1000x760 landscape STS2-style graphic card illustration. Wylder: closed feather-wing silver helmet, black scarf, dark navy clothing, white flow embroidery, simplified silver scales and brown wraps. Exactly two coherent arms and legs; no extra hands. Strong black silhouettes, simple flat hard-edged cel planes and limited colors. One straight rigid greatsword, pommel/grip/guard/blade/tip exactly collinear except where reference explicitly shows a curved weapon. No UI, text, borders, photorealism or intricate texture. Match user's reference as carefully as possible: camera three-quarter from BACK of a bowed twisting Wylder, head lowered towards screen-left, hips turned, both knees bent. Anatomical RIGHT shoulder and arm extend down toward lower-left, open EMPTY RIGHT hand reaching left. Anatomical LEFT shoulder near upper-right, LEFT elbow lifted, forearm passes horizontally in front of helmet and EMPTY LEFT hand opens down-left; trace each shoulder through its separate elbow and wrist, no third hand. Exactly ONE sword floating far upper-right, not touching either hand; long straight blade with forked pommel on same axis. A diagonal red helical energy ribbon from lower-left to upper-right encircles the FLOATING sword, not the hands. Quiet warm ivory background. Do not repeat rejected front-facing casting pose; copy the described side/back torso twist and arm placement.",
+    "inputs": [
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/wylder_assets/approved_sources/idle.png",
+      "D:/STS2/images/packed/card_portraits/silent/strike_silent.png"
+    ]
+  },
+  {
+    "key": "flame",
+    "filename": "exec-b757f893-a8e7-4068-911b-864e61189024.png",
+    "prompt": "One 1000x760 landscape STS2-style graphic card illustration. Wylder: closed feather-wing silver helmet, black scarf, dark navy clothing, white flow embroidery, simplified silver scales and brown wraps. Exactly two coherent arms and legs; no extra hands. Strong black silhouettes, simple flat hard-edged cel planes and limited colors. One straight rigid greatsword, pommel/grip/guard/blade/tip exactly collinear except where reference explicitly shows a curved weapon. No UI, text, borders, photorealism or intricate texture. Fix ONLY the sword pommel at the very left end of its grip. Current pommel looks like a CLOSED diamond. Replace with distinctive OPEN fork: TWO separated curled silver prongs, open gap visible between them, branching above and below the grip axis, unmistakably NOT a ring, diamond, ball, blade or extra hand. Keep both hands, arms, pose, same ONE rigid straight sword blade and fiery arc unchanged. Keep pommel center/grip/guard/blade axis exactly collinear.",
+    "inputs": [
+      "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-496fe225-88ba-49fc-9ac6-82113dd2d2c3.png",
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/wylder_assets/approved_sources/idle.png"
+    ]
+  }
+]

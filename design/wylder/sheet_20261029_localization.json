@@ -1,0 +1,444 @@
+{
+  "cards": {
+    "WYLDER_JUMPING_HEAVY": [
+      "跳跃重击",
+      "造成{Damage:diff()}点伤害。\n[gold]追击[/gold]：耗能变为0。",
+      "Jumping Heavy Attack",
+      "Deal {Damage:diff()} damage.\n[gold]Pursuit[/gold]: Costs 0."
+    ],
+    "WYLDER_AERIAL_STAKE": [
+      "空袭桩柱",
+      "[gold]追击[/gold]：造成{Damage:diff()}点伤害。\n给予{Imbalance:diff()}层[gold]失衡[/gold]。",
+      "Aerial Stake",
+      "[gold]Pursuit[/gold]: Deal {Damage:diff()} damage.\nApply {Imbalance:diff()} [gold]Imbalance[/gold]."
+    ],
+    "WYLDER_COUNTER_RUSH": [
+      "反冲桩柱",
+      "[gold]绝境[/gold]。\n造成{Damage:diff()}点伤害。\n给予{Imbalance:diff()}层[gold]失衡[/gold]。",
+      "Recoil Stake",
+      "[gold]Desperation[/gold].\nDeal {Damage:diff()} damage.\nApply {Imbalance:diff()} [gold]Imbalance[/gold]."
+    ],
+    "WYLDER_DEBUT": [
+      "登场",
+      "进入[gold]追击[/gold]。\n获得{Energy:energyIcons()}。",
+      "Debut",
+      "Enter [gold]Pursuit[/gold].\nGain {Energy:energyIcons()}."
+    ],
+    "WYLDER_SIXTH_SENSE": [
+      "第六感",
+      "受到致命伤害时，将这张牌移除出卡组，恢复最大生命值的{HealPercent:diff()}%。",
+      "Sixth Sense",
+      "When you would die, remove this card from your deck and heal {HealPercent:diff()}% of your maximum HP."
+    ],
+    "WYLDER_CLAW_REND": [
+      "钩爪撕扯",
+      "[gold]收招[/gold]。\n造成{Damage:diff()}点伤害。\n给予{Vulnerable:diff()}层[gold]易伤[/gold]。",
+      "Claw Rend",
+      "[gold]Follow Through[/gold].\nDeal {Damage:diff()} damage.\nApply {Vulnerable:diff()} [gold]Vulnerable[/gold]."
+    ],
+    "WYLDER_MOTION_AND_STILLNESS": [
+      "动与静",
+      "[gold]收招[/gold]。\n若上张打出的牌为非攻击牌，获得{Block:diff()}点[gold]格挡[/gold]。\n若上张打出的牌为攻击牌，获得{Vigor:diff()}点[gold]活力[/gold]。",
+      "Motion and Stillness",
+      "[gold]Follow Through[/gold].\nIf the last card you played was not an Attack, gain {Block:diff()} [gold]Block[/gold].\nIf it was an Attack, gain {Vigor:diff()} [gold]Vigor[/gold]."
+    ],
+    "WYLDER_EXECUTION": [
+      "处决",
+      "击晕一个敌人。",
+      "Execution",
+      "[gold]Stun[/gold] an enemy."
+    ],
+    "WYLDER_DESPERATE_SURVIVAL": [
+      "绝处逢生",
+      "[gold]绝境[/gold]。\n斩杀一个生命不足{Threshold:diff()}的敌人。",
+      "Desperate Survival",
+      "[gold]Desperation[/gold].\nKill an enemy with less than {Threshold:diff()} HP."
+    ],
+    "WYLDER_WILDFIRE": [
+      "燎原地火",
+      "每当你获得[gold]活力[/gold]时，对一名随机敌人造成等同于本次获得层数的伤害。",
+      "Spreading Wildfire",
+      "Whenever you gain [gold]Vigor[/gold], deal damage equal to the stacks gained to a random enemy."
+    ],
+    "WYLDER_BOLDNESS": [
+      "果敢",
+      "造成不低于20点的攻击伤害时，获得{Block:diff()}点格挡。",
+      "Boldness",
+      "Whenever an attack hit deals at least 20 damage, gain {Block:diff()} Block."
+    ],
+    "WYLDER_NIGHT_FORM": [
+      "黑夜形态",
+      "[gold]追击[/gold]的效果翻倍。",
+      "Night Form",
+      "Double the effects of [gold]Pursuit[/gold]."
+    ],
+    "WYLDER_REMAINING_EMBER": [
+      "余火",
+      "进入[gold]追击[/gold]状态时，将1张[gold]附火{IfUpgraded:show:+|}[/gold]添加到手牌。",
+      "Remaining Ember",
+      "Whenever you enter [gold]Pursuit[/gold], add 1 [gold]Fire Coating{IfUpgraded:show:+|}[/gold] to your hand."
+    ],
+    "WYLDER_UNDYING": [
+      "不灭",
+      "[gold]活力[/gold]触发后，保留一半层数。",
+      "Undying",
+      "When [gold]Vigor[/gold] triggers, keep half its stacks."
+    ],
+    "WYLDER_FOLLOW_THROUGH": [
+      "收招",
+      "退出[gold]追击[/gold]状态时，如果此牌在手牌中则自动打出。",
+      "Follow Through",
+      "When you leave [gold]Pursuit[/gold], automatically play this card if it is in your hand."
+    ],
+    "WYLDER_ERUPTION": [
+      "迸发",
+      "触发[gold]破势[/gold]后，对所有敌人造成{Damage:diff()}点伤害。",
+      "Eruption",
+      "Whenever you trigger [gold]Break[/gold], deal {Damage:diff()} damage to ALL enemies."
+    ],
+    "WYLDER_VALOR": [
+      "预备反击",
+      "获得{Block:diff()}点[gold]格挡[/gold]。\n在本回合获得{Strength:diff()}点[gold]力量[/gold]。",
+      "Ready to Counter",
+      "Gain {Block:diff()} [gold]Block[/gold].\nGain {Strength:diff()} [gold]Strength[/gold] this turn."
+    ],
+    "WYLDER_RESOLVE": [
+      "决断",
+      "抽{Cards:diff()}张牌。\n下回合抽牌数减1。",
+      "Resolve",
+      "Draw {Cards:diff()} cards.\nDraw 1 fewer card next turn."
+    ],
+    "WYLDER_BATTLE_READINESS": [
+      "临战",
+      "获得{Block:diff()}点格挡。\n从抽牌堆中抽取1张攻击牌。",
+      "Battle Readiness",
+      "Gain {Block:diff()} Block.\nDraw 1 Attack from your draw pile."
+    ],
+    "WYLDER_ROUSE": [
+      "奋起",
+      "获得{Energy:energyIcons()}。\n下回合抽牌数减1。",
+      "Rouse",
+      "Gain {Energy:energyIcons()}.\nDraw 1 fewer card next turn."
+    ],
+    "WYLDER_MAGNANIMITY": [
+      "豪迈",
+      "将卡组里1张[gold]防御[/gold]永久变化为[gold]小圆盾格挡[/gold]。\n保留原牌的升级。",
+      "Magnanimity",
+      "Permanently transform 1 [gold]Defend[/gold] in your deck into [gold]Buckler Parry[/gold].\nPreserve its upgrade."
+    ],
+    "WYLDER_MARTIAL_MASTERY": [
+      "百般武艺",
+      "回合开始时，从[gold]抽牌堆[/gold]的随机3张攻击牌中选择1张加入[gold]手牌[/gold]。",
+      "Martial Mastery",
+      "At the start of your turn, choose 1 of 3 random Attack cards in your [gold]draw pile[/gold] to add to your [gold]hand[/gold]."
+    ],
+    "WYLDER_ANCIENT_CLAW_LEAP": [
+      "钩爪飞跃",
+      "进入[gold]追击[/gold]。\n抽{Cards:diff()}张牌。",
+      "Claw Leap",
+      "Enter [gold]Pursuit[/gold].\nDraw {Cards:diff()} cards."
+    ],
+    "WYLDER_LIFE_FROM_DEATH": [
+      "向死而生",
+      "回合开始时，抽牌数减少1张。\n下回合开始时，将2张{IfUpgraded:show:升级过的|}随机[gold]绝境[/gold]牌加入手牌。",
+      "Life from Death",
+      "Draw 1 fewer card at the start of each turn.\nAt the start of your next turn, add 2 random {IfUpgraded:show:upgraded |}[gold]Desperation[/gold] cards to your hand."
+    ],
+    "WYLDER_GRAPPLE_SHOT": [
+      "钩爪射击",
+      "造成{Damage:diff()}点伤害。\n进入[gold]追击[/gold]。",
+      "Claw Shot",
+      "Deal {Damage:diff()} damage.\nEnter [gold]Pursuit[/gold]."
+    ],
+    "WYLDER_INTENSE_BURNING": [
+      "剧烈燃烧",
+      "获得{Vigor:diff()}点[gold]活力[/gold]X{IfUpgraded:show:+1|}次。",
+      "Intense Burning",
+      "Gain {Vigor:diff()} [gold]Vigor[/gold] X{IfUpgraded:show:+1|} times."
+    ],
+    "WYLDER_MULTIPLAYER_CARD": [
+      "追踪者",
+      "触发[gold]破势[/gold]效果时，将1张[gold]附火{IfUpgraded:show:+|}[/gold]加入每位其他玩家的手牌。",
+      "Wylder",
+      "Whenever you trigger [gold]Break[/gold], add 1 [gold]Fire Coating{IfUpgraded:show:+|}[/gold] to each other player's hand."
+    ],
+    "WYLDER_TINDER": [
+      "火种",
+      "将1张手牌变化为[gold]附火{IfUpgraded:show:+|}[/gold]。",
+      "Tinder",
+      "Transform 1 card in your hand into [gold]Fire Coating{IfUpgraded:show:+|}[/gold]."
+    ],
+    "WYLDER_DEFIANCE": [
+      "顽抗",
+      "获得{Block:diff()}点格挡。\n下回合抽牌数减少1张。",
+      "Defiance",
+      "Gain {Block:diff()} Block.\nDraw 1 fewer card next turn."
+    ],
+    "WYLDER_BREAKTHROUGH": [
+      "破局",
+      "给予{Vulnerable:diff()}层易伤。\n获得{Vigor:diff()}点[gold]活力[/gold]。",
+      "Breakthrough",
+      "Apply {Vulnerable:diff()} Vulnerable.\nGain {Vigor:diff()} [gold]Vigor[/gold]."
+    ],
+    "WYLDER_HOARFROST_STOMP": [
+      "冻霜踏地",
+      "给予所有敌人{Freeze:diff()}层[gold]冻伤[/gold]。",
+      "Hoarfrost Stomp",
+      "Apply {Freeze:diff()} [gold]Freeze[/gold] to ALL enemies."
+    ],
+    "WYLDER_OFFENSIVE_INSTINCT": [
+      "进攻本能",
+      "进入[gold]追击[/gold]时，给予随机敌人1层易伤。",
+      "Offensive Instinct",
+      "Whenever you enter [gold]Pursuit[/gold], apply 1 Vulnerable to a random enemy."
+    ],
+    "WYLDER_SPARK": [
+      "星火",
+      "获得{Vigor:diff()}点[gold]活力[/gold]。\n抽{Cards:diff()}张牌。",
+      "Spark",
+      "Gain {Vigor:diff()} [gold]Vigor[/gold].\nDraw {Cards:diff()} card."
+    ],
+    "WYLDER_GOLDEN_PARRY": [
+      "黄金格挡",
+      "[gold]绝境[/gold]。\n给予所有敌人{Imbalance:diff()}层[gold]失衡[/gold]。",
+      "Golden Parry",
+      "[gold]Desperation[/gold].\nApply {Imbalance:diff()} [gold]Imbalance[/gold] to ALL enemies."
+    ],
+    "WYLDER_TACTICAL_RETREAT": [
+      "战术撤退",
+      "[gold]绝境[/gold]。\n获得{Block:diff()}点[gold]格挡[/gold]。",
+      "Tactical Retreat",
+      "[gold]Desperation[/gold].\nGain {Block:diff()} [gold]Block[/gold]."
+    ],
+    "WYLDER_DESPERATE_FLURRY": [
+      "亡命连斩",
+      "[gold]绝境[/gold]。\n造成{Damage:diff()}点伤害{Repeat:diff()}次。",
+      "Desperate Flurry",
+      "[gold]Desperation[/gold].\nDeal {Damage:diff()} damage {Repeat:diff()} times."
+    ],
+    "WYLDER_HEROES_ASSEMBLE": [
+      "英雄的集结",
+      "下个回合开始时，使所有玩家进入[gold]追击[/gold]。",
+      "Heroes Assemble",
+      "At the start of your next turn, ALL players enter [gold]Pursuit[/gold]."
+    ],
+    "WYLDER_PASS_THE_FLAME": [
+      "传火",
+      "使指定玩家从[gold]抽牌堆[/gold]中随机抽取{Cards:diff()}张攻击牌。",
+      "Pass the Flame",
+      "The chosen player draws {Cards:diff()} random Attack cards from their [gold]draw pile[/gold]."
+    ],
+    "WYLDER_MURDEROUS_AURA": [
+      "杀气四溢",
+      "回合开始时，抽牌数减1，获得{Strength:diff()}点[gold]力量[/gold]和{Dexterity:diff()}点[gold]敏捷[/gold]。",
+      "Murderous Aura",
+      "At the start of each turn, draw 1 fewer card and gain {Strength:diff()} [gold]Strength[/gold] and {Dexterity:diff()} [gold]Dexterity[/gold]."
+    ],
+    "WYLDER_GAMBLE": [
+      "豪赌",
+      "抽{Cards:diff()}张牌。\n丢弃手牌中所有不为[gold]绝境[/gold]牌的牌。\n结束你的回合。",
+      "Gamble",
+      "Draw {Cards:diff()} cards.\nDiscard all non-[gold]Desperation[/gold] cards from your hand.\nEnd your turn."
+    ],
+    "WYLDER_FORGET_THE_SWORD": [
+      "忘剑",
+      "手牌数不超过3时，攻击伤害增加{Percent:diff()}%。",
+      "Forget the Sword",
+      "While you have 3 or fewer cards in hand, deal {Percent:diff()}% more attack damage."
+    ],
+    "WYLDER_LONE_COURAGE": [
+      "孤勇",
+      "消耗1张牌。\n本回合获得{Strength:diff()}点[gold]力量[/gold]。",
+      "Lone Courage",
+      "Exhaust 1 card.\nGain {Strength:diff()} [gold]Strength[/gold] this turn."
+    ],
+    "WYLDER_AGILITY": [
+      "机敏",
+      "丢弃1张牌。\n本回合获得{Dexterity:diff()}点[gold]敏捷[/gold]。",
+      "Agility",
+      "Discard 1 card.\nGain {Dexterity:diff()} [gold]Dexterity[/gold] this turn."
+    ],
+    "WYLDER_END_THE_NIGHT": [
+      "终结黑夜",
+      "[gold]绝境[/gold]。\n造成{Damage:diff()}点伤害。",
+      "End the Night",
+      "[gold]Desperation[/gold].\nDeal {Damage:diff()} damage."
+    ],
+    "WYLDER_TRUE_FLAME": [
+      "见真火",
+      "获得{Vigor:diff()}点[gold]活力[/gold]。\n本场战斗每进入1次[gold]追击[/gold]，这张牌的耗能在下次打出前减1。",
+      "True Flame",
+      "Gain {Vigor:diff()} [gold]Vigor[/gold].\nEach time you enter [gold]Pursuit[/gold] this combat, this card costs 1 less until played."
+    ],
+    "WYLDER_FLAWLESS_SWORD": [
+      "无暇律法",
+      "造成{Damage:diff()}点伤害。\n[gold]破势[/gold]{Break:diff()}：获得{Block:diff()}点[gold]格挡[/gold]。",
+      "Flawless Order",
+      "Deal {Damage:diff()} damage.\n[gold]Break[/gold] {Break:diff()}: Gain {Block:diff()} [gold]Block[/gold]."
+    ],
+    "WYLDER_HUNT": [
+      "追猎",
+      "消耗1张牌。\n给予所有敌人{Vulnerable:diff()}层[gold]易伤[/gold]。",
+      "Hunt",
+      "Exhaust 1 card.\nApply {Vulnerable:diff()} [gold]Vulnerable[/gold] to ALL enemies."
+    ],
+    "WYLDER_VANISH": [
+      "隐遁",
+      "丢弃1张牌。\n给予所有敌人{Weak:diff()}层[gold]虚弱[/gold]。",
+      "Vanish",
+      "Discard 1 card.\nApply {Weak:diff()} [gold]Weak[/gold] to ALL enemies."
+    ],
+    "WYLDER_ENDLESS_WILL": [
+      "无终战意",
+      "击晕敌人时，进入[gold]追击[/gold]。",
+      "Endless Will",
+      "Whenever an enemy is Stunned, enter [gold]Pursuit[/gold]."
+    ],
+    "WYLDER_LAST_RESORT": [
+      "最终手段",
+      "为1张手牌添加[gold]绝境[/gold]。\n其耗能增加1。",
+      "Last Resort",
+      "Give 1 card in your hand [gold]Desperation[/gold].\nIncrease its Energy cost by 1."
+    ],
+    "WYLDER_SHRIEK_OF_MILOS": [
+      "灭洛斯的嚎叫",
+      "给予所有敌人{Vulnerable:diff()}层[gold]易伤[/gold]。\n你打出的下张攻击牌伤害翻倍。",
+      "Shriek of Milos",
+      "Apply {Vulnerable:diff()} [gold]Vulnerable[/gold] to ALL enemies.\nYour next Attack deals double damage."
+    ],
+    "WYLDER_LAST_RESORT_SELECT": [
+      "选择1张手牌添加绝境。",
+      "选择1张手牌。",
+      "Choose a card in your hand to give Desperation.",
+      "Choose a card in your hand."
+    ],
+    "WYLDER_KICK": [
+      "踢击",
+      "给予{Imbalance:diff()}层[gold]失衡[/gold]。\n若因此击晕敌人，获得{Energy:energyIcons()}并抽{Cards:diff()}张牌。",
+      "Kick",
+      "Apply {Imbalance:diff()} [gold]Imbalance[/gold].\nIf this Stuns the enemy, gain {Energy:energyIcons()} and draw {Cards:diff()} card."
+    ],
+    "WYLDER_POISE": [
+      "游刃有余",
+      "手牌数少于2时，获得{CalculatedBlock:diff()}点[gold]格挡[/gold]。",
+      "Poise",
+      "If you have fewer than 2 cards in hand, gain {CalculatedBlock:diff()} [gold]Block[/gold]."
+    ],
+    "WYLDER_HORIZONTAL_SLASH": [
+      "横斩",
+      "造成{Damage:diff()}点伤害。\n[gold]破势[/gold]{Break:diff()}：进入[gold]追击[/gold]。",
+      "Horizontal Slash",
+      "Deal {Damage:diff()} damage.\n[gold]Break[/gold] {Break:diff()}: Enter [gold]Pursuit[/gold]."
+    ],
+    "WYLDER_VERTICAL_CLEAVE": [
+      "纵劈",
+      "[gold]收招[/gold]。\n造成{Damage:diff()}点伤害。",
+      "Vertical Cleave",
+      "[gold]Follow Through[/gold].\nDeal {Damage:diff()} damage."
+    ],
+    "WYLDER_ORDOVIS_VORTEX": [
+      "奥陶琵斯的漩涡",
+      "造成{Damage:diff()}点伤害。\n[gold]破势[/gold]{Break:diff()}：本次攻击伤害次数增加{Repeat:diff()}次。",
+      "Ordovis’s Vortex",
+      "Deal {Damage:diff()} damage.\n[gold]Break[/gold] {Break:diff()}: This attack hits {Repeat:diff()} additional times."
+    ],
+    "WYLDER_SILURIA_VORTEX": [
+      "志留亚的漩涡",
+      "造成{CalculatedDamage:diff()}点伤害。\n本场战斗中每击晕过1次敌人，这张牌的伤害增加{ExtraDamage:diff()}点。",
+      "Siluria's Woe",
+      "Deal {CalculatedDamage:diff()} damage.\nDeals {ExtraDamage:diff()} additional damage for each time an enemy has been Stunned this combat."
+    ]
+  },
+  "powers": {
+    "WYLDER_BOLDNESS_POWER": [
+      "果敢",
+      "单次攻击伤害不低于20点时，获得5点格挡（升级为7点）。\n伤害在扣除格挡前计算。",
+      "Boldness",
+      "When an attack hit deals at least 20 damage before Block, gain 5 Block (7 when upgraded)."
+    ],
+    "WYLDER_NIGHT_FORM_POWER": [
+      "黑夜形态",
+      "[gold]追击[/gold]的效果翻倍。\n追击的攻击伤害加成提高至100%，打出技能牌时获得2点能量并抽2张牌。",
+      "Night Form",
+      "Double the effects of [gold]Pursuit[/gold].\nPursuit grants 100% bonus attack damage, or 2 Energy and 2 cards when you play a Skill."
+    ],
+    "WYLDER_REMAINING_EMBER_POWER": [
+      "余火",
+      "进入[gold]追击[/gold]状态时，每层将1张[gold]附火[/gold]添加到手牌（升级层生成[gold]附火+[/gold]）。",
+      "Remaining Ember",
+      "Whenever you enter [gold]Pursuit[/gold], add 1 [gold]Fire Coating[/gold] to your hand per stack (upgraded stacks add [gold]Fire Coating+[/gold])."
+    ],
+    "WYLDER_UNDYING_POWER": [
+      "不灭",
+      "[gold]活力[/gold]触发后，保留一半层数。",
+      "Undying",
+      "When [gold]Vigor[/gold] triggers, keep half its stacks."
+    ],
+    "WYLDER_ERUPTION_POWER": [
+      "迸发",
+      "触发[gold]破势[/gold]后，对所有敌人造成7点伤害（升级为9点）。",
+      "Eruption",
+      "Whenever you trigger [gold]Break[/gold], deal 7 damage to ALL enemies (9 when upgraded)."
+    ],
+    "WYLDER_WILDFIRE_POWER": [
+      "燎原地火",
+      "每当你获得[gold]活力[/gold]时，对一名随机敌人造成等同于本次获得层数的伤害。",
+      "Spreading Wildfire",
+      "Whenever you gain [gold]Vigor[/gold], deal damage equal to the stacks gained to a random enemy."
+    ],
+    "WYLDER_MARTIAL_MASTERY_POWER": [
+      "百般武艺",
+      "回合开始时，每层从抽牌堆的随机3张攻击牌中选择1张加入手牌。",
+      "Martial Mastery",
+      "At the start of your turn, choose 1 of 3 random Attacks from your draw pile and add it to your hand per stack."
+    ],
+    "WYLDER_LIFE_FROM_DEATH_POWER": [
+      "向死而生",
+      "每回合少抽{Amount}张牌。",
+      "Life from Death",
+      "Draw {Amount} fewer cards each turn."
+    ],
+    "WYLDER_MULTIPLAYER_POWER": [
+      "追踪者",
+      "触发[gold]破势[/gold]效果时，为每位其他玩家生成{Amount}张[gold]附火[/gold]。\n升级版能力生成[gold]附火+[/gold]。",
+      "Wylder",
+      "Whenever you trigger [gold]Break[/gold], add {Amount} [gold]Fire Coating[/gold] cards to each other player's hand.\nUpgraded copies generate [gold]Fire Coating+[/gold]."
+    ],
+    "WYLDER_OFFENSIVE_INSTINCT_POWER": [
+      "进攻本能",
+      "每次进入[gold]追击[/gold]时，随机给予1层易伤，重复{Amount}次。",
+      "Offensive Instinct",
+      "Whenever you enter [gold]Pursuit[/gold], apply 1 Vulnerable to a random enemy {Amount} times."
+    ],
+    "WYLDER_HEROES_ASSEMBLE_POWER": [
+      "英雄的集结",
+      "下个回合开始时，使所有玩家进入[gold]追击[/gold]。",
+      "Heroes Assemble",
+      "At the start of your next turn, ALL players enter [gold]Pursuit[/gold]."
+    ],
+    "WYLDER_MURDEROUS_AURA_POWER": [
+      "杀气四溢",
+      "回合开始时，少抽{Amount}张牌。\n获得{StatGain}点[gold]力量[/gold]和{StatGain}点[gold]敏捷[/gold]。",
+      "Murderous Aura",
+      "At the start of your turn, draw {Amount} fewer cards.\nGain {StatGain} [gold]Strength[/gold] and {StatGain} [gold]Dexterity[/gold]."
+    ],
+    "WYLDER_FORGET_THE_SWORD_POWER": [
+      "忘剑",
+      "手牌数不超过3时，攻击伤害增加{Amount}%。",
+      "Forget the Sword",
+      "While you have 3 or fewer cards in hand, deal {Amount}% more attack damage."
+    ],
+    "WYLDER_ENDLESS_WILL_POWER": [
+      "无终战意",
+      "击晕敌人时，进入[gold]追击[/gold]。",
+      "Endless Will",
+      "Whenever an enemy is Stunned, enter [gold]Pursuit[/gold]."
+    ],
+    "WYLDER_SHRIEK_OF_MILOS_POWER": [
+      "灭洛斯的嚎叫",
+      "你接下来打出的{Amount}张攻击牌伤害翻倍。",
+      "Shriek of Milos",
+      "Your next {Amount} Attacks deal double damage."
+    ]
+  }
+}

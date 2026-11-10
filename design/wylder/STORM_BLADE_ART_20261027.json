@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-27",
+  "generator": "built-in imagegen",
+  "status": "rejected_by_user",
+  "runtime_promoted": true,
+  "output_dir": "design/卡图预览/wylder/storm_blade_20261027",
+  "pose_contract": "design/wylder/STORM_BLADE_POSE_CONTRACT_20261027.md",
+  "assets": [
+    {
+      "key": "wylder_storm_blade",
+      "name": "风暴刃",
+      "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-8f2d797f-e16a-4d45-9248-ca58d400db88.png",
+      "ref": "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/skills_20261022/wylder_storm_blade_reference.png",
+      "prompt": "Use case: illustration-story. Asset: ONE 1000x760 landscape game-card ARTWORK only. Input1 STRICT Storm Blade pose/action reference; input2 ONLY Wylder identity and straight sword handle design; input3 ONLY flat graphic style. Preserve input1's one-handed low forward stepping release: armored Wylder occupies LEFT HALF at medium-close scale, knees bent, torso leaning toward screen-right, helmet looking right. Anatomical RIGHT shoulder is near viewer at screen-left; right elbow low/back, right forearm descends to right gloved hand near left hip, grasping ONE navy sword grip. One straight long silver greatsword hangs DOWN toward bottom edge, just slightly angled right, like input1; compact silver guard and distinctive OPEN FORKED silver pommel, pommel/grip/guard/blade axis ruler-straight. NO bent steel, no round-ball pommel. Anatomical LEFT shoulder farther to right, left arm reaches FORWARD toward right, elbow slightly bent, wrist and EMPTY glove visible in front of chest like reference; this hand does NOT touch the sword. Exactly two coherent arms and hands, two legs. Front knee folded right, boot planted lower-right under body; rear leg stretches down-left behind for support, no airborne flip. Wylder CLOSED silver feather-wing helmet with dark visor, black scarf, navy split skirt with sparse WHITE flowing motifs, grouped silver scale shapes, brown gloves/wrapped boots. Simplify fine identity engraving. A COMPRESSED WHITE STORM projects forward/right in front of the extended hand, several OPEN elliptical wind coils reducing in size along an upward-right depth axis, filled with 2-3 broad ivory wind ribbons, like reference's spiraling air mass. One single readable event, not several independent attacks. Wind never hides either hand/guard. NO huge solid crescent outline framing entire screen (that belongs to different Vacuum Slice card), NO enclosing neon circle around character, no flames. Background: quiet desaturated warm GREY-MAUVE and grey-brown 2-3 broad horizontal low-contrast planes, with wide calm empty upper-left; no blue jagged shard wallpaper, no particles/debris/battlefield. Contrast white spiral, navy knight, muted warm-grey background. Flat GRAPHIC 2D fantasy card art, bold near-black silhouette/shadow shapes, chunky contours, exaggerated perspective, just 2-3 LARGE clean HARD-EDGE CEL color planes each material, no mottled surfaces or realistic metal. Keep same action stage and support legs as image1, but not naked mannequin. No text, UI, frame, logos, cinematic fog, painterly brushwork, photorealism, intricate armor or photographic lighting. Sword axis, anatomical arm continuity and reference action take priority over decoration.",
+      "edit_prompts": [
+        "Precise-object-edit of the last Storm Blade image. Keep character pose, camera, anatomy, armor, forward EMPTY left hand, support feet, white forward spiral, grey-mauve background and flat hard-edge style unchanged. Fix ONLY the physical sword's rigid geometry and pommel. It must be a SINGLE RULER-STRAIGHT sword from topmost pommel stem through navy grip center through right gloved fist center through crossguard center through blade central ridge to cropped blade point at bottom. In current image the grip tilts more than the blade at the guard. Use the current visible blade's down-right straight axis as the fixed guide, then place pommel and exposed grip on its EXACT upward-left continuation; move only the right gripping hand/wrist slightly if necessary, keep upper arm/elbow as-is. Grip and blade never form an angle. Replace current simple round broken-ring pommel with Wylder's sculptural OPEN FORKED silver pommel: two small swept asymmetrical hooks opening out either side at grip end, consistent with approved Wylder identity. Keep compact crossguard perpendicular to that sword axis. No curved sword, offset hilt, secondary handle or extra wrist/fingers. The sword steel should remain two broad flat uninterrupted color planes, no engravings. Do not add trails along sword or change storm shapes. Keep exactly 1000x760 landscape composition and no text/UI.",
+        "Precise-object-edit. Keep the entire illustration identical EXCEPT the ONE physical sword and the right gripping glove/wrist. Make this sword ABSOLUTELY VERTICAL in image space. Put pommel center, navy grip center, right fist grip center, crossguard center, blade ridge and cropped tip all on a single vertical plumb line at x=17% of canvas width. Pommel is about y=45%, fist y=55%, crossguard y=60%, blade extends STRAIGHT DOWN to bottom edge, no slope or kink. This is a rigid steel ruler, not curved: both long blade edges are parallel VERTICAL lines. Adjust the gripping right glove and wrist to hold the vertical handle naturally while keeping the same right elbow/upper arm and shoulder. Exactly one hilt and one blade. The open forked pommel has two outward-swept sculpted silver hooks, not a closed ring. Keep torso, EMPTY left hand reaching forward at right, legs, scarf, storm coils, background palette and hard-edged flat graphic rendering unchanged. Do not keep the existing slant in either grip or blade. No extra hands or diagonal steel fragments.",
+        "Edit target IMAGE1. IMAGE2 is STRICT pose reference. Keep IMAGE1's grey-mauve palette, white forward elliptical storm coils at right, navy/silver Wylder identity, VERTICAL straight sword, forked pommel, and flat graphic cel style. Correct ONLY Wylder's body pose and viewing angle to match IMAGE2 more closely: side/rear three-quarter with torso bent FORWARD much farther over the deeply bent front knee, back rounded, helmet pointing DOWN-RIGHT. Hips at left, head far to right of hips. We should see his NEAR SHOULDER, side and BACK armor, not the broad front chestplate. Same right hand gripping sword low at near hip, same left EMPTY hand reaching forward toward right, same two arms/two legs. Maintain readable anatomical right shoulder -> lowered bent right elbow -> right forearm -> closed glove on one vertical sword grip; anatomical left shoulder -> forward elbow -> EMPTY left glove. Move hips lower and backward left as needed and tuck front knee up under torso so weight is compressed like reference2. Front foot remains planted lower-right, rear leg supports down-left; no standing upright, jumping or flip. Sword pommel/grip/guard/blade remain perfectly VERTICAL on one axis, no bend, no second sword. Keep wind separate from hands and blade. Preserve wind visual and background shapes; don't turn storm into a giant solid crescent. No text/UI."
+      ],
+      "previous_runtime_portrait": "res://images/packed/card_portraits/ironclad/whirlwind.png",
+      "rejected_candidates": [
+        {
+          "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-1c7c3a0b-40a3-4e8c-921c-be6d0ea45c24.png",
+          "reason": "握柄与刃轴不一致",
+          "status": "rejected_by_self_review",
+          "workspace_copy": "design/卡图预览/wylder/storm_blade_20261027/wylder_storm_blade_rejected_1.png"
+        },
+        {
+          "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-88226c61-17ad-49aa-9de8-f035c3ea3c93.png",
+          "reason": "局部修改仍未充分校正轴线",
+          "status": "rejected_by_self_review",
+          "workspace_copy": "design/卡图预览/wylder/storm_blade_20261027/wylder_storm_blade_rejected_2.png"
+        },
+        {
+          "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-25e60581-12cf-43f4-b29c-e56e0ec24c42.png",
+          "reason": "武器已校直，但躯干过于直立，继续修订前倾压低动作",
+          "status": "rejected_by_self_review",
+          "workspace_copy": "design/卡图预览/wylder/storm_blade_20261027/wylder_storm_blade_rejected_3.png"
+        }
+      ],
+      "status": "rejected_by_user",
+      "runtime_path": "images/packed/card_portraits/wylder/wylder_storm_blade.png",
+      "approved_sha256": "6AD1F146DA07AEBBAFEE75791636CE4ABC691DC6DF076AFC391E636C0C2EB6EB",
+      "user_rejected_date": "2026-10-28",
+      "user_rejected_reason": "应由剑甩出剑气"
+    }
+  ],
+  "review": "design/wylder/STORM_BLADE_REVISION_20261027.md",
+  "validation": {
+    "build": "0 warnings, 0 errors",
+    "storm_blade_tests": "83 passed; native hit counts, Pursuit/Vigor lifecycle, base/upgraded metadata and glow",
+    "wylder_regressions": "all passed; 692 battle-art checks plus existing planner/ancient suites",
+    "card_text_format": "pass",
+    "portrait_paths": "531 passed",
+    "godot_import": "pass; exit0, no ERROR/SCRIPT ERROR",
+    "godot_warnings": [
+      "WARNING: Detected another project.godot at res://official_style_export. The folder will be ignored."
+    ],
+    "godot_log": "build/storm_blade_import_20261027.log",
+    "texture_cache_and_sha256": "pass",
+    "exported_or_installed": false
+  },
+  "user_rejected_date": "2026-10-28"
+}

@@ -1,16 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType><TargetFramework>net9.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable>
-    <Sts2AssemblyDir Condition="'$(Sts2AssemblyDir)' == ''">D:/Steam/steamapps/common/Slay the Spire 2/data_sts2_windows_x86_64</Sts2AssemblyDir>
+    <Sts2AssemblyDir Condition="'$(Sts2AssemblyDir)' == ''">../../sts2dll</Sts2AssemblyDir>
+    <Sts2RuntimeAssemblyDir Condition="'$(Sts2RuntimeAssemblyDir)' == ''">D:/STS2/.godot/mono/temp/bin/Debug</Sts2RuntimeAssemblyDir>
     <NightMustStayAssemblyDir Condition="'$(NightMustStayAssemblyDir)' == ''">../../.godot/mono/temp/bin/Debug</NightMustStayAssemblyDir>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="sts2"><HintPath>$(Sts2AssemblyDir)/sts2.dll</HintPath></Reference>
     <Reference Include="GodotSharp"><HintPath>$(Sts2AssemblyDir)/GodotSharp.dll</HintPath></Reference>
     <Reference Include="0Harmony"><HintPath>$(Sts2AssemblyDir)/0Harmony.dll</HintPath></Reference>
-    <Reference Include="Sentry.Godot"><HintPath>$(Sts2AssemblyDir)/Sentry.Godot.dll</HintPath></Reference>
-    <Reference Include="Sentry"><HintPath>$(Sts2AssemblyDir)/Sentry.dll</HintPath></Reference>
-    <Reference Include="SmartFormat"><HintPath>$(Sts2AssemblyDir)/SmartFormat.dll</HintPath></Reference>
+    <Reference Include="Sentry"><HintPath>$(Sts2RuntimeAssemblyDir)/Sentry.dll</HintPath></Reference>
+    <Reference Include="SmartFormat"><HintPath>$(Sts2RuntimeAssemblyDir)/SmartFormat.dll</HintPath></Reference>
+    <Reference Include="Steamworks.NET"><HintPath>$(Sts2RuntimeAssemblyDir)/Steamworks.NET.dll</HintPath></Reference>
+    <Reference Include="System.IO.Hashing"><HintPath>$(Sts2RuntimeAssemblyDir)/System.IO.Hashing.dll</HintPath></Reference>
     <Reference Include="NightMustStay"><HintPath>$(NightMustStayAssemblyDir)/NightMustStay.dll</HintPath></Reference>
   </ItemGroup>
 </Project>

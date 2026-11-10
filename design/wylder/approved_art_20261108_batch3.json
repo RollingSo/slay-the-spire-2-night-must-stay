@@ -1,0 +1,26 @@
+{
+  "approved_at": "2026-11-08",
+  "cards": [
+    {
+      "name": "灭洛斯的嚎叫",
+      "source": "design/卡图预览/追踪者六卡修订_20261108/灭洛斯的嚎叫.png",
+      "runtime": "images/packed/card_portraits/wylder/wylder_shriek_of_milos.png",
+      "sha256": "4A9077E7FED1F837A09035B532EBC3D7CADFF119F2B1D52C9E7065FE3F4CC580",
+      "approved": true
+    },
+    {
+      "name": "孤勇",
+      "source": "design/卡图预览/追踪者六卡修订_20261108/孤勇.png",
+      "runtime": "images/packed/card_portraits/wylder/wylder_lone_courage.png",
+      "sha256": "CF738E7FB9D80677F026EA228191ECD35481D6CAB3F54C9AF4DA6F4471E27BC6",
+      "approved": true
+    },
+    {
+      "name": "战术撤退",
+      "source": "design/卡图预览/追踪者六卡修订_20261108/战术撤退.png",
+      "runtime": "images/packed/card_portraits/wylder/wylder_tactical_retreat.png",
+      "sha256": "92CE619E4984A3B2AEA6399EE5159351E67625DEB4E480D926872A1065932132",
+      "approved": true
+    }
+  ]
+}

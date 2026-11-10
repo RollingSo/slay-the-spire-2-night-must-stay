@@ -1,0 +1,95 @@
+{
+  "status": "redrawn_and_user_approved",
+  "items": [
+    {
+      "key": "wylder_stamp_upward_cut",
+      "reason": "剑气轨迹不符",
+      "manifest": "design\\wylder\\STAMP_POSE_ART_20261027.json",
+      "backup": "design\\卡图预览\\wylder\\user_rejected_20261028\\wylder_stamp_upward_cut_rejected.png",
+      "replacement_status": "user_approved",
+      "replacement": "images/packed/card_portraits/wylder/wylder_stamp_upward_cut.png",
+      "replacement_sha256": "7BCD05A3194BD5ADE9D7F497944BD50DAC9204EA3EB7C77A8E9A555C3B638B86",
+      "user_approved_date": "2026-10-28"
+    },
+    {
+      "key": "wylder_stamp_sweep",
+      "reason": "右手持剑、左手前伸的位置错误",
+      "manifest": "design\\wylder\\STAMP_POSE_ART_20261027.json",
+      "backup": "design\\卡图预览\\wylder\\user_rejected_20261028\\wylder_stamp_sweep_rejected.png",
+      "replacement_status": "user_approved",
+      "replacement": "images/packed/card_portraits/wylder/wylder_stamp_sweep.png",
+      "replacement_sha256": "E23B2E9EF4109BE3A5E1E154A2CFC65EBDE0214398CCEDD74E4AE73E590B0640",
+      "user_approved_date": "2026-10-28"
+    },
+    {
+      "key": "wylder_lions_claw",
+      "reason": "肢体动作不符",
+      "manifest": "design\\wylder\\LIONS_CLAW_ART_20261027.json",
+      "backup": "design\\卡图预览\\wylder\\user_rejected_20261028\\wylder_lions_claw_rejected.png",
+      "replacement_status": "user_approved",
+      "replacement": "images/packed/card_portraits/wylder/wylder_lions_claw.png",
+      "replacement_sha256": "A2808701AB3EFE8E11881F239C19A9D38B033F84F4D289B475A34FDA52069660",
+      "user_approved_date": "2026-10-28"
+    },
+    {
+      "key": "wylder_bloodhounds_finesse",
+      "reason": "肢体动作不符",
+      "manifest": "design\\wylder\\FINESSE_CURVED_ART_20261027.json",
+      "backup": "design\\卡图预览\\wylder\\user_rejected_20261028\\wylder_bloodhounds_finesse_rejected.png",
+      "replacement_status": "user_approved",
+      "replacement": "images/packed/card_portraits/wylder/wylder_bloodhounds_finesse.png",
+      "replacement_sha256": "092AC004906F29E354C27DED9EF8C7552111BA869470DA95457087F0DA3A778C",
+      "user_approved_date": "2026-10-28"
+    },
+    {
+      "key": "wylder_parry",
+      "reason": "头盔不是背面",
+      "manifest": "design\\wylder\\BUCKLER_PARRY_ART_20261027.json",
+      "backup": "design\\卡图预览\\wylder\\user_rejected_20261028\\wylder_parry_rejected.png",
+      "replacement_status": "user_approved",
+      "replacement": "images/packed/card_portraits/wylder/wylder_parry.png",
+      "replacement_sha256": "F9C52D7444F81F9893D6C02FD5E8F8E50E0AB80F5BC9DD371DD870BBA1AA1A32",
+      "user_approved_date": "2026-10-28"
+    },
+    {
+      "key": "wylder_critical_strike",
+      "reason": "弃用参考图自主重绘",
+      "manifest": "design\\wylder\\CRITICAL_STRIKE_ART_20261027.json",
+      "backup": "design\\卡图预览\\wylder\\user_rejected_20261028\\wylder_critical_strike_rejected.png",
+      "replacement_status": "user_approved",
+      "replacement": "images/packed/card_portraits/wylder/wylder_critical_strike.png",
+      "replacement_sha256": "5A94E5615ADD6767D1604B8438E098F60B2A2C64B337D4BEA07672BF6824833B",
+      "user_approved_date": "2026-10-28"
+    },
+    {
+      "key": "wylder_vacuum_slice",
+      "reason": "剑应劈到地面",
+      "manifest": "design\\wylder\\VACUUM_SLICE_ART_20261027.json",
+      "backup": "design\\卡图预览\\wylder\\user_rejected_20261028\\wylder_vacuum_slice_rejected.png",
+      "replacement_status": "user_approved",
+      "replacement": "images/packed/card_portraits/wylder/wylder_vacuum_slice.png",
+      "replacement_sha256": "646518AA6992FF051C1672BA180CEB58E061ABC9383A1F97AEC0920758CA59FD",
+      "user_approved_date": "2026-10-28"
+    },
+    {
+      "key": "wylder_storm_blade",
+      "reason": "应由剑甩出剑气",
+      "manifest": "design\\wylder\\STORM_BLADE_ART_20261027.json",
+      "backup": "design\\卡图预览\\wylder\\user_rejected_20261028\\wylder_storm_blade_rejected.png",
+      "replacement_status": "user_approved",
+      "replacement": "images/packed/card_portraits/wylder/wylder_storm_blade.png",
+      "replacement_sha256": "301235C922F4DEB06E6134468E11CD005676F4FE16A9B8026FEFB190E1E3FCCB",
+      "user_approved_date": "2026-10-28"
+    },
+    {
+      "key": "wylder_eochaids_dancing_blade",
+      "reason": "肢体动作与参考图不符",
+      "manifest": "design\\wylder\\EOCHAID_ART_20261027.json",
+      "backup": "design\\卡图预览\\wylder\\user_rejected_20261028\\wylder_eochaids_dancing_blade_rejected.png",
+      "replacement_status": "user_approved",
+      "replacement": "images/packed/card_portraits/wylder/wylder_eochaids_dancing_blade.png",
+      "replacement_sha256": "8A5CFA5659F789090B67ACF25FC3BAF10142AFA9E31157FE27E83BEF537DFA86",
+      "user_approved_date": "2026-10-28"
+    }
+  ]
+}

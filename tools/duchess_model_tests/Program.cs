@@ -29,6 +29,13 @@ using System.Text.Json.Serialization;
 
 try
 {
+var dependencyDirectory = Environment.GetEnvironmentVariable("NMS_TEST_GAME_DEPENDENCIES");
+if (!string.IsNullOrWhiteSpace(dependencyDirectory))
+    System.Runtime.Loader.AssemblyLoadContext.Default.Resolving += (context, name) =>
+    {
+        string path = Path.Combine(dependencyDirectory, name.Name + ".dll");
+        return File.Exists(path) ? context.LoadFromAssemblyPath(path) : null;
+    };
 typeof(TestMode).GetProperty("IsOn")!.SetValue(null, true);
 var flags = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
 typeof(ModManager).GetMethod("ResetForTests", flags)!.Invoke(null, null);
@@ -228,6 +235,34 @@ if (args.Contains("--imbalance-threshold-only"))
     if ((int)progress.GetType().GetField("Increases")!.GetValue(progress)! != 0)
         throw new Exception("Imbalance resistance leaked between combats.");
     Console.WriteLine("PASS: Imbalance 1-4 player thresholds, caps, per-creature persistence and combat reset.");
+    return 0;
+}
+if (args.Contains("--card-pool-audit"))
+{
+    foreach (var character in new CharacterModel[] { ModelDb.Character<Guardian>(), ModelDb.Character<Ironeye>(), ModelDb.Character<Revenant>(), duchess, ModelDb.Character<Wylder>() })
+    {
+        var cards = character.CardPool.AllCards.ToArray();
+        Console.WriteLine(character.GetType().Name + ": " + cards.Length + " registered cards; rarities="
+            + string.Join(", ", cards.GroupBy(c => c.Rarity).Select(g => g.Key + "=" + g.Count()))
+            + "; types=" + string.Join(", ", cards.GroupBy(c => c.Type).Select(g => g.Key + "=" + g.Count())));
+    }
+    return 0;
+}
+if (args.Contains("--wylder-battle-art-only")) { WylderBattleArtRegression.Run(); return 0; }
+if (args.Contains("--wylder-models-only")) { WylderRegression.Run(); return 0; }
+if (args.Contains("--wylder-new-cards-only")) { WylderNewCardsRegression.Run(); return 0; }
+if (args.Contains("--wylder-multiplayer-batch-only")) { WylderMultiplayerBatchRegression.Run(); return 0; }
+if (args.Contains("--wylder-latest-batch-only")) { WylderLatestBatchRegression.Run(); return 0; }
+if (args.Contains("--wylder-takers-flames-only")) { WylderCompletionBRegression.Run(takersFlamesOnly: true); return 0; }
+WylderDialogueRegression.Run();
+if (args.Contains("--wylder-only"))
+{
+    WylderSheetManifestRegression.Run();
+    WylderRegression.Run();
+    WylderBattleArtRegression.Run();
+    WylderNewCardsRegression.Run();
+    WylderMultiplayerBatchRegression.Run();
+    WylderLatestBatchRegression.Run();
     return 0;
 }
 if (args.Contains("--strangle-damage-preview-only"))
