@@ -51,6 +51,34 @@ foreach (Type type in typeof(PowerModel).Assembly.GetTypes().Where(type => !type
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+if (args.Contains("--card-pool-audit"))
+{
+    foreach (var character in new CharacterModel[] { ModelDb.Character<Guardian>(), ModelDb.Character<Ironeye>(), ModelDb.Character<Revenant>(), duchess, ModelDb.Character<Wylder>() })
+    {
+        var cards = character.CardPool.AllCards.ToArray();
+        Console.WriteLine(character.GetType().Name + ": " + cards.Length + " registered cards; rarities="
+            + string.Join(", ", cards.GroupBy(c => c.Rarity).Select(g => g.Key + "=" + g.Count()))
+            + "; types=" + string.Join(", ", cards.GroupBy(c => c.Type).Select(g => g.Key + "=" + g.Count())));
+    }
+    return 0;
+}
+if (args.Contains("--wylder-battle-art-only")) { WylderBattleArtRegression.Run(); return 0; }
+if (args.Contains("--wylder-models-only")) { WylderRegression.Run(); return 0; }
+if (args.Contains("--wylder-new-cards-only")) { WylderNewCardsRegression.Run(); return 0; }
+if (args.Contains("--wylder-multiplayer-batch-only")) { WylderMultiplayerBatchRegression.Run(); return 0; }
+if (args.Contains("--wylder-latest-batch-only")) { WylderLatestBatchRegression.Run(); return 0; }
+if (args.Contains("--wylder-takers-flames-only")) { WylderCompletionBRegression.Run(takersFlamesOnly: true); return 0; }
+if (args.Contains("--wylder-only"))
+{
+    WylderDialogueRegression.Run();
+    WylderSheetManifestRegression.Run();
+    WylderRegression.Run();
+    WylderBattleArtRegression.Run();
+    WylderNewCardsRegression.Run();
+    WylderMultiplayerBatchRegression.Run();
+    WylderLatestBatchRegression.Run();
+    return 0;
+}
 if (args.Contains("--spirit-form-stack-only"))
 {
     SpiritFormStackRegression.Run();

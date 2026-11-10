@@ -2,9 +2,216 @@
   "schemaVersion": 1,
   "notes": "Confirmed card-name audit, 2026-10-02. Composite names retain mod wording with official terminology; IDs and mechanics are unchanged.",
   "cards": {
-    "COOPERATIVE_DEFENSE": {"zhs": "协同防御", "eng": "Cooperative Defense", "jpn": "協同防御", "kor": "협동 수비", "reference": "User-requested replacement for Shared Great Shield"},
-    "DUCHESS_CARNIVAL_NIGHT": {"zhs": "狂欢夜", "eng": "Carnival Night", "jpn": "狂歓の夜", "kor": "축제의 밤", "reference": "User-provided multiplayer card table screenshot"},
-    "DUCHESS_MASQUERADE": {"zhs": "面具舞会", "eng": "Masquerade", "jpn": "仮面舞踏会", "kor": "가면무도회", "reference": "User-provided multiplayer card table screenshot"},
+    "WYLDER_DEFEND": {
+      "zhs": "防御",
+      "eng": "Defend",
+      "jpn": "防御",
+      "kor": "수비",
+      "reference": "Wylder starter Defend; preserve canonical name membership"
+    },
+    "WYLDER_TURNING_GUARD": {
+      "zhs": "转身防御",
+      "eng": "Turning Defense",
+      "jpn": "振り向き防御",
+      "kor": "회전 수비",
+      "reference": "Wylder P002 planner card; preserve canonical Chinese Defend-name membership"
+    },
+    "WYLDER_STAMP_UPWARD_CUT": {
+      "zhs": "箭步：上砍",
+      "eng": "Stamp (Upward Cut)",
+      "jpn": "踏み込み（斬り上げ）",
+      "kor": "파고들어 올려 베기",
+      "reference": "Official ELDEN RING weapon skill localization"
+    },
+    "WYLDER_STAMP_SWEEP": {
+      "zhs": "箭步：回旋斩",
+      "eng": "Stamp (Sweep)",
+      "jpn": "踏み込み（回転薙ぎ）",
+      "kor": "파고들어 회전 베기",
+      "reference": "Official ELDEN RING weapon skill localization"
+    },
+    "WYLDER_VACUUM_SLICE": {
+      "zhs": "真空斩",
+      "eng": "Vacuum Slice",
+      "jpn": "真空斬り",
+      "kor": "진공 베기",
+      "reference": "Official ELDEN RING weapon skill localization"
+    },
+    "WYLDER_STORM_BLADE": {
+      "zhs": "风暴刃",
+      "eng": "Storm Blade",
+      "jpn": "嵐の刃",
+      "kor": "폭풍의 칼날",
+      "reference": "Official ELDEN RING weapon skill localization"
+    },
+    "WYLDER_FLAMING_STRIKE": {
+      "zhs": "炎击",
+      "eng": "Flaming Strike",
+      "jpn": "炎撃",
+      "kor": "염격",
+      "reference": "Official ELDEN RING weapon skill localization"
+    },
+    "WYLDER_FLAME_OF_REDMANES": {
+      "zhs": "红狮子火焰",
+      "eng": "Flame of the Redmanes",
+      "jpn": "赤獅子の炎",
+      "kor": "적사자의 화염",
+      "reference": "Official ELDEN RING weapon skill localization"
+    },
+    "WYLDER_BLOODHOUNDS_FINESSE": {
+      "zhs": "猎犬剑技",
+      "eng": "Bloodhound's Finesse",
+      "jpn": "猟犬の剣技",
+      "kor": "사냥개 검술",
+      "reference": "Official ELDEN RING weapon skill localization"
+    },
+    "WYLDER_LIONS_CLAW": {
+      "zhs": "狮子斩",
+      "eng": "Lion's Claw",
+      "jpn": "獅子斬り",
+      "kor": "사자 베기",
+      "reference": "Official ELDEN RING weapon skill localization"
+    },
+    "WYLDER_SPINNING_SLASH": {
+      "zhs": "回旋斩",
+      "eng": "Spinning Slash",
+      "jpn": "回転斬り",
+      "kor": "회전 베기",
+      "reference": "Official ELDEN RING weapon skill localization"
+    },
+    "WYLDER_ASSAULT_STAKE": {
+      "zhs": "袭击桩柱",
+      "eng": "Onslaught Stake",
+      "jpn": "襲撃の楔",
+      "kor": "습격의 쐐기",
+      "reference": "Official ELDEN RING NIGHTREIGN Wylder Ultimate Art localization"
+    },
+    "WYLDER_PARRY": {
+      "zhs": "小圆盾格挡",
+      "eng": "Buckler Parry",
+      "jpn": "バックラーパリィ",
+      "kor": "버클러 패리",
+      "reference": "Official ELDEN RING weapon skill localization"
+    },
+    "WYLDER_CORPSE_WAX_CUTTER": {
+      "zhs": "尸蜡斩击",
+      "eng": "Corpse Wax Cutter",
+      "jpn": "死蝋斬り",
+      "kor": "시랍 베기",
+      "reference": "Official ELDEN RING weapon skill localization"
+    },
+    "WYLDER_TAKERS_FLAMES": {
+      "zhs": "掠夺火焰",
+      "eng": "Taker's Flames",
+      "jpn": "略奪の炎",
+      "kor": "약탈의 화염",
+      "reference": "Official ELDEN RING weapon skill localization"
+    },
+    "WYLDER_RUINOUS_GHOSTFLAME": {
+      "zhs": "唤起灵火",
+      "eng": "Ruinous Ghostflame",
+      "jpn": "滅びの霊炎",
+      "kor": "멸망의 영혼 불",
+      "reference": "Official ELDEN RING weapon skill localization"
+    },
+    "WYLDER_EOCHAIDS_DANCING_BLADE": {
+      "zhs": "欧赫剑舞",
+      "eng": "Eochaid's Dancing Blade",
+      "jpn": "エオヒドの剣舞",
+      "kor": "에오히드의 검무",
+      "reference": "Official ELDEN RING weapon skill localization"
+    },
+    "WYLDER_SIXTH_SENSE": {
+      "zhs": "第六感",
+      "eng": "Sixth Sense",
+      "jpn": "第六感",
+      "kor": "육감",
+      "reference": "Official ELDEN RING NIGHTREIGN Wylder passive localization"
+    },
+    "WYLDER_GRAPPLE_SHOT": {
+      "zhs": "钩爪射击",
+      "eng": "Claw Shot",
+      "jpn": "クローショット",
+      "kor": "클로 샷",
+      "reference": "Official ELDEN RING NIGHTREIGN Wylder skill localization"
+    },
+    "WYLDER_MULTIPLAYER_CARD": {
+      "zhs": "追踪者",
+      "eng": "Wylder",
+      "jpn": "追跡者",
+      "kor": "추적자",
+      "reference": "Official ELDEN RING NIGHTREIGN Nightfarer name localization"
+    },
+    "WYLDER_HOARFROST_STOMP": {
+      "zhs": "冻霜踏地",
+      "eng": "Hoarfrost Stomp",
+      "jpn": "霜踏み",
+      "kor": "서리 밟기",
+      "reference": "Official ELDEN RING weapon skill localization"
+    },
+    "WYLDER_GOLDEN_PARRY": {
+      "zhs": "黄金格挡",
+      "eng": "Golden Parry",
+      "jpn": "黄金パリィ",
+      "kor": "황금 패리",
+      "reference": "Official ELDEN RING weapon skill localization"
+    },
+    "WYLDER_SHRIEK_OF_MILOS": {
+      "zhs": "灭洛斯的嚎叫",
+      "eng": "Shriek of Milos",
+      "jpn": "ミエロスの絶叫",
+      "kor": "미에로스의 절규",
+      "reference": "Official ELDEN RING weapon skill localization"
+    },
+    "WYLDER_KICK": {
+      "zhs": "踢击",
+      "eng": "Kick",
+      "jpn": "キック",
+      "kor": "킥",
+      "reference": "Official ELDEN RING weapon skill localization"
+    },
+    "WYLDER_ORDOVIS_VORTEX": {
+      "zhs": "奥陶琵斯的漩涡",
+      "eng": "Ordovis's Vortex",
+      "jpn": "オルドビスの渦",
+      "kor": "오르도비스의 회오리",
+      "reference": "Official ELDEN RING weapon skill localization"
+    },
+    "WYLDER_SILURIA_VORTEX": {
+      "zhs": "志留亚的漩涡",
+      "eng": "Siluria's Woe",
+      "jpn": "シルリアの渦",
+      "kor": "실루리아의 소용돌이",
+      "reference": "Official ELDEN RING weapon skill localization"
+    },
+    "WYLDER_MOONLIGHT_SWORD": {
+      "zhs": "月光剑",
+      "eng": "Moonlight Greatsword",
+      "jpn": "月光剣",
+      "kor": "월광검",
+      "reference": "Official ELDEN RING weapon skill localization"
+    },
+    "COOPERATIVE_DEFENSE": {
+      "zhs": "协同防御",
+      "eng": "Cooperative Defense",
+      "jpn": "協同防御",
+      "kor": "협동 수비",
+      "reference": "User-requested replacement for Shared Great Shield"
+    },
+    "DUCHESS_CARNIVAL_NIGHT": {
+      "zhs": "狂欢夜",
+      "eng": "Carnival Night",
+      "jpn": "狂歓の夜",
+      "kor": "축제의 밤",
+      "reference": "User-provided multiplayer card table screenshot"
+    },
+    "DUCHESS_MASQUERADE": {
+      "zhs": "面具舞会",
+      "eng": "Masquerade",
+      "jpn": "仮面舞踏会",
+      "kor": "가면무도회",
+      "reference": "User-provided multiplayer card table screenshot"
+    },
     "SOUL_DEPARTURE": {
       "zhs": "灵魂出窍",
       "eng": "Soul Departure",
@@ -674,6 +881,8 @@
     "DEFENSIVE_CADENCE",
     "DEFENSIVE_REINFORCEMENT",
     "DUCHESS_DEFEND",
+    "WYLDER_DEFEND",
+    "WYLDER_TURNING_GUARD",
     "EMERGENCY_DEFEND",
     "EVOLVED_DEFEND",
     "GUARD_COUNTER_CARD",

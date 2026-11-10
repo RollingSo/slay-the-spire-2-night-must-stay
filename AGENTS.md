@@ -18,6 +18,8 @@
 
 ## Card artwork
 
+- User authorization (2026-10-26): Codex must independently review, approve, and integrate card artwork; do not ask the user to approve each candidate. This overrides older user-approval gates in design documents. Keep candidates, backups, and review evidence; user-rejected artwork remains rejected. Do not use sub-agents.
+- Before generating or revising any card artwork, also read `design/NightMustStay_黑夜长留卡图美术规范.md` completely. Apply its pose-reference checks and cross-card background/composition differentiation rules.
 - Before generating or revising any card artwork, read `design/Slay_the_Spire_2_卡图生成强制规范.md` completely.
 - Before auditing or batch-redrawing Guardian, Ironeye, or Revenant card artwork, also read `design/NightMustStay_三角色卡图审查与重绘强制规范.md` completely and apply its six-stage audit in order.
 - For Guardian identity, equipment, poses, or mechanics, also read `design/Guardian_角色设计与动作强制规范.md` completely.

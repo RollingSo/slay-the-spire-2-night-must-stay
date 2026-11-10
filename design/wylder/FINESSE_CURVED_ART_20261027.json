@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-27",
+  "generator": "built-in imagegen",
+  "status": "rejected_by_user",
+  "runtime_promoted": true,
+  "output_dir": "design/卡图预览/wylder/finesse_curved_20261027",
+  "pose_contract": "design/wylder/FINESSE_POSE_CONTRACT_20261027.md",
+  "assets": [
+    {
+      "key": "wylder_bloodhounds_finesse",
+      "name": "猎犬剑技",
+      "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-c5b93f20-9209-499e-8bd3-13ce7eaeb4a5.png",
+      "ref": "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/skills_20261022/wylder_bloodhounds_finesse_reference.png",
+      "prompt": "Use case: illustration-story. 1000x760 landscape fantasy game-card ARTWORK ONLY. IMAGE1 controls BOTH exact airborne backflip POSE and the actual CURVED WEAPON. IMAGE2 is ONLY Wylder's character clothing/helmet identity, never its idle pose or straight sword. IMAGE3 controls graphic card style. Replace the knight in IMAGE1 with Wylder while preserving the reference's compact diagonal silhouette. He is MID-AIR in a BACKWARD SOMERSAULT: helmet at left-center tilted down and inward; torso nearly sideways, hips curled ABOVE and to the RIGHT of shoulders; both knees bent and tucked toward right, both boots off the ground. Both shoulders-to-elbow-to-wrist chains curl in front beneath torso, TWO hands side-by-side gripping ONE shared handle near lower-center-right. No third arm or extra handle. Weapon IMPORTANT: use the weapon visible in IMAGE1, a long PALE SILVER CURVED GREATSWORD with an asymmetric sweeping arched blade and hooked point, extending downward along right side. Copy the silhouette, simple curved guard and dark grip from IMAGE1. This is an EXPLICIT weapon exception: do NOT use Wylder's straight sword, do NOT straighten its naturally curved blade, do NOT use his forked pommel. One coherent grip-to-guard-to-curved-blade assembly, not a dislocated or crooked hilt. Wylder identity: CLOSED silver feather-wing helmet, silver faceguard/dark slit, blue SIDE panel only, black scarf, navy split skirt with sparse WHITE flowing water motifs, grouped silver scale sleeves and brown wrapped gloves/boots; no horned helmet from reference1. Scarf/skirt follow spin, do not conceal hands. Omit buckler if hidden; no additional weapons. One broad OPEN ivory-gray C-shaped slash trail behind back flipping body shows the retreat, with just a short muted crimson inner contour from pose reference. Steel curve visually separate from motion arc. Subject central fills about 75% frame. Quiet muted sage-gray background with only two broad low-contrast shadow planes; no scenery, dust, splinters, starburst, closed neon circle or blue shards. Graphic FLAT 2D illustration, chunky silhouette, bold near-black shapes, 2-3 HARD CEL tones per material, limited navy/silver/gray-green/ivory palette, no fine engraving or individual scale noise. Single readable event: curled knight backflips out with curved blade. No ground-contact crouch, standing swing, extra limbs, text, UI, border, cards, realistic metal, painterly texture or cinematic effects.",
+      "edit_prompt": "Edit this game-card illustration, change ONLY the leg visibility. Preserve curved weapon, both hands sharing its one handle, helmet, arms, slash trail, background and flat graphic style. The backflipping knight needs TWO clearly readable bent legs/boots. Currently only one leg and boot are visible at upper-right. Keep that upper-right bent leg exactly. Reveal his OTHER bent leg from behind the navy skirt: it originates from the SAME pelvis at upper-center, folds tightly inward, and its brown wrapped shin and second boot appear at middle-right, BELOW the existing upper-right boot, just behind the lower flying skirt panel and ABOVE/right of the two sword hands. Both legs are airborne, not touching the sword or either hand. Shorten/rearrange only a little navy skirt fabric to show this second bent knee and boot. Exactly TWO legs total, no extra limbs. Both knees tucked in a compact backward somersault as before, not straight kicking. Keep silver/navigy/white clothing motifs and brown wraps in 2-3 hard flat planes. No other changes, no text or UI, 1000x760 landscape art.",
+      "previous_runtime_portrait": "res://images/packed/card_portraits/silent/dash.png",
+      "rejected_candidates": [
+        {
+          "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-61da1822-9b93-4104-9f8b-c9e529641139.png",
+          "reason": "第二腿被裙摆遮挡过多，局部重绘为可区分的两条蜷曲腿。",
+          "workspace_copy": "design/卡图预览/wylder/finesse_curved_20261027/wylder_bloodhounds_finesse_rejected_1.png",
+          "status": "rejected_by_self_review"
+        }
+      ],
+      "approved_sha256": "E4C1F546B153E34377419FA7B7FC05BE0C06F5C030D7E8387472B6F06FCD458B",
+      "runtime_path": "images/packed/card_portraits/wylder/wylder_bloodhounds_finesse.png",
+      "status": "rejected_by_user",
+      "user_rejected_date": "2026-10-28",
+      "user_rejected_reason": "肢体动作不符"
+    }
+  ],
+  "validation": {
+    "build": "0 warnings, 0 errors",
+    "wylder_regressions": "pass; 29 dedicated Finesse checks plus existing suites",
+    "card_text_format": "pass",
+    "portrait_source_paths": "526 passed",
+    "godot_import": "pass",
+    "godot_log": "build/finesse_revision_import_20261027.log",
+    "exported_or_installed": false
+  },
+  "user_rejected_date": "2026-10-28"
+}

@@ -1,0 +1,788 @@
+{
+  "wylder_assets/combat_rig/wylder_combat_character.png": {
+    "size": [
+      2600,
+      1700
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      627,
+      190,
+      2011,
+      1550
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "approved",
+    "source": "wylder_assets/approved_sources/idle.png",
+    "body_height_px": 1360.0,
+    "body_top_px": 190.0
+  },
+  "wylder_assets/combat_rig/wylder_attack.png": {
+    "size": [
+      2600,
+      1700
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      331,
+      190,
+      1969,
+      1550
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "approved",
+    "source": "wylder_assets/approved_sources/attack.png",
+    "body_height_px": 1360.0,
+    "body_top_px": 190.0
+  },
+  "wylder_assets/combat_rig/wylder_hit.png": {
+    "size": [
+      2600,
+      1700
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      416,
+      190,
+      1890,
+      1550
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "approved",
+    "source": "wylder_assets/approved_sources/hit.png",
+    "body_height_px": 1360.0,
+    "body_top_px": 190.0
+  },
+  "wylder_assets/combat_rig/wylder_block.png": {
+    "size": [
+      2600,
+      1700
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      228,
+      190,
+      1687,
+      1550
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "approved",
+    "source": "wylder_assets/approved_sources/block.png",
+    "body_height_px": 1360.0,
+    "body_top_px": 190.0
+  },
+  "wylder_assets/combat_rig/wylder_death.png": {
+    "size": [
+      2600,
+      1700
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      725,
+      650,
+      1713,
+      1550
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "approved",
+    "source": "wylder_assets/approved_sources/death.png",
+    "body_height_px": 900.0,
+    "body_top_px": 650.0
+  },
+  "wylder_assets/rest_site/wylder_rest_site.png": {
+    "size": [
+      1200,
+      1250
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      12,
+      29,
+      1188,
+      1220
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "approved",
+    "source": "wylder_assets\\approved_sources\\approved_scene_hand_rest.png"
+  },
+  "wylder_assets/merchant/wylder_merchant.png": {
+    "size": [
+      1200,
+      1250
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      155,
+      12,
+      1044,
+      1238
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "approved",
+    "source": "wylder_assets\\approved_sources\\approved_scene_hand_merchant.png"
+  },
+  "wylder_assets/character_icon_wylder.png": {
+    "size": [
+      88,
+      88
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      9,
+      8,
+      71,
+      79
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "updated per user request",
+    "source": "wylder_assets\\approved_sources\\ui_head_first_selected.png"
+  },
+  "wylder_assets/character_icon_wylder_outline.png": {
+    "size": [
+      64,
+      64
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      5,
+      7,
+      53,
+      58
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "updated per user request",
+    "source": "wylder_assets\\approved_sources\\ui_head_first_selected.png"
+  },
+  "wylder_assets/map_marker_wylder.png": {
+    "size": [
+      49,
+      64
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      4,
+      13,
+      41,
+      51
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "updated per user request",
+    "source": "wylder_assets\\approved_sources\\ui_head_first_selected.png"
+  },
+  "wylder_assets/char_select_wylder.png": {
+    "size": [
+      132,
+      195
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      132,
+      195
+    ],
+    "corners_alpha": null,
+    "approval": "approved",
+    "source": "design/\u89d2\u8272\u8d44\u6e90\u9884\u89c8/wylder/selection_20261020/char_select_wylder.png"
+  },
+  "wylder_assets/char_select_wylder_locked.png": {
+    "size": [
+      132,
+      195
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      132,
+      195
+    ],
+    "corners_alpha": null,
+    "approval": "approved",
+    "source": "design/\u89d2\u8272\u8d44\u6e90\u9884\u89c8/wylder/selection_20261020/char_select_wylder_locked.png"
+  },
+  "wylder_assets/character_select_wylder_bg.png": {
+    "size": [
+      2560,
+      1200
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      2560,
+      1200
+    ],
+    "corners_alpha": null,
+    "approval": "approved",
+    "source": "design/\u89d2\u8272\u8d44\u6e90\u9884\u89c8/wylder/selection_20261020/character_select_wylder_bg.png"
+  },
+  "wylder_assets/energy_icon/wylder_energy_card_icon.png": {
+    "size": [
+      74,
+      74
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      3,
+      3,
+      71,
+      70
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "approved",
+    "source": "wylder_assets/approved_sources/energy_white_water.png"
+  },
+  "wylder_assets/energy_icon/wylder_energy_font_icon.png": {
+    "size": [
+      48,
+      48
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      3,
+      3,
+      45,
+      44
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "approved",
+    "source": "wylder_assets/approved_sources/energy_white_water.png"
+  },
+  "images/packed/sprite_fonts/wylder_energy_icon.png": {
+    "size": [
+      48,
+      48
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      3,
+      3,
+      45,
+      44
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "approved",
+    "source": "wylder_assets/approved_sources/energy_white_water.png"
+  },
+  "wylder_assets/energy_counter/wylder_orb_layer_1.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      66,
+      66,
+      190,
+      190
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "approved",
+    "source": "wylder_assets/approved_sources/energy_white_water.png"
+  },
+  "wylder_assets/energy_counter/wylder_orb_layer_2.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      43,
+      43,
+      213,
+      213
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "approved",
+    "source": "wylder_assets/approved_sources/energy_white_water.png"
+  },
+  "wylder_assets/energy_counter/wylder_orb_layer_3.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      26,
+      26,
+      230,
+      230
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "approved",
+    "source": "wylder_assets/approved_sources/energy_white_water.png"
+  },
+  "wylder_assets/energy_counter/wylder_orb_layer_4.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      15,
+      15,
+      241,
+      240
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "approved",
+    "source": "wylder_assets/approved_sources/energy_white_water.png"
+  },
+  "wylder_assets/energy_counter/wylder_orb_layer_5.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      16,
+      9,
+      243,
+      245
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "approved",
+    "source": "wylder_assets/approved_sources/energy_white_water.png"
+  },
+  "wylder_assets/multiplayer_hands/multiplayer_hand_wylder_point.png": {
+    "size": [
+      422,
+      1200
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      58,
+      38,
+      406,
+      1198
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "approved",
+    "source": "wylder_assets\\approved_sources\\approved_scene_hand_point.png"
+  },
+  "wylder_assets/multiplayer_hands/multiplayer_hand_wylder_rock.png": {
+    "size": [
+      422,
+      1200
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      81,
+      18,
+      406,
+      1180
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "approved",
+    "source": "wylder_assets\\approved_sources\\approved_scene_hand_rock.png"
+  },
+  "wylder_assets/multiplayer_hands/multiplayer_hand_wylder_paper.png": {
+    "size": [
+      422,
+      1200
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      104,
+      26,
+      336,
+      1181
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "approved",
+    "source": "wylder_assets\\approved_sources\\approved_scene_hand_paper.png"
+  },
+  "wylder_assets/multiplayer_hands/multiplayer_hand_wylder_scissors.png": {
+    "size": [
+      422,
+      1200
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      90,
+      18,
+      407,
+      1181
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "approved",
+    "source": "wylder_assets\\approved_sources\\approved_scene_hand_scissors.png"
+  },
+  "images/powers/wylder_pursuit_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      16,
+      55,
+      241,
+      199
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "draft"
+  },
+  "powers/wylder_pursuit_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      16,
+      55,
+      241,
+      199
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "draft"
+  },
+  "images/powers/wylder_break_description_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      13,
+      12,
+      242,
+      244
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "draft"
+  },
+  "powers/wylder_break_description_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      13,
+      12,
+      242,
+      244
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "draft"
+  },
+  "images/powers/wylder_uppercut_strength_down_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      43,
+      15,
+      235,
+      236
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "draft"
+  },
+  "powers/wylder_uppercut_strength_down_power.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      43,
+      15,
+      235,
+      236
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "draft"
+  },
+  "wylder_assets/relics/wylder_single_earring.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      59,
+      8,
+      239,
+      248
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "draft"
+  },
+  "wylder_assets/relics/wylder_single_earring_outline.png": {
+    "size": [
+      256,
+      256
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      56,
+      5,
+      242,
+      251
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "draft"
+  },
+  "design/\u5361\u56fe\u9884\u89c8/wylder/wylder_stamp_upward_cut.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ],
+    "corners_alpha": null,
+    "approval": "draft"
+  },
+  "images/packed/card_portraits/wylder/wylder_stamp_upward_cut.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ],
+    "corners_alpha": null,
+    "approval": "draft"
+  },
+  "design/\u5361\u56fe\u9884\u89c8/wylder/wylder_stamp_sweep.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ],
+    "corners_alpha": null,
+    "approval": "draft"
+  },
+  "images/packed/card_portraits/wylder/wylder_stamp_sweep.png": {
+    "size": [
+      1000,
+      760
+    ],
+    "mode": "RGB",
+    "bounds": [
+      0,
+      0,
+      1000,
+      760
+    ],
+    "corners_alpha": null,
+    "approval": "draft"
+  },
+  "wylder_assets/combat_rig/wylder_pursuit_idle.png": {
+    "size": [
+      2600,
+      1700
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      646,
+      69,
+      1911,
+      1550
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "approved",
+    "source": "wylder_assets/approved_sources/pursuit_idle.png",
+    "body_height_px": 1360.0,
+    "body_top_px": 190.14285714285714
+  },
+  "wylder_assets/combat_rig/wylder_pursuit_attack.png": {
+    "size": [
+      2600,
+      1700
+    ],
+    "mode": "RGBA",
+    "bounds": [
+      429,
+      190,
+      2475,
+      1550
+    ],
+    "corners_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "approval": "approved",
+    "source": "wylder_assets/approved_sources/pursuit_attack.png",
+    "body_height_px": 1360.0,
+    "body_top_px": 190.0
+  }
+}

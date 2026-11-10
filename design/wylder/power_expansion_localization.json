@@ -1,0 +1,210 @@
+{
+  "cards": {
+    "WYLDER_EMBER_RESERVE": [
+      "烽火余力",
+      "每个你的回合首次通过攻击牌消耗[gold]活力[/gold]后，获得{Block:diff()}点[gold]格挡[/gold]。",
+      "Ember Reserve",
+      "The first time each of your turns an Attack consumes [gold]Vigor[/gold], gain {Block:diff()} [gold]Block[/gold]."
+    ],
+    "WYLDER_CLASH_EMBERS": [
+      "交锋余热",
+      "每个你的回合第一张攻击牌结算后，获得{Vigor:diff()}点[gold]活力[/gold]。",
+      "Clash Embers",
+      "After your first Attack each turn resolves, gain {Vigor:diff()} [gold]Vigor[/gold]."
+    ],
+    "WYLDER_OPENING_HUNT": [
+      "破绽追索",
+      "每个你的回合首次触发[gold]破势[/gold]后，抽1张牌。{IfUpgraded:show:\n获得{Vigor:diff()}点[gold]活力[/gold]。|}",
+      "Opening Hunt",
+      "The first time each of your turns you trigger [gold]Break[/gold], draw 1 card.{IfUpgraded:show:\nGain {Vigor:diff()} [gold]Vigor[/gold].|}"
+    ],
+    "WYLDER_WINDWARD_STANCE": [
+      "迎风架势",
+      "每个你的回合，本能力生效后首次进入[gold]追击[/gold]时，获得{Block:diff()}点[gold]格挡[/gold]。",
+      "Windward Stance",
+      "The first time you enter [gold]Pursuit[/gold] each turn after this Power is active, gain {Block:diff()} [gold]Block[/gold]."
+    ],
+    "WYLDER_BATTLE_INSTINCT": [
+      "战斗本能",
+      "每个你的回合，本能力生效后首次从[gold]手牌[/gold]打出攻击牌并完全结算后，若手中恰好剩余1张技能牌，使该技能牌本回合耗能减少{Reduction:diff()}。",
+      "Battle Instinct",
+      "Once each turn after this Power is active, when an Attack played from your [gold]hand[/gold] fully resolves and leaves exactly 1 Skill in your hand, reduce that Skill's cost by {Reduction:diff()} this turn."
+    ],
+    "WYLDER_BLOOD_STILL_HOT": [
+      "热血未冷",
+      "每个你的回合首次获得[gold]活力[/gold]时，获得{Block:diff()}点[gold]格挡[/gold]。",
+      "Blood Still Hot",
+      "The first time each of your turns you gain [gold]Vigor[/gold], gain {Block:diff()} [gold]Block[/gold]."
+    ],
+    "WYLDER_FLAME_GUARD_STANCE": [
+      "御火姿态",
+      "每个你的回合首次通过攻击牌消耗[gold]活力[/gold]后，进入[gold]追击[/gold]。{IfUpgraded:show:\n获得{Block:diff()}点[gold]格挡[/gold]。|}",
+      "Flame Guard Stance",
+      "The first time each of your turns an Attack consumes [gold]Vigor[/gold], enter [gold]Pursuit[/gold].{IfUpgraded:show:\nGain {Block:diff()} [gold]Block[/gold].|}"
+    ],
+    "WYLDER_PURSUIT_COMMAND": [
+      "追击号令",
+      "每个你的回合首次通过卡牌效果进入[gold]追击[/gold]时，抽{Cards:diff()}张牌。\n同名效果每回合合计最多抽2张牌。",
+      "Pursuit Command",
+      "The first time each of your turns a card effect enters [gold]Pursuit[/gold], draw {Cards:diff()} cards.\nAll copies combined draw at most 2 cards per turn."
+    ],
+    "WYLDER_BATTLEFIELD_MIGHT": [
+      "掠阵余威",
+      "每个你的回合首次触发[gold]破势[/gold]后，获得{Strength:diff()}点[gold]力量[/gold]。",
+      "Battlefield Might",
+      "The first time each of your turns you trigger [gold]Break[/gold], gain {Strength:diff()} [gold]Strength[/gold]."
+    ],
+    "WYLDER_GUARD_RESURGENCE": [
+      "守势再起",
+      "每个你的回合首次通过技能牌使敌人[gold]眩晕[/gold]时，下个你的回合开始时获得{Energy:energyIcons()}和{Block:diff()}点[gold]格挡[/gold]。",
+      "Guard Resurgence",
+      "The first time each of your turns a Skill [gold]Stuns[/gold] an enemy, gain {Energy:energyIcons()} and {Block:diff()} [gold]Block[/gold] at the start of your next turn."
+    ],
+    "WYLDER_SWIFT_BATTLE_WILL": [
+      "迅捷战意",
+      "每个你的回合首次从[gold]手牌[/gold]打出一张非「迅捷战意」牌，且该牌的所有效果结算后你的[gold]手牌[/gold]不超过2张时，获得{Energy:energyIcons()}和{Block:diff()}点[gold]格挡[/gold]。",
+      "Swift Battle Will",
+      "The first time each of your turns a card other than Swift Battle Will played from your [gold]hand[/gold] fully resolves with at most 2 cards left in your hand, gain {Energy:energyIcons()} and {Block:diff()} [gold]Block[/gold]."
+    ],
+    "WYLDER_RUINOUS_GHOSTFLAME": [
+      "唤起灵火",
+      "造成超过20点的攻击伤害时，给予该敌人{Freeze:diff()}层[gold]冻伤[/gold]。",
+      "Ruinous Ghostflame",
+      "Whenever an attack deals more than 20 damage to an enemy, apply {Freeze:diff()} [gold]Freeze[/gold] to it."
+    ],
+    "WYLDER_PURSUIT_STANCE": [
+      "追击姿态",
+      "每个你的回合首次通过出牌消耗[gold]追击[/gold]后，若该牌是攻击牌，获得{Energy:energyIcons()}；若是技能牌，获得{Block:diff()}点[gold]格挡[/gold]。\n同名效果合计最多获得1点能量或20点基础[gold]格挡[/gold]。",
+      "Pursuit Stance",
+      "The first time each of your turns a played card consumes [gold]Pursuit[/gold], gain {Energy:energyIcons()} if it was an Attack, or {Block:diff()} [gold]Block[/gold] if it was a Skill.\nAll copies combined grant at most 1 Energy or 20 base Block."
+    ],
+    "WYLDER_FIERY_BLOOD": [
+      "炽热血性",
+      "每个你的回合首次通过卡牌直接获得[gold]活力[/gold]后，额外获得{Vigor:diff()}点[gold]活力[/gold]。",
+      "Fiery Blood",
+      "The first time each of your turns you gain [gold]Vigor[/gold] directly from a card effect, gain {Vigor:diff()} additional [gold]Vigor[/gold]."
+    ],
+    "WYLDER_VETERAN_EDGE": [
+      "百战砺芒",
+      "触发[gold]破势[/gold]后，获得{Strength:diff()}点[gold]力量[/gold]。",
+      "Veteran Edge",
+      "Whenever you trigger [gold]Break[/gold], gain {Strength:diff()} [gold]Strength[/gold]."
+    ],
+    "WYLDER_UNYIELDING_SPIRIT": [
+      "不屈斗志",
+      "在两次你的回合开始之间，首次因敌人的攻击失去生命后，获得{Block:diff()}点[gold]格挡[/gold]并进入[gold]追击[/gold]。",
+      "Unyielding Spirit",
+      "Between the starts of your turns, the first time an enemy attack causes you to lose HP, gain {Block:diff()} [gold]Block[/gold] and enter [gold]Pursuit[/gold]."
+    ],
+    "WYLDER_NIGHT_EDGE": [
+      "黑夜之锋",
+      "每个你的回合，第一张具有[gold]破势[/gold]的攻击牌[gold]破势[/gold]阈值降低{Reduction:diff()}，最低为1。\n无论是否成功[gold]破势[/gold]，均消耗此次资格。\n每个你的回合首次触发[gold]破势[/gold]后，获得{Vigor:diff()}点[gold]活力[/gold]。\n同名效果不叠加。",
+      "Night Edge",
+      "Each of your turns, your first Attack with [gold]Break[/gold] has its threshold reduced by {Reduction:diff()}, to a minimum of 1.\nThis opportunity is spent even if it fails to Break.\nAfter your first successful Break each turn, gain {Vigor:diff()} [gold]Vigor[/gold].\nMultiple copies do not stack."
+    ]
+  },
+  "powers": {
+    "WYLDER_EMBER_RESERVE_POWER": [
+      "烽火余力",
+      "按整回合首次真实攻击消耗活力计数；部署前已消耗也占资格。\n整张牌完成后统一获得格挡。",
+      "Ember Reserve",
+      "The first real attack consumption of Vigor counts even before deployment.\nBlock is granted after the whole card resolves."
+    ],
+    "WYLDER_CLASH_EMBERS_POWER": [
+      "交锋余热",
+      "整回合第一张攻击开始时即占资格，即使没有命中。\n后部署不会补发；活力在整张牌结算后获得。",
+      "Clash Embers",
+      "The first Attack claims eligibility when it begins, even if it misses.\nDeploying later does not grant the reward retroactively; Vigor is gained after the whole card."
+    ],
+    "WYLDER_OPENING_HUNT_POWER": [
+      "破绽追索",
+      "全回合首次成功破势计数，部署前也占资格。\n击杀不取消奖励；整张攻击及其自身奖励后抽牌，升级副本额外给予2点活力。",
+      "Opening Hunt",
+      "The first successful Break counts even before deployment.\nA killing blow still qualifies; rewards follow the whole attack and its own effects, with 2 Vigor per upgraded copy."
+    ],
+    "WYLDER_WINDWARD_STANCE_POWER": [
+      "迎风架势",
+      "只在本能力已部署时消费首次资格。\n重新进入追击也触发；格挡在本牌效果与旧追击补抽后获得。",
+      "Windward Stance",
+      "Eligibility begins when this Power is deployed.\nReentry qualifies; Block follows card effects and the old Pursuit draw."
+    ],
+    "WYLDER_BATTLE_INSTINCT_POWER": [
+      "战斗本能",
+      "只计算从手牌实际打出的攻击；手牌自动打出可触发，外部重放不触发。\n等关联抽牌完成后检查唯一技能，不满足条件不消耗资格。",
+      "Battle Instinct",
+      "Only Attacks actually played from hand qualify, including hand autoplay but not external replays.\nCheck for the single Skill after all related draws; failed conditions do not spend eligibility."
+    ],
+    "WYLDER_BLOOD_STILL_HOT_POWER": [
+      "热血未冷",
+      "首次实际获得活力包含卡牌与能力来源，部署前也占资格。\n玩家回合外不计；攻击内奖励延迟到整张牌完成。",
+      "Blood Still Hot",
+      "The first actual Vigor gain counts card and Power sources, including gains before deployment.\nEnemy-turn gains do not count; rewards inside attacks wait until the whole card finishes."
+    ],
+    "WYLDER_FLAME_GUARD_STANCE_POWER": [
+      "御火姿态",
+      "只统计原生攻击实际消耗的活力，不统计技能主动失去的活力。\n新追击在整张牌后获得，不增强该牌后续段数。",
+      "Flame Guard Stance",
+      "Only Vigor actually consumed by the native attack counts, not direct Skill losses.\nNew Pursuit is granted after the whole card and cannot enhance its remaining hits."
+    ],
+    "WYLDER_PURSUIT_COMMAND_POWER": [
+      "追击号令",
+      "卡牌直接进入或重入追击才计数；能力和遗物不计。\n部署前的首次卡内进入也占资格，同名能力每回合合计最多抽2张牌。",
+      "Pursuit Command",
+      "Only a card's direct entry or reentry into Pursuit counts, not Powers or Relics.\nThe first such entry counts even before deployment; all copies together draw at most 2 cards per turn."
+    ],
+    "WYLDER_BATTLEFIELD_MIGHT_POWER": [
+      "掠阵余威",
+      "首次成功破势按全回合计数，击杀仍奖励。\n力量在整张攻击后获得，不增强该牌后续段数。",
+      "Battlefield Might",
+      "The first successful Break counts across the whole turn; kills still reward.\nStrength is granted after the whole attack and cannot boost its remaining hits."
+    ],
+    "WYLDER_GUARD_RESURGENCE_POWER": [
+      "守势再起",
+      "只记录技能实际成功的眩晕，手牌自动弹反可触发。\n锁定触发时的副本数量，下回合基础资源初始化后发放；之后增加副本不追溯。",
+      "Guard Resurgence",
+      "Only a Skill's successful Stun qualifies, including Parry autoplayed from hand.\nThe reward snapshots copies at trigger time and is paid after next turn's base resources initialize."
+    ],
+    "WYLDER_SWIFT_BATTLE_WILL_POWER": [
+      "迅捷战意",
+      "首次资格按全回合最终结算顺序计数；部署前满足条件也占资格。\n所有同名迅捷战意出牌均排除，手牌外重放排除。\n追击补抽与相关能力抽牌全部完成后才检查。",
+      "Swift Battle Will",
+      "The first qualifying settlement counts even before deployment.\nEvery Swift Battle Will card and every external replay is excluded.\nThe check occurs after all Pursuit and related Power draws."
+    ],
+    "WYLDER_RUINOUS_GHOSTFLAME_POWER": [
+      "唤起灵火",
+      "对单个敌人造成超过20点的攻击伤害时，给予2层[gold]冻伤[/gold]（升级为3层）。\n伤害在扣除格挡前计算，多段分别判断。",
+      "Ruinous Ghostflame",
+      "Whenever an attack hit deals more than 20 damage to an enemy, apply 2 [gold]Freeze[/gold] (3 when upgraded).\nCheck each hit separately before Block."
+    ],
+    "WYLDER_PURSUIT_STANCE_POWER": [
+      "追击姿态",
+      "消费的是本次出牌前的旧追击，不要求状态实例移除。\n能力牌也占首次消费资格，但不给攻击或技能奖励。\n同名效果攻击分支最多1能量，技能分支基础格挡最多20，敏捷仅统一作用一次。",
+      "Pursuit Stance",
+      "Consumes the old Pursuit eligibility even if the status instance survives reentry.\nPower cards spend the first-consumption opportunity without an Attack or Skill reward.\nAll copies grant at most 1 Energy or 20 base Block, with Dexterity applied once."
+    ],
+    "WYLDER_FIERY_BLOOD_POWER": [
+      "炽热血性",
+      "只计算卡内直接实际获得活力。\n先锁定首次资格，再由本能力追加；不响应能力间接获得，不能递归触发自身。",
+      "Fiery Blood",
+      "Only actual Vigor gained directly by a card counts.\nEligibility is locked before this Power's extra gain; indirect Power gains cannot trigger it recursively."
+    ],
+    "WYLDER_VETERAN_EDGE_POWER": [
+      "百战砺芒",
+      "每次触发[gold]破势[/gold]后，每层此能力获得2点[gold]力量[/gold]。",
+      "Veteran Edge",
+      "Whenever you trigger [gold]Break[/gold], gain 2 [gold]Strength[/gold] per stack."
+    ],
+    "WYLDER_UNYIELDING_SPIRIT_POWER": [
+      "不屈斗志",
+      "每次玩家回合开始重置。\n敌方多段攻击首段实际失血后立即获得格挡，保护后续段，不抵销已受到的伤害。",
+      "Unyielding Spirit",
+      "Resets at the start of each player turn.\nBlock is granted immediately after the first enemy hit that causes HP loss, protecting later hits but not undoing damage already taken."
+    ],
+    "WYLDER_NIGHT_EDGE_POWER": [
+      "黑夜之锋",
+      "首张有破势攻击按全回合计数，包含自动打出、重放及部署前的攻击，未达标也消费减阈值资格。\n首成功破势是独立资格，活力在整张牌后获得。\n同名减阈值和活力分别取最高，不相加。",
+      "Night Edge",
+      "The first Attack with Break counts across the turn, including autoplay, replay and attacks before deployment; failure still spends its threshold reduction.\nThe first successful Break is independent and awards Vigor after the whole card.\nUse the strongest threshold reduction and Vigor reward across copies, not their sum."
+    ]
+  }
+}

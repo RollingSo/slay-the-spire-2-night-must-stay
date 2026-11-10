@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-27",
+  "generator": "built-in imagegen",
+  "status": "approved_and_integrated",
+  "runtime_promoted": true,
+  "output_dir": "design/卡图预览/wylder/flame_revision_20261027",
+  "assets": [
+    {
+      "key": "wylder_flaming_strike",
+      "name": "炎击",
+      "source": "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/skills_20261022/wylder_flaming_strike.png",
+      "ref": "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/skills_20261022/wylder_flaming_strike_reference.png",
+      "status": "user_approved",
+      "prompt": "保留用户已通过卡图，像素不重绘；源提示词见 SKILL_SEVEN_ART_20261022.json。",
+      "runtime_path": "images/packed/card_portraits/wylder/wylder_flaming_strike.png",
+      "approved_sha256": "591BA2D2FBC796306A07386A9BB67F8CB432C8849D803EA1198F3C0D46A7099A"
+    },
+    {
+      "key": "wylder_flame_of_redmanes",
+      "name": "红狮子火焰",
+      "source": "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/skills_20261022/wylder_flame_of_redmanes.png",
+      "ref": "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/skills_20261022/wylder_flame_of_redmanes_reference.png",
+      "status": "user_approved",
+      "prompt": "保留用户已通过卡图，像素不重绘；源提示词见 SKILL_SEVEN_ART_20261022.json。",
+      "runtime_path": "images/packed/card_portraits/wylder/wylder_flame_of_redmanes.png",
+      "approved_sha256": "B1841D1598EB131C1CD55AB963F1EB04AF922BAC5AD6C2079FAA8119ED69E2F7"
+    },
+    {
+      "key": "wylder_fire_coating",
+      "name": "附火",
+      "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-6d8b75f0-5de5-4ba9-8bd9-a7d4a17444ce.png",
+      "ref": "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/wylder_assets/approved_sources/idle.png",
+      "status": "self_reviewed_approved",
+      "prompt": "Use case: illustration-story. 1000x760 landscape fantasy game-card ARTWORK ONLY. A tight close-up of Wylder ENCHANTING a straight greatsword with flame, not attacking. IMAGE1 gives ONLY his gloves, silver forearm armor and sword identity; IMAGE2 gives the approved blocky orange flame shape language; IMAGE3 gives graphic flat-card style. Crop out helmet, torso, legs and enemies. Right brown gloved hand at lower-right grips ONE navy sword handle with compact silver guard and distinctive forked open silver pommel; the long rigid silver blade crosses frame from lower-right toward upper-left. Blade centerline, guard, navy grip and pommel stem lie on ONE STRAIGHT LINE; blade may leave upper-left edge. His other LEFT gauntleted hand enters from upper-right, open palm hovering just ABOVE the MIDDLE OF THE BLADE, touching neither edge nor tip. One broad ribbon of orange-red flame pours from the open palm and CRAWLS ALONG/CLINGS TO the sword surface toward upper-left: show bare silver lower blade transitioning into FLAME-COATED upper blade. Sword is not swinging; a still deliberate coating gesture. Exactly two hands, anatomically separate arm chains entering from different right edges, 5 fingers per hand, no extra hands. Use a calm near-black charcoal backdrop with one broad muted blue-gray diagonal plane; lots of quiet negative space. Sharp silver, brown, navy and orange-red/cream flame. Chunky bold silhouettes, 2-3 FLAT colors per material, HARD-edged cel shadows and strong black shapes, minimal details. No full knight, fire wave across battlefield, impact, concentric ring, shards, particles, fine engraving, realistic metal, painterly texture, cinematic fog, words, card frame or UI. Readable as a thumbnail: hand lays a ribbon of fire onto a blade.",
+      "edit_prompt": "Precise-object-edit of this card art. Keep the two hands, glove anatomy, casting gesture, flame coating, flat cel style and background unchanged. Correct ONLY the physical sword geometry: the pommel stem, navy grip, guard center and blade central ridge must all share ONE RULER-STRAIGHT diagonal line from lower-right to upper-left. Currently the blade kinks slightly just beyond the guard. Align the ENTIRE long silver blade to the existing navy GRIP AXIS and use two completely straight tapering blade edges. No curved ridge, no bend at the guard. Keep the open forked silver pommel. The flame ribbon is allowed to curl but the rigid steel under it must be visibly straight. The image is a 1000x760 landscape close-up of fire being applied to sword; no new limbs, no added text or UI.",
+      "rejected_candidates": [
+        {
+          "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-bdd0b9eb-03a5-43e0-ae0c-d0586341463f.png",
+          "reason": "剑身与握柄轴有偏差，局部校直后重新审阅。",
+          "workspace_copy": "design/卡图预览/wylder/flame_revision_20261027/wylder_fire_coating_rejected_1.png"
+        }
+      ],
+      "runtime_path": "images/packed/card_portraits/wylder/wylder_fire_coating.png",
+      "approved_sha256": "9ACAADB9D92898643BCF738FB35304817D043955DA843CD9F2A15378769400D9"
+    }
+  ],
+  "validation": {
+    "build": "0 warnings, 0 errors",
+    "wylder_regressions": "pass; 105 flame-specific checks plus existing suites",
+    "text_format": "pass",
+    "portrait_paths": "525 passed",
+    "godot_import": "pass",
+    "godot_log": "build/flame_revision_import_20261027.log",
+    "installed_or_exported": false
+  }
+}

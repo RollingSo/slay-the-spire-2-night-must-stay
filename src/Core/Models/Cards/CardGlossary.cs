@@ -24,6 +24,8 @@ internal static class CardGlossary
         typeof(HiddenPoisonPower), typeof(PoisonBurstPower), typeof(FreezePower),
         typeof(DuchessConcealmentPower), typeof(DuchessMomentDescriptionPower),
         typeof(DuchessReactionDescriptionPower),
+        typeof(WylderPursuitPower),
+        typeof(WylderBreakDescriptionPower),
     };
 
     internal static bool IsMechanic(Type type) => Mechanics.Contains(type);

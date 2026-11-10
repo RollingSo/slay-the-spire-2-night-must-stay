@@ -1,0 +1,2473 @@
+{
+  "guardian": [
+    {
+      "path": "guardian_assets/char_select_guardian.png",
+      "size": [
+        132,
+        195
+      ],
+      "alpha_bounds": [
+        0,
+        0,
+        132,
+        195
+      ]
+    },
+    {
+      "path": "guardian_assets/char_select_guardian_locked.png",
+      "size": [
+        132,
+        195
+      ],
+      "alpha_bounds": [
+        0,
+        0,
+        132,
+        195
+      ]
+    },
+    {
+      "path": "guardian_assets/character_icon_guardian.png",
+      "size": [
+        88,
+        88
+      ],
+      "alpha_bounds": [
+        4,
+        8,
+        84,
+        81
+      ]
+    },
+    {
+      "path": "guardian_assets/character_icon_guardian_outline.png",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bounds": [
+        3,
+        5,
+        61,
+        58
+      ]
+    },
+    {
+      "path": "guardian_assets/character_select_guardian_bg.png",
+      "size": [
+        2560,
+        1200
+      ],
+      "alpha_bounds": [
+        0,
+        0,
+        2560,
+        1200
+      ]
+    },
+    {
+      "path": "guardian_assets/combat_rig/guardian_combat_character.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "alpha_bounds": [
+        38,
+        12,
+        998,
+        1528
+      ]
+    },
+    {
+      "path": "guardian_assets/combat_rig/guardian_puppet_sheet.png",
+      "size": [
+        1629,
+        965
+      ],
+      "alpha_bounds": [
+        36,
+        41,
+        1593,
+        925
+      ]
+    },
+    {
+      "path": "guardian_assets/combat_rig/guardian_puppet_sheet_chroma.png",
+      "size": [
+        1629,
+        965
+      ],
+      "alpha_bounds": [
+        0,
+        0,
+        1629,
+        965
+      ]
+    },
+    {
+      "path": "guardian_assets/combat_rig/parts/head.png",
+      "size": [
+        240,
+        255
+      ],
+      "alpha_bounds": [
+        10,
+        21,
+        178,
+        237
+      ]
+    },
+    {
+      "path": "guardian_assets/combat_rig/parts/shield.png",
+      "size": [
+        255,
+        680
+      ],
+      "alpha_bounds": [
+        17,
+        33,
+        225,
+        657
+      ]
+    },
+    {
+      "path": "guardian_assets/combat_rig/parts/shield_arm.png",
+      "size": [
+        245,
+        430
+      ],
+      "alpha_bounds": [
+        28,
+        18,
+        198,
+        391
+      ]
+    },
+    {
+      "path": "guardian_assets/combat_rig/parts/torso.png",
+      "size": [
+        335,
+        690
+      ],
+      "alpha_bounds": [
+        13,
+        27,
+        335,
+        615
+      ]
+    },
+    {
+      "path": "guardian_assets/combat_rig/parts/upper_arm.png",
+      "size": [
+        220,
+        405
+      ],
+      "alpha_bounds": [
+        27,
+        48,
+        181,
+        377
+      ]
+    },
+    {
+      "path": "guardian_assets/combat_rig/parts/weapon_forearm.png",
+      "size": [
+        215,
+        350
+      ],
+      "alpha_bounds": [
+        20,
+        14,
+        168,
+        306
+      ]
+    },
+    {
+      "path": "guardian_assets/combat_rig/parts/wing.png",
+      "size": [
+        400,
+        720
+      ],
+      "alpha_bounds": [
+        21,
+        24,
+        368,
+        684
+      ]
+    },
+    {
+      "path": "guardian_assets/energy_counter/guardian_energy_counter_preview.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        0,
+        0,
+        256,
+        256
+      ]
+    },
+    {
+      "path": "guardian_assets/energy_counter/guardian_orb_layer_1.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        0,
+        0,
+        256,
+        256
+      ]
+    },
+    {
+      "path": "guardian_assets/energy_counter/guardian_orb_layer_2.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        40,
+        35,
+        214,
+        217
+      ]
+    },
+    {
+      "path": "guardian_assets/energy_counter/guardian_orb_layer_3.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        64,
+        62,
+        189,
+        192
+      ]
+    },
+    {
+      "path": "guardian_assets/energy_counter/guardian_orb_layer_4.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        5,
+        5,
+        251,
+        251
+      ]
+    },
+    {
+      "path": "guardian_assets/energy_counter/guardian_orb_layer_5.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        5,
+        5,
+        251,
+        251
+      ]
+    },
+    {
+      "path": "guardian_assets/energy_icon/guardian_energy_card_icon.png",
+      "size": [
+        74,
+        74
+      ],
+      "alpha_bounds": [
+        9,
+        1,
+        66,
+        73
+      ]
+    },
+    {
+      "path": "guardian_assets/guardian_power_atlas.png",
+      "size": [
+        2176,
+        1904
+      ],
+      "alpha_bounds": [
+        20,
+        20,
+        2156,
+        1884
+      ]
+    },
+    {
+      "path": "guardian_assets/guardian_power_atlas_preview.png",
+      "size": [
+        768,
+        768
+      ],
+      "alpha_bounds": [
+        3,
+        3,
+        765,
+        762
+      ]
+    },
+    {
+      "path": "guardian_assets/guardian_trail_emblem.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        12,
+        12,
+        244,
+        244
+      ]
+    },
+    {
+      "path": "guardian_assets/guardian_transition_mask.png",
+      "size": [
+        2560,
+        1200
+      ],
+      "alpha_bounds": [
+        0,
+        0,
+        2560,
+        1200
+      ]
+    },
+    {
+      "path": "guardian_assets/map_marker_guardian.png",
+      "size": [
+        49,
+        64
+      ],
+      "alpha_bounds": [
+        3,
+        13,
+        46,
+        51
+      ]
+    },
+    {
+      "path": "guardian_assets/merchant/guardian_merchant.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "alpha_bounds": [
+        40,
+        9,
+        992,
+        1509
+      ]
+    },
+    {
+      "path": "guardian_assets/multiplayer_hands/multiplayer_hand_guardian_paper.png",
+      "size": [
+        422,
+        1200
+      ],
+      "alpha_bounds": [
+        6,
+        33,
+        405,
+        1199
+      ]
+    },
+    {
+      "path": "guardian_assets/multiplayer_hands/multiplayer_hand_guardian_point.png",
+      "size": [
+        422,
+        1200
+      ],
+      "alpha_bounds": [
+        6,
+        33,
+        411,
+        1199
+      ]
+    },
+    {
+      "path": "guardian_assets/multiplayer_hands/multiplayer_hand_guardian_rock.png",
+      "size": [
+        422,
+        1200
+      ],
+      "alpha_bounds": [
+        6,
+        33,
+        405,
+        1199
+      ]
+    },
+    {
+      "path": "guardian_assets/multiplayer_hands/multiplayer_hand_guardian_scissors.png",
+      "size": [
+        422,
+        1200
+      ],
+      "alpha_bounds": [
+        6,
+        57,
+        405,
+        1199
+      ]
+    },
+    {
+      "path": "guardian_assets/rest_site/guardian_rest_site.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_bounds": [
+        228,
+        101,
+        1129,
+        1137
+      ]
+    },
+    {
+      "path": "images/powers/guardian_multiplayer_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        12,
+        21,
+        244,
+        235
+      ]
+    },
+    {
+      "path": "images/powers/guardian_oath_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        23,
+        12,
+        232,
+        244
+      ]
+    }
+  ],
+  "ironeye": [
+    {
+      "path": "ironeye_assets/char_select_ironeye.png",
+      "size": [
+        132,
+        195
+      ],
+      "alpha_bounds": [
+        0,
+        0,
+        132,
+        195
+      ]
+    },
+    {
+      "path": "ironeye_assets/char_select_ironeye_locked.png",
+      "size": [
+        132,
+        195
+      ],
+      "alpha_bounds": [
+        0,
+        0,
+        132,
+        195
+      ]
+    },
+    {
+      "path": "ironeye_assets/character_icon_ironeye.png",
+      "size": [
+        88,
+        88
+      ],
+      "alpha_bounds": [
+        6,
+        4,
+        82,
+        84
+      ]
+    },
+    {
+      "path": "ironeye_assets/character_icon_ironeye_outline.png",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bounds": [
+        5,
+        3,
+        60,
+        61
+      ]
+    },
+    {
+      "path": "ironeye_assets/character_select_ironeye_bg.png",
+      "size": [
+        2560,
+        1200
+      ],
+      "alpha_bounds": [
+        0,
+        0,
+        2560,
+        1200
+      ]
+    },
+    {
+      "path": "ironeye_assets/combat_rig/ironeye_attack.png",
+      "size": [
+        1161,
+        1354
+      ],
+      "alpha_bounds": [
+        114,
+        99,
+        892,
+        1284
+      ]
+    },
+    {
+      "path": "ironeye_assets/combat_rig/ironeye_combat_character.png",
+      "size": [
+        1156,
+        1360
+      ],
+      "alpha_bounds": [
+        222,
+        55,
+        952,
+        1265
+      ]
+    },
+    {
+      "path": "ironeye_assets/combat_rig/ironeye_hit.png",
+      "size": [
+        1155,
+        1362
+      ],
+      "alpha_bounds": [
+        123,
+        58,
+        957,
+        1272
+      ]
+    },
+    {
+      "path": "ironeye_assets/energy_counter/ironeye_orb_layer_1.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        9,
+        7,
+        247,
+        248
+      ]
+    },
+    {
+      "path": "ironeye_assets/energy_counter/ironeye_orb_layer_2.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        9,
+        7,
+        247,
+        248
+      ]
+    },
+    {
+      "path": "ironeye_assets/energy_counter/ironeye_orb_layer_3.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        9,
+        7,
+        247,
+        248
+      ]
+    },
+    {
+      "path": "ironeye_assets/energy_counter/ironeye_orb_layer_4.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        9,
+        7,
+        247,
+        248
+      ]
+    },
+    {
+      "path": "ironeye_assets/energy_counter/ironeye_orb_layer_5.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        9,
+        7,
+        247,
+        248
+      ]
+    },
+    {
+      "path": "ironeye_assets/energy_icon/ironeye_energy_card_icon.png",
+      "size": [
+        74,
+        74
+      ],
+      "alpha_bounds": [
+        2,
+        2,
+        72,
+        72
+      ]
+    },
+    {
+      "path": "ironeye_assets/energy_icon/ironeye_energy_font_icon.png",
+      "size": [
+        24,
+        24
+      ],
+      "alpha_bounds": [
+        1,
+        1,
+        24,
+        24
+      ]
+    },
+    {
+      "path": "ironeye_assets/map_marker_ironeye.png",
+      "size": [
+        49,
+        64
+      ],
+      "alpha_bounds": [
+        3,
+        8,
+        46,
+        55
+      ]
+    },
+    {
+      "path": "ironeye_assets/merchant/ironeye_merchant.png",
+      "size": [
+        1156,
+        1360
+      ],
+      "alpha_bounds": [
+        56,
+        60,
+        915,
+        1281
+      ]
+    },
+    {
+      "path": "ironeye_assets/multiplayer_hands/multiplayer_hand_ironeye_paper.png",
+      "size": [
+        422,
+        1200
+      ],
+      "alpha_bounds": [
+        6,
+        42,
+        379,
+        1199
+      ]
+    },
+    {
+      "path": "ironeye_assets/multiplayer_hands/multiplayer_hand_ironeye_point.png",
+      "size": [
+        422,
+        1200
+      ],
+      "alpha_bounds": [
+        6,
+        43,
+        405,
+        1199
+      ]
+    },
+    {
+      "path": "ironeye_assets/multiplayer_hands/multiplayer_hand_ironeye_rock.png",
+      "size": [
+        422,
+        1200
+      ],
+      "alpha_bounds": [
+        6,
+        35,
+        405,
+        1199
+      ]
+    },
+    {
+      "path": "ironeye_assets/multiplayer_hands/multiplayer_hand_ironeye_scissors.png",
+      "size": [
+        422,
+        1200
+      ],
+      "alpha_bounds": [
+        6,
+        42,
+        415,
+        1199
+      ]
+    },
+    {
+      "path": "ironeye_assets/powers/air_rending_arrow_strength_down_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        16,
+        36,
+        240,
+        220
+      ]
+    },
+    {
+      "path": "ironeye_assets/powers/night_must_stay_mark_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        11,
+        12,
+        247,
+        239
+      ]
+    },
+    {
+      "path": "ironeye_assets/rest_site/ironeye_rest_site.png",
+      "size": [
+        1158,
+        1358
+      ],
+      "alpha_bounds": [
+        29,
+        107,
+        1129,
+        1198
+      ]
+    },
+    {
+      "path": "images/powers/ironeye_origin_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        9,
+        29,
+        248,
+        225
+      ]
+    }
+  ],
+  "revenant": [
+    {
+      "path": "revenant_assets/char_select_revenant.png",
+      "size": [
+        132,
+        195
+      ],
+      "alpha_bounds": [
+        0,
+        0,
+        132,
+        195
+      ]
+    },
+    {
+      "path": "revenant_assets/char_select_revenant_locked.png",
+      "size": [
+        132,
+        195
+      ],
+      "alpha_bounds": [
+        3,
+        3,
+        129,
+        192
+      ]
+    },
+    {
+      "path": "revenant_assets/character_icon_revenant.png",
+      "size": [
+        88,
+        88
+      ],
+      "alpha_bounds": [
+        6,
+        4,
+        82,
+        84
+      ]
+    },
+    {
+      "path": "revenant_assets/character_icon_revenant_outline.png",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bounds": [
+        5,
+        3,
+        60,
+        61
+      ]
+    },
+    {
+      "path": "revenant_assets/character_select_revenant_bg.png",
+      "size": [
+        2560,
+        1200
+      ],
+      "alpha_bounds": [
+        0,
+        0,
+        2560,
+        1200
+      ]
+    },
+    {
+      "path": "revenant_assets/combat/revenant_attack.png",
+      "size": [
+        1156,
+        1360
+      ],
+      "alpha_bounds": [
+        4,
+        33,
+        1152,
+        1344
+      ]
+    },
+    {
+      "path": "revenant_assets/combat/revenant_claw_attack.png",
+      "size": [
+        1156,
+        1360
+      ],
+      "alpha_bounds": [
+        10,
+        43,
+        1145,
+        1344
+      ]
+    },
+    {
+      "path": "revenant_assets/combat/revenant_death.png",
+      "size": [
+        1156,
+        1360
+      ],
+      "alpha_bounds": [
+        62,
+        16,
+        1093,
+        1344
+      ]
+    },
+    {
+      "path": "revenant_assets/combat/revenant_hit.png",
+      "size": [
+        1156,
+        1360
+      ],
+      "alpha_bounds": [
+        56,
+        16,
+        1099,
+        1344
+      ]
+    },
+    {
+      "path": "revenant_assets/combat/revenant_idle.png",
+      "size": [
+        1156,
+        1360
+      ],
+      "alpha_bounds": [
+        97,
+        16,
+        1059,
+        1344
+      ]
+    },
+    {
+      "path": "revenant_assets/combat/revenant_prayer_attack.png",
+      "size": [
+        1156,
+        1360
+      ],
+      "alpha_bounds": [
+        24,
+        16,
+        1132,
+        1344
+      ]
+    },
+    {
+      "path": "revenant_assets/energy/revenant_energy.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        17,
+        17,
+        228,
+        240
+      ]
+    },
+    {
+      "path": "revenant_assets/energy/revenant_energy_card_icon.png",
+      "size": [
+        74,
+        74
+      ],
+      "alpha_bounds": [
+        8,
+        5,
+        66,
+        69
+      ]
+    },
+    {
+      "path": "revenant_assets/energy/revenant_energy_font_icon.png",
+      "size": [
+        24,
+        24
+      ],
+      "alpha_bounds": [
+        2,
+        1,
+        22,
+        23
+      ]
+    },
+    {
+      "path": "revenant_assets/energy/revenant_orb_layer_1.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        17,
+        17,
+        228,
+        240
+      ]
+    },
+    {
+      "path": "revenant_assets/energy/revenant_orb_layer_2.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": null
+    },
+    {
+      "path": "revenant_assets/energy/revenant_orb_layer_3.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": null
+    },
+    {
+      "path": "revenant_assets/energy/revenant_orb_layer_4.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": null
+    },
+    {
+      "path": "revenant_assets/energy/revenant_orb_layer_5.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": null
+    },
+    {
+      "path": "revenant_assets/families/animations/frederick/attack_impact.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        86,
+        168,
+        442,
+        484
+      ]
+    },
+    {
+      "path": "revenant_assets/families/animations/frederick/attack_recover.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        64,
+        145,
+        415,
+        481
+      ]
+    },
+    {
+      "path": "revenant_assets/families/animations/frederick/attack_windup.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        25,
+        159,
+        369,
+        483
+      ]
+    },
+    {
+      "path": "revenant_assets/families/animations/frederick/hit_impact.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        69,
+        157,
+        425,
+        481
+      ]
+    },
+    {
+      "path": "revenant_assets/families/animations/frederick/hit_recover.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        67,
+        166,
+        421,
+        481
+      ]
+    },
+    {
+      "path": "revenant_assets/families/animations/frederick/idle.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        66,
+        156,
+        430,
+        481
+      ]
+    },
+    {
+      "path": "revenant_assets/families/animations/helen/attack_impact.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        36,
+        122,
+        476,
+        480
+      ]
+    },
+    {
+      "path": "revenant_assets/families/animations/helen/attack_recover.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        111,
+        133,
+        401,
+        480
+      ]
+    },
+    {
+      "path": "revenant_assets/families/animations/helen/attack_windup.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        87,
+        126,
+        426,
+        479
+      ]
+    },
+    {
+      "path": "revenant_assets/families/animations/helen/hit_impact.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        118,
+        146,
+        423,
+        480
+      ]
+    },
+    {
+      "path": "revenant_assets/families/animations/helen/hit_recover.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        81,
+        130,
+        412,
+        480
+      ]
+    },
+    {
+      "path": "revenant_assets/families/animations/helen/idle.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        78,
+        136,
+        434,
+        480
+      ]
+    },
+    {
+      "path": "revenant_assets/families/animations/sebastian/attack_impact.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        36,
+        119,
+        476,
+        492
+      ]
+    },
+    {
+      "path": "revenant_assets/families/animations/sebastian/attack_recover.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        101,
+        161,
+        410,
+        480
+      ]
+    },
+    {
+      "path": "revenant_assets/families/animations/sebastian/attack_windup.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        83,
+        136,
+        428,
+        491
+      ]
+    },
+    {
+      "path": "revenant_assets/families/animations/sebastian/hit_impact.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        83,
+        131,
+        428,
+        480
+      ]
+    },
+    {
+      "path": "revenant_assets/families/animations/sebastian/hit_recover.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        80,
+        129,
+        425,
+        480
+      ]
+    },
+    {
+      "path": "revenant_assets/families/animations/sebastian/idle.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        67,
+        149,
+        446,
+        480
+      ]
+    },
+    {
+      "path": "revenant_assets/families/frederick.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        66,
+        156,
+        430,
+        481
+      ]
+    },
+    {
+      "path": "revenant_assets/families/helen.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        78,
+        136,
+        434,
+        480
+      ]
+    },
+    {
+      "path": "revenant_assets/families/necro.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        28,
+        18,
+        488,
+        496
+      ]
+    },
+    {
+      "path": "revenant_assets/families/sebastian.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha_bounds": [
+        67,
+        149,
+        446,
+        480
+      ]
+    },
+    {
+      "path": "revenant_assets/map_marker_revenant.png",
+      "size": [
+        49,
+        64
+      ],
+      "alpha_bounds": [
+        4,
+        4,
+        47,
+        60
+      ]
+    },
+    {
+      "path": "revenant_assets/merchant/revenant_merchant.png",
+      "size": [
+        1156,
+        1360
+      ],
+      "alpha_bounds": [
+        38,
+        22,
+        1117,
+        1338
+      ]
+    },
+    {
+      "path": "revenant_assets/multiplayer_hands/revenant_paper.png",
+      "size": [
+        422,
+        1200
+      ],
+      "alpha_bounds": [
+        29,
+        40,
+        410,
+        1199
+      ]
+    },
+    {
+      "path": "revenant_assets/multiplayer_hands/revenant_point.png",
+      "size": [
+        422,
+        1200
+      ],
+      "alpha_bounds": [
+        6,
+        34,
+        416,
+        1199
+      ]
+    },
+    {
+      "path": "revenant_assets/multiplayer_hands/revenant_rock.png",
+      "size": [
+        422,
+        1200
+      ],
+      "alpha_bounds": [
+        48,
+        181,
+        383,
+        1199
+      ]
+    },
+    {
+      "path": "revenant_assets/multiplayer_hands/revenant_scissors.png",
+      "size": [
+        422,
+        1200
+      ],
+      "alpha_bounds": [
+        6,
+        59,
+        398,
+        1199
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/ancient_dragon_faith_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        12,
+        17,
+        244,
+        238
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/beast_claw_mark_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        17,
+        12,
+        238,
+        244
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/blessing_of_grace_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        20,
+        12,
+        236,
+        244
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/change_hands_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        12,
+        18,
+        244,
+        237
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/chanting_blessing_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        24,
+        12,
+        231,
+        244
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/fight_for_me_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        25,
+        12,
+        231,
+        244
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/following_shadow_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        19,
+        12,
+        237,
+        244
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/frederick_headbutt_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        12,
+        29,
+        244,
+        227
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/frederick_heavy_hammer_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        12,
+        18,
+        244,
+        238
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/freeze_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        21,
+        12,
+        234,
+        244
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/frenzied_three_fingers_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        39,
+        12,
+        216,
+        244
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/ghostly_touch_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        12,
+        13,
+        244,
+        242
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/golden_order_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        12,
+        13,
+        244,
+        243
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/heavy_echo_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        12,
+        30,
+        244,
+        226
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/helen_retreat_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        12,
+        17,
+        244,
+        238
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/helen_step_strike_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        12,
+        41,
+        244,
+        215
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/light_spirit_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        41,
+        12,
+        215,
+        244
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/mutual_understanding_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        12,
+        33,
+        244,
+        223
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/necro_attack_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        30,
+        21,
+        233,
+        237
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/necro_protect_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        41,
+        21,
+        216,
+        237
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/necromancy_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        14,
+        12,
+        242,
+        244
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/pack_up_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        12,
+        15,
+        244,
+        240
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/relay_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        12,
+        24,
+        244,
+        231
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/revenant_summon_controller_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        8,
+        8,
+        248,
+        248
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/sebastian_roar_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        12,
+        26,
+        244,
+        230
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/sebastian_slam_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        12,
+        12,
+        244,
+        244
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/soulguard_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        22,
+        12,
+        234,
+        244
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/spirit_form_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        17,
+        12,
+        239,
+        244
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/spirit_link_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        12,
+        80,
+        244,
+        175
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/undying_march_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        12,
+        23,
+        244,
+        232
+      ]
+    },
+    {
+      "path": "revenant_assets/powers/white_shadow_lure_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        12,
+        15,
+        244,
+        240
+      ]
+    },
+    {
+      "path": "revenant_assets/rest_site/revenant_rest_site.png",
+      "size": [
+        1156,
+        1360
+      ],
+      "alpha_bounds": [
+        43,
+        109,
+        1113,
+        1319
+      ]
+    },
+    {
+      "path": "revenant_assets/revenant_art_qa_contact_sheet.png",
+      "size": [
+        1280,
+        1440
+      ],
+      "alpha_bounds": [
+        0,
+        0,
+        1280,
+        1440
+      ]
+    },
+    {
+      "path": "revenant_assets/revenant_transition_mask.png",
+      "size": [
+        2560,
+        1200
+      ],
+      "alpha_bounds": [
+        30,
+        0,
+        2531,
+        1200
+      ]
+    }
+  ],
+  "duchess": [
+    {
+      "path": "duchess_assets/char_select_duchess.png",
+      "size": [
+        132,
+        195
+      ],
+      "alpha_bounds": [
+        0,
+        0,
+        132,
+        195
+      ]
+    },
+    {
+      "path": "duchess_assets/char_select_duchess_locked.png",
+      "size": [
+        132,
+        195
+      ],
+      "alpha_bounds": [
+        0,
+        0,
+        132,
+        195
+      ]
+    },
+    {
+      "path": "duchess_assets/character_icon_duchess.png",
+      "size": [
+        88,
+        88
+      ],
+      "alpha_bounds": [
+        12,
+        4,
+        75,
+        84
+      ]
+    },
+    {
+      "path": "duchess_assets/character_icon_duchess_outline.png",
+      "size": [
+        64,
+        64
+      ],
+      "alpha_bounds": [
+        9,
+        3,
+        55,
+        61
+      ]
+    },
+    {
+      "path": "duchess_assets/character_select_duchess_bg.png",
+      "size": [
+        2560,
+        1200
+      ],
+      "alpha_bounds": [
+        0,
+        0,
+        2560,
+        1200
+      ]
+    },
+    {
+      "path": "duchess_assets/combat_rig/duchess_attack.png",
+      "size": [
+        1600,
+        1280
+      ],
+      "alpha_bounds": [
+        228,
+        310,
+        1372,
+        1240
+      ]
+    },
+    {
+      "path": "duchess_assets/combat_rig/duchess_block.png",
+      "size": [
+        2200,
+        1280
+      ],
+      "alpha_bounds": [
+        684,
+        40,
+        1914,
+        1240
+      ]
+    },
+    {
+      "path": "duchess_assets/combat_rig/duchess_combat_character.png",
+      "size": [
+        1600,
+        1280
+      ],
+      "alpha_bounds": [
+        444,
+        40,
+        1156,
+        1240
+      ]
+    },
+    {
+      "path": "duchess_assets/combat_rig/duchess_hit.png",
+      "size": [
+        1600,
+        1280
+      ],
+      "alpha_bounds": [
+        459,
+        140,
+        1140,
+        1240
+      ]
+    },
+    {
+      "path": "duchess_assets/energy_counter/duchess_orb_layer_1.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        68,
+        68,
+        188,
+        188
+      ]
+    },
+    {
+      "path": "duchess_assets/energy_counter/duchess_orb_layer_2.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        48,
+        48,
+        208,
+        208
+      ]
+    },
+    {
+      "path": "duchess_assets/energy_counter/duchess_orb_layer_3.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        32,
+        32,
+        224,
+        224
+      ]
+    },
+    {
+      "path": "duchess_assets/energy_counter/duchess_orb_layer_4.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        16,
+        16,
+        240,
+        240
+      ]
+    },
+    {
+      "path": "duchess_assets/energy_counter/duchess_orb_layer_5.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        16,
+        12,
+        240,
+        244
+      ]
+    },
+    {
+      "path": "duchess_assets/energy_icon/duchess_energy_card_icon.png",
+      "size": [
+        74,
+        74
+      ],
+      "alpha_bounds": [
+        2,
+        1,
+        72,
+        73
+      ]
+    },
+    {
+      "path": "duchess_assets/energy_icon/duchess_energy_font_icon.png",
+      "size": [
+        24,
+        24
+      ],
+      "alpha_bounds": [
+        0,
+        0,
+        24,
+        24
+      ]
+    },
+    {
+      "path": "duchess_assets/map_marker_duchess.png",
+      "size": [
+        49,
+        64
+      ],
+      "alpha_bounds": [
+        2,
+        3,
+        46,
+        62
+      ]
+    },
+    {
+      "path": "duchess_assets/merchant/duchess_merchant.png",
+      "size": [
+        1400,
+        1280
+      ],
+      "alpha_bounds": [
+        480,
+        40,
+        919,
+        1240
+      ]
+    },
+    {
+      "path": "duchess_assets/multiplayer_hands/duchess_point.png",
+      "size": [
+        422,
+        1200
+      ],
+      "alpha_bounds": [
+        103,
+        28,
+        299,
+        950
+      ]
+    },
+    {
+      "path": "duchess_assets/multiplayer_hands/multiplayer_hand_duchess_paper.png",
+      "size": [
+        422,
+        1200
+      ],
+      "alpha_bounds": [
+        6,
+        42,
+        404,
+        1199
+      ]
+    },
+    {
+      "path": "duchess_assets/multiplayer_hands/multiplayer_hand_duchess_point.png",
+      "size": [
+        422,
+        1200
+      ],
+      "alpha_bounds": [
+        0,
+        43,
+        411,
+        1200
+      ]
+    },
+    {
+      "path": "duchess_assets/multiplayer_hands/multiplayer_hand_duchess_rock.png",
+      "size": [
+        422,
+        1200
+      ],
+      "alpha_bounds": [
+        6,
+        168,
+        407,
+        1199
+      ]
+    },
+    {
+      "path": "duchess_assets/multiplayer_hands/multiplayer_hand_duchess_scissors.png",
+      "size": [
+        422,
+        1200
+      ],
+      "alpha_bounds": [
+        6,
+        34,
+        401,
+        1199
+      ]
+    },
+    {
+      "path": "duchess_assets/rest_site/duchess_rest_site.png",
+      "size": [
+        1400,
+        1280
+      ],
+      "alpha_bounds": [
+        200,
+        40,
+        1199,
+        1240
+      ]
+    },
+    {
+      "path": "images/powers/duchess_beat_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        43,
+        12,
+        211,
+        233
+      ]
+    },
+    {
+      "path": "images/powers/duchess_concealment_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        16,
+        22,
+        250,
+        229
+      ]
+    },
+    {
+      "path": "images/powers/duchess_dodge_moment_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        37,
+        12,
+        219,
+        244
+      ]
+    },
+    {
+      "path": "images/powers/duchess_end_turn_dodge_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        16,
+        42,
+        237,
+        188
+      ]
+    },
+    {
+      "path": "images/powers/duchess_end_turn_moment_block_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        18,
+        14,
+        239,
+        231
+      ]
+    },
+    {
+      "path": "images/powers/duchess_end_turn_retain_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        36,
+        27,
+        219,
+        212
+      ]
+    },
+    {
+      "path": "images/powers/duchess_eternal_form_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        8,
+        7,
+        248,
+        247
+      ]
+    },
+    {
+      "path": "images/powers/duchess_eternal_restage_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        33,
+        16,
+        237,
+        218
+      ]
+    },
+    {
+      "path": "images/powers/duchess_full_block_radiant_blade_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        11,
+        10,
+        221,
+        238
+      ]
+    },
+    {
+      "path": "images/powers/duchess_graceful_sword_dance_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        26,
+        22,
+        231,
+        237
+      ]
+    },
+    {
+      "path": "images/powers/duchess_moment_description_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        43,
+        12,
+        212,
+        244
+      ]
+    },
+    {
+      "path": "images/powers/duchess_moment_five_block_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        52,
+        19,
+        222,
+        212
+      ]
+    },
+    {
+      "path": "images/powers/duchess_moment_five_draw_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        12,
+        26,
+        244,
+        229
+      ]
+    },
+    {
+      "path": "images/powers/duchess_moment_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        43,
+        12,
+        212,
+        244
+      ]
+    },
+    {
+      "path": "images/powers/duchess_phantom_killer_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        24,
+        12,
+        244,
+        246
+      ]
+    },
+    {
+      "path": "images/powers/duchess_radiant_blade_growth_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        53,
+        7,
+        203,
+        249
+      ]
+    },
+    {
+      "path": "images/powers/duchess_reaction_block_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        37,
+        12,
+        219,
+        244
+      ]
+    },
+    {
+      "path": "images/powers/duchess_reaction_description_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        14,
+        12,
+        242,
+        244
+      ]
+    },
+    {
+      "path": "images/powers/duchess_reaction_draw_block_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        18,
+        19,
+        236,
+        241
+      ]
+    },
+    {
+      "path": "images/powers/duchess_reaction_draw_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        12,
+        10,
+        246,
+        242
+      ]
+    },
+    {
+      "path": "images/powers/duchess_replay_moment_three_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        41,
+        10,
+        229,
+        237
+      ]
+    },
+    {
+      "path": "images/powers/duchess_shadow_sword_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        74,
+        24,
+        213,
+        233
+      ]
+    },
+    {
+      "path": "images/powers/duchess_shuffle_block_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        23,
+        20,
+        233,
+        235
+      ]
+    },
+    {
+      "path": "images/powers/duchess_temporary_strength_down_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        56,
+        29,
+        213,
+        222
+      ]
+    },
+    {
+      "path": "images/powers/duchess_turn_start_swap_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        10,
+        10,
+        237,
+        236
+      ]
+    },
+    {
+      "path": "images/powers/duchess_zero_cost_attack_power.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bounds": [
+        15,
+        11,
+        238,
+        235
+      ]
+    }
+  ]
+}

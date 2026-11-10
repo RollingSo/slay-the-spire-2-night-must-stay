@@ -54,5 +54,14 @@
   "DUCHESS.description": "She turns the hands of her pocketwatch, weaving Dodge and Reaction through her deck before striking at the perfect Moment.",
   "DUCHESS.aromaPrinciple": "[sine]If it will help everyone, I am willing to try.[/sine]",
   "DUCHESS.eventDeathPrevention": "Someone is still waiting. I cannot stop here.",
-  "DUCHESS.goldMonologue": "[sine]Enough for the road ahead. I should set some aside for the others.[/sine]"
+  "DUCHESS.goldMonologue": "[sine]Enough for the road ahead. I should set some aside for the others.[/sine]",
+  "WYLDER.title": "Wylder",
+  "WYLDER.titleObject": "Wylder",
+  "WYLDER.pronounSubject": "he",
+  "WYLDER.pronounObject": "him",
+  "WYLDER.pronounPossessive": "his",
+  "WYLDER.possessiveAdjective": "his",
+  "WYLDER.cardsModifierTitle": "Wylder",
+  "WYLDER.cardsModifierDescription": "Wylder cards",
+  "WYLDER.description": "Enter Pursuit with a claw and break the enemy stance with attacks."
 }

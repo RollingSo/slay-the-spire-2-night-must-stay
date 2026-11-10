@@ -1,0 +1,50 @@
+[
+  {
+    "key": "sweep",
+    "filename": "exec-d7d3fb63-3c6e-4185-9264-ab6738fb3cc4.png",
+    "prompt": "Use case illustration-story; 1000x760 landscape fantasy card artwork. Strictly follow image1 action pose, image2 Wylder identity, image3 flat graphic rendering. Wylder closed silver feather-wing helmet with black visor, black scarf, navy coat with white water motifs, silver grouped scale armor, brown gloves. Two arms, two legs with continuous shoulder-elbow-wrist-hand joints. Chunky silhouettes, large hard-edge flat cel color planes, minimal texture. One physically rigid greatsword, straight blade/grip axis, open forked pommel, no bent steel or extra weapons. No text, UI or card frame. Match the exact mannequin reference1 as if dressing it in Wylder armor. CAMERA SEES HIS BACK, NO FRONT CHESTPLATE. Body twisted facing screen right, helmet looks right. RIGHT shoulder on screen LEFT reaches backward left to bent elbow and RIGHT hand firmly gripping sword diagonally DOWN-LEFT. LEFT shoulder on screen RIGHT has LEFT arm extending forward, EMPTY left fist reaching screen-right. Torso rear and dark cape clearly visible. Front knee bent, rear leg extends backward; single white horizontal slash band, flat plum background. Never swap hands or mirror entire pose.",
+    "inputs": [
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/stamp_pose_20261027/wylder_stamp_sweep_reference.png",
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/wylder_assets/approved_sources/idle.png",
+      "D:/STS2/images/packed/card_portraits/silent/strike_silent.png"
+    ]
+  },
+  {
+    "key": "lion",
+    "filename": "exec-f642f4e4-dc8a-4011-9f02-115c28b4659f.png",
+    "prompt": "Use case illustration-story; 1000x760 landscape fantasy card artwork. Strictly follow image1 action pose, image2 Wylder identity, image3 flat graphic rendering. Wylder closed silver feather-wing helmet with black visor, black scarf, navy coat with white water motifs, silver grouped scale armor, brown gloves. Two arms, two legs with continuous shoulder-elbow-wrist-hand joints. Chunky silhouettes, large hard-edge flat cel color planes, minimal texture. One physically rigid greatsword, straight blade/grip axis, open forked pommel, no bent steel or extra weapons. No text, UI or card frame. Replicate the exact forward somersault LANDING silhouette of image1, viewed mostly from the side/back: torso nearly horizontal and head lowered at right, hips high-left, rear leg stretched to left, near front knee folded under body with its boot flat on ground. Two anatomically clear arms: RIGHT shoulder extends down to elbow and right hand grips the greatsword handle near the ground; far LEFT shoulder extends down to bent elbow and left hand plants on the ground in front of the knee as a brace. ONE straight sword extends low from right hand to right edge. No hair plume, no extra arms. One pale vertical downward slash on right, simple rust-red background.",
+    "inputs": [
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/lions_claw_landing_20261027/wylder_lions_claw_reference.png",
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/wylder_assets/approved_sources/idle.png",
+      "D:/STS2/images/packed/card_portraits/silent/strike_silent.png"
+    ]
+  },
+  {
+    "key": "vacuum",
+    "filename": "exec-952ab9b8-f513-48e3-972c-761fe83593b8.png",
+    "prompt": "Use case illustration-story; 1000x760 landscape fantasy card artwork. Strictly follow image1 action pose, image2 Wylder identity, image3 flat graphic rendering. Wylder closed silver feather-wing helmet with black visor, black scarf, navy coat with white water motifs, silver grouped scale armor, brown gloves. Two arms, two legs with continuous shoulder-elbow-wrist-hand joints. Chunky silhouettes, large hard-edge flat cel color planes, minimal texture. One physically rigid greatsword, straight blade/grip axis, open forked pommel, no bent steel or extra weapons. No text, UI or card frame. Crouched rear-side Wylder slams sword TIP into ground at lower-right, real visible contact. BOTH arms bend down and TWO hands grip one straight greatsword by one navy handle. Place a clearly visible OPEN FORKED pommel behind the rear hand, then grip, guard, uninterrupted silver blade, tip touching ground all on one straight line. No second blue grip or duplicate hilt on blade. Huge white vertical wind crescent rises ahead of grounded sword; slate grey quiet background.",
+    "inputs": [
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/vacuum_slice_20261027/wylder_vacuum_slice_reference.png",
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/wylder_assets/approved_sources/idle.png",
+      "D:/STS2/images/packed/card_portraits/silent/strike_silent.png"
+    ]
+  },
+  {
+    "key": "eochaid",
+    "filename": "exec-1be392a9-9fb9-4c2b-b08a-3e96c69be6df.png",
+    "prompt": "Use case illustration-story; 1000x760 landscape fantasy card artwork. Strictly follow image1 action pose, image2 Wylder identity, image3 flat graphic rendering. Wylder closed silver feather-wing helmet with black visor, black scarf, navy coat with white water motifs, silver grouped scale armor, brown gloves. Two arms, two legs with continuous shoulder-elbow-wrist-hand joints. Chunky silhouettes, large hard-edge flat cel color planes, minimal texture. One physically rigid greatsword, straight blade/grip axis, open forked pommel, no bent steel or extra weapons. No text, UI or card frame. Strict action: side BACK view, helmeted head bowed down-left. Anatomical RIGHT shoulder near screen left extends arm down-left, empty open right hand near bottom-left. LEFT shoulder near upper screen-right extends into raised elbow, then LEFT FOREARM CROSSES HORIZONTALLY ACROSS FRONT OF HELMET TOWARD LEFT, ending in separate empty left hand near center-left. This crossed guarding forearm is essential and must visibly overlap helmet; do not raise left hand above the head or behind body. Hips twist screen-right, knees bent. One straight greatsword with forked pommel floats detached above and to the right, pointed upper-right, red helical ribbon from bottom-left to upper-right along sword axis. No hand touches weapon. Cream background.",
+    "inputs": [
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/wylder_assets/approved_sources/idle.png",
+      "D:/STS2/images/packed/card_portraits/silent/strike_silent.png"
+    ]
+  },
+  {
+    "key": "flame",
+    "filename": "exec-8dc9d701-78b8-4616-9b72-4b83ebed5d54.png",
+    "prompt": "Use case illustration-story; 1000x760 landscape fantasy card artwork. Strictly follow image1 action pose, image2 Wylder identity, image3 flat graphic rendering. Wylder closed silver feather-wing helmet with black visor, black scarf, navy coat with white water motifs, silver grouped scale armor, brown gloves. Two arms, two legs with continuous shoulder-elbow-wrist-hand joints. Chunky silhouettes, large hard-edge flat cel color planes, minimal texture. One physically rigid greatsword, straight blade/grip axis, open forked pommel, no bent steel or extra weapons. No text, UI or card frame. Lower-third character crouches forward in rear-side view, two separate connected arms grip the same ONE straight greatsword and perform a low horizontal sweep toward right. Display sword in the foreground, near-horizontal line from distinct OPEN TWO-PRONG FORKED POMMEL on left, through blue grip and two gloves, silver guard and rigid straight blade pointing right. Pommel must be OPEN, visibly TWO separate swept silver prongs with a gap, not a closed diamond or ring. An orange-yellow flaming sweep arcs from lower-left toward upper-right behind the blade; do not obscure hands. Simplified warm dark russet flat background, no UI or landscape.",
+    "inputs": [
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/wylder_assets/approved_sources/idle.png",
+      "D:/STS2/images/packed/card_portraits/silent/strike_silent.png"
+    ]
+  }
+]

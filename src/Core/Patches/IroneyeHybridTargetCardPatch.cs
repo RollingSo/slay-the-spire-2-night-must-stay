@@ -25,7 +25,8 @@ internal static class IroneyeHybridTargetState
     public static CardModel ActiveCard => ActiveCardPlays.Values.FirstOrDefault();
 
     public static bool IsHybridTargetCard(CardModel card) =>
-        card is AdvanceAndRetreat
+        card is WylderGrappleShot
+            or AdvanceAndRetreat
             or IroneyeSwift
             or AncientDragonLightning { IsChargeComplete: false }
             or BeastClaw { IsChargeComplete: false }
