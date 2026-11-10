@@ -90,13 +90,16 @@ public sealed class WylderDebut : WylderCard
     { await WylderPursuitPower.Enter(c, Owner.Creature, this); await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner); }
     protected override void OnUpgrade() => DynamicVars.Energy.UpgradeValueBy(1m);
 }
-public sealed class WylderSixthSense : WylderCard
+public sealed class WylderSixthSense : WylderDesperationCard
 {
     private bool _spent;
     public WylderSixthSense() : base(0, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
     public override string PortraitPath => "res://images/packed/card_portraits/wylder/wylder_sixth_sense.png";
-    public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Unplayable };
-    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new DynamicVar("HealPercent", 30m) };
+    public override bool GainsBlock => true;
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
+        { new BlockVar(10m, ValueProp.Move), new DynamicVar("HealPercent", 30m) };
+    protected override Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
+        CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block.BaseValue, ValueProp.Move, play);
     public override bool ShouldDie(Creature creature) => creature != Owner?.Creature || _spent
         || Pile?.Type is not (PileType.Hand or PileType.Draw or PileType.Discard or PileType.Exhaust or PileType.Play);
     public override async Task AfterPreventingDeath(Creature creature)
@@ -185,7 +188,7 @@ public sealed class WylderBoldness : WylderAbilityCard<WylderBoldnessPower>
 {
     public WylderBoldness() : base(1,CardRarity.Uncommon) { }
     public override string PortraitPath => "res://images/packed/card_portraits/wylder/wylder_boldness.png";
-    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new DynamicVar("Block",5m) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new DynamicVar("Block",4m) };
     protected override void OnUpgrade() => DynamicVars["Block"].UpgradeValueBy(2m);
 }
 public sealed class WylderNightForm : WylderAbilityCard<WylderNightFormPower>
@@ -204,13 +207,11 @@ public sealed class WylderRemainingEmber : WylderAbilityCard<WylderRemainingEmbe
 public sealed class WylderEruption : WylderAbilityCard<WylderEruptionPower>
 {
     public WylderEruption() : base(1, CardRarity.Uncommon) { }
-    internal const int BaseDamage = 7, UpgradedDamage = 9;
-    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new DynamicVar("Damage", BaseDamage) };
-    protected override void OnUpgrade() => DynamicVars["Damage"].UpgradeValueBy(2m);
+    protected override void OnUpgrade() => AddKeyword(CardKeyword.Innate);
 }
 public sealed class WylderUndying : WylderAbilityCard<WylderUndyingPower>
 {
-    public WylderUndying() : base(1,CardRarity.Rare) { }
+    public WylderUndying() : base(2,CardRarity.Rare) { }
     public override string PortraitPath => "res://images/packed/card_portraits/wylder/wylder_undying.png";
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Append(HoverTipFactory.FromPower<VigorPower>());
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);

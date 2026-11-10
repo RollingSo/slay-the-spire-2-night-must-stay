@@ -153,8 +153,9 @@ internal static partial class WylderBattleArtRegression
             lion.DynamicVars.Damage.UpdateCardPreview(lion, CardPreviewMode.Normal, _enemies[0], true);
             Check(lion.DynamicVars.Damage.PreviewValue == 40.5m, "Lion native Strength/Vulnerable preview");
             Play(lion);
-            Check(ResolvedDamage.Single() == 40 && Rewards.Single().Kind == nameof(PhantomImbalancePower)
-                && Rewards.Single().Amount == 2 && Rewards.Single().Target == _enemies[0], "Lion actual modified damage reaches Break40 and applies Imbalance2 to struck enemy");
+            Check(ResolvedDamage.Single() == 40
+                && Rewards.Any(r => r.Kind == nameof(PhantomImbalancePower) && r.Amount == 3 && r.Target == _enemies[0]),
+                "Upgraded Lion actual modified damage reaches Break40 and applies Imbalance3 to the struck enemy");
             Console.WriteLine($"PASS: {_checks} Wylder battle-art checks: base/upgraded models, four-locale rendered text/energy icon, native damage/block previews, native multihit/AOE builders, Break rewards and Finesse Pursuit cleanup (UI commands stubbed).");
             ReviewedPlannerCards();
             HorizontalReviewCards();
@@ -284,11 +285,16 @@ internal static partial class WylderBattleArtRegression
             WylderCombatEvents.AfterDamage(null!,_owner.Creature,_enemies[0],new DamageResult(_enemies[0],ValueProp.Move){BlockedDamage=19},ValueProp.Move,attack).GetAwaiter().GetResult();
             Check(!Rewards.Any(r=>r.Kind=="Block"),"Boldness does not trigger below 20 damage");
             WylderCombatEvents.AfterDamage(null!,_owner.Creature,_enemies[0],new DamageResult(_enemies[0],ValueProp.Move){BlockedDamage=20},ValueProp.Move,attack).GetAwaiter().GetResult();
-            Check(Rewards.Single(r=>r.Kind=="Block").Amount==(up?7:5),"Boldness triggers at exact 20 and includes blocked attack damage");
+            Check(Rewards.Single(r=>r.Kind=="Block").Amount==(up?6:4),"Boldness triggers at exact 20 and includes blocked attack damage");
             Fixture();
             var sense=Card(ModelDb.Card<WylderSixthSense>(),up);
             Put(sense,PileType.Hand);
-            Check(!sense.ShouldDie(_owner.Creature) && sense.ShouldDie(_enemies[0]) && sense.Keywords.Contains(CardKeyword.Unplayable),"Sixth Sense death prevention owner and unplayable");
+            Check(!sense.ShouldDie(_owner.Creature) && sense.ShouldDie(_enemies[0])
+                && !sense.Keywords.Contains(CardKeyword.Unplayable) && sense is WylderDesperationCard,
+                "Sixth Sense death prevention owner and Desperation");
+            Play(sense);
+            Check(Rewards.Single(r=>r.Kind=="Block").Amount==10 && sense.DynamicVars.Block.BaseValue==10,
+                "Sixth Sense gains 10 Block");
             Check(sense.DynamicVars["HealPercent"].BaseValue==(up?50:30),"Sixth Sense heal upgrade");
         }
         Console.WriteLine($"PASS: {_checks-before} sheet revision checks: revised metadata, native effects, full-Block thresholds, upgrades and death-prevention eligibility.");
@@ -840,7 +846,8 @@ internal static partial class WylderBattleArtRegression
                 foreach (var pair in card.DynamicVars)
                     Check(pair.Value.WasJustUpgraded == (upgraded && card.MaxUpgradeLevel > 0
                         && ((pair.Key == "Damage" && card is not WylderFlamingStrike) || pair.Key == "Block" || (card is WylderFlameOfRedmanes && pair.Key == "Vigor")
-                            || (card is WylderVacuumSlice && pair.Key == "Weak"))),
+                            || (card is WylderVacuumSlice && pair.Key == "Weak")
+                            || (card is WylderLionsClaw && pair.Key == "Imbalance"))),
                         "Only changed variables green " + card.Id + "/" + pair.Key);
             }
             foreach (string locale in new[] { "zhs", "eng", "jpn", "kor" })
@@ -1021,10 +1028,10 @@ internal static partial class WylderBattleArtRegression
             Check(lion.EnergyCost.GetResolved() == 2 && lion.Type == CardType.Attack && lion.Rarity == CardRarity.Uncommon,
                 "Lions Claw revised metadata");
             Check(lion.DynamicVars.Damage.BaseValue == (upgraded ? 24 : 18) && !lion.GainsBlock
-                && !lion.DynamicVars.ContainsKey("Block"), "Lions Claw only damage upgrade; old Block removed");
-            Check(lion.DynamicVars["Break"].BaseValue == 40 && lion.DynamicVars["Imbalance"].BaseValue == 2
-                && !lion.DynamicVars["Break"].WasJustUpgraded && !lion.DynamicVars["Imbalance"].WasJustUpgraded,
-                "Fixed Break40 and Imbalance2 never marked as upgraded");
+                && !lion.DynamicVars.ContainsKey("Block"), "Lions Claw damage upgrade; old Block removed");
+            Check(lion.DynamicVars["Break"].BaseValue == 40 && lion.DynamicVars["Imbalance"].BaseValue == (upgraded ? 3 : 2)
+                && !lion.DynamicVars["Break"].WasJustUpgraded && lion.DynamicVars["Imbalance"].WasJustUpgraded == upgraded,
+                "Fixed Break40 and upgraded Imbalance2-to-3");
             var play = TrackingArrowRegression.MakePlay(lion, _owner);
             lion.BeforeCardPlayed(play).GetAwaiter().GetResult();
             Hit(lion, _enemies[0], 39, blocked);
@@ -1032,13 +1039,18 @@ internal static partial class WylderBattleArtRegression
             Hit(lion, _enemies[0], 1, blocked);
             Check(!_enemies[0].HasPower<PhantomImbalancePower>(), "Sub-threshold hits do not accumulate into Break40");
             Hit(lion, _enemies[0], 40, blocked);
-            Check(_enemies[0].GetPowerAmount<PhantomImbalancePower>() == 2 && !_enemies[1].HasPower<PhantomImbalancePower>(),
-                "One hit at exactly40 applies2 Imbalance only to the damaged enemy");
+            Check(Rewards.Any(r => r.Kind == nameof(PhantomImbalancePower) && r.Amount == (upgraded ? 3 : 2)
+                    && r.Target == _enemies[0]) && !_enemies[1].HasPower<PhantomImbalancePower>(),
+                "One hit at exactly40 applies the upgraded Imbalance only to the damaged enemy");
+            Check(upgraded ? Rewards.Any(r => r.Kind == "Stun") && !_enemies[0].HasPower<PhantomImbalancePower>()
+                    : _enemies[0].GetPowerAmount<PhantomImbalancePower>() == 2,
+                "Upgraded Imbalance3 reaches the native solo Stun threshold");
+            int rewardCount = Rewards.Count;
             Hit(lion, _enemies[0], 100, blocked); Hit(lion, _enemies[1], 100, blocked);
-            Check(Rewards.Count == 1 && Rewards[0].Kind == nameof(PhantomImbalancePower), "Break triggers once per CardPlay, no self Block");
+            Check(Rewards.Count == rewardCount && Rewards[0].Kind == nameof(PhantomImbalancePower), "Break triggers once per CardPlay, no self Block");
             lion.AfterCardPlayedLate(null!, play).GetAwaiter().GetResult();
             Hit(lion, _enemies[1], 40, blocked);
-            Check(Rewards.Count == 1, "Post-play hits cannot trigger Break");
+            Check(Rewards.Count == rewardCount, "Post-play hits cannot trigger Break");
 
             Fixture();
             AddPower<PhantomImbalancePower>(_enemies[0], 1);
@@ -1048,7 +1060,8 @@ internal static partial class WylderBattleArtRegression
             Hit(lion, _enemies[0], 40, blocked);
             Check(Rewards.Count(r => r.Kind == "Stun") == 1 && Rewards.Single(r => r.Kind == "Stun").Target == _enemies[0],
                 "Existing1 plus new2 uses existing Imbalance threshold to Stun once");
-            Check(!_enemies[0].HasPower<PhantomImbalancePower>(), "Threshold consumes3 existing Imbalance stacks");
+            Check(_enemies[0].GetPowerAmount<PhantomImbalancePower>() == (upgraded ? 1 : 0),
+                "Stun consumes the native three-stack threshold and preserves any upgraded excess");
         }
         Fixture();
         var lethal = Card(ModelDb.Card<WylderLionsClaw>(), false);

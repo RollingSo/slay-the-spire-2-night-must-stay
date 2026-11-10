@@ -103,7 +103,7 @@ internal static class WylderRegression
                         WylderRuinousGhostflame => 1,
                         WylderSpark or WylderResolve or WylderDebut or WylderSixthSense or WylderBideTheMoment => 0,
                         WylderExecution => up?1:2,
-                        WylderUndying => up?0:1,
+                        WylderUndying => up?1:2,
                         WylderGoldenParry or WylderNightForm => 3, WylderMartialMastery => up?1:2, WylderDefiance => 2, WylderMultiplayerCard or WylderTinder or WylderBreakthrough or WylderLifeFromDeath => 0,
                         WylderAerialStake => up?2:3,
                         WylderCounterRush => 3,
@@ -111,7 +111,7 @@ internal static class WylderRegression
                         WylderSlidingLeap => 2,
                         WylderSidestep or WylderRelentlessAdvance or WylderForcedBreakout or WylderNightRespite => 0,
                         WylderAssaultDrop or WylderCriticalStrike => 3,
-                        WylderAirCleavingChase or WylderTakersFlames or WylderInfernalSlash or WylderFlameChaseSlash
+                        WylderFatesJudgment or WylderAirCleavingChase or WylderTakersFlames or WylderInfernalSlash or WylderFlameChaseSlash
                             or WylderCounteroffensive or WylderCliffStep or WylderAllInDuel or WylderBattlefieldMight
                             or WylderPursuitStance or WylderNightEdge => 2,
                         WylderShieldPress or WylderLightStepGuard or WylderGroundDash or WylderPatientFocus or WylderStormBlade or WylderEochaidsDancingBlade => 0,
@@ -122,7 +122,9 @@ internal static class WylderRegression
                             or WylderLastStandGuard or WylderFinalGuard => 2, _=>1 };
                     if(c is WylderIntenseBurning) Check(c.EnergyCost.CostsX,"Intense Burning X cost"); else Check(c.EnergyCost.GetResolved()==cost,"Cost "+c.GetType().Name);
                     if(c is WylderValor)Check(c.Type==CardType.Skill && c.Rarity==CardRarity.Common && c.TargetType==TargetType.Self && c.DynamicVars.Block.BaseValue==(up?7:6) && c.DynamicVars["Strength"].BaseValue==(up?3:2),"Valor metadata and upgrades");
-                    if(c is WylderEruption)Check(c.Type==CardType.Power && c.Rarity==CardRarity.Uncommon && c.DynamicVars["Damage"].BaseValue==(up?9:7),"Eruption stats");
+                    if(c is WylderEruption)Check(c.Type==CardType.Power && c.Rarity==CardRarity.Uncommon
+                        && c.Keywords.Contains(CardKeyword.Innate)==up && !c.DynamicVars.ContainsKey("Damage"),
+                        "Eruption enters Pursuit on shuffle and gains Innate when upgraded");
                     if(c is WylderCounterRush)Check(c.DynamicVars.Damage.BaseValue==(up?14:12) && c.DynamicVars["Imbalance"].BaseValue==(up?3:2),"Recoil Stake values");
                     if(c is WylderDesperateSurvival)Check(c.TargetType==TargetType.AnyEnemy && c.Keywords.Contains(CardKeyword.Exhaust) && c.Keywords.Contains(CardKeyword.Retain)==up && c.DynamicVars["Threshold"].BaseValue==50,"Desperate Survival targeting, threshold and keywords");
                     if(c is WylderCorpseWaxCutter)Check(c.Rarity==CardRarity.Uncommon && c.DynamicVars.Damage.BaseValue==(up?14:10) && c.DynamicVars["Break"].BaseValue==20 && c.DynamicVars["Vulnerable"].BaseValue==(up?3:2) && c.DynamicVars["Weak"].BaseValue==(up?3:2),"Corpse Wax Cutter rarity and values");

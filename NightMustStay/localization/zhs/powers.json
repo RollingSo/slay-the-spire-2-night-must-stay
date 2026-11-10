@@ -340,7 +340,7 @@
   "WYLDER_NIGHT_EDGE_POWER.title": "黑夜之锋",
   "WYLDER_NIGHT_EDGE_POWER.description": "首张有破势攻击按全回合计数，包含自动打出、重放及部署前的攻击，未达标也消费减阈值资格。\n首成功破势是独立资格，活力在整张牌后获得。\n同名减阈值和活力分别取最高，不相加。",
   "WYLDER_BOLDNESS_POWER.title": "果敢",
-  "WYLDER_BOLDNESS_POWER.description": "单次攻击伤害不低于20点时，获得5点格挡（升级为7点）。\n伤害在扣除格挡前计算。",
+  "WYLDER_BOLDNESS_POWER.description": "单次攻击伤害不低于20点时，获得4点格挡（升级为6点）。\n伤害在扣除格挡前计算。",
   "WYLDER_NIGHT_FORM_POWER.title": "黑夜形态",
   "WYLDER_NIGHT_FORM_POWER.description": "[gold]追击[/gold]的效果翻倍。\n追击的攻击伤害加成提高至100%，打出技能牌时获得2点能量并抽2张牌。",
   "WYLDER_REMAINING_EMBER_POWER.title": "余火",
@@ -348,7 +348,7 @@
   "WYLDER_UNDYING_POWER.title": "不灭",
   "WYLDER_UNDYING_POWER.description": "[gold]活力[/gold]触发后，保留一半层数。",
   "WYLDER_ERUPTION_POWER.title": "迸发",
-  "WYLDER_ERUPTION_POWER.description": "触发[gold]破势[/gold]后，对所有敌人造成7点伤害（升级为9点）。",
+  "WYLDER_ERUPTION_POWER.description": "每当你洗牌时，进入[gold]追击[/gold]。",
   "WYLDER_WILDFIRE_POWER.title": "燎原地火",
   "WYLDER_WILDFIRE_POWER.description": "每当你获得[gold]活力[/gold]时，对一名随机敌人造成等同于本次获得层数的伤害。",
   "WYLDER_MARTIAL_MASTERY_POWER.title": "百般武艺",
@@ -374,7 +374,5 @@
   "WYLDER_MOONLIGHT_SWORD_POWER.title": "月光剑",
   "WYLDER_MOONLIGHT_SWORD_POWER.description": "每次进入[gold]追击[/gold]时，随机给予1名敌人2层[gold]冻伤[/gold]，重复{Amount}次。\n升级版能力改为给予3层。",
   "WYLDER_FLAMELIGHT_ON_SNOW_POWER.title": "焰光照雪",
-  "WYLDER_FLAMELIGHT_ON_SNOW_POWER.description": "获得[gold]活力[/gold]时，给予随机敌人{Freeze}层[gold]冻伤[/gold]。\n对有[gold]冻伤[/gold]的敌人造成攻击伤害后，获得{Vigor}点[gold]活力[/gold]。",
-  "WYLDER_FATES_JUDGMENT_POWER.title": "命运裁决",
-  "WYLDER_FATES_JUDGMENT_POWER.description": "击晕敌人后，给予该敌人{Vulnerable}层[gold]易伤[/gold]和{Freeze}层[gold]冻伤[/gold]。"
+  "WYLDER_FLAMELIGHT_ON_SNOW_POWER.description": "获得[gold]活力[/gold]时，给予随机敌人{Freeze}层[gold]冻伤[/gold]。\n对有[gold]冻伤[/gold]的敌人造成攻击伤害后，获得{Vigor}点[gold]活力[/gold]。"
 }

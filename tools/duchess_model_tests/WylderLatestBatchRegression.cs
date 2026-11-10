@@ -60,10 +60,13 @@ internal static class WylderLatestBatchRegression
                 && triumph.EnergyCost.GetResolved() == 0
                 && triumph.DynamicVars.Energy.BaseValue == (upgraded ? 2 : 1)
                 && triumph.CanonicalKeywords.Contains(CardKeyword.Exhaust), "Triumph metadata and upgrade");
-            Check(judgment.Type == CardType.Power && judgment.Rarity == CardRarity.Rare
-                && judgment.EnergyCost.GetResolved() == 1
-                && judgment.DynamicVars["Vulnerable"].BaseValue == (upgraded ? 3 : 2)
-                && judgment.DynamicVars["Freeze"].BaseValue == (upgraded ? 3 : 2), "Fate's Judgment metadata and upgrade");
+            Check(judgment.Type == CardType.Skill && judgment.Rarity == CardRarity.Rare
+                && judgment.TargetType == TargetType.AnyEnemy
+                && judgment.EnergyCost.GetResolved() == 2
+                && judgment.CanonicalKeywords.Contains(CardKeyword.Exhaust)
+                && judgment.DynamicVars["Imbalance"].BaseValue == (upgraded ? 4 : 3)
+                && judgment.DynamicVars["Vulnerable"].BaseValue == (upgraded ? 4 : 3)
+                && judgment.DynamicVars["Freeze"].BaseValue == (upgraded ? 4 : 3), "Fate's Judgment metadata and upgrade");
         }
 
         Check(ModelDb.Card<WylderHoarfrostStomp>() is WylderFollowThroughCard
@@ -85,12 +88,6 @@ internal static class WylderLatestBatchRegression
         moonlightPower.UpgradedCopies = 1;
         Check(moonlightPower.BasicCopies == 1 && moonlightPower.Copies == 2,
             "Moonlight Sword mixed copies preserve individual triggers");
-        var judgmentPower = (WylderFatesJudgmentPower)ModelDb.Power<WylderFatesJudgmentPower>().ToMutable();
-        AccessTools.Property(typeof(PowerModel), nameof(PowerModel.Owner)).SetValue(judgmentPower, creature);
-        judgmentPower.SetAmount(2, true);
-        judgmentPower.UpgradedCopies = 1;
-        Check(judgmentPower.Sum(2, 3) == 5, "Fate's Judgment mixed copies preserve upgraded contribution");
-
         ((List<PowerModel>)AccessTools.Field(typeof(Creature), "_powers").GetValue(creature)!).Add(seamlessPower);
         var hand = CardPile.Get(PileType.Hand, owner) ?? throw new Exception("Missing test hand pile");
         var lastCard = ModelDb.Card<WylderStrike>().ToMutable();
@@ -119,7 +116,7 @@ internal static class WylderLatestBatchRegression
                 Check(cards.RootElement.TryGetProperty(id + ".upgradeDescription", out _), $"{locale} {id} upgrade description");
             }
             foreach (string id in new[] { "WYLDER_SEAMLESS_POWER", "WYLDER_MOONLIGHT_SWORD_POWER",
-                "WYLDER_FLAMELIGHT_ON_SNOW_POWER", "WYLDER_FATES_JUDGMENT_POWER" })
+                "WYLDER_FLAMELIGHT_ON_SNOW_POWER" })
             {
                 Check(powers.RootElement.TryGetProperty(id + ".title", out _), $"{locale} {id} title");
                 Check(powers.RootElement.TryGetProperty(id + ".description", out _), $"{locale} {id} description");

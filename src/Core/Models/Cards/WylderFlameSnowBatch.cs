@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -129,50 +130,40 @@ public sealed class WylderTriumph : WylderCard, IWylderStunReturn
     protected override void OnUpgrade() => DynamicVars.Energy.UpgradeValueBy(1m);
 }
 
-public sealed class WylderFatesJudgment : WylderAbilityCard<WylderFatesJudgmentPower>
+public sealed class WylderFatesJudgment : WylderCard
 {
-    public const int BaseDebuff = 2;
-    public const int UpgradedDebuff = 3;
+    public const int BaseDebuff = 3;
+    public const int UpgradedDebuff = 4;
 
-    public WylderFatesJudgment() : base(1, CardRarity.Rare) { }
+    public WylderFatesJudgment() : base(2, CardType.Skill, CardRarity.Rare, TargetType.AnyEnemy) { }
+    public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
     {
+        new PowerVar<PhantomImbalancePower>("Imbalance", BaseDebuff),
         new PowerVar<VulnerablePower>("Vulnerable", BaseDebuff),
         new PowerVar<FreezePower>("Freeze", BaseDebuff)
     };
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new[]
     {
+        HoverTipFactory.FromPower<PhantomImbalancePower>(),
         HoverTipFactory.FromPower<VulnerablePower>(),
         HoverTipFactory.FromPower<FreezePower>()
     });
+    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
+    {
+        ArgumentNullException.ThrowIfNull(play.Target);
+        await PowerCmd.Apply<PhantomImbalancePower>(context, play.Target,
+            DynamicVars["Imbalance"].BaseValue, Owner.Creature, this);
+        await PhantomImbalancePower.ResolveThreshold(context, play.Target);
+        await PowerCmd.Apply<VulnerablePower>(context, play.Target,
+            DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<FreezePower>(context, play.Target,
+            DynamicVars["Freeze"].BaseValue, Owner.Creature, this);
+    }
     protected override void OnUpgrade()
     {
+        DynamicVars["Imbalance"].UpgradeValueBy(UpgradedDebuff - BaseDebuff);
         DynamicVars["Vulnerable"].UpgradeValueBy(UpgradedDebuff - BaseDebuff);
         DynamicVars["Freeze"].UpgradeValueBy(UpgradedDebuff - BaseDebuff);
-    }
-}
-
-public sealed class WylderFatesJudgmentPower : WylderAbilityPower
-{
-    public override LocString Description
-    {
-        get
-        {
-            LocString description = base.Description;
-            description.Add("Vulnerable", Sum(WylderFatesJudgment.BaseDebuff, WylderFatesJudgment.UpgradedDebuff));
-            description.Add("Freeze", Sum(WylderFatesJudgment.BaseDebuff, WylderFatesJudgment.UpgradedDebuff));
-            return description;
-        }
-    }
-
-    internal async Task Trigger(Creature target)
-    {
-        if (target?.IsAlive != true || target.Side == Owner.Side) return;
-        var context = new ThrowingPlayerChoiceContext();
-        Flash();
-        await PowerCmd.Apply<VulnerablePower>(context, target,
-            Sum(WylderFatesJudgment.BaseDebuff, WylderFatesJudgment.UpgradedDebuff), Owner, null);
-        await PowerCmd.Apply<FreezePower>(context, target,
-            Sum(WylderFatesJudgment.BaseDebuff, WylderFatesJudgment.UpgradedDebuff), Owner, null);
     }
 }

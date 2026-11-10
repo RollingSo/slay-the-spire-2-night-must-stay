@@ -150,7 +150,11 @@ public sealed class WylderLionsClaw : WylderCard
     }
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(play.Target).Execute(context);
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(6m);
+    protected override void OnUpgrade()
+    {
+        DynamicVars.Damage.UpgradeValueBy(6m);
+        DynamicVars["Imbalance"].UpgradeValueBy(1m);
+    }
 }
 
 public sealed class WylderSpinningSlash : WylderCard

@@ -47,7 +47,14 @@ public sealed class WylderNightFormPower : WylderAbilityPower
 {
     public override PowerStackType StackType => PowerStackType.Single;
 }
-public sealed class WylderEruptionPower : WylderAbilityPower { }
+public sealed class WylderEruptionPower : WylderAbilityPower
+{
+    internal async Task AfterShuffle(PlayerChoiceContext context)
+    {
+        Flash();
+        await WylderPursuitPower.Enter(context, Owner, null, WylderEffectSource.PowerEffect);
+    }
+}
 public sealed class WylderRemainingEmberPower : WylderAbilityPower { }
 public sealed class WylderUndyingPower : WylderAbilityPower { }
 public sealed class WylderSeamlessPower : WylderAbilityPower

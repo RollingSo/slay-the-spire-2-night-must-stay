@@ -39,14 +39,14 @@ public sealed class WylderEndTheNight : WylderDesperationCard
 {
     public WylderEndTheNight() : base(5, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(100m, ValueProp.Move) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(60m, ValueProp.Move) };
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
         WylderAnimationPatch.QueueAttackMotion(Owner.Creature, "AttackTwoHand");
         await WylderEndTheNightVfx.PlayPrelude(Owner.Creature);
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(p.Target).WithEndTheNightFx().Execute(c);
     }
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(50m);
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(20m);
 }
 public sealed class WylderFlawlessSword : WylderCard
 {

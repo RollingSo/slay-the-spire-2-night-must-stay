@@ -178,14 +178,6 @@ public static class WylderCombatEvents
                     }
             });
         }
-        if (Power<WylderEruptionPower>(player) is { } eruption)
-        {
-            int damage = eruption.Sum(WylderEruption.BaseDamage, WylderEruption.UpgradedDamage);
-            Queue(play, async c => {
-                var enemies = player.Creature.CombatState.GetOpponentsOf(player.Creature).Where(e => e.IsAlive).ToArray();
-                if (enemies.Length > 0) await CreatureCmd.Damage(c, enemies, damage, ValueProp.Unpowered, player.Creature);
-            });
-        }
         if (!PlayerTurn(player)) return;
         int count = ++For(player).Breaks;
         if (count == 1)
@@ -332,7 +324,7 @@ public static class WylderCombatEvents
         if (props.IsPoweredAttack() && card?.Type == CardType.Attack && dealer?.Player is { } boldPlayer
             && Eligible(boldPlayer) && target.Side != dealer.Side && result.TotalDamage >= 20
             && Power<WylderBoldnessPower>(boldPlayer) is { } bold)
-            await InPowerScope(boldPlayer, () => Block(context, boldPlayer, bold.Sum(5,7), Current(boldPlayer)));
+            await InPowerScope(boldPlayer, () => Block(context, boldPlayer, bold.Sum(4,6), Current(boldPlayer)));
         if (props.IsPoweredAttack() && card?.Type == CardType.Attack && dealer?.Player is { } attacker && Eligible(attacker)
             && target.Side != dealer.Side && target.IsAlive && result.TotalDamage > 20 && Power<WylderRuinousGhostflamePower>(attacker) is { } ghost)
             await InPowerScope(attacker, async () => { await PowerCmd.Apply<FreezePower>(context, target, ghost.Sum(2, 3), dealer, card); });

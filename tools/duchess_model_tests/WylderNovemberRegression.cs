@@ -35,7 +35,7 @@ internal static partial class WylderBattleArtRegression
    Check(flurry is WylderDesperationCard && flurry.EnergyCost.GetResolved()==3 && flurry.Rarity==CardRarity.Rare,"Flurry metadata");
    Check(Attacks.Single()==(false,3,up?11m:9m)&&ResolvedDamage.Count==3,"Flurry native three hits");
    Fixture();var end=Card(ModelDb.Card<WylderEndTheNight>(),up);Play(end);
-   Check(end.Keywords.Contains(CardKeyword.Exhaust)&&end.EnergyCost.GetResolved()==5&&ResolvedDamage.Single()==(up?150:100),"End Night damage and exhaust");
+   Check(end.Keywords.Contains(CardKeyword.Exhaust)&&end.EnergyCost.GetResolved()==5&&ResolvedDamage.Single()==(up?80:60),"End Night damage and exhaust");
    foreach(int extra in new[]{0,up?14:18,up?15:19,30})
    {
     Fixture();_fullyBlocked=true;AddPower<StrengthPower>(_owner.Creature,extra);
