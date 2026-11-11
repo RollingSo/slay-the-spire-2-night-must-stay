@@ -29,17 +29,16 @@ public static class WylderCombatEvents
         internal object Combat;
         internal readonly HashSet<string> Seen = new();
         internal readonly List<CardPlay> Stack = new();
-        internal int Breaks;
         internal int AttackDiscount, BreakDiscount, BreakDraw, SkillDiscount;
-        internal bool HalfVigor, EnemyLifeLoss;
-        internal int NextEnergy, NextBlock, NextVigor;
+        internal bool HalfVigor;
+        internal int NextVigor;
         internal WylderEffectSource Source = WylderEffectSource.CardEffect;
     }
     internal sealed class Resolution
     {
         internal readonly Queue<Func<PlayerChoiceContext, Task>> Rewards = new();
         internal bool Begun, Completed, Draining, OldPursuit, ConsumedPursuit, KeptPursuit, VigorConsumed, Broke, HalfVigor;
-        internal int ThresholdReduction, BreakDraw, SeamlessBlock;
+        internal int BreakDraw, SeamlessBlock;
         internal WylderEffectSource ParentSource;
     }
     private static readonly ConditionalWeakTable<Player, State> States = new();
@@ -124,15 +123,8 @@ public static class WylderCombatEvents
         if (play.Card.Type == CardType.Attack)
         {
             data.HalfVigor = state.HalfVigor; state.HalfVigor = false;
-            if (First(player, "FirstAttack") && Power<WylderClashEmbersPower>(player) is { } heat)
-            {
-                int amount = heat.Sum(1, 2);
-                Queue(play, c => Vigor(c, player, amount, play.Card));
-            }
             if (play.Card is WylderCard attack && attack.HasBreak)
             {
-                if (First(player, "FirstBreakAttack") && Power<WylderNightEdgePower>(player) is { } edge)
-                    data.ThresholdReduction = edge.Highest(5, 7);
                 if (hand)
                 {
                     data.BreakDraw = state.BreakDraw;
@@ -142,13 +134,6 @@ public static class WylderCombatEvents
             if (hand) state.AttackDiscount = 0;
         }
         if (hand && play.Card.Type == CardType.Skill) state.SkillDiscount = 0;
-    }
-    public static decimal EffectiveBreak(WylderCard card, CardPlay play, decimal threshold)
-    {
-        if (threshold <= 0 || !card.IsMutable || !Eligible(card.Owner)) return threshold;
-        int reduction = play != null && Plays.TryGetValue(play, out var p) ? p.ThresholdReduction :
-            !For(card.Owner).Seen.Contains("FirstBreakAttack") ? Power<WylderNightEdgePower>(card.Owner)?.Highest(5, 7) ?? 0 : 0;
-        return Math.Max(1m, threshold - reduction);
     }
     public static decimal ModifyCost(CardModel card, decimal cost)
     {
@@ -187,19 +172,6 @@ public static class WylderCombatEvents
             });
         }
         if (!PlayerTurn(player)) return;
-        int count = ++For(player).Breaks;
-        if (count == 1)
-        {
-            if (Power<WylderOpeningHuntPower>(player) is { } hunt)
-            {
-                int draw = hunt.Copies, vigor = hunt.Sum(0, 2);
-                Queue(play, async c => { await CardPileCmd.Draw(c, draw, player); await Vigor(c, player, vigor, play.Card); });
-            }
-            if (Power<WylderBattlefieldMightPower>(player) is { } might)
-            { int amount = might.Sum(1, 2); Queue(play, c => Strength(c, player, amount, play.Card)); }
-            if (Power<WylderNightEdgePower>(player) is { } edge)
-            { int amount = edge.Highest(3, 4); Queue(play, c => Vigor(c, player, amount, play.Card)); }
-        }
         if (Power<WylderVeteranEdgePower>(player) is { } veteran)
         {
             int amount = 2 * veteran.Copies;
@@ -253,17 +225,6 @@ public static class WylderCombatEvents
                 }
             });
         }
-        if (!PlayerTurn(player)) return;
-        if (Power<WylderWindwardStancePower>(player) is { } wind && First(player, "WindwardDeployedEntry"))
-        {
-            int amount = wind.Sum(4, 6); CardPlay play = Current(player);
-            await QueueOrRun(context, player, c => Block(c, player, amount, play));
-        }
-        if (source == WylderEffectSource.CardEffect && First(player, "CardPursuitEntry") && Power<WylderPursuitCommandPower>(player) is { } command)
-        {
-            int draw = Math.Min(2, command.Sum(1, 2));
-            await QueueOrRun(context, player, c => CardPileCmd.Draw(c, draw, player));
-        }
     }
     public static void RegisterKeptPursuit(CardPlay play)
     {
@@ -280,31 +241,6 @@ public static class WylderCombatEvents
         if (!data.OldPursuit || data.ConsumedPursuit || data.KeptPursuit) return;
         data.ConsumedPursuit = true;
         Player player = play.Card.Owner;
-        if (!First(player, "OldPursuitConsumption") || Power<WylderPursuitStancePower>(player) is not { } stance) return;
-        if (play.Card.Type == CardType.Attack) Queue(play, _ => PlayerCmd.GainEnergy(1, player));
-        else if (play.Card.Type == CardType.Skill)
-        { int block = Math.Min(20, stance.Sum(8, 12)); Queue(play, c => Block(c, player, block, play)); }
-    }
-    public static Task RegisterSkillStun(PlayerChoiceContext context, CardPlay play)
-    {
-        if (play?.Card.Type != CardType.Skill || !Eligible(play.Card.Owner)) return Task.CompletedTask;
-        Player player = play.Card.Owner;
-        if (First(player, "SkillStun") && Power<WylderGuardResurgencePower>(player) is { } power)
-        {
-            For(player).NextEnergy += power.Copies;
-            For(player).NextBlock += power.Sum(4, 7);
-        }
-        return Task.CompletedTask;
-    }
-    public static async Task VigorGained(PlayerChoiceContext context, PowerModel power, decimal amount, CardModel cardSource)
-    {
-        Player player = power.Owner?.Player;
-        if (power is not VigorPower || amount <= 0 || !Eligible(player) || !PlayerTurn(player)) return;
-        if (First(player, "VigorGained") && Power<WylderBloodStillHotPower>(player) is { } blood)
-        { int block = blood.Sum(5, 7); CardPlay play = Current(player); await QueueOrRun(context, player, c => Block(c, player, block, play)); }
-        if (For(player).Source != WylderEffectSource.CardEffect || cardSource == null || Current(player)?.Card != cardSource) return;
-        if (First(player, "CardVigorGained") && Power<WylderFieryBloodPower>(player) is { } fiery)
-        { int vigor = fiery.Sum(2, 3); await QueueOrRun(context, player, c => Vigor(c, player, vigor, cardSource)); }
     }
     // Only called from the native Vigor.AfterAttack mutation, never from direct
     // skill losses. Reduction happens before consumption, not via a refund.
@@ -320,14 +256,6 @@ public static class WylderCombatEvents
         CardPlay play = Current(player);
         if (amount <= 0 || play?.Card.Type != CardType.Attack || !Eligible(player)) return;
         Plays.GetOrCreateValue(play).VigorConsumed = true;
-        if (!First(player, "VigorConsumed")) return;
-        if (Power<WylderEmberReservePower>(player) is { } reserve)
-        { int block = reserve.Sum(4, 6); Queue(play, c => Block(c, player, block, play)); }
-        if (Power<WylderFlameGuardStancePower>(player) is { } guard)
-        {
-            int block = guard.Sum(0, 3);
-            Queue(play, async c => { await WylderPursuitPower.Enter(c, player.Creature, play.Card, WylderEffectSource.PowerEffect); await Block(c, player, block, play); });
-        }
     }
     public static async Task AfterDamage(PlayerChoiceContext context, Creature dealer, Creature target, DamageResult result, ValueProp props, CardModel card)
     {
@@ -338,14 +266,6 @@ public static class WylderCombatEvents
         if (props.IsPoweredAttack() && card?.Type == CardType.Attack && dealer?.Player is { } attacker && Eligible(attacker)
             && target.Side != dealer.Side && target.IsAlive && result.TotalDamage > 20 && Power<WylderRuinousGhostflamePower>(attacker) is { } ghost)
             await InPowerScope(attacker, async () => { await PowerCmd.Apply<FreezePower>(context, target, ghost.Sum(2, 3), dealer, card); });
-        if (target?.Player is not { } player || !Eligible(player) || dealer == null || dealer.Side == target.Side
-            || !props.IsPoweredAttack() || result.UnblockedDamage <= 0) return;
-        State state = For(player);
-        if (state.EnemyLifeLoss) return;
-        state.EnemyLifeLoss = true;
-        if (Power<WylderUnyieldingSpiritPower>(player) is not { } spirit || !target.IsAlive) return;
-        int block = spirit.Sum(8, 12);
-        await InPowerScope(player, async () => { await Block(context, player, block, null); await WylderPursuitPower.Enter(context, target, null, WylderEffectSource.PowerEffect); });
     }
     public static async Task CompleteCard(PlayerChoiceContext context, CardPlay play)
     {
@@ -370,15 +290,6 @@ public static class WylderCombatEvents
             if (WylderHandPlayContext.HandCount(play.Card, play).HasValue && PlayerTurn(player))
             {
                 var hand = PileType.Hand.GetPile(player).Cards;
-                if (play.Card.Type == CardType.Attack && hand.Count == 1 && hand[0].Type == CardType.Skill
-                    && Power<WylderBattleInstinctPower>(player) is { } instinct && First(player, "InstinctDeployedHand"))
-                { hand[0].EnergyCost.AddThisTurn(-instinct.Sum(1, 2)); hand[0].InvokeEnergyCostChanged(); }
-                if (play.Card is not WylderSwiftBattleWill && hand.Count <= 2 && First(player, "StableLowHand")
-                    && Power<WylderSwiftBattleWillPower>(player) is { } swift)
-                {
-                    int energy = swift.Copies, block = swift.Sum(4, 6);
-                    await InPowerScope(player, async () => { await PlayerCmd.GainEnergy(energy, player); await Block(context, player, block, play); });
-                }
             }
             // Stable rewards currently cannot draw; still settle their derived
             // effects before releasing the outer resolution frame.
@@ -396,18 +307,16 @@ public static class WylderCombatEvents
     public static void StartTurn(Player player)
     {
         if (!Eligible(player)) return;
-        State state = For(player); state.Seen.Clear(); state.Breaks = 0; state.EnemyLifeLoss = false;
+        For(player).Seen.Clear();
     }
     public static async Task PayStartTurn(PlayerChoiceContext context, Player player)
     {
         if (!Eligible(player)) return;
         State state = For(player);
-        int energy = state.NextEnergy, block = state.NextBlock, vigor = state.NextVigor;
-        state.NextEnergy = state.NextBlock = state.NextVigor = 0;
+        int vigor = state.NextVigor;
+        state.NextVigor = 0;
         await InPowerScope(player, async () =>
         {
-            if (energy > 0) await PlayerCmd.GainEnergy(energy, player);
-            await Block(context, player, block, null);
             await Vigor(context, player, vigor, null);
         });
     }

@@ -92,7 +92,6 @@ internal static class WylderRegression
                 && deck.Count(c=>c is WylderClawMovement)==1 && deck.Count(c=>c is WylderDashAttack)==1,"Starting deck");
             Check(character.CardPool.AllCards.Count()==90,"90 registered cards");
             Check(character.CardPool.AllCards.Select(c=>c.Id).Distinct().Count()==90,"Unique registered IDs");
-            Check(!character.CardPool.AllCards.Any(c=>c is WylderExecution),"Removed cards excluded from pool");
             foreach(bool up in new[]{false,true})
             {
                 foreach(var canonical in character.CardPool.AllCards)
@@ -103,24 +102,19 @@ internal static class WylderRegression
                         WylderRuinousGhostflame => 1,
                         WylderSpark or WylderResolve or WylderDebut or WylderBideTheMoment or WylderKick => 0,
                         WylderSixthSense => 4,
-                        WylderExecution => up?1:2,
                         WylderUndying => up?1:2,
                         WylderGoldenParry or WylderNightForm => 3, WylderMartialMastery => up?1:2, WylderDefiance => 2, WylderMultiplayerCard or WylderTinder or WylderBreakthrough or WylderLifeFromDeath => 0,
                         WylderAerialStake => up?2:3,
                         WylderCounterRush => 3,
                         WylderTacticalRetreat or WylderParry or WylderDesperateSurvival => 4,
                         WylderSlidingLeap => 2,
-                        WylderSidestep or WylderRelentlessAdvance or WylderForcedBreakout or WylderNightRespite => 0,
-                        WylderAssaultDrop or WylderCriticalStrike => 3,
-                        WylderFatesJudgment or WylderAirCleavingChase or WylderTakersFlames or WylderInfernalSlash or WylderFlameChaseSlash
-                            or WylderCounteroffensive or WylderCliffStep or WylderAllInDuel or WylderBattlefieldMight
-                            or WylderPursuitStance or WylderNightEdge => 2,
-                        WylderShieldPress or WylderLightStepGuard or WylderGroundDash or WylderPatientFocus or WylderStormBlade or WylderEochaidsDancingBlade => 0,
+                        WylderCriticalStrike => 3,
+                        WylderFatesJudgment or WylderTakersFlames or WylderFlameChaseSlash => 2,
+                        WylderStormBlade or WylderEochaidsDancingBlade => 0,
                         WylderAssaultStake => 3,
                         WylderStampUpwardCut
-                            or WylderLionsClaw or WylderCliffbreaker
-                            or WylderJumpingHeavy or WylderDualGreatswordLeap or WylderGhostflameExplosion or WylderVerticalPressure
-                            or WylderLastStandGuard or WylderFinalGuard => 2, _=>1 };
+                            or WylderLionsClaw
+                            or WylderJumpingHeavy or WylderDualGreatswordLeap or WylderGhostflameExplosion => 2, _=>1 };
                     if(c is WylderIntenseBurning) Check(c.EnergyCost.CostsX,"Intense Burning X cost"); else Check(c.EnergyCost.GetResolved()==cost,"Cost "+c.GetType().Name);
                     if(c is WylderValor)Check(c.Type==CardType.Skill && c.Rarity==CardRarity.Common && c.TargetType==TargetType.Self && c.DynamicVars.Block.BaseValue==(up?7:6) && c.DynamicVars["Strength"].BaseValue==(up?3:2),"Valor metadata and upgrades");
                     if(c is WylderEruption)Check(c.Type==CardType.Power && c.Rarity==CardRarity.Uncommon

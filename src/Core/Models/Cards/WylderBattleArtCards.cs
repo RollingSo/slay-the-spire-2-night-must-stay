@@ -40,7 +40,6 @@ public sealed class WylderVacuumSlice : WylderCard
         DynamicVars["Weak"].UpgradeValueBy(1m);
     }
 }
-
 public sealed class WylderStormBlade : WylderCard
 {
     public WylderStormBlade() : base(0, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
@@ -56,7 +55,6 @@ public sealed class WylderStormBlade : WylderCard
     }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(1m);
 }
-
 public sealed class WylderFlamingStrike : WylderCard
 {
     public WylderFlamingStrike() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
@@ -78,7 +76,6 @@ public sealed class WylderFlamingStrike : WylderCard
         await CardPileCmd.AddGeneratedCardToCombat(coating, PileType.Hand, Owner);
     }
 }
-
 // Generated colorless Skill, excluded from Wylder's reward pool.
 public sealed class WylderFireCoating : CardModel
 {
@@ -93,7 +90,6 @@ public sealed class WylderFireCoating : CardModel
         await PowerCmd.Apply<VigorPower>(context, Owner.Creature, DynamicVars["Vigor"].BaseValue, Owner.Creature, this);
     protected override void OnUpgrade() => DynamicVars["Vigor"].UpgradeValueBy(2m);
 }
-
 public sealed class WylderFlameOfRedmanes : WylderCard
 {
     public WylderFlameOfRedmanes() : base(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies) { }
@@ -113,7 +109,6 @@ public sealed class WylderFlameOfRedmanes : WylderCard
         DynamicVars["Vigor"].UpgradeValueBy(1m);
     }
 }
-
 public sealed class WylderBloodhoundsFinesse : WylderCard
 {
     public WylderBloodhoundsFinesse() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
@@ -132,7 +127,6 @@ public sealed class WylderBloodhoundsFinesse : WylderCard
         DynamicVars.Block.UpgradeValueBy(2m);
     }
 }
-
 public sealed class WylderLionsClaw : WylderCard
 {
     public WylderLionsClaw() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
@@ -155,19 +149,4 @@ public sealed class WylderLionsClaw : WylderCard
         DynamicVars.Damage.UpgradeValueBy(6m);
         DynamicVars["Imbalance"].UpgradeValueBy(1m);
     }
-}
-
-public sealed class WylderSpinningSlash : WylderCard
-{
-    public WylderSpinningSlash() : base(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies) { }
-    public override string PortraitPath => "res://images/packed/card_portraits/silent/dagger_spray.png";
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        { new DamageVar(4m, ValueProp.Move), new RepeatVar(2), new DynamicVar("Break", 12m), new CardsVar(1) };
-    protected override decimal BreakThreshold => DynamicVars["Break"].BaseValue;
-    protected override int BreakHitCount => DynamicVars.Repeat.IntValue;
-    protected override async Task OnBreak(PlayerChoiceContext context) => await CardPileCmd.Draw(context, DynamicVars.Cards.BaseValue, Owner);
-    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).TargetingAllOpponents(CombatState)
-            .WithHitCount(DynamicVars.Repeat.IntValue).Execute(context);
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2m);
 }

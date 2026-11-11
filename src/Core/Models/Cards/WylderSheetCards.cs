@@ -152,15 +152,6 @@ public sealed class WylderMotionAndStillness : WylderFollowThroughCard
         DynamicVars["Vigor"].UpgradeValueBy(2m);
     }
 }
-public sealed class WylderExecution : WylderCard
-{
-    public WylderExecution() : base(2, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) { }
-    public override string PortraitPath => "res://images/packed/card_portraits/wylder/wylder_execution.png";
-    public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new[] { HoverTipFactory.Static(StaticHoverTip.Stun) });
-    protected override Task OnPlay(PlayerChoiceContext c, CardPlay p) => CreatureCmd.Stun(p.Target);
-    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
-}
 public sealed class WylderDesperateSurvival : WylderDesperationCard
 {
     public WylderDesperateSurvival() : base(4, CardType.Skill, CardRarity.Uncommon, TargetType.AnyEnemy) { }

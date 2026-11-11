@@ -62,18 +62,15 @@ if (args.Contains("--card-pool-audit"))
     }
     return 0;
 }
-if (args.Contains("--wylder-battle-art-only")) { WylderBattleArtRegression.Run(); return 0; }
 if (args.Contains("--wylder-models-only")) { WylderRegression.Run(); return 0; }
 if (args.Contains("--wylder-new-cards-only")) { WylderNewCardsRegression.Run(); return 0; }
 if (args.Contains("--wylder-multiplayer-batch-only")) { WylderMultiplayerBatchRegression.Run(); return 0; }
 if (args.Contains("--wylder-latest-batch-only")) { WylderLatestBatchRegression.Run(); return 0; }
-if (args.Contains("--wylder-takers-flames-only")) { WylderCompletionBRegression.Run(takersFlamesOnly: true); return 0; }
 if (args.Contains("--wylder-only"))
 {
     WylderDialogueRegression.Run();
     WylderSheetManifestRegression.Run();
     WylderRegression.Run();
-    WylderBattleArtRegression.Run();
     WylderNewCardsRegression.Run();
     WylderMultiplayerBatchRegression.Run();
     WylderLatestBatchRegression.Run();

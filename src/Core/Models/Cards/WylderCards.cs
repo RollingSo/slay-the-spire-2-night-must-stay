@@ -30,7 +30,7 @@ public abstract class WylderCard : CardModel
     private bool CanBreakFromHand()
     {
         if (!IsMutable || Pile?.Type != PileType.Hand || !HasBreak || CombatState == null) return false;
-        decimal threshold = WylderCombatEvents.EffectiveBreak(this, null, BreakThreshold);
+        decimal threshold = BreakThreshold;
         int hits = DynamicVars.TryGetValue("Repeat", out var repeat) ? repeat.IntValue : 1;
         if (EnergyCost.CostsX) hits += MegaCrit.Sts2.Core.Hooks.Hook.ModifyXValue(CombatState, this, Owner.PlayerCombatState.Energy);
         if (hits <= 0) return false;
@@ -114,7 +114,7 @@ public abstract class WylderCard : CardModel
         // still meet the per-hit threshold.
         bool endedByLethalHit = result.WasTargetKilled;
         if (hits.Count < requiredHits && !endedByLethalHit) return;
-        decimal threshold = WylderCombatEvents.EffectiveBreak(this, data.Play, BreakThreshold);
+        decimal threshold = BreakThreshold;
         if (requiredHits == 1)
         {
             if (result.TotalDamage < threshold) return;

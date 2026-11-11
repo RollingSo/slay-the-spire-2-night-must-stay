@@ -25,23 +25,8 @@ public abstract class WylderAbilityPower : PowerModel
     public int Highest(int normal, int upgraded) => UpgradedCopies > 0 ? upgraded : Amount > 0 ? normal : 0;
 }
 
-public sealed class WylderEmberReservePower : WylderAbilityPower { }
-public sealed class WylderClashEmbersPower : WylderAbilityPower { }
-public sealed class WylderOpeningHuntPower : WylderAbilityPower { }
-public sealed class WylderWindwardStancePower : WylderAbilityPower { }
-public sealed class WylderBattleInstinctPower : WylderAbilityPower { }
-public sealed class WylderBloodStillHotPower : WylderAbilityPower { }
-public sealed class WylderFlameGuardStancePower : WylderAbilityPower { }
-public sealed class WylderPursuitCommandPower : WylderAbilityPower { }
-public sealed class WylderBattlefieldMightPower : WylderAbilityPower { }
-public sealed class WylderGuardResurgencePower : WylderAbilityPower { }
-public sealed class WylderSwiftBattleWillPower : WylderAbilityPower { }
 public sealed class WylderRuinousGhostflamePower : WylderAbilityPower { }
-public sealed class WylderPursuitStancePower : WylderAbilityPower { }
-public sealed class WylderFieryBloodPower : WylderAbilityPower { }
 public sealed class WylderVeteranEdgePower : WylderAbilityPower { }
-public sealed class WylderUnyieldingSpiritPower : WylderAbilityPower { }
-public sealed class WylderNightEdgePower : WylderAbilityPower { }
 public sealed class WylderBoldnessPower : WylderAbilityPower { }
 public sealed class WylderNightFormPower : WylderAbilityPower
 {

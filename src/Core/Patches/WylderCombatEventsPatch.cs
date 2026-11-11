@@ -28,15 +28,6 @@ internal static class WylderStableCardSettledPatch
     private static async Task Finish(Task native, PlayerChoiceContext context, CardPlay play)
     { await native; WylderCombatEvents.RegisterOldPursuitConsumption(play); await WylderCombatEvents.CompleteCard(context, play); }
 }
-[HarmonyPatch(typeof(Hook), nameof(Hook.AfterPowerAmountChanged))]
-internal static class WylderVigorGainEventPatch
-{
-    [HarmonyPostfix]
-    private static void Observe(PlayerChoiceContext choiceContext, PowerModel power, decimal amount, CardModel cardSource, ref Task __result) =>
-        __result = Finish(__result, choiceContext, power, amount, cardSource);
-    private static async Task Finish(Task native, PlayerChoiceContext context, PowerModel power, decimal amount, CardModel card)
-    { await native; await WylderCombatEvents.VigorGained(context, power, amount, card); }
-}
 [HarmonyPatch(typeof(Hook), nameof(Hook.AfterDamageReceived))]
 internal static class WylderDamageEventsPatch
 {
@@ -84,7 +75,6 @@ internal static class WylderPendingTurnCleanupPatch
             foreach (Creature creature in participants) if (creature.Player is { } player) WylderCombatEvents.EndTurn(player);
     }
 }
-
 // The scope is the native Vigor.AfterAttack, not arbitrary negative Vigor
 // changes. Thus direct losses from P062/P068 never produce consumption events.
 [HarmonyPatch(typeof(VigorPower), nameof(VigorPower.AfterAttack))]
@@ -129,18 +119,5 @@ internal static class WylderNativeVigorConsumptionPatch
         int after = await native;
         WylderCombatEvents.RegisterVigorConsumed(player, Math.Max(0, before - after));
         return after;
-    }
-}
-
-[HarmonyPatch(typeof(DynamicVar), nameof(DynamicVar.UpdateCardPreview))]
-internal static class WylderBreakThresholdPreviewPatch
-{
-    [HarmonyPostfix]
-    private static void Preview(DynamicVar __instance, CardModel card, bool runGlobalHooks)
-    {
-        if (__instance.Name != "Break" || !runGlobalHooks || card is not WylderCard wylder || !wylder.IsMutable) return;
-        CardPlay play = WylderCombatEvents.Current(card.Owner);
-        if (play?.Card != card) play = null;
-        __instance.PreviewValue = WylderCombatEvents.EffectiveBreak(wylder, play, __instance.BaseValue);
     }
 }

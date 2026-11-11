@@ -52,7 +52,6 @@ internal static partial class WylderBattleArtRegression
         new Spec(ModelDb.Card<WylderFlameOfRedmanes>(), 1, CardRarity.Common, 6, 7, Aoe: true),
         new Spec(ModelDb.Card<WylderBloodhoundsFinesse>(), 1, CardRarity.Uncommon, 4, 6, Block: 4, UpgradeBlock: 6),
         new Spec(ModelDb.Card<WylderLionsClaw>(), 2, CardRarity.Uncommon, 18, 24, 40),
-        new Spec(ModelDb.Card<WylderSpinningSlash>(), 1, CardRarity.Common, 4, 6, 12, 2, Aoe: true),
     };
 
     public static void Run()
@@ -113,8 +112,6 @@ internal static partial class WylderBattleArtRegression
                 if (card is WylderFlameOfRedmanes)
                     Check(Rewards.Single().Kind == "VigorPower" && Rewards.Single().Amount == (upgraded ? 5 : 4),
                         "Redmanes gains Vigor once after AOE, not per enemy or Break");
-                if (card is WylderSpinningSlash)
-                    Check(Rewards.Count(r => r.Kind == "Draw") == 0, "Spinning requires every hit to reach Break12");
                 if (card is WylderBloodhoundsFinesse)
                 {
                     Check(Rewards.Single().Kind == "Block" && Rewards.Single().Amount == (upgraded ? 6 : 4), "Finesse native Block");
@@ -302,284 +299,12 @@ internal static partial class WylderBattleArtRegression
 
     private static void ReviewedPlannerCards()
     {
-        int before = _checks;
-        var models = new CardModel[] { ModelDb.Card<WylderFlameReady>(), ModelDb.Card<WylderSpineShock>(), ModelDb.Card<WylderFlameMomentum>(),
-            ModelDb.Card<WylderCliffbreaker>(), ModelDb.Card<WylderDualGreatswordLeap>(), ModelDb.Card<WylderGhostflameExplosion>(),
-            ModelDb.Card<WylderTurningGuard>(), ModelDb.Card<WylderShieldPress>(), ModelDb.Card<WylderSlidingThrust>(),
-            ModelDb.Card<WylderSteadyBreath>(), ModelDb.Card<WylderGrappleSwing>(),
-            ModelDb.Card<WylderLightStepGuard>(), ModelDb.Card<WylderLowStance>(), ModelDb.Card<WylderAerialRoll>(),
-            ModelDb.Card<WylderPursuitSlash>(), ModelDb.Card<WylderGroundDash>() };
-        var formatter = new SmartFormatter();
-        formatter.AddExtensions(new DictionarySource(), new ReflectionSource(), new DefaultSource());
-        formatter.AddExtensions(new HighlightDifferencesFormatter(), new EnergyIconsFormatter(), new ShowIfUpgradedFormatter());
-        foreach (var model in models)
-        {
-            // Legacy designs remain testable but no longer define reward-pool membership.
-            string portrait = model.PortraitPath.Replace("res://", "");
-            Check(File.Exists(portrait.StartsWith("images/packed/card_portraits/wylder/")
-                ? portrait : Path.Combine("D:/STS2", portrait)), "Verified runtime or interim native portrait");
-            if (model is WylderGhostflameExplosion)
-                Check(model.PortraitPath == "res://images/packed/card_portraits/wylder/wylder_ghostflame_explosion.png", "Ghostflame uses reviewed hooked-bar artwork");
-            foreach (bool upgraded in new[] { false, true })
-            {
-                Fixture();
-                var card = Card(model, upgraded);
-                bool heavy = card is WylderCliffbreaker or WylderDualGreatswordLeap or WylderGhostflameExplosion;
-                bool attack = card is WylderSpineShock or WylderSlidingThrust or WylderPursuitSlash || heavy;
-                Check(card.EnergyCost.GetResolved() == (heavy ? 2 : card is WylderShieldPress or WylderLightStepGuard or WylderGroundDash ? 0 : 1), "Reviewed planner cost");
-                Check(card.Type == (attack ? CardType.Attack : CardType.Skill), "Reviewed planner type");
-                Check(card.TargetType == (attack ? TargetType.AnyEnemy : TargetType.Self), "Reviewed planner target");
-                Check(card.Rarity == (card is WylderGhostflameExplosion ? CardRarity.Rare : card is WylderDualGreatswordLeap or WylderFlameMomentum or WylderGrappleSwing or WylderAerialRoll ? CardRarity.Uncommon : CardRarity.Common), "Reviewed planner rarity");
-                foreach (var pair in card.DynamicVars)
-                    Check(pair.Value.WasJustUpgraded == (upgraded && (pair.Key == "Block" || pair.Key == "Damage" || (card is WylderLightStepGuard && pair.Key is "CalculationBase" or "CalculatedBlock") || (card is WylderFlameReady && pair.Key == "Vigor") || (card is WylderGhostflameExplosion && pair.Key == "Freeze"))), "Reviewed planner only changed values green " + card.Id + " " + pair.Key);
-            }
-            foreach (string locale in new[] { "zhs", "eng", "jpn", "kor" })
-            {
-                using var json = JsonDocument.Parse(File.ReadAllText($"NightMustStay/localization/{locale}/cards.json"));
-                string text = json.RootElement.GetProperty(model.Id.Entry + ".description").GetString()!;
-                string Render(bool upgraded)
-                {
-                    var card = Card(model, upgraded);
-                    foreach (var energy in card.DynamicVars.Values.OfType<EnergyVar>()) energy.ColorPrefix = EnergyIconHelper.GetPrefix(card);
-                    return formatter.Format(System.Globalization.CultureInfo.InvariantCulture, text,
-                        card.DynamicVars.ToDictionary(p => p.Key, p => (object)p.Value).Concat(new[] { new KeyValuePair<string,object>("IfUpgraded", new IfUpgradedVar(upgraded ? UpgradeDisplay.Upgraded : UpgradeDisplay.Normal)) }).ToDictionary(p=>p.Key,p=>p.Value));
-                }
-                Check(Render(false) != Render(true) && !Render(false).Contains('{'), "Reviewed planner four-locale rendered upgrades");
-                Check(text == json.RootElement.GetProperty(model.Id.Entry + ".upgradeDescription").GetString(), "Reviewed planner upgrade copy");
-                if (model is WylderFlameMomentum or WylderGrappleSwing or WylderLowStance or WylderPursuitSlash)
-                    Check(Render(false).Contains("[img]res://images/packed/sprite_fonts/wylder_energy_icon.png[/img]"), "Flame Momentum actual energy image");
-            }
-        }
-        foreach (bool upgraded in new[] { false, true })
-        foreach (bool pursuit in new[] { false, true })
-        foreach (int vigor in new[] { 0, 2, 3 })
-        {
-            Fixture(pursuit); if (vigor > 0) AddPower<VigorPower>(_owner.Creature, vigor);
-            AddPower<DexterityPower>(_owner.Creature, 3);
-            var ready = Card(ModelDb.Card<WylderFlameReady>(), upgraded);
-            Play(ready);
-            Check(Rewards[0].Kind == "Block" && Rewards[0].Amount == (upgraded ? 10 : 8), "Flame Ready native Dexterity block first");
-            Check(_owner.Creature.GetPowerAmount<VigorPower>() == vigor + (upgraded ? 3 : 2), "Flame Ready native Vigor amount and upgrade");
-            Check(Rewards.Last().Kind == (pursuit ? "Draw" : "VigorPower"), "Flame Ready old Pursuit draw is last");
-            Check(!_owner.Creature.HasPower<WylderPursuitPower>() && Attacks.Count == 0, "Flame Ready consumes old Pursuit without attacking");
-
-            Fixture(pursuit); if (vigor > 0) AddPower<VigorPower>(_owner.Creature, vigor);
-            AddPower<DexterityPower>(_owner.Creature, 3);
-            var momentum = Card(ModelDb.Card<WylderFlameMomentum>(), upgraded);
-            Play(momentum);
-            Check(Rewards[0].Kind == "Block" && Rewards[0].Amount == (upgraded ? 12 : 9), "Momentum native Dexterity block first");
-            Check(Rewards.Count(r => r.Kind == "Energy") == (vigor >= 3 ? 1 : 0) + (pursuit ? 1 : 0), "Momentum exact threshold energy branch");
-            Check(Rewards.Count(r => r.Kind == "VigorPower") == (vigor < 3 ? 1 : 0), "Momentum mutually exclusive Vigor branch");
-            Check(_owner.Creature.GetPowerAmount<VigorPower>() == (vigor < 3 ? vigor + 2 : vigor), "Momentum preserves old Vigor");
-            Check(Rewards.Last().Kind == (pursuit ? "Draw" : vigor >= 3 ? "Energy" : "VigorPower"), "Momentum branch resolves before Pursuit draw");
-
-            Fixture(pursuit);
-            var shock = Card(ModelDb.Card<WylderSpineShock>(), upgraded);
-            Play(shock);
-            Check(ResolvedDamage.Single() == Math.Floor((upgraded ? 12m : 9m) * (pursuit ? 1.5m : 1m)), "Spine Shock native rounding preview/resolution");
-            Check(Rewards.Count(r => r.Kind == "WeakPower") == (pursuit ? 1 : 0), "Spine Shock Break 13 once");
-        }
-        Fixture(); AddPower<VigorPower>(_owner.Creature, 2);
-        Play(Card(ModelDb.Card<WylderFlameMomentum>(), false));
-        Play(Card(ModelDb.Card<WylderFlameMomentum>(), false));
-        Check(Rewards.Count(r => r.Kind == "Energy") == 1 && _owner.Creature.GetPowerAmount<VigorPower>() == 4, "Second Momentum reevaluates actual Vigor after 2 to 4");
-
-        Fixture();
-        var shifted = Card(ModelDb.Card<WylderSpineShock>(), false);
-        shifted.BeforeCardPlayed(TrackingArrowRegression.MakePlay(shifted, _owner)).GetAwaiter().GetResult();
-        Hit(shifted, _enemies[1], 13, true);
-        Check(Rewards.Single().Target == _enemies[1] && Rewards.Single().Amount == 1, "Break reward targets actual fully blocked damage recipient");
-        shifted.AfterCardPlayedLate(null!, TrackingArrowRegression.MakePlay(shifted, _owner)).GetAwaiter().GetResult();
-        Fixture();
-        var lethal = Card(ModelDb.Card<WylderSpineShock>(), false);
-        lethal.BeforeCardPlayed(TrackingArrowRegression.MakePlay(lethal, _owner)).GetAwaiter().GetResult();
-        _enemies[0].SetCurrentHpInternal(0);
-        Hit(lethal, _enemies[0], 13, false); Hit(lethal, _enemies[1], 30, false);
-        Check(Rewards.Count == 0, "Lethal Break skips dead target and cannot redirect reward");
-        foreach (bool upgraded in new[] { false, true })
-        foreach (bool pursuit in new[] { false, true })
-        foreach (bool fullyBlocked in new[] { false, true })
-        {
-            Fixture(pursuit); _fullyBlocked = fullyBlocked;
-            Play(Card(ModelDb.Card<WylderCliffbreaker>(), upgraded));
-            Check(Attacks.Single() == (false, 1, upgraded ? 22m : 17m), "Cliffbreaker native single attack");
-            Check(_owner.Creature.GetPowerAmount<VigorPower>() == (pursuit ? 3 : 0), "Cliffbreaker deferred Vigor exact pre-block threshold");
-            Check(ResolvedDamage.Single() == Math.Floor((upgraded ? 22m : 17m) * (pursuit ? 1.5m : 1m)), "Cliffbreaker reward cannot boost its own hit");
-
-            Fixture(pursuit); _fullyBlocked = fullyBlocked;
-            var leap = Card(ModelDb.Card<WylderDualGreatswordLeap>(), upgraded);
-            Check(leap.EnergyCost.GetResolved() == 2 && leap.Rarity == CardRarity.Uncommon, "Dual Leap cost and rarity");
-            Play(leap);
-            Check(Attacks.Single() == (false, 2, upgraded ? 10m : 9m), "Dual Leap native two hits");
-            Check(ResolvedDamage.Count == 2 && ResolvedDamage.All(d => d == Math.Floor((upgraded ? 10m : 9m) * (pursuit ? 1.5m : 1m))), "Both Leap hits use old Pursuit state only");
-            Check(!_owner.Creature.HasPower<WylderPursuitPower>(), "Dual Leap consumes old Pursuit");
-            Check(Rewards.Where(r => r.Kind == "Energy").Sum(r => r.Amount) == 0, "Dual Leap cannot sum two sub-threshold hits into Break20");
-            AccessTools.Method(typeof(CombatState), "AddCard", new[] { typeof(CardModel) }).Invoke(_combat, new object[] { leap });
-            Put(leap, PileType.Discard);
-            leap.AfterCardChangedPilesLate(leap, PileType.Play, null!).GetAwaiter().GetResult();
-            Check(leap.Pile!.Type == PileType.Discard, "Dual Leap returns only when every hit independently reaches Break20");
-
-            Fixture(pursuit); _fullyBlocked = fullyBlocked;
-            Play(Card(ModelDb.Card<WylderGhostflameExplosion>(), upgraded));
-            Check(Attacks.Single() == (false, 1, upgraded ? 17m : 15m), "Ghostflame native single target");
-            Check(ResolvedDamage.Count == 1 && ResolvedDamage.Single() == Math.Floor((upgraded ? 17m : 15m) * (pursuit ? 1.5m : 1m)), "Ghostflame damage before Break reward");
-            Check(_enemies.All(e => !e.HasPower<FreezePower>()), "Ghostflame no Freeze below Break30");
-        }
-        Fixture(); AddPower<StrengthPower>(_owner.Creature, 20);
-        Play(Card(ModelDb.Card<WylderDualGreatswordLeap>(), false));
-        Check(ResolvedDamage.SequenceEqual(new[] { 29m, 29m }) && !_owner.Creature.HasPower<WylderPursuitPower>(), "Dual Leap native Strength on both hits");
-        Check(Rewards.Where(r => r.Kind == "Energy").Sum(r => r.Amount) == 1, "Dual Leap Breaks once when both hits independently meet the threshold");
-        Fixture();
-        var lethalLeap = Card(ModelDb.Card<WylderDualGreatswordLeap>(), false);
-        var lethalLeapPlay = TrackingArrowRegression.MakePlay(lethalLeap, _owner);
-        lethalLeap.BeforeCardPlayed(lethalLeapPlay).GetAwaiter().GetResult();
-        Hit(lethalLeap, _enemies[0], 20, false, killed: true);
-        Check((bool)AccessTools.Property(typeof(WylderCard), "BrokeThisPlay").GetValue(lethalLeap)!,
-            "Dual Leap qualifying lethal first hit completes Break when the second hit is cancelled");
-        Fixture(true); AddPower<VigorPower>(_owner.Creature, 3);
-        Play(Card(ModelDb.Card<WylderCliffbreaker>(), false));
-        Check(ResolvedDamage.Single() == 30 && _owner.Creature.GetPowerAmount<VigorPower>() == 3, "Native old Vigor consumption precedes fresh Cliffbreaker Vigor");
-        Fixture(); _enemies[0].SetCurrentHpInternal(0);
-        Play(Card(ModelDb.Card<WylderGhostflameExplosion>(), false));
-        Check(_enemies.All(e => !e.HasPower<FreezePower>()), "Ghostflame skips dead recipient and unrelated enemies");
-        foreach (bool upgraded in new[] { false, true })
-        foreach (bool blocked in new[] { false, true })
-        foreach (int totalDamage in new[] { 29, 30, 31 })
-        {
-            Fixture(); _fullyBlocked = blocked;
-            AddPower<StrengthPower>(_owner.Creature, totalDamage - (upgraded ? 17 : 15));
-            Play(Card(ModelDb.Card<WylderGhostflameExplosion>(), upgraded));
-            Check(_enemies[0].GetPowerAmount<FreezePower>() == (totalDamage >= 30 ? upgraded ? 7 : 6 : 0), "Ghostflame exact pre-block Break boundary and upgrade");
-            Check(!_enemies[1].HasPower<FreezePower>(), "Ghostflame Break only affects selected enemy");
-        }
-        Fixture(); AddPower<FreezePower>(_enemies[0], 3); AddPower<StrengthPower>(_owner.Creature, 20);
-        Play(Card(ModelDb.Card<WylderGhostflameExplosion>(), false));
-        Check(_enemies[0].GetPowerAmount<FreezePower>() == 9, "Ghostflame stacks existing Freeze after Break");
-        _enemies[0].GetPower<FreezePower>()!.AfterSideTurnEnd(null!, CombatSide.Enemy, _enemies).GetAwaiter().GetResult();
-        Check(_enemies[0].GetPowerAmount<FreezePower>() == 8, "Ghostflame reuses native project Freeze decay");
-        HistoryCards();
-        HandSourceCards();
-        Console.WriteLine($"PASS: {_checks - before} reviewed planner checks: sixteen cards; four-locale upgrades/energy icons, Vigor, Dexterity once, Pursuit/Break timing, native play history, pre-move hand snapshots, replay isolation and reversible native cost discounts (UI commands stubbed).");
+        // Removed with unregistered legacy card models.
     }
 
     private static void HorizontalReviewCards()
     {
-        int start = _checks;
-        var specs = new[]
-        {
-            new Spec(ModelDb.Card<WylderVerticalPressure>(), 2, CardRarity.Uncommon, 18, 23, 30),
-            new Spec(ModelDb.Card<WylderGhostflameCinders>(), 1, CardRarity.Uncommon, 0, 0, Block:7, UpgradeBlock:9),
-            new Spec(ModelDb.Card<WylderFleetFootwork>(), 1, CardRarity.Uncommon, 0, 0, Block:4, UpgradeBlock:6),
-            new Spec(ModelDb.Card<WylderOffensiveShift>(), 1, CardRarity.Uncommon, 0, 0, Block:5, UpgradeBlock:8),
-            new Spec(ModelDb.Card<WylderLastStandGuard>(), 2, CardRarity.Uncommon, 0, 0, Block:15, UpgradeBlock:20),
-            new Spec(ModelDb.Card<WylderPatientFocus>(), 0, CardRarity.Uncommon, 0, 0, Block:5, UpgradeBlock:8),
-            new Spec(ModelDb.Card<WylderTwinEdgeCombo>(), 1, CardRarity.Rare, 7, 9, Hits:2),
-            new Spec(ModelDb.Card<WylderBraveBlessing>(), 1, CardRarity.Rare, 0, 0, Block:8, UpgradeBlock:11),
-            new Spec(ModelDb.Card<WylderFinalGuard>(), 2, CardRarity.Rare, 0, 0, Block:16, UpgradeBlock:20),
-            new Spec(ModelDb.Card<WylderWildBreath>(), 1, CardRarity.Rare, 0, 0)
-        };
-        var formatter = new SmartFormatter();
-        formatter.AddExtensions(new DictionarySource(), new ReflectionSource(), new DefaultSource());
-        formatter.AddExtensions(new HighlightDifferencesFormatter(), new EnergyIconsFormatter(), new ShowIfUpgradedFormatter());
-        foreach (var spec in specs)
-        {
-            // Legacy designs remain testable but no longer define reward-pool membership.
-            Check(File.Exists(spec.Model.PortraitPath.Replace("res://", "D:/STS2/")), "Horizontal native portrait exists");
-            foreach (bool up in new[] { false, true })
-            {
-                Fixture(); var card = Card(spec.Model, up);
-                Check(card.EnergyCost.GetResolved() == spec.Cost && card.Rarity == spec.Rarity, "Horizontal cost and rarity");
-                Check(card.Type == (spec.Damage > 0 ? CardType.Attack : CardType.Skill), "Horizontal type");
-                Check(card.TargetType == (spec.Damage > 0 || card is WylderGhostflameCinders ? TargetType.AnyEnemy : TargetType.Self), "Horizontal target");
-                foreach (var pair in card.DynamicVars)
-                {
-                    bool changes = pair.Key is "Damage" or "Block"
-                        || (card is WylderGhostflameCinders && pair.Key == "Freeze")
-                        || (card is WylderPatientFocus or WylderWildBreath && pair.Key == "Vigor");
-                    Check(pair.Value.WasJustUpgraded == (up && changes), "Horizontal changed values green " + card.Id + " " + pair.Key);
-                }
-            }
-            foreach (string locale in new[] { "zhs", "eng", "jpn", "kor" })
-            {
-                using var json = JsonDocument.Parse(File.ReadAllText($"NightMustStay/localization/{locale}/cards.json"));
-                string text = json.RootElement.GetProperty(spec.Model.Id.Entry + ".description").GetString()!;
-                string Render(bool up)
-                {
-                    var card = Card(spec.Model, up);
-                    foreach (var energy in card.DynamicVars.Values.OfType<EnergyVar>()) energy.ColorPrefix = EnergyIconHelper.GetPrefix(card);
-                    return formatter.Format(System.Globalization.CultureInfo.InvariantCulture, text,
-                        card.DynamicVars.ToDictionary(p => p.Key, p => (object)p.Value).Concat(new[] { new KeyValuePair<string,object>("IfUpgraded", new IfUpgradedVar(up ? UpgradeDisplay.Upgraded : UpgradeDisplay.Normal)) }).ToDictionary(p=>p.Key,p=>p.Value));
-                }
-                Check(Render(false) != Render(true) && !Render(false).Contains('{'), "Horizontal visible four-locale upgrade");
-                Check(text == json.RootElement.GetProperty(spec.Model.Id.Entry + ".upgradeDescription").GetString(), "Horizontal upgrade audit copy");
-                if (spec.Model is WylderFinalGuard)
-                    Check(Render(false).Contains("[img]res://images/packed/sprite_fonts/wylder_energy_icon.png[/img]"), "Final Guard actual energy icon");
-            }
-        }
-        foreach (bool up in new[] { false, true })
-        foreach (bool pursuit in new[] { false, true })
-        foreach (bool attacked in new[] { false, true })
-        foreach (int vigor in new[] { 0, 4, 5 })
-        {
-            void Begin()
-            {
-                Fixture(pursuit);
-                if (vigor > 0) AddPower<VigorPower>(_owner.Creature, vigor);
-                if (attacked) CombatManager.Instance.History.CardPlayStarted(_combat,
-                    TrackingArrowRegression.MakePlay(Card(ModelDb.Card<WylderStrike>(), false), _owner));
-                AddPower<DexterityPower>(_owner.Creature, 3);
-            }
-            Begin(); var vertical = Card(ModelDb.Card<WylderVerticalPressure>(), up); Play(vertical);
-            decimal verticalDamage = Math.Floor(((up ? 23m : 18m) + vigor) * (pursuit ? 1.5m : 1m));
-            Check(ResolvedDamage.Single() == verticalDamage, "Vertical Pressure modified damage");
-            Check(Rewards.Where(r => r.Kind == "Draw").Sum(r => r.Amount) == (verticalDamage >= 30 ? 2 : 0), "Vertical Pressure deferred Break draw");
-            Begin(); Play(Card(ModelDb.Card<WylderTwinEdgeCombo>(), up));
-            Check(Attacks.Single().Hits == 2 && ResolvedDamage.All(d => d == Math.Floor(((up ? 9m : 7m) + vigor) * (pursuit ? 1.5m : 1m))), "Twin Edge native multihit keeps old bonus for both hits");
-            Check(_owner.Creature.HasPower<WylderPursuitPower>() == pursuit, "Twin Edge reenters only old Pursuit");
-            Begin(); Play(Card(ModelDb.Card<WylderGhostflameCinders>(), up));
-            Check(Rewards[0].Kind == "Block" && Rewards[0].Amount == (up ? 12 : 10), "Cinders block first with Dexterity once");
-            Check(_enemies[0].GetPowerAmount<FreezePower>() == (up ? 2 : 1) && !_enemies[1].HasPower<FreezePower>(), "Cinders only selected living target");
-            Check(Rewards.Last().Kind == (pursuit ? "Draw" : "FreezePower"), "Cinders Pursuit draw last");
-            Begin(); var footwork = Card(ModelDb.Card<WylderFleetFootwork>(), up); Hand(footwork, 1);
-            Check(footwork.EnergyCost.GetResolved() == 1, "Reviewed Footwork not discounted by attack history"); Play(footwork);
-            Check(Rewards[0].Amount == (up ? 9 : 7) && Rewards.Count(r => r.Kind == "Block") == 1, "Footwork block once");
-            Check(Rewards.Where(r => r.Kind == "Draw").Sum(r => r.Amount) == 1 + (attacked ? 1 : 0) + (pursuit ? 1 : 0), "Footwork reviewed draw ceiling plus old Pursuit");
-            Begin(); Play(Card(ModelDb.Card<WylderOffensiveShift>(), up));
-            Check(_owner.Creature.GetPowerAmount<VigorPower>() == vigor + (pursuit ? 3 : 0), "Offensive Shift branches exclusive");
-            Check(_owner.Creature.HasPower<WylderPursuitPower>() == !pursuit, "Offensive Shift new Pursuit survives, old consumed");
-            Begin(); Play(Card(ModelDb.Card<WylderPatientFocus>(), up));
-            Check(Rewards.Count(r => r.Kind == "Block") == (attacked ? 1 : 0), "Patient Focus history branch");
-            Check(_owner.Creature.GetPowerAmount<VigorPower>() == vigor + (attacked ? 0 : up ? 3 : 2), "Patient Focus Vigor upgrade");
-            Begin(); Play(Card(ModelDb.Card<WylderBraveBlessing>(), up));
-            Check(Rewards[0].Amount == (up ? 14 : 11), "Brave Blessing block first");
-            Check(_owner.Creature.GetPowerAmount<VigorPower>() == vigor + (vigor >= 5 ? 0 : 3), "Brave Blessing exact threshold");
-            Check(Rewards.Where(r => r.Kind == "Draw").Sum(r => r.Amount) == (vigor >= 5 ? 2 : 0) + (pursuit ? 1 : 0), "Brave Blessing mutually exclusive draw plus Pursuit");
-            Begin(); Play(Card(ModelDb.Card<WylderWildBreath>(), up));
-            Check(Rewards[0].Kind == "VigorPower" && _owner.Creature.GetPowerAmount<VigorPower>() == vigor + (up ? 6 : 4), "Wild Breath Vigor first");
-            Check(Rewards.Where(r => r.Kind == "Draw").Sum(r => r.Amount) == (attacked ? 2 : 0) + (pursuit ? 1 : 0), "Wild Breath history draw and old Pursuit");
-        }
-        foreach (bool up in new[] { false, true })
-        foreach (bool pursuit in new[] { false, true })
-        foreach (int count in new[] { 1, 2, 3, 4 })
-        foreach (bool hand in new[] { false, true })
-        {
-            Fixture(pursuit); var card = Card(ModelDb.Card<WylderFinalGuard>(), up);
-            if (hand) Hand(card, count); else Put(card, PileType.Draw);
-            Play(card);
-            Check(Rewards[0].Kind == "Block" && Rewards[0].Amount == (up ? 20 : 16), "Final Guard reviewed Block");
-            Check(Rewards.Where(r => r.Kind == "Energy").Sum(r => r.Amount) == (hand && count == 2 ? 1 : 0) + (pursuit ? 1 : 0), "Final Guard exactly two, only refunds one");
-        }
-        Fixture(); var last = (WylderLastStandGuard)Card(ModelDb.Card<WylderLastStandGuard>(), true); Hand(last, 3);
-        Check(last.EnergyCost.GetResolved() == 1, "Last Stand native low-hand discount");
-        var fourth = Card(ModelDb.Card<WylderDefend>(), false); Put(fourth, PileType.Hand);
-        Check(last.EnergyCost.GetResolved() == 2, "Last Stand native discount reverses");
-        Put(fourth, PileType.Discard);
-        Check(last.TryModifyEnergyCostInCombat(last, 3, out var stack) && stack == 2, "Last Stand subtracts one with other modifiers");
-        Play(last); Check(Rewards.Single().Amount == 20, "Last Stand upgraded actual Block");
-        Fixture(true); var automatic = Card(ModelDb.Card<WylderFinalGuard>(), false); Hand(automatic, 2);
-        Play(automatic); Play(automatic, false, playIndex:1);
-        Check(Rewards.Where(r => r.Kind == "Energy").Sum(r => r.Amount) == 2, "Final Guard replay cannot inherit exactly-two refund");
-        Console.WriteLine($"PASS: {_checks - start} final-horizontal-review checks: eleven cards, reviewed no-refund/no-free-draw rules, exact hand snapshots, native multihit/Break, four-locale upgrades and reward ordering (UI commands stubbed).");
+        // Removed with unregistered legacy card models.
     }
 
     private static void Put(CardModel card, PileType destination)
@@ -597,153 +322,12 @@ internal static partial class WylderBattleArtRegression
 
     private static void HandSourceCards()
     {
-        foreach (bool upgraded in new[] { false, true })
-        foreach (bool pursuit in new[] { false, true })
-        foreach (int count in new[] { 1, 2, 3, 4 })
-        foreach (bool fromHand in new[] { false, true })
-        {
-            void Begin(CardModel c) { if (fromHand) Hand(c, count); else Put(c, PileType.Draw); }
-            Fixture(pursuit); AddPower<DexterityPower>(_owner.Creature, 3);
-            var guard = Card(ModelDb.Card<WylderLightStepGuard>(), upgraded); Begin(guard);
-            guard.DynamicVars.CalculatedBlock.UpdateCardPreview(guard, CardPreviewMode.Normal, null!, true);
-            decimal expected = (upgraded ? 5 : 3) + (fromHand && count <= 2 ? 3 : 0) + 3;
-            Check(guard.DynamicVars.CalculatedBlock.PreviewValue == expected, "Low-hand combined preview with Dexterity once");
-            Play(guard);
-            Check(Rewards.Count(r => r.Kind == "Block") == 1 && Rewards[0].Amount == expected, "Low-hand combined block one command, source snapshot includes self");
-            Check(Rewards.Count(r => r.Kind == "Draw") == (pursuit ? 1 : 0), "Low-hand skill old Pursuit draw once");
-            Fixture(pursuit);
-            var stance = Card(ModelDb.Card<WylderLowStance>(), upgraded); Begin(stance); Play(stance);
-            Check(Rewards[0].Amount == (upgraded ? 11 : 8), "Low Stance block");
-            Check(Rewards.Count(r => r.Kind == "Energy") == (fromHand && count <= 3 ? 1 : 0) + (pursuit ? 1 : 0), "Low Stance before-move hand threshold");
-            Check(Rewards.Last().Kind == (pursuit ? "Draw" : fromHand && count <= 3 ? "Energy" : "Block"), "Low Stance reward before Pursuit draw");
-            Fixture(pursuit);
-            var slash = Card(ModelDb.Card<WylderPursuitSlash>(), upgraded); Begin(slash); Play(slash);
-            Check(ResolvedDamage.Single() == Math.Floor((upgraded ? 11m : 8m) * (pursuit ? 1.5m : 1m)), "Pursuit Slash native attack bonus");
-            Check(Rewards.Count(r => r.Kind == "Energy") == (pursuit && fromHand && count <= 3 ? 1 : 0), "Pursuit Slash requires both source hand and Pursuit");
-            Fixture(pursuit);
-            var dash = Card(ModelDb.Card<WylderGroundDash>(), upgraded); Begin(dash); Play(dash);
-            Check(Rewards[0].Amount == (upgraded ? 5 : 3), "Ground Dash block upgrade");
-            Check(_owner.Creature.GetPowerAmount<VigorPower>() == (fromHand && count <= 3 ? 2 : 0), "Ground Dash source hand threshold");
-        }
-        Fixture();
-        var roll = (WylderAerialRoll)Card(ModelDb.Card<WylderAerialRoll>(), false); Hand(roll, 3);
-        Check(roll.EnergyCost.GetResolved() == 0, "Aerial Roll native hook hand three discount");
-        var fourth = Card(ModelDb.Card<WylderDefend>(), false); Put(fourth, PileType.Hand);
-        Check(roll.EnergyCost.GetResolved() == 1, "Aerial Roll cost restores at hand four");
-        Put(fourth, PileType.Discard);
-        Check(roll.EnergyCost.GetResolved() == 0, "Aerial Roll cost dynamically returns to zero");
-        Check(roll.TryModifyEnergyCostInCombat(roll, 2, out var stacked) && stacked == 1, "Aerial Roll subtracts rather than forces zero");
-        Check(roll.TryModifyEnergyCostInCombat(roll, 0, out var floor) && floor == 0, "Aerial Roll zero floor");
-        Check(!roll.TryModifyEnergyCostInCombat(fourth, 2, out var other) && other == 2, "Aerial Roll does not discount other cards");
-        Put(roll, PileType.Discard);
-        Check(roll.EnergyCost.GetResolved() == 1, "Aerial Roll outside hand no discount");
-        Fixture();
-        var repeat = Card(ModelDb.Card<WylderLowStance>(), false); Hand(repeat, 3);
-        Play(repeat); Play(repeat, false, playIndex: 1);
-        Check(Rewards.Count(r => r.Kind == "Energy") == 1, "Same wrapper replay cannot reuse hand source");
-        Fixture();
-        var automatic = Card(ModelDb.Card<WylderLowStance>(), false); Hand(automatic, 3);
-        Play(automatic, isAutoPlay: true);
-        Check(Rewards.Count(r => r.Kind == "Energy") == 1, "Automatic play originating in hand retains real hand source");
-        Fixture();
-        automatic = Card(ModelDb.Card<WylderLowStance>(), false); Put(automatic, PileType.Draw);
-        Play(automatic, isAutoPlay: true);
-        Check(Rewards.All(r => r.Kind != "Energy"), "Automatic draw-pile play is not hand-sourced");
-        Fixture();
-        var firstCopy = Card(ModelDb.Card<WylderLowStance>(), false);
-        var secondCopy = Card(ModelDb.Card<WylderLowStance>(), false);
-        Hand(firstCopy, 2); Put(secondCopy, PileType.Draw);
-        Play(firstCopy); Play(secondCopy);
-        Check(Rewards.Count(r => r.Kind == "Energy") == 1, "Different mutable copies never share source snapshot");
-        Fixture();
-        var nonWylder = Card(ModelDb.Card<WylderLowStance>(), false); Hand(nonWylder, 1);
-        AccessTools.Field(typeof(Player), "<Character>k__BackingField").SetValue(_owner, ModelDb.Character<Duchess>());
-        Play(nonWylder);
-        Check(Rewards.All(r => r.Kind != "Energy"), "Source-capture patch leaves other characters untouched");
-        Fixture();
-        var frozen = Card(ModelDb.Card<WylderLowStance>(), false); Hand(frozen, 4);
-        var helper = typeof(Wylder).Assembly.GetType("NightMustStay.Core.Models.Cards.WylderHandPlayContext")!;
-        AccessTools.Method(helper, "CaptureWrapper").Invoke(null, new object[] { frozen });
-        foreach (var c in PileType.Hand.GetPile(_owner).Cards.Where(c => c != frozen).ToArray()) Put(c, PileType.Discard);
-        Play(frozen, false);
-        Check(Rewards.All(r => r.Kind != "Energy"), "Post-capture hand changes cannot alter frozen count");
+        // Removed with unregistered legacy card models.
     }
 
     private static void HistoryCards()
     {
-        foreach (bool upgraded in new[] { false, true })
-        foreach (bool pursuit in new[] { false, true })
-        foreach (CardType? previous in new CardType?[] { null, CardType.Attack, CardType.Skill })
-        {
-            void Begin()
-            {
-                Fixture();
-                if (previous != null)
-                {
-                    var old = Card(previous == CardType.Attack ? ModelDb.Card<WylderStrike>() : ModelDb.Card<WylderDefend>(), false);
-                    CombatManager.Instance.History.CardPlayStarted(_combat, TrackingArrowRegression.MakePlay(old, _owner));
-                }
-                if (pursuit) AddPower<WylderPursuitPower>(_owner.Creature, 1);
-            }
-            Begin();
-            Play(Card(ModelDb.Card<WylderTurningGuard>(), upgraded));
-            Check(Rewards[0].Kind == "Block" && Rewards[0].Amount == (upgraded ? 10 : 7), "Turning Guard base/upgraded block");
-            Check(_owner.Creature.HasPower<WylderPursuitPower>() == (previous == CardType.Attack), "Turning Guard requires earlier attack and keeps new Pursuit");
-            Check(Rewards.Count(r => r.Kind == "Draw") == (pursuit ? 1 : 0), "Turning Guard old Pursuit draws once after effects");
-
-            Begin();
-            Play(Card(ModelDb.Card<WylderShieldPress>(), upgraded));
-            Check(Rewards[0].Kind == "Block" && Rewards[0].Amount == (upgraded ? 6 : 4), "Shield Press zero-cost block");
-            Check(_owner.Creature.GetPowerAmount<VigorPower>() == (previous == CardType.Skill ? 2 : 0), "Shield Press excludes itself from earlier Skills");
-            Check(Rewards.Count(r => r.Kind == "Draw") == (pursuit ? 1 : 0), "Shield Press Pursuit draw once");
-
-            Begin();
-            Play(Card(ModelDb.Card<WylderSlidingThrust>(), upgraded));
-            Check(_owner.Creature.HasPower<WylderPursuitPower>() == (previous == null), "Sliding Thrust only first card reenters Pursuit");
-            Check(ResolvedDamage.Single() == Math.Floor((upgraded ? 10m : 7m) * (pursuit ? 1.5m : 1m)), "Sliding Thrust new Pursuit never boosts itself");
-
-            Begin();
-            Play(Card(ModelDb.Card<WylderSteadyBreath>(), upgraded));
-            Check(Rewards[0].Kind == "Block" && Rewards[0].Amount == (upgraded ? 10 : 7), "Steady Breath block");
-            Check(_owner.Creature.HasPower<WylderPursuitPower>() == (previous != CardType.Attack), "Steady Breath inverse attack-history condition");
-            Check(Rewards.Count(r => r.Kind == "Draw") == (pursuit ? 1 : 0), "Steady Breath old Pursuit draws after entering new");
-
-            Begin();
-            Play(Card(ModelDb.Card<WylderGrappleSwing>(), upgraded));
-            Check(Rewards[0].Kind == "Block" && Rewards[0].Amount == (upgraded ? 9 : 6), "Grapple Swing block");
-            Check(Rewards.Count(r => r.Kind == "Energy") == (previous == CardType.Attack ? 1 : 0) + (pursuit ? 1 : 0), "Grapple Swing earlier attack energy branch");
-            Check(_owner.Creature.GetPowerAmount<VigorPower>() == (previous != CardType.Attack ? 2 : 0), "Grapple Swing branches exclusive");
-        }
-        Fixture();
-        var press = Card(ModelDb.Card<WylderShieldPress>(), false);
-        Play(press); Play(press);
-        Check(_owner.Creature.GetPowerAmount<VigorPower>() == 2, "Second native CardPlay of same Skill sees first, first cannot see itself");
-        Fixture();
-        var thrust = Card(ModelDb.Card<WylderSlidingThrust>(), false);
-        Play(thrust); Play(thrust);
-        Check(!_owner.Creature.HasPower<WylderPursuitPower>(), "Second native CardPlay is no longer first card");
-        _owner.PlayerCombatState!.IncrementTurnNumber();
-        Play(thrust);
-        Check(_owner.Creature.HasPower<WylderPursuitPower>(), "New player turn resets first-card eligibility without deleting history");
-
-        Fixture();
-        var current = Card(ModelDb.Card<WylderShieldPress>(), false);
-        var play = TrackingArrowRegression.MakePlay(current, _owner);
-        current.BeforeCardPlayed(play).GetAwaiter().GetResult();
-        CombatManager.Instance.History.CardPlayStarted(_combat, play);
-        var nested = Card(ModelDb.Card<WylderDefend>(), false);
-        CombatManager.Instance.History.CardPlayStarted(_combat, TrackingArrowRegression.MakePlay(nested, _owner));
-        ((Task)AccessTools.Method(current.GetType(), "OnPlay").Invoke(current, new object?[] { null, play })!).GetAwaiter().GetResult();
-        Check(!_owner.Creature.HasPower<VigorPower>(), "Later/nested Skill cannot become previous to current CardPlay");
-        Fixture();
-        var other = TrackingArrowRegression.MakePlayer();
-        var otherCreature = new Creature(other, 100, 100) { CombatState = _combat };
-        AccessTools.Field(typeof(Player), "<Creature>k__BackingField").SetValue(other, otherCreature);
-        var otherAttack = ModelDb.Card<WylderStrike>().ToMutable();
-        AccessTools.Field(typeof(CardModel), "_owner").SetValue(otherAttack, other);
-        CombatManager.Instance.History.CardPlayStarted(_combat, TrackingArrowRegression.MakePlay(otherAttack, other));
-        Play(Card(ModelDb.Card<WylderTurningGuard>(), false));
-        Check(!_owner.Creature.HasPower<WylderPursuitPower>(), "Ally attack does not satisfy owner's prior attack condition");
+        // Removed with unregistered legacy card models.
     }
 
     public static bool NotEnding(ref bool __result) { __result = false; return false; }
@@ -829,7 +413,7 @@ internal static partial class WylderBattleArtRegression
         formatter.AddExtensions(new HighlightDifferencesFormatter(), new EnergyIconsFormatter(), new ShowIfUpgradedFormatter());
         foreach (Spec spec in Specs())
         {
-            Check(spec.Model is WylderSpinningSlash || ModelDb.Character<Wylder>().CardPool.AllCards.Contains(spec.Model), "Pool registration " + spec.Model.Id);
+            Check(ModelDb.Character<Wylder>().CardPool.AllCards.Contains(spec.Model), "Pool registration " + spec.Model.Id);
             string art = spec.Model.PortraitPath.Replace("res://", "");
             Check(File.Exists(art.StartsWith("images/packed/card_portraits/wylder/") ? art : Path.Combine("D:/STS2", art)),
                 "Verified approved runtime or native interim portrait");
@@ -1188,10 +772,10 @@ internal static partial class WylderBattleArtRegression
             var card = Card(spec.Model, false);
             var play = TrackingArrowRegression.MakePlay(card, _owner);
             card.BeforeCardPlayed(play).GetAwaiter().GetResult();
-            int requiredHits = card is WylderSpinningSlash ? 2 : 1;
+            const int requiredHits = 1;
             for (int i = 0; i < requiredHits; i++) Hit(card, _enemies[0], spec.Break - 1, true);
             for (int i = 0; i < requiredHits; i++) Hit(card, _enemies[1], spec.Break, true);
-            Check(Rewards.Count == (card is WylderSpinningSlash ? 1 : card is WylderVacuumSlice ? 2 : 1),
+            Check(Rewards.Count == (card is WylderVacuumSlice ? 2 : 1),
                 "Each target is checked independently and sub-threshold hits never accumulate " + card.Id);
             card.AfterCardPlayedLate(null!, play).GetAwaiter().GetResult();
 
@@ -1205,7 +789,6 @@ internal static partial class WylderBattleArtRegression
                 && Rewards.Select(reward => reward.Target).Distinct().Count() == 2, "Vacuum Weak2 once to all living opponents");
             if (card is WylderLionsClaw) Check(Rewards.Single().Kind == nameof(PhantomImbalancePower)
                 && Rewards.Single().Amount == 2 && Rewards.Single().Target == _enemies[0], "Lion exact Break gives fixed Imbalance to broken target");
-            if (card is WylderSpinningSlash) Check(Rewards.Single().Amount == 1, "Spinning draw one");
             Hit(card, _enemies[0], 100, false); Hit(card, _enemies[1], 100, false);
             Check(Rewards.Count == count, "No repeat reward in same play " + card.Id);
             card.AfterCardPlayedLate(null!, play).GetAwaiter().GetResult();
@@ -1215,12 +798,6 @@ internal static partial class WylderBattleArtRegression
             for (int i = 0; i < requiredHits; i++) Hit(card, _enemies[1], spec.Break, false);
             Check(Rewards.Count == count * 2, "Independent replay/next-play reset " + card.Id);
         }
-        Fixture(true); _fullyBlocked = true;
-        Play(Card(ModelDb.Card<WylderSpinningSlash>(), false));
-        Check(Rewards.Count(r => r.Kind == "Draw") == 0, "Fully blocked sub-threshold native AOE hits do not accumulate");
-        Fixture(true); _fullyBlocked = true; AddPower<StrengthPower>(_owner.Creature, 4);
-        Play(Card(ModelDb.Card<WylderSpinningSlash>(), false));
-        Check(Rewards.Count(r => r.Kind == "Draw") == 1, "Native AOE multi-hit Breaks once when every hit reaches the threshold");
     }
 
     private static void Fixture(bool pursuit = false)
