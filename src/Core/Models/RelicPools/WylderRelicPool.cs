@@ -10,5 +10,13 @@ public sealed class WylderRelicPool : RelicPoolModel
     protected override IEnumerable<RelicModel> GenerateAllRelics() => new RelicModel[]
     {
         ModelDb.Relic<WylderSingleEarring>(),
+        ModelDb.Relic<WylderEarring>(),
+        ModelDb.Relic<WylderDarkGrayWhetstone>(),
+        ModelDb.Relic<WylderSearingSwordOil>(),
+        ModelDb.Relic<WylderGodfreyPortrait>(),
+        ModelDb.Relic<WylderSilverTeardrop>(),
+        ModelDb.Relic<WylderKingsNight>(),
+        ModelDb.Relic<WylderWarriorJarShard>(),
+        ModelDb.Relic<WylderRedStainedBlade>(),
     };
 }

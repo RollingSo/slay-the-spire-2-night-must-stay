@@ -31,5 +31,11 @@
   "DUCHESS_VEIL_VIAL.title": "Dodge Vial",
   "DUCHESS_VEIL_VIAL.description": "Add 2 [gold]회피[/gold] cards to your hand.",
   "DUCHESS_MEMORY_DRAUGHT.title": "Timing Draught",
-  "DUCHESS_MEMORY_DRAUGHT.description": "Set [gold]Moment[/gold] to 5.\nDraw 1 card."
+  "DUCHESS_MEMORY_DRAUGHT.description": "Set [gold]Moment[/gold] to 5.\nDraw 1 card.",
+  "WYLDER_FIRE_GREASE.title": "Fire Grease",
+  "WYLDER_FIRE_GREASE.description": "Gain {VigorPower} [gold]Vigor[/gold].",
+  "WYLDER_BRAVE_MEAT.title": "Brave's Meat",
+  "WYLDER_BRAVE_MEAT.description": "Gain {StrengthPower} [gold]Strength[/gold].\nEnter [gold]Pursuit[/gold].",
+  "WYLDER_STONE_SWORD_KEY.title": "Stone-Sheathed Sword Key",
+  "WYLDER_STONE_SWORD_KEY.description": "Add {Cards} random [gold]Desperation[/gold] cards to your [gold]Hand[/gold]."
 }

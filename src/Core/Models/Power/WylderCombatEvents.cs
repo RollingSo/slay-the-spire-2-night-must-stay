@@ -14,10 +14,11 @@ using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Cards;
 using NightMustStay.Core.Models.Characters;
+using NightMustStay.Core.Models.Relics;
 
 namespace NightMustStay.Core.Models.Power;
 
-public enum WylderEffectSource { CardEffect, PowerEffect, RelicEffect }
+public enum WylderEffectSource { CardEffect, PowerEffect, RelicEffect, PotionEffect }
 
 // This ledger exists before any ability is deployed. Events spend their global
 // first-event eligibility even when there is no matching power to reward.
@@ -165,6 +166,8 @@ public static class WylderCombatEvents
         if (data.Broke) return;
         data.Broke = true;
         Player player = play.Card.Owner;
+        if (player.Relics?.OfType<WylderGodfreyPortrait>().FirstOrDefault() is { } portrait)
+            Queue(play, portrait.OnBreak);
         if (data.BreakDraw > 0)
         {
             int draw = data.BreakDraw;
@@ -207,6 +210,8 @@ public static class WylderCombatEvents
     {
         Player player = owner.Player;
         if (player != null) WylderPursuitHistory.Enter(player);
+        if (player?.Relics?.OfType<WylderWarriorJarShard>().FirstOrDefault() is { } shard)
+            await shard.OnPursuitEntered(context);
         if (!Eligible(player)) return;
         if (Power<WylderOffensiveInstinctPower>(player) is { } instinct)
         {

@@ -8,5 +8,9 @@ public sealed class WylderPotionPool : PotionPoolModel
     public override string EnergyColorName => "wylder";
     public override Color LabOutlineColor => new("809CC8");
     protected override IEnumerable<PotionModel> GenerateAllPotions() => new PotionModel[]
-    { };
+    {
+        ModelDb.Potion<WylderFireGrease>(),
+        ModelDb.Potion<WylderBraveMeat>(),
+        ModelDb.Potion<WylderStoneSwordKey>(),
+    };
 }

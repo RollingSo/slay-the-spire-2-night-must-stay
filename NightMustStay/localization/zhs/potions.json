@@ -31,5 +31,11 @@
   "DUCHESS_VEIL_VIAL.title": "闪避小瓶",
   "DUCHESS_VEIL_VIAL.description": "将2张[gold]闪避[/gold]加入手牌。",
   "DUCHESS_MEMORY_DRAUGHT.title": "定时饮剂",
-  "DUCHESS_MEMORY_DRAUGHT.description": "使[gold]时刻[/gold]变为5。\n抽1张牌。"
+  "DUCHESS_MEMORY_DRAUGHT.description": "使[gold]时刻[/gold]变为5。\n抽1张牌。",
+  "WYLDER_FIRE_GREASE.title": "火油脂",
+  "WYLDER_FIRE_GREASE.description": "获得{VigorPower}点[gold]活力[/gold]。",
+  "WYLDER_BRAVE_MEAT.title": "勇者肉块",
+  "WYLDER_BRAVE_MEAT.description": "获得{StrengthPower}点[gold]力量[/gold]。\n进入[gold]追击[/gold]。",
+  "WYLDER_STONE_SWORD_KEY.title": "石剑钥匙",
+  "WYLDER_STONE_SWORD_KEY.description": "将{Cards}张随机[gold]绝境[/gold]牌加入你的[gold]手牌[/gold]。"
 }
