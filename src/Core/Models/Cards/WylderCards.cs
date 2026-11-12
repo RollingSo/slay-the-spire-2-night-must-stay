@@ -230,7 +230,7 @@ public sealed class WylderStampSweep : WylderCard
 {
     public WylderStampSweep() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
     protected override bool HasPursuitCondition => true;
-    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new DamageVar(10m, ValueProp.Move) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new DamageVar(11m, ValueProp.Move) };
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         var attack = DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this);

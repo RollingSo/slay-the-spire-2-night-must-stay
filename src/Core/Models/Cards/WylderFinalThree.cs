@@ -47,21 +47,18 @@ public sealed class WylderLastResort : WylderCard
 public sealed class WylderShriekOfMilos : WylderCard
 {
     public WylderShriekOfMilos() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
-    protected override IEnumerable<MegaCrit.Sts2.Core.HoverTips.IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Append(MegaCrit.Sts2.Core.HoverTips.HoverTipFactory.FromPower<VulnerablePower>());
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new PowerVar<VulnerablePower>("Vulnerable", 1m) };
+    public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
+    protected override IEnumerable<MegaCrit.Sts2.Core.HoverTips.IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new MegaCrit.Sts2.Core.HoverTips.IHoverTip[]
+        { MegaCrit.Sts2.Core.HoverTips.HoverTipFactory.FromPower<VulnerablePower>(), MegaCrit.Sts2.Core.HoverTips.HoverTipFactory.FromPower<VigorPower>() });
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
+        { new PowerVar<VulnerablePower>("Vulnerable", 1m), new PowerVar<VigorPower>("Vigor", 6m) };
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        foreach (var enemy in CombatState.GetOpponentsOf(Owner.Creature).Where(e => e.IsAlive).ToArray()) await PowerCmd.Apply<VulnerablePower>(c, enemy, 1, Owner.Creature, this);
-        await PowerCmd.Apply<WylderShriekOfMilosPower>(c, Owner.Creature, 1, Owner.Creature, this);
+        foreach (var enemy in CombatState.GetOpponentsOf(Owner.Creature).Where(e => e.IsAlive).ToArray())
+            await PowerCmd.Apply<VulnerablePower>(c, enemy, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<VigorPower>(c, Owner.Creature, DynamicVars["Vigor"].BaseValue, Owner.Creature, this);
     }
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
-}
-public sealed class WylderShriekOfMilosPower : PowerModel
-{
-    public override PowerType Type => PowerType.Buff;
-    public override PowerStackType StackType => PowerStackType.Counter;
-    internal decimal Multiplier(Creature dealer, ValueProp props, CardModel card) => dealer == Owner && card?.Type == CardType.Attack && props.IsPoweredAttack() ? 2m : 1m;
-    public override async Task AfterCardPlayedLate(PlayerChoiceContext c, CardPlay play) { if (play.Card.Owner.Creature == Owner && play.Card.Type == CardType.Attack) await PowerCmd.Decrement(this); }
 }
 internal static class WylderGrantedDesperation
 {

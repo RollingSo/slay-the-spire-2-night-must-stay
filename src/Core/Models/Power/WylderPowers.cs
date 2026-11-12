@@ -5,10 +5,12 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Cards;
 
@@ -47,7 +49,17 @@ public sealed class WylderPursuitPower : PowerModel
         else await PowerCmd.Apply<WylderPursuitPower>(context, owner, 1m, owner, source);
         if (doubleEffect && owner.GetPower<WylderPursuitPower>() is { } pursuit)
             pursuit.GetInternalData<Data>().DoubleEffect = true;
-        if (IsActive(owner)) await WylderCombatEvents.RegisterEntry(context, owner, source, sourceKind);
+        if (IsActive(owner))
+        {
+            await WylderCombatEvents.RegisterEntry(context, owner, source, sourceKind);
+            RefreshHand(owner.Player);
+        }
+    }
+    internal static void RefreshHand(Player player)
+    {
+        if (player == null || NCombatRoom.Instance?.Ui?.Hand == null) return;
+        foreach (var holder in NCombatRoom.Instance.Ui.Hand.ActiveHolders)
+            if (holder.CardModel?.Owner == player) holder.UpdateCard();
     }
     private int EffectMultiplier => GetInternalData<Data>().DoubleEffect ? 2 : 1;
     internal decimal AttackMultiplier(Creature dealer, ValueProp props, CardModel source) =>
@@ -85,6 +97,7 @@ public sealed class WylderPursuitPower : PowerModel
         {
             var followThrough = WylderFollowThroughCard.Snapshot(Owner.Player);
             await PowerCmd.Remove(this);
+            RefreshHand(Owner.Player);
             WylderCombatEvents.QueuePursuitExit(play, followThrough);
         }
         if (skillReward > 0)

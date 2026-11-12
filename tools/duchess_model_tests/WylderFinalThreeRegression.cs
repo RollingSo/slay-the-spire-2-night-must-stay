@@ -35,18 +35,11 @@ internal static partial class WylderBattleArtRegression
      Fixture();var card=Card(model,up);
      Check(card.EnergyCost.GetResolved()==(up?0:1)&&card.TargetType==TargetType.Self,"Final three cost upgrade and targeting");
      Check(card.Type==(card is WylderEndlessWill?CardType.Power:CardType.Skill)&&card.Rarity==(card is WylderEndlessWill?CardRarity.Uncommon:CardRarity.Rare),"Final three type and rarity");
-     Check(card.Keywords.Contains(CardKeyword.Exhaust)==(card is WylderLastResort),"Only Last Resort has native Exhaust");
+     Check(card.Keywords.Contains(CardKeyword.Exhaust)==(card is WylderLastResort or WylderShriekOfMilos),"Last Resort and Shriek of Milos have native Exhaust");
     }
     Fixture();Play(Card(ModelDb.Card<WylderShriekOfMilos>(),up));
     Check(_enemies.All(e=>e.GetPowerAmount<VulnerablePower>()==1),"Milos applies 1 Vulnerable to every enemy");
-    var shriek=_owner.Creature.GetPower<WylderShriekOfMilosPower>()!;
-    Play(Card(ModelDb.Card<WylderDefend>(),false));Check(shriek.Amount==1,"Skill does not consume next Attack buff");
-    var attack=Card(ModelDb.Card<WylderDesperateFlurry>(),false);attack.DynamicVars.Damage.UpdateCardPreview(attack,CardPreviewMode.Normal,_enemies[0],true);
-    Check(attack.DynamicVars.Damage.PreviewValue==27,"Milos native damage preview doubles alongside Vulnerable");
-    Play(attack);Check(ResolvedDamage.SequenceEqual(new[]{27m,27m,27m}),"Milos covers all native hits of next Attack");
-    shriek.AfterCardPlayedLate(null!,TrackingArrowRegression.MakePlay(attack,_owner)).GetAwaiter().GetResult();
-    Check(!_owner.Creature.HasPower<WylderShriekOfMilosPower>(),"Milos consumed after full Attack");
-    Attacks.Clear();ResolvedDamage.Clear();Play(Card(ModelDb.Card<WylderStrike>(),false));Check(ResolvedDamage.Single()==9,"Following Attack not doubled");
+    Check(_owner.Creature.GetPowerAmount<VigorPower>()==6,"Milos grants 6 Vigor");
     Fixture();var will=Card(ModelDb.Card<WylderEndlessWill>(),up);Play(will);
     var power=_owner.Creature.GetPower<WylderEndlessWillPower>()!;
     ((Task)AccessTools.Method(typeof(WylderEndlessWillPower),"Trigger").Invoke(power,null)!).GetAwaiter().GetResult();

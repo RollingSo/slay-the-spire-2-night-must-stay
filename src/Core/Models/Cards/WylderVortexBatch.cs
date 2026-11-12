@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
+using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
 using NightMustStay.Core.Nodes.Vfx;
@@ -52,8 +54,20 @@ internal static class WylderStunHistory
 }
 public sealed class WylderSiluriaVortex:WylderCard
 {
- public WylderSiluriaVortex():base(2,CardType.Attack,CardRarity.Rare,TargetType.AnyEnemy){}
- protected override IEnumerable<DynamicVar> CanonicalVars=>new DynamicVar[]{new CalculationBaseVar(24m),new ExtraDamageVar(5m),new CalculatedDamageVar(ValueProp.Move).WithMultiplier(static(card,_)=>WylderStunHistory.Count(card.Owner))};
- protected override async Task OnPlay(PlayerChoiceContext c,CardPlay p){WylderAnimationPatch.QueueAttackMotion(Owner.Creature,"AttackTwoHand");await DamageCmd.Attack(DynamicVars.CalculatedDamage.Calculate(p.Target)).CompatFromCard(this).Targeting(p.Target).WithWylderFx(WylderAttackVfx.Kind.SiluriaVortex,Owner.Creature).Execute(c);}
- protected override void OnUpgrade()=>DynamicVars["ExtraDamage"].UpgradeValueBy(5m);
+ public WylderSiluriaVortex():base(3,CardType.Attack,CardRarity.Rare,TargetType.AnyEnemy){}
+ protected override IEnumerable<DynamicVar> CanonicalVars=>new DynamicVar[]{new DamageVar(24m,ValueProp.Move)};
+ public override bool TryModifyEnergyCostInCombat(CardModel card,decimal originalCost,out decimal modifiedCost)
+ {
+  modifiedCost=originalCost;
+  if(card!=this||Owner==null)return false;
+  int discount=WylderStunHistory.Count(Owner);
+  modifiedCost=Math.Max(0m,originalCost-discount);
+  return discount>0;
+ }
+ protected override async Task OnPlay(PlayerChoiceContext c,CardPlay p)
+ {
+  WylderAnimationPatch.QueueAttackMotion(Owner.Creature,"AttackTwoHand");
+  await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(p.Target).WithWylderFx(WylderAttackVfx.Kind.SiluriaVortex,Owner.Creature).Execute(c);
+ }
+ protected override void OnUpgrade()=>EnergyCost.UpgradeBy(-1);
 }

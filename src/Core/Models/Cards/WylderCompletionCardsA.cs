@@ -82,10 +82,10 @@ public sealed class WylderParry : WylderDesperationCard
 }
 public sealed class WylderCorpseWaxCutter : WylderCard
 {
-    public WylderCorpseWaxCutter() : base(1, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies) { }
+    public WylderCorpseWaxCutter() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AllEnemies) { }
     public override string PortraitPath => "res://images/packed/card_portraits/wylder/wylder_corpse_wax_cutter.png";
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        { new DamageVar(10m, ValueProp.Move), new DynamicVar("Break", 20m), new PowerVar<VulnerablePower>("Vulnerable", 2m), new PowerVar<WeakPower>("Weak", 2m) };
+        { new DamageVar(14m, ValueProp.Move), new DynamicVar("Break", 30m), new PowerVar<VulnerablePower>("Vulnerable", 2m), new PowerVar<WeakPower>("Weak", 2m) };
     protected override decimal BreakThreshold => DynamicVars["Break"].BaseValue;
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new[] { HoverTipFactory.FromPower<VulnerablePower>(), HoverTipFactory.FromPower<WeakPower>() });
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)

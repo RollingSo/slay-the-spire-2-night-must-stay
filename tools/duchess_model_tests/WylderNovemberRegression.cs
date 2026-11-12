@@ -50,8 +50,8 @@ internal static partial class WylderBattleArtRegression
     Check(flame.TryModifyEnergyCostInCombat(flame,cost,out price)&&price==Math.Max(0,cost-n),"True Flame combat entry discount clamps zero");
     Check(flame.EnergyCost.GetResolved()==Math.Max(0,cost-n),"True Flame native displayed and paid energy cost");
    }
-   Check(flame.DynamicVars["Vigor"].BaseValue==20,"True Flame preview is 20 Vigor");
-   Play(flame);Put(flame,PileType.Hand);Check(Rewards.Any(r=>r.Kind==nameof(VigorPower)&&r.Amount==20),"True Flame grants 20 Vigor");
+   Check(flame.DynamicVars["Vigor"].BaseValue==15,"True Flame preview is 15 Vigor");
+   Play(flame);Put(flame,PileType.Hand);Check(Rewards.Any(r=>r.Kind==nameof(VigorPower)&&r.Amount==15),"True Flame grants 15 Vigor");
    Check(!flame.TryModifyEnergyCostInCombat(flame,cost,out price)&&price==cost,"True Flame resets after play");
    Check(copy.TryModifyEnergyCostInCombat(copy,cost,out price)&&price==0,"True Flame copies independent");
    WylderCombatEvents.RegisterEntry(null!,_owner.Creature,null!,WylderEffectSource.PowerEffect).GetAwaiter().GetResult();
@@ -59,12 +59,14 @@ internal static partial class WylderBattleArtRegression
    Check(!flame.TryModifyEnergyCostInCombat(copy,cost,out _),"True Flame only discounts itself");
    foreach(int handCount in new[]{0,3,4})
    {
-    Fixture();AddPower<WylderForgetTheSwordPower>(_owner.Creature,up?50:25);
+    Fixture();
     for(int n=0;n<handCount;n++)Put(Card(ModelDb.Card<WylderDefend>(),false),PileType.Hand);
-    var strike=Card(ModelDb.Card<WylderStrike>(),false);strike.DynamicVars.Damage.UpdateCardPreview(strike,CardPreviewMode.Normal,_enemies[0],true);
-    Check(strike.DynamicVars.Damage.PreviewValue==6m*(handCount<=3?(up?1.5m:1.25m):1m),"Forget Sword current-hand damage preview");
-    Play(strike);Check(ResolvedDamage.Single()==(handCount<=3?(up?9:7):6),"Forget Sword actual native damage multiplier");
+    Play(Card(ModelDb.Card<WylderForgetTheSword>(),up));
+    Check(_owner.Creature.GetPowerAmount<StrengthPower>()==(handCount<=3?(up?4:3):0),"Forget Sword grants real Strength only with at most three cards in hand");
    }
+   Fixture(true);var pursuitStrike=Card(ModelDb.Card<WylderStrike>(),false);pursuitStrike.DynamicVars.Damage.UpdateCardPreview(pursuitStrike,CardPreviewMode.Normal,_enemies[0],true);
+   Check(pursuitStrike.DynamicVars.Damage.PreviewValue==9,"Base Pursuit increases ordinary attack preview by 50 percent");
+   Play(pursuitStrike);Check(ResolvedDamage.Single()==9,"Base Pursuit increases ordinary attack damage by 50 percent");
    Fixture();var aura=Card(ModelDb.Card<WylderMurderousAura>(),up);Play(aura);var power=_owner.Creature.GetPower<WylderMurderousAuraPower>()!;
    Check(power.ModifyHandDraw(_owner,5)==4&&power.ModifyHandDraw(_owner,0)==0,"Aura persistent draw penalty");
    Check(Rewards.Count(r=>r.Kind is nameof(StrengthPower) or nameof(DexterityPower))==2

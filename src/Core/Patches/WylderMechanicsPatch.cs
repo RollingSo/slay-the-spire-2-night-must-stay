@@ -17,8 +17,6 @@ internal static class WylderPursuitDamageBranchPatch
     private static bool Modify(AbstractModel __instance, Creature dealer, ValueProp props,
         CardModel cardSource, ref decimal __result)
     {
-        if (__instance is WylderShriekOfMilosPower shriek) { __result = shriek.Multiplier(dealer, props, cardSource); return false; }
-        if (__instance is WylderForgetTheSwordPower forgotten) { __result = forgotten.Multiplier(dealer, props, cardSource); return false; }
         if (__instance is not WylderPursuitPower power) return true;
         __result = power.AttackMultiplier(dealer, props, cardSource);
         return false;

@@ -184,14 +184,14 @@ public sealed class WylderMurderousAuraPower : PowerModel
 public sealed class WylderForgetTheSword : WylderCard
 {
     public WylderForgetTheSword() : base(1, CardType.Power, CardRarity.Uncommon, TargetType.Self) { }
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DynamicVar("Percent", 25m) };
-    protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p) => await PowerCmd.Apply<WylderForgetTheSwordPower>(c, Owner.Creature, DynamicVars["Percent"].BaseValue, Owner.Creature, this);
-    protected override void OnUpgrade() => DynamicVars["Percent"].UpgradeValueBy(25m);
-}
-public sealed class WylderForgetTheSwordPower : PowerModel
-{
-    public override PowerType Type => PowerType.Buff; public override PowerStackType StackType => PowerStackType.Counter;
-    internal decimal Multiplier(Creature dealer, ValueProp props, CardModel card) => dealer == Owner && card?.Type == CardType.Attack && props.IsPoweredAttack() && PileType.Hand.GetPile(Owner.Player).Cards.Count <= 3 ? 1m + Amount / 100m : 1m;
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new PowerVar<StrengthPower>("Strength", 3m) };
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Append(HoverTipFactory.FromPower<StrengthPower>());
+    protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
+    {
+        if (PileType.Hand.GetPile(Owner).Cards.Count <= 3)
+            await PowerCmd.Apply<StrengthPower>(c, Owner.Creature, DynamicVars["Strength"].BaseValue, Owner.Creature, this);
+    }
+    protected override void OnUpgrade() => DynamicVars["Strength"].UpgradeValueBy(1m);
 }
 // Combat-local history also covers entries before True Flame is drawn or generated.
 internal static class WylderPursuitHistory
@@ -206,7 +206,7 @@ public sealed class WylderTrueFlame : WylderCard
     [SavedProperty] public int SpentEntries { get; set; }
     public WylderTrueFlame() : base(5, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
     public override Task BeforeCombatStart() { SpentEntries = 0; return Task.CompletedTask; }
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new PowerVar<VigorPower>("Vigor", 20m) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new PowerVar<VigorPower>("Vigor", 15m) };
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Append(HoverTipFactory.FromPower<VigorPower>());
     public override bool TryModifyEnergyCostInCombat(CardModel card, decimal originalCost, out decimal modifiedCost) { modifiedCost = originalCost; if (card != this || Owner == null) return false; int discount = Math.Max(0, WylderPursuitHistory.Count(Owner) - SpentEntries); modifiedCost = Math.Max(0m, originalCost - discount); return discount > 0; }
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p) { SpentEntries = WylderPursuitHistory.Count(Owner); await PowerCmd.Apply<VigorPower>(c, Owner.Creature, DynamicVars["Vigor"].BaseValue, Owner.Creature, this); }

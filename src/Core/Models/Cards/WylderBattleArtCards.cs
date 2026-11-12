@@ -22,7 +22,7 @@ public sealed class WylderVacuumSlice : WylderCard
 {
     public WylderVacuumSlice() : base(1, CardType.Attack, CardRarity.Common, TargetType.AllEnemies) { }
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        { new DamageVar(9m, ValueProp.Move), new DynamicVar("Break", 20m), new PowerVar<WeakPower>("Weak", 2m) };
+        { new DamageVar(8m, ValueProp.Move), new DynamicVar("Break", 20m), new PowerVar<WeakPower>("Weak", 2m) };
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new[] { HoverTipFactory.FromPower<WeakPower>() });
     protected override decimal BreakThreshold => DynamicVars["Break"].BaseValue;
     protected override async Task OnBreak(PlayerChoiceContext context) =>

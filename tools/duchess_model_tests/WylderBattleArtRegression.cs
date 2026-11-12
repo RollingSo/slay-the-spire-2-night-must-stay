@@ -45,7 +45,7 @@ internal static partial class WylderBattleArtRegression
 
     private static Spec[] Specs() => new[]
     {
-        new Spec(ModelDb.Card<WylderVacuumSlice>(), 1, CardRarity.Common, 9, 12, 20, Aoe: true),
+        new Spec(ModelDb.Card<WylderVacuumSlice>(), 1, CardRarity.Common, 8, 11, 20, Aoe: true),
         new Spec(ModelDb.Card<WylderCriticalStrike>(), 3, CardRarity.Uncommon, 16, 21),
         new Spec(ModelDb.Card<WylderStormBlade>(), 0, CardRarity.Uncommon, 4, 5),
         new Spec(ModelDb.Card<WylderFlamingStrike>(), 1, CardRarity.Uncommon, 8, 8),
@@ -139,9 +139,9 @@ internal static partial class WylderBattleArtRegression
             AddPower<VulnerablePower>(_enemies[0], 1);
             var vacuum = Card(ModelDb.Card<WylderVacuumSlice>(), false);
             vacuum.DynamicVars.Damage.UpdateCardPreview(vacuum, CardPreviewMode.Normal, _enemies[0], true);
-            Check(vacuum.DynamicVars.Damage.PreviewValue == 24.75m, "Strength/Vulnerable/Pursuit native preview");
+            Check(vacuum.DynamicVars.Damage.PreviewValue == 22.5m, "Strength/Vulnerable/Pursuit native preview");
             Play(vacuum);
-            Check(ResolvedDamage.SequenceEqual(new decimal[] { 24, 16 }) && Rewards.Count == 2
+            Check(ResolvedDamage.SequenceEqual(new decimal[] { 22, 15 }) && Rewards.Count == 2
                 && Rewards.All(reward => reward.Kind == nameof(WeakPower) && reward.Amount == 2), "Modified AOE damage crosses Break20 on one target and applies Weak once to each enemy");
             Fixture();
             AddPower<StrengthPower>(_owner.Creature, 3);
@@ -262,11 +262,11 @@ internal static partial class WylderBattleArtRegression
             Fixture();
             Play(Card(ModelDb.Card<WylderClawRend>(),up));
             Check(Attacks.Single().Raw == 6 && _enemies[0].GetPowerAmount<VulnerablePower>()==(up ? 2 : 1), "Claw Rend damage/Vulnerable");
-            Fixture(true); AddPower<StrengthPower>(_owner.Creature,5); _fullyBlocked=true;
+            Fixture(true); AddPower<StrengthPower>(_owner.Creature,16); _fullyBlocked=true;
             var wax = Card(ModelDb.Card<WylderCorpseWaxCutter>(),up);
             Check(wax.Rarity==CardRarity.Uncommon && wax.TargetType==TargetType.AllEnemies,"Corpse Wax revised metadata");
             Play(wax);
-            Check(Attacks.Single().Aoe && Attacks.Single().Raw==(up?14:10) && _enemies.All(e=>e.GetPowerAmount<VulnerablePower>()==(up?3:2) && e.GetPowerAmount<WeakPower>()==(up?3:2)),"Corpse Wax group Break applies both debuffs once");
+            Check(Attacks.Single().Aoe && Attacks.Single().Raw==(up?18:14) && _enemies.All(e=>e.GetPowerAmount<VulnerablePower>()==(up?3:2) && e.GetPowerAmount<WeakPower>()==(up?3:2)),"Corpse Wax group Break applies both debuffs once");
             Fixture();
             var ghost = AddPower<WylderRuinousGhostflamePower>(_owner.Creature,1); ghost.UpgradedCopies=up?1:0;
             var attack=Card(ModelDb.Card<WylderStrike>(),false);
@@ -755,10 +755,10 @@ internal static partial class WylderBattleArtRegression
         Fixture(true); _fullyBlocked = true;
         AddPower<StrengthPower>(_owner.Creature, 5);
         Play(Card(ModelDb.Card<WylderVacuumSlice>(), false));
-        Check(Attacks.Single() == (true, 1, 9m) && ResolvedDamage.SequenceEqual(new decimal[] { 21, 21 }),
+        Check(Attacks.Single() == (true, 1, 8m) && ResolvedDamage.SequenceEqual(new decimal[] { 19, 19 }),
             "Native AOE builder resolves both modified hits even when fully blocked");
-        Check(Rewards.Count == 2 && Rewards.All(r => r.Kind == nameof(WeakPower) && r.Amount == 2),
-            "Both targets exceeding20 while blocked gives only one Weak application per enemy and no energy refund");
+        Check(Rewards.Count == 0,
+            "Both targets below Break20 while blocked give no Weak application and no energy refund");
         Check(ModelDb.Card<WylderVacuumSlice>().PortraitPath == "res://images/packed/card_portraits/wylder/wylder_vacuum_slice.png",
             "Vacuum uses reviewed upright wind-blade portrait");
         Console.WriteLine($"PASS: {_checks-before} revised Vacuum Slice checks: AOE target, base/upgraded Weak, per-hit pre-block threshold, no accumulation, once-per-play, lethal target and native blocked AOE.");

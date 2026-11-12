@@ -8,7 +8,7 @@ using NightMustStay.Core.Models.Power;
 namespace NightMustStay.Core.Models.Cards;
 public sealed class WylderAncientClawLeap : WylderCard
 {
- public WylderAncientClawLeap() : base(1, CardType.Attack, CardRarity.Ancient, TargetType.Self) { }
+ public WylderAncientClawLeap() : base(1, CardType.Skill, CardRarity.Ancient, TargetType.Self) { }
  public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Retain };
  protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new CardsVar(2) };
  protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)

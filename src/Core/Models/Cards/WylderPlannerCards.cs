@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Saves.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
 using NightMustStay.Core.Nodes.Vfx;
@@ -33,10 +35,10 @@ internal static class WylderPlayHistory
 // portraits only: the planner's artwork descriptions are not art approvals.
 public sealed class WylderDualGreatswordLeap : WylderCard
 {
-    private bool _returnAfterPlay;
+    [SavedProperty] public bool ReturnNextTurn { get; set; }
     public WylderDualGreatswordLeap() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        { new DamageVar(9m, ValueProp.Move), new RepeatVar(2), new DynamicVar("Break", 20m), new EnergyVar(1) };
+        { new DamageVar(7m, ValueProp.Move), new RepeatVar(2), new DynamicVar("Break", 20m), new EnergyVar(1) };
     protected override decimal BreakThreshold => DynamicVars["Break"].BaseValue;
     protected override int BreakHitCount => DynamicVars.Repeat.IntValue;
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
@@ -45,15 +47,17 @@ public sealed class WylderDualGreatswordLeap : WylderCard
             .WithHitCount(DynamicVars.Repeat.IntValue).Execute(context);
         if (!BrokeThisPlay) return;
         await PlayerCmd.GainEnergy(DynamicVars.Energy.BaseValue, Owner);
-        _returnAfterPlay = true;
+        ReturnNextTurn = true;
     }
-    public override async Task AfterCardChangedPilesLate(MegaCrit.Sts2.Core.Models.CardModel card, PileType oldPileType, MegaCrit.Sts2.Core.Models.AbstractModel clonedBy)
+    public override async Task BeforeSideTurnStart(PlayerChoiceContext context, CombatSide side,
+        IReadOnlyList<Creature> creatures, ICombatState combatState)
     {
-        if (card != this || !_returnAfterPlay || Pile == null || Pile.Type == PileType.Play || !Pile.Type.IsCombatPile()) return;
-        _returnAfterPlay = false;
+        if (!ReturnNextTurn || side != CombatSide.Player || Owner?.Creature == null
+            || !creatures.Contains(Owner.Creature) || Pile == null || !Pile.Type.IsCombatPile()) return;
+        ReturnNextTurn = false;
         if (Pile.Type != PileType.Hand) await CardPileCmd.Add(this, PileType.Hand);
     }
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(1m);
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2m);
 }
 public sealed class WylderGhostflameExplosion : WylderCard
 {
