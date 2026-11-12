@@ -10,6 +10,7 @@
     <Reference Include="GodotSharp"><HintPath>$(Sts2AssemblyDir)/GodotSharp.dll</HintPath></Reference>
     <Reference Include="0Harmony"><HintPath>$(Sts2AssemblyDir)/0Harmony.dll</HintPath></Reference>
     <Reference Include="Sentry"><HintPath>$(Sts2RuntimeAssemblyDir)/Sentry.dll</HintPath></Reference>
+    <Reference Include="Sentry.Godot" Condition="Exists('$(Sts2AssemblyDir)/Sentry.Godot.dll')"><HintPath>$(Sts2AssemblyDir)/Sentry.Godot.dll</HintPath></Reference>
     <Reference Include="SmartFormat"><HintPath>$(Sts2RuntimeAssemblyDir)/SmartFormat.dll</HintPath></Reference>
     <Reference Include="Steamworks.NET"><HintPath>$(Sts2RuntimeAssemblyDir)/Steamworks.NET.dll</HintPath></Reference>
     <Reference Include="System.IO.Hashing"><HintPath>$(Sts2RuntimeAssemblyDir)/System.IO.Hashing.dll</HintPath></Reference>

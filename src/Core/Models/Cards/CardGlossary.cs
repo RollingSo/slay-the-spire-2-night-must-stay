@@ -69,6 +69,23 @@ internal static class CardGlossary
         foreach (Type type in Mechanics)
         {
             var power = ModelDb.GetById<PowerModel>(ModelDb.GetId(type));
+            if (type == typeof(PhantomImbalancePower) || type == typeof(WylderBreakDescriptionPower))
+            {
+                var imbalance = ModelDb.Power<PhantomImbalancePower>();
+                var wylderBreak = ModelDb.Power<WylderBreakDescriptionPower>();
+                if (imbalance.Title.GetFormattedText() == wylderBreak.Title.GetFormattedText())
+                {
+                    bool hasBreak = card.DynamicVars.ContainsKey("Break");
+                    bool hasImbalance = card.DynamicVars.ContainsKey("Imbalance");
+                    if (!(hasBreak && hasImbalance))
+                    {
+                        bool isBreak = hasBreak || (!hasImbalance
+                            && card.Id.Entry.StartsWith("WYLDER_", StringComparison.Ordinal));
+                        if ((type == typeof(WylderBreakDescriptionPower)) != isBreak)
+                            continue;
+                    }
+                }
+            }
             if (Mentions(text, power.Title.GetFormattedText(), type == typeof(DuchessMomentDescriptionPower)))
                 result.MegaTryAddingTip(FromPower(power));
         }

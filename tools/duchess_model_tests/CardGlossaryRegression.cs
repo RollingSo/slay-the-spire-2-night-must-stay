@@ -85,10 +85,33 @@ internal static class CardGlossaryRegression
                         foreach (Type type in mechanicTypes)
                         {
                             string title = ModelDb.GetById<PowerModel>(ModelDb.GetId(type)).Title.GetFormattedText();
+                            if (type == typeof(PhantomImbalancePower) || type == typeof(WylderBreakDescriptionPower))
+                            {
+                                string imbalanceTitle = ModelDb.Power<PhantomImbalancePower>().Title.GetFormattedText();
+                                string breakTitle = ModelDb.Power<WylderBreakDescriptionPower>().Title.GetFormattedText();
+                                if (imbalanceTitle == breakTitle)
+                                {
+                                    bool hasBreak = card.DynamicVars.ContainsKey("Break");
+                                    bool hasImbalance = card.DynamicVars.ContainsKey("Imbalance");
+                                    if (!(hasBreak && hasImbalance))
+                                    {
+                                        bool isBreak = hasBreak || (!hasImbalance
+                                            && card.Id.Entry.StartsWith("WYLDER_", StringComparison.Ordinal));
+                                        if ((type == typeof(WylderBreakDescriptionPower)) != isBreak)
+                                            continue;
+                                    }
+                                }
+                            }
+                            int expectedTitleCount = ModelDb.Power<PhantomImbalancePower>().Title.GetFormattedText()
+                                    == ModelDb.Power<WylderBreakDescriptionPower>().Title.GetFormattedText()
+                                && card.DynamicVars.ContainsKey("Break") && card.DynamicVars.ContainsKey("Imbalance") ? 2 : 1;
                             if (text.Contains("[gold]" + title + "[/gold]", StringComparison.OrdinalIgnoreCase)
-                                && tips.OfType<HoverTip>().Count(tip => tip.Title == title) != 1)
+                                && tips.OfType<HoverTip>().Count(tip => tip.Title == title) != expectedTitleCount)
                                 throw new Exception($"Missing or duplicate glossary for {title}.");
-                            if (type != typeof(FreezePower) && text.Contains("[gold]" + title, StringComparison.OrdinalIgnoreCase)
+                            bool mentionsMechanic = text.Contains("[gold]" + title + "[/gold]", StringComparison.OrdinalIgnoreCase)
+                                || type == typeof(DuchessMomentDescriptionPower)
+                                    && text.Contains("[gold]" + title, StringComparison.OrdinalIgnoreCase);
+                            if (type != typeof(FreezePower) && mentionsMechanic
                                 && !tips.Any(tip => tip.Id == ModelDb.GetId(type).ToString()))
                                 throw new Exception($"Mechanic {title} must use its native icon-bearing power definition.");
                         }

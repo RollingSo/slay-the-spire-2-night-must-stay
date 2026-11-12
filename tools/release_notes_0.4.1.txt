@@ -1,0 +1,25 @@
+[h1]0.4.1｜追踪者卡牌调整[/h1]
+
+- [b]钩爪飞跃[/b]：牌型由攻击改为技能，更符合其进入追击并抽牌的定位。
+- [b]真空斩[/b]：基础伤害由9调整为8。
+- [b]箭步：回旋斩[/b]：伤害由10/13提高至11/14。
+- [b]尸蜡斩击[/b]：耗能由1提高至2，伤害由10/14提高至14/18，破势门槛由20提高至30。
+- [b]灭洛斯的嚎叫[/b]：移除“下一张攻击牌伤害翻倍”，改为获得6点活力；群体易伤由1层提高至2层，并新增消耗，升级后0费不变。
+- [b]忘剑[/b]：由“手牌不超过3张时攻击伤害提高25%/50%”改为打出时若手牌不超过3张，获得3/4点力量。
+- [b]见真火[/b]：获得的活力由20调整为15。
+- [b]双剑跳劈[/b]：伤害由9/10调整为7/9；触发破势后不再立刻回手，改为下回合开始时回到手牌。
+- [b]志留亚的漩涡[/b]：耗能由2调整为3/2，伤害固定为24；本场战斗每击晕过1次敌人，耗能降低1，最低为0。
+- 进入或退出追击时会立即刷新手牌预览，使伤害、目标和费用显示及时更新。
+
+[h1]0.4.1 | Wylder Card Adjustments[/h1]
+
+- [b]Claw Leap[/b]: Changed from an Attack to a Skill, matching its Pursuit-entry and draw role.
+- [b]Vacuum Slice[/b]: Base damage reduced from 9 to 8.
+- [b]Stamp (Sweep)[/b]: Damage increased from 10/13 to 11/14.
+- [b]Corpse Wax Cutter[/b]: Cost increased from 1 to 2, damage increased from 10/14 to 14/18, and the Break threshold increased from 20 to 30.
+- [b]Shriek of Milos[/b]: Replaced “your next Attack deals double damage” with 6 Vigor, increased its AoE Vulnerable from 1 to 2, and added Exhaust. Its 0-cost upgrade is unchanged.
+- [b]Forget the Sword[/b]: Reworked from a 25%/50% Attack damage bonus at 3 or fewer cards in hand to gaining 3/4 Strength when played with 3 or fewer cards in hand.
+- [b]True Flame[/b]: Vigor reduced from 20 to 15.
+- [b]Dual Greatsword Leap[/b]: Damage changed from 9/10 to 7/9. After triggering Break, it now returns to your hand at the start of the next turn instead of immediately.
+- [b]Siluria's Woe[/b]: Cost changed from 2 to 3/2 and damage is now fixed at 24. Each enemy Stun this combat reduces its cost by 1, to a minimum of 0.
+- Entering or leaving Pursuit now refreshes cards in hand immediately so damage, targeting, and cost previews stay current.

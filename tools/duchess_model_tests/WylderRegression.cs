@@ -189,12 +189,23 @@ internal static class WylderRegression
             var sweep=Card<WylderStampSweep>();
             Check(sweep.TargetType==TargetType.AllEnemies,"Sweep uses native AOE targeting while pursuing");
             Check((bool)AccessTools.PropertyGetter(typeof(WylderCard),"ShouldGlowGoldInternal").Invoke(sweep,null)!,"Pursuit condition glow");
-            var nativeModifier=typeof(PowerModel).GetMethods().Single(m=>m.Name=="ModifyDamageMultiplicative");
-            var modifierArgs=nativeModifier.GetParameters().Select(parameter=>parameter.ParameterType==typeof(Creature)?(object)creature
-                :parameter.ParameterType==typeof(ValueProp)?ValueProp.Move
-                :parameter.ParameterType==typeof(CardModel)?strike
-                :parameter.ParameterType==typeof(decimal)?9m:null).ToArray();
-            Check((decimal)nativeModifier.Invoke(p,modifierArgs)! == 1.5m,"Runtime damage patch");
+            var patchType=typeof(Wylder).Assembly.GetType("NightMustStay.Core.Patches.WylderPursuitDamageBranchPatch")!;
+            var hookMethod=typeof(MegaCrit.Sts2.Core.Hooks.Hook).GetMethods().Single(method => method.Name == "ModifyDamage"
+                && method.GetParameters().Any(parameter => parameter.Name == "dealer")
+                && method.GetParameters().Any(parameter => parameter.Name == "cardSource"));
+            decimal RuntimeMultiplier()
+            {
+                object[] hookArgs=hookMethod.GetParameters().Select(parameter => parameter.Name switch
+                {
+                    "dealer" => (object)creature, "props" => ValueProp.Move, "cardSource" => strike,
+                    _ when parameter.ParameterType == typeof(MegaCrit.Sts2.Core.Hooks.ModifyDamageHookType)
+                        => MegaCrit.Sts2.Core.Hooks.ModifyDamageHookType.Multiplicative, _ => null!
+                }).ToArray();
+                object[] patchArgs={hookArgs,9m};
+                AccessTools.Method(patchType,"Modify").Invoke(null,patchArgs);
+                return (decimal)patchArgs[1]/9m;
+            }
+            Check(RuntimeMultiplier() == 1.5m,"Runtime damage patch");
             Check((decimal)multiplier.Invoke(p,new object[]{creature,ValueProp.Move,strike})! ==1.5m,"Pursuit 50% attack bonus");
             Check((decimal)multiplier.Invoke(p,new object[]{creature,ValueProp.Unpowered,strike})! ==1m,"No passive bonus");
             Check((decimal)multiplier.Invoke(p,new object[]{creature,ValueProp.Move,skill})! ==1m,"No skill damage bonus");
@@ -231,7 +242,7 @@ internal static class WylderRegression
             AccessTools.Property(typeof(CombatState), nameof(CombatState.CurrentSide)).SetValue(creature.CombatState, CombatSide.Player);
             Attach<WylderNightFormPower>(1); p=Power(); WylderCombatEvents.StartTurn(owner);
             WylderPursuitPower.Enter(null!,creature,skill).GetAwaiter().GetResult();
-            Check((decimal)nativeModifier.Invoke(p,modifierArgs)! == 2m,"Night Form doubles only the first Pursuit entry each turn");
+            Check(RuntimeMultiplier() == 2m,"Night Form doubles only the first Pursuit entry each turn");
             play=TrackingArrowRegression.MakePlay(skill,owner);
             p.BeforeCardPlayed(play).GetAwaiter().GetResult();
             p.AfterCardPlayedLate(null!,play).GetAwaiter().GetResult();
@@ -239,7 +250,7 @@ internal static class WylderRegression
             ((List<PowerModel>)AccessTools.Field(typeof(Creature),"_powers").GetValue(creature)!).Clear();
             Attach<WylderNightFormPower>(1); p=Power();
             WylderPursuitPower.Enter(null!,creature,skill).GetAwaiter().GetResult();
-            Check((decimal)nativeModifier.Invoke(p,modifierArgs)! == 1.5m,"Later Pursuit entries keep their normal effect");
+            Check(RuntimeMultiplier() == 1.5m,"Later Pursuit entries keep their normal effect");
             play=TrackingArrowRegression.MakePlay(skill,owner);
             p.BeforeCardPlayed(play).GetAwaiter().GetResult();
             p.AfterCardPlayedLate(null!,play).GetAwaiter().GetResult();
