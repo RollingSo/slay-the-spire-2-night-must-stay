@@ -9,13 +9,6 @@
       "kor": "수비",
       "reference": "Wylder starter Defend; preserve canonical name membership"
     },
-    "WYLDER_TURNING_GUARD": {
-      "zhs": "转身防御",
-      "eng": "Turning Defense",
-      "jpn": "振り向き防御",
-      "kor": "회전 수비",
-      "reference": "Wylder P002 planner card; preserve canonical Chinese Defend-name membership"
-    },
     "WYLDER_STAMP_UPWARD_CUT": {
       "zhs": "箭步：上砍",
       "eng": "Stamp (Upward Cut)",
@@ -70,13 +63,6 @@
       "eng": "Lion's Claw",
       "jpn": "獅子斬り",
       "kor": "사자 베기",
-      "reference": "Official ELDEN RING weapon skill localization"
-    },
-    "WYLDER_SPINNING_SLASH": {
-      "zhs": "回旋斩",
-      "eng": "Spinning Slash",
-      "jpn": "回転斬り",
-      "kor": "회전 베기",
       "reference": "Official ELDEN RING weapon skill localization"
     },
     "WYLDER_ASSAULT_STAKE": {
@@ -882,7 +868,6 @@
     "DEFENSIVE_REINFORCEMENT",
     "DUCHESS_DEFEND",
     "WYLDER_DEFEND",
-    "WYLDER_TURNING_GUARD",
     "EMERGENCY_DEFEND",
     "EVOLVED_DEFEND",
     "GUARD_COUNTER_CARD",

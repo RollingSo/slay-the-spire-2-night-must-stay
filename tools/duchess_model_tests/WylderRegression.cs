@@ -66,8 +66,8 @@ internal static class WylderRegression
             Check(character.StartingHp == 78, "Wylder starting HP is 78");
             var defendFilter = AccessTools.Method(typeof(Wylder).Assembly.GetType("NightMustStay.Core.Models.GuardianCardFilters"),
                 "HasDefendInName", new[] { typeof(string), typeof(string), typeof(bool) });
-            Check((bool)defendFilter.Invoke(null, new object[] { "WYLDER_TURNING_GUARD", "Turning Defense", true })!,
-                "Turning Defense canonical Defend membership survives localization");
+            Check((bool)defendFilter.Invoke(null, new object[] { "WYLDER_DEFEND", "Defend", true })!,
+                "Wylder Defend canonical membership survives localization");
             Check(!(bool)defendFilter.Invoke(null, new object[] { "WYLDER_STEADY_BREATH", "Defend", true })!,
                 "Unrelated Wylder cards cannot enter Defend set through translated title");
             Check(ModelDb.Card<WylderStampSweep>().TargetType == TargetType.AnyEnemy, "Canonical sweep library target is safe");

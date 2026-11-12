@@ -1,0 +1,47 @@
+[h1]0.4.0｜新角色：追踪者[/h1]
+
+[b]新增角色[/b]
+- 新增第五名可玩角色“追踪者”，完整接入角色选择、战斗、地图、商店、休息处、卡牌图鉴与多人游戏。
+- 新增“追击”“破势”“绝境”“收招”等核心机制，并围绕活力、冻伤、失衡、低手牌与连续进攻构建多条流派。
+- 新增完整战斗动作、钩爪与绝招演出、角色头像、地图头像、角色选择背景，以及卡牌、能力、遗物和药水美术。
+
+[b]卡牌、遗物与药水[/b]
+- 新增 90 张追踪者卡池卡牌，全部支持升级、四语本地化和对应卡图。
+- 新增 9 件追踪者专属遗物：单边耳环、追踪者的耳环、深灰色砥石、灼热剑油、葛弗雷的肖像、银色泪滴、王的黑夜、战士壶碎片、染红凶刃。
+- 新增 3 种追踪者专属药水：火油脂、勇者肉块、石剑钥匙。
+
+[b]逐卡清单[/b]
+打击、防御、钩爪移动、冲刺攻击、滑行飞跃、箭步：上砍、箭步：回旋斩、真空斩、风暴刃、炎击、红狮子火焰、猎犬剑技、狮子斩、双剑跳劈、灵火爆炸
+袭击桩柱、钩爪拖拽、小圆盾格挡、尸蜡斩击、掠夺火焰、唤起灵火、百战砺芒、致命一击、欧赫剑舞、燃火追斩、跳跃重击、空袭桩柱、反冲桩柱、登场、第六感
+钩爪撕扯、动与静、绝处逢生、燎原地火、果敢、黑夜形态、余火、不灭、调息、迸发、预备反击、星火、翻滚攻击、决断、临战
+奋起、激发、豪迈、百般武艺、钩爪飞跃、向死而生、钩爪射击、剧烈燃烧、追踪者、火种、顽抗、破局、冻霜踏地、进攻本能、黄金格挡
+战术撤退、亡命连斩、英雄的集结、传火、杀气四溢、豪赌、忘剑、孤勇、机敏、终结黑夜、见真火、无暇律法、追猎、隐遁、无终战意
+最终手段、灭洛斯的嚎叫、踢击、游刃有余、横斩、纵劈、奥陶琵斯的漩涡、志留亚的漩涡、天衣无缝、月光剑、孪生信物、焰光照雪、凯旋、命运裁决、伺机而动
+
+[b]兼容性[/b]
+- 同步支持《杀戮尖塔 2》正式版与 Public Beta 分支。
+- 更新简体中文、英语、日语、韩语商店页面描述。
+
+[h1]0.4.0 | New Character: Wylder[/h1]
+
+[b]New Character[/b]
+- Added Wylder as the fifth playable character, fully integrated into character select, combat, the map, shops, rest sites, the card library, and multiplayer.
+- Added the core Pursuit, Break, Desperation, and Follow Through mechanics, with archetypes built around Vigor, Freeze, Imbalance, low hand size, and sustained offense.
+- Added a complete combat animation set, claw and ultimate effects, character and map portraits, a character-select background, and dedicated card, power, relic, and potion artwork.
+
+[b]Cards, Relics, and Potions[/b]
+- Added a complete 90-card Wylder pool, with upgrades, localization in all four supported languages, and dedicated card art.
+- Added 9 Wylder relics: Single Earring, Wylder's Earring, Dark Gray Whetstone, Searing Sword Oil, Godfrey Portrait, Silver Tear, King's Night, Warrior Jar Shard, and Red-Stained Blade.
+- Added 3 Wylder potions: Fire Grease, Brave Meat, and Stonesword Key.
+
+[b]Complete Card List[/b]
+Strike, Defend, Claw Movement, Dash Attack, Sliding Leap, Stamp (Upward Cut), Stamp (Sweep), Vacuum Slice, Storm Blade, Flaming Strike, Flame of the Redmanes, Bloodhound's Finesse, Lion's Claw, Dual Greatsword Leap, Ghostflame Explosion
+Onslaught Stake, Claw Pull, Buckler Parry, Corpse Wax Cutter, Taker's Flames, Ruinous Ghostflame, Veteran Edge, Critical Strike, Eochaid's Dancing Blade, Flame Chase Slash, Jumping Heavy Attack, Aerial Stake, Recoil Stake, Debut, Sixth Sense
+Claw Rend, Motion and Stillness, Desperate Survival, Spreading Wildfire, Boldness, Night Form, Remaining Ember, Undying, Centering Breath, Eruption, Ready to Counter, Spark, Rolling Attack, Resolve, Battle Readiness
+Rouse, Inspire, Magnanimity, Martial Mastery, Claw Leap, Life from Death, Claw Shot, Intense Burning, Wylder, Tinder, Defiance, Breakthrough, Hoarfrost Stomp, Offensive Instinct, Golden Parry
+Tactical Retreat, Desperate Flurry, Heroes Assemble, Pass the Flame, Murderous Aura, Gamble, Forget the Sword, Lone Courage, Agility, End the Night, True Flame, Flawless Order, Hunt, Vanish, Endless Will
+Last Resort, Shriek of Milos, Kick, Poise, Horizontal Slash, Vertical Cleave, Ordovis's Vortex, Siluria's Woe, Seamless, Moonlight Greatsword, Twin Token, Flamelight on Snow, Triumph, Fate's Judgment, Bide the Moment
+
+[b]Compatibility[/b]
+- Supports both the official and Public Beta branches of Slay the Spire 2.
+- Updated the Workshop description in Simplified Chinese, English, Japanese, and Korean.

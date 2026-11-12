@@ -679,37 +679,7 @@
     ],
     "approval": "draft"
   },
-  "design/\u5361\u56fe\u9884\u89c8/wylder/wylder_stamp_upward_cut.png": {
-    "size": [
-      1000,
-      760
-    ],
-    "mode": "RGB",
-    "bounds": [
-      0,
-      0,
-      1000,
-      760
-    ],
-    "corners_alpha": null,
-    "approval": "draft"
-  },
   "images/packed/card_portraits/wylder/wylder_stamp_upward_cut.png": {
-    "size": [
-      1000,
-      760
-    ],
-    "mode": "RGB",
-    "bounds": [
-      0,
-      0,
-      1000,
-      760
-    ],
-    "corners_alpha": null,
-    "approval": "draft"
-  },
-  "design/\u5361\u56fe\u9884\u89c8/wylder/wylder_stamp_sweep.png": {
     "size": [
       1000,
       760
