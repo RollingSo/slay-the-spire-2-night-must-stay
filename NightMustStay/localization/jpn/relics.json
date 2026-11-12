@@ -130,9 +130,9 @@
   "DUCHESS_BLUE_RIBBON.title": "青いリボン",
   "DUCHESS_BLUE_RIBBON.description": "最初のターン開始時、[gold]ブロック[/gold]6を得る。",
   "DUCHESS_BLUE_RIBBON.flavor": "旅立つ前には、襟を正しておきたい。",
-  "WYLDER_SINGLE_EARRING.title": "Single Earring",
-  "WYLDER_SINGLE_EARRING.description": "At the start of combat, enter [gold]Pursuit[/gold].",
-  "WYLDER_SINGLE_EARRING.flavor": "A lone earring, its edges worn smooth."
+  "WYLDER_SINGLE_EARRING.title": "片耳の耳飾り",
+  "WYLDER_SINGLE_EARRING.description": "戦闘開始時、[gold]追撃[/gold]状態になる。",
+  "WYLDER_SINGLE_EARRING.flavor": "縁が滑らかに摩耗した、片方だけの耳飾り。"
   ,"WYLDER_EARRING.title": "Wylder's Earring"
   ,"WYLDER_EARRING.description": "For the first 3 turns of combat, enter [gold]Pursuit[/gold] at the start of your turn."
   ,"WYLDER_EARRING.flavor": "Its missing half has returned, making an old rhythm whole again."
@@ -156,5 +156,29 @@
   ,"WYLDER_WARRIOR_JAR_SHARD.flavor": "The shard burns with more fighting spirit than the vessel ever held."
   ,"WYLDER_RED_STAINED_BLADE.title": "Red-Stained Blade"
   ,"WYLDER_RED_STAINED_BLADE.description": "At the start of your turn, if you are in [gold]Pursuit[/gold], gain an additional {Energy:energyIcons()}."
-  ,"WYLDER_RED_STAINED_BLADE.flavor": "The red upon its edge has never yielded to cleaning."
+  ,"WYLDER_RED_STAINED_BLADE.flavor": "The red upon its edge has never yielded to cleaning.",
+  "WYLDER_EARRING.title": "追跡者の耳飾り",
+  "WYLDER_EARRING.description": "戦闘開始後の最初の3ターン、ターン開始時に[gold]追撃[/gold]状態になる。",
+  "WYLDER_EARRING.flavor": "失われた片割れが戻り、古い歩調が再び一つになった。",
+  "WYLDER_DARK_GRAY_WHETSTONE.title": "濃灰色の砥石",
+  "WYLDER_DARK_GRAY_WHETSTONE.description": "戦闘開始時、[gold]火付け+[/gold]を1枚[gold]手札[/gold]に加える。",
+  "WYLDER_DARK_GRAY_WHETSTONE.flavor": "表面には黒く焼けた刃の跡が残る。",
+  "WYLDER_SEARING_SWORD_OIL.title": "灼熱の剣油",
+  "WYLDER_SEARING_SWORD_OIL.description": "ターン開始時、[gold]活力[/gold]を{VigorPower}得る。",
+  "WYLDER_SEARING_SWORD_OIL.flavor": "一滴あれば、冷たい鋼も炎を思い出す。",
+  "WYLDER_GODFREY_PORTRAIT.title": "ゴッドフレイの肖像",
+  "WYLDER_GODFREY_PORTRAIT.description": "[gold]体勢崩し[/gold]が発動するたび、敵全体に{Damage}ダメージを与える。",
+  "WYLDER_GODFREY_PORTRAIT.flavor": "色褪せた王は、今も静かな威圧とともに戦場を見つめている。",
+  "WYLDER_SILVER_TEARDROP.title": "銀の雫",
+  "WYLDER_SILVER_TEARDROP.description": "戦闘ごとに1回、[gold]窮地[/gold]カードをプレイした後、HPを{Heal}回復する。",
+  "WYLDER_SILVER_TEARDROP.flavor": "銀となった涙は、破滅の淵でもなお温かい。",
+  "WYLDER_KINGS_NIGHT.title": "王の夜",
+  "WYLDER_KINGS_NIGHT.description": "3ターンごとに[gold]追撃[/gold]状態になる。",
+  "WYLDER_KINGS_NIGHT.flavor": "夜は王の名のもとに閉ざされ、やがて狩人へ道を開く。",
+  "WYLDER_WARRIOR_JAR_SHARD.title": "戦士壺の破片",
+  "WYLDER_WARRIOR_JAR_SHARD.description": "[gold]追撃[/gold]状態に4回なるたび、[gold]筋力[/gold]を{StrengthPower}得る。",
+  "WYLDER_WARRIOR_JAR_SHARD.flavor": "破片に宿る闘志は、かつての器よりも熱い。",
+  "WYLDER_RED_STAINED_BLADE.title": "赤く染まった凶刃",
+  "WYLDER_RED_STAINED_BLADE.description": "ターン開始時に[gold]追撃[/gold]状態なら、追加で{Energy:energyIcons()}を得る。",
+  "WYLDER_RED_STAINED_BLADE.flavor": "刃の赤は、拭っても決して消えなかった。"
 }

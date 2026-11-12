@@ -12,7 +12,7 @@ ANCIENTS = {'NEOW', 'DARV', 'NONUPEIPE', 'OROBAS', 'PAEL', 'TANX', 'TEZCATARA', 
 
 
 def expected(locale):
-    source = json.loads(SOURCE.read_text(encoding='utf-8'))['zhs' if locale == 'zhs' else 'eng']
+    source = json.loads(SOURCE.read_text(encoding='utf-8'))[locale]
     assert set(source) == ANCIENTS
     entries = {}
     for ancient, dialogues in source.items():
@@ -26,7 +26,7 @@ def expected(locale):
                 stem = f'{ancient}.talk.WYLDER.{index}-{line}{"r" if repeat else ""}'
                 entries[stem + '.' + speaker] = text
                 if line < len(lines) - 1:
-                    entries[stem + '.next'] = '继续' if locale == 'zhs' else 'Continue'
+                    entries[stem + '.next'] = {'zhs': '继续', 'eng': 'Continue', 'jpn': '続ける', 'kor': '계속'}[locale]
     assert len(entries) == 104
     return entries
 

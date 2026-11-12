@@ -32,10 +32,10 @@
   "DUCHESS_VEIL_VIAL.description": "[gold]回避[/gold]2枚を手札に加える。",
   "DUCHESS_MEMORY_DRAUGHT.title": "時刻の霊薬",
   "DUCHESS_MEMORY_DRAUGHT.description": "[gold]時刻[/gold]を5にする。\nカードを1枚引く。",
-  "WYLDER_FIRE_GREASE.title": "Fire Grease",
-  "WYLDER_FIRE_GREASE.description": "Gain {VigorPower} [gold]Vigor[/gold].",
-  "WYLDER_BRAVE_MEAT.title": "Brave's Meat",
-  "WYLDER_BRAVE_MEAT.description": "Gain {StrengthPower} [gold]Strength[/gold].\nEnter [gold]Pursuit[/gold].",
-  "WYLDER_STONE_SWORD_KEY.title": "Stone-Sheathed Sword Key",
-  "WYLDER_STONE_SWORD_KEY.description": "Add {Cards} random [gold]Desperation[/gold] cards to your [gold]Hand[/gold]."
+  "WYLDER_FIRE_GREASE.title": "火脂",
+  "WYLDER_FIRE_GREASE.description": "[gold]活力[/gold]を{VigorPower}得る。",
+  "WYLDER_BRAVE_MEAT.title": "勇者の肉塊",
+  "WYLDER_BRAVE_MEAT.description": "[gold]筋力[/gold]を{StrengthPower}得る。\n[gold]追撃[/gold]状態になる。",
+  "WYLDER_STONE_SWORD_KEY.title": "石剣の鍵",
+  "WYLDER_STONE_SWORD_KEY.description": "ランダムな[gold]窮地[/gold]カードを{Cards}枚[gold]手札[/gold]に加える。"
 }

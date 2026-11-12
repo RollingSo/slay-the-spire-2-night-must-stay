@@ -55,13 +55,13 @@
   "DUCHESS.aromaPrinciple": "[sine]If it will help everyone, I am willing to try.[/sine]",
   "DUCHESS.eventDeathPrevention": "Someone is still waiting. I cannot stop here.",
   "DUCHESS.goldMonologue": "[sine]Enough for the road ahead. I should set some aside for the others.[/sine]",
-  "WYLDER.title": "Wylder",
-  "WYLDER.titleObject": "Wylder",
-  "WYLDER.pronounSubject": "he",
-  "WYLDER.pronounObject": "him",
-  "WYLDER.pronounPossessive": "his",
-  "WYLDER.possessiveAdjective": "his",
-  "WYLDER.cardsModifierTitle": "Wylder",
-  "WYLDER.cardsModifierDescription": "Wylder cards",
-  "WYLDER.description": "Enter Pursuit with a claw and break the enemy stance with attacks."
+  "WYLDER.title": "추적자",
+  "WYLDER.titleObject": "추적자",
+  "WYLDER.pronounSubject": "그",
+  "WYLDER.pronounObject": "그",
+  "WYLDER.pronounPossessive": "그의",
+  "WYLDER.possessiveAdjective": "그의",
+  "WYLDER.cardsModifierTitle": "추적자",
+  "WYLDER.cardsModifierDescription": "추적자의 카드.",
+  "WYLDER.description": "갈고리로 추격에 진입하고 공격으로 적의 태세를 무너뜨립니다."
 }

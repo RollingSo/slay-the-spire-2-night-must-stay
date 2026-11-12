@@ -12,6 +12,8 @@ for fragment_name in ['completion_a_localization.json', 'completion_b_localizati
                     raise ValueError(f'Duplicate Wylder localization source: {table}.{key}')
                 source[table][key] = value
 name_overrides=json.loads((ROOT/'design/card_name_localization.json').read_text(encoding='utf-8'))['cards']
+authored_locale_path = ROOT/'design/wylder/localization_jpn_kor.json'
+authored_locales = json.loads(authored_locale_path.read_text(encoding='utf-8')) if authored_locale_path.exists() else {}
 
 def highlight_card_terms(text, chinese):
     # Preserve authored gold spans and runtime placeholders. Conditional clauses
@@ -46,12 +48,16 @@ for locale in ['zhs','eng','jpn','kor']:
         p=ROOT/f'NightMustStay/localization/{locale}/{table}.json'
         data={}
         for key,values in entries.items():
-            data[key+'.title']=name_overrides.get(key, {}).get(locale, values[offset])
-            description=highlight_card_terms(values[offset+1], locale=='zhs') if table=='cards' else values[offset+1]
+            authored = authored_locales.get(locale, {}).get(table, {})
+            title_key = key+'.title'
+            description_key = key+'.description'
+            data[title_key]=authored.get(title_key, name_overrides.get(key, {}).get(locale, values[offset]))
+            description=authored.get(description_key, highlight_card_terms(values[offset+1], locale=='zhs') if table=='cards' else values[offset+1])
             data[key+'.description']=description
             if table=='relics':
                 # Native inspection and all shipping locale gates need flavor.
-                data[key+'.flavor']=values[4 if locale=='zhs' else 5]
+                flavor_key = key+'.flavor'
+                data[flavor_key]=authored.get(flavor_key, values[4 if locale=='zhs' else 5])
             if table=='cards' and key not in ['WYLDER_PURSUIT','WYLDER_BREAK','WYLDER_HAND_CONDITION']:
                 data[key+'.upgradeDescription']=description
         merge(p,data)
@@ -65,10 +71,12 @@ for locale in ['zhs','eng','jpn','kor']:
         'possessiveAdjective':'他的' if locale=='zhs' else 'his','cardsModifierTitle':name,
         'cardsModifierDescription':name+' cards' if locale!='zhs' else '追踪者的卡牌。',
         'description':'以钩爪进入追击，用攻击打破敌人的架势。' if locale=='zhs' else 'Enter Pursuit with a claw and break the enemy stance with attacks.'}
+    authored_character = authored_locales.get(locale, {}).get('characters', {})
+    entries = {key: authored_character.get('WYLDER.'+key, value) for key, value in entries.items()}
     for key,value in entries.items(): data['WYLDER.'+key]=value
     merge(p,data)
     p=ROOT/f'NightMustStay/localization/{locale}/card_library.json';data={}
-    data['POOL_WYLDER_TIP']=name
+    data['POOL_WYLDER_TIP']=authored_locales.get(locale, {}).get('card_library', {}).get('POOL_WYLDER_TIP', name)
     merge(p,data)
 print('Wylder localization synchronized; Japanese/Korean use explicit English fallbacks.')
 import subprocess, sys

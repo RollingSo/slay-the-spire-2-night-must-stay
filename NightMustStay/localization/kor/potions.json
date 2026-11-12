@@ -32,10 +32,10 @@
   "DUCHESS_VEIL_VIAL.description": "Add 2 [gold]회피[/gold] cards to your hand.",
   "DUCHESS_MEMORY_DRAUGHT.title": "Timing Draught",
   "DUCHESS_MEMORY_DRAUGHT.description": "Set [gold]Moment[/gold] to 5.\nDraw 1 card.",
-  "WYLDER_FIRE_GREASE.title": "Fire Grease",
-  "WYLDER_FIRE_GREASE.description": "Gain {VigorPower} [gold]Vigor[/gold].",
-  "WYLDER_BRAVE_MEAT.title": "Brave's Meat",
-  "WYLDER_BRAVE_MEAT.description": "Gain {StrengthPower} [gold]Strength[/gold].\nEnter [gold]Pursuit[/gold].",
-  "WYLDER_STONE_SWORD_KEY.title": "Stone-Sheathed Sword Key",
-  "WYLDER_STONE_SWORD_KEY.description": "Add {Cards} random [gold]Desperation[/gold] cards to your [gold]Hand[/gold]."
+  "WYLDER_FIRE_GREASE.title": "불기름",
+  "WYLDER_FIRE_GREASE.description": "[gold]활력[/gold]을 {VigorPower} 얻습니다.",
+  "WYLDER_BRAVE_MEAT.title": "용자의 고깃덩이",
+  "WYLDER_BRAVE_MEAT.description": "[gold]힘[/gold]을 {StrengthPower} 얻습니다.\n[gold]추격[/gold]에 진입합니다.",
+  "WYLDER_STONE_SWORD_KEY.title": "석검 열쇠",
+  "WYLDER_STONE_SWORD_KEY.description": "무작위 [gold]궁지[/gold] 카드 {Cards}장을 [gold]손패[/gold]에 추가합니다."
 }

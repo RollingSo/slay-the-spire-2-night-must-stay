@@ -55,13 +55,13 @@
   "DUCHESS.aromaPrinciple": "[sine]皆さんの助けになるのなら、試してみましょう。[/sine]",
   "DUCHESS.eventDeathPrevention": "まだ、待っている人がいます。ここで終わるわけにはいきません。",
   "DUCHESS.goldMonologue": "[sine]これで次の旅支度ができます。皆さんの分も残しておきましょう。[/sine]",
-  "WYLDER.title": "Wylder",
-  "WYLDER.titleObject": "Wylder",
-  "WYLDER.pronounSubject": "he",
-  "WYLDER.pronounObject": "him",
-  "WYLDER.pronounPossessive": "his",
-  "WYLDER.possessiveAdjective": "his",
-  "WYLDER.cardsModifierTitle": "Wylder",
-  "WYLDER.cardsModifierDescription": "Wylder cards",
-  "WYLDER.description": "Enter Pursuit with a claw and break the enemy stance with attacks."
+  "WYLDER.title": "追跡者",
+  "WYLDER.titleObject": "追跡者",
+  "WYLDER.pronounSubject": "彼",
+  "WYLDER.pronounObject": "彼",
+  "WYLDER.pronounPossessive": "彼の",
+  "WYLDER.possessiveAdjective": "彼の",
+  "WYLDER.cardsModifierTitle": "追跡者",
+  "WYLDER.cardsModifierDescription": "追跡者のカード。",
+  "WYLDER.description": "鉤爪で追撃に入り、攻撃で敵の体勢を崩す。"
 }

@@ -130,9 +130,9 @@
   "DUCHESS_BLUE_RIBBON.title": "Blue Ribbon",
   "DUCHESS_BLUE_RIBBON.description": "At the start of your first turn, gain 6 [gold]Block[/gold].",
   "DUCHESS_BLUE_RIBBON.flavor": "There is always time to straighten one's collar before leaving.",
-  "WYLDER_SINGLE_EARRING.title": "Single Earring",
-  "WYLDER_SINGLE_EARRING.description": "At the start of combat, enter [gold]Pursuit[/gold].",
-  "WYLDER_SINGLE_EARRING.flavor": "A lone earring, its edges worn smooth."
+  "WYLDER_SINGLE_EARRING.title": "한쪽 귀걸이",
+  "WYLDER_SINGLE_EARRING.description": "전투 시작 시 [gold]추격[/gold]에 진입합니다.",
+  "WYLDER_SINGLE_EARRING.flavor": "가장자리가 매끈하게 닳은 외짝 귀걸이."
   ,"WYLDER_EARRING.title": "Wylder's Earring"
   ,"WYLDER_EARRING.description": "For the first 3 turns of combat, enter [gold]Pursuit[/gold] at the start of your turn."
   ,"WYLDER_EARRING.flavor": "Its missing half has returned, making an old rhythm whole again."
@@ -156,5 +156,29 @@
   ,"WYLDER_WARRIOR_JAR_SHARD.flavor": "The shard burns with more fighting spirit than the vessel ever held."
   ,"WYLDER_RED_STAINED_BLADE.title": "Red-Stained Blade"
   ,"WYLDER_RED_STAINED_BLADE.description": "At the start of your turn, if you are in [gold]Pursuit[/gold], gain an additional {Energy:energyIcons()}."
-  ,"WYLDER_RED_STAINED_BLADE.flavor": "The red upon its edge has never yielded to cleaning."
+  ,"WYLDER_RED_STAINED_BLADE.flavor": "The red upon its edge has never yielded to cleaning.",
+  "WYLDER_EARRING.title": "추적자의 귀걸이",
+  "WYLDER_EARRING.description": "전투 시작 후 첫 3턴 동안 턴 시작 시 [gold]추격[/gold]에 진입합니다.",
+  "WYLDER_EARRING.flavor": "잃어버린 짝이 돌아와 오래된 발걸음이 다시 하나가 되었다.",
+  "WYLDER_DARK_GRAY_WHETSTONE.title": "짙은 회색 숫돌",
+  "WYLDER_DARK_GRAY_WHETSTONE.description": "전투 시작 시 [gold]불 붙이기+[/gold] 1장을 [gold]손패[/gold]에 추가합니다.",
+  "WYLDER_DARK_GRAY_WHETSTONE.flavor": "표면에 검게 탄 칼날 자국이 남아 있다.",
+  "WYLDER_SEARING_SWORD_OIL.title": "작열하는 검기름",
+  "WYLDER_SEARING_SWORD_OIL.description": "턴 시작 시 [gold]활력[/gold]을 {VigorPower} 얻습니다.",
+  "WYLDER_SEARING_SWORD_OIL.flavor": "한 방울이면 차가운 강철도 불꽃을 기억한다.",
+  "WYLDER_GODFREY_PORTRAIT.title": "고드프리의 초상",
+  "WYLDER_GODFREY_PORTRAIT.description": "[gold]태세 붕괴[/gold]가 발동할 때마다 모든 적에게 {Damage}의 피해를 줍니다.",
+  "WYLDER_GODFREY_PORTRAIT.flavor": "빛바랜 왕은 지금도 조용한 위압으로 전장을 지켜본다.",
+  "WYLDER_SILVER_TEARDROP.title": "은빛 물방울",
+  "WYLDER_SILVER_TEARDROP.description": "전투마다 1회, [gold]궁지[/gold] 카드를 사용한 후 HP를 {Heal} 회복합니다.",
+  "WYLDER_SILVER_TEARDROP.flavor": "은이 된 눈물은 파멸의 끝에서도 아직 따뜻하다.",
+  "WYLDER_KINGS_NIGHT.title": "왕의 밤",
+  "WYLDER_KINGS_NIGHT.description": "3턴마다 [gold]추격[/gold]에 진입합니다.",
+  "WYLDER_KINGS_NIGHT.flavor": "밤은 왕의 이름 아래 닫히고, 이내 사냥꾼에게 길을 내준다.",
+  "WYLDER_WARRIOR_JAR_SHARD.title": "전사 항아리 파편",
+  "WYLDER_WARRIOR_JAR_SHARD.description": "[gold]추격[/gold]에 4회 진입할 때마다 [gold]힘[/gold]을 {StrengthPower} 얻습니다.",
+  "WYLDER_WARRIOR_JAR_SHARD.flavor": "파편의 투지는 온전했던 항아리보다 더 뜨겁다.",
+  "WYLDER_RED_STAINED_BLADE.title": "붉게 물든 흉도",
+  "WYLDER_RED_STAINED_BLADE.description": "턴 시작 시 [gold]추격[/gold] 상태라면 추가로 {Energy:energyIcons()}를 얻습니다.",
+  "WYLDER_RED_STAINED_BLADE.flavor": "칼날의 붉은빛은 아무리 닦아도 사라지지 않았다."
 }
