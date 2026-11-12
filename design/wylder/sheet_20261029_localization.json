@@ -302,9 +302,9 @@
     ],
     "WYLDER_SHRIEK_OF_MILOS": [
       "灭洛斯的嚎叫",
-      "给予所有敌人{Vulnerable:diff()}层[gold]易伤[/gold]。\n你打出的下张攻击牌伤害翻倍。",
+      "给予所有敌人{Vulnerable:diff()}层[gold]易伤[/gold]。\n获得{Vigor:diff()}点[gold]活力[/gold]。",
       "Shriek of Milos",
-      "Apply {Vulnerable:diff()} [gold]Vulnerable[/gold] to ALL enemies.\nYour next Attack deals double damage."
+      "Apply {Vulnerable:diff()} [gold]Vulnerable[/gold] to ALL enemies.\nGain {Vigor:diff()} [gold]Vigor[/gold]."
     ],
     "WYLDER_LAST_RESORT_SELECT": [
       "选择1张手牌添加绝境。",

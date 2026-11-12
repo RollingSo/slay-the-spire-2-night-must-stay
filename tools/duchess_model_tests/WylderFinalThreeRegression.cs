@@ -38,7 +38,7 @@ internal static partial class WylderBattleArtRegression
      Check(card.Keywords.Contains(CardKeyword.Exhaust)==(card is WylderLastResort or WylderShriekOfMilos),"Last Resort and Shriek of Milos have native Exhaust");
     }
     Fixture();Play(Card(ModelDb.Card<WylderShriekOfMilos>(),up));
-    Check(_enemies.All(e=>e.GetPowerAmount<VulnerablePower>()==1),"Milos applies 1 Vulnerable to every enemy");
+    Check(_enemies.All(e=>e.GetPowerAmount<VulnerablePower>()==2),"Milos applies 2 Vulnerable to every enemy");
     Check(_owner.Creature.GetPowerAmount<VigorPower>()==6,"Milos grants 6 Vigor");
     Fixture();var will=Card(ModelDb.Card<WylderEndlessWill>(),up);Play(will);
     var power=_owner.Creature.GetPower<WylderEndlessWillPower>()!;

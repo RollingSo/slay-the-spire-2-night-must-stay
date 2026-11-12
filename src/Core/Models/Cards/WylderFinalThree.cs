@@ -51,7 +51,7 @@ public sealed class WylderShriekOfMilos : WylderCard
     protected override IEnumerable<MegaCrit.Sts2.Core.HoverTips.IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new MegaCrit.Sts2.Core.HoverTips.IHoverTip[]
         { MegaCrit.Sts2.Core.HoverTips.HoverTipFactory.FromPower<VulnerablePower>(), MegaCrit.Sts2.Core.HoverTips.HoverTipFactory.FromPower<VigorPower>() });
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        { new PowerVar<VulnerablePower>("Vulnerable", 1m), new PowerVar<VigorPower>("Vigor", 6m) };
+        { new PowerVar<VulnerablePower>("Vulnerable", 2m), new PowerVar<VigorPower>("Vigor", 6m) };
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
         foreach (var enemy in CombatState.GetOpponentsOf(Owner.Creature).Where(e => e.IsAlive).ToArray())

@@ -3,6 +3,7 @@ using System.Reflection;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
@@ -12,14 +13,40 @@ namespace NightMustStay.Core.Patches;
 [HarmonyPatch]
 internal static class WylderPursuitDamageBranchPatch
 {
-    private static MethodBase TargetMethod() => DamageModifierBranchCompatibility.Resolve("ModifyDamageMultiplicative");
-    [HarmonyPrefix]
-    private static bool Modify(AbstractModel __instance, Creature dealer, ValueProp props,
-        CardModel cardSource, ref decimal __result)
+    private static int _dealerIndex;
+    private static int _propsIndex;
+    private static int _cardSourceIndex;
+    private static MethodBase TargetMethod()
     {
-        if (__instance is not WylderPursuitPower power) return true;
-        __result = power.AttackMultiplier(dealer, props, cardSource);
-        return false;
+        MethodInfo method = typeof(Hook).GetMethods(BindingFlags.Public | BindingFlags.Static)
+            .Single(candidate => candidate.Name == nameof(Hook.ModifyDamage)
+                && candidate.GetParameters().Any(parameter => parameter.Name == "dealer")
+                && candidate.GetParameters().Any(parameter => parameter.Name == "cardSource"));
+        ParameterInfo[] parameters = method.GetParameters();
+        _dealerIndex = System.Array.FindIndex(parameters, parameter => parameter.Name == "dealer");
+        _propsIndex = System.Array.FindIndex(parameters, parameter => parameter.Name == "props");
+        _cardSourceIndex = System.Array.FindIndex(parameters, parameter => parameter.Name == "cardSource");
+        return method;
+    }
+
+    // Production 0.107 and Public Beta route power modifiers through different
+    // PowerModel hook signatures. Hook.ModifyDamage is stable on both branches;
+    // inspect its arguments by type so the optional CardPlay slot is irrelevant.
+    [HarmonyPostfix]
+    private static void Modify(object[] __args, ref decimal __result)
+    {
+        ModifyDamageHookType hookType = __args.OfType<ModifyDamageHookType>().Single();
+        if (!hookType.HasFlag(ModifyDamageHookType.Multiplicative)) return;
+
+        Creature dealer = __args[_dealerIndex] as Creature;
+        ValueProp props = __args[_propsIndex] is ValueProp value ? value : default;
+        CardModel cardSource = __args[_cardSourceIndex] as CardModel;
+        if (dealer == null || cardSource?.Type != CardType.Attack || !props.IsPoweredAttack()) return;
+
+        decimal multiplier = 1m;
+        if (dealer.GetPower<WylderPursuitPower>() is { } pursuit)
+            multiplier *= pursuit.AttackMultiplier(dealer, props, cardSource);
+        __result *= multiplier;
     }
 }
 
