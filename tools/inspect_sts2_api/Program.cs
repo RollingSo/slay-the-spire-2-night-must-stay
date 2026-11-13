@@ -37,8 +37,44 @@ if (methodFilter == "patch-all")
         if (normalizeArguments[0] is not System.Collections.IEnumerable normalized
             || normalized.Cast<object>().Any())
             throw new InvalidOperationException("Null damage modifiers were not normalized to an empty sequence.");
+
+        Type branchCompat = mod.GetType("NightMustStay.Core.Compatibility.Sts2BranchCompat", true)!;
+        MethodInfo prepareDamage = branchCompat.GetMethod(
+            "PrepareDamageInvocation",
+            BindingFlags.NonPublic | BindingFlags.Static)!;
+        Type choiceContextType = assembly.GetType(
+            "MegaCrit.Sts2.Core.GameActions.Multiplayer.BlockingPlayerChoiceContext", true)!;
+        Type creatureType = assembly.GetType(
+            "MegaCrit.Sts2.Core.Entities.Creatures.Creature", true)!;
+        Type valuePropType = assembly.GetType(
+            "MegaCrit.Sts2.Core.ValueProps.ValueProp", true)!;
+        object choiceContext = Activator.CreateInstance(choiceContextType, nonPublic: true)!;
+        object targets = Array.CreateInstance(creatureType, 0);
+        object dealer = RuntimeHelpers.GetUninitializedObject(creatureType);
+        object props = Enum.Parse(valuePropType, "Unpowered");
+        object?[] suppliedDamageArguments = { choiceContext, targets, 1m, props, dealer, null };
+        object prepared = prepareDamage.Invoke(null, new object?[] { suppliedDamageArguments })!;
+        MethodInfo selectedDamage = (MethodInfo)prepared.GetType().GetField("Item1")!.GetValue(prepared)!;
+        object?[] completedDamageArguments =
+            (object?[])prepared.GetType().GetField("Item2")!.GetValue(prepared)!;
+        ParameterInfo[] selectedParameters = selectedDamage.GetParameters();
+        if (selectedParameters.Length != completedDamageArguments.Length
+            || selectedParameters.Length < suppliedDamageArguments.Length)
+            throw new InvalidOperationException("Damage bridge did not match the runtime overload arguments.");
+        for (int i = suppliedDamageArguments.Length; i < selectedParameters.Length; i++)
+        {
+            string trailingType = selectedParameters[i].ParameterType.Name;
+            if (trailingType == "CardPlay" && completedDamageArguments[i] is not null)
+                throw new InvalidOperationException("Damage bridge must supply a null CardPlay.");
+            if (trailingType == "ModifyDamageHookType"
+                && !string.Equals(completedDamageArguments[i]?.ToString(), "All", StringComparison.Ordinal))
+                throw new InvalidOperationException("Damage bridge must supply ModifyDamageHookType.All.");
+            if (trailingType is not ("CardPlay" or "ModifyDamageHookType"))
+                throw new InvalidOperationException("Damage bridge completed an unexpected parameter: " + trailingType);
+        }
         Console.WriteLine("PASS: every Night Must Stay Harmony patch applies against " + assemblyPath);
         Console.WriteLine("PASS: null legacy damage modifiers are normalized against " + assemblyPath);
+        Console.WriteLine("PASS: multi-target card damage arguments match the runtime overload in " + assemblyPath);
     }
     finally { harmonyType.GetMethod("UnpatchAll")!.Invoke(harmony, new object[] { patchId }); }
     return 0;

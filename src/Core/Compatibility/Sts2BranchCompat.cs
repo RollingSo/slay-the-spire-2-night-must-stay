@@ -27,6 +27,11 @@ namespace NightMustStay.Core.Compatibility;
 /// </summary>
 public static class Sts2BranchCompat
 {
+    private static readonly MethodInfo[] DamageMethods =
+        typeof(CreatureCmd).GetMethods(BindingFlags.Public | BindingFlags.Static)
+            .Where(method => method.Name == nameof(CreatureCmd.Damage))
+            .ToArray();
+
     private static readonly MethodInfo AttackFromCardMethod =
         typeof(AttackCommand).GetMethods(BindingFlags.Public | BindingFlags.Instance)
             .Single(method => method.Name == nameof(AttackCommand.FromCard));
@@ -222,25 +227,59 @@ public static class Sts2BranchCompat
 
     private static Task<IEnumerable<DamageResult>> InvokeDamageWithOptionalCardPlay(params object?[] arguments)
     {
-        MethodInfo? method = TryFindDamage(arguments);
-        if (method is null)
+        (MethodInfo method, object?[] invocationArguments) = PrepareDamageInvocation(arguments);
+        return (Task<IEnumerable<DamageResult>>)method.Invoke(null, invocationArguments)!;
+    }
+
+    private static (MethodInfo Method, object?[] Arguments) PrepareDamageInvocation(object?[] suppliedArguments)
+    {
+        MethodInfo? exact = TryFindDamage(suppliedArguments);
+        if (exact is not null)
+            return (exact, suppliedArguments);
+
+        foreach (MethodInfo method in DamageMethods)
         {
-            arguments = arguments.Append(null).ToArray();
-            method = FindDamage(arguments);
+            ParameterInfo[] parameters = method.GetParameters();
+            if (parameters.Length <= suppliedArguments.Length
+                || !ParametersAccept(parameters.Take(suppliedArguments.Length).ToArray(), suppliedArguments))
+                continue;
+
+            object?[] invocationArguments = new object?[parameters.Length];
+            Array.Copy(suppliedArguments, invocationArguments, suppliedArguments.Length);
+            bool supported = true;
+            for (int i = suppliedArguments.Length; i < parameters.Length; i++)
+            {
+                if (parameters[i].ParameterType == typeof(CardPlay))
+                    invocationArguments[i] = null;
+                else if (parameters[i].ParameterType == typeof(ModifyDamageHookType))
+                    invocationArguments[i] = ModifyDamageHookType.All;
+                else if (parameters[i].HasDefaultValue)
+                    invocationArguments[i] = parameters[i].DefaultValue;
+                else
+                {
+                    supported = false;
+                    break;
+                }
+            }
+
+            if (supported)
+                return (method, invocationArguments);
         }
-        return (Task<IEnumerable<DamageResult>>)method.Invoke(null, arguments)!;
+
+        throw MissingDamageMethod(suppliedArguments);
     }
 
     private static MethodInfo FindDamage(object?[] arguments) =>
         TryFindDamage(arguments)
-        ?? throw new MissingMethodException(
+        ?? throw MissingDamageMethod(arguments);
+
+    private static MissingMethodException MissingDamageMethod(object?[] arguments) =>
+        new(
             typeof(CreatureCmd).FullName,
             $"Damage({string.Join(", ", arguments.Select(argument => argument?.GetType().Name ?? "null"))})");
 
     private static MethodInfo? TryFindDamage(object?[] arguments) =>
-        typeof(CreatureCmd).GetMethods(BindingFlags.Public | BindingFlags.Static)
-            .Where(method => method.Name == nameof(CreatureCmd.Damage))
-            .FirstOrDefault(method => ParametersAccept(method.GetParameters(), arguments));
+        DamageMethods.FirstOrDefault(method => ParametersAccept(method.GetParameters(), arguments));
 
     private static bool ParametersAccept(ParameterInfo[] parameters, object?[] arguments)
     {
@@ -248,7 +287,13 @@ public static class Sts2BranchCompat
             return false;
         for (int i = 0; i < parameters.Length; i++)
         {
-            if (arguments[i] is not null && !parameters[i].ParameterType.IsInstanceOfType(arguments[i]))
+            if (arguments[i] is null)
+            {
+                Type parameterType = parameters[i].ParameterType;
+                if (parameterType.IsValueType && Nullable.GetUnderlyingType(parameterType) is null)
+                    return false;
+            }
+            else if (!parameters[i].ParameterType.IsInstanceOfType(arguments[i]))
                 return false;
         }
         return true;
