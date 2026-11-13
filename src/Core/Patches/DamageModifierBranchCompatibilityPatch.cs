@@ -1,13 +1,29 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
 
 namespace NightMustStay.Core.Patches;
+
+/// <summary>
+/// v0.113's post-damage hook requires a non-null modifier sequence. Older
+/// attack-hit integrations can still forward null, which faults every attack
+/// card before its play action completes (most visibly on the Fool). Treat the
+/// legacy null value as the empty modifier set used by the native pipeline.
+/// </summary>
+[HarmonyPatch(typeof(Hook), nameof(Hook.AfterModifyingDamageAmount))]
+internal static class NullDamageModifierListCompatibilityPatch
+{
+    [HarmonyPrefix]
+    private static void Normalize(ref IEnumerable<AbstractModel> modifiers) =>
+        modifiers ??= Array.Empty<AbstractModel>();
+}
 
 [HarmonyPatch]
 internal static class StyxSpiritFireDamageBranchPatch

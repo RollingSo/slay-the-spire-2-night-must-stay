@@ -26,7 +26,19 @@ if (methodFilter == "patch-all")
     {
         harmonyType.GetMethod("PatchAll", new[] { typeof(Assembly) })!
             .Invoke(harmony, new object[] { mod });
+        Type nullModifierPatch = mod.GetType(
+            "NightMustStay.Core.Patches.NullDamageModifierListCompatibilityPatch",
+            true)!;
+        MethodInfo normalize = nullModifierPatch.GetMethod(
+            "Normalize",
+            BindingFlags.NonPublic | BindingFlags.Static)!;
+        object?[] normalizeArguments = { null };
+        normalize.Invoke(null, normalizeArguments);
+        if (normalizeArguments[0] is not System.Collections.IEnumerable normalized
+            || normalized.Cast<object>().Any())
+            throw new InvalidOperationException("Null damage modifiers were not normalized to an empty sequence.");
         Console.WriteLine("PASS: every Night Must Stay Harmony patch applies against " + assemblyPath);
+        Console.WriteLine("PASS: null legacy damage modifiers are normalized against " + assemblyPath);
     }
     finally { harmonyType.GetMethod("UnpatchAll")!.Invoke(harmony, new object[] { patchId }); }
     return 0;
