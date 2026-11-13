@@ -59,7 +59,7 @@ internal static class BelieversVowClothRegression
         ModelDb.Card<DeathLightning>().ToMutable(),
         ModelDb.Card<LightningSpear>().ToMutable(),
         ModelDb.Card<GurranqBeastClaw>().ToMutable(),
-        ModelDb.Card<Ensemble>().ToMutable(),
+        ModelDb.Card<NightMustStayEnsemble>().ToMutable(),
         ModelDb.Card<SoulChargingClaw>().ToMutable(),
         ModelDb.Card<WatchfulWaiting>().ToMutable(),
     };

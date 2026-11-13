@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 if (args.Length < 2)
 {
-    Console.Error.WriteLine("Usage: inspect_sts2_api <sts2.dll> <type-name> [method-name-filter] [dependency-directory] [mod.dll for prepare-duchess]");
+    Console.Error.WriteLine("Usage: inspect_sts2_api <sts2.dll> <type-name> [method-name-filter] [dependency-directory] [mod.dll for prepare-duchess/prepare-fortify/patch-all]");
     return 2;
 }
 
@@ -15,6 +15,22 @@ string methodFilter = args.Length > 2 ? args[2] : string.Empty;
 
 using InspectionLoadContext context = new(assemblyDirectory, args.Length > 3 ? args[3] : null);
 Assembly assembly = context.LoadFromAssemblyPath(assemblyPath);
+if (methodFilter == "patch-all")
+{
+    Assembly mod = context.LoadFromAssemblyPath(Path.GetFullPath(args[4]));
+    Assembly harmonyAssembly = context.LoadFromAssemblyName(new AssemblyName("0Harmony"));
+    Type harmonyType = harmonyAssembly.GetType("HarmonyLib.Harmony", true)!;
+    string patchId = "night-must-stay.tests.full-branch-compatibility";
+    object harmony = Activator.CreateInstance(harmonyType, patchId)!;
+    try
+    {
+        harmonyType.GetMethod("PatchAll", new[] { typeof(Assembly) })!
+            .Invoke(harmony, new object[] { mod });
+        Console.WriteLine("PASS: every Night Must Stay Harmony patch applies against " + assemblyPath);
+    }
+    finally { harmonyType.GetMethod("UnpatchAll")!.Invoke(harmony, new object[] { patchId }); }
+    return 0;
+}
 if (methodFilter == "prepare-fortify")
 {
     Assembly mod = context.LoadFromAssemblyPath(Path.GetFullPath(args[4]));

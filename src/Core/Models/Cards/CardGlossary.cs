@@ -117,6 +117,6 @@ internal static class CardGlossary
             return new HoverTip(power.Title, description);
         // Keep one native icon-bearing definition per power ID, even when an
         // instance-type power would normally allow multiple hover tips.
-        return new HoverTip(power, description.GetFormattedText(), false) { IsInstanced = false };
+        return new HoverTip(power, description.GetFormattedText(), false);
     }
 }

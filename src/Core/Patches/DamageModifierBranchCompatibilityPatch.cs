@@ -27,10 +27,9 @@ internal static class StyxSpiritFireDamageBranchPatch
 }
 
 /// <summary>
-/// The Public Beta added a CardPlay parameter to PowerModel's damage modifier
-/// hooks in v0.108. Resolving the current method by name keeps one mod DLL
-/// compatible with both the five-parameter release API and six-parameter Beta
-/// API without weakening the power effects.
+/// A previous Public Beta added a CardPlay parameter to PowerModel's damage
+/// modifier hooks. Resolve the current method by name so the same mod DLL keeps
+/// working if main and Public Beta temporarily expose different signatures.
 /// </summary>
 internal static class DamageModifierBranchCompatibility
 {

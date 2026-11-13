@@ -75,11 +75,12 @@ internal static class WylderRegression
             var shopRepair = AccessTools.Method(typeof(Wylder).Assembly.GetType("NightMustStay.Core.Patches.WylderSmallShopPoolPatch"), "Restore");
             foreach (var requested in new[] { CardType.Attack, CardType.Skill, CardType.Power })
             {
-                object[] repairArgs = { authoredPool, Array.Empty<CardModel>(), requested };
+                object[] repairArgs = { authoredPool, Array.Empty<CardModel>(), character.CardPool.AllCards.ToArray(), requested };
                 shopRepair.Invoke(null, repairArgs);
                 var repaired = ((IEnumerable<CardModel>)repairArgs[1]).ToArray();
-                Check(repaired.Any(c => c.Type == (CardType)repairArgs[2] && c.Rarity == CardRarity.Common), "Exhausted shop slot fallback " + requested);
+                Check(repaired.Any(c => c.Type == (CardType)repairArgs[3] && c.Rarity == CardRarity.Common), "Exhausted shop slot fallback " + requested);
                 Check(repaired.All(c => c is WylderCard && c.Rarity != CardRarity.Basic), "Shop fallback stays in authored pool");
+                Check(!((IEnumerable<CardModel>)repairArgs[2]).Any(), "Shop fallback resets blacklist");
             }
             var rewardRepair = AccessTools.Method(typeof(Wylder).Assembly.GetType("NightMustStay.Core.Patches.WylderSmallRewardPoolPatch"), "Restore");
             object[] rewardArgs = { authoredPool, character.CardPool.AllCards.ToArray() };

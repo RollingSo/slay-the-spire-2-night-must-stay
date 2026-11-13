@@ -50,6 +50,11 @@ foreach ($runtimeDir in @($StableAssemblyDir, $BetaAssemblyDir)) {
     if ($LASTEXITCODE -ne 0) {
         throw "Fortify native automatic-clear patch failed against: $runtimeDir"
     }
+    & dotnet run --project $apiInspector -- `
+        (Join-Path $runtimeDir 'sts2.dll') unused patch-all $BetaAssemblyDir $stableMod
+    if ($LASTEXITCODE -ne 0) {
+        throw "One or more Harmony patches failed against: $runtimeDir"
+    }
 }
 
 function Assert-NoModelIdCollisions(

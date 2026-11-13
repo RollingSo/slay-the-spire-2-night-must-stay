@@ -30,7 +30,9 @@ foreach ($locale in $patterns.Keys) {
 foreach ($locale in @('zhs', 'eng', 'jpn', 'kor')) {
     $cards = Get-Content (Join-Path $root "NightMustStay/localization/$locale/cards.json") -Raw -Encoding UTF8 | ConvertFrom-Json
     foreach ($entry in $catalog.cards.PSObject.Properties) {
-        if ($cards.PSObject.Properties["$($entry.Name).title"].Value -cne $entry.Value.$locale) { throw "Name override mismatch: $locale/$($entry.Name)" }
+        $actualTitle = [string]$cards.PSObject.Properties["$($entry.Name).title"].Value
+        $expectedTitle = [string]$entry.Value.$locale
+        if ($actualTitle -cne $expectedTitle) { throw "Name override mismatch: $locale/$($entry.Name)" }
     }
 }
 Write-Output "Defend card-name validation passed ($($ids.Count) cards, four locales)."

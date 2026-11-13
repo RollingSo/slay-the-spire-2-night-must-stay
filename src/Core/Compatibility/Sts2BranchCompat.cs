@@ -14,15 +14,16 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.ValueProps;
 
 namespace NightMustStay.Core.Compatibility;
 
 /// <summary>
-/// Runtime bridge for API signatures changed by the v0.108 Public Beta.
-/// Calls are resolved once against the currently loaded game assembly so the
-/// same NightMustStay DLL can run on both Production and Public Beta.
+/// Runtime bridge for API signatures that differ between the v0.111 main
+/// branch and the v0.113 Public Beta. Calls are resolved against the currently
+/// loaded game assembly so one NightMustStay DLL can run on both branches.
 /// </summary>
 public static class Sts2BranchCompat
 {
@@ -133,6 +134,32 @@ public static class Sts2BranchCompat
             ? new object?[] { creature, amount }
             : new object?[] { new BlockingPlayerChoiceContext(), creature, amount, null };
         return (Task)method.Invoke(null, arguments)!;
+    }
+
+    public static void SetCreatureInteractable(NCreature creature, bool on)
+    {
+        MethodInfo? method = typeof(NCreature).GetMethod(
+            "SetIsInteractable",
+            BindingFlags.Public | BindingFlags.Instance,
+            binder: null,
+            types: new[] { typeof(bool), typeof(bool) },
+            modifiers: null);
+        if (method is not null)
+        {
+            method.Invoke(creature, new object[] { on, true });
+            return;
+        }
+
+        method = typeof(NCreature).GetMethod(
+            "ToggleIsInteractable",
+            BindingFlags.Public | BindingFlags.Instance,
+            binder: null,
+            types: new[] { typeof(bool) },
+            modifiers: null)
+            ?? throw new MissingMethodException(
+                typeof(NCreature).FullName,
+                "SetIsInteractable(bool, bool) / ToggleIsInteractable(bool)");
+        method.Invoke(creature, new object[] { on });
     }
 
     public static Task Exhaust(PlayerChoiceContext context, CardModel card)
