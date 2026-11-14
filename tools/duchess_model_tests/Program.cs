@@ -1,12 +1,14 @@
 using System.Reflection;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.TestSupport;
 using MegaCrit.Sts2.Core.Modding;
 using NightMustStay.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Unlocks;
 using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -252,7 +254,17 @@ if (args.Contains("--imbalance-threshold-only"))
     progressMethod.Invoke(null, new object[] { creature });
     if ((int)progress.GetType().GetField("Increases")!.GetValue(progress)! != 0)
         throw new Exception("Imbalance resistance leaked between combats.");
-    Console.WriteLine("PASS: Imbalance 1-4 player thresholds, caps, per-creature persistence and combat reset.");
+    var thresholdPower = ModelDb.Power<PhantomImbalanceThresholdPower>().ToMutable();
+    if (thresholdPower.Type != PowerType.Buff || thresholdPower.StackType != PowerStackType.Counter)
+        throw new Exception("Imbalance threshold display power metadata mismatch.");
+    foreach (string relative in new[]
+    {
+        "images/atlases/power_atlas.sprites/phantom_imbalance_threshold_power.tres",
+        "images/powers/phantom_imbalance_threshold_power.png",
+        "powers/phantom_imbalance_threshold_power.png",
+    })
+        if (!File.Exists(relative)) throw new Exception("Missing Imbalance threshold display asset: " + relative);
+    Console.WriteLine("PASS: Imbalance 1-4 player thresholds, caps, per-creature persistence, combat reset and visible threshold power assets.");
     return 0;
 }
 if (args.Contains("--strangle-damage-preview-only"))

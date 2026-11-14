@@ -386,10 +386,34 @@ namespace NightMustStay.Core.Models.Power
             {
                 await CreatureCmd.Stun(target);
                 progress.Increases = Math.Min(4, progress.Increases + 1);
-                await PowerCmd.ModifyAmount(context, imbalance, -stunThreshold, imbalance.Applier, null);
+                Creature applier = imbalance.Applier;
+                await PowerCmd.ModifyAmount(context, imbalance, -stunThreshold, applier, null);
+                int nextThreshold = GetThreshold(target);
+                PhantomImbalanceThresholdPower display = target.GetPower<PhantomImbalanceThresholdPower>();
+                if (display == null)
+                {
+                    await PowerCmd.Apply<PhantomImbalanceThresholdPower>(
+                        context, target, nextThreshold, applier, null);
+                }
+                else if (display.Amount != nextThreshold)
+                {
+                    await PowerCmd.ModifyAmount(
+                        context, display, nextThreshold - display.Amount, applier, null);
+                }
             }
             finally { progress.Resolving = false; }
         }
+    }
+
+    /// <summary>
+    /// Visible combat reminder for the per-enemy Imbalance resistance stored
+    /// outside PhantomImbalancePower. Its amount is the current Stun threshold.
+    /// </summary>
+    public sealed class PhantomImbalanceThresholdPower : PowerModel
+    {
+        public override PowerType Type => PowerType.Buff;
+
+        public override PowerStackType StackType => PowerStackType.Counter;
     }
 
     // Attached to the struck enemy. Each application resolves separately so that

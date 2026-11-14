@@ -18,8 +18,8 @@ internal static class WylderNewCardsRegression
         Check(shot.EnergyCost.GetResolved()==1 && shot.Type==CardType.Skill && shot.TargetType==TargetType.AnyEnemy && shot.Rarity==CardRarity.Uncommon && shot.DynamicVars["Vulnerable"].BaseValue==2,"Grapple Shot base");
         shot.UpgradeInternal(); Check(shot.EnergyCost.GetResolved()==0 && shot.DynamicVars["Vulnerable"].BaseValue==2,"Grapple Shot upgrade");
         var aerial=ModelDb.Card<WylderAerialStake>().ToMutable();
-        Check(aerial.EnergyCost.GetResolved()==3 && aerial.DynamicVars.Damage.BaseValue==20 && aerial.DynamicVars["Imbalance"].BaseValue==3,"Aerial base");
-        aerial.UpgradeInternal(); Check(aerial.EnergyCost.GetResolved()==2 && aerial.DynamicVars.Damage.BaseValue==20 && aerial.DynamicVars["Imbalance"].BaseValue==3,"Aerial cost-only upgrade");
+        Check(aerial.EnergyCost.GetResolved()==2 && aerial.DynamicVars.Damage.BaseValue==20 && aerial.DynamicVars["Imbalance"].BaseValue==3,"Aerial base");
+        aerial.UpgradeInternal(); Check(aerial.EnergyCost.GetResolved()==1 && aerial.DynamicVars.Damage.BaseValue==20 && aerial.DynamicVars["Imbalance"].BaseValue==3,"Aerial cost-only upgrade");
         var leap=ModelDb.Card<WylderSlidingLeap>().ToMutable();
         Check(!leap.Keywords.Contains(CardKeyword.Retain),"Leap base"); leap.UpgradeInternal(); Check(leap.Keywords.Contains(CardKeyword.Retain),"Leap retain upgrade");
         var burn=ModelDb.Card<WylderIntenseBurning>().ToMutable();

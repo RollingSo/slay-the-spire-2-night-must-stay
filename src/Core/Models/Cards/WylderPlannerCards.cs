@@ -57,7 +57,7 @@ public sealed class WylderDualGreatswordLeap : WylderCard
         ReturnNextTurn = false;
         if (Pile.Type != PileType.Hand) await CardPileCmd.Add(this, PileType.Hand);
     }
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2m);
+    protected override void OnUpgrade() => DynamicVars.Energy.UpgradeValueBy(1m);
 }
 public sealed class WylderGhostflameExplosion : WylderCard
 {

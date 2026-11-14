@@ -77,6 +77,8 @@
   "LAI_PI_POWER.description": "アタックをプレイするたび、{Amount}[gold]ブロック[/gold]を得る。",
   "PHANTOM_IMBALANCE_POWER.title": "体勢崩し",
   "PHANTOM_IMBALANCE_POWER.description": "現在のスタン閾値に達すると、この敵を[gold]スタン[/gold]させ、同量の[gold]体勢崩し[/gold]を取り除く。\n発動するたびに、次のスタンに必要なスタックが1増加する（最大+4）。",
+  "PHANTOM_IMBALANCE_THRESHOLD_POWER.title": "体勢崩し閾値",
+  "PHANTOM_IMBALANCE_THRESHOLD_POWER.description": "[gold]スタン[/gold]させるには[gold]体勢崩し[/gold]が{Amount}必要。",
   "GUARDIAN_MULTIPLAYER_POWER.title": "守護者",
   "GUARDIAN_MULTIPLAYER_POWER.description": "[gold]堅守[/gold]によって[gold]ブロック[/gold]を維持するたび、味方全員が同量の[gold]ブロック[/gold]を得る。",
   "PHANTOM_CO_STRIKE_POWER.title": "幻影共撃",

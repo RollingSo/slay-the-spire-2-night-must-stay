@@ -49,5 +49,5 @@ public sealed class WylderPoise:WylderCard
  private bool WillMeetHandCondition=>IsMutable&&Owner!=null&&Pile?.Type==PileType.Hand&&PileType.Hand.GetPile(Owner).Cards.Count-1<=DynamicVars["HandThreshold"].IntValue;
  private bool MeetsHandConditionForPlay=>SourceHandCount is int count&&count-1<=DynamicVars["HandThreshold"].IntValue;
  protected override async Task OnPlay(PlayerChoiceContext c,CardPlay p){if(MeetsHandConditionForPlay)await CreatureCmd.GainBlock(Owner.Creature,DynamicVars.Block.BaseValue,ValueProp.Move,p);}
- protected override void OnUpgrade()=>DynamicVars.Block.UpgradeValueBy(4m);
+ protected override void OnUpgrade()=>EnergyCost.UpgradeBy(-1);
 }

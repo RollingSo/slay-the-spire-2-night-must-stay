@@ -77,6 +77,8 @@
   "LAI_PI_POWER.description": "每当你打出攻击牌，获得{Amount}点[gold]格挡[/gold]。",
   "PHANTOM_IMBALANCE_POWER.title": "失衡",
   "PHANTOM_IMBALANCE_POWER.description": "累计至当前击晕阈值时，[gold]击晕[/gold]该敌人并移除等量[gold]失衡[/gold]。\n每次触发后，下次击晕所需层数增加1，最多增加4层。",
+  "PHANTOM_IMBALANCE_THRESHOLD_POWER.title": "失衡阈值",
+  "PHANTOM_IMBALANCE_THRESHOLD_POWER.description": "需要{Amount}层[gold]失衡[/gold]才能被[gold]击晕[/gold]。",
   "GUARDIAN_MULTIPLAYER_POWER.title": "守护者",
   "GUARDIAN_MULTIPLAYER_POWER.description": "通过[gold]固守[/gold]保留[gold]格挡[/gold]时，所有队友获得等量[gold]格挡[/gold]。",
   "PHANTOM_CO_STRIKE_POWER.title": "幻影共击",

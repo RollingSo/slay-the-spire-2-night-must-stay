@@ -112,7 +112,10 @@ public abstract class WylderCard : CardModel
         // qualifying hit therefore completes Break even when the remaining
         // scheduled hits are cancelled; every hit that actually occurred must
         // still meet the per-hit threshold.
-        bool endedByLethalHit = result.WasTargetKilled;
+        // On current builds WasTargetKilled is not guaranteed to be populated
+        // before AfterDamageGiven runs. The target's HP/death state is already
+        // authoritative at this point, so use it as the compatibility fallback.
+        bool endedByLethalHit = result.WasTargetKilled || target.IsDead || target.CurrentHp <= 0m;
         if (hits.Count < requiredHits && !endedByLethalHit) return;
         decimal threshold = BreakThreshold;
         if (requiredHits == 1)

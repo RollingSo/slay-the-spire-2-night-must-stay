@@ -231,7 +231,7 @@ internal static partial class WylderBattleArtRegression
             Fixture();
             var valor = Card(ModelDb.Card<WylderValor>(), up);
             Play(valor);
-            Check(Rewards.Single(r=>r.Kind=="Block").Amount==(up?7:6), "Valor block preview and resolution");
+            Check(Rewards.Single(r=>r.Kind=="Block").Amount==(up?9:7), "Valor block preview and resolution");
             Check(_owner.Creature.GetPowerAmount<WylderValorStrengthPower>()==(up?3:2), "Valor uses native temporary Strength");
             Fixture();
             var claw = Card(ModelDb.Card<WylderClawMovement>(), up);
@@ -339,7 +339,7 @@ internal static partial class WylderBattleArtRegression
         {
             Fixture(pursuit);
             var retreat = Card(ModelDb.Card<WylderTacticalRetreat>(), up);
-            Check(retreat.EnergyCost.GetResolved() == 4 && retreat.Type == CardType.Skill && retreat.Rarity == CardRarity.Uncommon && retreat.TargetType == TargetType.Self && retreat.Keywords.SetEquals(new[] { CardKeyword.Exhaust }), "Tactical Retreat metadata and Exhaust");
+            Check(retreat.EnergyCost.GetResolved() == 4 && retreat.Type == CardType.Skill && retreat.Rarity == CardRarity.Uncommon && retreat.TargetType == TargetType.Self && !retreat.Keywords.Contains(CardKeyword.Exhaust), "Tactical Retreat metadata without Exhaust");
             AddPower<DexterityPower>(_owner.Creature, 3);
             retreat.DynamicVars.Block.UpdateCardPreview(retreat, CardPreviewMode.Normal, null!, true);
             Check(retreat.DynamicVars.Block.PreviewValue == (up ? 33 : 23), "Tactical Retreat native Block preview");
@@ -450,9 +450,13 @@ internal static partial class WylderBattleArtRegression
                 string basic = Render(false), upgrade = Render(true);
                 Check((spec.Model.MaxUpgradeLevel == 0 ? basic == upgrade : basic != upgrade)
                     && !basic.Contains('{') && !upgrade.Contains('{'), "Authored upgrade difference / all variables bind");
-                if (spec.Break > 0) Check(text.Contains("[gold]" + (locale == "zhs" ? "破势" : "Break") + "[/gold]"), "Gold Break text");
+                string breakTitle = locale switch { "zhs" => "破势", "jpn" => "体勢崩し", "kor" => "태세 붕괴", _ => "Break" };
+                if (spec.Break > 0) Check(text.Contains("[gold]" + breakTitle + "[/gold]"), "Gold Break text");
                 if (spec.Model is WylderVacuumSlice)
-                    Check(text.Contains("[gold]" + (locale == "zhs" ? "虚弱" : "Weak") + "[/gold]") && !text.Contains("{Energy"), "Vacuum Weak text replaces obsolete energy reward");
+                {
+                    string weakTitle = locale switch { "zhs" => "虚弱", "jpn" => "脱力", "kor" => "약화", _ => "Weak" };
+                    Check(text.Contains("[gold]" + weakTitle + "[/gold]") && !text.Contains("{Energy"), "Vacuum Weak text replaces obsolete energy reward");
+                }
             }
         }
     }
@@ -895,7 +899,9 @@ internal static partial class WylderBattleArtRegression
         for (int i = 0; i < hits; i++)
         foreach (var target in attack.IsMultiTargeted ? _enemies.Where(c => c.IsAlive) : new[] { (Creature)AccessTools.Field(typeof(AttackCommand), "_singleTarget").GetValue(attack)! })
         {
-            DynamicVar preview = card is WylderSiluriaVortex ? card.DynamicVars.CalculatedDamage : card.DynamicVars.Damage;
+            DynamicVar preview = card.DynamicVars.TryGetValue("CalculatedDamage", out DynamicVar? calculated)
+                ? calculated!
+                : card.DynamicVars.Damage;
             preview.UpdateCardPreview(card, CardPreviewMode.Normal, target, true);
             decimal damage = Math.Floor(preview.PreviewValue);
             ResolvedDamage.Add(damage);

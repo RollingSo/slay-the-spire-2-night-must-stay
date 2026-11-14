@@ -105,7 +105,7 @@ internal static class WylderRegression
                         WylderSixthSense => 4,
                         WylderUndying => up?1:2,
                         WylderGoldenParry or WylderNightForm => 3, WylderMartialMastery => up?1:2, WylderDefiance => 2, WylderMultiplayerCard or WylderTinder or WylderBreakthrough or WylderLifeFromDeath => 0,
-                        WylderAerialStake => up?2:3,
+                        WylderAerialStake => up?1:2,
                         WylderCounterRush => 3,
                         WylderTacticalRetreat or WylderParry or WylderDesperateSurvival => 4,
                         WylderSlidingLeap => 2,
@@ -115,14 +115,17 @@ internal static class WylderRegression
                         WylderAssaultStake => 3,
                         WylderStampUpwardCut
                             or WylderLionsClaw
-                            or WylderJumpingHeavy or WylderDualGreatswordLeap or WylderGhostflameExplosion or WylderCorpseWaxCutter => 2, _=>1 };
+                            or WylderJumpingHeavy or WylderDualGreatswordLeap or WylderGhostflameExplosion or WylderCorpseWaxCutter => 2,
+                        WylderPoise => up?0:1, _=>1 };
                     if(c is WylderIntenseBurning) Check(c.EnergyCost.CostsX,"Intense Burning X cost"); else Check(c.EnergyCost.GetResolved()==cost,"Cost "+c.GetType().Name);
-                    if(c is WylderValor)Check(c.Type==CardType.Skill && c.Rarity==CardRarity.Common && c.TargetType==TargetType.Self && c.DynamicVars.Block.BaseValue==(up?7:6) && c.DynamicVars["Strength"].BaseValue==(up?3:2),"Valor metadata and upgrades");
+                    if(c is WylderValor)Check(c.Type==CardType.Skill && c.Rarity==CardRarity.Common && c.TargetType==TargetType.Self && c.DynamicVars.Block.BaseValue==(up?9:7) && c.DynamicVars["Strength"].BaseValue==(up?3:2),"Valor metadata and upgrades");
                     if(c is WylderEruption)Check(c.Type==CardType.Power && c.Rarity==CardRarity.Uncommon
                         && c.Keywords.Contains(CardKeyword.Innate)==up && !c.DynamicVars.ContainsKey("Damage"),
                         "Eruption enters Pursuit on shuffle and gains Innate when upgraded");
                     if(c is WylderCounterRush)Check(c.DynamicVars.Damage.BaseValue==(up?14:12) && c.DynamicVars["Imbalance"].BaseValue==(up?3:2),"Recoil Stake values");
                     if(c is WylderDesperateSurvival)Check(c.TargetType==TargetType.AnyEnemy && c.Keywords.Contains(CardKeyword.Exhaust) && c.Keywords.Contains(CardKeyword.Retain)==up && c.DynamicVars["Threshold"].BaseValue==50,"Desperate Survival targeting, threshold and keywords");
+                    if(c is WylderTacticalRetreat)Check(!c.Keywords.Contains(CardKeyword.Exhaust),"Tactical Retreat no longer Exhausts");
+                    if(c is WylderPoise)Check(c.DynamicVars.Block.BaseValue==16 && c.Keywords.Contains(CardKeyword.Retain),"Poise fixed Block and Retain");
                     if(c is WylderCorpseWaxCutter)Check(c.Rarity==CardRarity.Uncommon && c.DynamicVars.Damage.BaseValue==(up?18:14) && c.DynamicVars["Break"].BaseValue==30 && c.DynamicVars["Vulnerable"].BaseValue==(up?3:2) && c.DynamicVars["Weak"].BaseValue==(up?3:2),"Corpse Wax Cutter rarity and values");
                     if(c is WylderWildfire)Check(c.TargetType==TargetType.Self && c.Keywords.Contains(CardKeyword.Innate)==up,"Spreading Wildfire target and Innate upgrade");
                     if(c is WylderNightForm)Check(c.Rarity==CardRarity.Rare && c.Keywords.Contains(CardKeyword.Retain)==up,"Night Form Retain upgrade");
@@ -141,8 +144,8 @@ internal static class WylderRegression
                     if(c is WylderInspire)Check(c.Type==CardType.Skill && c.Rarity==CardRarity.Uncommon
                         && c.TargetType==TargetType.Self && c.DynamicVars.Cards.BaseValue==(up?3:2)
                         && c.DynamicVars["HandThreshold"].BaseValue==2,"Inspire metadata and upgrade");
-                    if(c is WylderDualGreatswordLeap leap)Check(c.DynamicVars.Energy.BaseValue==1
-                        && c.DynamicVars.Damage.BaseValue==(up?9:7) && c.DynamicVars.Repeat.IntValue==2
+                    if(c is WylderDualGreatswordLeap leap)Check(c.DynamicVars.Energy.BaseValue==(up?2:1)
+                        && c.DynamicVars.Damage.BaseValue==7 && c.DynamicVars.Repeat.IntValue==2
                         && !leap.ReturnNextTurn,"Dual Leap damage, hits, Break energy and initial return state");
                 }
             }
@@ -301,6 +304,10 @@ internal static class WylderRegression
             lethalMulti.BeforeCardPlayed(TrackingArrowRegression.MakePlay(lethalMulti,owner)).GetAwaiter().GetResult();
             Hit(lethalMulti,a,15,killed:true);
             Check(lethalMulti.Triggers==1,"A qualifying lethal hit completes multi-hit Break when later hits are cancelled");
+            var runtimeLethal=Probe();runtimeLethal.RequiredHits=2;var deadTarget=Enemy();
+            runtimeLethal.BeforeCardPlayed(TrackingArrowRegression.MakePlay(runtimeLethal,owner)).GetAwaiter().GetResult();
+            deadTarget.SetCurrentHpInternal(0);Hit(runtimeLethal,deadTarget,15);
+            Check(runtimeLethal.Triggers==1,"A lethal target state completes multi-hit Break when WasTargetKilled is unset");
             var mixedMulti=Probe();mixedMulti.RequiredHits=2;
             mixedMulti.BeforeCardPlayed(TrackingArrowRegression.MakePlay(mixedMulti,owner)).GetAwaiter().GetResult();
             Hit(mixedMulti,a,14);Hit(mixedMulti,a,20,killed:true);

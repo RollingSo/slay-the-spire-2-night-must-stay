@@ -22,7 +22,6 @@ public sealed class WylderTacticalRetreat : WylderDesperationCard
 {
     public WylderTacticalRetreat() : base(4, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
     public override bool GainsBlock => true;
-    public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new BlockVar(20m, ValueProp.Move) };
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {

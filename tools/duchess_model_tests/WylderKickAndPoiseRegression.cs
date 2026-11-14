@@ -25,7 +25,10 @@ internal static partial class WylderBattleArtRegression
   {
    using var json=JsonDocument.Parse(File.ReadAllText($"NightMustStay/localization/{locale}/cards.json"));var text=json.RootElement.GetProperty(model.Id.Entry+".description").GetString()!;
    string Render(bool up){Fixture();var card=Card(model,up);Hand(card,1);foreach(var energy in card.DynamicVars.Values.OfType<EnergyVar>())energy.ColorPrefix=EnergyIconHelper.GetPrefix(card);return formatter.Format(System.Globalization.CultureInfo.InvariantCulture,text,card.DynamicVars.ToDictionary(p=>p.Key,p=>(object)p.Value));}
-   Check(Render(false)!=Render(true)&&!Render(true).Contains('{'),"Kick/Poise rendered upgrades in "+locale);
+   string baseText=Render(false), upgradedText=Render(true);
+   Check(!baseText.Contains('{')&&!upgradedText.Contains('{'),"Kick/Poise rendered text in "+locale);
+   Check(model is WylderPoise ? baseText==upgradedText : baseText!=upgradedText,
+    "Kick value upgrade and Poise cost-only upgrade text in "+locale);
    Check(text==json.RootElement.GetProperty(model.Id.Entry+".upgradeDescription").GetString(),"Kick/Poise upgrade audit copy "+locale);
   }
   var h=new HarmonyLib.Harmony("wylder.kick.poise");
@@ -53,11 +56,11 @@ internal static partial class WylderBattleArtRegression
     Fixture();if(dex>0)AddPower<DexterityPower>(_owner.Creature,dex);
     var card=Card(ModelDb.Card<WylderPoise>(),up);Hand(card,count);
     card.DynamicVars.Block.UpdateCardPreview(card,CardPreviewMode.Normal,null!,true);
-    int shown=(up?20:16)+dex;
+    int shown=16+dex;
     int expected=count-1<=2?shown:0;
     Check(card.DynamicVars.Block.PreviewValue==shown,"Poise always displays its nonzero Block value");
     Check(((bool)AccessTools.PropertyGetter(typeof(WylderCard),"ShouldGlowGoldInternal").Invoke(card,null)!)==(expected>0),"Poise glow uses post-play hand size at most two");
-    Check(card.Keywords.Contains(CardKeyword.Retain)&&card.EnergyCost.GetResolved()==1&&card.Rarity==CardRarity.Uncommon&&card.TargetType==TargetType.Self,"Poise native Retain and metadata");
+    Check(card.Keywords.Contains(CardKeyword.Retain)&&card.EnergyCost.GetResolved()==(up?0:1)&&card.Rarity==CardRarity.Uncommon&&card.TargetType==TargetType.Self,"Poise native Retain and cost upgrade");
     Play(card);Check(Rewards.Where(r=>r.Kind=="Block").Sum(r=>r.Amount)==expected,"Poise actual Block uses pre-move hand count");
    }
    Fixture();var notHand=Card(ModelDb.Card<WylderPoise>(),true);Play(notHand);Check(!Rewards.Any(r=>r.Kind=="Block"),"Poise replay/non-hand use cannot inherit low-hand qualification");

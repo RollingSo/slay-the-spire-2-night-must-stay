@@ -17,7 +17,7 @@ public sealed class WylderValor : WylderCard
     public WylderValor() : base(1, CardType.Skill, CardRarity.Common, TargetType.Self) { }
     public override bool GainsBlock => true;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        { new BlockVar(6m, ValueProp.Move), new PowerVar<StrengthPower>("Strength", 2m) };
+        { new BlockVar(7m, ValueProp.Move), new PowerVar<StrengthPower>("Strength", 2m) };
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         base.ExtraHoverTips.Append(HoverTipFactory.FromPower<StrengthPower>());
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
@@ -28,7 +28,7 @@ public sealed class WylderValor : WylderCard
     }
     protected override void OnUpgrade()
     {
-        DynamicVars.Block.UpgradeValueBy(1m);
+        DynamicVars.Block.UpgradeValueBy(2m);
         DynamicVars["Strength"].UpgradeValueBy(1m);
     }
 }

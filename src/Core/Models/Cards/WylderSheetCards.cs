@@ -42,7 +42,7 @@ public sealed class WylderJumpingHeavy : WylderCard
 }
 public sealed class WylderAerialStake : WylderCard
 {
-    public WylderAerialStake() : base(3, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
+    public WylderAerialStake() : base(2, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
     protected override bool HasPursuitCondition => true;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(20m, ValueProp.Move), new PowerVar<PhantomImbalancePower>("Imbalance", 3m) };
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Append(HoverTipFactory.FromPower<PhantomImbalancePower>());
