@@ -39,6 +39,7 @@ namespace NightMustStay.Core.Patches
         {
             string id = power switch
             {
+                WylderPursuitPower => "wylder_pursuit_power",
                 WylderValorStrengthPower => "wylder_valor_strength_power",
                 WylderLoneCouragePower => "wylder_lone_courage_power",
                 WylderAgilityPower => "wylder_agility_power",
@@ -269,6 +270,11 @@ namespace NightMustStay.Core.Patches
 
             DisableCharacterVfx(__result.GetNodeOrNull<CanvasItem>("%EnergyVfxBack"));
             DisableCharacterVfx(__result.GetNodeOrNull<CanvasItem>("%EnergyVfxFront"));
+            if (__result.GetNodeOrNull("WylderPursuitEnergy") == null)
+                __result.AddChild(new NightMustStay.Core.Nodes.Vfx.WylderPursuitEnergyVisual
+                {
+                    Name = "WylderPursuitEnergy", Player = player
+                });
         }
 
         private static void DisableCharacterVfx(CanvasItem vfx)
@@ -456,6 +462,8 @@ namespace NightMustStay.Core.Patches
                 "res://wylder_assets/energy_counter/wylder_orb_layer_3.png",
                 "res://wylder_assets/energy_counter/wylder_orb_layer_4.png",
                 "res://wylder_assets/energy_counter/wylder_orb_layer_5.png",
+                "res://wylder_assets/energy_counter/pursuit_orb.png",
+                "res://wylder_assets/energy_counter/pursuit_water.png",
                 "res://wylder_assets/energy_icon/wylder_energy_card_icon.png",
                 "res://images/atlases/ui_atlas.sprites/card/energy_wylder.tres",
                 "res://images/packed/sprite_fonts/wylder_energy_icon.png",
