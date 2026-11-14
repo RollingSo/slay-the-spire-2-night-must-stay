@@ -1,0 +1,19 @@
+[h1]0.4.7｜联机交互与追踪者体验优化[/h1]
+
+- 修复联机模式下追踪者与女爵的部分卡牌目标及结算异常。
+- 修复“终结黑夜”在原目标失效时无法正确选择可用敌人的问题。
+- 修复“英雄集结”在多人战斗中的追击赋予与移除时机。
+- 修复致命伤害溢出时破势判定可能忽略伤害加成的问题。
+- 失衡说明现在会动态显示当前破势伤害阈值。
+- 新增追踪者回合结束对话，以及模组角色的恐惧状态短标题。
+- 更新追踪者在多人猜拳交互中的四张手势图。
+
+[h1]0.4.7 | Multiplayer Interactions and Wylder Polish[/h1]
+
+- Fixed several multiplayer targeting and resolution issues involving Wylder and Duchess cards.
+- Fixed End the Night failing to select a valid enemy when its original target is no longer available.
+- Fixed Heroes Assemble granting Pursuit and removing itself at the wrong time in multiplayer combat.
+- Fixed Break checks sometimes ignoring damage bonuses when a lethal hit dealt overkill damage.
+- Imbalance tooltips now display the current Break damage threshold dynamically.
+- Added Wylder end-turn banter and short Dread titles for the mod characters.
+- Updated all four Wylder hand images used by the multiplayer rock-paper-scissors interaction.

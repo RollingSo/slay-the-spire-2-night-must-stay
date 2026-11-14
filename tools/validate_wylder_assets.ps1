@@ -45,7 +45,9 @@ try {
             }
         }
     }
-    if ($null -eq $tip -or $tip[0] -lt 140 -or $tip[0] -gt 160 -or $tip[1] -lt 35 -or $tip[1] -gt 50) {
+    # The redrawn hand has a narrower, taller index finger. Keep the alpha
+    # hotspot near its visible fingertip so future crops cannot shift it away.
+    if ($null -eq $tip -or $tip[0] -lt 165 -or $tip[0] -gt 185 -or $tip[1] -lt 15 -or $tip[1] -gt 35) {
         throw "Wylder multiplayer pointing-hand cursor hotspot is misaligned: $($tip -join ',')"
     }
 } finally { $pointingHand.Dispose() }
