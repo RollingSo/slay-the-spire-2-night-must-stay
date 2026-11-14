@@ -244,6 +244,14 @@ if (args.Contains("--imbalance-threshold-only"))
         for (int triggers = 0; triggers < 6; triggers++)
             if (PhantomImbalancePower.GetThreshold(players, triggers) != expected[players - 1][triggers])
                 throw new Exception("Imbalance threshold scaling/cap mismatch.");
+    foreach (string locale in new[] { "zhs", "eng", "jpn", "kor" })
+    {
+        using var powers = JsonDocument.Parse(File.ReadAllText($"NightMustStay/localization/{locale}/powers.json"));
+        string description = powers.RootElement.GetProperty("PHANTOM_IMBALANCE_POWER.description").GetString()!;
+        if (!description.Contains("{Threshold}", StringComparison.Ordinal)
+            || !description.Contains("{MaxThreshold}", StringComparison.Ordinal))
+            throw new Exception($"{locale}: Imbalance description does not display its dynamic thresholds.");
+    }
     var player = TrackingArrowRegression.MakePlayer();
     var creature = new Creature(player, 70, 70) { CombatState = new MegaCrit.Sts2.Core.Combat.CombatState() };
     var progressMethod = typeof(PhantomImbalancePower).GetMethod("GetProgress", BindingFlags.NonPublic | BindingFlags.Static)!;
@@ -267,7 +275,7 @@ if (args.Contains("--imbalance-threshold-only"))
         "powers/phantom_imbalance_threshold_power.png",
     })
         if (!File.Exists(relative)) throw new Exception("Missing Imbalance threshold display asset: " + relative);
-    Console.WriteLine("PASS: Imbalance 1-4 player thresholds, caps, per-creature persistence, combat reset and visible threshold power assets.");
+    Console.WriteLine("PASS: Imbalance 1-4 player thresholds, dynamic localized threshold text, caps, per-creature persistence, combat reset and visible threshold power assets.");
     return 0;
 }
 if (args.Contains("--strangle-damage-preview-only"))
