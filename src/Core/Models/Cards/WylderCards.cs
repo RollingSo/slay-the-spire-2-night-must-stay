@@ -104,7 +104,12 @@ public abstract class WylderCard : CardModel
             hits = new List<decimal>();
             data.Damage[target] = hits;
         }
-        hits.Add(result.TotalDamage);
+        // DamageResult.TotalDamage omits overkill. That made multiplicative
+        // bonuses such as the Necrobinder's Lethality disappear from Break
+        // checks whenever the boosted hit killed its target. Break is based on
+        // the attack's dealt amount before HP capping, so include overkill.
+        decimal dealtDamage = result.TotalDamage + result.OverkillDamage;
+        hits.Add(dealtDamage);
         int requiredHits = BreakHitCount;
         if (requiredHits <= 0) return;
 
@@ -120,7 +125,7 @@ public abstract class WylderCard : CardModel
         decimal threshold = BreakThreshold;
         if (requiredHits == 1)
         {
-            if (result.TotalDamage < threshold) return;
+            if (dealtDamage < threshold) return;
         }
         else
         {

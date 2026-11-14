@@ -93,13 +93,16 @@ public sealed class WylderPursuitPower : PowerModel
         if (data.Kept.Remove(play)) return;
         int skillReward = play.Card.Type == CardType.Skill ? effectMultiplier : 0;
         WylderCombatEvents.RegisterOldPursuitConsumption(play);
+        var followThrough = WylderFollowThroughCard.Snapshot(Owner.Player);
         if (!reentered)
         {
-            var followThrough = WylderFollowThroughCard.Snapshot(Owner.Player);
             await PowerCmd.Remove(this);
             RefreshHand(Owner.Player);
-            WylderCombatEvents.QueuePursuitExit(play, followThrough);
         }
+        // Re-entering Pursuit still settles the old instance's Follow Through.
+        // Those auto-played cards then interact with (and may consume) the new
+        // Pursuit normally.
+        WylderCombatEvents.QueuePursuitExit(play, followThrough);
         if (skillReward > 0)
         {
             await PlayerCmd.GainEnergy(skillReward, Owner.Player);

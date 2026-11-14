@@ -42,6 +42,7 @@ internal static partial class WylderBattleArtRegression
     private static bool _fullyBlocked;
     private static int _imbalancePlayerCount = 1;
     private static int _checks;
+    private static bool _sheetLifecycleOnly;
 
     private static Spec[] Specs() => new[]
     {
@@ -84,6 +85,11 @@ internal static partial class WylderBattleArtRegression
         try
         {
             Patch(AccessTools.PropertyGetter(typeof(CombatManager), nameof(CombatManager.IsEnding)), nameof(NotEnding));
+            if (_sheetLifecycleOnly)
+            {
+                SheetLifecycle();
+                return;
+            }
             VortexCards();
             KickAndPoiseCards();
             FinalThreeCards();
@@ -162,6 +168,13 @@ internal static partial class WylderBattleArtRegression
         finally { h.UnpatchAll(h.Id); }
     }
 
+    public static void RunSheetLifecycleOnly()
+    {
+        _sheetLifecycleOnly = true;
+        try { Run(); }
+        finally { _sheetLifecycleOnly = false; }
+    }
+
     private static int _sheetAutoPlays, _sheetDeckRemovals, _sheetHeals;
     private static void SettleSheetPlay()
     {
@@ -186,13 +199,16 @@ internal static partial class WylderBattleArtRegression
             Check(_sheetAutoPlays==2 && follow.Pile?.Type==PileType.Hand && rend.Pile?.Type==PileType.Discard
                 && flame.Pile?.Type==PileType.Discard,"Pursuit exit plays Claw Rend and Flame Chase but not Dual Leap");
             Fixture(true);_sheetAutoPlays=0;
-            Put(Card(ModelDb.Card<WylderDualGreatswordLeap>(),false),PileType.Hand);
+            var reentryFollowThrough=Card(ModelDb.Card<WylderClawRend>(),false);
+            Put(reentryFollowThrough,PileType.Hand);
             var claw=Card(ModelDb.Card<WylderClawMovement>(),false);
             Play(claw);SettleSheetPlay();
             Check(Rewards.Count(r=>r.Kind=="Energy")==1 && Rewards.Count(r=>r.Kind=="Draw")==1
-                && _owner.Creature.HasPower<WylderPursuitPower>(),
-                "Claw Movement receives the old Pursuit Skill reward and keeps its new Pursuit");
-            Check(_sheetAutoPlays==0,"Pursuit reentry does not trigger Follow Through");
+                && !_owner.Creature.HasPower<WylderPursuitPower>(),
+                $"Claw Movement receives the old Pursuit Skill reward and its Follow Through consumes the new Pursuit " +
+                $"(energy {Rewards.Count(r=>r.Kind=="Energy")}, draw {Rewards.Count(r=>r.Kind=="Draw")}, pursuit {_owner.Creature.HasPower<WylderPursuitPower>()})");
+            Check(_sheetAutoPlays==1 && reentryFollowThrough.Pile?.Type==PileType.Discard,
+                $"Pursuit reentry triggers the old Pursuit's Follow Through (actual {_sheetAutoPlays})");
             foreach(bool up in new[]{false,true})
             {
                 Fixture();_sheetDeckRemovals=_sheetHeals=0;
@@ -206,7 +222,7 @@ internal static partial class WylderBattleArtRegression
                 sense.AfterPreventingDeath(_owner.Creature).GetAwaiter().GetResult();
                 Check(_sheetHeals==1 && sense.ShouldDie(_owner.Creature),"Spent Sixth Sense cannot prevent another death");
             }
-            Console.WriteLine("PASS: Follow Through native autoplay queue/reentry filtering; Sixth Sense 30/50% revival, permanent/combat removal and single-use lifetime.");
+            Console.WriteLine("PASS: Follow Through native autoplay queue and Pursuit reentry settlement; Sixth Sense 30/50% revival, permanent/combat removal and single-use lifetime.");
         }
         finally {h.UnpatchAll(h.Id);}
     }

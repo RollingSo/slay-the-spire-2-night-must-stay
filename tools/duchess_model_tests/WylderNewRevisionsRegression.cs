@@ -134,10 +134,31 @@ internal static class WylderNewRevisionsRegression
                 return formatter.Format(System.Globalization.CultureInfo.InvariantCulture, text, vars);
             }
             Check(!Render(false).Contains('+') && Render(true).Contains('+') && Render(true, true).Contains('+'), "Base/upgraded/preview generated-card naming");
-            Check(text.Contains(locale == "zhs" ? "收招" : "Follow Through"), "Follow Through text present");
-            Check(json.RootElement.GetProperty("WYLDER_ASSAULT_STAKE.description").GetString()!.Contains(locale == "zhs" ? "绝境" : "Desperation"), "Desperation text present");
+            string followThrough = locale switch
+            {
+                "zhs" => "收招",
+                "jpn" => "追撃終了",
+                "kor" => "마무리",
+                _ => "Follow Through"
+            };
+            Check(text.Contains(followThrough), "Follow Through text present");
+            string desperation = locale switch
+            {
+                "zhs" => "绝境",
+                "jpn" => "窮地",
+                "kor" => "궁지",
+                _ => "Desperation"
+            };
+            Check(json.RootElement.GetProperty("WYLDER_ASSAULT_STAKE.description").GetString()!.Contains(desperation), "Desperation text present");
             string bide = json.RootElement.GetProperty("WYLDER_BIDE_THE_MOMENT.description").GetString()!;
-            Check(bide.Contains(locale == "zhs" ? "追击" : "Pursuit") && bide.Contains("{Block:diff()}"),
+            string pursuit = locale switch
+            {
+                "zhs" => "追击",
+                "jpn" => "追撃",
+                "kor" => "추격",
+                _ => "Pursuit"
+            };
+            Check(bide.Contains(pursuit) && bide.Contains("{Block:diff()}"),
                 "Bide the Moment Pursuit and dynamic Block text");
         }
     }

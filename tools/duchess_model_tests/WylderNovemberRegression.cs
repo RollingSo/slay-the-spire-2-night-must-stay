@@ -191,10 +191,9 @@ internal static partial class WylderBattleArtRegression
    }
    Fixture();var alive=NovemberAlly();var dead=NovemberAlly();dead.Creature.SetCurrentHpInternal(0);
    Play(Card(ModelDb.Card<WylderHeroesAssemble>(),false));var heroes=_owner.Creature.GetPower<WylderHeroesAssemblePower>()!;
-   heroes.AfterPlayerTurnStartLate(null!,_owner).GetAwaiter().GetResult();Check(!_owner.Creature.HasPower<WylderPursuitPower>(),"Heroes not on same start phase");
-   heroes.AfterSideTurnStart(_owner.Creature.Side,new[]{_owner.Creature},_combat).GetAwaiter().GetResult();
-   heroes.AfterPlayerTurnStartLate(null!,alive).GetAwaiter().GetResult();Check(!alive.Creature.HasPower<WylderPursuitPower>(),"Heroes ignores teammate's trigger");
-   heroes.AfterPlayerTurnStartLate(null!,_owner).GetAwaiter().GetResult();
+   heroes.AfterSideTurnStart(CombatSide.Enemy,Array.Empty<Creature>(),_combat).GetAwaiter().GetResult();
+   Check(!_owner.Creature.HasPower<WylderPursuitPower>(),"Heroes waits for its owner's side turn");
+   heroes.AfterSideTurnStart(_owner.Creature.Side,new[]{_owner.Creature,alive.Creature},_combat).GetAwaiter().GetResult();
    Check(_owner.Creature.HasPower<WylderPursuitPower>()&&alive.Creature.HasPower<WylderPursuitPower>()&&!dead.Creature.HasPower<WylderPursuitPower>(),"Heroes enters Pursuit for all living players including self");
    Check(!_owner.Creature.HasPower<WylderHeroesAssemblePower>(),"Heroes scheduled effect consumed once");
   }finally{h.UnpatchAll(h.Id);}

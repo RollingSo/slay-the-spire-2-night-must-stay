@@ -86,8 +86,8 @@ public abstract class DuchessCard : CardModel
     {
         DuchessCardSpec spec = DuchessCardCatalog.All[key];
         if (spec.Effects.Any(e => e.Kind == "AllyConcealmentPass")) return TargetType.AnyAlly;
-        if (spec.TargetSelf) return TargetType.Self;
         if (spec.All) return TargetType.AllEnemies;
+        if (spec.TargetSelf) return TargetType.Self;
         return spec.Type == CardType.Attack || spec.Effects.Any(e => e.Kind is "Weak" or "Vulnerable")
             ? TargetType.AnyEnemy : TargetType.Self;
     }

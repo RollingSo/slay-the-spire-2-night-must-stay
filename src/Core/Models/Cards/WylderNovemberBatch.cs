@@ -43,9 +43,16 @@ public sealed class WylderEndTheNight : WylderDesperationCard
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(60m, ValueProp.Move) };
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
+        Creature target = p.Target?.IsAlive == true
+            ? p.Target
+            : CombatState.GetOpponentsOf(Owner.Creature)
+                .Where(enemy => enemy.IsAlive && enemy.IsHittable)
+                .FirstOrDefault();
+        if (target == null)
+            return;
         WylderAnimationPatch.QueueAttackMotion(Owner.Creature, "AttackTwoHand");
         await WylderEndTheNightVfx.PlayPrelude(Owner.Creature);
-        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(p.Target).WithEndTheNightFx().Execute(c);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(target).WithEndTheNightFx().Execute(c);
     }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(20m);
 }
@@ -159,9 +166,19 @@ public sealed class WylderHeroesAssemble : WylderCard
 public sealed class WylderHeroesAssemblePower : PowerModel
 {
     public override PowerType Type => PowerType.Buff; public override PowerStackType StackType => PowerStackType.Counter;
-    [SavedProperty] public int DueCopies { get; set; }
-    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState state) { if (participants.Contains(Owner)) DueCopies = Amount; return Task.CompletedTask; }
-    public override async Task AfterPlayerTurnStartLate(PlayerChoiceContext c, Player player) { if (player != Owner.Player || DueCopies == 0) return; int copies = Math.Min(Amount, DueCopies); DueCopies = 0; var allies = Owner.CombatState.Players.Where(p => p.Creature.IsAlive).ToArray(); if (copies == Amount) await PowerCmd.Remove(this); else await PowerCmd.ModifyAmount(c, this, -copies, Owner, null); for (int i = 0; i < copies; i++) foreach (var ally in allies) await WylderPursuitPower.Enter(c, ally.Creature, null, WylderEffectSource.PowerEffect); }
+    public override async Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState state)
+    {
+        if (side != Owner.Side || !participants.Contains(Owner))
+            return;
+
+        int copies = decimal.ToInt32(Amount);
+        var context = new ThrowingPlayerChoiceContext();
+        var allies = state.Players.Where(player => player.Creature.IsAlive).ToArray();
+        await PowerCmd.Remove(this);
+        for (int i = 0; i < copies; i++)
+            foreach (Player ally in allies)
+                await WylderPursuitPower.Enter(context, ally.Creature, null, WylderEffectSource.PowerEffect);
+    }
 }
 public sealed class WylderMurderousAura : WylderCard
 {

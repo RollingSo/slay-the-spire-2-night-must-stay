@@ -65,6 +65,8 @@ if (args.Contains("--card-pool-audit"))
     return 0;
 }
 if (args.Contains("--wylder-models-only")) { WylderRegression.Run(); return 0; }
+if (args.Contains("--wylder-battle-art-only")) { WylderBattleArtRegression.Run(); return 0; }
+if (args.Contains("--wylder-sheet-lifecycle-only")) { WylderBattleArtRegression.RunSheetLifecycleOnly(); return 0; }
 if (args.Contains("--wylder-new-cards-only")) { WylderNewCardsRegression.Run(); return 0; }
 if (args.Contains("--wylder-multiplayer-batch-only")) { WylderMultiplayerBatchRegression.Run(); return 0; }
 if (args.Contains("--wylder-latest-batch-only")) { WylderLatestBatchRegression.Run(); return 0; }
@@ -1683,6 +1685,8 @@ var waltz = DuchessCardCatalog.All[nameof(DuchessMidnightWaltz)];
 if (waltz.Cost != 0 || waltz.Moment != 12 || !waltz.All
     || waltz.Effects.Length != 1 || waltz.Effects[0] != new DuchessEffect("Damage", 60, 75, "moment"))
     throw new Exception("Midnight Waltz specification is wrong.");
+if (ModelDb.Card<DuchessMidnightWaltz>().TargetType != TargetType.AllEnemies)
+    throw new Exception("Midnight Waltz must use native all-enemy targeting so multiplayer play resolves its Moment 12 attack.");
 var grandReprise = DuchessCardCatalog.All[nameof(DuchessGrandReprise)];
 if (grandReprise.Cost != 0 || !grandReprise.Exhaust || grandReprise.Effects.Length != 2
     || grandReprise.Effects[0].Kind != "ShuffleDiscardAll"

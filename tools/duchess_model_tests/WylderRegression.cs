@@ -305,6 +305,11 @@ internal static class WylderRegression
             lethalMulti.BeforeCardPlayed(TrackingArrowRegression.MakePlay(lethalMulti,owner)).GetAwaiter().GetResult();
             Hit(lethalMulti,a,15,killed:true);
             Check(lethalMulti.Triggers==1,"A qualifying lethal hit completes multi-hit Break when later hits are cancelled");
+            var lethalBonus=Probe();
+            lethalBonus.BeforeCardPlayed(TrackingArrowRegression.MakePlay(lethalBonus,owner)).GetAwaiter().GetResult();
+            var lethalBonusResult=new DamageResult(a,ValueProp.Move){UnblockedDamage=10,OverkillDamage=5,WasTargetKilled=true};
+            lethalBonus.AfterDamageGiven(null!,creature,lethalBonusResult,ValueProp.Move,a,lethalBonus).GetAwaiter().GetResult();
+            Check(lethalBonus.Triggers==1,"Break includes Lethality-style bonus damage that becomes overkill");
             var runtimeLethal=Probe();runtimeLethal.RequiredHits=2;var deadTarget=Enemy();
             runtimeLethal.BeforeCardPlayed(TrackingArrowRegression.MakePlay(runtimeLethal,owner)).GetAwaiter().GetResult();
             deadTarget.SetCurrentHpInternal(0);Hit(runtimeLethal,deadTarget,15);
