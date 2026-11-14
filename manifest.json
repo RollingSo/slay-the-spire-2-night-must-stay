@@ -3,9 +3,9 @@
   "name": "Slay the Spire 2 : Night Must Stay",
   "author": "Rolling",
   "description": "A Slay the Spire 2 character expansion inspired by Elden Ring: Nightreign, featuring Guardian, Ironeye, Revenant, Duchess, and Wylder.",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "has_dll": true,
   "has_pck": true,
-  "min_game_version": "0.111.0",
+  "min_game_version": "0.107.1",
   "affects_gameplay": true
 }

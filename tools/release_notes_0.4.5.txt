@@ -1,0 +1,13 @@
+[h1]0.4.5｜正式版加载修复与追踪者卡图更新[/h1]
+
+- 将最低支持游戏版本修正为正式分支实际版本 v0.107.1，解决正式版启动时提示版本不兼容并拒绝加载模组的问题。
+- 保留对 Public Beta v0.113 的兼容支持。
+- 更新追踪者“余火”卡图。
+- 更新追踪者“见真火”卡图。
+
+[h1]0.4.5 | Stable Loading Fix and Wylder Card Art[/h1]
+
+- Corrected the minimum supported game version to the stable branch's actual v0.107.1, fixing the mod being rejected as incompatible on startup.
+- Retained compatibility with Public Beta v0.113.
+- Updated the Wylder Remaining Ember card art.
+- Updated the Wylder True Flame card art.
