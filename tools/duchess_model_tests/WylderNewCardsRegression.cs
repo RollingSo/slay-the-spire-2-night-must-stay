@@ -21,10 +21,10 @@ internal static class WylderNewCardsRegression
         Check(aerial.EnergyCost.GetResolved()==2 && aerial.DynamicVars.Damage.BaseValue==20 && aerial.DynamicVars["Imbalance"].BaseValue==3,"Aerial base");
         aerial.UpgradeInternal(); Check(aerial.EnergyCost.GetResolved()==1 && aerial.DynamicVars.Damage.BaseValue==20 && aerial.DynamicVars["Imbalance"].BaseValue==3,"Aerial cost-only upgrade");
         var leap=ModelDb.Card<WylderSlidingLeap>().ToMutable();
-        Check(!leap.Keywords.Contains(CardKeyword.Retain),"Leap base"); leap.UpgradeInternal(); Check(leap.Keywords.Contains(CardKeyword.Retain),"Leap retain upgrade");
+        Check(leap.Rarity==CardRarity.Uncommon && !leap.Keywords.Contains(CardKeyword.Retain),"Leap base"); leap.UpgradeInternal(); Check(leap.Keywords.Contains(CardKeyword.Retain),"Leap retain upgrade");
         var burn=ModelDb.Card<WylderIntenseBurning>().ToMutable();
-        Check(burn.EnergyCost.CostsX && burn.DynamicVars["Vigor"].BaseValue==4 && burn.DynamicVars.Repeat.BaseValue==0,"Burn base");
-        burn.UpgradeInternal(); Check(burn.DynamicVars.Repeat.BaseValue==1 && burn.DynamicVars["Vigor"].BaseValue==4,"Burn upgrade");
+        Check(burn.EnergyCost.CostsX && burn.DynamicVars["Vigor"].BaseValue==6 && burn.DynamicVars.Repeat.BaseValue==0,"Burn base");
+        burn.UpgradeInternal(); Check(burn.DynamicVars.Repeat.BaseValue==1 && burn.DynamicVars["Vigor"].BaseValue==6,"Burn upgrade");
         var life=ModelDb.Card<WylderLifeFromDeath>().ToMutable();
         Check(life.EnergyCost.GetResolved()==0 && life.Type==CardType.Power && life.Rarity==CardRarity.Ancient && life.TargetType==TargetType.Self,"Life metadata");
         life.UpgradeInternal(); Check(life.IsUpgraded,"Life upgrade");

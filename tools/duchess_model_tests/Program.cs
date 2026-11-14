@@ -93,7 +93,8 @@ if (args.Contains("--revenant-november-only"))
         var gaze = ModelDb.Card<GazeBeyond>().ToMutable();
         var updatedPocket = ModelDb.Card<DuchessHiddenPocket>().ToMutable();
         var claw = ModelDb.Card<CursedClawCombo>().ToMutable();
-        if (upgraded) { halo.UpgradeInternal(); burn.UpgradeInternal(); chant.UpgradeInternal(); gaze.UpgradeInternal(); updatedPocket.UpgradeInternal(); claw.UpgradeInternal(); }
+        var stunCall = ModelDb.Card<StunCall>().ToMutable();
+        if (upgraded) { halo.UpgradeInternal(); burn.UpgradeInternal(); chant.UpgradeInternal(); gaze.UpgradeInternal(); updatedPocket.UpgradeInternal(); claw.UpgradeInternal(); stunCall.UpgradeInternal(); }
         if (halo.DynamicVars.Damage.BaseValue != 6 || halo.DynamicVars["Growth"].BaseValue != (upgraded ? 7 : 4)
             || !halo.Keywords.Contains(CardKeyword.Ethereal)) throw new Exception("Halo rules");
         halo.IncreaseDamageForCurrentCombat(); halo.IncreaseDamageForCurrentCombat();
@@ -103,8 +104,10 @@ if (args.Contains("--revenant-november-only"))
         if (gaze.DynamicVars["Vulnerable"].BaseValue != (upgraded ? 3 : 2)) throw new Exception("Gaze Beyond");
         if (updatedPocket.DynamicVars["HandToDrawTopBlock"].BaseValue != (upgraded ? 7 : 5)) throw new Exception("Hidden Pocket");
         if (claw.DynamicVars.Damage.BaseValue != (upgraded ? 7 : 5) || !claw.Keywords.Contains(CardKeyword.Ethereal)) throw new Exception("Cursed Claw Combo");
+        if (stunCall.EnergyCost.GetResolved() != (upgraded ? 1 : 2) || stunCall.DynamicVars.Damage.BaseValue != 8)
+            throw new Exception("Stun Call cost-only upgrade");
     }
-    Console.WriteLine("PASS: six card base/upgraded values and repeated Halo growth.");
+    Console.WriteLine("PASS: Revenant card values, Stun cost-only upgrade and repeated Halo growth.");
     return 0;
 }
 if (args.Contains("--guardian-november-only"))

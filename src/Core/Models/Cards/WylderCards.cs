@@ -188,7 +188,7 @@ public sealed class WylderDashAttack : WylderCard
 }
 public sealed class WylderSlidingLeap : WylderFollowThroughCard
 {
-    public WylderSlidingLeap() : base(2, CardRarity.Common, CardType.Skill, TargetType.Self) { }
+    public WylderSlidingLeap() : base(2, CardRarity.Uncommon, CardType.Skill, TargetType.Self) { }
     protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);
     protected override Task OnPlay(PlayerChoiceContext context, CardPlay play) =>
         WylderPursuitPower.Enter(context, Owner.Creature, this);
@@ -215,30 +215,30 @@ public sealed class WylderCenteringBreath : WylderCard
 }
 public sealed class WylderStampUpwardCut : WylderCard
 {
-    public WylderStampUpwardCut() : base(2, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
-    protected override bool HasPursuitCondition => true;
+    public WylderStampUpwardCut() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        { new DamageVar(16m, ValueProp.Move), new DynamicVar("StrengthLoss", 5m) };
+        { new DamageVar(11m, ValueProp.Move), new DynamicVar("StrengthLoss", 5m), new CardsVar(1) };
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        bool pursuit = Pursuing;
         await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(play.Target).Execute(context);
-        if (pursuit && play.Target.IsAlive)
+        if (play.Target.IsAlive)
             await PowerCmd.Apply<WylderUppercutStrengthDownPower>(context, play.Target,
                 DynamicVars["StrengthLoss"].BaseValue, Owner.Creature, this);
+        await PowerCmd.Apply<SacredFeatherDrawReductionPower>(context, Owner.Creature,
+            DynamicVars.Cards.BaseValue, Owner.Creature, this);
     }
-    protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(2m); DynamicVars["StrengthLoss"].UpgradeValueBy(1m); }
+    protected override void OnUpgrade() { DynamicVars.Damage.UpgradeValueBy(2m); DynamicVars["StrengthLoss"].UpgradeValueBy(2m); }
 }
 public sealed class WylderStampSweep : WylderCard
 {
-    public WylderStampSweep() : base(1, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
-    protected override bool HasPursuitCondition => true;
-    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new DamageVar(11m, ValueProp.Move) };
+    public WylderStampSweep() : base(1, CardType.Attack, CardRarity.Common, TargetType.Self) { }
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(14m, ValueProp.Move), new CardsVar(1) };
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        var attack = DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this);
-        if (Pursuing) await attack.TargetingAllOpponents(CombatState).Execute(context);
-        else await attack.Targeting(play.Target).Execute(context);
+        await DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this)
+            .TargetingAllOpponents(CombatState).Execute(context);
+        await PowerCmd.Apply<SacredFeatherDrawReductionPower>(context, Owner.Creature,
+            DynamicVars.Cards.BaseValue, Owner.Creature, this);
     }
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(4m);
 }

@@ -60,7 +60,7 @@ internal static partial class WylderBattleArtRegression
    WylderCombatEvents.CompleteCard(null!,MegaCrit.Sts2.Core.Combat.CombatManager.Instance.History.CardPlaysStarted.Last().CardPlay).GetAwaiter().GetResult();
    Check(Rewards.Any(r=>r.Kind==nameof(StrengthPower)&&r.Amount==2),"Veteran Edge actual Break reward2");
   }
-  Check(ModelDb.Card<WylderCriticalStrike>().Rarity==CardRarity.Uncommon&&ModelDb.Card<WylderCounterRush>().Rarity==CardRarity.Uncommon,"Critical Strike and Recoil Stake Uncommon");
+  Check(ModelDb.Card<WylderCriticalStrike>().Rarity==CardRarity.Uncommon&&ModelDb.Card<WylderCounterRush>().Rarity==CardRarity.Common,"Critical Strike Uncommon and Recoil Stake Common");
   Console.WriteLine($"PASS: {_checks-start} Vortex batch checks: targets, rarity, costs, Break entry, Follow Through, stun growth and native preview.");
  }
 }

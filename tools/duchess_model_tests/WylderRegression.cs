@@ -29,7 +29,6 @@ internal static class WylderRegression
     {
         var h=new HarmonyLib.Harmony("night-must-stay.tests.wylder");
         h.CreateClassProcessor(typeof(Wylder).Assembly.GetType("NightMustStay.Core.Patches.WylderPursuitDamageBranchPatch")!).Patch();
-        h.CreateClassProcessor(typeof(Wylder).Assembly.GetType("NightMustStay.Core.Patches.WylderSweepTargetPatch")!).Patch();
         h.CreateClassProcessor(typeof(Wylder).Assembly.GetType("NightMustStay.Core.Patches.WylderSmallShopPoolPatch")!).Patch();
         h.CreateClassProcessor(typeof(Wylder).Assembly.GetType("NightMustStay.Core.Patches.WylderSmallRewardPoolPatch")!).Patch();
         h.Patch(typeof(PowerCmd).GetMethods().Single(m=>m.Name=="Remove" && !m.IsGenericMethod),
@@ -70,7 +69,7 @@ internal static class WylderRegression
                 "Wylder Defend canonical membership survives localization");
             Check(!(bool)defendFilter.Invoke(null, new object[] { "WYLDER_STEADY_BREATH", "Defend", true })!,
                 "Unrelated Wylder cards cannot enter Defend set through translated title");
-            Check(ModelDb.Card<WylderStampSweep>().TargetType == TargetType.AnyEnemy, "Canonical sweep library target is safe");
+            Check(ModelDb.Card<WylderStampSweep>().TargetType == TargetType.Self, "Canonical sweep uses native no-target AOE");
             var authoredPool = character.CardPool.AllCards.Where(c => c.Rarity == CardRarity.Common).ToArray();
             var shopRepair = AccessTools.Method(typeof(Wylder).Assembly.GetType("NightMustStay.Core.Patches.WylderSmallShopPoolPatch"), "Restore");
             foreach (var requested in new[] { CardType.Attack, CardType.Skill, CardType.Power })
@@ -100,7 +99,7 @@ internal static class WylderRegression
                     var c=canonical.ToMutable(); if(up && c.MaxUpgradeLevel > 0)c.UpgradeInternal();
                     int cost=c switch { WylderFlamelightOnSnow => up?1:2, WylderTriumph => 0,
                         WylderVerticalCleave => 2, WylderSiluriaVortex => up?2:3, WylderEndlessWill or WylderLastResort or WylderShriekOfMilos or WylderTwinToken or WylderGrappleShot => up?0:1, WylderGamble or WylderLoneCourage or WylderAgility => 0, WylderHeroesAssemble => up?0:1, WylderEndTheNight => 5, WylderTrueFlame => up?4:5, WylderDesperateFlurry => 3, WylderClawMovement or WylderAncientClawLeap or WylderMagnanimity or WylderOffensiveInstinct => up?0:1,
-                        WylderRuinousGhostflame => 1,
+                        WylderRuinousGhostflame => 1, WylderWildfire => up?0:1,
                         WylderSpark or WylderResolve or WylderDebut or WylderBideTheMoment or WylderKick => 0,
                         WylderSixthSense => 4,
                         WylderUndying => up?1:2,
@@ -113,8 +112,7 @@ internal static class WylderRegression
                         WylderFatesJudgment or WylderTakersFlames or WylderFlameChaseSlash => 2,
                         WylderStormBlade or WylderEochaidsDancingBlade => 0,
                         WylderAssaultStake => 3,
-                        WylderStampUpwardCut
-                            or WylderLionsClaw
+                        WylderLionsClaw
                             or WylderJumpingHeavy or WylderDualGreatswordLeap or WylderGhostflameExplosion or WylderCorpseWaxCutter => 2,
                         WylderPoise => up?0:1, _=>1 };
                     if(c is WylderIntenseBurning) Check(c.EnergyCost.CostsX,"Intense Burning X cost"); else Check(c.EnergyCost.GetResolved()==cost,"Cost "+c.GetType().Name);
@@ -122,24 +120,27 @@ internal static class WylderRegression
                     if(c is WylderEruption)Check(c.Type==CardType.Power && c.Rarity==CardRarity.Uncommon
                         && c.Keywords.Contains(CardKeyword.Innate)==up && !c.DynamicVars.ContainsKey("Damage"),
                         "Eruption enters Pursuit on shuffle and gains Innate when upgraded");
-                    if(c is WylderCounterRush)Check(c.DynamicVars.Damage.BaseValue==(up?14:12) && c.DynamicVars["Imbalance"].BaseValue==(up?3:2),"Recoil Stake values");
+                    if(c is WylderCounterRush)Check(c.Rarity==CardRarity.Common && c.DynamicVars.Damage.BaseValue==(up?14:12) && c.DynamicVars["Imbalance"].BaseValue==(up?3:2),"Recoil Stake rarity and values");
                     if(c is WylderDesperateSurvival)Check(c.TargetType==TargetType.AnyEnemy && c.Keywords.Contains(CardKeyword.Exhaust) && c.Keywords.Contains(CardKeyword.Retain)==up && c.DynamicVars["Threshold"].BaseValue==50,"Desperate Survival targeting, threshold and keywords");
                     if(c is WylderTacticalRetreat)Check(!c.Keywords.Contains(CardKeyword.Exhaust),"Tactical Retreat no longer Exhausts");
                     if(c is WylderPoise)Check(c.DynamicVars.Block.BaseValue==16 && c.Keywords.Contains(CardKeyword.Retain),"Poise fixed Block and Retain");
                     if(c is WylderCorpseWaxCutter)Check(c.Rarity==CardRarity.Uncommon && c.DynamicVars.Damage.BaseValue==(up?18:14) && c.DynamicVars["Break"].BaseValue==30 && c.DynamicVars["Vulnerable"].BaseValue==(up?3:2) && c.DynamicVars["Weak"].BaseValue==(up?3:2),"Corpse Wax Cutter rarity and values");
-                    if(c is WylderWildfire)Check(c.TargetType==TargetType.Self && c.Keywords.Contains(CardKeyword.Innate)==up,"Spreading Wildfire target and Innate upgrade");
+                    if(c is WylderWildfire)Check(c.TargetType==TargetType.Self && !c.Keywords.Contains(CardKeyword.Innate),"Spreading Wildfire target and cost-only upgrade");
+                    if(c is WylderSlidingLeap)Check(c.Rarity==CardRarity.Uncommon,"Sliding Leap rarity");
                     if(c is WylderNightForm)Check(c.Rarity==CardRarity.Rare && c.Keywords.Contains(CardKeyword.Retain)==up,"Night Form Retain upgrade");
                     if(c is WylderClawMovement)Check(c.Type==CardType.Skill && c.TargetType==TargetType.Self
                         && c.Keywords.Contains(CardKeyword.Retain),"Claw is a self-targeted retained Skill");
                     if(c is WylderAncientClawLeap)Check(c.Type==CardType.Skill && c.TargetType==TargetType.Self,
                         "Ancient Grapple Leap is a self-targeted Skill");
                     decimal damage=c switch { WylderStrike=>up?9:6, WylderDashAttack=>up?11:9,
-                        WylderStampUpwardCut=>up?18:16, WylderStampSweep=>up?14:11, _=>0 };
+                        WylderStampUpwardCut=>up?13:11, WylderStampSweep=>up?18:14, _=>0 };
                     if(damage>0)Check(c.DynamicVars.Damage.BaseValue==damage,"Damage "+c.GetType().Name);
                     if(c is WylderDefend or WylderCenteringBreath)
                         Check(c.DynamicVars.Block.BaseValue==(c is WylderDefend?(up?8:5):(up?7:6)),"Block");
                     if(c is WylderDashAttack)Check(c.DynamicVars["Vulnerable"].BaseValue==(up?2:1),"Vulnerable");
-                    if(c is WylderStampUpwardCut)Check(c.DynamicVars["StrengthLoss"].BaseValue==(up?6:5),"Strength loss");
+                    if(c is WylderStampUpwardCut)Check(c.DynamicVars["StrengthLoss"].BaseValue==(up?7:5)
+                        && c.DynamicVars.Cards.BaseValue==1,"Strength and next-turn draw loss");
+                    if(c is WylderStampSweep)Check(c.DynamicVars.Cards.BaseValue==1,"Sweep next-turn draw loss");
                     if(c is WylderCenteringBreath)Check(c.DynamicVars.Energy.BaseValue==(up?3:2),"Centering Breath energy");
                     if(c is WylderInspire)Check(c.Type==CardType.Skill && c.Rarity==CardRarity.Uncommon
                         && c.TargetType==TargetType.Self && c.DynamicVars.Cards.BaseValue==(up?3:2)
@@ -191,8 +192,8 @@ internal static class WylderRegression
             var multiplier=AccessTools.Method(typeof(WylderPursuitPower),"AttackMultiplier");
             var p=Power();
             var sweep=Card<WylderStampSweep>();
-            Check(sweep.TargetType==TargetType.AllEnemies,"Sweep uses native AOE targeting while pursuing");
-            Check((bool)AccessTools.PropertyGetter(typeof(WylderCard),"ShouldGlowGoldInternal").Invoke(sweep,null)!,"Pursuit condition glow");
+            Check(sweep.TargetType==TargetType.Self,"Sweep always uses native no-target AOE");
+            Check(!(bool)AccessTools.PropertyGetter(typeof(WylderCard),"ShouldGlowGoldInternal").Invoke(sweep,null)!,"Sweep has no obsolete Pursuit condition glow");
             var patchType=typeof(Wylder).Assembly.GetType("NightMustStay.Core.Patches.WylderPursuitDamageBranchPatch")!;
             var hookMethod=typeof(MegaCrit.Sts2.Core.Hooks.Hook).GetMethods().Single(method => method.Name == "ModifyDamage"
                 && method.GetParameters().Any(parameter => parameter.Name == "dealer")
@@ -218,7 +219,7 @@ internal static class WylderRegression
             var play=TrackingArrowRegression.MakePlay(strike,owner);
             p.BeforeCardPlayed(play).GetAwaiter().GetResult();p.AfterCardPlayedLate(null!,play).GetAwaiter().GetResult();
             Check(_removes==1 && _draws==0,"Attack consumes without draw");
-            Check(sweep.TargetType==TargetType.AnyEnemy,"Sweep returns to single target after pursuit");
+            Check(sweep.TargetType==TargetType.Self,"Sweep remains no-target AOE after Pursuit is consumed");
             p=Power(); play=TrackingArrowRegression.MakePlay(skill,owner);
             p.BeforeCardPlayed(play).GetAwaiter().GetResult();p.AfterCardPlayedLate(null!,play).GetAwaiter().GetResult();
             p.AfterCardPlayedLate(null!,play).GetAwaiter().GetResult();

@@ -33,7 +33,7 @@ public sealed class WylderIntenseBurning : WylderCard
 {
     public WylderIntenseBurning() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
     protected override bool HasEnergyCostX => true;
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new PowerVar<VigorPower>("Vigor", 4m), new RepeatVar(0) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new PowerVar<VigorPower>("Vigor", 6m), new RepeatVar(0) };
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Append(HoverTipFactory.FromPower<VigorPower>());
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {

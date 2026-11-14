@@ -62,7 +62,7 @@ public sealed class WylderAerialStake : WylderCard
 }
 public sealed class WylderCounterRush : WylderDesperationCard
 {
-    public WylderCounterRush() : base(3, CardType.Attack, CardRarity.Uncommon, TargetType.AnyEnemy) { }
+    public WylderCounterRush() : base(3, CardType.Attack, CardRarity.Common, TargetType.AnyEnemy) { }
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         { new DamageVar(12m, ValueProp.Move), new PowerVar<PhantomImbalancePower>("Imbalance", 2m) };
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -175,7 +175,7 @@ public sealed class WylderWildfire : WylderAbilityCard<WylderWildfirePower>
 {
     public WylderWildfire() : base(1, CardRarity.Uncommon) { }
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Append(HoverTipFactory.FromPower<VigorPower>());
-    protected override void OnUpgrade() => AddKeyword(CardKeyword.Innate);
+    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }
 public sealed class WylderBoldness : WylderAbilityCard<WylderBoldnessPower>
 {

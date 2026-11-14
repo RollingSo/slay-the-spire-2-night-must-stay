@@ -32,15 +32,15 @@
     ],
     "WYLDER_STAMP_UPWARD_CUT": [
       "箭步：上砍",
-      "造成{Damage:diff()}点伤害。\n[gold]追击[/gold]：本回合内减少该敌人{StrengthLoss:diff()}点[gold]力量[/gold]。",
+      "造成{Damage:diff()}点伤害。\n本回合内减少该敌人{StrengthLoss:diff()}点[gold]力量[/gold]。\n下回合抽牌数减少{Cards:diff()}张。",
       "Stamp (Upward Cut)",
-      "Deal {Damage:diff()} damage.\n[gold]Pursuit[/gold]: That enemy loses {StrengthLoss:diff()} [gold]Strength[/gold] this turn."
+      "Deal {Damage:diff()} damage.\nThat enemy loses {StrengthLoss:diff()} [gold]Strength[/gold] this turn.\nDraw {Cards:diff()} fewer card next turn."
     ],
     "WYLDER_STAMP_SWEEP": [
       "箭步：回旋斩",
-      "造成{Damage:diff()}点伤害。\n[gold]追击[/gold]：改为对所有敌人造成伤害。",
+      "对所有敌人造成{Damage:diff()}点伤害。\n下回合抽牌数减少{Cards:diff()}张。",
       "Stamp (Sweep)",
-      "Deal {Damage:diff()} damage.\n[gold]Pursuit[/gold]: Target all enemies instead."
+      "Deal {Damage:diff()} damage to ALL enemies.\nDraw {Cards:diff()} fewer card next turn."
     ],
     "WYLDER_FLAME_CHASE_SLASH": [
       "燃火追斩",

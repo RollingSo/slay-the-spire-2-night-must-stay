@@ -62,7 +62,7 @@ public sealed class StunCall : CardModel
         }
     }
 
-    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
+    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }
 
 public sealed class Relay : CardModel
