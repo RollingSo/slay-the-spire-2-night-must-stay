@@ -57,6 +57,8 @@
   "DUCHESS.goldMonologue": "[sine]足够准备下一段路了。也该为各位留一些。[/sine]",
   "WYLDER.title": "追踪者",
   "WYLDER.titleObject": "追踪者",
+  "WYLDER.banter.alive.endTurnPing": "……该行动了。",
+  "WYLDER.banter.dead.endTurnPing": "别管我。继续追。",
   "WYLDER.pronounSubject": "他",
   "WYLDER.pronounObject": "他",
   "WYLDER.pronounPossessive": "他的",

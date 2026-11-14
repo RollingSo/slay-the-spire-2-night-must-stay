@@ -66,7 +66,10 @@ for locale in ['zhs','eng','jpn','kor']:
     p=ROOT/f'NightMustStay/localization/{locale}/characters.json'
     data={}
     name='追踪者' if locale=='zhs' else 'Wylder'
-    entries={'title':name,'titleObject':name,'pronounSubject':'他' if locale=='zhs' else 'he',
+    entries={'title':name,'titleObject':name,
+        'banter.alive.endTurnPing':'……该行动了。' if locale=='zhs' else '...Time to move.',
+        'banter.dead.endTurnPing':'别管我。继续追。' if locale=='zhs' else 'Leave me. Keep moving.',
+        'pronounSubject':'他' if locale=='zhs' else 'he',
         'pronounObject':'他' if locale=='zhs' else 'him','pronounPossessive':'他的' if locale=='zhs' else 'his',
         'possessiveAdjective':'他的' if locale=='zhs' else 'his','cardsModifierTitle':name,
         'cardsModifierDescription':name+' cards' if locale!='zhs' else '追踪者的卡牌。',

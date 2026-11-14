@@ -57,6 +57,8 @@
   "DUCHESS.goldMonologue": "[sine]Enough for the road ahead. I should set some aside for the others.[/sine]",
   "WYLDER.title": "추적자",
   "WYLDER.titleObject": "추적자",
+  "WYLDER.banter.alive.endTurnPing": "...움직일 때다.",
+  "WYLDER.banter.dead.endTurnPing": "난 두고 가. 계속 움직여.",
   "WYLDER.pronounSubject": "그",
   "WYLDER.pronounObject": "그",
   "WYLDER.pronounPossessive": "그의",

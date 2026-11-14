@@ -57,6 +57,8 @@
   "DUCHESS.goldMonologue": "[sine]Enough for the road ahead. I should set some aside for the others.[/sine]",
   "WYLDER.title": "Wylder",
   "WYLDER.titleObject": "Wylder",
+  "WYLDER.banter.alive.endTurnPing": "...Time to move.",
+  "WYLDER.banter.dead.endTurnPing": "Leave me. Keep moving.",
   "WYLDER.pronounSubject": "he",
   "WYLDER.pronounObject": "him",
   "WYLDER.pronounPossessive": "his",

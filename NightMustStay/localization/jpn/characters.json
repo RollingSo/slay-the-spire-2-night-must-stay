@@ -57,6 +57,8 @@
   "DUCHESS.goldMonologue": "[sine]これで次の旅支度ができます。皆さんの分も残しておきましょう。[/sine]",
   "WYLDER.title": "追跡者",
   "WYLDER.titleObject": "追跡者",
+  "WYLDER.banter.alive.endTurnPing": "……行くぞ。",
+  "WYLDER.banter.dead.endTurnPing": "俺はいい。先へ進め。",
   "WYLDER.pronounSubject": "彼",
   "WYLDER.pronounObject": "彼",
   "WYLDER.pronounPossessive": "彼の",

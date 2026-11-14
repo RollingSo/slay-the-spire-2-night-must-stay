@@ -24,6 +24,15 @@ internal static class WylderDialogueRegression
         {
             foreach (string locale in new[] { "zhs", "eng", "jpn", "kor" })
             {
+                using (var characters = JsonDocument.Parse(File.ReadAllText($"NightMustStay/localization/{locale}/characters.json")))
+                {
+                    foreach (string state in new[] { "alive", "dead" })
+                    {
+                        string key = $"WYLDER.banter.{state}.endTurnPing";
+                        if (!characters.RootElement.TryGetProperty(key, out var value) || string.IsNullOrWhiteSpace(value.GetString()))
+                            throw new Exception($"{locale}: Missing Wylder end-turn banter: {key}");
+                    }
+                }
                 _table = new();
                 foreach (string path in new[] { $"D:/STS2/localization/{locale}/ancients.json", $"NightMustStay/localization/{locale}/ancients.json" })
                 {
@@ -69,7 +78,7 @@ internal static class WylderDialogueRegression
                     .Invoke(null, new object[] { architect, "WYLDER" });
                 Check(architect, "THE_ARCHITECT", locale, ref checks);
             }
-            Console.WriteLine($"PASS: {checks} Wylder Ancient dialogue lines in four locales, native speaker/repeating/Next resolution, visits 0-12, and missing-key regression probes.");
+            Console.WriteLine($"PASS: {checks} Wylder Ancient dialogue lines and alive/dead end-turn banter in four locales, native speaker/repeating/Next resolution, visits 0-12, and missing-key regression probes.");
         }
         finally { fixture.UnpatchAll(fixture.Id); _table.Clear(); }
     }
