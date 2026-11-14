@@ -268,7 +268,7 @@
       "WYLDER_STONE_SWORD_KEY.title": "石剣の鍵", "WYLDER_STONE_SWORD_KEY.description": "ランダムな[gold]窮地[/gold]カードを{Cards}枚[gold]手札[/gold]に加える。"
     },
     "characters": {
-      "WYLDER.title": "追跡者", "WYLDER.titleObject": "追跡者", "WYLDER.banter.alive.endTurnPing": "……行くぞ。", "WYLDER.banter.dead.endTurnPing": "俺はいい。先へ進め。", "WYLDER.pronounSubject": "彼", "WYLDER.pronounObject": "彼", "WYLDER.pronounPossessive": "彼の", "WYLDER.possessiveAdjective": "彼の", "WYLDER.cardsModifierTitle": "追跡者", "WYLDER.cardsModifierDescription": "追跡者のカード。", "WYLDER.description": "鉤爪で追撃に入り、攻撃で敵の体勢を崩す。"
+      "WYLDER.title": "追跡者", "WYLDER.shortTitle": "追跡者", "WYLDER.titleObject": "追跡者", "WYLDER.banter.alive.endTurnPing": "……行くぞ。", "WYLDER.banter.dead.endTurnPing": "俺はいい。先へ進め。", "WYLDER.pronounSubject": "彼", "WYLDER.pronounObject": "彼", "WYLDER.pronounPossessive": "彼の", "WYLDER.possessiveAdjective": "彼の", "WYLDER.cardsModifierTitle": "追跡者", "WYLDER.cardsModifierDescription": "追跡者のカード。", "WYLDER.description": "鉤爪で追撃に入り、攻撃で敵の体勢を崩す。"
     },
     "ancients": {},
     "card_library": { "POOL_WYLDER_TIP": "追跡者" }
@@ -516,7 +516,7 @@
       "WYLDER_STONE_SWORD_KEY.title": "석검 열쇠", "WYLDER_STONE_SWORD_KEY.description": "무작위 [gold]궁지[/gold] 카드 {Cards}장을 [gold]손패[/gold]에 추가합니다."
     },
     "characters": {
-      "WYLDER.title": "추적자", "WYLDER.titleObject": "추적자", "WYLDER.banter.alive.endTurnPing": "...움직일 때다.", "WYLDER.banter.dead.endTurnPing": "난 두고 가. 계속 움직여.", "WYLDER.pronounSubject": "그", "WYLDER.pronounObject": "그", "WYLDER.pronounPossessive": "그의", "WYLDER.possessiveAdjective": "그의", "WYLDER.cardsModifierTitle": "추적자", "WYLDER.cardsModifierDescription": "추적자의 카드.", "WYLDER.description": "갈고리로 추격에 진입하고 공격으로 적의 태세를 무너뜨립니다."
+      "WYLDER.title": "추적자", "WYLDER.shortTitle": "추적자", "WYLDER.titleObject": "추적자", "WYLDER.banter.alive.endTurnPing": "...움직일 때다.", "WYLDER.banter.dead.endTurnPing": "난 두고 가. 계속 움직여.", "WYLDER.pronounSubject": "그", "WYLDER.pronounObject": "그", "WYLDER.pronounPossessive": "그의", "WYLDER.possessiveAdjective": "그의", "WYLDER.cardsModifierTitle": "추적자", "WYLDER.cardsModifierDescription": "추적자의 카드.", "WYLDER.description": "갈고리로 추격에 진입하고 공격으로 적의 태세를 무너뜨립니다."
     },
     "ancients": {},
     "card_library": { "POOL_WYLDER_TIP": "추적자" }
