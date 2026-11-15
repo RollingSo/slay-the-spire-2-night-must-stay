@@ -1,0 +1,67 @@
+# 追踪者（Wylder）动画制作清单
+
+2026-11-09 · 素材来源 [codex/wylder-development-20261018 @ 67021f3](https://github.com/RollingSo/slay-the-spire-2-night-must-stay/commit/67021f3e4106d457ffc293919dd94a8fd549b2ff)
+
+普通与追击状态各有一张绿幕首帧。第一批建议先做 WY01 普通待机和 WY02 普通大剑斩，确认扛剑姿势、脚底与剑尖的活动空间，再做追击和其余动作。当前进度为素材准备。
+
+## 首帧与姿势参考
+
+| 首帧 | 对应分支原图 | 使用范围 |
+|---|---|---|
+| [wylder_idle_reference_green.png](preview/wylder_idle_reference_green.png) | `wylder_assets/combat_rig/wylder_combat_character.png` | WY01–WY06。人物自身右手持长直大剑，待机横搭右肩，左手持小圆盾，左前臂有钩爪机构。 |
+| [wylder_pursuit_idle_reference_green.png](preview/wylder_pursuit_idle_reference_green.png) | `wylder_assets/combat_rig/wylder_pursuit_idle.png` | WY07–WY08。双手共握同一把大剑，盾固定在上背部。现图有历史记录中的柄尾和握柄问题，保留获选姿势，生成时按正确剑形约束。 |
+
+两张首帧均以正式运行贴图在纯绿 `#00FF00` 上合成，沿用原始 `2600×1700` 画布、角色比例和位置。朝屏幕右方的三分之四视角、完整金属面甲、分片翼饰、黑围巾、银色刻纹与深蓝衣摆以普通待机图为身份基准。大剑的柄尾中心、握柄、护手、剑脊和剑尖保持同轴，柄尾采用分叉轮廓。抠图时重点检查武器、盔翼、盾缘和细纹。
+
+原图目前仍在 `wylder_assets/`；本目录尚未提交 `source/` 副本，制作时以 `wylder_assets/` 的原图为身份基准。战斗参考包括两张待机图和下表五张姿势图，另有独立的商店、篝火图。姿势图用于动作峰值或末态对照，通常从相应的待机绿幕起手。
+
+## 真实触发核对（2026-11-15）
+
+| 触发 | 代码入口 | 当前表现 | 序列动作 |
+|---|---|---|---|
+| `Idle` / `Relaxed` | `WylderAnimationPatch` → `play_trigger` | 普通/追击 idle 贴图 + 程序动作 | WY01 / WY07 |
+| `Attack` / `AttackSingle` / `AttackTwoHand` | 卡牌 `QueueAttackMotion` | 普通/追击攻击贴图 + 程序挥砍 | WY02 / WY08 |
+| `Block` / `BucklerBlock` | `WylderAnimationPatch.PlayBlock` | 格挡贴图 + tween | WY03 |
+| `Hit` | `play_trigger("Hit")` | 受击贴图 + 程序动作 | WY04 |
+| `Cast` | `play_trigger("Cast")` | 内置 cast 动画 | WY05 |
+| `Dead` | `StartDeathAnim` → `play_trigger("Dead")` | 倒地贴图，末态保持 | WY06 |
+| `ClawShot` | `PlayImmediate(..., "ClawShot")` / `QueueAttackMotion(..., "ClawShot")` | 钩爪静态姿势 + tween | **WY11（新增）** |
+| `Ultimate` | `QueueAttackMotion(..., "Ultimate")` | 绝招静态姿势 + tween | **WY12（新增）** |
+| 商店 / 篝火 | 场景替换 | 静态图 + 程序呼吸 | WY09 / WY10 |
+
+结论：WY01–WY12 覆盖真实触发；`WY11` 不是纯粹的“追击转场”候选，而是真实的钩爪射击动作；`Ultimate` 也必须单独做，不能只复用普通攻击。
+
+## 制作任务
+
+完整时长均为剪辑后的建议范围。除标注已备首帧外，视频制作待开始。
+
+| 编号 | 动作 | 姿势、动作与触发 | 建议完整时长 | 循环 | 排期 |
+|---|---|---|---|---|---|
+| WY01 | 普通战斗待机 | 右手扛剑、左手持盾。脚底固定，轻微呼吸，衣摆随动，首尾运动方向连续。对应 `idle_loop`。 | 2–4 秒 | 是 | 第一批，首帧已备 |
+| WY02 | 普通大剑斩 | 由扛剑直接进入一次右手斩击，左手保留圆盾，反作用后回肩。斩击参考 `wylder_attack.png`。对应普通 `Attack`，默认等待 0.15 秒。 | 0.9–1.4 秒 | 否 | 第一批 |
+| WY03 | 举盾格挡 | 左手短促举小圆盾，右手持剑保持稳定，峰值参考 `wylder_block.png`。已有 `Block` 播放入口，卡牌触发映射待确认。 | 0.6–0.9 秒 | 否 | 第二批 |
+| WY04 | 受击 | 肩、躯干和膝盖快速卸力，再站稳回待机。参考 `wylder_hit.png`，对应 `Hit`。 | 0.7–1.0 秒 | 否 | 第二批 |
+| WY05 | 施法／能力 | 试做短促蓄势，保留剑与盾的持物关系，峰值可用于对齐现有能力表现。对应 `Cast`，默认等待 0.25 秒，具体用卡待核对。 | 1.0–1.5 秒 | 否 | 第二批 |
+| WY06 | 死亡／倒地 | 失去支撑后跪落，剑与盾的落点连续。以 `wylder_death.png` 为末态，保持末帧。对应 `Dead`。 | 1.9–2.5 秒 | 否 | 第二批 |
+| WY07 | 追击待机 | 双手同握一把剑，保留背盾，双脚稳定，动作首尾相接。追击能力存在时使用。 | 2–4 秒 | 是 | 追击组，首帧已备 |
+| WY08 | 追击双手斩 | 从追击待机起手，双手带动躯干完成一次切斩，参考已批准的 v12 `wylder_pursuit_attack.png`。追击状态下触发 `Attack`，收招时按实际状态回普通或追击待机。 | 1.0–1.5 秒 | 否 | 追击组 |
+| WY09 | 商店待机 | 用 `wylder_merchant.png` 的站姿，保留背负装备，呼吸和手部低幅活动。 | 3–5 秒 | 是 | 后续 |
+| WY10 | 篝火待机 | 用 `wylder_rest_site.png` 的坐姿，保留石座、地面剑盾和接触点，头肩小幅活动。 | 4–6 秒 | 是 | 后续 |
+| WY11 | 钩爪射击 `ClawShot` | 真实触发：左前臂钩爪装置发射/回收，身体沿钩索方向配重；对应 `WylderAnimationPatch.PlayImmediate(..., "ClawShot")`。 | 0.8–1.2 秒 | 否 | 必做；当前只有静态姿势图 |
+| WY12 | 绝招 `Ultimate` | 真实触发：左前臂装置瞄准/后坐，铁桩与爆炸由独立 VFX 表现；对应 `QueueAttackMotion(..., "Ultimate")`。 | 1.0–1.5 秒 | 否 | 必做；当前只有静态姿势图 |
+
+低血量待机、放松待机、独立复活、翻滚及其他战技专用动作暂缓。战斗放松可先沿用当前待机，复活先验证现有 `Revive` 恢复入口。
+
+## 接入前核对
+
+- 正式战斗入口为 `WylderAssetPatch.CreateVisuals` → `wylder_combat_visuals.tscn` → `wylder_combat_rig.tscn` 与 `.gd`。当前已接的战斗表现使用姿势贴图、变换与切图。普通和追击状态共用攻击触发，在起手时锁定使用的攻击贴图。
+- `Wylder.cs` 的 0.15 秒与 0.25 秒是默认命令等待。逐动作另外记录源视频时长、序列时长、释放或峰值帧、命令等待及正常／快速／瞬时的实际播放时长。斩击先对齐释放，再核对刀光、音效和伤害。追击消耗、连续攻击、受击打断、死亡锁定和复活恢复均需预览。
+- `WylderDefend` 当前直接调用 `GainBlock`，源码中未找到 `WylderAnimationPatch.PlayBlock` 的调用点。先确认格挡应在哪条命令触发。
+- 战斗贴图脚底边界统一为源画布 `y=1550`（边界坐标）。普通待机全非透明高 `1360 px`，乘 Sprite 缩放 `0.22` 和外层缩放 `1.0`，静态估算可见高 `299.2 px`。追击待机的剑尖抬高到 `y=69`，画幅应容纳剑尖，体型校准仍以脚底和身体为准。商店与篝火各自使用场景锚点。
+- 身体素材保留人物与随身装备。刀光、钩索及其他战斗特效独立对齐。先验证首帧、峰值帧与末帧的透明边缘，再进入序列制作。
+
+## 来源索引
+
+- 身份与审批记录见来源提交的 `design/wylder/追踪者视觉校准.md`、`形象贴图武器复核.md`、`approved_combat_assets.json` 和 `PURSUIT_ATTACK_V12_GEOMETRY.md`。
+- 透明原图 `wylder_combat_character.png` 的 SHA-256 为 `915c156617fa52c51eba4836250b3f85e1a07f076097a6a73ca681bfda48867d`。
+- 透明原图 `wylder_pursuit_idle.png` 的 SHA-256 为 `ff1b19fd8db278ec1bfe70ab31ff0c8bac8a56a3ac9ac992e5f8e13c80d3c9ef`。
