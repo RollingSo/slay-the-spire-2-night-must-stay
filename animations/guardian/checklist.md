@@ -1,6 +1,6 @@
 # 神鹰／守护者（Guardian）动画制作清单
 
-状态：**核心战斗动画 7 个 `.res` 已打包；篝火动态 `.res` 已接入场景；商店待机待构图参考；盾戳与 Steel Guard/翼风暂缓。**
+状态：**技能动画资产覆盖完成：7 个战斗动作 + 篝火动态均已打包；商店动态待参考；运行时序列接入未完成。**
 
 - 真实战斗动作：**7 个**（idle、attack、cast_brace、power_activate、hurt、death、guard_counter）；场景与扩展动作按实际触发另算
 - 衍生动画：**0 个**（守护者没有家人/召唤动作）
@@ -85,7 +85,23 @@
 | GD11 盾戳 | 未完成；无独立触发，当前视频还有盾牌让位问题 |
 | 盾正面瑕疵 | GD03/04/05/07/11 已登记为已知瑕疵，先保留不重做 |
 
-**结论：篝火已完成；核心 7 个战斗动作仍只有独立 `.res`，未接入序列 rig；商店、盾戳、Steel Guard/翼风仍未完成。**
+**结论：篝火已完成；核心 7 个战斗动作仍只有独立 `.res`，未接入序列 rig；商店动态仍未完成。技能素材覆盖可判为完成，游戏内整体不能判为完成。**
+
+## 技能触发覆盖核对（2026-11-15 最终）
+
+| 游戏触发 / 场景 | 使用它的内容 | 对应资产 | 状态 |
+|---|---|---|---|
+| `Idle` / `Relaxed` / `Revive` | 待机、复活 | `combat_idle.res` | 已有 |
+| `Attack` | 所有 Attack 卡，含 ShieldPoke/ShieldedThrust、Whirlwind 攻击 | `halberd_attack.res` | 已有 |
+| `Cast` | Skill/Power 的施法、防御架势 | `cast_brace.res` | 已有 |
+| `PowerUp` | Power/能力牌 | `power_activate.res` | 已有素材；映射未接 |
+| `Hit` | 实际扣血受击 | `hurt.res` | 已有 |
+| `Dead` | 死亡 | `death.res` | 已有 |
+| `GuardCounter` | `GuardCounterPower` 显式触发 | `guard_counter.res` | 已有 |
+| 篝火场景 | `NRestSiteCharacter` 的 Guardian 替换 | `camp_idle.res` | 已接入场景 |
+| 商店场景 | `NMerchantCharacter` 的 Guardian 替换 | 仍用静态 merchant 场景 | 动态未完成 |
+
+结论：**技能动画的素材覆盖已经完整**。Steel Guard、Whirlwind/翼风、ShieldPoke 目前没有独立的动画触发；它们分别走 Cast/Attack/PowerUp，不需要再凭名字新增动作。
 ## 第一版主体动画
 
 | ID | 动作 | 英文动画名 | 用途 | 目标时长 | 循环 | 优先级 | 状态 |

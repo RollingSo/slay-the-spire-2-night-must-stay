@@ -382,5 +382,13 @@
     {
       "note": "No Guardian-specific .res exists yet; current runtime uses Ironclad placeholders."
     }
-  ]
+  ],
+  "completion": {
+    "skill_animation_assets": "complete",
+    "combat_asset_count": 7,
+    "camp_scene_animation": "complete",
+    "runtime_sequence_integration": "pending",
+    "merchant_dynamic_idle": "pending",
+    "note": "Skill trigger coverage is complete. Sequence .res assets are not wired into the combat rig yet; merchant dynamic idle remains blocked."
+  }
 }
