@@ -80,16 +80,33 @@
       "action": "cast_brace",
       "animation": "cast_brace",
       "file": "main/cast_brace.res",
-      "exists": false,
+      "exists": true,
       "priority": "P0",
       "target_seconds": [
         0.6,
         1.0
       ],
       "loop": false,
-      "status": "prompt_ready",
+      "status": "adopted_pending_integration",
       "trigger": "Cast",
-      "note": "Not a Guard trigger; used by Cast for defensive/skill cards."
+      "note": "Shield glow is baked; avoid double VFX.",
+      "frames": 24,
+      "fps": 24,
+      "seconds": 1.0,
+      "canvas": [
+        538,
+        639
+      ],
+      "anchor": [
+        241.722,
+        627.696
+      ],
+      "texture_visible_height": 616,
+      "actual_visible_height": 617,
+      "final_visible_height": 308.331,
+      "integration_scale": 0.4997,
+      "resource_bytes": 12918901,
+      "source_video": "GD-举盾防御.mp4"
     },
     {
       "id": "GD04",
