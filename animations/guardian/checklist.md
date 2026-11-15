@@ -4,7 +4,7 @@
 
 - 真实战斗动作：**7 个**（idle、attack、cast_brace、power_activate、hurt、death、guard_counter）；场景与扩展动作按实际触发另算
 - 衍生动画：**0 个**（守护者没有家人/召唤动作）
-- 当前已有 Guardian `.res`：**6 个**（GD01、GD02、GD03、GD04、GD05、GD12 均已采纳）
+- 当前已有 Guardian `.res`：**7 个**（GD01、GD02、GD03、GD04、GD05、GD07、GD12 均已采纳）
 - 正式素材目录：`animations/guardian/main/`
 - 预览目录：`animations/guardian/preview/`（只用于人工预览，不用于 Mod 接入或打包）
 - **方向规则（所有 Guardian 动画）**：2D 侧视，角色永远朝画面右侧，头/喙不转向镜头；攻击只在画面平面内，不做 3D 透视或转身。
@@ -39,7 +39,7 @@
 | GD05 | 死亡 | `death` | 单膝跪地，盾牌落地、长戟插地，末态保持 | 2.542s | 否 | P0 | 已采纳（用户确认接受开翼） |
 | GD06 | Steel Guard | `steel_guard` | 普通格挡中垫步、盾面送正、压低扎根 | 0.8–1.2s | 否 | P1 | 暂不制作（无独立触发，复用 Cast 架势） |
 | GD12 | 能力施放 | `power_activate` | 举长戟、刃部少量粒子，短促激活后回位 | 1.25s | 否 | P1 | 已采纳（用户接受开翼/偏亮粒子）；映射待序列 rig 接入 |
-| GD07 | 防御反击 | `guard_counter` | 盾挡 → 受击下沉 → 盾面发光 → 长戟前刺 → 收招 | 1.0–1.5s | 否 | P1 | 触发明确，提示词已备，待生成 |
+| GD07 | 防御反击 | `guard_counter` | 盾挡 → 受击下沉 → 盾面发光 → 长戟前刺 → 收招 | 1.042s | 否 | P1 | 已采纳（加速；翅膀/盾光保持源样） |
 | GD08 | 翼风/施法 | `wing_command` | 羽翼风压、增益/技能释放 | 1.0–1.8s | 否 | P1 | 暂不制作（无独立触发，复用 Cast/Attack） |
 | GD09 | 商店待机 | `merchant_idle` | 商店内动态循环：待确认构图参考 | 4–5s | 是 | P2 | 暂停：需要游戏内商店截图/默认商店图，当前孤立立绘不作首帧 |
 | GD10 | 篝火待机 | `camp_idle` | 篝火动态循环：坐姿呼吸、头肩微动 | 4–5s | 是 | P2 | 动态化提示词已备，待生成视频；静态场景暂留 |
@@ -305,7 +305,7 @@
 - 正式预览：`preview/guardian_power_activate.gif` / `.mp4` / `_keyframes.png`。
 
 
-**2026-11-15 审阅 `GD-防御反击.mp4`：动作顺序成立，但翅膀不合规。** 盾挡、下沉、盾面发光、长戟前刺、回位都成立；双翼从起手展开，盾光也比“短暂、明显”更亮更大。审阅 GIF：`preview/guardian_guard_counter_review.gif`；关键帧：`preview/guardian_guard_counter_review.png`。尚未打包。
+**2026-11-15 审阅 `GD-防御反击.mp4`：动作顺序成立，后按用户要求加速采纳。** 盾挡、下沉、盾面发光、长戟前刺、回位都成立；双翼从起手展开，盾光也比“短暂、明显”更亮更大。审阅 GIF：`preview/guardian_guard_counter_review.gif`；正式预览：`preview/guardian_guard_counter.gif`。已按起手压缩到 1.042 秒并做脚底对齐。
 
 ## GD07 防御反击（GuardCounter）提示词
 
@@ -377,3 +377,13 @@
 ```
 
 生成视频后再做循环裁剪、抠绿、`.res` 打包，并把对应 `.tscn` 的 `Sprite2D` 换成 SpriteFrames 播放器。当前静态场景暂不删除。
+
+## GD07 当前结果
+
+- 源：`GD-防御反击.mp4`；25 帧 / 24FPS / 1.0417 秒，非循环。
+- 重点压缩“盾挡 → 重心下沉 → 盾面发光”的起手段；长戟前刺紧跟。
+- 画布 1157×642，锚点 525.030,630.295；纹理可见高 616（实际 617），最终 308.331。
+- 接入总缩放约 0.4997；若挂在 `Visuals` 0.6703 下，局部约 0.745。
+- `.res` 约 15MB；独立复载通过；脚底已逐帧对齐到 631，消除 6px 滑动。
+- 已知：翅膀展开、盾光偏亮，保持源样；用户接受。
+- 正式预览：`preview/guardian_guard_counter.gif` / `.mp4` / `_keyframes.png`。

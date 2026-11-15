@@ -219,14 +219,33 @@
       "action": "guard_counter",
       "animation": "guard_counter",
       "file": "main/guard_counter.res",
-      "exists": false,
+      "exists": true,
       "priority": "P1",
       "target_seconds": [
         1.0,
         1.5
       ],
       "loop": false,
-      "status": "video_rejected_wings"
+      "status": "adopted_pending_integration",
+      "frames": 25,
+      "fps": 24,
+      "seconds": 1.0417,
+      "canvas": [
+        1157,
+        642
+      ],
+      "anchor": [
+        525.03,
+        630.295
+      ],
+      "texture_visible_height": 616,
+      "actual_visible_height": 617,
+      "final_visible_height": 308.331,
+      "integration_scale": 0.4997,
+      "resource_bytes": 15701710,
+      "source_video": "GD-防御反击.mp4",
+      "accepted_known_issue": "wings open; shield glow stronger than requested; user accepted",
+      "ground_aligned": true
     },
     {
       "id": "GD08",
