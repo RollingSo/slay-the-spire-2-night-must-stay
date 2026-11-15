@@ -87,7 +87,7 @@
         1.0
       ],
       "loop": false,
-      "status": "prompt_ready"
+      "status": "deferred_no_trigger"
     },
     {
       "id": "GD04",
