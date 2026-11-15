@@ -285,7 +285,7 @@
       "animation": "power_activate",
       "file": "main/power_activate.res",
       "exists": false,
-      "status": "prompt_ready",
+      "status": "video_rejected_wings",
       "trigger": "PowerUp",
       "note": "Guardian rig currently does not map PowerUp; add mapping before use."
     }
