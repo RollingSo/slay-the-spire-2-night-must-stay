@@ -166,6 +166,9 @@ IdleNormal  --Hit--> hurt_normal --> IdleNormal
 
 当前只生成过渡，不把这段当攻击动作；正式制作时再剪到约 0.35–0.5 秒，并保留首尾的稳定帧。
 
+
+**2026-11-15 WY01 视频审阅：** `ZZ-普通待机.mp4` 用于待机循环；已出整段审阅 GIF。正式资源再截 2–4 秒连续循环。
+
 ## WY01 普通战斗待机 提示词
 
 首帧：`preview/wylder_normal_idle_start_green.png`（main 最新普通运行图，2600×1700）。
