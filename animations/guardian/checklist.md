@@ -304,6 +304,9 @@
 - **映射未接：当前战斗场景仍是骨骼原型，`animations/guardian/main/*.res` 尚未接到序列播放器；`PowerUp → power_activate` 等序列 rig 接入时再加。**
 - 正式预览：`preview/guardian_power_activate.gif` / `.mp4` / `_keyframes.png`。
 
+
+**2026-11-15 审阅 `GD-防御反击.mp4`：动作顺序成立，但翅膀不合规。** 盾挡、下沉、盾面发光、长戟前刺、回位都成立；双翼从起手展开，盾光也比“短暂、明显”更亮更大。审阅 GIF：`preview/guardian_guard_counter_review.gif`；关键帧：`preview/guardian_guard_counter_review.png`。尚未打包。
+
 ## GD07 防御反击（GuardCounter）提示词
 
 参考首尾帧：`preview/guardian_attack_reference_green_square.png`（首帧和末帧都用同一张待机绿幕）。
