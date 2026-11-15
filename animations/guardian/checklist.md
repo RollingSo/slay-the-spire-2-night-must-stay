@@ -225,6 +225,9 @@
 - `.res` 约 11MB；独立复载通过，脚底 639 稳定，23 个唯一姿态。
 - 正式预览：`preview/guardian_hurt.gif` / `.mp4` / `_keyframes.png`。
 
+
+**2026-11-15 审阅 `GD-死亡.mp4`：不采用。** 从 f24 起双翼明显张开，f48 后保持展开到末帧；违反“残损翅膀全程锁定”的硬约束。单膝跪地、盾牌落地、长戟插地的末态基本成立，但翅膀连续性不可接受。需要重生成。审阅图：`preview/guardian_death_review.png`。
+
 ## GD05 死亡提示词（仅首帧，单膝跪地）
 
 参考首帧：`preview/guardian_attack_reference_green_square.png`（3072×3072，正方形绿幕）。
