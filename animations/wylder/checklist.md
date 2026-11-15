@@ -87,6 +87,45 @@
 5. **WY09 / WY10**：商店、篝火场景循环。
 6. **WY14**：仅异常移除追击时使用，非必需优先级最低。
 
+
+## 最终资源清单（方案 1）
+
+| 资源 | 内容 | 触发/用途 | 目标时长 |
+|---|---|---|---|
+| `idle_normal.res` | 普通待机循环 | Idle / Relaxed | 2–4s |
+| `idle_pursuit.res` | 追击待机循环 | Pursuit 状态 | 2–4s |
+| `enter_pursuit.res` | 普通→追击 | 获得追击 | 0.35–0.5s |
+| `attack.res` | 普通单手持盾大剑斩 | Attack / AttackSingle / AttackTwoHand | 0.9–1.4s |
+| `block.res` | 小圆盾格挡 | Block / BucklerBlock | 0.6–0.9s |
+| `hurt_normal.res` | 受击→普通 | Hit（无追击） | 0.7–1.0s |
+| `hurt_pursuit.res` | 受击→追击 | Hit（有追击） | 0.7–1.0s |
+| `cast.res` | 施法/能力蓄势 | Cast | 1.0–1.5s |
+| `death.res` | 死亡倒地 | Dead | 1.9–2.5s |
+| `claw_shot.res` | 钩爪射击 | ClawShot | 0.8–1.2s |
+| `ultimate.res` | 绝招瞄准/后坐 | Ultimate | 1.0–1.5s |
+| `merchant_idle.res` | 商店待机 | 商店场景 | 3–5s |
+| `camp_idle.res` | 篝火待机 | 篝火场景 | 4–6s |
+| `exit_pursuit.res` | 追击→普通（异常回退） | 非攻击/技能移除追击 | 0.35–0.5s |
+
+**WY08 不生成独立资源。** 追击攻击 = `enter_pursuit` 的短入口（2–3 帧）+ `attack.res`；`attack.res` 首尾都是普通单手持盾。
+
+**WY04 两套**：`hurt_normal` 与 `hurt_pursuit` 共用身体中段，只有结尾 2–3 帧分叉。
+
+## 接入状态机
+
+```text
+IdleNormal  --获得追击--> EnterPursuit --> IdlePursuit
+IdlePursuit --攻击/技能--> 3帧短入口 --> 共享动作 --> IdleNormal
+IdleNormal  --攻击/技能--> 共享动作 --> IdleNormal
+IdlePursuit --Hit--> hurt_pursuit --> IdlePursuit
+IdleNormal  --Hit--> hurt_normal --> IdleNormal
+```
+
+- 所有攻击/技能动作在资源内直接以普通单手持盾收尾，不运行时拼“追击→普通”。
+- `Hit` 按动作结束时的实际 `WylderPursuitPower` 选 `hurt_normal` 或 `hurt_pursuit`。
+- `Block` 若由消耗追击的技能牌触发则回普通；否则按当前状态。
+- 短入口必须在 Attack 0.15 秒等待内完成；若接缝明显，用 2–3 帧姿态插值/短暂 smear，不延长到 0.3 秒。
+
 ## 接入前核对
 
 - 正式战斗入口为 `WylderAssetPatch.CreateVisuals` → `wylder_combat_visuals.tscn` → `wylder_combat_rig.tscn` 与 `.gd`。当前已接的战斗表现使用姿势贴图、变换与切图。普通和追击状态共用攻击触发，在起手时锁定使用的攻击贴图。
