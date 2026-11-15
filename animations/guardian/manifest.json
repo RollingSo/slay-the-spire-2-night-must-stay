@@ -254,7 +254,7 @@
         8
       ],
       "loop": true,
-      "status": "implemented_static_scene"
+      "status": "video_prompt_ready"
     },
     {
       "id": "GD10",
@@ -268,7 +268,7 @@
         8
       ],
       "loop": true,
-      "status": "implemented_static_scene"
+      "status": "video_prompt_ready"
     },
     {
       "id": "GD11",
