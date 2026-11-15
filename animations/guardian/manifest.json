@@ -226,10 +226,10 @@
         1.5
       ],
       "loop": false,
-      "status": "revision_pending_speed",
-      "frames": 25,
+      "status": "adopted_pending_integration",
+      "frames": 31,
       "fps": 24,
-      "seconds": 1.0417,
+      "seconds": 1.2917,
       "canvas": [
         1157,
         642
@@ -242,10 +242,11 @@
       "actual_visible_height": 617,
       "final_visible_height": 308.331,
       "integration_scale": 0.4997,
-      "resource_bytes": 15701710,
+      "resource_bytes": 19648703,
       "source_video": "GD-防御反击.mp4",
       "accepted_known_issue": "wings open; shield glow stronger than requested; user accepted",
-      "ground_aligned": true
+      "ground_aligned": true,
+      "speed_note": "hybrid: fast block-to-glow, slower thrust/recovery"
     },
     {
       "id": "GD08",
