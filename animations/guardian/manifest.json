@@ -52,7 +52,7 @@
         1.5
       ],
       "loop": false,
-      "status": "candidate_pending_review",
+      "status": "adopted_pending_integration",
       "frames": 35,
       "fps": 24,
       "seconds": 1.4583,
@@ -87,7 +87,7 @@
         1.0
       ],
       "loop": false,
-      "status": "planned"
+      "status": "prompt_ready"
     },
     {
       "id": "GD04",
