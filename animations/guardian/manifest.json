@@ -290,14 +290,34 @@
       "action": "camp_idle",
       "animation": "camp_idle",
       "file": "main/camp_idle.res",
-      "exists": false,
+      "exists": true,
       "priority": "P2",
       "target_seconds": [
         4,
         8
       ],
       "loop": true,
-      "status": "video_reviewed_pending_pack"
+      "status": "adopted_scene_replaced",
+      "frames": 120,
+      "fps": 24,
+      "seconds": 5.0,
+      "canvas": [
+        480,
+        561
+      ],
+      "anchor": [
+        240.0,
+        550.0
+      ],
+      "texture_visible_height": 528,
+      "scene_scale": 1.099769,
+      "scene_position": [
+        63.866,
+        299.294
+      ],
+      "resource_bytes": 53539589,
+      "source_video": "GD-篝火待机.mp4",
+      "scene": "guardian_assets/rest_site/guardian_rest_site.tscn"
     },
     {
       "id": "GD11",

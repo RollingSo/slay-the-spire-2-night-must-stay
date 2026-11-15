@@ -1,10 +1,10 @@
 # 神鹰／守护者（Guardian）动画制作清单
 
-状态：**部分制作中：GD01 待机已打包，其余动作仍待制作。** 当前游戏内的守护者战斗、商店、营火仍复用铁甲战士资源；本清单定义第一版要制作的动画范围。
+状态：**核心战斗动画 7 个 `.res` 已打包；篝火动态 `.res` 已接入场景；商店待机待构图参考；盾戳与 Steel Guard/翼风暂缓。**
 
 - 真实战斗动作：**7 个**（idle、attack、cast_brace、power_activate、hurt、death、guard_counter）；场景与扩展动作按实际触发另算
 - 衍生动画：**0 个**（守护者没有家人/召唤动作）
-- 当前已有 Guardian `.res`：**7 个**；其中 **5 个盾正面不符神鹰盾规范、需重做**（GD03、GD04、GD05、GD07、GD11）。
+- 当前已有 Guardian `.res`：**8 个**；其中 GD03/04/05/07 的盾正面有已知瑕疵（先保留），GD11 仍是无独立触发的候选。
 - 正式素材目录：`animations/guardian/main/`
 - 预览目录：`animations/guardian/preview/`（只用于人工预览，不用于 Mod 接入或打包）
 - **方向规则（所有 Guardian 动画）**：2D 侧视，角色永远朝画面右侧，头/喙不转向镜头；攻击只在画面平面内，不做 3D 透视或转身。
@@ -79,13 +79,13 @@
 | 核心战斗动作 GD01/02/03/04/05/07/12 | 7/7 `.res` 已打包；GD01 仍标 `packed_pending_integration`，其余为 accepted/known flaw |
 | 序列资源接入 | **未完成**。当前 `guardian_combat_visuals.tscn` 仍用骨骼原型，`animations/guardian/main/*.res` 还没接到序列播放器；`PowerUp → power_activate` 映射也待接 |
 | GD09 商店待机 | 未完成；`blocked_need_shop_reference` |
-| GD10 篝火待机 | 视频已收到并做过审阅 GIF；**没有 `.res`，也没有替换场景** |
+| GD10 篝火待机 | **已完成**：120 帧 / 5 秒循环 `.res`，`guardian_rest_site.tscn` 已改为 AnimatedSprite2D |
 | GD06 Steel Guard | 未制作；无独立触发，暂定复用 Cast 架势 |
 | GD08 翼风/施法 | 未制作；无独立触发，暂定复用 Cast/Attack |
 | GD11 盾戳 | 未完成；无独立触发，当前视频还有盾牌让位问题 |
 | 盾正面瑕疵 | GD03/04/05/07/11 已登记为已知瑕疵，先保留不重做 |
 
-**结论：不能算“除了商店都好了”。** 核心 7 个动作有 `.res`，但未接入游戏；篝火只有预览，盾戳/Steel Guard/翼风还没完成。
+**结论：篝火已完成；核心 7 个战斗动作仍只有独立 `.res`，未接入序列 rig；商店、盾戳、Steel Guard/翼风仍未完成。**
 ## 第一版主体动画
 
 | ID | 动作 | 英文动画名 | 用途 | 目标时长 | 循环 | 优先级 | 状态 |
@@ -100,7 +100,7 @@
 | GD07 | 防御反击 | `guard_counter` | 盾挡 → 受击下沉 → 盾面发光 → 长戟前刺 → 收招 | 1.292s | 否 | P1 | 已保留；盾正面有瑕疵（完整盾） |
 | GD08 | 翼风/施法 | `wing_command` | 羽翼风压、增益/技能释放 | 1.0–1.8s | 否 | P1 | 暂不制作（无独立触发，复用 Cast/Attack） |
 | GD09 | 商店待机 | `merchant_idle` | 商店内动态循环：待确认构图参考 | 4–5s | 是 | P2 | 暂停：需要游戏内商店截图/默认商店图，当前孤立立绘不作首帧 |
-| GD10 | 篝火待机 | `camp_idle` | 篝火动态循环：坐姿呼吸、头肩微动 | 4–5s | 是 | P2 | 视频已收到并出 GIF；尚未打包/接入 |
+| GD10 | 篝火待机 | `camp_idle` | 篝火动态循环：坐姿呼吸、头肩微动 | 5.0s | 是 | P2 | 已采纳；`.res` 已打包，场景已替换 |
 
 ## 可选，不计入第一版
 
@@ -119,7 +119,7 @@
 3. **GD05 死亡 `death`**：已采纳，标准 `Dead` 触发。
 4. **GD12 能力施放 `power_activate`**：`PowerUp` 触发；需补 Guardian rig 的 `PowerUp` 映射。
 5. **GD07 防御反击 `guard_counter`**：由 `GuardCounterPower` 显式触发。
-6. **暂缓**：GD06 Steel Guard、GD08 翼风/施法、GD09 商店、GD10 篝火；当前没有独立触发或仍走铁甲战士场景。
+6. **暂缓**：GD06 Steel Guard、GD08 翼风/施法、GD09 商店；当前没有独立触发或仍走铁甲战士场景。
 
 ## 动作约束
 
@@ -388,3 +388,12 @@
 - `.res` 约 16MB；独立复载通过；脚底逐帧对齐到 631。
 - 已知：翅膀展开、盾光偏亮，保持源样；用户接受。
 - 正式预览：`preview/guardian_guard_counter.gif` / `.mp4` / `_keyframes.png`。
+
+## GD10 当前结果
+
+- 源：`GD-篝火待机.mp4`；120 帧 / 24FPS / 5.0 秒循环。
+- 画布 480×561，锚点 240,550；纹理可见高 528；场景缩放 1.099769，位置 63.866,299.294。
+- `guardian_assets/rest_site/guardian_rest_site.tscn` 的静态 `Sprite2D` 已替换为 `AnimatedSprite2D`，播放 `camp_idle`。
+- 保留 `AnimationPlayer` 的空 `idle` 轨道，兼容现有 `GuardianAssetPatch` 的 `Play("idle")` 调用；翻转逻辑不变。
+- `.res` 约 51MB；独立复载通过，场景加载测试通过。
+- 正式预览：`preview/guardian_camp_idle.gif` / `.mp4` / `_keyframes.png`。
