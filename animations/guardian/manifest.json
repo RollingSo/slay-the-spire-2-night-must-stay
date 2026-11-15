@@ -278,6 +278,16 @@
       "exists": false,
       "status": "prompt_ready_no_trigger",
       "note": "ShieldPoke/ShieldedThrust currently use generic Attack; needs card-specific mapping."
+    },
+    {
+      "id": "GD12",
+      "action": "power_activate",
+      "animation": "power_activate",
+      "file": "main/power_activate.res",
+      "exists": false,
+      "status": "prompt_ready",
+      "trigger": "PowerUp",
+      "note": "Guardian rig currently does not map PowerUp; add mapping before use."
     }
   ],
   "optional": [
