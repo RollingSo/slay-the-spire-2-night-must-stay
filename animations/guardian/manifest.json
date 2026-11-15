@@ -152,14 +152,36 @@
       "action": "death",
       "animation": "death",
       "file": "main/death.res",
-      "exists": false,
+      "exists": true,
       "priority": "P0",
       "target_seconds": [
         1.9,
         2.5
       ],
       "loop": false,
-      "status": "video_rejected_wings"
+      "status": "adopted_pending_integration",
+      "frames": 61,
+      "fps": 24,
+      "seconds": 2.5417,
+      "canvas": [
+        670,
+        831
+      ],
+      "anchor": [
+        364.294,
+        819.176
+      ],
+      "texture_visible_height": 616,
+      "actual_visible_height": 617,
+      "final_visible_height": 308.331,
+      "integration_scale": 0.4997,
+      "resource_bytes": 31643060,
+      "source_video": "GD-死亡.mp4",
+      "source_range_frames": [
+        0,
+        60
+      ],
+      "accepted_known_issue": "wings open from f24 to end; user accepted"
     },
     {
       "id": "GD06",
