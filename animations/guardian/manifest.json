@@ -252,6 +252,15 @@
       ],
       "loop": true,
       "status": "deferred_no_combat_trigger"
+    },
+    {
+      "id": "GD11",
+      "action": "shield_poke",
+      "animation": "shield_poke",
+      "file": null,
+      "exists": false,
+      "status": "prompt_ready_no_trigger",
+      "note": "ShieldPoke/ShieldedThrust currently use generic Attack; needs card-specific mapping."
     }
   ],
   "optional": [
