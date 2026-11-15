@@ -41,8 +41,8 @@
 | GD12 | 能力施放 | `power_activate` | 举长戟、刃部少量粒子，短促激活后回位 | 1.25s | 否 | P1 | 已采纳（用户接受开翼/偏亮粒子）；映射待序列 rig 接入 |
 | GD07 | 防御反击 | `guard_counter` | 盾挡 → 受击下沉 → 盾面发光 → 长戟前刺 → 收招 | 1.0–1.5s | 否 | P1 | 触发明确，提示词已备，待生成 |
 | GD08 | 翼风/施法 | `wing_command` | 羽翼风压、增益/技能释放 | 1.0–1.8s | 否 | P1 | 暂不制作（无独立触发，复用 Cast/Attack） |
-| GD09 | 商店待机 | `merchant_idle` | 商店正式姿态循环 | 4–8s | 是 | P2 | 暂不制作（当前非战斗触发） |
-| GD10 | 篝火待机 | `camp_idle` | 营火坐姿/低幅动作循环 | 4–8s | 是 | P2 | 暂不制作（当前非战斗触发） |
+| GD09 | 商店待机 | `merchant_idle` | 商店场景静态图 + 程序呼吸 | 2.4s | 是 | P2 | 已有实现（`guardian_merchant.tscn`），非战斗 `.res` |
+| GD10 | 篝火待机 | `camp_idle` | 篝火场景静态坐姿 + 程序呼吸 | 3.2s | 是 | P2 | 已有实现（`guardian_rest_site.tscn`），非战斗 `.res` |
 
 ## 可选，不计入第一版
 
@@ -329,3 +329,16 @@
 ```
 
 生成视频后再从视频抽帧做 `.res`；这一条由 `GuardCounter` 显式触发，不要和普通盾戳共用素材。
+
+## 商店/篝火现状（2026-11-15 核查）
+
+这两个不是缺失的战斗动作，当前已经有可运行的场景待机：
+
+| 场景 | 实现 | 时长 | 现状 |
+|---|---|---|---|
+| 商店 | `guardian_assets/merchant/guardian_merchant.tscn`：`guardian_merchant.png` 静态图 + `relaxed_loop` | 2.4s | `GuardianAssetPatch` 替换商人视觉并自动播放 |
+| 篝火 | `guardian_assets/rest_site/guardian_rest_site.tscn`：`guardian_rest_site.png` 静态坐姿 + `idle` | 3.2s | `NRestSiteCharacter.Create` 替换 Spine，支持翻转 |
+
+两者都是**静态图 + 程序位移/旋转的轻微呼吸**，不是逐帧 `.res`，也没有战斗触发。它们已经能正常出现在商店/篝火，不需要为了“有动画”再花视频额度。
+
+如果以后要升级成逐帧循环，需要：\n1. 各生成一段 5 秒待机视频（首尾姿态接近）；\n2. 剪成 2–4 秒循环 `.res`；\n3. 把对应 `.tscn` 的 `Sprite2D` 换成 SpriteFrames 播放器，再保留现有的替换和翻转逻辑。\n\n优先级建议：先不动，等实际游戏里觉得呼吸太假或比例不对再升级。

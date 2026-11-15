@@ -254,7 +254,7 @@
         8
       ],
       "loop": true,
-      "status": "deferred_no_combat_trigger"
+      "status": "implemented_static_scene"
     },
     {
       "id": "GD10",
@@ -268,7 +268,7 @@
         8
       ],
       "loop": true,
-      "status": "deferred_no_combat_trigger"
+      "status": "implemented_static_scene"
     },
     {
       "id": "GD11",
