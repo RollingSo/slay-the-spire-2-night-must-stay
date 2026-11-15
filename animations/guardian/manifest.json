@@ -45,14 +45,35 @@
       "action": "halberd_attack",
       "animation": "halberd_attack",
       "file": "main/halberd_attack.res",
-      "exists": false,
+      "exists": true,
       "priority": "P0",
       "target_seconds": [
         0.9,
         1.5
       ],
       "loop": false,
-      "status": "planned"
+      "status": "candidate_pending_review",
+      "frames": 35,
+      "fps": 24,
+      "seconds": 1.4583,
+      "canvas": [
+        988,
+        910
+      ],
+      "anchor": [
+        367.781,
+        898.008
+      ],
+      "texture_visible_height": 616,
+      "actual_visible_height": 617,
+      "final_visible_height": 308.331,
+      "integration_scale": 0.4997,
+      "resource_bytes": 17200094,
+      "source_video": "GD-截击-2.mp4",
+      "omitted_source_frames": [
+        57,
+        59
+      ]
     },
     {
       "id": "GD03",
