@@ -101,6 +101,9 @@
 - 透明原图 `wylder_combat_character.png` 的 SHA-256 为 `915c156617fa52c51eba4836250b3f85e1a07f076097a6a73ca681bfda48867d`。
 - 透明原图 `wylder_pursuit_idle.png` 的 SHA-256 为 `ff1b19fd8db278ec1bfe70ab31ff0c8bac8a56a3ac9ac992e5f8e13c80d3c9ef`。
 
+
+**2026-11-15 WY13 视频审阅：** `ZZ-进追击.mp4` 首尾姿态和盾/剑关系成立；按整段 1.2× 出预览（104 帧，约 4.16 秒），尚未剪成最终 0.35–0.5 秒。
+
 ## WY13 普通→追击 过渡提示词
 
 - 首帧：`preview/wylder_normal_to_pursuit_start_green.png`（普通待机：右手扛剑、左手小圆盾）
