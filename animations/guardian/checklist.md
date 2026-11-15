@@ -326,3 +326,5 @@
 ```
 
 生成视频后再从视频抽帧做 `.res`；当前先补 prompt，代码层还需把 `PowerUp` 映射到 `power_activate`。
+
+**2026-11-15 审阅 `GD-盾戳-待定.mp4`：动作可用但翅膀不合规。** 盾后缩身、长戟前刺、回位都成立；但双翼从起手开始展开，违反残损翅膀锁定。审阅 GIF：`preview/guardian_shield_poke_review.gif`；关键帧：`preview/guardian_shield_poke_review.png`。尚未打包。

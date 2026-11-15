@@ -276,7 +276,7 @@
       "animation": "shield_poke",
       "file": null,
       "exists": false,
-      "status": "prompt_ready_no_trigger",
+      "status": "video_rejected_wings",
       "note": "ShieldPoke/ShieldedThrust currently use generic Attack; needs card-specific mapping."
     },
     {
