@@ -254,7 +254,8 @@
         8
       ],
       "loop": true,
-      "status": "video_prompt_ready"
+      "status": "blocked_need_shop_reference",
+      "note": "Do not use isolated merchant cutout as shop first frame; need in-game shop composition reference."
     },
     {
       "id": "GD10",
