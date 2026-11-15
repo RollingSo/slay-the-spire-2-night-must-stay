@@ -1,0 +1,35 @@
+{
+  "character": "wylder",
+  "layout": "animations/wylder",
+  "assets": [
+    {
+      "code": "WY07",
+      "action": "idle_pursuit",
+      "file": "main/idle_pursuit.res",
+      "animation": "idle_pursuit",
+      "frames": 96,
+      "fps": 24,
+      "loop": true,
+      "seconds": 4.0,
+      "canvas": [
+        596,
+        766
+      ],
+      "anchor": [
+        301.0,
+        757.0
+      ],
+      "texture_visible_height": 736,
+      "existing_runtime_visible_height": 325.16,
+      "integration_scale": 0.4418,
+      "status": "packed_pending_integration",
+      "source_video": "ZZ-追击待机.mp4",
+      "source_frames": [
+        0,
+        95
+      ],
+      "resource_bytes": 40961974,
+      "note": "Wylder still uses static pose rig; sequence player integration pending."
+    }
+  ]
+}
