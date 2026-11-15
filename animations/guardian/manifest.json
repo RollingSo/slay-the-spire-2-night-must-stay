@@ -87,7 +87,7 @@
         1.0
       ],
       "loop": false,
-      "status": "adopted_pending_integration",
+      "status": "redo_needed_shield_front",
       "trigger": "Cast",
       "note": "Shield glow is baked; avoid double VFX.",
       "frames": 24,
@@ -106,7 +106,8 @@
       "final_visible_height": 308.331,
       "integration_scale": 0.4997,
       "resource_bytes": 12918901,
-      "source_video": "GD-举盾防御.mp4"
+      "source_video": "GD-举盾防御.mp4",
+      "shield_front_ok": false
     },
     {
       "id": "GD04",
@@ -120,7 +121,7 @@
         1.0
       ],
       "loop": false,
-      "status": "adopted_pending_integration",
+      "status": "redo_needed_shield_front",
       "frames": 23,
       "fps": 24,
       "seconds": 0.9583,
@@ -162,7 +163,8 @@
         96,
         108,
         119
-      ]
+      ],
+      "shield_front_ok": false
     },
     {
       "id": "GD05",
@@ -176,7 +178,7 @@
         2.5
       ],
       "loop": false,
-      "status": "adopted_pending_integration",
+      "status": "redo_needed_shield_front",
       "frames": 61,
       "fps": 24,
       "seconds": 2.5417,
@@ -198,7 +200,8 @@
         0,
         60
       ],
-      "accepted_known_issue": "wings open from f24 to end; user accepted"
+      "accepted_known_issue": "wings open from f24 to end; user accepted",
+      "shield_front_ok": false
     },
     {
       "id": "GD06",
@@ -226,7 +229,7 @@
         1.5
       ],
       "loop": false,
-      "status": "adopted_pending_integration",
+      "status": "redo_needed_shield_front",
       "frames": 31,
       "fps": 24,
       "seconds": 1.2917,
@@ -246,7 +249,8 @@
       "source_video": "GD-防御反击.mp4",
       "accepted_known_issue": "wings open; shield glow stronger than requested; user accepted",
       "ground_aligned": true,
-      "speed_note": "hybrid: fast block-to-glow, slower thrust/recovery"
+      "speed_note": "hybrid: fast block-to-glow, slower thrust/recovery",
+      "shield_front_ok": false
     },
     {
       "id": "GD08",
@@ -297,8 +301,9 @@
       "animation": "shield_poke",
       "file": null,
       "exists": false,
-      "status": "video_rejected_wings",
-      "note": "ShieldPoke/ShieldedThrust currently use generic Attack; needs card-specific mapping."
+      "status": "redo_needed_shield_front",
+      "note": "ShieldPoke/ShieldedThrust currently use generic Attack; needs card-specific mapping.",
+      "shield_front_ok": false
     },
     {
       "id": "GD12",
