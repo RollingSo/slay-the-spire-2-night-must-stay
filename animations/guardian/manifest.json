@@ -15,7 +15,7 @@
         4
       ],
       "loop": true,
-      "status": "packed_pending_integration",
+      "status": "accepted_pending_integration",
       "frames": 48,
       "fps": 24,
       "seconds": 2.0417,
@@ -297,7 +297,7 @@
         8
       ],
       "loop": true,
-      "status": "video_prompt_ready"
+      "status": "video_reviewed_pending_pack"
     },
     {
       "id": "GD11",
