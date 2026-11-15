@@ -1,8 +1,11 @@
 # 追踪者（Wylder）动画制作清单
 
-2026-11-09 · 素材来源 [codex/wylder-development-20261018 @ 67021f3](https://github.com/RollingSo/slay-the-spire-2-night-must-stay/commit/67021f3e4106d457ffc293919dd94a8fd549b2ff)
+2026-11-15 · 首尾帧来源：main `9b75c2e` 的最新运行图 `wylder_assets/combat_rig/wylder_pursuit_idle.png`（SHA-256 `acc291d2…`）；旧开发分支 `67021f3` 的追击图已废弃
 
 普通与追击状态各有一张绿幕首帧。第一批建议先做 WY01 普通待机和 WY02 普通大剑斩，确认扛剑姿势、脚底与剑尖的活动空间，再做追击和其余动作。当前进度为素材准备。
+
+
+**2026-11-15 追击首帧修正：** 旧绿幕图来自开发分支 `67021f3` 的运行图（`ff1b19…`），不是 main 最新版。已用 main `9b75c2e` 的 `wylder_pursuit_idle.png`（`acc291d2…`）重做追击待机末帧和普通→追击末帧；柄尾已改为分叉轮廓，姿态/画布保持不变。
 
 ## 首帧与姿势参考
 
