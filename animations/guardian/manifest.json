@@ -284,10 +284,30 @@
       "action": "power_activate",
       "animation": "power_activate",
       "file": "main/power_activate.res",
-      "exists": false,
-      "status": "video_rejected_wings",
+      "exists": true,
+      "status": "adopted_pending_integration",
       "trigger": "PowerUp",
-      "note": "Guardian rig currently does not map PowerUp; add mapping before use."
+      "note": "Guardian rig currently does not map PowerUp; add mapping before use.",
+      "frames": 30,
+      "fps": 24,
+      "loop": false,
+      "seconds": 1.25,
+      "canvas": [
+        707,
+        843
+      ],
+      "anchor": [
+        293.705,
+        831.73
+      ],
+      "texture_visible_height": 616,
+      "actual_visible_height": 617,
+      "final_visible_height": 308.331,
+      "integration_scale": 0.4997,
+      "resource_bytes": 18821307,
+      "source_video": "GD-能力.mp4",
+      "accepted_known_issue": "wings open from start; particles brighter than requested; user accepted",
+      "mapping_status": "pending_sequence_rig"
     }
   ],
   "optional": [
