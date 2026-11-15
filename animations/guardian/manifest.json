@@ -282,8 +282,8 @@
         8
       ],
       "loop": true,
-      "status": "blocked_need_shop_reference",
-      "note": "Do not use isolated merchant cutout as shop first frame; need in-game shop composition reference."
+      "status": "waived_out_of_scope",
+      "note": "User deferred dynamic merchant idle; keep static fallback."
     },
     {
       "id": "GD10",
@@ -387,8 +387,9 @@
     "skill_animation_assets": "complete",
     "combat_asset_count": 7,
     "camp_scene_animation": "complete",
+    "merchant_dynamic_idle": "waived_out_of_scope",
     "runtime_sequence_integration": "pending",
-    "merchant_dynamic_idle": "pending",
-    "note": "Skill trigger coverage is complete. Sequence .res assets are not wired into the combat rig yet; merchant dynamic idle remains blocked."
+    "animation_production_status": "complete",
+    "in_game_integration_status": "pending"
   }
 }
