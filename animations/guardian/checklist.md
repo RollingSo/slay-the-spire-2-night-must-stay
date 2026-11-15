@@ -2,12 +2,30 @@
 
 状态：**部分制作中：GD01 待机已打包，其余动作仍待制作。** 当前游戏内的守护者战斗、商店、营火仍复用铁甲战士资源；本清单定义第一版要制作的动画范围。
 
-- 主体动画：**9 个**（GD03 普通格挡暂不制作；当前没有独立 Guard 触发）
+- 真实战斗动作：**6 个**（idle、attack、cast_brace、hurt、death、guard_counter）；场景与扩展动作按实际触发另算
 - 衍生动画：**0 个**（守护者没有家人/召唤动作）
 - 当前已有 Guardian `.res`：**3 个**（GD01、GD02、GD04 均已采纳）
 - 正式素材目录：`animations/guardian/main/`
 - 预览目录：`animations/guardian/preview/`（只用于人工预览，不用于 Mod 接入或打包）
 - **方向规则（所有 Guardian 动画）**：2D 侧视，角色永远朝画面右侧，头/喙不转向镜头；攻击只在画面平面内，不做 3D 透视或转身。
+
+
+## 触发审计（2026-11-15）
+
+代码证据：`src/Core/Patches/GuardianAnimationPatch.cs` 把 `NCreature.SetAnimationTrigger` 转发给 `play_trigger`；`GuardCounterPower` 显式调用 `PlayGuardCounter`。原型 `guardian_skeleton_prototype.gd` 的映射：
+
+| 游戏触发 | 原型动画 | 实际用途 | 状态 |
+|---|---|---|---|
+| `Idle` / `Relaxed` / `Revive` | `idle_loop` | 待机、复活回待机 | GD01 已采纳 |
+| `Attack` | `attack` | Attack 卡共用 | GD02 已采纳 |
+| `Cast` | `guard` → 现命名 `cast_brace` | Skill/Power 的防御/施法身体动作 | GD03 待生成 |
+| `Hit` | `hit` | 实际扣血时 | GD04 已采纳 |
+| `Dead` | `death` | 死亡 | GD05 待制作 |
+| `GuardCounter` | `counter_attack` | `GuardCounterPower` 显式触发 | GD07 待制作 |
+| `Guard` / `SteelGuard` / `WingCommand` | 无 | 当前没有独立触发 | 暂缓/复用 |
+| Merchant / RestSite | 无（当前指向铁甲战士场景） | 非战斗场景 | 暂缓 |
+
+结论：第一版只做 **6 个真实战斗动作**，不再做“普通格挡”和“受击”两套高重合动作；`Cast` 用防御架势，`Hit` 用小幅受击。
 
 ## 第一版主体动画
 
@@ -15,14 +33,14 @@
 |---|---|---|---|---|---:|---|---|
 | GD01 | 战斗待机 | `combat_idle` | 持盾、长戟、羽翼低幅呼吸；2s 往返循环 | 2.04s | 是 | P0 | 已选 2s，`.res` 已打包，待接入 |
 | GD02 | 长戟重击 | `halberd_attack` | 普通攻击/重攻击共用身体动作，早释放、有反作用 | 1.458s | 否 | P0 | 已采纳 v07，`.res` 已打包，待接入 |
-| GD03 | 普通格挡 | `guard` | 举盾建立安全平面，身体压入盾后 | 0.6–1.0s | 否 | P0 | 暂不制作（无独立 Guard 触发） |
+| GD03 | Cast 防御架势 | `cast_brace` | 盾后小幅缩身、重心下沉；由 Cast 使用，不是独立 Guard | 0.6–1.0s | 否 | P0 | Cast 触发，提示词已备，待生成 |
 | GD04 | 受击 | `hurt` | 身体小幅缩到盾后、重心下沉，再恢复 | 0.958s | 否 | P0 | 已采纳 v01，`.res` 已打包，待接入 |
 | GD05 | 死亡 | `death` | 盾/长戟落地，末态保持 | 1.9–2.5s | 否 | P0 | 待制作 |
-| GD06 | Steel Guard | `steel_guard` | 普通格挡中垫步、盾面送正、压低扎根 | 0.8–1.2s | 否 | P1 | 待制作 |
+| GD06 | Steel Guard | `steel_guard` | 普通格挡中垫步、盾面送正、压低扎根 | 0.8–1.2s | 否 | P1 | 暂不制作（无独立触发，复用 Cast 架势） |
 | GD07 | 防御反击 | `guard_counter` | 盾吸收 → 盾后短冲 → 长戟重击 | 1.0–1.5s | 否 | P1 | 待制作 |
-| GD08 | 翼风/施法 | `wing_command` | 羽翼风压、增益/技能释放 | 1.0–1.8s | 否 | P1 | 待制作 |
-| GD09 | 商店待机 | `merchant_idle` | 商店正式姿态循环 | 4–8s | 是 | P2 | 待制作 |
-| GD10 | 篝火待机 | `camp_idle` | 营火坐姿/低幅动作循环 | 4–8s | 是 | P2 | 待制作 |
+| GD08 | 翼风/施法 | `wing_command` | 羽翼风压、增益/技能释放 | 1.0–1.8s | 否 | P1 | 暂不制作（无独立触发，复用 Cast/Attack） |
+| GD09 | 商店待机 | `merchant_idle` | 商店正式姿态循环 | 4–8s | 是 | P2 | 暂不制作（当前非战斗触发） |
+| GD10 | 篝火待机 | `camp_idle` | 营火坐姿/低幅动作循环 | 4–8s | 是 | P2 | 暂不制作（当前非战斗触发） |
 
 ## 可选，不计入第一版
 
@@ -34,12 +52,13 @@
 
 如果把普通格挡与 Steel Guard 合并，可压到 9 个；如果把防御反击拆成“格挡吸收”和“反击”两段，可能到 11 个。
 
-## 制作顺序
+## 制作顺序（按真实触发）
 
-1. **GD01 战斗待机 + GD02 长戟重击 + GD03 普通格挡**：先验证体型、盾牌、长戟轴线和羽翼剪影。
-2. **GD04 受击 + GD05 死亡**：补齐战斗闭环。
-3. **GD06 Steel Guard + GD07 防御反击 + GD08 翼风/施法**：补守护者机制动作。
-4. **GD09 商店待机 + GD10 篝火待机**：补场景动作。
+1. **已采纳**：GD01 战斗待机、GD02 长戟重击、GD04 受击。
+2. **GD03 Cast 防御架势 `cast_brace`**：用于 Skill/Power 的 `Cast` 触发；不是普通格挡。
+3. **GD05 死亡 `death`**：标准 `Dead` 触发。
+4. **GD07 防御反击 `guard_counter`**：由 `GuardCounterPower` 显式触发，独立于 Cast。
+5. **暂缓**：GD06 Steel Guard、GD08 翼风/施法、GD09 商店、GD10 篝火；当前没有独立触发或仍走铁甲战士场景，等接入需求确认。
 
 ## 动作约束
 
@@ -144,9 +163,9 @@
 - `.res` 约 18MB；独立复载通过，脚底 899 稳定，35 个唯一姿态。
 - 正式预览：`preview/guardian_halberd_attack.gif` / `.mp4` / `_keyframes.png`。
 
-## GD03 普通格挡提示词（暂不制作）
+## GD03 Cast 防御架势（cast_brace）提示词
 
-**状态：暂不制作。** 当前没有独立 `Guard` 触发；标准触发只有 `Idle / Attack / Cast / Hit / Dead`。这段仅作历史参考，不要生成。
+**状态：待生成。** 该动作由 `Cast` 触发，不是普通格挡；用于防御/施法类 Skill/Power。
 
 参考首帧：`preview/guardian_attack_reference_green_square.png`（3072×3072，正方形绿幕；角色仍为 1024×1536）。
 

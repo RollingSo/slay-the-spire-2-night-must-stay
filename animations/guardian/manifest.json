@@ -77,9 +77,9 @@
     },
     {
       "id": "GD03",
-      "action": "guard",
-      "animation": "guard",
-      "file": "main/guard.res",
+      "action": "cast_brace",
+      "animation": "cast_brace",
+      "file": "main/cast_brace.res",
       "exists": false,
       "priority": "P0",
       "target_seconds": [
@@ -87,7 +87,9 @@
         1.0
       ],
       "loop": false,
-      "status": "deferred_no_trigger"
+      "status": "prompt_ready",
+      "trigger": "Cast",
+      "note": "Not a Guard trigger; used by Cast for defensive/skill cards."
     },
     {
       "id": "GD04",
@@ -171,7 +173,7 @@
         1.2
       ],
       "loop": false,
-      "status": "planned"
+      "status": "deferred_reuse_cast"
     },
     {
       "id": "GD07",
@@ -199,7 +201,7 @@
         1.8
       ],
       "loop": false,
-      "status": "planned"
+      "status": "deferred_reuse_cast_or_attack"
     },
     {
       "id": "GD09",
@@ -213,7 +215,7 @@
         8
       ],
       "loop": true,
-      "status": "planned"
+      "status": "deferred_no_combat_trigger"
     },
     {
       "id": "GD10",
@@ -227,7 +229,7 @@
         8
       ],
       "loop": true,
-      "status": "planned"
+      "status": "deferred_no_combat_trigger"
     }
   ],
   "optional": [
