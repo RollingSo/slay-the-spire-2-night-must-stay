@@ -87,7 +87,7 @@
         1.0
       ],
       "loop": false,
-      "status": "redo_needed_shield_front",
+      "status": "accepted_with_known_shield_flaw",
       "trigger": "Cast",
       "note": "Shield glow is baked; avoid double VFX.",
       "frames": 24,
@@ -107,7 +107,8 @@
       "integration_scale": 0.4997,
       "resource_bytes": 12918901,
       "source_video": "GD-举盾防御.mp4",
-      "shield_front_ok": false
+      "shield_front_ok": false,
+      "known_issue": "shield front is complete oval/leaf; missing Eagle shield notch/wing tip; accepted for now"
     },
     {
       "id": "GD04",
@@ -121,7 +122,7 @@
         1.0
       ],
       "loop": false,
-      "status": "redo_needed_shield_front",
+      "status": "accepted_with_known_shield_flaw",
       "frames": 23,
       "fps": 24,
       "seconds": 0.9583,
@@ -164,7 +165,8 @@
         108,
         119
       ],
-      "shield_front_ok": false
+      "shield_front_ok": false,
+      "known_issue": "shield front is complete oval/leaf; missing Eagle shield notch/wing tip; accepted for now"
     },
     {
       "id": "GD05",
@@ -178,7 +180,7 @@
         2.5
       ],
       "loop": false,
-      "status": "redo_needed_shield_front",
+      "status": "accepted_with_known_shield_flaw",
       "frames": 61,
       "fps": 24,
       "seconds": 2.5417,
@@ -201,7 +203,8 @@
         60
       ],
       "accepted_known_issue": "wings open from f24 to end; user accepted",
-      "shield_front_ok": false
+      "shield_front_ok": false,
+      "known_issue": "shield front is complete oval/leaf; missing Eagle shield notch/wing tip; accepted for now"
     },
     {
       "id": "GD06",
@@ -229,7 +232,7 @@
         1.5
       ],
       "loop": false,
-      "status": "redo_needed_shield_front",
+      "status": "accepted_with_known_shield_flaw",
       "frames": 31,
       "fps": 24,
       "seconds": 1.2917,
@@ -250,7 +253,8 @@
       "accepted_known_issue": "wings open; shield glow stronger than requested; user accepted",
       "ground_aligned": true,
       "speed_note": "hybrid: fast block-to-glow, slower thrust/recovery",
-      "shield_front_ok": false
+      "shield_front_ok": false,
+      "known_issue": "shield front is complete oval/leaf; missing Eagle shield notch/wing tip; accepted for now"
     },
     {
       "id": "GD08",
@@ -301,7 +305,7 @@
       "animation": "shield_poke",
       "file": null,
       "exists": false,
-      "status": "redo_needed_shield_front",
+      "status": "candidate_with_known_shield_flaw",
       "note": "ShieldPoke/ShieldedThrust currently use generic Attack; needs card-specific mapping.",
       "shield_front_ok": false
     },
