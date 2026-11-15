@@ -194,6 +194,9 @@ IdleNormal  --Hit--> hurt_normal --> IdleNormal
 
 生成后从视频中截取首尾连续的 2–4 秒循环；不要把静图或 GIF 当作动画源。
 
+
+**2026-11-15 WY07 视频审阅：** `ZZ-追击待机.mp4` 已抽出审阅 GIF；正式资源再截 2–4 秒连续循环。
+
 ## WY07 追击待机 提示词
 
 首帧/末帧：`preview/wylder_pursuit_idle_start_green.png` / `preview/wylder_pursuit_idle_end_green.png`（同一张最新 main 追击待机图）。
