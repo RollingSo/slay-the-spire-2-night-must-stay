@@ -1,0 +1,64 @@
+{
+  "items": [
+    {
+      "key": "wylder_stamp_upward_cut",
+      "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-4fdd204d-d652-481a-9225-b93fc8d8ba1f.png",
+      "candidate": "design\\卡图预览\\wylder\\user_redraw_20261028\\wylder_stamp_upward_cut_candidate.png",
+      "status": "rejected_by_self_review",
+      "review": "剑倒悬，剑尖朝下，不符参考上举"
+    },
+    {
+      "key": "wylder_stamp_sweep",
+      "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-2fe2c6ff-f406-47ff-82e6-ce096fa9daae.png",
+      "candidate": "design\\卡图预览\\wylder\\user_redraw_20261028\\wylder_stamp_sweep_candidate.png",
+      "status": "rejected_by_self_review",
+      "review": "躯干朝正面，与参考背面视角不符"
+    },
+    {
+      "key": "wylder_lions_claw",
+      "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-4e6b91a5-6161-4088-a5c1-08c10d6bc7e8.png",
+      "candidate": "design\\卡图预览\\wylder\\user_redraw_20261028\\wylder_lions_claw_candidate.png",
+      "status": "rejected_by_self_review",
+      "review": "第二臂与手连接不清晰"
+    },
+    {
+      "key": "wylder_bloodhounds_finesse",
+      "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-e4d19c55-6447-4295-9ccb-4a562d1ac43f.png",
+      "candidate": "design\\卡图预览\\wylder\\user_redraw_20261028\\wylder_bloodhounds_finesse_candidate.png",
+      "status": "rejected_by_self_review",
+      "review": "身体接近平躺，参考是前翻扭转"
+    },
+    {
+      "key": "wylder_parry",
+      "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-cee65927-5c2b-4fff-9ced-835c3f41c031.png",
+      "candidate": "design\\卡图预览\\wylder\\user_redraw_20261028\\wylder_parry_candidate.png",
+      "status": "self_reviewed_approved",
+      "review": "头盔后壳、左臂举盾和右臂下放清晰"
+    },
+    {
+      "key": "wylder_critical_strike",
+      "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-790fc86a-ed1e-462b-bd5e-d77d40180333.png",
+      "candidate": "design\\卡图预览\\wylder\\user_redraw_20261028\\wylder_critical_strike_candidate.png",
+      "status": "self_reviewed_approved",
+      "review": "自主构图，双手持直剑刺入敌身"
+    },
+    {
+      "key": "wylder_vacuum_slice",
+      "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-6cdae9c8-cfe1-4943-a06c-60c74bca1069.png",
+      "candidate": "design\\卡图预览\\wylder\\user_redraw_20261028\\wylder_vacuum_slice_candidate.png",
+      "status": "rejected_by_self_review",
+      "review": "护手后刃身出现额外蓝色握柄形状"
+    },
+    {
+      "key": "wylder_storm_blade",
+      "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-1e994727-72e5-4145-9ba8-02eb8e7d306c.png",
+      "candidate": "design\\卡图预览\\wylder\\user_redraw_20261028\\wylder_storm_blade_candidate.png",
+      "status": "self_reviewed_approved",
+      "review": "单手挥剑，白色剑气由剑刃甩出"
+    }
+  ],
+  "remaining": "redraw and review failed candidates and Eochaid",
+  "status": "completed_self_reviewed",
+  "final_manifest": "design/wylder/USER_REJECTED_ART_20261028.json",
+  "review_sheet": "design/卡图预览/wylder/user_redraw_20261028/final_nine_contact_sheet.png"
+}

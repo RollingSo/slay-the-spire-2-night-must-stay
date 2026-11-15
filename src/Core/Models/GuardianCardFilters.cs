@@ -19,6 +19,7 @@ namespace NightMustStay.Core.Models
             "DEFENSIVE_CADENCE",
             "DEFENSIVE_REINFORCEMENT",
             "DUCHESS_DEFEND",
+            "WYLDER_DEFEND",
             "EMERGENCY_DEFEND",
             "EVOLVED_DEFEND",
             "GUARD_COUNTER_CARD",

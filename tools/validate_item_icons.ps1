@@ -5,7 +5,7 @@ if (-not $ManifestPath) { $ManifestPath = Join-Path $root 'build/item_icon_paths
 Add-Type -AssemblyName System.Drawing
 $paths = [Collections.Generic.List[string]]::new()
 $count = 0
-foreach ($role in @('guardian','ironeye','revenant','duchess')) {
+foreach ($role in @('guardian','ironeye','revenant','duchess','wylder')) {
     foreach ($kind in @('relics','potions')) {
         $folder = Join-Path $root ($role+'_assets/'+$kind)
         foreach ($icon in Get-ChildItem -LiteralPath $folder -Filter '*.png' | Where-Object BaseName -NotLike '*_outline') {
@@ -41,8 +41,8 @@ foreach ($role in @('guardian','ironeye','revenant','duchess')) {
         }
     }
 }
-if ($count -ne 49 -or $paths.Count -ne 124) { throw "Unexpected item icon inventory: $count icons / $($paths.Count) resources" }
+if ($count -ne 61 -or $paths.Count -ne 154) { throw "Unexpected item icon inventory: $count icons / $($paths.Count) resources" }
 $parent = Split-Path -Parent $ManifestPath
 New-Item -ItemType Directory -Force -Path $parent | Out-Null
 [IO.File]::WriteAllText($ManifestPath,(@{paths=@($paths)} | ConvertTo-Json -Depth 5),[Text.UTF8Encoding]::new($false))
-Write-Output 'Item icons validated: 49 icons, 49 outlines, 13 potion icon and 13 outline mappings.'
+Write-Output 'Item icons validated: 61 icons, 61 outlines, 16 potion icon and 16 outline mappings.'

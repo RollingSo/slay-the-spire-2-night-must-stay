@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-10",
+  "status": "user_approved_battle_readiness_and_resolve; agility_redraw_reverted",
+  "style_reference": "approved Duchess card artwork",
+  "review": "design/卡图预览/2026-11-10_追踪者女爵画风重绘/复核与提示词.md",
+  "contact_sheet": "design/卡图预览/2026-11-10_追踪者女爵画风重绘/三卡正式接触表.png",
+  "cards": [
+    {
+      "card": "临战",
+      "english": "Battle Readiness",
+      "status": "user_approved_and_integrated",
+      "source": "design/卡图预览/2026-11-10_追踪者女爵画风重绘/临战_approved.png",
+      "backup": "design/卡图预览/2026-11-10_追踪者女爵画风重绘/临战_previous.png",
+      "runtime": "images/packed/card_portraits/wylder/wylder_battle_readiness.png",
+      "sha256": "BE177EC9DCDB3DC8AC85FC6B089A13C6460A6742B488FC1A30D63C7E1DB323EB"
+    },
+    {
+      "card": "决断",
+      "english": "Resolve",
+      "status": "user_approved_and_integrated",
+      "source": "design/卡图预览/2026-11-10_追踪者女爵画风重绘/决断_approved.png",
+      "backup": "design/卡图预览/2026-11-10_追踪者女爵画风重绘/决断_previous.png",
+      "runtime": "images/packed/card_portraits/wylder/wylder_resolve.png",
+      "sha256": "AB5DF9A62697A327923D0163F4AB65E6A7333FFFBCFE685EF692C785AFB8DD1F"
+    },
+    {
+      "card": "机敏",
+      "english": "Agility",
+      "status": "redraw_reverted_per_user",
+      "source": "design/卡图预览/2026-11-10_追踪者女爵画风重绘/机敏_previous.png",
+      "reverted_candidate": "design/卡图预览/2026-11-10_追踪者女爵画风重绘/机敏_approved.png",
+      "runtime": "images/packed/card_portraits/wylder/wylder_agility.png",
+      "sha256": "6BB1AFB56E6E8DD8A73E4D5DEB3AE8457FE2A721E52F70C14B489B42533692D1"
+    }
+  ]
+}

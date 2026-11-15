@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-27",
+  "generator": "built-in imagegen",
+  "status": "rejected_by_user",
+  "runtime_promoted": true,
+  "output_dir": "design/卡图预览/wylder/vacuum_slice_20261027",
+  "pose_contract": "design/wylder/VACUUM_SLICE_POSE_CONTRACT_20261027.md",
+  "assets": [
+    {
+      "key": "wylder_vacuum_slice",
+      "name": "真空斩",
+      "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-e3bbbe07-b09a-453f-bd4c-e5f097b07ab5.png",
+      "ref": "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/skills_20261022/wylder_vacuum_slice_reference.png",
+      "prompt": "Use case: illustration-story. ONE 1000x760 landscape game-card ARTWORK ONLY. IMAGE1 is STRICT crouched POSE and enormous vertical wind-blade reference. IMAGE2 is ONLY Wylder costume/helmet identity, NOT idle pose or detailed sprite rendering. IMAGE3 controls graphic flat game-card style. Wylder is a SMALL compressed BACK-LEFT three-quarter figure in LOWER-LEFT (about30% frame), body crouching deep, back arched, helmet looking DOWN-RIGHT, near knee folded high, front boot planted. No upright stance, airborne backflip, or forward-flip landing. Two bent arms tuck close to body, both brown gloved hands at low-left control ONE straight greatsword angled UP-RIGHT from low grip toward wind-wave origin. Keep shoulders/elbows/wrists anatomically connected. Normal Wylder weapon is a LONG RIGID STRAIGHT silver greatsword, navy grip, compact guard, sculptural FORKED silver pommel; grip/guard/blade all collinear. Do NOT bend physical blade to match the curved wind. A SEPARATE ENORMOUS UPRIGHT gray-white CRESCENT VACUUM BLADE fills RIGHT TWO-THIRDS from top to bottom, fired FORWARD/RIGHT from the low sword motion. Outer edge is sharp convex crescent on right, open side faces left, 2-3 broad swept inner wind bands lead from crouching knight toward curved outer edge, matching IMAGE1. It is a single forward-moving vertical cutting wave, NOT a complete ring wrapping around character, NOT a top-down white slash pillar, not a fire explosion. Use hard flat ivory/ice-gray bands with dark slate negative cuts, no airbrushed wisps or glitter. Subject costume: CLOSED silver feather-wing helmet and blue back/nape plate, black scarf, navy split skirt with sparse WHITE flowing motifs, grouped silver scales, brown wraps. Show BACK fabric, do not put V-shaped FRONT breastplate on back. Wind wave is primary event; smaller crouching knight establishes cause. Minimal DEEP MUTED PETROL/SLATE background with one low-contrast ground plane, broad calm negative space upper-left, no rubble/scenery/pillars. Contrast the enormous cool pale blade against gray-teal dark field. Graphic FLAT2D fantasy card illustration: chunky shapes, bold BLACK shadows, limited palette, 2-3 LARGE HARD-EDGE CEL planes per material. No detailed engraving, realistic texture/metal, cinematic fog, full battlefield, UI/text, border, extra hands or blades. Important: it must look different from a grounded flip-slam: tiny BACK-VIEW knight low-left launching huge curved wind forward, not large frontal knight landing beside a vertical beam.",
+      "previous_runtime_portrait": "res://images/packed/card_portraits/ironclad/uppercut.png",
+      "status": "rejected_by_user",
+      "runtime_path": "images/packed/card_portraits/wylder/wylder_vacuum_slice.png",
+      "approved_sha256": "2A038CE31779C571D4C87C6E9120B093E247F9A78B29CCAA8AF3B2089C44FA68",
+      "user_rejected_date": "2026-10-28",
+      "user_rejected_reason": "剑应劈到地面"
+    }
+  ],
+  "review": "design/wylder/VACUUM_SLICE_REVISION_20261027.md",
+  "validation": {
+    "build": "0 warnings, 0 errors",
+    "wylder_regressions": "pass; 28 dedicated Vacuum checks and 609 battle-art checks",
+    "card_text_format": "pass",
+    "portrait_paths": "530 passed",
+    "godot_import": "pass; no ERROR/SCRIPT ERROR; existing nested project warning",
+    "godot_log": "build/vacuum_critical_import_20261027.log",
+    "texture_cache_and_sha256": "pass",
+    "exported_or_installed": false
+  },
+  "user_rejected_date": "2026-10-28"
+}

@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-27",
+  "generator": "built-in imagegen",
+  "status": "rejected_by_user",
+  "runtime_promoted": true,
+  "damage_confirmation": "User confirmed 16->21 on 2026-10-27",
+  "output_dir": "design/卡图预览/wylder/critical_strike_20261027",
+  "pose_contract": "design/wylder/CRITICAL_STRIKE_ART_CONTRACT_20261027.md",
+  "assets": [
+    {
+      "key": "wylder_critical_strike",
+      "name": "致命一击",
+      "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-bdd54e83-92d8-4f36-a822-bfd0e37f23a0.png",
+      "ref": null,
+      "ref_provenance": "Latest user conversation image, passed directly with num_last_images_to_include=1. Old clipboard 2ac0f488 path absent; no local screenshot archive claimed.",
+      "prompt": "Use case: illustration-story. Create ONE 1000x760 landscape fantasy game-card ARTWORK, a TIGHT CLOSE-UP of Wylder plunging a greatsword INTO an enemy's torso at the instant of a critical riposte. Use the user's latest attached game screenshot as action/contact reference ONLY; IGNORE ALL game UI, bars, compass, numbers and screenshot rendering. Crop out full bodies, heads, faces and legs. Show only Wylder's two brown leather gloved hands and simplified silver forearm armor/navy sleeves entering from lower-left, both hands controlling ONE long navy grip; a compact silver guard; one long RIGID STRAIGHT broad silver greatsword driving toward center-right INTO the chest/abdomen of a large hostile enemy wearing heavy pale-gray robes. Enemy torso fills RIGHT half, with a small parted fabric crease exactly where the steel DISAPPEARS INSIDE the body; the point is already buried, not merely resting on cloth. Sword pommel must be distinctive OPEN FORKED silver sculpture at far lower-left, NOT a ball. Pommel stem, grip, guard center, blade central ridge and hidden point path lie on ONE RULER-STRAIGHT nearly-horizontal upward-right axis. The blade never kinks near the guard or bends as it enters. Exactly two coherent gloves/wrists on one handle, no extra hands, no second weapon. One hand close to guard, other at grip end; hands never hold sharp blade. Impact shown by a small muted crimson contact seam and 2 angular pale fabric folds, no organs, flying gore or wound close-up detail. SINGLE event: a straight greatsword being driven into an enemy, not a swing with a long motion crescent. Close camera, exaggerated hand/guard silhouette, central steel-to-body contact stays readable in small thumbnail. Flat GRAPHIC 2D fantasy card illustration: bold black contour/negative shapes, 2-3 LARGE HARD-EDGED CEL planes per material, limited slate-silver/navy/brown/pale-gray palette with small dark-red accent. Background a calm near-black charcoal/russet field, no scene texture, no blue shards or neon rings, no flames, no starburst explosion. The pale enemy robe torso and dark hand silhouette carry composition. No card border, text, UI, logos, realistic metal reflections, photographic lighting, painterly texture, finely engraved armor, full knight or full battlefield.",
+      "edit_prompt": "Style-transfer edit, keep EXACT composition, two gloved hands, one grip, sword geometry and sword visibly entering the pale enemy torso. Change ONLY rendering simplification: remove ALL mottled/faceted surface noise, little cloth streaks and metallic scratch texture. Convert each large sleeve, glove, metal bracer, blade plane and pale robe fold into just 2-3 CLEAN FLAT hard-edged CEL color blocks with strong intentional near-black shadow shapes. Keep only 4-5 broad robe folds radiating from entry, not dozens of jagged microplanes. Silver blade should be two long uninterrupted flat steel planes and one black ridge; do not change its straight axis or grip angle. Dark-red contact seam remains small. Gloves remain clearly two separate hands with readable simple knuckles. Preserve navy sleeves and open forked pommel. Background calm near-black flat field. Final appearance graphic flat fantasy card art, NOT gritty/painterly or realistically textured. 1000x760 landscape, no words or UI. Do not change anatomy, crop, thrust direction, contact point, weapon length or target pose.",
+      "rejected_candidates": [
+        {
+          "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-49044610-4753-431c-9079-a49a814604ee.png",
+          "reason": "衣袍和金属表面纹理过密，已简化为硬边平涂。",
+          "workspace_copy": "design/卡图预览/wylder/critical_strike_20261027/wylder_critical_strike_rejected_1.png",
+          "status": "rejected_by_self_review"
+        }
+      ],
+      "runtime_path": "images/packed/card_portraits/wylder/wylder_critical_strike.png",
+      "approved_sha256": "DC0A2643EFBC483C0C90A691BD0A2C415C213FA1E72141EA715E7AACACDA8BDD",
+      "status": "rejected_by_user",
+      "user_rejected_date": "2026-10-28",
+      "user_rejected_reason": "弃用参考图自主重绘"
+    }
+  ],
+  "card_registered": true,
+  "validation": {
+    "build": "0 warnings, 0 errors",
+    "independent_return_tests": "33 passed using the actual registered WylderCriticalStrike model",
+    "card_text_format": "pass",
+    "portrait_paths": "530 passed",
+    "godot_import": "pass; no ERROR/SCRIPT ERROR; existing nested project warning",
+    "godot_log": "build/vacuum_critical_import_20261027.log",
+    "damage_confirmation": "confirmed by user: 16->21",
+    "exported_or_installed": false,
+    "wylder_regressions": "pass; 609 battle-art checks including metadata/localized text for both cards; Vacuum28 and Critical Strike33 dedicated lifecycle checks",
+    "texture_cache_and_sha256": "pass"
+  },
+  "user_rejected_date": "2026-10-28"
+}

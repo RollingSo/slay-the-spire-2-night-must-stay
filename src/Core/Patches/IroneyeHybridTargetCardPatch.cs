@@ -25,7 +25,8 @@ internal static class IroneyeHybridTargetState
     public static CardModel ActiveCard => ActiveCardPlays.Values.FirstOrDefault();
 
     public static bool IsHybridTargetCard(CardModel card) =>
-        card is AdvanceAndRetreat
+        card is WylderGrappleShot
+            or AdvanceAndRetreat
             or IroneyeSwift
             or AncientDragonLightning { IsChargeComplete: false }
             or BeastClaw { IsChargeComplete: false }
@@ -33,7 +34,7 @@ internal static class IroneyeHybridTargetState
             or LightningSpear
             or GurranqBeastClaw { IsChargeComplete: false }
             or SoulChargingClaw
-            or Ensemble { IsChargeComplete: false }
+            or NightMustStayEnsemble { IsChargeComplete: false }
             or WatchfulWaiting { IsChargeComplete: false }
             or EmergencyRestore;
 
@@ -108,7 +109,7 @@ internal static class RevenantDirectPlayFallbackPatch
             && card is not AncientDragonLightning { IsChargeComplete: false }
             && card is not DeathLightning { IsChargeComplete: false }
             && card is not GurranqBeastClaw { IsChargeComplete: false }
-            && card is not Ensemble { IsChargeComplete: false }
+            && card is not NightMustStayEnsemble { IsChargeComplete: false }
             && card is not WatchfulWaiting { IsChargeComplete: false })
             return true;
 

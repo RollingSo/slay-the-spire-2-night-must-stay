@@ -1,19 +1,28 @@
 {
-  "last_published": "0.3.22",
-  "next_version": "0.3.23",
-  "last_package": "Slay the Spire 2 ： Night Must Stay 0.3.22.zip",
-  "last_sha256": "3EDE4B6DC59FE65D3E2DFBFBA2E5EF38625C41B571B10A4A68E6545FC4D81254",
-  "published_at": "2026-11-08T01:38:15.7935944+08:00",
+  "last_published": "0.4.7",
+  "next_version": "0.4.8",
+  "last_package": "Slay the Spire 2 ： Night Must Stay 0.4.7.zip",
+  "last_sha256": "8395B519D5AA27857490A4C2BB76BAAA265AA564AC9A944D09BDB0A13024B80E",
+  "published_at": "2026-11-15T03:22:36.3418061+08:00",
   "verification": {
-    "source_main": "0012fa0",
-    "public_manifest": "9093390254879923643",
-    "public_beta_manifest": "6281241713827058086",
-    "public_changelog_id": "1794073132",
-    "public_beta_changelog_id": "1794073200",
+    "source_main": "20114ba4",
+    "stable_min_game_version": "0.107.1",
+    "public_manifest": "3059698194026076794",
+    "public_beta_manifest": "8623793600577924606",
+    "public_changelog_id": "1794684259",
+    "public_beta_changelog_id": "1794684313",
     "bilingual_latest_changelogs_match": true,
-    "downloaded_beta_core_hashes_match": true,
+    "stable_and_public_beta_compatibility": true,
+    "model_id_collision_scan": "708 mod models; passed on both branches",
+    "localized_titles": {
+      "schinese": "黑夜长留 | 艾尔登法环 : 黑夜君临 mod",
+      "japanese": "夜を留めよう | ELDEN RING NIGHTREIGN Mod",
+      "koreana": "밤을 머물게 합시다 | ELDEN RING NIGHTREIGN Mod",
+      "public_pages_match": true
+    },
+    "downloaded_beta_snapshot_hashes_match": true,
     "download_callback": "k_EResultOK",
-    "content_submit_callback": "k_EResultTimeout; server commits and downloaded content independently verified",
+    "content_submit_callback": "k_EResultTimeout; server manifests, changelogs, branches and downloaded content independently verified",
     "local_mods_install": false
   }
 }

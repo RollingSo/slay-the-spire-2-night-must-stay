@@ -6,7 +6,7 @@ if ([string]::IsNullOrWhiteSpace($ManifestPath)) {
     $ManifestPath = Join-Path $root 'build/card_portrait_paths.json'
 }
 $paths = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::Ordinal)
-$characters = 'guardian|ironeye|revenant|duchess'
+$characters = 'guardian|ironeye|revenant|duchess|wylder'
 $portraitPattern = '(?:packed/card_portraits/(?:' + $characters + ')/|images/packed/card_portraits/(?:' + $characters + ')/|(?:' + $characters + ')_assets/cards/|images/atlases/card_atlas\.sprites/(?:' + $characters + ')/)'
 
 # Check literal runtime overrides, not just whether an image with the same basename exists.
@@ -22,7 +22,7 @@ foreach ($file in Get-ChildItem -LiteralPath (Join-Path $root 'src/Core/Models/C
 
 # Include base-class atlas portraits and dynamic character paths, not only explicit overrides.
 foreach ($relative in @('packed/card_portraits/guardian', 'guardian_assets/cards', 'ironeye_assets/cards', 'revenant_assets/cards',
-    'images/packed/card_portraits/guardian', 'images/packed/card_portraits/ironeye', 'images/packed/card_portraits/revenant', 'images/packed/card_portraits/duchess',
+    'images/packed/card_portraits/guardian', 'images/packed/card_portraits/ironeye', 'images/packed/card_portraits/revenant', 'images/packed/card_portraits/duchess', 'images/packed/card_portraits/wylder',
     'images/atlases/card_atlas.sprites/guardian', 'images/atlases/card_atlas.sprites/ironeye', 'images/atlases/card_atlas.sprites/revenant', 'images/atlases/card_atlas.sprites/duchess')) {
     $directory = Join-Path $root $relative
     if (-not (Test-Path -LiteralPath $directory)) { continue }

@@ -1,0 +1,50 @@
+{
+  "tool": "built-in imagegen",
+  "styleReference": "design/角色资源预览/wylder/wylder_idle_v2_identity.png",
+  "status": "approved",
+  "runtimeUpdated": true,
+  "alphaCleanup": false,
+  "latestApproval": "2026-10-19: all seven approved combat poses wired into production resources, including the locally straightened v12 pursuit attack.",
+  "assets": [
+    {
+      "key": "idle_shield",
+      "file": "design/角色资源预览/wylder/wylder_idle_shield_v1.png",
+      "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-aa2c27a0-3d21-4372-a1f4-a69608a45332.png"
+    },
+    {
+      "key": "pursuit_idle_user_selected",
+      "file": "wylder_assets/approved_sources/pursuit_idle.png",
+      "source": "C:/Users/wenti/AppData/Local/Temp/codex-clipboard-eae6a513-5edf-4f06-9976-c344415b8dbb.png"
+    },
+    {
+      "key": "attack",
+      "file": "design/角色资源预览/wylder/wylder_attack_v2.png",
+      "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-8496e5b9-5c1a-403d-8eaa-1880eb2096e2.png"
+    },
+    {
+      "key": "pursuit_attack_v12_geometry",
+      "file": "wylder_assets/approved_sources/pursuit_attack.png",
+      "source": "design/角色资源预览/wylder/wylder_pursuit_attack_v12_geometry.png",
+      "method": "User-authorized local geometry correction; see PURSUIT_ATTACK_V12_GEOMETRY.md."
+    },
+    {
+      "key": "block",
+      "file": "design/角色资源预览/wylder/wylder_block_v2.png",
+      "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-f981b8bb-0ad3-4ed1-b22f-736f1a91b5b3.png"
+    },
+    {
+      "key": "hit",
+      "file": "design/角色资源预览/wylder/wylder_hit_v2.png",
+      "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-74c8050d-c696-4ab3-a7ca-918f1cc3d6c9.png"
+    },
+    {
+      "key": "death",
+      "file": "design/角色资源预览/wylder/wylder_death_v2.png",
+      "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-a79724a2-92b6-4333-933e-760aeba415b2.png"
+    }
+  ],
+  "not_selected": [
+    "wylder_pursuit_idle_v2_rejected_grip.png",
+    "wylder_pursuit_idle_v3.png"
+  ]
+}

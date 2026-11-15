@@ -1,0 +1,74 @@
+{
+  "cards": {
+    "WYLDER_AIR_CLEAVING_CHASE": [
+      "破空追斩", "造成{Damage:diff()}点伤害。\n[gold]破势[/gold]{Break:diff()}：使目标[gold]眩晕[/gold]1回合。\n若未触发[gold]破势[/gold]，获得{Block:diff()}点[gold]格挡[/gold]。",
+      "Air-Cleaving Chase", "Deal {Damage:diff()} damage.\n[gold]Break[/gold] {Break:diff()}: [gold]Stun[/gold] the target for 1 turn.\nIf [gold]Break[/gold] did not trigger, gain {Block:diff()} [gold]Block[/gold]."
+    ],
+    "WYLDER_TAKERS_FLAMES": [
+      "掠夺火焰", "对所有敌人造成{Damage:diff()}点伤害。\n[gold]破势[/gold]{Break:diff()}：恢复{Heal:diff()}点生命。",
+      "Taker's Flames", "Deal {Damage:diff()} damage to ALL enemies.\n[gold]Break[/gold] {Break:diff()}: Heal {Heal:diff()} HP."
+    ],
+    "WYLDER_INFERNAL_SLASH": [
+      "燃狱斩", "造成{CalculatedDamage:diff()}点伤害。\n从[gold]手牌[/gold]打出此牌时，若打出前拥有至少{VigorThreshold:diff()}点[gold]活力[/gold]，基础伤害增加{ExtraDamage:diff()}点（已计入）。",
+      "Infernal Slash", "Deal {CalculatedDamage:diff()} damage.\nWhen played from your [gold]hand[/gold], if you had at least {VigorThreshold:diff()} [gold]Vigor[/gold] before play, its base damage is increased by {ExtraDamage:diff()} (already included)."
+    ],
+    "WYLDER_ASSAULT_DROP": [
+      "强袭落斩", "对所有敌人造成{Damage:diff()}点伤害{Repeat:diff()}次。\n[gold]破势[/gold]{Break:diff()}：给予所有仍存活的敌人{Imbalance:diff()}层[gold]失衡[/gold]。",
+      "Assault Drop", "Deal {Damage:diff()} damage to ALL enemies {Repeat:diff()} times.\n[gold]Break[/gold] {Break:diff()}: Apply {Imbalance:diff()} [gold]Imbalance[/gold] to ALL surviving enemies."
+    ],
+    "WYLDER_COUNTEROFFENSIVE": [
+      "逆势反攻", "造成{CalculatedDamage:diff()}点伤害。\n每有{BlockStep:diff()}点当前[gold]格挡[/gold]，基础伤害增加{ExtraDamage:diff()}点，最多增加{MaxBonus:diff()}点（已计入）。\n[gold]追击[/gold]：本次攻击结束后，获得{Block:diff()}点[gold]格挡[/gold]。",
+      "Counteroffensive", "Deal {CalculatedDamage:diff()} damage.\nEach {BlockStep:diff()} current [gold]Block[/gold] increases its base damage by {ExtraDamage:diff()}, up to {MaxBonus:diff()} (already included).\n[gold]Pursuit[/gold]: After this attack, gain {Block:diff()} [gold]Block[/gold]."
+    ],
+    "WYLDER_FLAME_WARD": [
+      "烈火护持", "获得{CalculatedBlock:diff()}点[gold]格挡[/gold]，其基础值等同于你当前的[gold]活力[/gold]层数。\n本回合你的下一张攻击牌正常享受[gold]活力[/gold]加成，但仅消耗其中一半[gold]活力[/gold]（向上取整）。",
+      "Flame Ward", "Gain {CalculatedBlock:diff()} [gold]Block[/gold], with a base value equal to your current [gold]Vigor[/gold].\nYour next Attack this turn receives the full [gold]Vigor[/gold] damage bonus, but consumes only half of that [gold]Vigor[/gold] (rounded up)."
+    ],
+    "WYLDER_GRAPPLE_LEAP": [
+      "钩爪飞跃", "进入[gold]追击[/gold]。\n本回合你下一张从[gold]手牌[/gold]打出的攻击牌耗能减少{CostReduction:diff()}。",
+      "Grapple Leap", "Enter [gold]Pursuit[/gold].\nYour next Attack played from your [gold]hand[/gold] this turn costs {CostReduction:diff()} less."
+    ],
+    "WYLDER_GRAPPLE_LEAP_PENDING": [
+      "钩爪飞跃：待命减费", "同名待命减费只取最高值，不相加，可与其他来源的减费叠加。\n下一张从[gold]手牌[/gold]打出的攻击牌无论是否命中均消耗此效果。\n手牌外的重放不消耗此效果。\n未使用的效果在回合结束时清除。",
+      "Grapple Leap: Pending Discount", "Repeated copies use only the highest pending discount, and can combine with discounts from other sources.\nThe next Attack played from your [gold]hand[/gold] consumes it whether or not it hits.\nReplays from outside your [gold]hand[/gold] do not consume it.\nUnused discounts expire at the end of the turn."
+    ],
+    "WYLDER_FORCED_BREAKOUT": [
+      "强制突围", "使你[gold]手牌[/gold]中耗能最高的另一张牌本回合耗能减少{CostReduction:diff()}。\n从[gold]手牌[/gold]打出此牌时，若打出前[gold]手牌[/gold]不超过{HandThreshold:diff()}张，再使该牌耗能减少1。",
+      "Forced Breakout", "The other card with the highest cost in your [gold]hand[/gold] costs {CostReduction:diff()} less this turn.\nWhen played from your [gold]hand[/gold], if you had at most {HandThreshold:diff()} cards before play, reduce that card's cost by 1 more."
+    ],
+    "WYLDER_SPEND_RESERVES": [
+      "余力奋战", "获得{Block:diff()}点[gold]格挡[/gold]。\n每有{VigorStep:diff()}点[gold]活力[/gold]，失去{VigorStep:diff()}点[gold]活力[/gold]并获得{Energy:energyIcons()}，最多触发{MaxTriggers:diff()}次。",
+      "Spend Reserves", "Gain {Block:diff()} [gold]Block[/gold].\nFor each {VigorStep:diff()} [gold]Vigor[/gold] you have, lose {VigorStep:diff()} [gold]Vigor[/gold] and gain {Energy:energyIcons()}, up to {MaxTriggers:diff()} times."
+    ],
+    "WYLDER_CLIFF_STEP": [
+      "断崖踏步", "获得{Block:diff()}点[gold]格挡[/gold]。\n本回合你下一张从[gold]手牌[/gold]打出的具有[gold]破势[/gold]的攻击牌耗能减少{CostReduction:diff()}。\n若该牌触发[gold]破势[/gold]，在整次攻击结束后抽{Cards:diff()}张牌。",
+      "Cliff Step", "Gain {Block:diff()} [gold]Block[/gold].\nYour next Attack with [gold]Break[/gold] played from your [gold]hand[/gold] this turn costs {CostReduction:diff()} less.\nIf that card triggers [gold]Break[/gold], draw {Cards:diff()} card after its entire attack."
+    ],
+    "WYLDER_NIGHT_RESPITE": [
+      "渡夜余裕", "抽{Cards:diff()}张牌。\n若从[gold]手牌[/gold]打出此牌并消耗[gold]追击[/gold]，获得{Energy:energyIcons()}。",
+      "Night Respite", "Draw {Cards:diff()} card.\nIf this is played from your [gold]hand[/gold] and consumes [gold]Pursuit[/gold], gain {Energy:energyIcons()}."
+    ],
+    "WYLDER_WIND_CHASE": [
+      "追风疾行", "获得{Block:diff()}点[gold]格挡[/gold]。\n本回合你下一张从[gold]手牌[/gold]打出的技能牌耗能减少{CostReduction:diff()}。\n进入[gold]追击[/gold]。",
+      "Wind Chase", "Gain {Block:diff()} [gold]Block[/gold].\nYour next Skill played from your [gold]hand[/gold] this turn costs {CostReduction:diff()} less.\nEnter [gold]Pursuit[/gold]."
+    ],
+    "WYLDER_SPRINT_AFTERIMAGE": [
+      "冲刺残影", "获得{CalculatedBlock:diff()}点[gold]格挡[/gold]。\n本回合此前每打出过1张攻击牌，基础[gold]格挡[/gold]增加{CalculationExtra:diff()}点，最多增加{MaxBonus:diff()}点（已计入）。",
+      "Sprint Afterimage", "Gain {CalculatedBlock:diff()} [gold]Block[/gold].\nEach Attack you played earlier this turn increases its base [gold]Block[/gold] by {CalculationExtra:diff()}, up to {MaxBonus:diff()} (already included)."
+    ],
+    "WYLDER_LAST_EMBER": [
+      "将息未息", "获得{Block:diff()}点[gold]格挡[/gold]。\n若拥有至少{VigorCost:diff()}点[gold]活力[/gold]，失去{VigorCost:diff()}点[gold]活力[/gold]并恢复{Heal:diff()}点生命。",
+      "Last Ember", "Gain {Block:diff()} [gold]Block[/gold].\nIf you have at least {VigorCost:diff()} [gold]Vigor[/gold], lose {VigorCost:diff()} [gold]Vigor[/gold] and heal {Heal:diff()} HP."
+    ],
+    "WYLDER_ALL_IN_DUEL": [
+      "孤注决斗", "获得{Block:diff()}点[gold]格挡[/gold]。\n你[gold]手牌[/gold]中其他攻击牌本回合耗能减少1。\n从[gold]手牌[/gold]打出此牌时，若打出前[gold]手牌[/gold]不超过{HandThreshold:diff()}张，改为耗能减少2。",
+      "All-In Duel", "Gain {Block:diff()} [gold]Block[/gold].\nOther Attacks in your [gold]hand[/gold] cost 1 less this turn.\nWhen played from your [gold]hand[/gold], if you had at most {HandThreshold:diff()} cards before play, they cost 2 less instead."
+    ],
+    "WYLDER_LONG_NIGHT_OATH": [
+      "长夜誓约", "获得{Block:diff()}点[gold]格挡[/gold]。\n进入[gold]追击[/gold]。\n下个你的回合开始时，获得{Vigor:diff()}点[gold]活力[/gold]。",
+      "Long Night Oath", "Gain {Block:diff()} [gold]Block[/gold].\nEnter [gold]Pursuit[/gold].\nAt the start of your next turn, gain {Vigor:diff()} [gold]Vigor[/gold]."
+    ]
+  },
+  "powers": {},
+  "relics": {}
+}

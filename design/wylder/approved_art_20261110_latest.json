@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-10",
+  "status": "user-approved-and-integrated",
+  "cards": [
+    {
+      "card": "燃火追斩",
+      "english": "Flame Chase Slash",
+      "source": "design/卡图预览/2026-11-10_燃火追斩与翻滚攻击/燃火追斩_approved.png",
+      "runtime": "images/packed/card_portraits/wylder/wylder_flame_chase_slash.png",
+      "sha256": "146175F651B8CB7CCF9F187D0F303B2B3D73123660FDE8F16D0CE6594BFBFF83"
+    },
+    {
+      "card": "翻滚攻击",
+      "english": "Rolling Attack",
+      "source": "design/卡图预览/2026-11-10_燃火追斩与翻滚攻击/翻滚攻击_approved.png",
+      "runtime": "images/packed/card_portraits/wylder/wylder_rolling_attack.png",
+      "sha256": "A9BAF4A59895D8343B328CB13E85CECBC8E77FEBCCCA2A18BBDE677610F63938"
+    }
+  ]
+}

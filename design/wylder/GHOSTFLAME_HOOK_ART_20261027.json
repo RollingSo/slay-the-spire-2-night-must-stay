@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-27",
+  "generator": "built-in imagegen",
+  "status": "rejected_by_user",
+  "output_dir": "design/卡图预览/wylder/ghostflame_hook_20261027",
+  "runtime_promoted": true,
+  "assets": [
+    {
+      "key": "wylder_ghostflame_explosion",
+      "name": "灵火爆炸·钩棒砸地",
+      "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-53521548-c196-4f03-a131-c08baa6146fa.png",
+      "ref": "C:/Users/wenti/AppData/Local/Temp/codex-clipboard-d1923082-ef83-4358-bce6-4a31f94d21e9.png",
+      "prompt": "Use case: illustration-story. Asset: ONE opaque full-bleed 1000x760 LANDSCAPE game card illustration, artwork only. Image1 is USER ACTION/EFFECT/WEAPON reference: translate the hunched downward strike and detonating cold ghostflame, and specifically use its Death's Poker HOOKED BAR weapon, not its skeletal bird monster. Image2 ONLY Wylder armor identity, NOT its sword or idle pose. Images3/4 ONLY flat graphic STYLE references, never their subjects or card-shaped props. Visual event: Wylder SLAMS A HOOKED BAR INTO THE GROUND and violent GHOSTFLAME detonates at its striking head. Wylder at center-left, leaning deeply forward, bent knees, feet braced, closed helmet looks down toward impact. Exactly TWO human arms: BOTH brown-gloved hands grip ONE continuous dark handle at separate clearly visible positions, connected naturally shoulder-elbow-wrist. The weapon runs diagonally from upper-left behind the shoulder through both grips toward the ground at lower-right. Weapon is the reference's recognizable dark rough hooked club/poker: long narrow knotted shaft, at the striking end a short widened, bent, angular hook-like piece, blunt irregular blackened iron/charred-bone silhouette. NOT a straight silver sword, not a greatsword, no crossguard or forked sword pommel, not a scythe, not a bow or a magic staff with a crystal. Show its physical hooked striking head actually contacting a tiny dark ground patch; pale blue-white ghostfire launches out FROM THAT EXACT CONTACT. White and PALE-CYAN large sharp curling FLAME tongues with midnight-blue inner cutouts surge across lower-right and curl upward, violent burst not a ring, not icy crystals or lightning bolts. No orange fire. The two gripping hands, helmet and connected shaft remain readable above the burst, no extra hand in flame. Identity: closed SILVER feather-wing helmet, dark slit and metal faceplate, black layered scarf, V-bottom silver breastplate, asymmetrical silver shoulder armor, grouped angular silver scales, deep NAVY split skirt with a few white flowing marks, dark trousers, rope boots; simple navy buckler strapped behind back if visible. Simplify all ornament. Graphic2D flat large color blocks, chunky angular silhouettes, HARD EDGE cel shading2-4 planes, bold black shadow shapes, exaggerated weapon-to-impact perspective, readable at250x190. BACKGROUND: calm near-black SMOKY SLATE/GRAY-VIOLET broad horizontal negative-space blocks, no radial shards, no circular pattern, no scenery clutter. No photo, painterly brushwork, realistic metal texture, dense ornament, fog haze, text, UI, logos, watermark, cards/card frames/card-shaped props, extra figures, skeletal birds or duplicate weapons."
+    }
+  ],
+  "rejected_date": "2026-10-28",
+  "rejection_reason": "用户要求仅局部特写钩棒砸地引发灵火，追踪者不出现。"
+}

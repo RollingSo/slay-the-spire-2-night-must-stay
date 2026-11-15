@@ -1,0 +1,13 @@
+{
+  "approval": "User approved all six combat poses and explicitly selected the attached pursuit idle; on 2026-10-19 approved the locally straightened v12 pursuit attack and requested all approved poses wired into production resources. On 2026-11-09 the pursuit-idle round pommel was replaced with the approved normal-state forked greatsword pommel while preserving the selected pose and runtime bounds.",
+  "alpha_cleanup": false,
+  "assets": [
+    {"key":"idle","source":"wylder_assets/approved_sources/idle.png","runtime":"wylder_assets/combat_rig/wylder_combat_character.png","anchor_x":660},
+    {"key":"pursuit_idle","source":"wylder_assets/approved_sources/pursuit_idle.png","runtime":"wylder_assets/combat_rig/wylder_pursuit_idle.png","body_top":106,"anchor_x":640},
+    {"key":"attack","source":"wylder_assets/approved_sources/attack.png","runtime":"wylder_assets/combat_rig/wylder_attack.png","anchor_x":805},
+    {"key":"pursuit_attack","source":"wylder_assets/approved_sources/pursuit_attack.png","runtime":"wylder_assets/combat_rig/wylder_pursuit_attack.png","anchor_x":655},
+    {"key":"hit","source":"wylder_assets/approved_sources/hit.png","runtime":"wylder_assets/combat_rig/wylder_hit.png","anchor_x":780},
+    {"key":"block","source":"wylder_assets/approved_sources/block.png","runtime":"wylder_assets/combat_rig/wylder_block.png","anchor_x":940},
+    {"key":"death","source":"wylder_assets/approved_sources/death.png","runtime":"wylder_assets/combat_rig/wylder_death.png","anchor_x":765}
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-28",
+  "generator": "built-in imagegen",
+  "status": "user_approved",
+  "runtime_promoted": true,
+  "output_dir": "design/卡图预览/wylder/claw_redraw_20261028",
+  "pose_contract": "design/wylder/CLAW_REDRAW_CONTRACT_20261028.md",
+  "assets": [
+    {
+      "key": "wylder_claw_movement",
+      "name": "钩爪移动",
+      "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-a2b5a3a5-3e00-4455-9028-413547fc34a6.png",
+      "initial_candidate": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-263770d7-2d15-417c-bfba-2919dcffac6c.png",
+      "ref": "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/revisions_20261025/wylder_claw_movement_reference.png",
+      "prompt": "Use case illustration-story. Create one 1000x760 landscape Slay the Spire 2 game card illustration. Image 1 is the USER POSE reference: LOW compressed crouching ground slide viewed from behind and slightly left, moving right; image 2 is Wylder's identity/equipment only; image 3 is the original game's flat graphic style only. Draw Wylder being pulled forward along the ground by his grappling claw: he faces screen right, showing his back and left side to the viewer, torso inclined forward and hips low, both knees deeply flexed with one boot sliding on the ground, other leg trailing. His anatomical LEFT shoulder, bent elbow and LEFT hand stretch toward screen right and connect clearly to a forearm grappling launcher. One single taut THIN rope extends continuously from that left forearm down-right to a small grappling hook gripping the stone ground AHEAD of him, clearly visible near the bottom-right. His anatomical RIGHT arm is bent close to the torso for balance; exactly two arms. Small round navy shield strapped to his BACK. Silver fully closed feather-wing helmet with dark visor, black scarf, silver armor, dark navy split skirt with a few white flowing designs, brown wrapped boots. Show character low on left and rope and its anchored hook on right, readable mechanical cause and effect. Low horizontal slate-gray ground, muted gray-green background in a few calm horizontal shapes, pale dust scrape behind boot. Blue-gray and navy figure; no ochre desert, no blue magic, no circle, no action explosion. Bold black negative shapes, simplified chunky 2D shapes, flat graphic color, hard-edged cel shading like Image 3, 2-4 colors per material, no texture. No other characters, no extra limbs, no UI, words, frames, or logo. Not jumping or swinging from the sky.",
+      "refinement": "Rework Image 1 into a left-side profile of the SAME character sliding right. Critical correction: the anatomical LEFT arm must be the near, viewer-facing arm. Show the left side of the helmet and the LEFT side of the torso, not a back view; the near shoulder is LEFT, and the complete left shoulder → upper arm → elbow → forearm launcher → closed hand extends forward to the right. The thin taut rope continues from that LEFT forearm to the hook embedded in ground at lower right. The other, RIGHT arm is behind and partially occluded, bent close to the body, no extra arm. Keep both bent legs sliding on same ground, low crouch and side/rear movement as reference screenshot Image 2. Keep the little round shield secured behind torso, closed silver winged helmet, black scarf, navy skirt with simple white patterns, boots. Single figure, one rope, one hook. Simplified flat hard-edged illustrated card style from Image 3, restrained grey-green horizontal background and grey ground. No circle, magic burst, words or UI. Landscape 1000x760."
+    }
+  ],
+  "approved_sha256": "95913E863FFFD4D9F4308D2430470E08E341D9B97D1F75BA18AE1AE57441B350",
+  "user_approved_date": "2026-10-28"
+}

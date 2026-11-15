@@ -54,7 +54,7 @@ public sealed class SoulDeparture : CardModel
                 new CardSelectorPrefs(SelectionScreenPrompt, count))).Distinct().ToArray();
             foreach (CardModel card in selected)
                 if (card.Owner == player && card.Pile?.Type is PileType.Draw or PileType.Hand or PileType.Discard)
-                    await CardCmd.Exhaust(context, card);
+                    await NightMustStay.Core.Compatibility.Sts2BranchCompat.Exhaust(context, card);
             if (!TestMode.IsOn)
                 MegaCrit.Sts2.Core.Logging.Log.Info($"[SoulDeparture] Owner choice complete: player={player.NetId}, selected={selected.Length}");
         }

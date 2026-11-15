@@ -1,0 +1,26 @@
+[h1]黑夜长留 | Night Must Stay[/h1]
+[b]Current version: 0.4.0 | Supports the official and Public Beta branches of Slay the Spire 2[/b]
+
+The Nightfarers of ELDEN RING NIGHTREIGN have entered the Spire!
+
+This mod aims to bring each Nightfarer's distinctive fighting style into deckbuilding gameplay, with a design approach and balance close to the original Slay the Spire 2.
+
+Five playable characters are currently available: Guardian, Ironeye, Revenant, Duchess, and Wylder. Each has their own cards, relics, and unique combat mechanics.
+
+[b]New in 0.4.0: Wylder[/b]
+Use the claw to enter Pursuit and unleash heavy attacks that break the enemy's stance. Wylder arrives with a complete 90-card pool, 9 dedicated relics, and 3 dedicated potions, supporting archetypes built around Pursuit, Break, Desperation, Vigor, Freeze, and Imbalance.
+
+Nightfarers, let the night linger within the Spire.
+
+[h1]Mod Information[/h1]
+[b]Supported languages:[/b] Simplified Chinese, English, Japanese, Korean
+[b]Required mods:[/b] None
+[b]Multiplayer:[/b] All players must install this mod and use the same version
+
+[h1]Feedback and Community[/h1]
+The mod is continually being updated and refined. Bug reports, balance feedback, and suggestions about character design or the gameplay experience are all welcome!
+
+QQ group: 366184201
+Discord: [url=https://discord.gg/urBMQFsuC]Join the community[/url]
+
+Thank you to every Nightfarer for your support and feedback!

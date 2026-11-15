@@ -20,6 +20,7 @@ using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.ValueProps;
+using NightMustStay.Core.Compatibility;
 using NightMustStay.Core.Models.Power;
 using NightMustStay.Core.Models.Relics;
 
@@ -818,7 +819,7 @@ public sealed class RevenantSummonManager
         // remain readable and unmirrored.
         if (node.Body != null)
             node.Body.Scale = new Vector2(-Mathf.Abs(node.Body.Scale.X), node.Body.Scale.Y);
-        node.ToggleIsInteractable(on: true);
+        Sts2BranchCompat.SetCreatureInteractable(node, on: true);
         PositionCurrentNecro();
         RefreshNecroIntent(necro);
     }
@@ -849,7 +850,7 @@ public sealed class RevenantSummonManager
         if (node == null)
             return;
         node.Visuals.Visible = false;
-        node.ToggleIsInteractable(on: false);
+        Sts2BranchCompat.SetCreatureInteractable(node, on: false);
     }
 
     public async Task NotifyChargeCompleted(CardModel card)

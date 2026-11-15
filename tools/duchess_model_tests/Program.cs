@@ -1,12 +1,14 @@
 using System.Reflection;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
+using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.TestSupport;
 using MegaCrit.Sts2.Core.Modding;
 using NightMustStay.Core.Models.Cards;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.Unlocks;
 using MegaCrit.Sts2.Core.ValueProps;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -51,6 +53,33 @@ foreach (Type type in typeof(PowerModel).Assembly.GetTypes().Where(type => !type
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+if (args.Contains("--card-pool-audit"))
+{
+    foreach (var character in new CharacterModel[] { ModelDb.Character<Guardian>(), ModelDb.Character<Ironeye>(), ModelDb.Character<Revenant>(), duchess, ModelDb.Character<Wylder>() })
+    {
+        var cards = character.CardPool.AllCards.ToArray();
+        Console.WriteLine(character.GetType().Name + ": " + cards.Length + " registered cards; rarities="
+            + string.Join(", ", cards.GroupBy(c => c.Rarity).Select(g => g.Key + "=" + g.Count()))
+            + "; types=" + string.Join(", ", cards.GroupBy(c => c.Type).Select(g => g.Key + "=" + g.Count())));
+    }
+    return 0;
+}
+if (args.Contains("--wylder-models-only")) { WylderRegression.Run(); return 0; }
+if (args.Contains("--wylder-battle-art-only")) { WylderBattleArtRegression.Run(); return 0; }
+if (args.Contains("--wylder-sheet-lifecycle-only")) { WylderBattleArtRegression.RunSheetLifecycleOnly(); return 0; }
+if (args.Contains("--wylder-new-cards-only")) { WylderNewCardsRegression.Run(); return 0; }
+if (args.Contains("--wylder-multiplayer-batch-only")) { WylderMultiplayerBatchRegression.Run(); return 0; }
+if (args.Contains("--wylder-latest-batch-only")) { WylderLatestBatchRegression.Run(); return 0; }
+if (args.Contains("--wylder-only"))
+{
+    WylderDialogueRegression.Run();
+    WylderSheetManifestRegression.Run();
+    WylderRegression.Run();
+    WylderNewCardsRegression.Run();
+    WylderMultiplayerBatchRegression.Run();
+    WylderLatestBatchRegression.Run();
+    return 0;
+}
 if (args.Contains("--spirit-form-stack-only"))
 {
     SpiritFormStackRegression.Run();
@@ -66,7 +95,8 @@ if (args.Contains("--revenant-november-only"))
         var gaze = ModelDb.Card<GazeBeyond>().ToMutable();
         var updatedPocket = ModelDb.Card<DuchessHiddenPocket>().ToMutable();
         var claw = ModelDb.Card<CursedClawCombo>().ToMutable();
-        if (upgraded) { halo.UpgradeInternal(); burn.UpgradeInternal(); chant.UpgradeInternal(); gaze.UpgradeInternal(); updatedPocket.UpgradeInternal(); claw.UpgradeInternal(); }
+        var stunCall = ModelDb.Card<StunCall>().ToMutable();
+        if (upgraded) { halo.UpgradeInternal(); burn.UpgradeInternal(); chant.UpgradeInternal(); gaze.UpgradeInternal(); updatedPocket.UpgradeInternal(); claw.UpgradeInternal(); stunCall.UpgradeInternal(); }
         if (halo.DynamicVars.Damage.BaseValue != 6 || halo.DynamicVars["Growth"].BaseValue != (upgraded ? 7 : 4)
             || !halo.Keywords.Contains(CardKeyword.Ethereal)) throw new Exception("Halo rules");
         halo.IncreaseDamageForCurrentCombat(); halo.IncreaseDamageForCurrentCombat();
@@ -76,8 +106,10 @@ if (args.Contains("--revenant-november-only"))
         if (gaze.DynamicVars["Vulnerable"].BaseValue != (upgraded ? 3 : 2)) throw new Exception("Gaze Beyond");
         if (updatedPocket.DynamicVars["HandToDrawTopBlock"].BaseValue != (upgraded ? 7 : 5)) throw new Exception("Hidden Pocket");
         if (claw.DynamicVars.Damage.BaseValue != (upgraded ? 7 : 5) || !claw.Keywords.Contains(CardKeyword.Ethereal)) throw new Exception("Cursed Claw Combo");
+        if (stunCall.EnergyCost.GetResolved() != (upgraded ? 1 : 2) || stunCall.DynamicVars.Damage.BaseValue != 8)
+            throw new Exception("Stun Call cost-only upgrade");
     }
-    Console.WriteLine("PASS: six card base/upgraded values and repeated Halo growth.");
+    Console.WriteLine("PASS: Revenant card values, Stun cost-only upgrade and repeated Halo growth.");
     return 0;
 }
 if (args.Contains("--guardian-november-only"))
@@ -214,6 +246,14 @@ if (args.Contains("--imbalance-threshold-only"))
         for (int triggers = 0; triggers < 6; triggers++)
             if (PhantomImbalancePower.GetThreshold(players, triggers) != expected[players - 1][triggers])
                 throw new Exception("Imbalance threshold scaling/cap mismatch.");
+    foreach (string locale in new[] { "zhs", "eng", "jpn", "kor" })
+    {
+        using var powers = JsonDocument.Parse(File.ReadAllText($"NightMustStay/localization/{locale}/powers.json"));
+        string description = powers.RootElement.GetProperty("PHANTOM_IMBALANCE_POWER.description").GetString()!;
+        if (!description.Contains("{Threshold}", StringComparison.Ordinal)
+            || !description.Contains("{MaxThreshold}", StringComparison.Ordinal))
+            throw new Exception($"{locale}: Imbalance description does not display its dynamic thresholds.");
+    }
     var player = TrackingArrowRegression.MakePlayer();
     var creature = new Creature(player, 70, 70) { CombatState = new MegaCrit.Sts2.Core.Combat.CombatState() };
     var progressMethod = typeof(PhantomImbalancePower).GetMethod("GetProgress", BindingFlags.NonPublic | BindingFlags.Static)!;
@@ -227,7 +267,17 @@ if (args.Contains("--imbalance-threshold-only"))
     progressMethod.Invoke(null, new object[] { creature });
     if ((int)progress.GetType().GetField("Increases")!.GetValue(progress)! != 0)
         throw new Exception("Imbalance resistance leaked between combats.");
-    Console.WriteLine("PASS: Imbalance 1-4 player thresholds, caps, per-creature persistence and combat reset.");
+    var thresholdPower = ModelDb.Power<PhantomImbalanceThresholdPower>().ToMutable();
+    if (thresholdPower.Type != PowerType.Buff || thresholdPower.StackType != PowerStackType.Counter)
+        throw new Exception("Imbalance threshold display power metadata mismatch.");
+    foreach (string relative in new[]
+    {
+        "images/atlases/power_atlas.sprites/phantom_imbalance_threshold_power.tres",
+        "images/powers/phantom_imbalance_threshold_power.png",
+        "powers/phantom_imbalance_threshold_power.png",
+    })
+        if (!File.Exists(relative)) throw new Exception("Missing Imbalance threshold display asset: " + relative);
+    Console.WriteLine("PASS: Imbalance 1-4 player thresholds, dynamic localized threshold text, caps, per-creature persistence, combat reset and visible threshold power assets.");
     return 0;
 }
 if (args.Contains("--strangle-damage-preview-only"))
@@ -1635,6 +1685,8 @@ var waltz = DuchessCardCatalog.All[nameof(DuchessMidnightWaltz)];
 if (waltz.Cost != 0 || waltz.Moment != 12 || !waltz.All
     || waltz.Effects.Length != 1 || waltz.Effects[0] != new DuchessEffect("Damage", 60, 75, "moment"))
     throw new Exception("Midnight Waltz specification is wrong.");
+if (ModelDb.Card<DuchessMidnightWaltz>().TargetType != TargetType.AllEnemies)
+    throw new Exception("Midnight Waltz must use native all-enemy targeting so multiplayer play resolves its Moment 12 attack.");
 var grandReprise = DuchessCardCatalog.All[nameof(DuchessGrandReprise)];
 if (grandReprise.Cost != 0 || !grandReprise.Exhaust || grandReprise.Effects.Length != 2
     || grandReprise.Effects[0].Kind != "ShuffleDiscardAll"

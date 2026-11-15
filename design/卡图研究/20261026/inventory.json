@@ -1,0 +1,3566 @@
+{
+  "guardian": {
+    "source": "packed/card_portraits/guardian",
+    "file_count": 142,
+    "assets": [
+      {
+        "path": "packed/card_portraits/guardian/absolute_defense.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "e1904fef631ea9af6ce1ce707722d161626a87680687a1c5dd5e34d111b3d2aa"
+      },
+      {
+        "path": "packed/card_portraits/guardian/advance.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "d43eb0812401635239bca87765ec3cb9d435b09f5cb489b673b4a04b1804b5f3"
+      },
+      {
+        "path": "packed/card_portraits/guardian/aegis_form.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "5b2f1389dd1990b8db1065baefbea49a8584272aa8cc891014644662f95216ae"
+      },
+      {
+        "path": "packed/card_portraits/guardian/aegis_sweep.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "a131eccefb2a6e3ff7aaf180141c5d6c54b10dc4ce54d8bc3b9505c1126c36a8"
+      },
+      {
+        "path": "packed/card_portraits/guardian/aerial_intercept.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "fddf25ad9764fd388881634dca0253eb8cf73b416f7873496ef7a82e34868358"
+      },
+      {
+        "path": "packed/card_portraits/guardian/aerial_salvation.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "0814539a45f41a6546c72217dc1b9c9671014e2a2a66969686f635f25acf66fc"
+      },
+      {
+        "path": "packed/card_portraits/guardian/all_out_counter.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "afc20b086f9b7d84fe7c17dc2a02498515c859f079c52def9a20a899ea372a77"
+      },
+      {
+        "path": "packed/card_portraits/guardian/anchored_defend.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "eeaf9c6db633d2dda288b8af748f2ea36bc874e5bb8197f8f2ebb4e8e884a699"
+      },
+      {
+        "path": "packed/card_portraits/guardian/bladewind_convergence.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "72f789e0872e11927e07825b1a098019896bda652235c2c913beb6299ccf6fb7"
+      },
+      {
+        "path": "packed/card_portraits/guardian/brace_for_impact.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "3f256b7d8e44801e353d3584b192217312ec59c8bc5150985ab00fee673d62e6"
+      },
+      {
+        "path": "packed/card_portraits/guardian/breathing_room.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "d1c8cca75ede8febb1e2c2f9c3d74a9f3ce4d1032c1c7d297016029fe74888c6"
+      },
+      {
+        "path": "packed/card_portraits/guardian/bulwark_reversal.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "5852c8c240702037e3e1931d7323c96b3474f930ea6599b5a3c1db7511461e61"
+      },
+      {
+        "path": "packed/card_portraits/guardian/circling_gust.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "0e6ca98c75e70429c18d519fddfd2f91979cc53ec64551c14508106c75decbcb"
+      },
+      {
+        "path": "packed/card_portraits/guardian/cloud_rending_sweep.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "0edfafc3a663a0db2e2aec4ef4a69fdbd496ad9f515aabcc82e843c55369021f"
+      },
+      {
+        "path": "packed/card_portraits/guardian/cooperative_defense.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "5f039088b17cbd63197f791efe96dbfb553f6b0072b77295381ff6b81900cdec"
+      },
+      {
+        "path": "packed/card_portraits/guardian/counter_discipline.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "a670d3ffcd1b5758ec5821808d46ac0dc3ab4ec74425b388bdf645cea586be92"
+      },
+      {
+        "path": "packed/card_portraits/guardian/counter_like_tide.png",
+        "size": [
+          606,
+          852
+        ],
+        "sha256": "38f273d869f3b60392f654629bce82b24982b3237ac241a454e61be33ce83982"
+      },
+      {
+        "path": "packed/card_portraits/guardian/counter_lunge.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "a670d3ffcd1b5758ec5821808d46ac0dc3ab4ec74425b388bdf645cea586be92"
+      },
+      {
+        "path": "packed/card_portraits/guardian/counter_step.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "f915b51158d55c69bd279f16eb605db6591b8d823f1f3641ea6e1ab6954202a3"
+      },
+      {
+        "path": "packed/card_portraits/guardian/counterstorm.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "169f1763c3ca0acf92e47e16125b69f0b15d1bf6385e7d92f4c7a84bc2bf785c"
+      },
+      {
+        "path": "packed/card_portraits/guardian/cyclone.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "9e9eefb63dcf085c4a5841b137f926d8e61028de763826121cb9a32e9e6207e7"
+      },
+      {
+        "path": "packed/card_portraits/guardian/cyclone_halberd.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "937751f0e85a105269031c13a3370c7fb580c24a77309d0df014a70e3c536d78"
+      },
+      {
+        "path": "packed/card_portraits/guardian/defend_and_press.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "2a01c4ced01b07dc8de66e277c082bc64f0217b517ab4595342cc491f84b62cd"
+      },
+      {
+        "path": "packed/card_portraits/guardian/defend_guardian.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "110e893eac0500487916256b4e85cd880e26c31fdac97133db98e57b423ba932"
+      },
+      {
+        "path": "packed/card_portraits/guardian/defend_relay.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "1d09c60adee909852173d545a77f8bff95d57b2809d436e15358701a9ce6d160"
+      },
+      {
+        "path": "packed/card_portraits/guardian/defensive_cadence.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "3df3d2a31fa41c690ed15ecf5f69ed40aa0b1dc2da59658111ce77304645cb51"
+      },
+      {
+        "path": "packed/card_portraits/guardian/defensive_reinforcement.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "21e731a903b894ea8c5de9209367490d749a86a02ae9dd0f2f29e46900829b23"
+      },
+      {
+        "path": "packed/card_portraits/guardian/deflecting_feathers.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "b003c8dd182d577ab9b3128d386001efeb1140cdb4e6c3d808c70cc2caccb235"
+      },
+      {
+        "path": "packed/card_portraits/guardian/delayed_bulwark.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "f0301b6c8e7dfb66bdb0bec300a793d893ac16271f9e20644eee261386172b68"
+      },
+      {
+        "path": "packed/card_portraits/guardian/desperate_blow.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "0d1557f6bd9264179cf061cf4cbda3e0fa1d0978b373cfa2aa2dbe9b46fad4c4"
+      },
+      {
+        "path": "packed/card_portraits/guardian/desperate_struggle.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "914dd6a6780dfa99d55e0e3bed68a06e2ac16f0d8f462c78497d817295310553"
+      },
+      {
+        "path": "packed/card_portraits/guardian/dust_return_slash.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b8cc0fbac702cfecdb84e5bc09aef4f8b463c8f59c422f1acf55fbc11dbbb43a"
+      },
+      {
+        "path": "packed/card_portraits/guardian/eagle_judgment.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "903924c17afa2e76516b60fc7cd0d2ebda2973937f35fdc96e1f2a9351a35cf5"
+      },
+      {
+        "path": "packed/card_portraits/guardian/emergency_defend.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "922782576c5c4fd50bdd636fe248b277c61a67e856473e81a8b5a50a517d22dc"
+      },
+      {
+        "path": "packed/card_portraits/guardian/engage.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "9c2fefc1204545e2450efceb4994229097474e020d6ef2e5b5b5e2f8eb5d08cf"
+      },
+      {
+        "path": "packed/card_portraits/guardian/eve_of_counterattack.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "e1b7f17ad4a63ac5b20509b9dd1511e6d23723dd8edd9e0a4f073340abc5473c"
+      },
+      {
+        "path": "packed/card_portraits/guardian/evolution_wings.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "5c677d2a982f483909cd112eeab4911eac5d7a721d51b92d5010aa3894e355f6"
+      },
+      {
+        "path": "packed/card_portraits/guardian/evolved_defend.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "de20907ef8c0bd46ab5ec19fd76b3085105b4b9e120ec26b94d21e2d7903e8a8"
+      },
+      {
+        "path": "packed/card_portraits/guardian/fearless.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "7a43f353dbc369d82e2b69d75ccf2b6519fb4f323d5f3466577fe446b73853aa"
+      },
+      {
+        "path": "packed/card_portraits/guardian/feather_sword.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "6c80f26f04fd37ff7bb054d12dabc947861e1dea4fb766f9ceeaaec3e6e85c32"
+      },
+      {
+        "path": "packed/card_portraits/guardian/feathered_respite.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "b76716ce674d46c599b9f9191dac1349e678824e79ffb751eb3542b532cddb4d"
+      },
+      {
+        "path": "packed/card_portraits/guardian/featherstep.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "8974b9dde322df6c527a5a443afa13a9f87903c4947a3886d875e99015a90500"
+      },
+      {
+        "path": "packed/card_portraits/guardian/final_bastion.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "a6781c194e97aa7a2a9536aa7cc4e378b8a12cca1112e036952d98cf0a4c77c4"
+      },
+      {
+        "path": "packed/card_portraits/guardian/final_curtain_halberd.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "ebe0af38e2912dc9cc1e06246a0f4b518e4bf45e039a55138c06bf3a381bb963"
+      },
+      {
+        "path": "packed/card_portraits/guardian/fortified_strike.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "b42f3d016650588cca9c78c537ed855711036d582e9f331658232604480717b8"
+      },
+      {
+        "path": "packed/card_portraits/guardian/fortress_heart.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "20247f6cf44c6ea1ed7d28c2edf4aa8f1a93eb129d8f4558b0531f56f4c0e57c"
+      },
+      {
+        "path": "packed/card_portraits/guardian/giant_hunter.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "21568c1b578782728c412af07e7235f9fff25af84e811e06c920be6579b905f2"
+      },
+      {
+        "path": "packed/card_portraits/guardian/golden_phalanx.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "a4f7a5c5ac8fbb1d63e3ce6a0a4bc814254f2465a25efc5e476bde3b0d353404"
+      },
+      {
+        "path": "packed/card_portraits/guardian/great_shield_shock.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "1bcb64ddcb7d6c2bc501513047b9b0da46dc8b5de40864de7ef09c7287019f6c"
+      },
+      {
+        "path": "packed/card_portraits/guardian/great_tornado.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "8b773dcda7d0b7110f65c8c9c164dc90c17d20dd84778e3b524e562a5732774d"
+      },
+      {
+        "path": "packed/card_portraits/guardian/guard_counter_card.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "c469c42027bc4ccd0139650398fc2e498a4e5d12edc1b00ab4d56ba1ad34c2e1"
+      },
+      {
+        "path": "packed/card_portraits/guardian/guard_counter_flow.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "5852c8c240702037e3e1931d7323c96b3474f930ea6599b5a3c1db7511461e61"
+      },
+      {
+        "path": "packed/card_portraits/guardian/guarded_draw.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "26627153aed5878a9c11cf19cc320dd11a9c35d55811527a0a9189792c0ecfd8"
+      },
+      {
+        "path": "packed/card_portraits/guardian/guardian_assault.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "dfd03b09b9b54daf8f9ed1226e78984023e574ea1a25797ccdc797fe1cfb67ca"
+      },
+      {
+        "path": "packed/card_portraits/guardian/guardian_charge.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "fd011c34436ecb1d71af528d3d98d2869582f6fc67ec89e4728d6a711c7c95a2"
+      },
+      {
+        "path": "packed/card_portraits/guardian/guardian_multiplayer_card.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "08d40c6a0c9171f97f50df67fe4169937cdebd549d4d6bd84c6d29c5910719fc"
+      },
+      {
+        "path": "packed/card_portraits/guardian/guardian_oath.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "a6781c194e97aa7a2a9536aa7cc4e378b8a12cca1112e036952d98cf0a4c77c4"
+      },
+      {
+        "path": "packed/card_portraits/guardian/guardian_preparation.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "bcfef2e76324e87a9c039db5b88bf86d576a1a2ee1e7e5721ef9e75153d415e0"
+      },
+      {
+        "path": "packed/card_portraits/guardian/guardian_sanctuary.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "523ab42c389a02308193aa3426d0df54377f5f027d2edf7c9097ab32961723a3"
+      },
+      {
+        "path": "packed/card_portraits/guardian/guardian_skyward.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "1151f3d45bb4da0ac90fd16c2bb2785a849314904de0b01a3de32aa4a9121d65"
+      },
+      {
+        "path": "packed/card_portraits/guardian/guardian_whirlwind.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "c5ba046b82bdd1b72baa444d60a88340e6a884778d09d4242df36531fb20b03e"
+      },
+      {
+        "path": "packed/card_portraits/guardian/halberd_wing_combo.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "3b31787b3a99cdd6721d70a5749f7f24d09eae21d269cf6773091f01a41836d1"
+      },
+      {
+        "path": "packed/card_portraits/guardian/hardened_breath.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "b76716ce674d46c599b9f9191dac1349e678824e79ffb751eb3542b532cddb4d"
+      },
+      {
+        "path": "packed/card_portraits/guardian/heavenfall.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "aea5e383db955c0d623691bbfe8748454e60139ae047f2b6287f6cd99ab9c3f8"
+      },
+      {
+        "path": "packed/card_portraits/guardian/heavens_retaliation.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "903924c17afa2e76516b60fc7cd0d2ebda2973937f35fdc96e1f2a9351a35cf5"
+      },
+      {
+        "path": "packed/card_portraits/guardian/heavy_halberd.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "530c7d08fccd097e634c5b912c267001b0071296bdbc03138f88a5e4e74e25f0"
+      },
+      {
+        "path": "packed/card_portraits/guardian/hide_and_seek_stab.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "19d62a575522d9391ce70102c20241986fc10dfca8c515e392fedc9c247dce45"
+      },
+      {
+        "path": "packed/card_portraits/guardian/hold_the_line.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "2a096ea0b6fa57a041adb7bcd15eca25b9b26d437d3b5360135273730ba6cbd2"
+      },
+      {
+        "path": "packed/card_portraits/guardian/horn.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "50eb58faafcc1176a32870017bf52b311acdd352b7b949b56fb1553e67956c96"
+      },
+      {
+        "path": "packed/card_portraits/guardian/immortal_watch.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "a6781c194e97aa7a2a9536aa7cc4e378b8a12cca1112e036952d98cf0a4c77c4"
+      },
+      {
+        "path": "packed/card_portraits/guardian/invoke_storm.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b80425968fd477d4b66a9598eca0161f7927ef9fc172e424ef53cf7c3d09ca2c"
+      },
+      {
+        "path": "packed/card_portraits/guardian/iron_wall_defend.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "e376417841b17d00c973bb2a2b0e76a68c1da2f937ac2b2dc9328748f98e4035"
+      },
+      {
+        "path": "packed/card_portraits/guardian/lai_pi.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "6e7c56598741aaf6da6299dc0f337385736f7b773553a459b756b0a88841f0c2"
+      },
+      {
+        "path": "packed/card_portraits/guardian/last_stand_protocol.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "e590e56130771ec075b46ab1de7553d556d4d49d4a41994d5a62ca794cbba06c"
+      },
+      {
+        "path": "packed/card_portraits/guardian/measured_advance.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "75f2bfe4d96df704c5cc140a07049c4b561080f8f9b2d48338c350d86be5f35c"
+      },
+      {
+        "path": "packed/card_portraits/guardian/mirror_guard_defend.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "08a86758de8c28dcff25aace5cf21a7189b4d3049a568948b4b92792caa3805c"
+      },
+      {
+        "path": "packed/card_portraits/guardian/offense_defense_shift.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "50512a583f2f2c39b6d8a04840ee9ea832afe08d7139eebac38a1d4231b30dbc"
+      },
+      {
+        "path": "packed/card_portraits/guardian/perfect_guard.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "5b2f1389dd1990b8db1065baefbea49a8584272aa8cc891014644662f95216ae"
+      },
+      {
+        "path": "packed/card_portraits/guardian/phantom_co_strike.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "e876a5a2579e36b2ad18fb40508410b4179bc05a3c5ae2160af180dc452653bf"
+      },
+      {
+        "path": "packed/card_portraits/guardian/phantom_spear.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "3c1388da5af66b792fc61768267ac9c4e1ea2d8f5561657061fd9597b43ada46"
+      },
+      {
+        "path": "packed/card_portraits/guardian/piercing_gale.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "7d6919e14841bcabf2c82dbccf40ae2a6167707897246cd56188b2b1c1b4c07a"
+      },
+      {
+        "path": "packed/card_portraits/guardian/powerful_defend.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "6f49265ce20c5ca6b87f3ed74355b81c57508f9fa7fc2ad151e3e9aec241929c"
+      },
+      {
+        "path": "packed/card_portraits/guardian/powerful_guard_counter.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "2585e7e6f5c1db1ea34071cf1b10f667a3f4d882cf1b10029af72abf3e1d8112"
+      },
+      {
+        "path": "packed/card_portraits/guardian/probing_stab.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "acf2de6c87078973df3b5c4e26fb384db2c2c1a2b1c057d8e7a2a4b3d4ad6c95"
+      },
+      {
+        "path": "packed/card_portraits/guardian/protective_airstream.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "24902b4587ad46cc63eeabe56f5487d602d9329f8968ca3756a92207af45c749"
+      },
+      {
+        "path": "packed/card_portraits/guardian/radiant_shield.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "20247f6cf44c6ea1ed7d28c2edf4aa8f1a93eb129d8f4558b0531f56f4c0e57c"
+      },
+      {
+        "path": "packed/card_portraits/guardian/retreating_defense.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "4a8ba85ce39c55f15a5af774d36c34b0cda266134cbbd8ed930a9f0d54c2ff29"
+      },
+      {
+        "path": "packed/card_portraits/guardian/sacred_counter.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "5852c8c240702037e3e1931d7323c96b3474f930ea6599b5a3c1db7511461e61"
+      },
+      {
+        "path": "packed/card_portraits/guardian/sacrificial_bulwark.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "e590e56130771ec075b46ab1de7553d556d4d49d4a41994d5a62ca794cbba06c"
+      },
+      {
+        "path": "packed/card_portraits/guardian/savior_form.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "d0fd38af8e2d9ddeac590dae85eeeb750a65f2ff628d2cd498e883c8551a222e"
+      },
+      {
+        "path": "packed/card_portraits/guardian/savior_spread_wings.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "1117d08ffb61b00e1a7e21c93d50297f25521f70ae583493f9e7349e68b76db4"
+      },
+      {
+        "path": "packed/card_portraits/guardian/sentry_stance.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "eeaf9c6db633d2dda288b8af748f2ea36bc874e5bb8197f8f2ebb4e8e884a699"
+      },
+      {
+        "path": "packed/card_portraits/guardian/sharpen_resolve.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "5c75db7e3a8942e410968baef1c2a8005ccbf404097c7d63bda238a742791f69"
+      },
+      {
+        "path": "packed/card_portraits/guardian/shield_bash_defend.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "b42f3d016650588cca9c78c537ed855711036d582e9f331658232604480717b8"
+      },
+      {
+        "path": "packed/card_portraits/guardian/shield_impact.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "18ce4a3b91dcd312010320b43db2fd361abf345176bcce2e327472feb5917926"
+      },
+      {
+        "path": "packed/card_portraits/guardian/shield_memory.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "08a86758de8c28dcff25aace5cf21a7189b4d3049a568948b4b92792caa3805c"
+      },
+      {
+        "path": "packed/card_portraits/guardian/shield_poke.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "954a4a34deb1dbb4688bb2619ef05d5f4d660e106452d0d20c7620d359f4ffe6"
+      },
+      {
+        "path": "packed/card_portraits/guardian/shield_poke_tactics.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "4bd6e05c281482c57f5afd5e3a433d2eebaced58d7116e587a6da8cbe4d87d62"
+      },
+      {
+        "path": "packed/card_portraits/guardian/shield_wall_defend.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "f483ad0c2dcdd5c5e1742646fa37c33c59c1728aea48a5d0546f5f4c78ba5d5b"
+      },
+      {
+        "path": "packed/card_portraits/guardian/shielded_thrust.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "91c4eb93ab6cccd61da54bd698f7fb9db243a4c47983929958e69eef57797e09"
+      },
+      {
+        "path": "packed/card_portraits/guardian/sidestep.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "bca794c326d0cb0070a21dd9d07127bc7e6a4685de5fa2e0050c8f02ab7e0d70"
+      },
+      {
+        "path": "packed/card_portraits/guardian/silence_citadel.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "d4a90deef50efa6df6d96521ecf6b1f4371ffd05f48c0c9a49e3114f0b89f4b4"
+      },
+      {
+        "path": "packed/card_portraits/guardian/sky_citadel.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "fddf25ad9764fd388881634dca0253eb8cf73b416f7873496ef7a82e34868358"
+      },
+      {
+        "path": "packed/card_portraits/guardian/sky_sweeping_god.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "14556d799a4930fb72716feec05048b1454188f1adc7af59b5cd5e2561ce38e6"
+      },
+      {
+        "path": "packed/card_portraits/guardian/skyward_guard.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "fddf25ad9764fd388881634dca0253eb8cf73b416f7873496ef7a82e34868358"
+      },
+      {
+        "path": "packed/card_portraits/guardian/slow_defend.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "f2821992adf3573b12d0af31021799b9e5770ef0eef5b03db479c8b03726b4ed"
+      },
+      {
+        "path": "packed/card_portraits/guardian/spear_and_shield.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "229d24050eefb51740c00389e90411ff06a18548a401928a1a084be3a5c660d9"
+      },
+      {
+        "path": "packed/card_portraits/guardian/spear_grinding.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "a00269f44cfa18bdaa51abccd55d42daf84b0dd3f7a18fb6d58f55c1a7fee323"
+      },
+      {
+        "path": "packed/card_portraits/guardian/spear_polish.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "cffd27e59d82df780a1846a5ea58a5feed4497203cbe0b42332a61fa9cc34b57"
+      },
+      {
+        "path": "packed/card_portraits/guardian/stalwart_shield.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "bb8f32aff51d44cb69088d9d8f86efafff042dd4fc78f235a80ce93ac2a1bb49"
+      },
+      {
+        "path": "packed/card_portraits/guardian/stand_firm.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "dc42417a143d0a3018956c7c7982ebc140dae08b6652227b3f048b7d8891fc6b"
+      },
+      {
+        "path": "packed/card_portraits/guardian/step_forward_for_all.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "2ce6455fbee90bc6dbabb59497a17837062bb521b2590620397d7618dd95f463"
+      },
+      {
+        "path": "packed/card_portraits/guardian/step_forward_pursuit.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "5c377b630cf1666fca84e88eba348531ff677fa795c3db858fecc46a02183f79"
+      },
+      {
+        "path": "packed/card_portraits/guardian/stomp_stance.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "f0593d0a1b4c2a8204485b3be956152a73bce3e2ff28514591080a2e73470108"
+      },
+      {
+        "path": "packed/card_portraits/guardian/storm_aegis.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "169f1763c3ca0acf92e47e16125b69f0b15d1bf6385e7d92f4c7a84bc2bf785c"
+      },
+      {
+        "path": "packed/card_portraits/guardian/storm_assault.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "40ba3c65aa69ceced2eee18c6115972fddcb0abd46e2894736fc3edd4840baec"
+      },
+      {
+        "path": "packed/card_portraits/guardian/storm_barrier.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "e8d1a615769363f31f718894db7d7857a46af999b0bcc9626cb5a9cf306a3268"
+      },
+      {
+        "path": "packed/card_portraits/guardian/storm_birth.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "fd53139446e44db82480fe7a91c106b6bb19f0da56680b13383c0b9ecf0e5c9f"
+      },
+      {
+        "path": "packed/card_portraits/guardian/storm_kick.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "0d61f68f52e980af529a341d9aef75b1381c273a291742eb160325f60326a67d"
+      },
+      {
+        "path": "packed/card_portraits/guardian/strike_guardian.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "f2cb0ac7116983e4de23cb4a0b413231ab33117c73d655895d42ffe67c364c9e"
+      },
+      {
+        "path": "packed/card_portraits/guardian/swallow_return_wind.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "ff7f2f4447e3a834b1fce8eb61f0f175b8f6310f7af27642e41bf7c17829c183"
+      },
+      {
+        "path": "packed/card_portraits/guardian/tactical_retain.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "721f812c255b87e2d6128e3878231508805482979f33dad927dd6acfe2835ef4"
+      },
+      {
+        "path": "packed/card_portraits/guardian/thousand_weight_halberd.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "f96b5a58f51eae20edd7c8c31635cdb517e70627e568e738b511bd82adcbc3e6"
+      },
+      {
+        "path": "packed/card_portraits/guardian/topple.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "fc3a664bc80aaf1373d216308bd903e2f10b42c60aab370b149b7ca9ba7c66b5"
+      },
+      {
+        "path": "packed/card_portraits/guardian/twin_wing_guard.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "0814539a45f41a6546c72217dc1b9c9671014e2a2a66969686f635f25acf66fc"
+      },
+      {
+        "path": "packed/card_portraits/guardian/ultimate_defend_counter.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "005dca8ec9748282742bf302d80e9e6388cf4bb5337f4dc684c8b99c479b92af"
+      },
+      {
+        "path": "packed/card_portraits/guardian/ultimate_offense_defense.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b27b3b8de49d7a25d2cab2a33a3dac958f0db267e3e4f903dcd598f47d3db8fc"
+      },
+      {
+        "path": "packed/card_portraits/guardian/unbreakable_stance.png",
+        "size": [
+          606,
+          852
+        ],
+        "sha256": "78685838ff0c60a4839875c2c822fa0598decf2f1bf3f5be004472f51a10117d"
+      },
+      {
+        "path": "packed/card_portraits/guardian/unbroken_line.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "a6781c194e97aa7a2a9536aa7cc4e378b8a12cca1112e036952d98cf0a4c77c4"
+      },
+      {
+        "path": "packed/card_portraits/guardian/unyielding_defend.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "e590e56130771ec075b46ab1de7553d556d4d49d4a41994d5a62ca794cbba06c"
+      },
+      {
+        "path": "packed/card_portraits/guardian/wandering_spell_soul.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "f6fa6feba61269c4efb4d871413c13c7b9b8aa3be425a45c3fedec71315ce7b7"
+      },
+      {
+        "path": "packed/card_portraits/guardian/warden_command.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "a4f7a5c5ac8fbb1d63e3ce6a0a4bc814254f2465a25efc5e476bde3b0d353404"
+      },
+      {
+        "path": "packed/card_portraits/guardian/warding_gale.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "a009dbe8259988c1b68162287be9e8588a88fefd531de3cd3ab4e2e3858efc31"
+      },
+      {
+        "path": "packed/card_portraits/guardian/weakening_riposte.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "a670d3ffcd1b5758ec5821808d46ac0dc3ab4ec74425b388bdf645cea586be92"
+      },
+      {
+        "path": "packed/card_portraits/guardian/whirling_strike.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "eefc8e87b6191c219ee6e19d9cb9ea51957096ee36d81e5b9f606b5c6ea6f63c"
+      },
+      {
+        "path": "packed/card_portraits/guardian/windbreak.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "730a4b2a89f2675408410492b5c4a0b861e2273d9cf0533186ca769e9c1c0674"
+      },
+      {
+        "path": "packed/card_portraits/guardian/wing_flap.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "60f3623d0b457a6f412edda7bc9ea2b973beae86656bc5cb5b2f01283aca0a52"
+      },
+      {
+        "path": "packed/card_portraits/guardian/wing_strike.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "e9c22bbf889818223530882861fc44fa2221605365163fdff5861dc10708ddcf"
+      },
+      {
+        "path": "packed/card_portraits/guardian/wingbeat_defend.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "a526a5e41f8a9c64c0b1fdf3e568f721211e22ba4f3c15253ebd17b0cfa1beec"
+      },
+      {
+        "path": "packed/card_portraits/guardian/winged_bulwark.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "c84dc3be93eba723e82c9f253d5d8d538ece97b9195ff178af6c3acb61e985a1"
+      },
+      {
+        "path": "packed/card_portraits/guardian/world_ending_wings.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "4053ff90667bb650590bfdea849043056f897844be91fb968fcd7238668c6efc"
+      },
+      {
+        "path": "packed/card_portraits/guardian/zephyr_doctrine.png",
+        "size": [
+          1000,
+          700
+        ],
+        "sha256": "730a4b2a89f2675408410492b5c4a0b861e2273d9cf0533186ca769e9c1c0674"
+      }
+    ],
+    "sample": [
+      "packed/card_portraits/guardian/absolute_defense.png",
+      "packed/card_portraits/guardian/brace_for_impact.png",
+      "packed/card_portraits/guardian/counterstorm.png",
+      "packed/card_portraits/guardian/delayed_bulwark.png",
+      "packed/card_portraits/guardian/fearless.png",
+      "packed/card_portraits/guardian/golden_phalanx.png",
+      "packed/card_portraits/guardian/guardian_oath.png",
+      "packed/card_portraits/guardian/hide_and_seek_stab.png",
+      "packed/card_portraits/guardian/mirror_guard_defend.png",
+      "packed/card_portraits/guardian/radiant_shield.png",
+      "packed/card_portraits/guardian/shield_impact.png",
+      "packed/card_portraits/guardian/sky_sweeping_god.png",
+      "packed/card_portraits/guardian/stomp_stance.png",
+      "packed/card_portraits/guardian/thousand_weight_halberd.png",
+      "packed/card_portraits/guardian/warding_gale.png",
+      "packed/card_portraits/guardian/zephyr_doctrine.png"
+    ],
+    "exact_duplicate_groups": [
+      [
+        "packed/card_portraits/guardian/aegis_form.png",
+        "packed/card_portraits/guardian/perfect_guard.png"
+      ],
+      [
+        "packed/card_portraits/guardian/aerial_intercept.png",
+        "packed/card_portraits/guardian/sky_citadel.png",
+        "packed/card_portraits/guardian/skyward_guard.png"
+      ],
+      [
+        "packed/card_portraits/guardian/aerial_salvation.png",
+        "packed/card_portraits/guardian/twin_wing_guard.png"
+      ],
+      [
+        "packed/card_portraits/guardian/anchored_defend.png",
+        "packed/card_portraits/guardian/sentry_stance.png"
+      ],
+      [
+        "packed/card_portraits/guardian/bulwark_reversal.png",
+        "packed/card_portraits/guardian/guard_counter_flow.png",
+        "packed/card_portraits/guardian/sacred_counter.png"
+      ],
+      [
+        "packed/card_portraits/guardian/counter_discipline.png",
+        "packed/card_portraits/guardian/counter_lunge.png",
+        "packed/card_portraits/guardian/weakening_riposte.png"
+      ],
+      [
+        "packed/card_portraits/guardian/counterstorm.png",
+        "packed/card_portraits/guardian/storm_aegis.png"
+      ],
+      [
+        "packed/card_portraits/guardian/eagle_judgment.png",
+        "packed/card_portraits/guardian/heavens_retaliation.png"
+      ],
+      [
+        "packed/card_portraits/guardian/feathered_respite.png",
+        "packed/card_portraits/guardian/hardened_breath.png"
+      ],
+      [
+        "packed/card_portraits/guardian/final_bastion.png",
+        "packed/card_portraits/guardian/guardian_oath.png",
+        "packed/card_portraits/guardian/immortal_watch.png",
+        "packed/card_portraits/guardian/unbroken_line.png"
+      ],
+      [
+        "packed/card_portraits/guardian/fortified_strike.png",
+        "packed/card_portraits/guardian/shield_bash_defend.png"
+      ],
+      [
+        "packed/card_portraits/guardian/fortress_heart.png",
+        "packed/card_portraits/guardian/radiant_shield.png"
+      ],
+      [
+        "packed/card_portraits/guardian/golden_phalanx.png",
+        "packed/card_portraits/guardian/warden_command.png"
+      ],
+      [
+        "packed/card_portraits/guardian/last_stand_protocol.png",
+        "packed/card_portraits/guardian/sacrificial_bulwark.png",
+        "packed/card_portraits/guardian/unyielding_defend.png"
+      ],
+      [
+        "packed/card_portraits/guardian/mirror_guard_defend.png",
+        "packed/card_portraits/guardian/shield_memory.png"
+      ],
+      [
+        "packed/card_portraits/guardian/windbreak.png",
+        "packed/card_portraits/guardian/zephyr_doctrine.png"
+      ]
+    ]
+  },
+  "ironeye": {
+    "source": "images/packed/card_portraits/ironeye",
+    "file_count": 91,
+    "assets": [
+      {
+        "path": "images/packed/card_portraits/ironeye/adaptation.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "7d6192b62da554ab086679b92849752014f743ac4f7f79cb58626851b0ec9d1a"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/advance_and_retreat.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "5ad41c28f829f2b45e2e58fbcca4e50160a3edd33f5c870ecf90175c094bad8b"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/aim.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "6ccb976d5da73c24c0cb4b24d18681c3753e31e1157e6db7a7f14c8b1067b5b4"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/air_rending_arrow.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "2b06545fff9b7e468e4897edc4a58047a99b0246144c84510381c08e7b41a4aa"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/all_things_wither.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "303bbff3143977312420ac64edab1258d0396cec846166576ede19980ea23c3f"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/anti_air_shot.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "e14895a4b079bd7eddad6e93e81cfa874db02043a9afdf17ea7673b07602f2be"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/approach.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "382ad003fa3426497d4b71cfe84b31df91e8a6e990299af38ab8cafd79fb8a72"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/approaching_venom_fang.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "c343d5bcccaa8dd7d59fb9a5b5e88e6d57bbd04fa938512d4a5e667d6e90a3db"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/arrow_on_string.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "402275df31dfa488d0b90e157ef273ddebab8af3ca84145b6013989f255a07ab"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/arrow_rain.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "80668dde93ffd5bb2e1d89281ebc195cbbf5dd6dfc997ca7303e4ab056c712de"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/backstep_shot.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "12d7981ce90d2cd0641c798a295784c18b8bfa74b054c7e36cfd265d1315c16c"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/blade_glide.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b15d31d7981a45ce6acafb3aebec39727cbf0a619022ab6c8e82c27c270a2ef9"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/blade_shadow_unmatched.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "34d9f9560e8be183ffe676475414609d1f8d71704727dae0333c1d28e4c71037"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/bow_combat_art.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "21a3c4cc8784f479767d71c3d59412a1afd357b53f4f01e2be08856bc9f48425"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/bow_like_full_moon.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "711ab366cb4ab5aae0fadba9d7a8252a721b2005775ed0498049634325c1b049"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/calibration.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "95e28a344f77527addc811994fd7018428ea29d7aff3a2decad9df4ee1494f21"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/circling_maneuver.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "c3340ece1a4fcfc350c7b949f49a4ef43480e2afe674b849b359cc5dfbc0f904"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/cloud_piercing_arrow.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "c647b2068b7bac43922a37dc66de69e3ee0423ba89a0bf60dfa403bb4fdc7f1b"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/continuous_shooting.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "69ee7c7b3098fca9b57d33450193971720891e151654134ca9412af901d473a3"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/corrode_all.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "f0e6b2096d5cb9b2d059b6b67a9a65bfbfbdce77ff1fc0202bd2b26a0a7c5545"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/curtain_call.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "feabc504324240179bf7cfd19f9c15c0a1e8857df7dcc78ceec02412210a3d77"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/cut_through_chaos.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "72366a412aa6361d015e0426e6b3d44e6e3672f8430212baa5c46aa8e3073e1e"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/death_mark.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "709436e26caf550c9e9dbc1a6cd1a4ea8f2ba421255043f2b919c62962ad265f"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/defend_ironeye.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "cfe0c68450990ff320f4d4add69a88c953daff5096b860b85b5fa2cf92bfe0b8"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/eagle_eye.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "d4052072e9a7f3451f964dc59cd54c251290bfba60711e0ab602c5d4eb544449"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/emergency_nocking.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "90898f56bd7f1520a9940511ab5ce0a7c1cacc9ca96ed2d34391af82f0940886"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/evasive_arrow_slash.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "753c677acd6d0157850161682c4c78485dfd1547f78b48af8c12ed7faaa9174f"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/fatal_blade_edge.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "0f6cdf9c721217d3093076ece9b57d148f04c59cba89dc7dd920ee439f3479df"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/final_battle.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "7fee7b9529345247f85207aa7be68c2c611c8dd54c9bbc2afcfe6c8648d106d1"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/finger_snap.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "564652259cc350e23a859ce52d116d24fa29bdc22cfa39428f84b69c05ad807b"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/frightened_bird.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "80a4628bdceef870a4b6789fee5f3f0f88521c43cb3eaedffcb0507877094a4d"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/full_draw.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "7311523ed8f1509048b0e0d82bfe971ceab2379853e7fe5a5cbbb392ef4a1558"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/ghost_step.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "1ea60ef864cccb265903e96b82965405159d9e94761d441581d66c34190e7703"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/graceful_blade_dance.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "e8d016844a167e8f650623ac811512a828e335465e45fa5e7f707d0c930bdc70"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/ground_skid.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "5329bb0927aab4bdc081927fb40a31b560954bc8598c4829804f70546f73ba3b"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/headshot.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "5776a8484461a490a9beca4b631f21fb1ef0a712b81f50398d41a72158ac2b66"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/heartpiercing_arrow.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "f0bdeb02ca404fe07fea571ba1f1d7b84a0f9213af91b65df3c19132dbe428d6"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/heavenly_eye_form.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "8ee04993868ed7bb2f88ce6b4beec172f6a4f8c087f06ae6b3efb1d5148eb5d9"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/hundred_schemes.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "99396e6c7dab5a42ad8d455c75bfd268218c72419a2bfab993e0cf5676302cf8"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/hunt.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b601835a1aa8e4213f9f9a4082e4379fc3dd71439c0f871444e434263da6f168"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/hunter_step_mark.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "3160182d415abac2dc1cbd27f3c00e23fe8a8c1e0c4299106f60f0d2720920f4"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/hunting_prelude.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "35994c18a1381c45f1234455a0687bb0f259436a15b9b505c2d64910383d9f76"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/imposing_presence.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "76cd1c862b1fecda151c5e68e3c1272a2eb67ac1d439007fca833b7c1c4d7ead"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/iron_eye.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "340d3c1bda711e8d2cb684f22079e7055e12bb309c637ac5e394a083f22d63f6"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/ironeye_readiness.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "9be9233a8f6cb50374b80b4aa1daf67c3f2f5442f233862c00b31669092e28b0"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/ironeye_swift.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "72274bc1cc50a56c375c1e57f0021cf8117d7f27ce15c2219d35eab11d50ae4a"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/irresistible_force.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "3a6fd20b48fc902bf969d63dee76e63a21d69f3317cf6c42d58a8021ca18dc4b"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/killing_intent_gaze.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "d846d7377b58cb5adb27bbda025731745a524f002cdad4eba98e7661754a185a"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/lightning_arrowhead.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "d33e0386b50032c36f00e4baa65311839c0b23b1b798b244d7205e4c9301b981"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/lucky_arrow_bag.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "64f5ec87564009f298e447fbd84a8f745dbee1cc2de397cb3c930645bf69230e"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/mark.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "7af9967c0f7e32f2f083a390a7d007c9ca0acaeb21ebe4d159e39c7c7cfde4b9"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/misdirection_step.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "18a2b51415fff2899f74bbdeb23e5ad1d9b6bbc551bb31cd9ab806acc2165f3b"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/observation.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "801bf2594c01005031ae1432ce0e6ad0c12e5f687416a2cff7a04012cfcb88f5"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/offensive.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "bb426fdf9a6b8b13442cbdec434307bda4801c500d3917c9c565cea99d428cc6"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/pierce_the_willow.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "c8e2425d854ea5005fcf0b2b7a5705eb6b255e4c75d88104aebc90497059400d"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/poison_arrow.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "4f770142c17af203c4ab948214cc7cc43c08514c4e2f5d1ab443285ba60ddaae"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/poison_blade.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "fbf214be2a20a31f9318f28873edd3fbbd95aa8700adeff40adde87d40dcc868"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/poison_burst.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "f498441bf8839496d8c03c61f4c9b9dbc098c6dff40f84b8352d0d60d22123b2"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/poison_mist_arrow_array.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "77bc65a83dd69bba6b4f8a47b4c01cb826b9799ced8381045b2b221d741a32ca"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/poison_scheme.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "d9d37b3b4e8197c06818449fc9486d08823565bced0ed0499875aeec044e6151"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/release.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "6e3aec96fc53c6a080795a1b5913608608db51e8a814ea4d314bf2a17036c98f"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/retreat.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "f3d4ee60ed4e93d129c7ec3532913326c92e1b22e200a38f72d105ffd7fa795d"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/retreat_step.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "0e4e798a8e8042af569f66789bbc2c201eb61e381e75866890b05bffcf8802e5"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/return_to_zero.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "8552f5ef16ba6b3bbd8fe749a35639e829b01f710d5ba6bec1199046d1d327fa"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/returning_wind_arrow.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "2b8983c310c054edf21ec64508d21971b098300882f3de4fd8311e8670ebe232"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/reversal_step.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "82c188faed5d06de9f9174615e0d65bbd643770145004f0ad79677e0b7ff5546"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/road_already_traveled.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "37d0840c29cb658aaf2edd5be2316e9378b35a0025ca67cdf7a3eb0efcdb17cc"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/scatter.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "a8d48f2b3f58e3004e3ebee1fdce88b23807441905437ce5ed19b7693c991a5c"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/scouting.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "23afb0f387b5df87148c0a99f08c40a780243a1aa892e72d780b0aa5cec74d31"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/see_through.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "c71aabe18156b43f7afecf8e2622814fdd208f4381424a62704c1d15b6563a4e"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/shadow_assault.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "73bd3a44939d18131bb32e1a93eecd5027f3f6beae578ed42f8a034bad2519e5"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/shared_intelligence.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "da2a732a916eade23d5291bd528e6219087f2a331ae6961ba139ba46403dbcb7"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/soul_chasing_volley.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "ee37b6a1579811b9f932fbe28de979bd0a32268b4ffabd12fe656525020089e7"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/spirit_shot.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "05dc659f3172d37b931d7c42c70f6bf26a3e714fd1d8cdcaa82d05f4bbc8510b"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/star_plucker.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b21e1b05d360fefae80051bbd39979227bbf79a60b2410bf61358e6c3e593558"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/strangle_command.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "3ebe43ad62e8102fc60f7f57fc34df6b0c9f7ad909615f3ad2f2607a1e3e029a"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/strike_ironeye.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "fe55853db303654f7470ef19fb07478b8ad1cde1699dad55d8240247da94ce54"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/throat_seal.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "0bbc65b01f275dc6bd692008f5feb596824a74d00abff91d791fdd8cff7c9f3a"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/tracking_arrow.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "c769de3267fe511894799e6414b930322974369a3633f49fb2048dc7526e0de0"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/triple_volley.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "e2430c50cda7bde14a3303507492a3b661b7898053dc85758d429c29064636fb"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/turning_arrow.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "5a853629e06362913bb8b99e187ffa7eb13f9d9e9861aa8869980dc68b712e45"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/twin_kiss_poison_moth.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b9925a07d895cc252a27de3adb30bacf98e959472bf4394521b7e0416fbc27ab"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/venom_dagger.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "fc139cf9bdfba0bdb9c3f04b8c9a631c7d904749ac7f9d86f90b3c3815953962"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/vigilance.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "9d2aee3d8a7186547c2bebbabe146e255248c0d22e1125460f1c884a29d0091a"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/volatile_poison.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "6a665d55ea041dd05a113a3ed1c7c8316366c0e0f8599312652a66f979f316ee"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/wave_walking.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b572ec282d1bd1db8c2af962c9122a3b49f3bf4bf4ca1afc5fdcc3172c7f1e3c"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/wavering_step.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "693dd48670d81b98fa554b57b5726cc4e11f96bb950ad8e1bc370963b1488949"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/willow_piercing_arrow.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "aace5d53b0f5ebc31da4d22e1ee269edbe6812f447477f269c4e871aa0c852a1"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/wither_and_flourish.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "2c7de42e338352fa5eac54cd9554fe1aa9e6d10a78b8400c0f43c947babd7d3a"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/withering_cut.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "3bd9b444de1b70959d92841a777d0e23a1b938aeffbb7c647dd9ee87d9cccf45"
+      },
+      {
+        "path": "images/packed/card_portraits/ironeye/withering_slash.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "c6f027e8fc5a29e846f9464fab656073264897b8c3038b0c76d83693fe70f40d"
+      }
+    ],
+    "sample": [
+      "images/packed/card_portraits/ironeye/adaptation.png",
+      "images/packed/card_portraits/ironeye/approach.png",
+      "images/packed/card_portraits/ironeye/blade_shadow_unmatched.png",
+      "images/packed/card_portraits/ironeye/continuous_shooting.png",
+      "images/packed/card_portraits/ironeye/eagle_eye.png",
+      "images/packed/card_portraits/ironeye/frightened_bird.png",
+      "images/packed/card_portraits/ironeye/heartpiercing_arrow.png",
+      "images/packed/card_portraits/ironeye/imposing_presence.png",
+      "images/packed/card_portraits/ironeye/lightning_arrowhead.png",
+      "images/packed/card_portraits/ironeye/pierce_the_willow.png",
+      "images/packed/card_portraits/ironeye/release.png",
+      "images/packed/card_portraits/ironeye/road_already_traveled.png",
+      "images/packed/card_portraits/ironeye/soul_chasing_volley.png",
+      "images/packed/card_portraits/ironeye/tracking_arrow.png",
+      "images/packed/card_portraits/ironeye/volatile_poison.png",
+      "images/packed/card_portraits/ironeye/withering_slash.png"
+    ],
+    "exact_duplicate_groups": []
+  },
+  "revenant": {
+    "source": "revenant_assets/cards",
+    "file_count": 94,
+    "assets": [
+      {
+        "path": "revenant_assets/cards/all_souls_return.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "8789a3d41b9c03e21f8b8ca50630c9ecdf1517f067c04c1fea8a7e8b96d1a3f1"
+      },
+      {
+        "path": "revenant_assets/cards/ancient_dragon_faith.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "04e5d73f0423ac3634d484cb25da5227dcdd6fe16f99bd2c62954c81fe05d56b"
+      },
+      {
+        "path": "revenant_assets/cards/ancient_dragon_lightning.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "8046f955511bdab00766e7fff82f8a8f02dee535db4e910adf4922eb1b303d43"
+      },
+      {
+        "path": "revenant_assets/cards/ancient_dragon_spear.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "2e5ebf6452be5a2469c17b9d6a684294edd348426e37fac480fafdd8e17260b4"
+      },
+      {
+        "path": "revenant_assets/cards/answer_the_call.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "f9efedcbd9e12b2c4d962fd58f999c1645db918e3b8d483bdb247fc0ced94125"
+      },
+      {
+        "path": "revenant_assets/cards/beast_claw.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "2b8f0085b6f2388b93bf67ecbf7df2d5f550e19d0d3fea16068552660f3774ef"
+      },
+      {
+        "path": "revenant_assets/cards/beast_claw_mark.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "9a7de511e97c5efe5f3d39a5458576f202d1605ce3a424fcdcdce4a31d3b5774"
+      },
+      {
+        "path": "revenant_assets/cards/beaststone.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "6d388c10455eab4556a7b57ba57e116e987faa8333c344928a84fbd6657ca1f6"
+      },
+      {
+        "path": "revenant_assets/cards/blessing_of_grace.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "f053389cd397dd4a8f76321c404cc983667a16d052ae140d9be5d266f7476fbc"
+      },
+      {
+        "path": "revenant_assets/cards/bodyguard_bone.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b112242a0dd5937891dbc38cd1482d78ac04e68ac063729d0f727fe280db8867"
+      },
+      {
+        "path": "revenant_assets/cards/bone_coin.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "09c5e038e577586291bc7604171d9e48263919eeb8a7dad69212269e522c7093"
+      },
+      {
+        "path": "revenant_assets/cards/brute_force_path.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "c105ed4e41780aa33b8427613c79f3a859774de460e0c8c900671d01577b7e06"
+      },
+      {
+        "path": "revenant_assets/cards/burn_life.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "0b5b206db631ce5c0aecd6cd6564a1785cd798f16df0f4d376570e5e7c5b3f7c"
+      },
+      {
+        "path": "revenant_assets/cards/call.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "8bd24e6848be33742421146b6975fc5db2d548493ad9c85f74c58ada563cc0e6"
+      },
+      {
+        "path": "revenant_assets/cards/change_hands.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "1eea1459667899a204b54d9274a0d954beb1201dae188fc6a77a1bb90afb340e"
+      },
+      {
+        "path": "revenant_assets/cards/chanting_blessing.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "3f50e04c4dd374644955b7d4bb5570f6f62f6e827e108cee6c2f26c94c1da336"
+      },
+      {
+        "path": "revenant_assets/cards/close_guard.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "3ab63cc41b6f970279acad90618c96bf128549e9f889808f060909c2b95d6182"
+      },
+      {
+        "path": "revenant_assets/cards/concerto.png",
+        "size": [
+          606,
+          852
+        ],
+        "sha256": "cbf19f46daa476fb1e028b40591674e238d3e6474f0ffbbc68678b35865165ba"
+      },
+      {
+        "path": "revenant_assets/cards/cursed_claw_combo.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "0106a815836a47807a075a81b24b81412432567ad82085ee8cdb2bb19b63b79c"
+      },
+      {
+        "path": "revenant_assets/cards/dead_realm_spirit_fire.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "ced721a66133f62ca9b96f525544f8d6c7b8d6e3b65b4139f196c152f6e4eff9"
+      },
+      {
+        "path": "revenant_assets/cards/death_lightning.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "ac49cefb9d5a07f3cc6aba17b86c5382939a0253508a1c082f3b09efeca67a17"
+      },
+      {
+        "path": "revenant_assets/cards/defend_revenant.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "102c541facb0382de0b0c3c0b7cd37c5eade196cfaf396e5d3e1e8f3e921d5c7"
+      },
+      {
+        "path": "revenant_assets/cards/emergency_restore.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "5f28d62d95acdddf02c71f572d88c37dd074b08c879c1e034a3aba53408554db"
+      },
+      {
+        "path": "revenant_assets/cards/ensemble.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "01ab906064ab961a1d0cad99ec1e5cc2183f24e56a8a49e8be730882bb4e0a60"
+      },
+      {
+        "path": "revenant_assets/cards/fight_for_me.png",
+        "size": [
+          606,
+          852
+        ],
+        "sha256": "61e8cd2b307f191135b734900db1c76c71a180d2d53caf9c7aaf0335f9a477da"
+      },
+      {
+        "path": "revenant_assets/cards/flannsax_lightning_spear.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "318464cf30e21215372dc34f508267b7b1861cb8a97f86d2eec58a4734011f3a"
+      },
+      {
+        "path": "revenant_assets/cards/following_shadow.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "c67591520a719e7d68298c5a9e327c7eb7661f527d61037e0693447ad831e54f"
+      },
+      {
+        "path": "revenant_assets/cards/formation_breaker_hammer.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "9e30eb51030324209907711690064b3000f3f3d8482cf68044e7564136360f89"
+      },
+      {
+        "path": "revenant_assets/cards/frenzied_flame.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "60c965479699a2d9bf1babade03ba5705637a7e18c9f3d03be75865af0d8ac7c"
+      },
+      {
+        "path": "revenant_assets/cards/frenzied_three_fingers.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "3f2c69ad87d38f3676c16e03214731015992b14075dc5dc8e9ea8d09cbba1139"
+      },
+      {
+        "path": "revenant_assets/cards/gaze_beyond.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "af79709e356193f02a39d8f9201e5baf685a9d073529a731953e1e9bf890420e"
+      },
+      {
+        "path": "revenant_assets/cards/ghostly_touch.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "5bd0f6f0dfb8e40e6dc4386919e442f414eaaae7b1319f374f20eb5c697831c0"
+      },
+      {
+        "path": "revenant_assets/cards/giant_skeleton_wrath.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "a5156531a0b4fd3a77bceb67d26886cf22d537deb62a900b83892c151551c51f"
+      },
+      {
+        "path": "revenant_assets/cards/golden_order.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "8b5e867fa32bb121fbc3e19155a120ed749cbf2281409e7c51ecb3df118c687d"
+      },
+      {
+        "path": "revenant_assets/cards/grave_rob.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "c041e45e28891349888355319f7f34d52135d1f792cc8456def72f823a6c20bc"
+      },
+      {
+        "path": "revenant_assets/cards/greater_recover.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "ac4edea9fe1d12e66af411feac162d6b1e887ea9eafe6e1b744c7c33ea725ff2"
+      },
+      {
+        "path": "revenant_assets/cards/grooming.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "9470df688d62a598474c70255cfd25504a61df030fbb2be20990bad734481b3b"
+      },
+      {
+        "path": "revenant_assets/cards/gurranq_beast_claw.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "2e74fbe6c33049134c1076f8fa36223296977b418b9f4e5ab347822445545e12"
+      },
+      {
+        "path": "revenant_assets/cards/gurranqs_rock.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "e630f86b5e4cb0310eaf103aa7e4753952ce1ea9d563eca1d38f9f6185da7f45"
+      },
+      {
+        "path": "revenant_assets/cards/halo.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "27bbb1a309fdc2c04c6379831cb8fd688ebed58ebedb67e74db0c0a855f7b1a3"
+      },
+      {
+        "path": "revenant_assets/cards/harmony.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "682cd5154b1bccdc5a64650f61cc5131e4442e6c0804955e89a655011aae2ecb"
+      },
+      {
+        "path": "revenant_assets/cards/heavy_echo.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "5ca1a7191a9eb12222c57fd0458feaf8b4708b32b209f4824c69241d3c796cb6"
+      },
+      {
+        "path": "revenant_assets/cards/helen_family.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "043f311db526502ccf4b3d9584f331f16d1e5e7acc69fecf53b9059bc4d8090d"
+      },
+      {
+        "path": "revenant_assets/cards/ice_lightning_spear.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "4abdf1eeec91c15e049a9cf6bcb289d2c80f0fb1b9ab2089f40eff23ca2abf3b"
+      },
+      {
+        "path": "revenant_assets/cards/joint_strike.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "5bb73951ac33dce1c15021d35f385a5619394e2cdd74c3f45edf039e338be9cd"
+      },
+      {
+        "path": "revenant_assets/cards/kings_recovery.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "5acd3620675784703670cd394b1e5bdd323fa7854cafc316122f5b32ace0c464"
+      },
+      {
+        "path": "revenant_assets/cards/lansseax_blade.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "fbba6a034e092eb64a244a11d645443e7304ccc507a10109f272a9c5ef70b6f6"
+      },
+      {
+        "path": "revenant_assets/cards/life_and_death.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "85a79b048dcba1ee24ad2472366f22b1ef36bca209adf99b1a56bdd37e5b241f"
+      },
+      {
+        "path": "revenant_assets/cards/light_spirit.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "f280a7fc7bac596b4ec5dcaded47aaa85a275f982b251b7b83989f6e664740bb"
+      },
+      {
+        "path": "revenant_assets/cards/lightning_spear.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b3c07ef7a9c8b8f7e45670c6923a4e52a13c51ab45195ee987a68cc5fd5886ed"
+      },
+      {
+        "path": "revenant_assets/cards/lightning_strike.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "6b55471ee5ba7863febc7bc232a6eb8946aa8c9a9105128df68bac7f15293458"
+      },
+      {
+        "path": "revenant_assets/cards/mutual_understanding.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "90a1099e0e3dd50b222c4cbfabef7e6b79ab34d810c48d61e3c471c30720bf61"
+      },
+      {
+        "path": "revenant_assets/cards/necro_drive.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "f0ceba1a89372792b29d8b088e58f976aec6183df714b9930d6db0eed8677637"
+      },
+      {
+        "path": "revenant_assets/cards/night_must_stay_longing.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "1f66e919d1f56393b397c9ac34083b556269e02b9821694e86455ec63b867c59"
+      },
+      {
+        "path": "revenant_assets/cards/pack_up.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "256bcc3d5015b724fba9d9c3be36c4fb3c4f9b500a83464ce200adbb271d4efc"
+      },
+      {
+        "path": "revenant_assets/cards/precise_lightning_strike.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "0b7417ec989f2dc45edffa3fd2f9c394944d4fe9c2e9b49efb84a184ad3144a8"
+      },
+      {
+        "path": "revenant_assets/cards/preparation_ritual.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "66f373c6fb19af7c23746f770887c8d47e278c876d0e6ae7ef42d68844413489"
+      },
+      {
+        "path": "revenant_assets/cards/pumpkin_head_family.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "fb079f6583857f774999d5826cc712505e41102321d651ebbbdcb49cd015e685"
+      },
+      {
+        "path": "revenant_assets/cards/radagon_halo.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "e30d46733508f5e2638f33572c1c4129bd6d8d064faab73fad3e869d02e57c3c"
+      },
+      {
+        "path": "revenant_assets/cards/reanimate_dead.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "176411ceee88736452d97756ec50d01e7e3c27f5017da6f7eb9d00b879ea2d71"
+      },
+      {
+        "path": "revenant_assets/cards/recover.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "a66e583c4c0a494a739f5ac5865a1e404b3683fa670b0aa33c6e0617707ab8ab"
+      },
+      {
+        "path": "revenant_assets/cards/relay.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "0d81d9d5302520eb1c363cf5b97ba3c06f6c0e91f36ae925ca7a187851c9e9b3"
+      },
+      {
+        "path": "revenant_assets/cards/resonance.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "53ba0bc6b93c9c7edd6ff67bafdee4956a271edc8e24088f62e59906bc03f05a"
+      },
+      {
+        "path": "revenant_assets/cards/resurgence.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "976f074ed976fdf091f714bdff5ebd8c6bf05f03446072653eabc2b9e72a231e"
+      },
+      {
+        "path": "revenant_assets/cards/revenant_card.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "7e21e4b717e212f8aafa71180fa238db9f76a170ea6c2aa3957229ad8bac6f3f"
+      },
+      {
+        "path": "revenant_assets/cards/skeleton_family.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "379d45639f9bc93c840a734c79f74ce168fae2e66ea0bd7350fbfd32694cf954"
+      },
+      {
+        "path": "revenant_assets/cards/sky_rending_chord.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "a500b869a5822e1f7ad896110ebf66b08c46e4d78810ba0128f3270e83012d4a"
+      },
+      {
+        "path": "revenant_assets/cards/soul_charging_claw.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "05b579b8d9cb8519ff4e8a54da352b2ae15227637692d82e5f51a415590f0795"
+      },
+      {
+        "path": "revenant_assets/cards/soul_cursing_bell.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "4266e773a14eba250b7c730df3deb83a76014d2ed2106ac71aadc049e91bc1d6"
+      },
+      {
+        "path": "revenant_assets/cards/soul_departure.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "ed17ab4b96ee63fbe44b09e88eb949ef6c712a310ea1cea7aec5f72dd67817bb"
+      },
+      {
+        "path": "revenant_assets/cards/soul_return.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "ee87458c663cb5960a213a80774a0ffcde10566a974a8544e622f96ebf4a0e1a"
+      },
+      {
+        "path": "revenant_assets/cards/soul_summon.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "3a07e8da4b077f4182507a74531da2c3209137c571d0ed2a012088fb77670c3d"
+      },
+      {
+        "path": "revenant_assets/cards/soulbound.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "cf0c9e4cac7daf202475c403d4b3e69c9ce23490cdf474e927b2f9fe267b1b1e"
+      },
+      {
+        "path": "revenant_assets/cards/soulguard.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "586b4750d182c136416bf9167df686085e169a30ef2cdf86051e20250c408f7c"
+      },
+      {
+        "path": "revenant_assets/cards/space_rending_frenzy.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "eb7783467ddad49b436314312d7fcfc13df59c1ea1788c2d198dbb357cdde5c8"
+      },
+      {
+        "path": "revenant_assets/cards/spirit_form.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "2437b36ae3490575911241b679cdd982ca19a31caf0edf90d3ee65fa42798475"
+      },
+      {
+        "path": "revenant_assets/cards/spirit_gathering.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "bc84cba072fbd2ae2b446e9b9742b52fe24aac4144e7b3959df3db2800afb0d2"
+      },
+      {
+        "path": "revenant_assets/cards/spirit_link.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "be8b724432516ad8ce063bc9770929257c00fe3dd3ee413fc6fa9f3851a04ed9"
+      },
+      {
+        "path": "revenant_assets/cards/spirit_manipulation.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "f35243fbd8f1f47c398d363f5daa727fc0cde78e6dc317b9e5313c9a8434f4e2"
+      },
+      {
+        "path": "revenant_assets/cards/strike_revenant.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "5b011612fb960a301cea719c594d2a9650758c52ba1c8493868399542db0e383"
+      },
+      {
+        "path": "revenant_assets/cards/stun_call.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "a8b10c4e203532b3d316da182353ddfff4106d145545e0ced2cd022f2088702a"
+      },
+      {
+        "path": "revenant_assets/cards/styx_spirit_fire.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "c33032dbc8bcffcd94ba5c802cc2f9696b57cf41da2f71019874de600e273bd2"
+      },
+      {
+        "path": "revenant_assets/cards/substitute_doll.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b5460fed37d6500d2d5459b22628a8a1154556c672829992242f717aea806988"
+      },
+      {
+        "path": "revenant_assets/cards/surge.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "6ecf666abb79fd0396bd50587cedad708bd01be8140e53976686ca38d66a0c11"
+      },
+      {
+        "path": "revenant_assets/cards/threefold_halo.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "f1c5a05b12116e37a819d2221c795a6c0da85f52851f1896825df9b2b45b962f"
+      },
+      {
+        "path": "revenant_assets/cards/traveling_satchel.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "e01a600a7dccb45c220b06bcef45b2e4f098549f3e3fd7ad49b8fe7264395421"
+      },
+      {
+        "path": "revenant_assets/cards/unbearable_frenzy.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "d524286dd6e5458fad013eafc2655655479cb3d06b67430a0ac58c2f5eb66810"
+      },
+      {
+        "path": "revenant_assets/cards/underworld_reflection.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "cad534f60a5b8645c0d4556d9a6911e99db3266b622dfdbd80e209fe00cada51"
+      },
+      {
+        "path": "revenant_assets/cards/underworld_rising.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b2caebcf5465759413c6725bfb5e4eec2e7fa55b52cd3d7db324283d0b5ea385"
+      },
+      {
+        "path": "revenant_assets/cards/undying_march.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "ed686ad5548c790725f40e1adfd75a0ca8a04206ac860e9432fdff3339279e13"
+      },
+      {
+        "path": "revenant_assets/cards/watchful_waiting.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "6ec9c5553f18683dac961510c5bab1deecb7bd7df1b0f06371fab5b9c964aa7e"
+      },
+      {
+        "path": "revenant_assets/cards/weeping_strings.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "32149eb8dd7d1b96f9f3e00bfe202b7823ec4cdcb4b1b23edad28472830a1282"
+      },
+      {
+        "path": "revenant_assets/cards/white_shadow_lure.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "a58ee5046b034099cd781453022611111597bfaa57cf46a43834d7d3ca9c6917"
+      },
+      {
+        "path": "revenant_assets/cards/wrathful_note.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "e6ab24d69b4b00a3253aa9689cd431cb1dbff3993c5721590d95ce51b97a755b"
+      }
+    ],
+    "sample": [
+      "revenant_assets/cards/all_souls_return.png",
+      "revenant_assets/cards/beast_claw_mark.png",
+      "revenant_assets/cards/burn_life.png",
+      "revenant_assets/cards/dead_realm_spirit_fire.png",
+      "revenant_assets/cards/flannsax_lightning_spear.png",
+      "revenant_assets/cards/ghostly_touch.png",
+      "revenant_assets/cards/gurranq_beast_claw.png",
+      "revenant_assets/cards/ice_lightning_spear.png",
+      "revenant_assets/cards/lightning_strike.png",
+      "revenant_assets/cards/preparation_ritual.png",
+      "revenant_assets/cards/resonance.png",
+      "revenant_assets/cards/soul_cursing_bell.png",
+      "revenant_assets/cards/space_rending_frenzy.png",
+      "revenant_assets/cards/styx_spirit_fire.png",
+      "revenant_assets/cards/underworld_reflection.png",
+      "revenant_assets/cards/wrathful_note.png"
+    ],
+    "exact_duplicate_groups": []
+  },
+  "duchess": {
+    "source": "images/packed/card_portraits/duchess",
+    "file_count": 96,
+    "assets": [
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_angel_wings.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "9b42036ad18de8b6b9a191df949edab1ac6e7e8ea2559abc55a819db0b32fc3a"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_back_to_past.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "d0d23e2691862a91167b5d99b4049db2c8b5e0b13548e065d1e67349ba1ba14a"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_beat.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b7b36455e67a32619d62efebb41bde17ed1eb97d066eb0d7943691a82088cf89"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_become_invisible.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "38a300fe62e6342b0c2c5a8db79faf33b42473bbc699546d3cfbbf9f17816ca0"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_blade_reveal_moment.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "9f2260b4ad883017949ca7ba324a84e0c9d89c23e2da473688ffb1bd7750f3cb"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_blind_spot.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "1d52d45cf04b2e2c747fe6374464fcc1744af57e85a8a92b4be049da8bff3c9e"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_calm_composure.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "138d6e047349e1eb5872b6e7423c405901b73284d92f68dde59f34b24758f347"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_caria_phalanx.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "001c4d7982b6b08e4d244c98c66e0dd14ecae05d78a269543cc3eba97b2ac880"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_carian_greatsword.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "8d8fc7bf80c7f897dac7109ba4ac25172ada79431e71dd0a6603e59d03738fda"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_carian_piercer.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "ae32a2e806dc88a03e07eb0a111d9a86f54f49d37172e7d2f9cdab1f88f42906"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_carian_retaliation.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "5a699bb8231e8e4f36c0c00204bea9b76ac4a47edae11bfa010e4faffd0b0622"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_carian_slicer.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "5d821ea2d1e63064198d15e6c36a0901e3e06e750555e0b908f9cce37bac96d8"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_carian_swordsmanship.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "fd622bd65b1f1b5580c8da4240579de4593f37cff842997b9ac21bdd87f3c57a"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_carnival_night.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "ddc3c045eb9e63e56186049ed00e29f9d1838be4217fa915dc12e8f30189dd63"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_composure.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "aa9a47eff112fc400cd49da7636f395bbb232d25f5b19fe1c1d358e17d5a6369"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_death_blade.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "87864b5f6233bc037581e5bb33e163d807dd22582640af70630b8a2ea5a468ba"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_defend.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "86aaecb88d3f304857081d7f3b0eb7b9a58a79f5be92d50aff560b855474e5ac"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_distraction.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "fc9564de606bb74931cb90f9f80e284a00d58533b127b88236a36984fff14090"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_dodge.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "96a8a13f9a0ec73b5fe53c0a06070dcdc7a70a33dd88e1d3b47f014fb4d8522c"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_duchess.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "3428a51d7b9b55553422ce20dae33637d76e73577a5d26cf9f0d4f4a6363767b"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_elegant_bearing.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "13562f1e8fd5fc1d5b2608a71bdec4da23c3351d751bad380652edf4c2b91807"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_ephemeral.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "85d6d15b6c3153281f056c5077618f2a34a4f456a9668b0801a1fd87a6400ba8"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_escape.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "411a2430aefef0358f5f9a0f2b68ae3285e22f103739d11a4d3112af7c95c7d5"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_eternal_form.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "bf7d2f4352ec68860303d3eb0f2ac056a0d350f4b59a6f3384aa5b6e45878ebb"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_eternal_restage.png",
+        "size": [
+          606,
+          852
+        ],
+        "sha256": "1f6b755a10b9bf049b521f039df09e9fcbf8e006d5e7fac2bcef361b5f39222a"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_falling_magic.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b5338baf602edaed1a11569a463c8f409a0056898433975a28b5f98c12b1b582"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_fate.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "93c85bebc435f5afc77c6f378e88e9242229657fb9f7d4ac1d37c420395afbd1"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_feint.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "88f48c88b893f9abeed11ce4c36f2ec65af056d1b720e60e44f8956629366b15"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_finale.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "5b773af021bbc43c76a545cd84078eaed4f16fc2edcac3a4245c1d115bd46071"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_fleeting_blade.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "96a8a13f9a0ec73b5fe53c0a06070dcdc7a70a33dd88e1d3b47f014fb4d8522c"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_fleeting_instant.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "44f6873fa366e88e408b0b161d8a8b6a559b2b2893f7e5676dc35cf18bdf1865"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_foresee_future.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "fb6982576f8ac212bdda481fa2d1195fd16fd63da439c4d9396560104b8390e5"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_gap_moonshadow.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "3bee13e7782ff2b54332c24cd22e497d1dac6d8a1e905fdfa90ab7e3445a4cea"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_glintstone_hail.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b208c742519c70e721bc4d10dbc5e7d2a13ccc6d7d48abef866c48e63c2d5a44"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_glintstone_knife.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "e60620d7cdeb58eb85f18b8d5e82c02c27a8cf8abce3add6a55b7f8a994ffbd6"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_golden_blade.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "9a60c9b995753f776db0e6de20b203946e07fd128d62e5f2f2ddb91e55fc6663"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_golden_moment.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "168ff9c3eec85fde2a9662ac16234d8010f63bea1db7c2498870c9aa743b6757"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_graceful_sword_dance.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "a1beba356c14c115b5d30f52b55a8e31ac9f51811497239d0569f148970ea720"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_grand_bearing.png",
+        "size": [
+          606,
+          852
+        ],
+        "sha256": "f83e2ac3fbb61456b3766540bdbe28c48b382bb2a419dd154be51985fca52009"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_grand_reprise.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "45252c7e76fd6f1f853b6adb0073155438ae2e938f1719880e541360f82c8ba8"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_great_caria.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "d09d8f057c9e24355e148123561e7b0dfbc6de2594a05494342d887154ae8b44"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_greatsword_phalanx.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "f8a27fbf85d3ae768979f284c52b00920cf7bbebc602ffd075de5537e1a1c4c5"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_hidden_pocket.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "3e5fc12140231ede2dd558d937a9fbf78397be5a298ca2378b06f18c4351f7f3"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_inch_victory.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b2d7a458aa3487f3240fa93f986c374624b53554823a60a7719f78cd53a7cbdd"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_initiative.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "77ef3c5dad52f2c42d6885a2582d8631ba947ea92e48eac1a913b843d9a6e80d"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_insight_future.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "710a19b35d333ee483bc8354f3cc32a6c4668e663686284b39847ff9ee49b3e6"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_invitation.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "497ca726c62a08ab4f6c9e0eaf480b4d37fe7f3fe8b44c18e70fab9014a5cb26"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_lightning_nerves.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "d6d8d0ef74fb385878a09bd81644f5fb86afa780ffaf4c5ba6060bb84c114295"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_loretta_greatbow.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "a51f20e43ecdd8f64e805996aeb70190b6c9a971850064864d0a5a9182289235"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_loretta_mastery.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "9af7dc8dd117f96630f92ed3b1b3c920b869b9deaa667814c59fab834c1b00ef"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_loretta_slash.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "f980145c67fff7e3bc363f195365e8e62a71461869e887c5961224dad5cf3e64"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_magic_dagger.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "eab6377f1c0ed61936f86ad33f1cb2fbb0797fb03707bcb21348d6b5087fedb9"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_magic_radiant_blade.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "28f66c02549f8431fc17e198f59c1fff6edb931939bba2ee08ed5fd58d909bc0"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_masquerade.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "bee34427dc7f51a1944bef4e60bbf3d9c88177c963154987f467a99e4b23d440"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_memory.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "def3462a4117bd850db004b065fee6724fa9cb3dc6b9118894cc4f122d557cbf"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_memory_fragment.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "3675af0f818b6adeae84183a3ab2cd138b9c7351b35775b3f583d7707b0a6594"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_midnight_waltz.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "42f2b6fc07f83f4d630317d5d6877415f4045cb2a8e99212bea547df408f1ea1"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_miquellas_halo.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "2b0ac479bbf4ad0384c8362d717e6e251ab5d617b779b4683178323b3c2b41c3"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_moment_and_eternity.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "1a8c54021c1251163a23a4f9fa8be008954fdd30b0fd1c61eb5eb28d5e38ec68"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_opening_moment.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "1792cd7b1171ff7460af0ea63b460c750c0c3a3de95dff9b75708a08038a6a75"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_overdraw.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "a0639153ac0bf91a8f6ee49ede3db581f6041c34ca7eed06908420b0ef92f39b"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_parallel_time.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b4a8f6a8fdd60bb46767cf3fd4966bbfc894d52c58b5c365ffe070175b7a7007"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_passing_cut.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "aca659337f79d20c26fdfaddadd05d5f7546245ec3808dd3a7f4b0e8633bc486"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_perfect_rehearsal.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "411a2430aefef0358f5f9a0f2b68ae3285e22f103739d11a4d3112af7c95c7d5"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_phantom_killer.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "ef685a9e60b25e030acc5d6b25f5707d136784445cdd7b3f371c8457243e31b1"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_pivot.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "8f11d30c9b31dc58841f0db2d4809d91fcce4862042abb288addc32aef84c06d"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_poised_exit.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "fc575d927b58863e79c20c01667b1e8eb8fb9feebd4b40650c9b8b181bba7ad1"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_quick_hands.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b041550723cac2f38e10335778cb0af068f763b6291a60d3e9a334aae97b9886"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_quickstep.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "927d034cf29a5e3c976feb8c88b8d5d33f181d9f281cd9ee428125caf0797054"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_quietude.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "7bf61313ee3f1f80c9c495a857f0586a4c79f46f48f0e91462534bfad3de74a3"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_radiant_blade.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "4ef22f33ccf94794a5ac87054abe10457c3033eac85c43b31e8da779b8071f50"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_radiant_blade_array.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b2c8068c9b268fda1525475b51142361233620f80721ac2e8fb76e4c8672d625"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_radiant_blade_magic.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "e7842c89790d75699c0e32a631334a178f2f1f5a40bf1e70b8227419264465bc"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_reenactment.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b2ddf2df5d6bca6e60a1b199e53451ce0d8994c348b410daaed521a212bfc493"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_restage.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b8959da004d44c1582dbe4d1876ca1aeda9a4f8e5edc0db18a4ccaf2d0ff36b5"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_returning_crosscut.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "ca7339cab6602faaaf3f8150f4f98201ea3aeacd9f265388b4b0ef57c9cfdb86"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_reveal.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "df8bc9ed4e0e33d662260fbf4184db39b40b7a7b1991c8d993452cce3a278f2d"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_reverberation.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "bfffa7ef2b649394e0f197799edd146ab5624400f542e1f5adcc3bf35bdb8494"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_reverse_time.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "31874fc4c9f46bb1a761082ec82e0f53d878f8a0a6c14a891954819f2d86f78d"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_sacred_halo.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "ca04ca143ae06afd8bbad1b131c7a0ef46ab6d4f2bce83008079919f096e22bd"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_shadow_sword.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "d971f14c805de8e78e85b9cb5ae19f66228f4aaf8dfbe61e02146ee24f90d71c"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_side_somersault.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "6dbf4541e73eb83cb13d2b30c2327bdf815ef0e78318b7a17e693fcb3b32d090"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_silence.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "432bb91c94a649024e7909e8f6b8271c66c1a522b0d616237478134187635302"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_silver_flash.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "ecd6477071ccd2996679dc49c78dde264beff585a7e0df9da6dff37445283a51"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_silver_storm.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "a115604064757ac479c177dbb0155df951d85507b209f93c5726cd80e7a7c0d7"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_sleight_of_hand.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "b3e4f9858281f64f4a62c9cea28b6d066ae9848c0f6af899ab4c0a54ac5a3ee2"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_soft_landing.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "c4b1d490d7e797f33afafa0b3431bca10f895e384a8c1120577578d10212d3b0"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_strike.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "ad640fbec21d3d2c8edc3ec6081d1802b1ed94637449cf5dfd07118660fa6ca6"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_swaying_step.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "17537a53ee5b16cebe31695638a5ca09bead86f0110f67bbf179a8b12f9a4ed6"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_switcheroo.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "517a9db055ce7aa60612fc0f80509a868c052002aa5216dab4230990b614ca40"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_thiefs_arsenal.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "fe94999b2a34549de1be40c2309593c314ac0d23cd5038fd841b2fb722a1115e"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_thread_the_gap.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "4a0da65c7a12cabbe4c7f7970c7fe15ce89108cf2e6220de597a1b6d9db0e5cb"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_tidy_collar.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "61093f6b7184f6f682cd5c7608aaf18163fcd8d6b3cd3649077f2c9a69351aad"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_undecided_fate.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "fc24daeb76e3d040d16ca88e8fb34ec2000b9a375396eb1154e5e629bb84a50e"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_veiled_step.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "89f61714c51eef8526c7551eea2a75fe49b90fae721c5d6fca43af97917ed168"
+      },
+      {
+        "path": "images/packed/card_portraits/duchess/duchess_wait_a_moment.png",
+        "size": [
+          1000,
+          760
+        ],
+        "sha256": "56f114cbf91340557edac166c1e950ff7fe1ca3d2d49e20181cfbb520cf019bd"
+      }
+    ],
+    "sample": [
+      "images/packed/card_portraits/duchess/duchess_angel_wings.png",
+      "images/packed/card_portraits/duchess/duchess_calm_composure.png",
+      "images/packed/card_portraits/duchess/duchess_carnival_night.png",
+      "images/packed/card_portraits/duchess/duchess_duchess.png",
+      "images/packed/card_portraits/duchess/duchess_falling_magic.png",
+      "images/packed/card_portraits/duchess/duchess_gap_moonshadow.png",
+      "images/packed/card_portraits/duchess/duchess_grand_bearing.png",
+      "images/packed/card_portraits/duchess/duchess_initiative.png",
+      "images/packed/card_portraits/duchess/duchess_magic_dagger.png",
+      "images/packed/card_portraits/duchess/duchess_miquellas_halo.png",
+      "images/packed/card_portraits/duchess/duchess_perfect_rehearsal.png",
+      "images/packed/card_portraits/duchess/duchess_radiant_blade.png",
+      "images/packed/card_portraits/duchess/duchess_reveal.png",
+      "images/packed/card_portraits/duchess/duchess_silence.png",
+      "images/packed/card_portraits/duchess/duchess_switcheroo.png",
+      "images/packed/card_portraits/duchess/duchess_wait_a_moment.png"
+    ],
+    "exact_duplicate_groups": [
+      [
+        "images/packed/card_portraits/duchess/duchess_dodge.png",
+        "images/packed/card_portraits/duchess/duchess_fleeting_blade.png"
+      ],
+      [
+        "images/packed/card_portraits/duchess/duchess_escape.png",
+        "images/packed/card_portraits/duchess/duchess_perfect_rehearsal.png"
+      ]
+    ]
+  }
+}

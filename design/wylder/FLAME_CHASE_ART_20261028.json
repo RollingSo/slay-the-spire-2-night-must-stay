@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-28",
+  "generator": "built-in imagegen",
+  "status": "user_approved",
+  "runtime_promoted": true,
+  "output_dir": "design/卡图预览/wylder/wylder_flame_chase_slash_20261028",
+  "assets": [
+    {
+      "key": "wylder_flame_chase_slash",
+      "name": "燃火追斩",
+      "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-8dc9d701-78b8-4616-9b72-4b83ebed5d54.png",
+      "ref": null,
+      "ref_provenance": "截图旧剪贴板失效：根据对话中可见截图描述动作，另传入角色立绘与卡图风格。",
+      "prompt": "Use case illustration-story; 1000x760 landscape fantasy card artwork. Strictly follow image1 action pose, image2 Wylder identity, image3 flat graphic rendering. Wylder closed silver feather-wing helmet with black visor, black scarf, navy coat with white water motifs, silver grouped scale armor, brown gloves. Two arms, two legs with continuous shoulder-elbow-wrist-hand joints. Chunky silhouettes, large hard-edge flat cel color planes, minimal texture. One physically rigid greatsword, straight blade/grip axis, open forked pommel, no bent steel or extra weapons. No text, UI or card frame. Lower-third character crouches forward in rear-side view, two separate connected arms grip the same ONE straight greatsword and perform a low horizontal sweep toward right. Display sword in the foreground, near-horizontal line from distinct OPEN TWO-PRONG FORKED POMMEL on left, through blue grip and two gloves, silver guard and rigid straight blade pointing right. Pommel must be OPEN, visibly TWO separate swept silver prongs with a gap, not a closed diamond or ring. An orange-yellow flaming sweep arcs from lower-left toward upper-right behind the blade; do not obscure hands. Simplified warm dark russet flat background, no UI or landscape.",
+      "edit_prompt": "Precise object edit ONLY the greatsword hilt/pommel in this artwork. Keep pose, both arms, both gripping hands, sword blade, body, flames, background, crop and flat graphic style EXACTLY unchanged. The pommel behind the lower/rearmost hand is currently concealed and looks like a round knob. Expose a small distinctive silver OPEN FORKED pommel, with two swept pointed prongs and dark negative space, at the left end of the blue grip, extending horizontally LEFT away from both hands. It must visibly connect to the same single grip. Keep pommel stem, grip, guard, straight blade ridge and tip exactly COLLINEAR on one nearly horizontal axis from left to right. No second handle, no extra hand or fingers. Preserve the sword's rigid straight blade and all non-hilt artwork.",
+      "rejected_candidates": [
+        {
+          "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-5f96f8b1-2d18-4c16-95c7-91f673c41c54.png",
+          "reason": "叉形柄头被遮挡"
+        }
+      ],
+      "runtime_path": "images/packed/card_portraits/wylder/wylder_flame_chase_slash.png",
+      "approved_sha256": "C52CFD5DA2D483A202C31F3585D8BE33C0EF54249597353BA96EC70C8507E58A",
+      "status": "self_reviewed_approved",
+      "replacement_source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-8dc9d701-78b8-4616-9b72-4b83ebed5d54.png",
+      "replacement_prompt": "Use case illustration-story; 1000x760 landscape fantasy card artwork. Strictly follow image1 action pose, image2 Wylder identity, image3 flat graphic rendering. Wylder closed silver feather-wing helmet with black visor, black scarf, navy coat with white water motifs, silver grouped scale armor, brown gloves. Two arms, two legs with continuous shoulder-elbow-wrist-hand joints. Chunky silhouettes, large hard-edge flat cel color planes, minimal texture. One physically rigid greatsword, straight blade/grip axis, open forked pommel, no bent steel or extra weapons. No text, UI or card frame. Lower-third character crouches forward in rear-side view, two separate connected arms grip the same ONE straight greatsword and perform a low horizontal sweep toward right. Display sword in the foreground, near-horizontal line from distinct OPEN TWO-PRONG FORKED POMMEL on left, through blue grip and two gloves, silver guard and rigid straight blade pointing right. Pommel must be OPEN, visibly TWO separate swept silver prongs with a gap, not a closed diamond or ring. An orange-yellow flaming sweep arcs from lower-left toward upper-right behind the blade; do not obscure hands. Simplified warm dark russet flat background, no UI or landscape.",
+      "previous_source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-496fe225-88ba-49fc-9ac6-82113dd2d2c3.png",
+      "previous_prompt": "Use case: illustration-story. Create one 1000x760 LANDSCAPE game-card illustration only. Input1 Wylder character identity and straight greatsword. Input2 is already-approved Flaming Strike card used ONLY to differentiate compositions; do not copy its upright raised-sword pose or deep-purple background. Input3 original game graphic style. Action reconstructed from user screenshot: Wylder is at LOWER CENTER in a DEEP LOW CROUCH, rear three-quarter view, body leaning forward, head pointed to right, both knees bent and grounded, rear leg pushes. He sweeps ONE long rigid straight greatsword very LOW, nearly horizontal from lower-left towards right: exactly TWO coherent armored arms lead from shoulders through bent elbows to TWO brown gloved hands on one navy handle; compact silver guard and distinctive sculptural open forked pommel. Pommel center, handle, guard, silver blade ridge and tip remain collinear, RULER STRAIGHT, never bend; flame motion curve is physically separate from steel. A BROAD sweeping ORANGE/YELLOW FIRE BAND rises from lower-left across the front and expands towards upper-right, echoing screenshot's wide low horizontal fiery sweep. The ONE flaming ribbon reveals both gloves, guard and helmet, not a uniform wall covering the person. Wylder has closed silver feather-wing helmet, black scarf, navy split skirt with sparse white flowing motifs, grouped silver scale shapes, brown wrappings. One readable action: low sweeping fiery follow-up slash. Make figure recognizable and 50% canvas; sword/hands read at 250x190. Dark warm RUSSET/BROWN backdrop of 2 calm flat shapes with large quiet area upper-left, not purple rays, not grey-blue wave, no grass/trees/castle, no game UI. Graphic flat 2D fantasy card art, chunky angular silhouettes, large solid color blocks, strong black shadows, 2–3 HARD-EDGE CEL planes per material, no photographic textures, no fine engraving, no cinematic lighting. No words, UI, frames, logo, duplicate sword, extra arm, bent blade, fiery particles, glowing circular halo or flame-obscured body."
+    }
+  ],
+  "validation": {
+    "build": "0 warnings, 0 errors",
+    "new_revision_checks": "56 passed, including generated-card hover preview and pursuit event handling",
+    "card_text_format": "pass",
+    "portrait_paths": "534 passed",
+    "godot_import": "pass; no ERROR/SCRIPT ERROR",
+    "godot_log": "build/wylder_redraw_20261028.log",
+    "texture_cache_and_sha256": "pass",
+    "exported_or_installed": false
+  },
+  "user_approved_date": "2026-10-28"
+}

@@ -26,6 +26,7 @@ namespace NightMustStay.Core.Patches
             AddCharacterDialogue<Ironeye>(__result, ironeyeDialogues);
             AddCharacterDialogue<Revenant>(__result, revenantDialogues);
             AddCharacterDialogue<Duchess>(__result, CreateDialogues(__instance));
+            AddCharacterDialogue<Wylder>(__result, CreateDialogues(__instance));
 
             // Dialogue sets can be constructed before mod localization tables are
             // merged. Populate on every access so repeating (.r) Guardian lines are

@@ -1,0 +1,15 @@
+[h1]0.4.2｜游戏版本兼容更新[/h1]
+
+- 适配游戏正式版 v0.111，并将最低支持版本更新为 v0.111。
+- 适配 Public Beta v0.113 的伤害修正、召唤物、混合目标卡牌和卡池接口变化。
+- “合奏”改用模组专属模型 ID，避免与游戏原生内容发生 ID 冲突。
+- 加强追踪者小型商店/奖励卡池在不同游戏分支下的兼容性。
+- 修复复仇者召唤物、铁之眼混合目标卡牌及多处 Harmony 补丁在新版游戏中的兼容问题。
+
+[h1]0.4.2 | Game Version Compatibility[/h1]
+
+- Added support for the v0.111 stable release and raised the minimum supported game version to v0.111.
+- Added compatibility for Public Beta v0.113 API changes affecting damage modifiers, summons, hybrid-target cards, and card pools.
+- Moved Ensemble to a mod-specific model ID to avoid collisions with native game content.
+- Improved Wylder small shop/reward pool compatibility across game branches.
+- Fixed compatibility issues affecting Revenant summons, Ironeye hybrid-target cards, and several Harmony patches on newer game builds.

@@ -1,0 +1,247 @@
+{
+  "date": "2026-11-01",
+  "instruction": "用户批准回旋斩本轮第一张、箭步上砍，以及其余所有尚未确认卡图最新版本；此前拒稿不恢复。",
+  "sweep_selected_source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-79448188-79d0-45fa-899b-1fc41e3b8212.png",
+  "cards": [
+    {
+      "id": "wylder_aerial_stake",
+      "path": "images/packed/card_portraits/wylder/wylder_aerial_stake.png",
+      "sha256": "b61b93495143f6f8d09c93ac541de6941ed920deb634e9c56a0dd67144fd572c",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_assault_stake",
+      "path": "images/packed/card_portraits/wylder/wylder_assault_stake.png",
+      "sha256": "b969b68e071ec7327c91a691f4867ef7c38c7b0acd14f6b6bd5b5904337880ef",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_bloodhounds_finesse",
+      "path": "images/packed/card_portraits/wylder/wylder_bloodhounds_finesse.png",
+      "sha256": "092ac004906f29e354c27ded9ef8c7552111ba869470da95457087f0da3a778c",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_boldness",
+      "path": "images/packed/card_portraits/wylder/wylder_boldness.png",
+      "sha256": "71454f43f6e059f4278a294f1fe9d5153ea5423647059cee2758f0c391018759",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_claw_movement",
+      "path": "images/packed/card_portraits/wylder/wylder_claw_movement.png",
+      "sha256": "95913e863fffd4d9f4308d2430470e08e341d9b97d1f75ba18ae1ae57441b350",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_claw_pull",
+      "path": "images/packed/card_portraits/wylder/wylder_claw_pull.png",
+      "sha256": "4b6120db76413808e2276d86c64a0c01d63a7df6df4c46efbb930b39c182025e",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_claw_rend",
+      "path": "images/packed/card_portraits/wylder/wylder_claw_rend.png",
+      "sha256": "c1315c59cbf0fc977a1bdf1e4e35cdeb8fef000f03c31ae0838fd28efa730a12",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_corpse_wax_cutter",
+      "path": "images/packed/card_portraits/wylder/wylder_corpse_wax_cutter.png",
+      "sha256": "8ecb890a587a79450850bc494fabd62e4d5797eea0e4512191d8f0e7398de547",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_counter_rush",
+      "path": "images/packed/card_portraits/wylder/wylder_counter_rush.png",
+      "sha256": "4d4fbaa754bda23ee311033815d7b78733592f92170df3c0836e63c73279bf28",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_critical_strike",
+      "path": "images/packed/card_portraits/wylder/wylder_critical_strike.png",
+      "sha256": "5a94e5615add6767d1604b8438e098f60b2a2c64b337d4bea07672bf6824833b",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_dash_attack",
+      "path": "images/packed/card_portraits/wylder/wylder_dash_attack.png",
+      "sha256": "1a2b97773a3d6dc36ab5a8b1c4d61c1867183298f6678a8dd4be21be2f17e0a4",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_debut",
+      "path": "images/packed/card_portraits/wylder/wylder_debut.png",
+      "sha256": "093d6d54a51c251ab9eea6e6e79040b8f9159c21a56b19c1d67544973ae5cdca",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_defend",
+      "path": "images/packed/card_portraits/wylder/wylder_defend.png",
+      "sha256": "b9869fe440d588afec73275f50d9726666addbdb6485de796254ad0b77b423b4",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_desperate_survival",
+      "path": "images/packed/card_portraits/wylder/wylder_desperate_survival.png",
+      "sha256": "999223b47427782e34bfbd2bfaab50bff1fd5b91cf988df4412c18a526c5b300",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_dual_greatsword_leap",
+      "path": "images/packed/card_portraits/wylder/wylder_dual_greatsword_leap.png",
+      "sha256": "0bdbab2bbd7ba48fcae0a8f74a5ee6450ca0a6b9184f2354d03cd81fa6e33090",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_eochaids_dancing_blade",
+      "path": "images/packed/card_portraits/wylder/wylder_eochaids_dancing_blade.png",
+      "sha256": "8a5cfa5659f789090b67acf25fc3baf10142afa9e31157fe27e83bef537dfa86",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_execution",
+      "path": "images/packed/card_portraits/wylder/wylder_execution.png",
+      "sha256": "5e534f6b2fe9ccc5c720e8be8db922d64c0fb85c481efe1ec7886d4ddaa9c132",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_fire_coating",
+      "path": "images/packed/card_portraits/wylder/wylder_fire_coating.png",
+      "sha256": "9acaadb9d92898643bcf738fb35304817d043955da843cd9f2a15378769400d9",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_flame_chase_slash",
+      "path": "images/packed/card_portraits/wylder/wylder_flame_chase_slash.png",
+      "sha256": "c52cfd5da2d483a202c31f3585d8be33c0ef54249597353ba96ec70c8507e58a",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_flame_of_redmanes",
+      "path": "images/packed/card_portraits/wylder/wylder_flame_of_redmanes.png",
+      "sha256": "b1841d1598eb131c1cd55ab963f1eb04af922bac5ad6c2079faa8119ed69e2f7",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_flaming_strike",
+      "path": "images/packed/card_portraits/wylder/wylder_flaming_strike.png",
+      "sha256": "591ba2d2fbc796306a07386a9bb67f8cb432c8849d803ea1198f3c0d46a7099a",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_ghostflame_explosion",
+      "path": "images/packed/card_portraits/wylder/wylder_ghostflame_explosion.png",
+      "sha256": "9159aca46ac65562998d1ca15ef4b941a73aef733b159f06549329d9c771e3b4",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_jumping_heavy",
+      "path": "images/packed/card_portraits/wylder/wylder_jumping_heavy.png",
+      "sha256": "2aed57aab6575adce037c2832666f6accc5925f0671b34b2ac4861328f07f0c4",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_lions_claw",
+      "path": "images/packed/card_portraits/wylder/wylder_lions_claw.png",
+      "sha256": "a2808701ab3efe8e11881f239c19a9d38b033f84f4d289b475a34fda52069660",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_motion_and_stillness",
+      "path": "images/packed/card_portraits/wylder/wylder_motion_and_stillness.png",
+      "sha256": "f3ba6f1a6ca765b4fac726a8e656bd8db4410cd7badc443b56a319dc96857ce5",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_night_form",
+      "path": "images/packed/card_portraits/wylder/wylder_night_form.png",
+      "sha256": "a7f8b60f7f7dd5bd72655fd521a7b083f18935d5fb5719416afcbbfb4d8866d7",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_parry",
+      "path": "images/packed/card_portraits/wylder/wylder_parry.png",
+      "sha256": "f50950221af67d8d0a8db9a1e4d9a99e2552477ac35fbce25d14d43638072870",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_remaining_ember",
+      "path": "images/packed/card_portraits/wylder/wylder_remaining_ember.png",
+      "sha256": "247d7d29e536c09b665d2dc883ffc42a8eaa610b36396f6b0353829437d77515",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_ruinous_ghostflame",
+      "path": "images/packed/card_portraits/wylder/wylder_ruinous_ghostflame.png",
+      "sha256": "9f6f31b9d4e8c4ddaa144f9e80690bc2e29d193161ee03d44931777fe0e2b13f",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_sixth_sense",
+      "path": "images/packed/card_portraits/wylder/wylder_sixth_sense.png",
+      "sha256": "651667239c93c806d86099c1d8a3170f1140776cd53da02370f286efec8798e6",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_sliding_leap",
+      "path": "images/packed/card_portraits/wylder/wylder_sliding_leap.png",
+      "sha256": "87c7589a72ef127f3cecf15ef0913479c6917ad33163cc7514d88f5073885ce1",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_stamp_sweep",
+      "path": "images/packed/card_portraits/wylder/wylder_stamp_sweep.png",
+      "sha256": "2708d729f01e93fd3c35891366d2317c22b19c984522999f5392053d2e5f0328",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_stamp_upward_cut",
+      "path": "images/packed/card_portraits/wylder/wylder_stamp_upward_cut.png",
+      "sha256": "9366988e1bf7381b339d7c60bd839f4111bb0879ed0c9b523d92ef22b5bf7387",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_storm_blade",
+      "path": "images/packed/card_portraits/wylder/wylder_storm_blade.png",
+      "sha256": "301235c922f4deb06e6134468e11cd005676f4fe16a9b8026fefb190e1e3fccb",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_strike",
+      "path": "images/packed/card_portraits/wylder/wylder_strike.png",
+      "sha256": "ac1d4d21ff7c6cba598605659fd06e83435c2e358815d8792c89cfe4b7295343",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_takers_flames",
+      "path": "images/packed/card_portraits/wylder/wylder_takers_flames.png",
+      "sha256": "f38a6b79206caf2ba65657451fcfcdbaa0c43f92936cf35986259f1e65612ac6",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_undying",
+      "path": "images/packed/card_portraits/wylder/wylder_undying.png",
+      "sha256": "a150190535e34f09c7198c9bcd8057be5c9e2f40012f376d29569d4756c0828a",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_vacuum_slice",
+      "path": "images/packed/card_portraits/wylder/wylder_vacuum_slice.png",
+      "sha256": "646518aa6992ff051c1672ba180ceb58e061abc9383a1f97aec0920758ca59fd",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_veteran_edge",
+      "path": "images/packed/card_portraits/wylder/wylder_veteran_edge.png",
+      "sha256": "a31002ddf1ff03a188db808ce4c51802a5027ea8707853ee645fa4726054a28d",
+      "status": "user_approved"
+    },
+    {
+      "id": "wylder_wildfire",
+      "path": "images/packed/card_portraits/wylder/wylder_wildfire.png",
+      "sha256": "dc01699b0a10666ff46ce18686de6de73514672f991a25f977b5f7a5d4694397",
+      "status": "user_approved"
+    }
+  ]
+}

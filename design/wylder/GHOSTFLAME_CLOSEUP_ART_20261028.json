@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-28",
+  "generator": "built-in imagegen",
+  "status": "user_approved",
+  "runtime_promoted": true,
+  "output_dir": "design/卡图预览/wylder/ghostflame_closeup_20261028",
+  "pose_contract": "design/wylder/GHOSTFLAME_CLOSEUP_CONTRACT_20261028.md",
+  "assets": [
+    {
+      "key": "wylder_ghostflame_explosion",
+      "name": "灵火爆炸",
+      "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-d8e05aef-d7cf-4c30-a901-d38d42f2c5cd.png",
+      "ref": "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/ghostflame_hook_20261027/wylder_ghostflame_explosion_reference.png",
+      "prompt": "Create a landscape 1000:760 Slay the Spire 2 card illustration, guided by reference 1 only for the distinctive crooked hooked poker weapon and icy ghostflame, and reference 2 for the precise graphic visual style. EXTREME CLOSE-UP: only one old dark iron hooked poker smashes into a dark stone floor; its long shaft enters diagonally from the upper left edge, and its clearly curved, angular hook tip physically contacts cracked stone near lower center. At that exact contact point, violent pale cyan and icy white ghostflame erupts in thick, sharply shaped tongues, illuminating the broken stone. Single readable event. No character whatsoever, no hands, no arms, no bird, no figure, no silhouettes, no sword, no interface or lettering. Clear distinctive hooked weapon silhouette, not a straight blade or trident. Compose for clarity at small card size with large shapes and negative space. Flat graphic shapes, thick dark contours, crisp hard-edged cel shading, limited palette of near-black, desaturated dark gray green, cyan and pale icy white; match the bold flat game card artwork in reference 2. No photorealism, no painterly rendering, no detailed textures, no lens effects, no realistic glow. Background is quiet fractured stone, no circular wind arcs."
+    }
+  ],
+  "approved_sha256": "9159aca46ac65562998d1ca15ef4b941a73aef733b159f06549329d9c771e3b4",
+  "user_approved_date": "2026-10-28"
+}

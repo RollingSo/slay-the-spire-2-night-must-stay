@@ -1,0 +1,71 @@
+{
+  "date": "2026-10-27",
+  "generator": "built-in imagegen",
+  "status": "rejected_by_user",
+  "runtime_promoted": true,
+  "output_dir": "design/卡图预览/wylder/stamp_pose_20261027",
+  "authorization": "User authorizes independent artwork review and integration, no subagents.",
+  "pose_contract": "design/wylder/STAMP_POSE_CONTRACT_20261027.md",
+  "assets": [
+    {
+      "key": "wylder_stamp_upward_cut",
+      "name": "箭步：上砍",
+      "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-2e5b0fa6-559f-4c79-a474-9647ee7d1800.png",
+      "ref": "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/pose_redraw_20261022/pose_upward_reference.png",
+      "prompt": "Use case: illustration-story. Asset: 1000x760 landscape game card artwork only. Reference 1 is the STRICT pose to reproduce, reference 2 is ONLY Wylder's armor/weapon identity, reference 3 controls the simple graphic card rendering. Render as graphic flat 2D fantasy card illustration, bold black silhouette and hard-edged cel planes, simplified navy/silver/brown palette, 2-3 tones per material, NOT detailed metal, NOT painted/realistic. Closed feather-wing silver helmet and dark visor, black scarf, navy split coat with a few white flowing water motifs, grouped silver scales and brown wrapped boots. Sword: ONE long rigid straight greatsword, forked sculptural pommel from ref2 (not ball), grip/guard/blade/tip on one ruler-straight axis. No text, UI, card frame, extra limbs, gritty texture or dust speckles. Recreate reference1's anatomical pose faithfully by dressing the mannequin, do not copy the idle pose. Upright fully extended torso centered at x50%, head turns to screen RIGHT. RIGHT arm goes from shoulder at screen-left up and left, right glove firmly gripping sword above head at x25% y18%. Blade rises almost vertically to top-left, may exit top border; pommel below right hand remains visible. LEFT arm on screen-right is bent upward with free fist above helmet and to its right. Both elbows high, hands clearly separate; only right hand grips sword. Asymmetric armor: simple silver plate over navy on RIGHT shoulder, layered ornate silver plates and grappling bracer on LEFT arm. Chest visible, no shield concealing arms. Legs in a narrow front-back stepping stance per ref1, NOT broad squat. Camera three-quarter front, no reversal or mirror. Keep helmet/torso in central safe area and joint chains readable. One slim white rising slash scrape to far left of sword, no fire and no closed ring. Background: pale warm limestone gray with just two large dark vertical shadow blocks on left, substantial quiet warm-gray negative space on right. Simplify to big flat shapes, little engraving.",
+      "edit_prompt": "Precise-object-edit: edit IMAGE1 only the sword POMMEL BELOW the raised gripping hand. It is incorrectly a small round hexagonal ring. Replace it with Wylder's distinctive long sculptural FORKED/CRESCENT pommel from IMAGE2: two curled metal prongs branching sideways, open crescent silhouette, not a ball or ring. Preserve entire pose, helmet, hands, background, flat graphic shading and framing exactly. Keep vertical sword axis straight: blade, guard center, navy grip and forked pommel stem collinear. Do not change the curved guard above hand. 1000x760 landscape card illustration no text/UI.",
+      "rejected_candidates": [
+        {
+          "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-ac0db608-55c0-49b2-a3d4-a9dc177de0aa.png",
+          "reason": "圆形柄头，必须替换为叉形。",
+          "workspace_copy": "design/卡图预览/wylder/stamp_pose_20261027/wylder_stamp_upward_cut_rejected_1.png",
+          "status": "rejected_by_self_review"
+        }
+      ],
+      "previous_sha256": "5BFB0CDBAB2B0A7147EFF189B7F20F0E0997B769A3A96D439C7430CC77A53D01",
+      "approved_sha256": "B072ABE5F7FBB4D989A58BFFF85A57F0A7C8BCA0657D3DC360DAAAA239FC63B5",
+      "runtime_path": "images/packed/card_portraits/wylder/wylder_stamp_upward_cut.png",
+      "status": "rejected_by_user",
+      "user_rejected_date": "2026-10-28",
+      "user_rejected_reason": "剑气轨迹不符"
+    },
+    {
+      "key": "wylder_stamp_sweep",
+      "name": "箭步：回旋斩",
+      "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-5ce6bd5a-6c20-469a-9569-251a27a9938a.png",
+      "ref": "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/pose_redraw_20261022/pose_sweep_reference.png",
+      "prompt": "Repaint IMAGE 1 as a flat-color fantasy card illustration. KEEP the mannequin's EXACT pose and viewing angle. Dress the mannequin in Wylder's outfit from IMAGE 2: silver winged closed helmet, black scarf, navy coat with white flowing motifs, silver scale sleeves, brown wraps. Ignore IMAGE 2's pose. We see the hunched BACK, not chest. RIGHT hand alone holds a greatsword behind him on screen-left, angled down-left. The LEFT arm reaches FORWARD, left forearm horizontal in front of body, empty fist on screen-right. Keep shoulder/elbow/wrist positions, torso tilt, deeply bent front knee and rear foot exactly as image1. Do not straighten the crouched body or use low-angle camera. No front V breastplate or belt buckle on his BACK. Sword must be rigid straight: long silver blade, navy grip and distinctive open FORKED pommel (not ball). Keep right hand holding sword and left hand empty, not mirrored. One weapon. Flat hard-edged 2D blocks, bold black shapes, minimal surface detail. Landscape 1000x760, subject centered. Dark plum backdrop with two calm horizontal gray-olive ground planes. Thin white horizontal sweep trace behind waist. No circular halo, fire, debris, text, border or UI. Prioritize the exact anatomical silhouette of image1.",
+      "rejected_candidates": [
+        {
+          "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-da7094b3-a016-4f77-8005-11563675f221.png",
+          "prompt": "Use case: illustration-story. Asset: 1000x760 landscape game card artwork only. Reference 1 is the STRICT pose to reproduce, reference 2 is ONLY Wylder's armor/weapon identity, reference 3 controls the simple graphic card rendering. Render as graphic flat 2D fantasy card illustration, bold black silhouette and hard-edged cel planes, simplified navy/silver/brown palette, 2-3 tones per material, NOT detailed metal, NOT painted/realistic. Closed feather-wing silver helmet and dark visor, black scarf, navy split coat with a few white flowing water motifs, grouped silver scales and brown wrapped boots. Sword: ONE long rigid straight greatsword, forked sculptural pommel from ref2 (not ball), grip/guard/blade/tip on one ruler-straight axis. No text, UI, card frame, extra limbs, gritty texture or dust speckles. STRICT reskin of reference1 mannequin in exactly that three-quarter BACK view and crouched turning pose, NOT front view. Camera sees Wylder's BACK and right rear shoulder blade. Head turned toward screen RIGHT, forward bent knee screen-right, rear leg stretches back-left. Anatomical RIGHT shoulder is at screen-left of the back, its upper arm sweeps backward to screen-left, elbow bends toward the right hand at x27% y43%. That RIGHT hand alone grips the sword behind the body. Sword guard just below this hand, long straight blade extends diagonally DOWN-LEFT to x9% y91%, forked pommel above the right fist. Anatomical LEFT shoulder is on far screen-right, left arm reaches forwards to screen-right, bent forearm held HORIZONTALLY IN FRONT of chest with empty left fist at x83% y47%. Left fist must be clearly in front, never holding the sword. Match arm silhouette and shoulder-elbow-wrist chains of reference1, no mirroring. Right sword arm simple silver shoulder plate/navy sleeve/brown glove; LEFT free arm ornate layered silver shoulder and large silver grappling bracer. The broad visible torso surface is BACK of navy coat with black scarf drape, NOT the V-shaped front breastplate. Keep drape short enough to reveal right shoulder-to-sword arm connection; omit buckler here to make anatomy unambiguous. One thin flat pale horizontal trailing slash behind waist only, no luminous circular ring. Background: dark muted plum with 2 broad gray-olive horizontal ledges near bottom; large smooth plum negative space upper-right. No vertical blocks, no orange accent, no particles. Character centered and occupies most height, preserve full weapon hand and main knee.",
+          "reason": "躯干偏正面，后引臂展开过直，未按参考低重心。",
+          "workspace_copy": "design/卡图预览/wylder/stamp_pose_20261027/wylder_stamp_sweep_rejected_1.png",
+          "status": "rejected_by_self_review"
+        },
+        {
+          "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-96b034c2-975f-40e3-b3c4-27d45f4d0474.png",
+          "prompt": "Edit / identity-preserve costume replacement. IMAGE1 is the TARGET: preserve its EXACT mannequin pose, anatomy, silhouette and camera; dress THIS figure as Wylder using IMAGE2 ONLY as costume identity. Do not borrow IMAGE2's front-facing chest pose. Keep the visible BACK from IMAGE1. Don't redraw a front view. The sword-bearing RIGHT shoulder is the high near shoulder at x52% y24%; right upper arm angles backward down-left, elbow x37% y30%, right forearm down-left to RIGHT sword fist x27% y41%. The RIGHT hand holds the sword behind the hip, pointing DOWN LEFT. Opposite LEFT shoulder at x65% y34%, left arm reaches forward to screen-right; EMPTY LEFT fist at x82% y50%, LEFT forearm horizontal in front. Only right hand on sword. Preserve the mannequin's strongly hunched twisting back, tucked low pelvis, deeply bent lead knee x72% y60%, lead foot x73% y86%, rear foot x38% y76%; no tall upright frontal lunge. No belt buckle, no front abdominal scales, no V-shaped chest plate on the visible BACK. Back: navy fabric between shoulder blades, a short black scarf cape streaming away from right sword arm; dark back belt. Near right shoulder SIMPLE silver plate, left forward shoulder ornate silver layered armor and left bracer. Closed silver feather-wing helmet turns right with blue nape panel, dark face slit. Navy split coat with few WHITE WATER swirls, grouped silver scales only side sleeves, brown wraps. Replace mannequin's sword with long straight greatsword matching IMAGE2 forked pommel: pommel above hand, guard below hand, rigid axis to tip lower-left, no bending. Recompose only outer canvas to landscape 1000x760, keep figure proportions and pose centered, all main joints visible. Use flat graphic game-card rendering from IMAGE3: strong black shapes, 2-3 hard-edged tones per material, no textures, few details. Replace transparent/black background with muted dark plum open space, 2 quiet horizontal gray-olive ledges below, thin flattened white horizontal trailing stroke behind waist. No ring, no neon blue, no vertical pillars, no text or frame. Crucial: direct pose transfer/reskin of IMAGE1, NOT a new pose. LEFT empty forearm in front, RIGHT sword behind, as the mannequin.",
+          "reason": "重心和参考仍有差异，且圆柄头、剑柄与剑轴不完全共线。",
+          "workspace_copy": "design/卡图预览/wylder/stamp_pose_20261027/wylder_stamp_sweep_rejected_2.png",
+          "status": "rejected_by_self_review"
+        }
+      ],
+      "previous_sha256": "EF35BE507476A6832BCC46A71110DAD9E4E629058BC2834DEB2826D060A3940B",
+      "approved_sha256": "7931933F564F20C90931C5D18ED06276BEBFFC50F63376C785121D5A51AF084B",
+      "runtime_path": "images/packed/card_portraits/wylder/wylder_stamp_sweep.png",
+      "status": "rejected_by_user",
+      "user_rejected_date": "2026-10-28",
+      "user_rejected_reason": "右手持剑、左手前伸的位置错误"
+    }
+  ],
+  "validation": {
+    "card_text_format": "pass",
+    "wylder_model_regression": "pass",
+    "godot_import": "pass",
+    "godot_log": "build/stamp_pose_import_20261027.log",
+    "portrait_source_paths": "522 passed",
+    "exported_or_installed": false
+  },
+  "user_rejected_date": "2026-10-28"
+}

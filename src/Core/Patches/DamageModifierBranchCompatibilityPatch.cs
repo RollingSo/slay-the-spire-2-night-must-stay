@@ -1,13 +1,29 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Hooks;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.ValueProps;
 using NightMustStay.Core.Models.Power;
 
 namespace NightMustStay.Core.Patches;
+
+/// <summary>
+/// v0.113's post-damage hook requires a non-null modifier sequence. Older
+/// attack-hit integrations can still forward null, which faults every attack
+/// card before its play action completes (most visibly on the Fool). Treat the
+/// legacy null value as the empty modifier set used by the native pipeline.
+/// </summary>
+[HarmonyPatch(typeof(Hook), nameof(Hook.AfterModifyingDamageAmount))]
+internal static class NullDamageModifierListCompatibilityPatch
+{
+    [HarmonyPrefix]
+    private static void Normalize(ref IEnumerable<AbstractModel> modifiers) =>
+        modifiers ??= Array.Empty<AbstractModel>();
+}
 
 [HarmonyPatch]
 internal static class StyxSpiritFireDamageBranchPatch
@@ -27,10 +43,9 @@ internal static class StyxSpiritFireDamageBranchPatch
 }
 
 /// <summary>
-/// The Public Beta added a CardPlay parameter to PowerModel's damage modifier
-/// hooks in v0.108. Resolving the current method by name keeps one mod DLL
-/// compatible with both the five-parameter release API and six-parameter Beta
-/// API without weakening the power effects.
+/// A previous Public Beta added a CardPlay parameter to PowerModel's damage
+/// modifier hooks. Resolve the current method by name so the same mod DLL keeps
+/// working if main and Public Beta temporarily expose different signatures.
 /// </summary>
 internal static class DamageModifierBranchCompatibility
 {

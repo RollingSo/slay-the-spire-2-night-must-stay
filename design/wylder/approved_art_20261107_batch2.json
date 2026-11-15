@@ -1,0 +1,37 @@
+[
+  {
+    "name": "英雄的集结",
+    "source": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\design\\卡图预览\\追踪者最终补图_20261107\\英雄的集结.png",
+    "runtime": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\images\\packed\\card_portraits\\wylder\\wylder_heroes_assemble.png",
+    "sha256": "DD3719C5649490AC32F15027CF3454F4ADD9D72ABAB1F4E9720763B263F68BCD",
+    "approved": true
+  },
+  {
+    "name": "传火",
+    "source": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\design\\卡图预览\\追踪者最终补图_20261107\\传火.png",
+    "runtime": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\images\\packed\\card_portraits\\wylder\\wylder_pass_the_flame.png",
+    "sha256": "DF73A283AD0639769108CADDCF383B87947D67FC4840543F49CFDAAEC05DFE93",
+    "approved": true
+  },
+  {
+    "name": "忘剑",
+    "source": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\design\\卡图预览\\追踪者最终补图_20261107\\忘剑.png",
+    "runtime": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\images\\packed\\card_portraits\\wylder\\wylder_forget_the_sword.png",
+    "sha256": "200B28A2CD3CD3800A473B24D6B3CB1BB585B977F293A278C630936E536C5B31",
+    "approved": true
+  },
+  {
+    "name": "追猎",
+    "source": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\design\\卡图预览\\追踪者最终补图_20261107\\追猎.png",
+    "runtime": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\images\\packed\\card_portraits\\wylder\\wylder_hunt.png",
+    "sha256": "08E35DC6BA8615717508C29B1ADB5223D607235E08A815D124F70FA2E7D5481A",
+    "approved": true
+  },
+  {
+    "name": "隐遁",
+    "source": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\design\\卡图预览\\追踪者最终补图_20261107\\隐遁.png",
+    "runtime": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\images\\packed\\card_portraits\\wylder\\wylder_vanish.png",
+    "sha256": "8011A761BFDD55251523AA93B856200A02792F2E406F61488D47318A8DF745CD",
+    "approved": true
+  }
+]

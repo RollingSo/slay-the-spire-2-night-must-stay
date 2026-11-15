@@ -94,7 +94,9 @@ public sealed class FrenziedFlame : CardModel
     protected override void OnUpgrade() => AddKeyword(CardKeyword.Retain);
 }
 
-public sealed class Ensemble : CardModel, IRevenantChargeCard
+// v0.113 added an official Ensemble card. Model IDs ignore namespaces, so the
+// mod card needs a unique type name to avoid preventing ModelDb initialization.
+public sealed class NightMustStayEnsemble : CardModel, IRevenantChargeCard
 {
     private bool _chargeComplete;
 
@@ -124,14 +126,14 @@ public sealed class Ensemble : CardModel, IRevenantChargeCard
         new CardHoverTip(CreateOppositeChargePreview()),
     };
 
-    public Ensemble() : base(0, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy) { }
+    public NightMustStayEnsemble() : base(0, CardType.Skill, CardRarity.Common, TargetType.AnyEnemy) { }
 
     protected override void AddExtraArgsToDescription(LocString description) =>
         RevenantCardHelpers.AddChargeStateDescription(this, description, IsChargeComplete);
 
-    private Ensemble CreateOppositeChargePreview()
+    private NightMustStayEnsemble CreateOppositeChargePreview()
     {
-        var preview = (Ensemble)MutableClone();
+        var preview = (NightMustStayEnsemble)MutableClone();
         preview.ChargeComplete = !IsChargeComplete;
         return preview;
     }

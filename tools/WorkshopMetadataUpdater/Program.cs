@@ -102,6 +102,8 @@ return 0;
 
 static void UpdateWorkshopMetadata(WorkshopMetadata metadata)
 {
+    string changeNote = ReadInlineOrFile(metadata.ChangeNote, metadata.ChangeNotePath) ?? string.Empty;
+    string? description = ReadInlineOrFile(metadata.Description, metadata.DescriptionPath);
     UGCUpdateHandle_t handle = SteamUGC.StartItemUpdate(
         new AppId_t(appId),
         new PublishedFileId_t(publishedFileId));
@@ -109,8 +111,8 @@ static void UpdateWorkshopMetadata(WorkshopMetadata metadata)
     Require(SteamUGC.SetItemUpdateLanguage(handle, metadata.Language), "language");
     if (!string.IsNullOrWhiteSpace(metadata.Title))
         Require(SteamUGC.SetItemTitle(handle, metadata.Title), "title");
-    if (!string.IsNullOrWhiteSpace(metadata.Description))
-        Require(SteamUGC.SetItemDescription(handle, metadata.Description), "description");
+    if (!string.IsNullOrWhiteSpace(description))
+        Require(SteamUGC.SetItemDescription(handle, description), "description");
     if (!string.IsNullOrWhiteSpace(metadata.ContentPath))
     {
         string contentPath = Path.GetFullPath(metadata.ContentPath);
@@ -142,7 +144,7 @@ static void UpdateWorkshopMetadata(WorkshopMetadata metadata)
             completed = true;
         });
 
-    callResult.Set(SteamUGC.SubmitItemUpdate(handle, metadata.ChangeNote));
+    callResult.Set(SteamUGC.SubmitItemUpdate(handle, changeNote));
 
     Stopwatch timeout = Stopwatch.StartNew();
     Stopwatch progressTimer = Stopwatch.StartNew();
@@ -174,6 +176,13 @@ static void UpdateWorkshopMetadata(WorkshopMetadata metadata)
         $"(legal agreement required: {result.m_bUserNeedsToAcceptWorkshopLegalAgreement}).");
 }
 
+static string? ReadInlineOrFile(string? inline, string? path)
+{
+    if (!string.IsNullOrWhiteSpace(path))
+        return File.ReadAllText(Path.GetFullPath(path));
+    return inline;
+}
+
 static void Require(bool success, string field)
 {
     if (!success)
@@ -182,9 +191,11 @@ static void Require(bool success, string field)
 
 internal sealed record WorkshopMetadata(
     string Language,
-    string ChangeNote,
+    string? ChangeNote = null,
     string? Title = null,
     string? Description = null,
+    string? ChangeNotePath = null,
+    string? DescriptionPath = null,
     string? MinBranch = null,
     string? MaxBranch = null,
     string? ContentPath = null);

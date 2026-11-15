@@ -6,7 +6,7 @@ func _initialize() -> void:
 		push_error("Cannot mount exported mod PCK")
 		quit(1)
 		return
-	var themes = {"guardian": "6F4A2F", "ironeye": "68734A", "revenant": "5C7689", "duchess": "48B9ED"}
+	var themes = {"guardian": "6F4A2F", "ironeye": "68734A", "revenant": "5C7689", "duchess": "48B9ED", "wylder": "252E4A"}
 	var failed = false
 	for character in themes:
 		var material = load("res://materials/cards/frames/card_frame_%s_mat.tres" % character) as ShaderMaterial

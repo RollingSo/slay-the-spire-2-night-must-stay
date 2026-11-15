@@ -1,0 +1,15 @@
+{
+  "approved": true,
+  "status": "User approved replacement/export on 2026-10-20; actual in-game 16:9 screenshot remains pending.",
+  "in_game_crop_verified": false,
+  "tool": "built-in imagegen; mechanical engine-resolution derivatives only",
+  "preview_directory": "design/角色资源预览/wylder/selection_20261020",
+  "portrait_size": [132, 195],
+  "background_size": [2560, 1200],
+  "theme_primary": "252E4A",
+  "portrait_generated_source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-b1240359-eb1f-43a8-ad88-b9d469425c3e.png",
+  "background_generated_source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-f51e4323-5e6c-49cf-81c2-9d4239be42aa.png",
+  "background_pose_reference": "D:/sts-2-mod/design/艾尔登法环黑夜君临_图标合集_2026-07-15/10_角色选择立绘_Nightfarers/01_追踪者_wylder.png",
+  "body_center": [0.64, 0.53],
+  "secondary_center": [0.66, 0.78]
+}

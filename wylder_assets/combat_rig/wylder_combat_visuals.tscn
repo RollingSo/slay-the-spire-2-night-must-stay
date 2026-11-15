@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://wylder_assets/combat_rig/wylder_combat_rig.tscn" id="1_rig"]
+
+[node name="WylderCombatVisuals" type="Node2D"]
+
+[node name="Visuals" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, 0)
+scale = Vector2(1, 1)
+
+[node name="Prototype" parent="Visuals" instance=ExtResource("1_rig")]
+
+[node name="Bounds" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 0
+offset_left = -125.0
+offset_top = -300.0
+offset_right = 125.0
+offset_bottom = 0.0
+mouse_filter = 2
+
+[node name="CenterPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0.000000000, -153.773442366)
+
+[node name="IntentPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(6.982198350, -322.178580566)
+
+[node name="OrbPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0.000000000, -334.148063453)
+
+[node name="TalkPos" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(98.748233814, -314.198925309)

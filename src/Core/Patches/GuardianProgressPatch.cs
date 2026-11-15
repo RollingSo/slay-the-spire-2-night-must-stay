@@ -6,7 +6,6 @@ using Godot;
 using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Helpers;
-using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Cards;
@@ -38,7 +37,8 @@ namespace NightMustStay.Core.Patches
             if (localPlayer.Character is not Guardian
                 && localPlayer.Character is not Ironeye
                 && localPlayer.Character is not Revenant
-                && localPlayer.Character is not Duchess)
+                && localPlayer.Character is not Duchess
+                && localPlayer.Character is not Wylder)
                 return true;
 
             ProgressState progress = SaveManager.Instance.Progress;
@@ -112,6 +112,7 @@ namespace NightMustStay.Core.Patches
                 ModelDb.Character<Ironeye>(),
                 ModelDb.Character<Revenant>(),
                 ModelDb.Character<Duchess>(),
+                ModelDb.Character<Wylder>(),
             };
             foreach (CharacterModel character in modCharacters)
             {
@@ -154,6 +155,17 @@ namespace NightMustStay.Core.Patches
 
             EnsureIroneyeCardLibraryFilter(library, ironcladFilter, filters, characterFilters);
             EnsureRevenantCardLibraryFilter(library, ironcladFilter, filters, characterFilters);
+            ClearCharacterFilterHoverTips(characterFilters);
+        }
+
+        internal static void ClearCharacterFilterHoverTips(
+            IDictionary<CharacterModel, NCardPoolFilter> characterFilters)
+        {
+            if (characterFilters == null)
+                return;
+
+            foreach (NCardPoolFilter filter in characterFilters.Values.Distinct())
+                filter.Loc = null;
         }
 
         private static void EnsureIroneyeCardLibraryFilter(
@@ -255,8 +267,6 @@ namespace NightMustStay.Core.Patches
             filter.FocusMode = template.FocusMode;
             parent.AddChild(filter);
             parent.MoveChild(filter, template.GetIndex() + 1);
-            filter.Loc = new LocString("card_library", "POOL_GUARDIAN_TIP");
-
             ApplyGuardianPortrait(filter);
 
             filter.Connect(NCardPoolFilter.SignalName.Toggled, Callable.From<NCardPoolFilter>(selected =>
@@ -308,7 +318,6 @@ namespace NightMustStay.Core.Patches
             filter.FocusMode = template.FocusMode;
             parent.AddChild(filter);
             parent.MoveChild(filter, Math.Min(template.GetIndex() + 2, parent.GetChildCount() - 1));
-            filter.Loc = new LocString("card_library", "POOL_IRONEYE_TIP");
             ApplyIroneyePortrait(filter);
 
             filter.Connect(
@@ -366,7 +375,6 @@ namespace NightMustStay.Core.Patches
             filter.FocusMode = template.FocusMode;
             parent.AddChild(filter);
             parent.MoveChild(filter, Math.Min(template.GetIndex() + 3, parent.GetChildCount() - 1));
-            filter.Loc = new LocString("card_library", "POOL_REVENANT_TIP");
             ApplyRevenantPortrait(filter);
 
             filter.Connect(
@@ -467,6 +475,7 @@ namespace NightMustStay.Core.Patches
                 ModelDb.Character<Ironeye>(),
                 ModelDb.Character<Revenant>(),
                 ModelDb.Character<Duchess>(),
+                ModelDb.Character<Wylder>(),
             };
             foreach (CharacterModel character in modCharacters)
             {

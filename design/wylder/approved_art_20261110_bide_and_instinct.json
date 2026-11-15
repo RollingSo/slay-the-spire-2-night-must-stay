@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-10",
+  "status": "user-temporarily-approved-and-integrated",
+  "review": "design/卡图预览/wylder/revisions_20261110/generation_notes.md",
+  "cards": [
+    {
+      "card": "进攻本能",
+      "english": "Offensive Instinct",
+      "change": "remove the Tracker while preserving the red attack arc and enemy silhouette",
+      "source": "design/卡图预览/wylder/revisions_20261110/wylder_offensive_instinct_no_tracker.png",
+      "runtime": "images/packed/card_portraits/wylder/wylder_offensive_instinct.png",
+      "sha256": "38E4A9229FCC1CBB57251BD82A13D5CEC6289BEFCC3D4B71981D217FECFB4D4A"
+    },
+    {
+      "card": "伺机而动",
+      "english": "Bide the Moment",
+      "source": "design/卡图预览/wylder/revisions_20261110/wylder_bide_the_moment.png",
+      "runtime": "images/packed/card_portraits/wylder/wylder_bide_the_moment.png",
+      "sha256": "8332080B1EF66BA5C653E8FF3E2EB914EEDFA6EFF096F9475CC3594018761285"
+    }
+  ]
+}

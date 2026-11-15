@@ -1,0 +1,33 @@
+[h1]0.4.6｜追踪者机制与卡牌平衡更新[/h1]
+
+- 重制追击能量状态显示，加入分层水面效果并更新追击图标。
+- 改进破势与失衡反馈：补充失衡阈值图标，并修复致命一击可能无法正确触发破势的问题。
+- 箭步：上砍：费用2→1，伤害16/18→11/13；力量降低5/6→5/7，不再要求追击，但会使下回合少抽1张牌。
+- 箭步：回旋斩：改为固定攻击所有敌人，伤害11/14→14/18，并使下回合少抽1张牌。
+- 强烈燃烧：每次获得的活力4→6。
+- 滑步飞跃：稀有度由普通调整为罕见。
+- 架势：升级由额外获得4点格挡改为费用1→0。
+- 双剑跳劈：升级由伤害+2改为额外获得1点能量。
+- 空中钉刺：费用3→2。
+- 反击突进：稀有度由罕见调整为普通。
+- 野火：升级由固有改为费用1→0。
+- 战术撤退：移除消耗。
+- 骁勇：格挡6/7→7/9，力量仍为2/3。
+- 震慑：升级由伤害8→11改为费用2→1。
+
+[h1]0.4.6 | Wylder Mechanics and Card Balance[/h1]
+
+- Reworked the Pursuit energy-state display with layered water effects and an updated Pursuit icon.
+- Improved Break and Imbalance feedback with an Imbalance-threshold icon, and fixed lethal hits sometimes failing to trigger Break.
+- Stamp (Upward Cut): Cost 2→1, damage 16/18→11/13, Strength reduction 5/6→5/7; no longer requires Pursuit, but reduces next turn's draw by 1.
+- Stamp (Sweep): Now always hits all enemies, damage 11/14→14/18, and reduces next turn's draw by 1.
+- Intense Burning: Vigor per activation increased from 4 to 6.
+- Sliding Leap: Rarity changed from Common to Uncommon.
+- Poise: Upgrade changed from +4 Block to cost 1→0.
+- Dual Greatsword Leap: Upgrade changed from +2 damage to +1 Energy gained.
+- Aerial Stake: Cost reduced from 3 to 2.
+- Counter Rush: Rarity changed from Uncommon to Common.
+- Wildfire: Upgrade changed from Innate to cost 1→0.
+- Tactical Retreat: No longer Exhausts.
+- Valor: Block increased from 6/7 to 7/9; Strength remains 2/3.
+- Stun Call: Upgrade changed from damage 8→11 to cost 2→1.

@@ -17,6 +17,7 @@ namespace NightMustStay.Core.Patches
         private static void AddGuardianTranscendence(
             ref Dictionary<ModelId, CardModel> __result)
         {
+            __result[ModelDb.Card<WylderClawMovement>().Id] = ModelDb.Card<WylderAncientClawLeap>();
             __result[ModelDb.Card<StompStance>().Id] =
                 ModelDb.Card<UnbreakableStance>();
             __result[ModelDb.Card<IroneyeMark>().Id] =

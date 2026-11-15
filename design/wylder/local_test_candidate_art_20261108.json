@@ -1,0 +1,114 @@
+[
+  {
+    "name": "横斩",
+    "source": "design/卡图预览/横斩纵劈与漩涡_20261107/横斩.png",
+    "runtime": "images/packed/card_portraits/wylder/wylder_horizontal_slash.png",
+    "status": "local_test_candidate_only",
+    "sha256": "62A9F8879DBC73E7E36425F94EEB607803A930EA07CA1B726858C83BA265933D"
+  },
+  {
+    "name": "纵劈",
+    "source": "design/卡图预览/横斩纵劈与漩涡_20261107/纵劈.png",
+    "runtime": "images/packed/card_portraits/wylder/wylder_vertical_cleave.png",
+    "status": "local_test_candidate_only",
+    "sha256": "5177F26F5BBE6D13B85F8DD422550024B9061703A3D8262DAFE910503175EE52"
+  },
+  {
+    "name": "奥陶琵斯的漩涡",
+    "source": "design/卡图预览/横斩纵劈与漩涡_20261107/奥陶琵斯的漩涡.png",
+    "runtime": "images/packed/card_portraits/wylder/wylder_ordovis_vortex.png",
+    "status": "local_test_candidate_only",
+    "sha256": "44917E5A2BFEC284B13ABF44F27F99E090FAB13B6A303246C4EE8CA9BC4B5988"
+  },
+  {
+    "name": "志留亚的漩涡",
+    "source": "design/卡图预览/横斩纵劈与漩涡_20261107/志留亚的漩涡.png",
+    "runtime": "images/packed/card_portraits/wylder/wylder_siluria_vortex.png",
+    "status": "local_test_candidate_only",
+    "sha256": "119493E45DD334C3743CF6217B46A8E11C0DBBD514E8C3928A4725190EAA81F0"
+  },
+  {
+    "name": "踢击",
+    "source": "design/卡图预览/踢击与游刃有余_20261107/踢击.png",
+    "runtime": "images/packed/card_portraits/wylder/wylder_kick.png",
+    "status": "local_test_candidate_only",
+    "sha256": "84017DB4C7E99E9C4988EA8768826D57EAE4F9083060D918BC412CA7B4AF1572"
+  },
+  {
+    "name": "游刃有余",
+    "source": "design/卡图预览/踢击与游刃有余_20261107/游刃有余.png",
+    "runtime": "images/packed/card_portraits/wylder/wylder_poise.png",
+    "status": "local_test_candidate_only",
+    "sha256": "3A8624D7F2DDE4A833DDE5AE3350E9B2C07954E70080EEDF9AEA9521FEA350C2"
+  },
+  {
+    "name": "灭洛斯的嚎叫",
+    "source": "design/卡图预览/灭洛斯的嚎叫_重绘_20261107/灭洛斯的嚎叫.png",
+    "runtime": "images/packed/card_portraits/wylder/wylder_shriek_of_milos.png",
+    "status": "local_test_candidate_only",
+    "sha256": "F65F8165B448DF7F90A63CCF195C8C2E81EA421F9CED953CBB7D839E0D67DF75"
+  },
+  {
+    "name": "豪赌",
+    "source": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\design\\卡图预览\\追踪者卡图修订_20261108\\豪赌.png",
+    "runtime": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\images\\packed\\card_portraits\\wylder\\wylder_gamble.png",
+    "status": "local_test_candidate_only",
+    "sha256": "7711B456262307C15172DB32A259D322BF2B37982DE1182AB234647AF1E6011C"
+  },
+  {
+    "name": "机敏",
+    "source": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\design\\卡图预览\\追踪者卡图修订_20261108\\机敏.png",
+    "runtime": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\images\\packed\\card_portraits\\wylder\\wylder_agility.png",
+    "status": "local_test_candidate_only",
+    "sha256": "6BB1AFB56E6E8DD8A73E4D5DEB3AE8457FE2A721E52F70C14B489B42533692D1"
+  },
+  {
+    "name": "终结黑夜",
+    "source": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\design\\卡图预览\\追踪者卡图修订_20261108\\终结黑夜.png",
+    "runtime": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\images\\packed\\card_portraits\\wylder\\wylder_end_the_night.png",
+    "status": "local_test_candidate_only",
+    "sha256": "9AD7BED9781D1085A2B80E9244BFA90363CEEB25EAA327070F78931C8F01E0A7"
+  },
+  {
+    "name": "无暇之剑",
+    "source": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\design\\卡图预览\\追踪者卡图修订_20261108\\无暇之剑.png",
+    "runtime": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\images\\packed\\card_portraits\\wylder\\wylder_flawless_sword.png",
+    "status": "local_test_candidate_only",
+    "sha256": "90CC93EA0FAB65BEE47B29ECC0588F82FF4A113BB308E52769BBA74B356A5A3D"
+  },
+  {
+    "name": "见真火",
+    "source": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\design\\卡图预览\\追踪者卡图修订_20261108\\见真火.png",
+    "runtime": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\images\\packed\\card_portraits\\wylder\\wylder_true_flame.png",
+    "status": "local_test_candidate_only",
+    "sha256": "4F9E24CCA801F89FBE568D366E8F0DE5F010FEC0EBDDBC3D271116432E7BAC51"
+  },
+  {
+    "name": "战术撤退",
+    "source": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\design\\卡图预览\\追踪者卡图修订_20261108\\战术撤退.png",
+    "runtime": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\images\\packed\\card_portraits\\wylder\\wylder_tactical_retreat.png",
+    "status": "local_test_candidate_only",
+    "sha256": "0BAEBC6B9EF9308DD19FC986FADAEF04240836C46A3ED19A3C6248D336C6BB3B"
+  },
+  {
+    "name": "孤勇",
+    "source": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\design\\卡图预览\\追踪者卡图修订_20261108\\孤勇.png",
+    "runtime": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\images\\packed\\card_portraits\\wylder\\wylder_lone_courage.png",
+    "status": "local_test_candidate_only",
+    "sha256": "3A25EDF3840F2C5D8FA765881C8790328A733B5E8215CD51B8D003435F9B9026"
+  },
+  {
+    "name": "无终战意",
+    "source": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\design\\卡图预览\\追踪者卡图修订_20261108\\无终战意.png",
+    "runtime": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\images\\packed\\card_portraits\\wylder\\wylder_endless_will.png",
+    "status": "local_test_candidate_only",
+    "sha256": "EC7D038B8177FF9A2B64F0AE823BBC15C12B583BD8266A1905FC3B9B3647E85C"
+  },
+  {
+    "name": "最终手段",
+    "source": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\design\\卡图预览\\追踪者卡图修订_20261108\\最终手段.png",
+    "runtime": "C:\\Users\\wenti\\.codex\\worktrees\\4d0b\\sts-2-mod\\images\\packed\\card_portraits\\wylder\\wylder_last_resort.png",
+    "status": "local_test_candidate_only",
+    "sha256": "5480879E13652D5071C2FB7DEDADE5729449EC37872F7B7E5BB510B27B169966"
+  }
+]

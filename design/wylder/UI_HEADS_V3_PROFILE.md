@@ -1,0 +1,5 @@
+# 小头像纯侧面修订（待审批）
+
+使用内置 imagegen 编辑第二版，候选保存到 design/角色资源预览/wylder/ui_heads_v3_profile。正式资源未覆盖，未导出。88×88图鉴、64×64描边、49×64地图版本四角透明检查通过。
+
+提示词：Edit this Wylder UI head icon: change ONLY the viewing angle to a strict, true 90-degree LEFT SIDE PROFILE, orthographic lateral elevation, no three-quarter view whatsoever. The helmet's sagittal plane is parallel to the image plane: nose and chin point directly left. Show ONE near-side metal feather wing only; far-side wing is completely occluded, not peeking above or in front. Show the lateral side of the closed helmet and its navy temple/back panel, not the frontal faceplate surface or central front ridge. Preserve recognizable silver winged knight helmet, tiny dark visor slit without eye, navy side panel, short black neck scarf. Preserve the same simplified broad flat angular color blocks, few hard shadow shapes and sparse internal lines appropriate for 88px game head icons. Head only, no shoulders/chest/hands/weapons. Complete wing and head silhouette within transparent margin. Genuine transparent background, no text/frame/glow.

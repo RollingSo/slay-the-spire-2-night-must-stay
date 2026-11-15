@@ -1,0 +1,59 @@
+{
+  "status": "approved_and_promoted",
+  "cards": [
+    {
+      "card": "临战",
+      "source": "design/卡图预览/追踪者临战旧卡图恢复_20261109/临战.png",
+      "runtime": "images/packed/card_portraits/wylder/wylder_battle_readiness.png",
+      "sha256": "ECFD16A6CCFDC87B54CB219F465ABF87B936E2FD326033BE15A6B03E7824314B"
+    },
+    {
+      "card": "预备反击",
+      "source": "design/卡图预览/追踪者五卡修订_20261108/预备反击.png",
+      "runtime": "images/packed/card_portraits/wylder/wylder_valor.png",
+      "sha256": "64EAD943C831E8CDE6EED12A9A6441D6EC5AC49565466945D2C67313B8A56DA2"
+    },
+    {
+      "card": "月光剑",
+      "source": "design/卡图预览/追踪者卡图重绘_20261108_剑路与局部构图/月光剑.png",
+      "runtime": "images/packed/card_portraits/wylder/wylder_moonlight_sword.png",
+      "sha256": "2DFB9C9DFBF768A39EA962D887188E392C4992C09A5A16EA79EAADE6BE74C22E"
+    },
+    {
+      "card": "游刃有余",
+      "source": "design/卡图预览/追踪者卡图重绘_20261108_剑路与局部构图/游刃有余.png",
+      "runtime": "images/packed/card_portraits/wylder/wylder_poise.png",
+      "sha256": "6E689F8E0F4B6CFDE6F7A549E50E64E56D116D657E608F7BDC6443401879E98F"
+    },
+    {
+      "card": "孪生信物",
+      "source": "design/卡图预览/追踪者卡图重绘_20261108_剑路与局部构图/孪生信物.png",
+      "runtime": "images/packed/card_portraits/wylder/wylder_twin_token.png",
+      "sha256": "D6FC5A5798E067CF8A23E0AF8679CDE2EAF3B1E5EF3B51D169373194E09DC54B"
+    },
+    {
+      "card": "焰光照雪",
+      "source": "design/卡图预览/2026-11-09_第二轮重绘/wylder_flamelight_on_snow_candidate_v2.png",
+      "runtime": "images/packed/card_portraits/wylder/wylder_flamelight_on_snow.png",
+      "sha256": "AC29064EABAABC2587F43055BC1EDFFC75EE1374F51564872C7CB8B0EA9699F4"
+    },
+    {
+      "card": "凯旋",
+      "source": "design/卡图预览/2026-11-09_第二轮重绘/wylder_triumph_candidate_v2.png",
+      "runtime": "images/packed/card_portraits/wylder/wylder_triumph.png",
+      "sha256": "9291996A6416E0E7B299E785D8C52E868EF43359C9E8165C02EA92DB56190F00"
+    },
+    {
+      "card": "命运裁决",
+      "source": "design/卡图预览/2026-11-09_第二轮重绘/wylder_fates_judgment_candidate_v4.png",
+      "runtime": "images/packed/card_portraits/wylder/wylder_fates_judgment.png",
+      "sha256": "52A42FE8A83F52F89EEAC34AB467471D370C7EB983805D8C3536769627EFD8F4"
+    },
+    {
+      "card": "激发",
+      "source": "design/卡图预览/2026-11-09_第二轮重绘/wylder_inspire_candidate_v4.png",
+      "runtime": "images/packed/card_portraits/wylder/wylder_inspire.png",
+      "sha256": "65CF9A58C113E923E155AABA185A82EA4B0C503D859FB645EEC42B0F17BA829F"
+    }
+  ]
+}

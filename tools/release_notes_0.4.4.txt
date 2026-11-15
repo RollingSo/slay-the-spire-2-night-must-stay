@@ -1,0 +1,13 @@
+[h1]0.4.4｜v0.113 多目标伤害热修复[/h1]
+
+- 修复 Public Beta v0.113 更新多目标伤害接口后，部分群体伤害牌可能导致出牌卡死的问题。
+- 修复女爵“重演”和复仇者“怨气”触发骷髅家人群体攻击时的结算。
+- 修复同一伤害路径下“天降魔力”“优雅剑舞”“大龙卷”“护身烈风”和“巨盾震击”的兼容性。
+- 保留 0.4.3 对旧攻击伤害钩子及“愚者”攻击牌的热修复。
+
+[h1]0.4.4 | v0.113 Multi-Target Damage Hotfix[/h1]
+
+- Fixed cards potentially stalling after Public Beta v0.113 changed the multi-target damage API.
+- Fixed multi-target resolution for Duchess Reenact and Revenant Resentment when triggering the skeletal family's group attack.
+- Fixed compatibility for Magic from Above, Graceful Sword Dance, Great Tornado, Protective Gale, and Greatshield Shock on the same damage path.
+- Includes the 0.4.3 legacy attack-hook and Fool Attack-card hotfixes.

@@ -22,6 +22,7 @@ namespace NightMustStay.Core.Patches
                 ModelDb.CardPool<IroneyeCardPool>(),
                 ModelDb.CardPool<RevenantCardPool>(),
                 ModelDb.CardPool<DuchessCardPool>(),
+                ModelDb.CardPool<WylderCardPool>(),
             };
 
             foreach (CardPoolModel modPool in modPools)
@@ -46,6 +47,7 @@ namespace NightMustStay.Core.Patches
                 ModelDb.Character<Ironeye>(),
                 ModelDb.Character<Revenant>(),
                 ModelDb.Character<Duchess>(),
+                ModelDb.Character<Wylder>(),
             };
 
             foreach (CharacterModel modCharacter in modCharacters)
@@ -70,6 +72,7 @@ namespace NightMustStay.Core.Patches
                 ModelDb.CardPool<IroneyeCardPool>(),
                 ModelDb.CardPool<RevenantCardPool>(),
                 ModelDb.CardPool<DuchessCardPool>(),
+                ModelDb.CardPool<WylderCardPool>(),
             };
 
             foreach (CardPoolModel modPool in modPools)

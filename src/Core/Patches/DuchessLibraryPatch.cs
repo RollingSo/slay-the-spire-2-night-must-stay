@@ -4,7 +4,6 @@ using System.Linq;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Helpers;
-using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Screens.CardLibrary;
 using NightMustStay.Core.Models.CardPools;
@@ -46,7 +45,6 @@ public static class DuchessLibraryPatch
                 AccessTools.Field(typeof(NCardLibrary), "_lastHoveredControl")?.SetValue(__instance, captured)));
         }
         filter.Visible = true;
-        filter.Loc = new LocString("card_library", "POOL_DUCHESS_TIP");
         var image = filter.GetNodeOrNull<TextureRect>("Image");
         if (image != null)
         {
@@ -58,6 +56,7 @@ public static class DuchessLibraryPatch
         filters[filter] = card => ModelDb.CardPool<DuchessCardPool>().AllCardIds.Contains(card.Id);
         var characters = AccessTools.Field(typeof(NCardLibrary), "_cardPoolFilters")?.GetValue(__instance) as IDictionary<CharacterModel, NCardPoolFilter>;
         if (characters != null) characters[ModelDb.Character<Duchess>()] = filter;
+        GuardianCardLibraryPatch.ClearCharacterFilterHoverTips(characters);
         NCardPoolFilter[] orderedFilters = ModFilterOrder
             .Select(name => parent.GetNodeOrNull<NCardPoolFilter>(name)).ToArray();
         if (orderedFilters.Any(item => item == null)) return;

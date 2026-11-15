@@ -1,0 +1,13 @@
+[h1]0.4.3｜v0.113 攻击牌热修复[/h1]
+
+- 修复 Public Beta v0.113 中“愚者”打出攻击牌时可能崩溃或结算悬空的问题。
+- 修复旧版攻击命中兼容桥向伤害后处理钩子传入空修正器列表的问题。
+- 同步保护其他角色经由旧伤害钩子结算的攻击牌，避免同类崩溃。
+- 保留 0.4.2 对正式版 v0.111 与 Public Beta v0.113 的全部兼容适配。
+
+[h1]0.4.3 | v0.113 Attack Card Hotfix[/h1]
+
+- Fixed a Public Beta v0.113 crash or stalled resolution when The Fool played Attack cards.
+- Fixed the legacy attack-hit compatibility bridge passing a null modifier list to post-damage hooks.
+- Applied the same protection to Attack cards from other characters that resolve through legacy damage hooks.
+- Includes all v0.111 stable and v0.113 Public Beta compatibility changes from 0.4.2.

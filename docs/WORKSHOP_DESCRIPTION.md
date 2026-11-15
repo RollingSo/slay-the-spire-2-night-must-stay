@@ -1,5 +1,12 @@
 # Steam Workshop descriptions
 
+## Localized titles
+
+- English: `Night Must Stay | Elden Ring : Nightreign Mod`
+- 简体中文: `黑夜长留 | 艾尔登法环 : 黑夜君临 mod`
+- 日本語: `夜を留めよう | ELDEN RING NIGHTREIGN Mod`
+- 한국어: `밤을 머물게 합시다 | ELDEN RING NIGHTREIGN Mod`
+
 ## 简体中文
 
 标题：`黑夜长留 | 艾尔登法环 : 黑夜君临 mod`

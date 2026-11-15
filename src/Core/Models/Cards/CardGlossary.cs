@@ -24,6 +24,8 @@ internal static class CardGlossary
         typeof(HiddenPoisonPower), typeof(PoisonBurstPower), typeof(FreezePower),
         typeof(DuchessConcealmentPower), typeof(DuchessMomentDescriptionPower),
         typeof(DuchessReactionDescriptionPower),
+        typeof(WylderPursuitPower),
+        typeof(WylderBreakDescriptionPower),
     };
 
     internal static bool IsMechanic(Type type) => Mechanics.Contains(type);
@@ -67,6 +69,23 @@ internal static class CardGlossary
         foreach (Type type in Mechanics)
         {
             var power = ModelDb.GetById<PowerModel>(ModelDb.GetId(type));
+            if (type == typeof(PhantomImbalancePower) || type == typeof(WylderBreakDescriptionPower))
+            {
+                var imbalance = ModelDb.Power<PhantomImbalancePower>();
+                var wylderBreak = ModelDb.Power<WylderBreakDescriptionPower>();
+                if (imbalance.Title.GetFormattedText() == wylderBreak.Title.GetFormattedText())
+                {
+                    bool hasBreak = card.DynamicVars.ContainsKey("Break");
+                    bool hasImbalance = card.DynamicVars.ContainsKey("Imbalance");
+                    if (!(hasBreak && hasImbalance))
+                    {
+                        bool isBreak = hasBreak || (!hasImbalance
+                            && card.Id.Entry.StartsWith("WYLDER_", StringComparison.Ordinal));
+                        if ((type == typeof(WylderBreakDescriptionPower)) != isBreak)
+                            continue;
+                    }
+                }
+            }
             if (Mentions(text, power.Title.GetFormattedText(), type == typeof(DuchessMomentDescriptionPower)))
                 result.MegaTryAddingTip(FromPower(power));
         }
@@ -98,6 +117,6 @@ internal static class CardGlossary
             return new HoverTip(power.Title, description);
         // Keep one native icon-bearing definition per power ID, even when an
         // instance-type power would normally allow multiple hover tips.
-        return new HoverTip(power, description.GetFormattedText(), false) { IsInstanced = false };
+        return new HoverTip(power, description.GetFormattedText(), false);
     }
 }

@@ -1,0 +1,22 @@
+{
+  "output_dir": "design/卡图预览/wylder/stamp_redraw_20261026",
+  "generator": "built-in imagegen",
+  "status": "rejected_by_user",
+  "rejection": "动作仍不符合参考；需提高不同卡图之间的背景和构图辨识度。旧图保留追溯，禁止接入正式。",
+  "assets": [
+    {
+      "key": "wylder_stamp_upward_cut",
+      "name": "箭步：上砍·人物居中",
+      "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-f425289b-fdf3-4192-8eaa-beea0898ddf4.png",
+      "ref": "design/卡图预览/wylder/pose_redraw_20261022/pose_upward_reference.png",
+      "prompt": "1000x760 landscape graphic flat game card. Reference pose: central knight torso at horizontal50%, right sword arm extending to upper-left, left free fist raised near head at right, head turns right, wide stepping stance. Match reference lifted open chest and one-handed rising motion, no downward cut. Sword near vertical left; one upward pale-orange white slash from below. Closed silver feather-wing helmet, navy split skirt, black scarf, silver V breastplate, brown gloves and rope boots. One straight long sword with forked pommel, all grip/guard/blade/tip collinear. Large flat hard-edge planes, bold black shadows, abstract navy backdrop, no text/UI/extra limbs."
+    },
+    {
+      "key": "wylder_stamp_sweep",
+      "name": "箭步：回旋斩·右手持剑",
+      "source": "C:/Users/wenti/.codex/generated_images/01a0f3d5-9b03-7243-a90e-88371d6c286a/exec-453d62d3-607f-4d1e-892f-657c940d25b2.png",
+      "ref": "design/卡图预览/wylder/pose_redraw_20261022/pose_sweep_reference.png",
+      "prompt": "1000x760 landscape graphic flat card. Low twisting back three-quarter pose matching saved reference; helmet faces right, bent forward knee, sword trails down-left held by anatomical RIGHT hand, free LEFT fist forward-right. Trace continuous shoulder-elbow-wrist-hand chains, exactly two arms. Back drapery/navy tunic, small round shield strapped on visible back, no frontal chest shield or V breastplate in back view. One rigid straight greatsword aligned pommel-grip-guard-blade-tip; distinctive forked sculptural pommel. Single cyan-white slash around waist, bold black/navy shapes, simplified silver armor with hard flat cel shading, no text/UI/extra limbs. First generated version rejected for inconsistent torso/shield perspective; candidate uses corrected version."
+    }
+  ]
+}

@@ -53,7 +53,7 @@ public sealed class RevenantCardPool : CardPoolModel
         ModelDb.Card<GurranqBeastClaw>(),
         ModelDb.Card<GurranqsRock>(),
         ModelDb.Card<FrenziedFlame>(),
-        ModelDb.Card<Ensemble>(),
+        ModelDb.Card<NightMustStayEnsemble>(),
         ModelDb.Card<Surge>(),
         ModelDb.Card<UnderworldRising>(),
         ModelDb.Card<Resurgence>(),

@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-28",
+  "vacuum": {
+    "source": "exec-998bbecf-8d46-4c73-9e39-d72d179e4989.png",
+    "prompt": "Precise object edit to IMAGE1. Image2 is only sword pommel identity. Change ONLY the ONE sword hilt at the left end of the rear glove. Extend the single navy grip visibly leftward beyond the rear fist and attach a clearly visible OPEN FORKED silver pommel with TWO outward curling silver prongs separated by empty air (NOT a closed ring, NOT a diamond, NOT a ball). Its center, the one grip through both hands, crossguard, the perfectly straight steel blade and sword tip already touching ground must follow one continuous rigid straight diagonal line. Place the new pommel in the dark open space left of the rear glove, not on the blade or under the knee. Exactly two hands; keep glove outlines, pose, ground contact point, blade length, giant wind crescent, clothing, gray backdrop and flat graphic style unchanged. No additional hilt, no additional sword, no extra fingers. This is an extremely small hilt-end correction."
+  },
+  "sweep": {
+    "source": "exec-5975e9c2-d9cf-4531-b9a1-c7a69ea6fbdf.png",
+    "prompt": "修正圆柄头为两个分开的银色叉形尖端；保持右手在后持剑、左拳前伸、背侧姿态和剑轴。"
+  },
+  "review": "逐张核对用户拒稿原因、四肢连贯、剑轴、缩略图和卡间区别。"
+}

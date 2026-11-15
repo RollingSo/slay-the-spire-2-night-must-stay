@@ -1,0 +1,104 @@
+[
+  {
+    "key": "quality_upward_rejected",
+    "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-9982e2de-1684-4b29-845d-5b6d6c58e73c.png",
+    "prompt": "Redraw as 1000x760 landscape card art. Image1 is STRICT anatomical pose and upward WHITE sword trail reference. Image2 is Wylder equipment identity ONLY, do not inherit its wide-legged pose or over-detailed painting. Image3 is exact target simplicity and brushless flat cel rendering. Dress image1 mannequin in closed silver winged helmet, black neck scarf, navy split knee coat with 2 simple white flowing motifs, silver chest plate and grouped scale sleeves, brown boots/gloves. Preserve upright extended torso, head turned right, RIGHT sword hand upper left, LEFT empty fist upper right, narrow staggered stepping legs. Long rigid straight sword vertical at upper left, silver fork pommel below grip; blade may exit top. The sword stroke rises from bottom left up along far left edge, not a circle around hero. Character centered. Warm ochre quiet background with only two broad vertical umber bands; NO ruins, rocks or debris. Large deliberate rounded and angular silhouette with bold black contour, broad solid color shapes, exactly base/shadow/highlight, NO etched ornament, tiny scales, faceted triangles, metal reflections, gradients on armor, texture. Character expressive readable at tiny size; not realistic body painting. Preserve reference pose, no UI text borders.",
+    "references": [
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/pose_redraw_20261022/pose_upward_reference.png",
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/images/packed/card_portraits/wylder/wylder_stamp_upward_cut.png",
+      "D:/STS2/images/packed/card_portraits/ironclad/uppercut.png"
+    ],
+    "status": "rejected_by_user"
+  },
+  {
+    "key": "quality_upward_pose",
+    "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-4afd8a32-d54d-4508-aae6-1d3e8231716a.png",
+    "prompt": "Image1 is exact required pose. Image2 ONLY rendering style. Make a 1000x760 horizontal card illustration: trace/reskin the anatomical pose of image1 without changing stance or camera. Thin tall upright knight, rear leg extends down-left, forward knee slightly bent toward right, feet in narrow staggered stance not a wide squat. Right sword arm upper-left, left empty bent fist upper-right, head facing right. Silver closed helmet with two upright metal feather wings, black scarf, navy knee-length tunic with ONE white flowing motif, silver breastplate, brown gloves boots. Simple CARTOON drawing like image2: flat ink shapes, 3 tones total per surface, absolutely no engraved metal, individual tiny scales, decorative detail, triangular facets or realistic shading. Sword perfectly straight vertical above right hand, silver open fork pommel below grip. White UPWARD vertical slash trail hugs left edge, not encircling body. Full body centered occupying 75% height, sword can exit top. Background pale ochre almost blank with one tall dark brown block on left. Silhouette of pose must match image1 EXACTLY. No text UI frame.",
+    "references": [
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/pose_redraw_20261022/pose_upward_reference.png",
+      "D:/STS2/images/packed/card_portraits/ironclad/uppercut.png"
+    ],
+    "status": "rejected_by_user"
+  },
+  {
+    "key": "quality_upward",
+    "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-411bb0ab-7df4-4cf4-95cf-3cfbdc38f085.png",
+    "prompt": "Edit IMAGE1 only equipment identity, preserve EXACT current pose, slim stepping legs, arm joints, vertical sword and white upward trail. Use IMAGE2 only as equipment reference. Helmet wings are too tall: shorten feather ornaments by half and angle them slightly backward. Add BLACK neck scarf. Chestplate bottom pointed V, brown wide belt with ROUND silver buckle. Add just 2 rows of large silver scale shapes at upper arms and waist, no tiny scales. Replace knee armor with dark cloth knees and rope wraps around brown lower legs. Left forearm on upper-right has compact silver grappling mechanism. Keep simplified 3-tone cel shapes and quiet ochre background; no engraving or additional detail, preserve pose and camera. Both boots fully within image. Landscape 1000x760.",
+    "references": [
+      "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-4afd8a32-d54d-4508-aae6-1d3e8231716a.png",
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/images/packed/card_portraits/wylder/wylder_stamp_upward_cut.png"
+    ],
+    "status": "rejected_by_user"
+  },
+  {
+    "key": "quality_sweep",
+    "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-bb22d312-6058-4f48-951a-07c6413c26e0.png",
+    "prompt": "1000x760 landscape card. Image1 STRICT POSE: trace body and limbs before dressing. Image2 ONLY Wylder simplified armor identity; NEVER copy image2 pose or front view. Image3 flat shapes rendering. THREE QUARTER BACK view of crouched turning knight, BACK faces viewer, head looks screen-right, no chest plate visible. Anatomical RIGHT shoulder at screen-left -> right upper arm back -> right hand behind hip at left holding straight greatsword pointing down-left. LEFT shoulder at screen-right -> left elbow forward -> empty left fist to screen-right horizontal in front of chest. Deep bent front knee at right, rear leg back left exactly image1. Silver winged closed helmet seen from BACK, black short scarf, navy skirt white flowing motif, brown boots wraps, simplified silver scale bands. No long cape concealing back/arms. One broad white FLAT horizontal sweep behind waist and across feet following image1, not circular ring. Muted plum background top, olive flat ground bottom; no rocks, debris, architecture. Bold black silhouette, smooth purposeful contours, THREE flat colors per material, few silver shapes, no engraved metal or microtexture. Preserve exact reference pose and right-hand grip; single sword, sword/pommel/handle collinear with open silver fork pommel.",
+    "references": [
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/pose_redraw_20261022/pose_sweep_reference.png",
+      "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-411bb0ab-7df4-4cf4-95cf-3cfbdc38f085.png",
+      "D:/STS2/images/packed/card_portraits/ironclad/uppercut.png"
+    ],
+    "status": "rejected_by_user"
+  },
+  {
+    "key": "quality_parry",
+    "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-ad387545-f1e8-4e9e-b41f-b3f3a0a33e81.png",
+    "prompt": "Landscape 1000x760 card art. Image1 exact back-view raised shield pose. Image2 ONLY navy silver brown costume, image3 simple flat rendering. RESKIN image1 without turning body. Direct rear view: visible BACK OF CLOSED HELMET, NO faceplate NO eye slit NO nose. Silver smooth rounded rear helmet with small metal feather wings pointing up/back, black scarf over upper back, navy coat white printed swirl, grouped silver sleeve scales, brown gloves. LEFT arm goes diagonally upper-left holding SMALL round buckler navy face three silver curved arms and central silver boss. Right empty arm slopes down-right. Shield high overhead and body exactly image1; crop below hips as reference, not head. One broad ivory swipe arc behind raised shield sweeps down right, preserve reference. Background quiet desaturated violet with a single large charcoal lower shape, no ruin, shards, rocks, spikes. Bold cartoon contour, 2-3 flat tones, strong silhouette, no fine texture, engraving or metal reflection. Keep no breastplate on back, no chest buckle; back of head unmistakable. No UI text border.",
+    "references": [
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/buckler_parry_20261027/wylder_parry_reference.png",
+      "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-411bb0ab-7df4-4cf4-95cf-3cfbdc38f085.png",
+      "D:/STS2/images/packed/card_portraits/ironclad/uppercut.png"
+    ],
+    "status": "rejected_by_user"
+  },
+  {
+    "key": "correction_sweep_v1",
+    "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-59b16c89-8107-4b5a-bd0d-40b5382785de.png",
+    "prompt": "Image1 is the PRIMARY and exact pose template. Image2 is ONLY clothing and helmet identity, NOT pose or framing. Repaint image1 as Wylder wearing image2 equipment. DO NOT invent a new pose. Keep exact camera and screen position of every body joint from image1: three-quarter BACK view, bent crouched torso leaning screen-right, head low and turned right; left forearm extends horizontally forward to screen-right with empty fist; right arm extends behind to screen-left and right hand holds sword angled down-left. Deep front bent knee at right, rear leg stretched back-left. The viewer sees the character's BACK, not chest, not front belt buckle. Preserve the entire mannequin silhouette and white horizontal slash trail around waist from image1. Helmet needs exact silver winged knight identity from image2, but seen from back-right with only a sliver of side faceplate, no front face. Navy split skirt, white fine flowing cloth print reduced but recognizable, black scarf, brown leather wraps and boots, silver scale sleeves, left forearm grappling bracer. Straight sword with aligned blade grip and silver forked pommel; right hand only. Frame full pose within 1000x760 landscape, reduce subject uniformly if needed, never stretch or alter stance. Background quiet muted gray olive ground and dark plum upper region. Graphic card illustration, hard-edged 3-tone shading, bold dark shapes, no photorealism, no gratuitous little triangular facets, no jagged background shards, no UI text. Most important: BACK view, exact crouch and exact hand/foot arrangement from image1. Do not copy any other pose.",
+    "references": [
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/pose_redraw_20261022/pose_sweep_reference.png",
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/images/packed/card_portraits/wylder/wylder_critical_strike.png"
+    ],
+    "status": "rejected_by_self_review"
+  },
+  {
+    "key": "correction_upward_v1",
+    "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-8344146d-b622-445a-8e72-f3254ee418d3.png",
+    "prompt": "Reskin IMAGE1 with Wylder's armor from IMAGE2. Pose is ONLY image1 and must match anatomical joint positions exactly. Entire upright extended human silhouette, slight backwards torso arch, head turns screen-right. RIGHT arm stretched up-left gripping vertical sword, LEFT elbow bent up-right free fist. Two arms raised; NO hands swapped. Preserve narrow front/back stepping legs from image1, NO wide-legged triangular stance, NO squat. Front knee to right and rear leg long down-left. Full torso centered. Same physical helmet proportions and closed silver faceplate as image2, small backward slanted metal wing ornaments, black scarf, asymmetric silver shoulder plates and grouped silver scale sleeves, navy split coat with thin white water patterns, wide brown belt circular buckle, brown rope-wrapped boots. ONE long straight silver sword with blue grip and open FORKED silver pommel below right hand. Blade goes vertically out top left. Preserve LARGE WHITE UPWARD sword trajectory rising vertically behind right arm at screen-left as original image1, not a semicircle wrapping feet. Background two quiet warm gray vertical shapes, no jagged rocks or environment. Render graphic flat-color 2D card art, 3 tones per material, no photorealistic rendering, no etched micro-detail, no dense low-poly triangles. Landscape 1000x760. Adapt square reference to landscape by adding quiet side space, NEVER widening pose. No text UI.",
+    "references": [
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/pose_redraw_20261022/pose_upward_reference.png",
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/images/packed/card_portraits/wylder/wylder_critical_strike.png"
+    ],
+    "status": "rejected_by_self_review"
+  },
+  {
+    "key": "correction_sweep",
+    "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-f935c62e-b466-4bc6-a846-7b4c3fd99bbc.png",
+    "prompt": "Correct IMAGE1 to image2 pose, preserve navy silver armor identity. Main correction: lower hips and upper torso to a DEEP CROUCH, forward right-screen thigh nearly horizontal, bent knee pronounced, rear heel lifted; copy image2 exact body tilt and joint locations. Keep right sword hand behind at screen-left and empty left fist forward right. Fix sword pommel to OPEN TWO-PRONG FORK not polygon ball. Keep straight blade/grip axis. Render as CLEAN GRAPHIC flat cel art, remove ALL canvas/grain and ground texture, remove fine engraved armor detail but preserve closed helmet silhouette, use broad shadow shapes. Background only quiet solid plum and olive gray planes; preserve white horizontal sweep placement from image2. No additional elements, no text. Landscape 1000x760. Do not straighten legs or show chest.",
+    "references": [
+      "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-59b16c89-8107-4b5a-bd0d-40b5382785de.png",
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/pose_redraw_20261022/pose_sweep_reference.png"
+    ],
+    "status": "self_reviewed_approved"
+  },
+  {
+    "key": "correction_upward",
+    "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-66d20452-16ba-4a61-96bf-01e61bb593f0.png",
+    "prompt": "Edit this image, KEEP all figure pose, anatomy, armor identity, sword, hand placement EXACTLY. Change only background/white motion effect and framing: background is warm medium-gray flat color, leftmost 15% a dark slate gray vertical band; right half calm warm-gray negative space. Add a strong WHITE UPWARD sword-air trail on left behind sword arm: wide at bottom-left, narrows as it rises vertically up left edge, TWO slim upward pointed white streaks, not circular arc. The white trail must clearly contrast gray background. No painterly brush texture, no debris, no ruins. Slightly reduce figure uniformly by 5% so rear boot at bottom-left is fully visible, don't change relative joints. 1000x760 landscape. Never widen stance or alter head facing. Flat cel-shaded graphic rendering.",
+    "references": [
+      "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-8344146d-b622-445a-8e72-f3254ee418d3.png"
+    ],
+    "status": "self_reviewed_approved"
+  },
+  {
+    "key": "correction_parry",
+    "source": "C:\\Users\\wenti\\.codex\\generated_images\\01a0f3d5-9b03-7243-a90e-88371d6c286a\\exec-e2502f4b-5c18-46f1-8c7f-198fe9d37c82.png",
+    "prompt": "Create 1000x760 landscape card artwork. IMAGE1 is absolute pose reference: BACK VIEW, left arm raised diagonally upper-left holding small round shield, right arm slopes down-right empty fist, torso straight and head centered. Dress mannequin exactly in Wylder equipment from IMAGE2, but NEVER copy frontal pose. Preserve detailed recognizable silver winged helmet silhouette, black scarf, asymmetric silver shoulders, navy split knee coat white flowing decoration, brown gloves and wraps, silver grouped scales. BACK of helmet visible: rounded engraved steel rear dome, small backward-slanted wings at sides, no visor eyes nose or front face. Back clothing is navy and dark scarf, no breastplate or circular belt buckle on back. Buckler small, silver rim and center boss with three silver curved spokes on navy face. Keep shield size about forearm length. White sweeping trajectory from raised shield upper-left behind body toward lower-right exactly like IMAGE1. Background quiet muted blue-gray, two broad shapes, no shards/ruins. Graphic 2D hard-edged shading, reduce armor details compared image2 but preserve identity, no toy/chibi armor, no giant bare plate knees, no bright invented cloth logo. No texture or photorealism. No text UI.",
+    "references": [
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/design/卡图预览/wylder/buckler_parry_20261027/wylder_parry_reference.png",
+      "C:/Users/wenti/.codex/worktrees/4d0b/sts-2-mod/images/packed/card_portraits/wylder/wylder_critical_strike.png"
+    ],
+    "status": "self_reviewed_approved"
+  }
+]
