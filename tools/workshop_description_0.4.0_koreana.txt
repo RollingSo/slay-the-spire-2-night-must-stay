@@ -1,5 +1,5 @@
 [h1]黑夜长留 | Night Must Stay[/h1]
-[b]현재 버전: 0.4.0 | Slay the Spire 2 정식 및 Public Beta 브랜치 지원[/b]
+[b]현재 버전: 0.4.7 | Slay the Spire 2 정식 및 Public Beta 브랜치 지원[/b]
 
 ELDEN RING NIGHTREIGN의 밤의 방랑자들이 이제 첨탑에 발을 들입니다!
 

@@ -1,5 +1,5 @@
 [h1]黑夜长留 | Night Must Stay[/h1]
-[b]Current version: 0.4.0 | Supports the official and Public Beta branches of Slay the Spire 2[/b]
+[b]Current version: 0.4.7 | Supports the official and Public Beta branches of Slay the Spire 2[/b]
 
 The Nightfarers of ELDEN RING NIGHTREIGN have entered the Spire!
 

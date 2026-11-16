@@ -1,5 +1,5 @@
 [h1]黑夜长留 | Night Must Stay[/h1]
-[b]現在のバージョン：0.4.0｜『Slay the Spire 2』の正式版および Public Beta に対応[/b]
+[b]現在のバージョン：0.4.7｜『Slay the Spire 2』の正式版および Public Beta に対応[/b]
 
 『ELDEN RING NIGHTREIGN』の夜渡りたちが、今、尖塔へと足を踏み入れる！
 

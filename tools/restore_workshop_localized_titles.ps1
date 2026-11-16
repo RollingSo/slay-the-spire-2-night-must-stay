@@ -12,6 +12,7 @@ foreach ($language in @('english', 'schinese', 'japanese', 'koreana')) {
     [ordered]@{
         Language = $language
         Title = [string]$titles.$language
+        DescriptionPath = (Join-Path $PSScriptRoot "workshop_description_0.4.0_$language.txt")
         ChangeNote = ''
     } | ConvertTo-Json | Set-Content -LiteralPath $configPath -Encoding UTF8
 
