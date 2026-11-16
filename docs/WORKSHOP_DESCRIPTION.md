@@ -49,7 +49,7 @@
 [h2]玩家社区[/h2]
 [b]QQ群：[/b]366184201
 [b]Discord 频道：[/b]
-[url=https://discord.gg/HFREXPPXq]https://discord.gg/HFREXPPXq[/url]
+[url=https://discord.gg/nHskw8ZNK]https://discord.gg/nHskw8ZNK[/url]
 
 [h2]模组信息[/h2]
 [list]
@@ -114,7 +114,7 @@ If you encounter a problem or have feedback about character design or balance, y
 [h2]Community[/h2]
 [b]QQ Group:[/b] 366184201
 [b]Discord:[/b]
-[url=https://discord.gg/HFREXPPXq]https://discord.gg/HFREXPPXq[/url]
+[url=https://discord.gg/nHskw8ZNK]https://discord.gg/nHskw8ZNK[/url]
 
 [h2]Mod Information[/h2]
 [list]
