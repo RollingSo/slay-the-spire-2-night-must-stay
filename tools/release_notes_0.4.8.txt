@@ -1,0 +1,19 @@
+[h1]0.4.8｜联机药水、追踪者调整与结算修复[/h1]
+
+- 更新女爵的韩文本地化。
+- 11 种角色药水现在可以对队友使用。所有角色的「时刻」独立结算。
+- 追踪者「孤勇」改为 1 费，升级后 0 费，消耗一张牌后从抽牌堆抽一张绝境牌。「机敏」弃牌后改为获得 5 点格挡，升级后为 7 点。
+- 「灭洛斯的嚎叫」改为让下回合打出的第一张攻击牌伤害翻倍。「奥陶琵斯的漩涡」改为两档破势，每达到一档多打一次。
+- 「迸发」升级改为 0 费。调整追踪者的绝境牌结算及欧赫宝剑相关连击逻辑。
+- 修复复仇者的雷击与光环结算，并修复击晕打断虫节和仪式兽预设行动流程的问题。
+- 「孪生信物」将「第六感」加入目标牌组底部，同一张信物成功转移后不会再次触发。
+
+[h1]0.4.8 | Co-op Potions, Wylder Changes, and Combat Fixes[/h1]
+
+- Updated Duchess's Korean localization.
+- Eleven character potions can now target allies. Moment resolves independently for each character.
+- Lone Courage now costs 1 Energy (0 when upgraded) and draws a Desperation card from the draw pile after Exhausting a card. Agility now grants 5 Block after discarding a card, or 7 when upgraded.
+- Shriek of Milos now doubles the damage of the first Attack played next turn. Ordovis's Vortex now gains one hit at each of two Break thresholds.
+- Upgraded Eruption now costs 0 Energy. Adjusted Desperation resolution and Eochaid hit-count handling.
+- Fixed Revenant's Lightning Strike and halo resolution, and prevented stuns from interrupting scripted transitions for the Slumbering Beetle and Ritual Beast.
+- Twin Token now adds Sixth Sense to the bottom of the target's deck. Each copy can only transfer once.
