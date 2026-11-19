@@ -85,6 +85,11 @@ if (args.Contains("--spirit-form-stack-only"))
     SpiritFormStackRegression.Run();
     return 0;
 }
+if (args.Contains("--halo-return-only"))
+{
+    HaloReturnRegression.Run();
+    return 0;
+}
 if (args.Contains("--revenant-november-only"))
 {
     foreach (bool upgraded in new[] { false, true })
@@ -144,6 +149,11 @@ if (args.Contains("--revenant-routing-only"))
 if (args.Contains("--reverse-time-performance-only"))
 {
     ReverseTimePerformanceRegression.Run();
+    return 0;
+}
+if (args.Contains("--team-potion-moment-only"))
+{
+    TeamPotionMomentRegression.Run();
     return 0;
 }
 if (args.Contains("--beetle-stun-only"))

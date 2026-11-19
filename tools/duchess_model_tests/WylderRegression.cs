@@ -98,7 +98,7 @@ internal static class WylderRegression
                 {
                     var c=canonical.ToMutable(); if(up && c.MaxUpgradeLevel > 0)c.UpgradeInternal();
                     int cost=c switch { WylderFlamelightOnSnow => up?1:2, WylderTriumph => 0,
-                        WylderVerticalCleave => 2, WylderSiluriaVortex => up?2:3, WylderEndlessWill or WylderLastResort or WylderShriekOfMilos or WylderTwinToken or WylderGrappleShot => up?0:1, WylderGamble or WylderLoneCourage or WylderAgility => 0, WylderHeroesAssemble => up?0:1, WylderEndTheNight => 5, WylderTrueFlame => up?4:5, WylderDesperateFlurry => 3, WylderClawMovement or WylderAncientClawLeap or WylderMagnanimity or WylderOffensiveInstinct => up?0:1,
+                        WylderVerticalCleave => 2, WylderSiluriaVortex => up?2:3, WylderEndlessWill or WylderLastResort or WylderShriekOfMilos or WylderTwinToken or WylderGrappleShot or WylderLoneCourage => up?0:1, WylderGamble or WylderAgility => 0, WylderHeroesAssemble => up?0:1, WylderEndTheNight => 5, WylderTrueFlame => up?4:5, WylderDesperateFlurry => 3, WylderClawMovement or WylderAncientClawLeap or WylderMagnanimity or WylderOffensiveInstinct => up?0:1,
                         WylderRuinousGhostflame => 1, WylderWildfire => up?0:1,
                         WylderSpark or WylderResolve or WylderDebut or WylderBideTheMoment or WylderKick => 0,
                         WylderSixthSense => 4,
@@ -114,12 +114,12 @@ internal static class WylderRegression
                         WylderAssaultStake => 3,
                         WylderLionsClaw
                             or WylderJumpingHeavy or WylderDualGreatswordLeap or WylderGhostflameExplosion or WylderCorpseWaxCutter => 2,
-                        WylderPoise => up?0:1, _=>1 };
+                        WylderPoise or WylderEruption => up?0:1, _=>1 };
                     if(c is WylderIntenseBurning) Check(c.EnergyCost.CostsX,"Intense Burning X cost"); else Check(c.EnergyCost.GetResolved()==cost,"Cost "+c.GetType().Name);
                     if(c is WylderValor)Check(c.Type==CardType.Skill && c.Rarity==CardRarity.Common && c.TargetType==TargetType.Self && c.DynamicVars.Block.BaseValue==(up?9:7) && c.DynamicVars["Strength"].BaseValue==(up?3:2),"Valor metadata and upgrades");
                     if(c is WylderEruption)Check(c.Type==CardType.Power && c.Rarity==CardRarity.Uncommon
-                        && c.Keywords.Contains(CardKeyword.Innate)==up && !c.DynamicVars.ContainsKey("Damage"),
-                        "Eruption enters Pursuit on shuffle and gains Innate when upgraded");
+                        && !c.Keywords.Contains(CardKeyword.Innate) && !c.DynamicVars.ContainsKey("Damage"),
+                        "Eruption enters Pursuit on shuffle and upgrades cost only");
                     if(c is WylderCounterRush)Check(c.Rarity==CardRarity.Common && c.DynamicVars.Damage.BaseValue==(up?14:12) && c.DynamicVars["Imbalance"].BaseValue==(up?3:2),"Recoil Stake rarity and values");
                     if(c is WylderDesperateSurvival)Check(c.TargetType==TargetType.AnyEnemy && c.Keywords.Contains(CardKeyword.Exhaust) && c.Keywords.Contains(CardKeyword.Retain)==up && c.DynamicVars["Threshold"].BaseValue==50,"Desperate Survival targeting, threshold and keywords");
                     if(c is WylderTacticalRetreat)Check(!c.Keywords.Contains(CardKeyword.Exhaust),"Tactical Retreat no longer Exhausts");
@@ -137,7 +137,7 @@ internal static class WylderRegression
                     if(damage>0)Check(c.DynamicVars.Damage.BaseValue==damage,"Damage "+c.GetType().Name);
                     if(c is WylderDefend or WylderCenteringBreath)
                         Check(c.DynamicVars.Block.BaseValue==(c is WylderDefend?(up?8:5):(up?7:6)),"Block");
-                    if(c is WylderDashAttack)Check(c.DynamicVars["Vulnerable"].BaseValue==(up?2:1),"Vulnerable");
+                    if(c is WylderDashAttack)Check(c.DynamicVars["Vulnerable"].BaseValue==(up?3:2),"Vulnerable");
                     if(c is WylderStampUpwardCut)Check(c.DynamicVars["StrengthLoss"].BaseValue==(up?7:5)
                         && c.DynamicVars.Cards.BaseValue==1,"Strength and next-turn draw loss");
                     if(c is WylderStampSweep)Check(c.DynamicVars.Cards.BaseValue==1,"Sweep next-turn draw loss");

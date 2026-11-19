@@ -13,6 +13,7 @@ using NightMustStay.Core.Models.Power;
 internal static partial class WylderBattleArtRegression
 {
  private static readonly List<CardModel> FinalAuto=new();
+ private static Action<CardModel,Creature?>? ResolveFinalAuto;
  private static void FinalThreeCards()
  {
   int start=_checks;
@@ -38,8 +39,22 @@ internal static partial class WylderBattleArtRegression
      Check(card.Keywords.Contains(CardKeyword.Exhaust)==(card is WylderLastResort or WylderShriekOfMilos),"Last Resort and Shriek of Milos have native Exhaust");
     }
     Fixture();Play(Card(ModelDb.Card<WylderShriekOfMilos>(),up));
-    Check(_enemies.All(e=>e.GetPowerAmount<VulnerablePower>()==2),"Milos applies 2 Vulnerable to every enemy");
-    Check(_owner.Creature.GetPowerAmount<VigorPower>()==6,"Milos grants 6 Vigor");
+    var shriek=_owner.Creature.GetPower<WylderShriekOfMilosPower>()!;
+    Check(shriek!=null&&_enemies.All(e=>e.GetPowerAmount<VulnerablePower>()==0)
+      && _owner.Creature.GetPowerAmount<VigorPower>()==0,"Milos schedules its next-turn power");
+    var attack=Card(ModelDb.Card<WylderStrike>(),false);
+    var multiplier=AccessTools.Method(typeof(WylderShriekOfMilosPower),"DamageMultiplier");
+    decimal Multiplier()=> (decimal)multiplier.Invoke(shriek,new object[]{_owner.Creature,attack,MegaCrit.Sts2.Core.ValueProps.ValueProp.Move})!;
+    Check(Multiplier()==1,"Milos does not boost the turn when played");
+    var combat=_owner.Creature.CombatState!;
+    AccessTools.Method(typeof(WylderShriekOfMilosPower),"Schedule").Invoke(shriek,new object[]{combat.RoundNumber});
+    shriek!.AfterSideTurnStart(CombatSide.Player,new[]{_owner.Creature},combat).GetAwaiter().GetResult();
+    Check(Multiplier()==2,"Milos previews doubled damage on the eligible turn");
+    var attackPlay=TrackingArrowRegression.MakePlay(attack,_owner);
+    shriek.BeforeCardPlayed(attackPlay).GetAwaiter().GetResult();
+    Check(Multiplier()==2,"Milos doubles the first attack through its entire resolution");
+    shriek.AfterCardPlayedLate(null!,attackPlay).GetAwaiter().GetResult();
+    Check(Multiplier()==1,"Milos does not boost a subsequent attack");
     Fixture();var will=Card(ModelDb.Card<WylderEndlessWill>(),up);Play(will);
     var power=_owner.Creature.GetPower<WylderEndlessWillPower>()!;
     ((Task)AccessTools.Method(typeof(WylderEndlessWillPower),"Trigger").Invoke(power,null)!).GetAwaiter().GetResult();
@@ -62,8 +77,36 @@ internal static partial class WylderBattleArtRegression
     _payment.BeforeSideTurnEnd(null!,CombatSide.Player,new[]{_owner.Creature}).GetAwaiter().GetResult();native.BeforeSideTurnEnd(null!,CombatSide.Player,new[]{_owner.Creature}).GetAwaiter().GetResult();
     Check(FinalAuto.SequenceEqual(new[]{_payment,native}),"Mixed granted and native Desperation each auto-play exactly once");
    }
-  }finally{h.UnpatchAll(h.Id);}
+   foreach(bool executionFirst in new[]{true,false})
+   foreach(int remainingHp in new[]{49,50})
+   {
+    Fixture();FinalAuto.Clear();
+    var execution=Card(ModelDb.Card<WylderDesperateSurvival>(),false);
+    var damage=Card(ModelDb.Card<WylderDesperateFlurry>(),false);
+    var followUp=Card(ModelDb.Card<WylderEndTheNight>(),false);
+    foreach(var card in executionFirst?new[]{execution,damage,followUp}:new[]{damage,followUp,execution})
+        Put(card,PileType.Hand);
+    Creature? weakened=null;
+    ResolveFinalAuto=(card,target)=>
+    {
+        if(card==damage)
+        {
+            weakened=target??throw new Exception("Missing damage target");
+            weakened.SetCurrentHpInternal(remainingHp);
+        }
+        if(card==execution)
+        {
+            Check(ReferenceEquals(target,weakened),"Desperate Survival must pick the newly eligible enemy");
+            target!.SetCurrentHpInternal(0);
+        }
+    };
+    var first=executionFirst?execution:damage;
+    first.BeforeSideTurnEnd(null!,CombatSide.Player,new[]{_owner.Creature}).GetAwaiter().GetResult();
+    Check(FinalAuto.SequenceEqual(remainingHp==49?new[]{damage,execution,followUp}:new[]{damage,followUp}),
+        "Desperate Survival fires as soon as another Desperation card leaves an enemy below 50, regardless of hand order");
+   }
+  }finally{ResolveFinalAuto=null;h.UnpatchAll(h.Id);}
   Console.WriteLine($"PASS: {_checks-start} final-three checks: cost upgrades, native damage preview/multihit, Vulnerable, buff consumption, repeated Pursuit and granted Desperation autoplay.");
  }
- public static bool FinalAutoPlay(CardModel card,ref Task __result){FinalAuto.Add(card);Put(card,PileType.Discard);__result=Task.CompletedTask;return false;}
+ public static bool FinalAutoPlay(CardModel card,Creature? target,ref Task __result){FinalAuto.Add(card);ResolveFinalAuto?.Invoke(card,target);Put(card,PileType.Discard);__result=Task.CompletedTask;return false;}
 }

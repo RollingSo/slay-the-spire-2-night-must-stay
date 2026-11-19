@@ -60,6 +60,22 @@ internal static class DamageModifierBranchCompatibility
 }
 
 [HarmonyPatch]
+internal static class WylderShriekDamageBranchPatch
+{
+    private static MethodBase TargetMethod() =>
+        DamageModifierBranchCompatibility.Resolve("ModifyDamageMultiplicative");
+
+    [HarmonyPrefix]
+    private static bool BeforeModify(AbstractModel __instance, Creature dealer, CardModel cardSource,
+        ValueProp props, ref decimal __result)
+    {
+        if (__instance is not NightMustStay.Core.Models.Cards.WylderShriekOfMilosPower power) return true;
+        __result = power.DamageMultiplier(dealer, cardSource, props);
+        return false;
+    }
+}
+
+[HarmonyPatch]
 internal static class DuchessConcealmentDamageBranchPatch
 {
     private static MethodBase TargetMethod() =>

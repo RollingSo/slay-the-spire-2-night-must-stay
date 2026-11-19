@@ -38,16 +38,33 @@ internal static class WylderEochaidRegression
     internal static void Run()
     {
         var h = new HarmonyLib.Harmony("NightMustStay.Wylder.Eochaid.Regression");
-        h.CreateClassProcessor(typeof(Wylder).Assembly.GetType("NightMustStay.Core.Patches.WylderEochaidHitBudgetPatch")!).Patch();
         h.Patch(typeof(CreatureCmd).GetMethods().Single(m => m.Name == "Damage" && m.GetParameters().Length >= 6
             && m.GetParameters()[1].ParameterType == typeof(IEnumerable<Creature>) && m.GetParameters()[2].ParameterType == typeof(decimal)),
             prefix: new HarmonyMethod(typeof(WylderEochaidRegression), nameof(Damage)));
+        var targetDataDamage = typeof(CreatureCmd).GetMethods().SingleOrDefault(m => m.Name == "Damage"
+            && m.GetParameters().Length >= 6 && m.GetParameters()[1].ParameterType.IsGenericType
+            && m.GetParameters()[1].ParameterType.GetGenericArguments()[0].Name == "DamageTargetData");
+        if (targetDataDamage != null)
+            h.Patch(targetDataDamage, prefix: new HarmonyMethod(typeof(WylderEochaidRegression), nameof(DamageUsingTargetData)));
         h.Patch(AccessTools.Method(typeof(CreatureCmd), nameof(CreatureCmd.TriggerAnim)),
             prefix: new HarmonyMethod(typeof(WylderEochaidRegression), nameof(Animation)));
         h.Patch(AccessTools.Method(typeof(Hook), nameof(Hook.ModifyXValue)),
             postfix: new HarmonyMethod(typeof(WylderEochaidRegression), nameof(XBonus)));
+        h.CreateClassProcessor(typeof(Wylder).Assembly.GetType("NightMustStay.Core.Patches.WylderEochaidHitBudgetPatch")!).Patch();
         try
         {
+            foreach(bool up in new[]{false,true})foreach(int firstDamage in new[]{0,19,20,39,40})foreach(bool blocked in new[]{false,true})
+            {
+                Fixture();_blocked=blocked;ForcedDamage.Enqueue(firstDamage);
+                var vortex=(WylderOrdovisVortex)AccessTools.Method(Shared,"Card").Invoke(null,new object[]{ModelDb.Card<WylderOrdovisVortex>(),up})!;
+                Play(vortex);Check(DamageValues.Count==(firstDamage>=40?3:firstDamage>=20?2:1),
+                    $"Ordovis Break boundary: first hit {firstDamage}, blocked {blocked}, observed [{string.Join(", ", DamageValues)}]");
+                DamageValues.Clear();Play(vortex);Check(DamageValues.Count==1,"Ordovis later play resets added hit budget");
+            }
+            Fixture();Enemies[0].SetCurrentHpInternal(1);ForcedDamage.Enqueue(20);
+            var lethalVortex=(WylderOrdovisVortex)AccessTools.Method(Shared,"Card").Invoke(null,new object[]{ModelDb.Card<WylderOrdovisVortex>(),false})!;
+            Play(lethalVortex);Check(DamageValues.Count==1,"Ordovis stops added hits after target death");
+            Console.WriteLine("PASS: Ordovis Break 20/40 native hit budget, full block, reset and lethal target.");
             foreach (bool up in new[] { false, true })
             foreach (bool pursuit in new[] { false, true })
             foreach (bool blocked in new[] { false, true })
@@ -93,16 +110,6 @@ internal static class WylderEochaidRegression
             Check(DamageValues.Count == 1, "Native attacker-death exit retained");
             Fixture(); Enemies[0].SetCurrentHpInternal(15); Play(Card(false, 4));
             Check(DamageValues.Count == 2 && Enemies[0].IsDead, "No damage is dealt to a dead target for remaining/bonus hits");
-            foreach(bool up in new[]{false,true})foreach(int firstDamage in new[]{0,19,20,21})foreach(bool blocked in new[]{false,true})
-            {
-                Fixture();_blocked=blocked;ForcedDamage.Enqueue(firstDamage);
-                var vortex=(WylderOrdovisVortex)AccessTools.Method(Shared,"Card").Invoke(null,new object[]{ModelDb.Card<WylderOrdovisVortex>(),up})!;
-                Play(vortex);Check(DamageValues.Count==(firstDamage>=20?3:1),"Ordovis native loop exact19/20 blocked boundary");
-                DamageValues.Clear();Play(vortex);Check(DamageValues.Count==1,"Ordovis later play resets added hit budget");
-            }
-            Fixture();Enemies[0].SetCurrentHpInternal(1);ForcedDamage.Enqueue(20);
-            var lethalVortex=(WylderOrdovisVortex)AccessTools.Method(Shared,"Card").Invoke(null,new object[]{ModelDb.Card<WylderOrdovisVortex>(),false})!;
-            Play(lethalVortex);Check(DamageValues.Count==1,"Ordovis stops added hits after target death");
             LocalizedText();
             Check(File.Exists(ModelDb.Card<WylderEochaidsDancingBlade>().PortraitPath.Replace("res://", "")), "Custom portrait resolves");
             Console.WriteLine($"PASS: {_checks} Eochaid checks using the real native attack loop: every original hit must reach Break20, with upgrades, Pursuit, full block, last-hit doubling, Vigor, X modifiers, reset/copy isolation and death exits.");
@@ -128,6 +135,14 @@ internal static class WylderEochaidRegression
         CardModel? cardSource, ref Task<IEnumerable<DamageResult>> __result)
     {
         if (cardSource is not WylderEochaidsDancingBlade and not WylderOrdovisVortex) return true;
+        __result = ResolveDamage(targets, props, dealer, cardSource); return false;
+    }
+    public static bool DamageUsingTargetData(object __1, ValueProp props, Creature dealer,
+        CardModel? cardSource, ref Task<IEnumerable<DamageResult>> __result)
+    {
+        if (cardSource is not WylderEochaidsDancingBlade and not WylderOrdovisVortex) return true;
+        var targets = ((System.Collections.IEnumerable)__1).Cast<object>().Select(data =>
+            (Creature)AccessTools.Field(data.GetType(), "target").GetValue(data)!);
         __result = ResolveDamage(targets, props, dealer, cardSource); return false;
     }
     private static async Task<IEnumerable<DamageResult>> ResolveDamage(IEnumerable<Creature> targets, ValueProp props, Creature dealer, CardModel card)
@@ -170,7 +185,8 @@ internal static class WylderEochaidRegression
             string basic = Render(false), upgraded = Render(true), preview = Render(true, true);
             Check(basic != upgraded && !basic.Contains('{') && !upgraded.Contains('{') && upgraded.Contains("X+"), "Runtime X vs X+1 text renders visibly different");
             Check(preview.Contains("X+") && preview.Contains("[green]") && !preview.Contains('{'), "Upgrade preview displays X+1 change");
-            Check(text.Contains("[gold]" + (locale == "zhs" ? "破势" : "Break") + "[/gold]"), "Break keyword gold");
+            string keyword = locale switch { "zhs" => "破势", "jpn" => "体勢崩し", "kor" => "태세 붕괴", _ => "Break" };
+            Check(text.Contains("[gold]" + keyword + "[/gold]"), "Break keyword gold");
         }
     }
     private static void Check(bool ok, string reason) { _checks++; if (!ok) throw new Exception("Eochaid: " + reason); }

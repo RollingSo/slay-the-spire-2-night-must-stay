@@ -12,6 +12,7 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Entities.Powers;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
+using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Powers;
@@ -84,22 +85,32 @@ public abstract class WylderHandPaymentCard : WylderCard
 }
 public sealed class WylderLoneCourage : WylderHandPaymentCard
 {
-    public WylderLoneCourage() : base(0) { }
+    public WylderLoneCourage() : base(1) { }
     protected override bool ExhaustPayment => true;
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new PowerVar<StrengthPower>("Strength", 3m) };
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Append(HoverTipFactory.FromPower<StrengthPower>());
-    protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p) { await Pay(c); await PowerCmd.Apply<WylderLoneCouragePower>(c, Owner.Creature, DynamicVars["Strength"].BaseValue, Owner.Creature, this); }
-    protected override void OnUpgrade() => DynamicVars["Strength"].UpgradeValueBy(1m);
+    protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Append(
+        new HoverTip(new LocString("cards", "WYLDER_DESPERATION.title"),
+            new LocString("cards", "WYLDER_DESPERATION.description")));
+
+    protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
+    {
+        await Pay(context);
+        var card = PileType.Draw.GetPile(Owner).Cards.FirstOrDefault(WylderGrantedDesperation.Is);
+        if (card == null) return;
+        await CardPileCmd.Add(card, PileType.Draw, CardPilePosition.Top);
+        await CardPileCmd.Draw(context, 1m, Owner);
+    }
+
+    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }
 public sealed class WylderLoneCouragePower : TemporaryStrengthPower { public override AbstractModel OriginModel => ModelDb.Card<WylderLoneCourage>(); }
 public sealed class WylderAgility : WylderHandPaymentCard
 {
     public WylderAgility() : base(0) { }
     protected override bool ExhaustPayment => false;
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new PowerVar<DexterityPower>("Dexterity", 3m) };
-    protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Append(HoverTipFactory.FromPower<DexterityPower>());
-    protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p) { await Pay(c); await PowerCmd.Apply<WylderAgilityPower>(c, Owner.Creature, DynamicVars["Dexterity"].BaseValue, Owner.Creature, this); }
-    protected override void OnUpgrade() => DynamicVars["Dexterity"].UpgradeValueBy(1m);
+    public override bool GainsBlock => true;
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new BlockVar(5m, ValueProp.Move) };
+    protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p) { await Pay(c); await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, p); }
+    protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(2m);
 }
 public sealed class WylderAgilityPower : TemporaryDexterityPower { public override AbstractModel OriginModel => ModelDb.Card<WylderAgility>(); }
 public sealed class WylderHunt : WylderHandPaymentCard

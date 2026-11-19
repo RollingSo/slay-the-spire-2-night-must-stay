@@ -200,7 +200,7 @@ public sealed class WylderRemainingEmber : WylderAbilityCard<WylderRemainingEmbe
 public sealed class WylderEruption : WylderAbilityCard<WylderEruptionPower>
 {
     public WylderEruption() : base(1, CardRarity.Uncommon) { }
-    protected override void OnUpgrade() => AddKeyword(CardKeyword.Innate);
+    protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
 }
 public sealed class WylderUndying : WylderAbilityCard<WylderUndyingPower>
 {

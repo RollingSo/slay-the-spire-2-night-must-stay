@@ -18,23 +18,27 @@ public sealed class DuchessSmokeBottle : PotionModel
         new[] { HoverTipFactory.FromPower<DuchessConcealmentPower>() };
     public override PotionRarity Rarity => PotionRarity.Common;
     public override PotionUsage Usage => PotionUsage.CombatOnly;
-    public override TargetType TargetType => TargetType.Self;
-    protected override Task OnUse(PlayerChoiceContext context, Creature target) =>
-        PowerCmd.Apply<DuchessConcealmentPower>(context, Owner.Creature, 3m, Owner.Creature, null);
+    public override TargetType TargetType => TargetType.AnyPlayer;
+    protected override Task OnUse(PlayerChoiceContext context, Creature target)
+    {
+        AssertValidForTargetedPotion(target);
+        return PowerCmd.Apply<DuchessConcealmentPower>(context, target, 3m, Owner.Creature, null);
+    }
 }
 
 public sealed class DuchessRadiantBladeCrystal : PotionModel
 {
     public override PotionRarity Rarity => PotionRarity.Uncommon;
     public override PotionUsage Usage => PotionUsage.CombatOnly;
-    public override TargetType TargetType => TargetType.Self;
+    public override TargetType TargetType => TargetType.AnyPlayer;
     protected override async Task OnUse(PlayerChoiceContext context, Creature target)
     {
+        AssertValidForTargetedPotion(target);
         for (int i = 0; i < 2; i++)
         {
-            DuchessRadiantBlade blade = Owner.Creature.CombatState.CreateCard<DuchessRadiantBlade>(Owner);
+            DuchessRadiantBlade blade = target.CombatState.CreateCard<DuchessRadiantBlade>(target.Player);
             CardCmd.Upgrade(blade);
-            if (Owner.Creature.GetPower<DuchessRadiantBladeGrowthPower>() is { } growth)
+            if (target.GetPower<DuchessRadiantBladeGrowthPower>() is { } growth)
                 blade.DynamicVars.Damage.BaseValue += growth.TotalGrowth;
             await CardPileCmd.AddGeneratedCardToCombat(blade, PileType.Hand, Owner, CardPilePosition.Top);
         }
@@ -45,11 +49,12 @@ public sealed class DuchessRegretPotion : PotionModel
 {
     public override PotionRarity Rarity => PotionRarity.Rare;
     public override PotionUsage Usage => PotionUsage.CombatOnly;
-    public override TargetType TargetType => TargetType.Self;
+    public override TargetType TargetType => TargetType.AnyPlayer;
     protected override async Task OnUse(PlayerChoiceContext context, Creature target)
     {
-        await PlayerCmd.GainEnergy(2m, Owner);
-        await CardPileCmd.Draw(context, 2m, Owner);
-        await DuchessMomentPower.Set(context, Owner.Creature, 0, this);
+        AssertValidForTargetedPotion(target);
+        await PlayerCmd.GainEnergy(2m, target.Player);
+        await CardPileCmd.Draw(context, 2m, target.Player);
+        await DuchessMomentPower.Set(context, target, 0, this);
     }
 }

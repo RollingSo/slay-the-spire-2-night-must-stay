@@ -61,6 +61,7 @@
   "DUCHESS.goldMonologue": "[sine]これで次の旅支度ができます。皆さんの分も残しておきましょう。[/sine]",
   "WYLDER.title": "追跡者",
   "WYLDER.shortTitle": "追跡者",
+  "WYLDER.aromaPrinciple": "[sine]……まだ先がある。ここでは止まれない。[/sine]",
   "WYLDER.titleObject": "追跡者",
   "WYLDER.banter.alive.endTurnPing": "……行くぞ。",
   "WYLDER.banter.dead.endTurnPing": "俺はいい。先へ進め。",

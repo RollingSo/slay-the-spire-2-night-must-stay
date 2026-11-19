@@ -44,6 +44,7 @@ public record DuchessCardSpec(int Cost, CardType Type, CardRarity Rarity,
 
 public abstract class DuchessCard : CardModel
 {
+    internal static ValueProp ShuffleAoeDamageProps => ValueProp.Unpowered;
     private bool _playInProgress;
     private int _reactionDiscountAfterCleanup;
 
@@ -331,7 +332,7 @@ public abstract class DuchessCard : CardModel
             if (falling != null && CombatState.HittableEnemies.Any(enemy => enemy.IsAlive))
                 await NightMustStay.Core.Compatibility.Sts2BranchCompat.Damage(
                     new BlockingPlayerChoiceContext(), CombatState.HittableEnemies.Where(enemy => enemy.IsAlive).ToArray(),
-                    DynamicVars["ShuffleAoeDamage"].BaseValue, ValueProp.Unpowered, Owner.Creature, this);
+                    DynamicVars["ShuffleAoeDamage"].BaseValue, ShuffleAoeDamageProps, Owner.Creature, this);
         }
     }
 

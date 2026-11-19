@@ -342,7 +342,7 @@
   "WYLDER_ENDLESS_WILL_POWER.title": "尽きぬ戦意",
   "WYLDER_ENDLESS_WILL_POWER.description": "敵が[gold]スタン[/gold]するたび、[gold]追撃[/gold]状態になる。",
   "WYLDER_SHRIEK_OF_MILOS_POWER.title": "ミエロスの絶叫",
-  "WYLDER_SHRIEK_OF_MILOS_POWER.description": "次にプレイするアタック{Amount}枚のダメージが2倍になる。",
+  "WYLDER_SHRIEK_OF_MILOS_POWER.description": "次のターンに最初にプレイするアタックのダメージが2倍になる。",
   "WYLDER_SEAMLESS_POWER.title": "天衣無縫",
   "WYLDER_SEAMLESS_POWER.description": "手札の最後のカードをプレイするたび、[gold]ブロック[/gold]を{Block}得る。",
   "WYLDER_MOONLIGHT_SWORD_POWER.title": "月光剣",

@@ -99,11 +99,13 @@ public sealed class StarlightShard : PotionModel
 
     public override PotionRarity Rarity => PotionRarity.Rare;
     public override PotionUsage Usage => PotionUsage.CombatOnly;
-    public override TargetType TargetType => TargetType.Self;
+    public override TargetType TargetType => TargetType.AnyPlayer;
 
     protected override async Task OnUse(PlayerChoiceContext choiceContext, Creature target)
     {
-        CardPile discard = PileType.Discard.GetPile(Owner);
+        AssertValidForTargetedPotion(target);
+        var recipient = target.Player;
+        CardPile discard = PileType.Discard.GetPile(recipient);
         int count = Math.Min(RecoverCount, discard.Cards.Count);
         if (count <= 0)
             return;
@@ -111,11 +113,12 @@ public sealed class StarlightShard : PotionModel
         CardModel[] selected = (await CardSelectCmd.FromCombatPile(
             choiceContext,
             discard,
-            Owner,
+            recipient,
             new CardSelectorPrefs(
                 new LocString("potions", "STARLIGHT_SHARD.selectionScreenPrompt"),
                 count))).ToArray();
         foreach (CardModel card in selected)
-            await CardPileCmd.Add(card, PileType.Hand);
+            if (card.Owner == recipient && card.Pile == discard)
+                await CardPileCmd.Add(card, PileType.Hand);
     }
 }

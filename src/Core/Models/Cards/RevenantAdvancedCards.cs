@@ -314,7 +314,7 @@ public sealed class LansseaxBlade : CardModel
 
 public sealed class LightningStrike : CardModel
 {
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(6m, ValueProp.Unpowered) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DamageVar(6m, ValueProp.Move) };
     protected override bool IsPlayable => false;
     public override string PortraitPath => "res://revenant_assets/cards/lightning_strike.png";
     public LightningStrike() : base(0, CardType.Attack, CardRarity.Common, TargetType.Self) { }
@@ -327,7 +327,7 @@ public sealed class LightningStrike : CardModel
         Creature[] enemies = CombatState.HittableEnemies.Where(enemy => enemy.IsAlive).ToArray();
         Creature target = Owner.RunState.Rng.CombatTargets.NextItem(enemies);
         await RevenantAttackEffects.Damage(new BlockingPlayerChoiceContext(), target,
-            DynamicVars.Damage.BaseValue, ValueProp.Unpowered, Owner.Creature, this);
+            DynamicVars.Damage.BaseValue, DynamicVars.Damage.Props, Owner.Creature, this);
     }
     protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(3m);
 }

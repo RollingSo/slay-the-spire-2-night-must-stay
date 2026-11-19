@@ -80,7 +80,7 @@ public sealed class PickledTurtleNeckMeat : PotionModel
 
     public override PotionUsage Usage => PotionUsage.CombatOnly;
 
-    public override TargetType TargetType => TargetType.Self;
+    public override TargetType TargetType => TargetType.AnyPlayer;
 
     public override IEnumerable<IHoverTip> ExtraHoverTips =>
         HoverTipFactory.FromCardWithCardHoverTips<Approach>(true)
@@ -90,10 +90,11 @@ public sealed class PickledTurtleNeckMeat : PotionModel
         PlayerChoiceContext choiceContext,
         Creature target)
     {
-        CardModel approach = Owner.Creature.CombatState
-            .CreateCard<Approach>(Owner);
-        CardModel retreat = Owner.Creature.CombatState
-            .CreateCard<Retreat>(Owner);
+        AssertValidForTargetedPotion(target);
+        CardModel approach = target.CombatState
+            .CreateCard<Approach>(target.Player);
+        CardModel retreat = target.CombatState
+            .CreateCard<Retreat>(target.Player);
         CardCmd.Upgrade(approach);
         CardCmd.Upgrade(retreat);
 

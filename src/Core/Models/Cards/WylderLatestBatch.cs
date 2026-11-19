@@ -39,6 +39,8 @@ public sealed class WylderMoonlightSword : WylderAbilityCard<WylderMoonlightSwor
 
 public sealed class WylderTwinToken : WylderCard
 {
+    private bool _transferred;
+
     public WylderTwinToken() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyPlayer) { }
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
@@ -47,11 +49,12 @@ public sealed class WylderTwinToken : WylderCard
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         var player = play.Target?.Player;
-        if (player == null || player.Creature.IsDead) return;
+        if (_transferred || player == null || player.Creature.IsDead) return;
 
         var sixthSense = player.RunState.CreateCard<WylderSixthSense>(player);
-        var result = await CardPileCmd.Add(sixthSense, PileType.Deck, CardPilePosition.Random, this);
+        var result = await CardPileCmd.Add(sixthSense, PileType.Deck, CardPilePosition.Bottom, this, skipVisuals: true);
         if (!result.success) return;
+        _transferred = true;
 
         if (DeckVersion is { } deckVersion && deckVersion.Pile?.Type == PileType.Deck)
             await CardPileCmd.RemoveFromDeck(deckVersion, false);

@@ -205,7 +205,7 @@ namespace NightMustStay.Core.Patches
             if (starCounter == null)
                 return;
             Player player = AccessTools.Field(typeof(NStarCounter), "_player")?.GetValue(starCounter) as Player;
-            if (player?.Character is not Duchess)
+            if (player == null)
                 return;
 
             Node parent = starCounter.GetParent();

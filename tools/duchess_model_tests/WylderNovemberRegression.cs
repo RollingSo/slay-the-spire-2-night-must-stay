@@ -85,6 +85,7 @@ internal static partial class WylderBattleArtRegression
   Patch(AccessTools.Method(typeof(CardCmd),nameof(CardCmd.Exhaust)),nameof(NovemberExhaust));
   Patch(AccessTools.Method(typeof(CardCmd),nameof(CardCmd.Discard),new[]{typeof(PlayerChoiceContext),typeof(CardModel)}),nameof(NovemberDiscard));
   Patch(AccessTools.Method(typeof(PlayerCmd),nameof(PlayerCmd.EndTurn)),nameof(NovemberEnd));
+  Patch(typeof(CardPileCmd).GetMethods().Single(m=>m.Name=="Add"&&m.GetParameters()[0].ParameterType==typeof(CardModel)&&m.GetParameters()[1].ParameterType==typeof(PileType)),nameof(NovemberAdd));
   try
   {
    foreach(bool up in new[]{false,true})foreach(bool empty in new[]{false,true})
@@ -93,8 +94,9 @@ internal static partial class WylderBattleArtRegression
     Fixture();_sequence.Clear();_payment=empty?null:Card(ModelDb.Card<WylderDefend>(),false);if(_payment!=null)Put(_payment,PileType.Hand);
     var card=Card(model,up);Play(card);
     Check(_sequence.SequenceEqual(empty?Array.Empty<string>():new[]{card is WylderLoneCourage or WylderHunt?"Exhaust":"Discard"}),"Hand selection moves exact chosen card");
-    int amount=card is WylderLoneCourage or WylderAgility?(up?4:3):(up?3:2);
-    Check(Rewards.Count==(card is WylderHunt or WylderVanish?2:1)&&Rewards.All(r=>r.Amount==amount),"Payment cards follow native empty-hand semantics and upgraded reward");
+    int amount=card is WylderAgility?(up?7:5):(up?3:2);
+    Check(Rewards.Count==(card is WylderLoneCourage?0:card is WylderHunt or WylderVanish?2:1)&&Rewards.All(r=>r.Amount==amount),"Payment cards follow native empty-hand semantics and upgraded reward");
+    if(card is WylderAgility) Check(Rewards.Single().Kind=="Block","Agility grants Block");
     Check(!card.Keywords.Contains(CardKeyword.Exhaust),"Exhaust chosen card does not exhaust source");
    }
    foreach(bool up in new[]{false,true})
@@ -104,6 +106,24 @@ internal static partial class WylderBattleArtRegression
     Check(Rewards.First().Kind=="Draw"&&Rewards.First().Amount==(up?6:4),"Gamble draws first");
     Check(_sequence.SequenceEqual(new[]{"Discard","Discard","End"})&&PileType.Hand.GetPile(_owner).Cards.SequenceEqual(new[]{keep})&&!keep.Keywords.Contains(CardKeyword.Retain),"Gamble retains only Desperation through turn end without making Retain permanent");
     Check(gamble.Keywords.Contains(CardKeyword.Exhaust)&&gamble.EnergyCost.GetResolved()==0,"Gamble Exhaust and free cost");
+   }
+   h.Patch(typeof(CardPileCmd).GetMethods().Single(m=>m.Name=="Draw"&&m.GetParameters().Length==4),
+       prefix:new HarmonyMethod(typeof(WylderBattleArtRegression),nameof(NovemberDraw)){priority=Priority.First});
+   foreach(bool up in new[]{false,true})foreach(bool granted in new[]{false,true})
+   {
+    Fixture();_sequence.Clear();_payment=Card(ModelDb.Card<WylderDefend>(),false);
+    Put(_payment,PileType.Hand);
+    var ordinary=Card(ModelDb.Card<WylderStrike>(),false);
+    var match=Card(granted?(CardModel)ModelDb.Card<WylderStrike>():ModelDb.Card<WylderDesperateSurvival>(),false);
+    if(granted) AccessTools.Method(typeof(WylderLoneCourage).Assembly.GetType(
+        "NightMustStay.Core.Models.Cards.WylderGrantedDesperation")!,"Grant").Invoke(null,new object[]{match});
+    NovemberMove(ordinary,PileType.Draw);
+    NovemberMove(match,PileType.Draw);
+    var courage=Card(ModelDb.Card<WylderLoneCourage>(),up);
+    Play(courage);
+    Check(courage.EnergyCost.GetResolved()==(up?0:1)&&_sequence.SequenceEqual(new[]{"Exhaust"})
+        &&PileType.Hand.GetPile(_owner).Cards.SequenceEqual(new[]{match})
+        &&PileType.Draw.GetPile(_owner).Cards.SequenceEqual(new[]{ordinary}),"Lone Courage exhausts one card and draws only the first eligible Desperation card");
    }
   }finally{h.UnpatchAll(h.Id);}
   Console.WriteLine($"PASS: {_checks-start} new November card checks: damage, thresholds, hand selection, empty hand, temporary stats, draw penalty, discounts, copies, multiplayer metadata and turn-end order.");
@@ -146,7 +166,7 @@ internal static partial class WylderBattleArtRegression
     string Render(bool up){var card=Card(model,up);return formatter.Format(System.Globalization.CultureInfo.InvariantCulture,text,card.DynamicVars.ToDictionary(p=>p.Key,p=>(object)p.Value));}
     Check(!Render(false).Contains('{')&&!Render(true).Contains('{'),"New card base and upgraded text fully formats "+model.Id);
     Check(text==json.RootElement.GetProperty(model.Id.Entry+".upgradeDescription").GetString(),"New card upgrade audit copy synced "+model.Id);
-    Check((Render(false)!=Render(true))==(model is not WylderHeroesAssemble and not WylderTrueFlame),"Visible upgraded values, or native cost upgrade "+model.Id);
+    Check((Render(false)!=Render(true))==(model is not WylderHeroesAssemble and not WylderTrueFlame and not WylderLoneCourage),"Visible upgraded values, or native cost upgrade "+model.Id);
     var card=Card(model,false);Check(card.TargetType==(card is WylderPassTheFlame?TargetType.AnyPlayer:card.Type==CardType.Attack?TargetType.AnyEnemy:TargetType.Self),"New card target "+card.Id);
    }
   }

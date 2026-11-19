@@ -84,6 +84,9 @@ public sealed class HaloReturnPower : PowerModel
             GetInternalData<Data>().Cards.Add(card);
     }
 
+    internal static bool IsRecoverablePile(PileType pileType) =>
+        pileType == PileType.Discard;
+
     public override async Task AfterSideTurnStart(
         CombatSide side,
         IReadOnlyList<Creature> creatures,
@@ -94,7 +97,11 @@ public sealed class HaloReturnPower : PowerModel
 
         foreach (CardModel card in GetInternalData<Data>().Cards.ToArray())
         {
-            if (card?.Pile != null && card.Pile.Type.IsCombatPile())
+            // Recover is specifically a discard-pile-to-hand operation. If the
+            // card was already recovered, shuffled, or exhausted (Ethereal),
+            // the delayed effect must not pull it out of that pile or grant its
+            // accompanying growth.
+            if (card?.Pile != null && IsRecoverablePile(card.Pile.Type))
             {
                 if (card is Halo halo)
                     halo.IncreaseDamageForCurrentCombat();
@@ -103,12 +110,9 @@ public sealed class HaloReturnPower : PowerModel
                 else if (card is RadagonHalo radagonHalo)
                     radagonHalo.DoubleDamageForCurrentCombat();
 
-                if (card.Pile.Type != PileType.Hand)
-                {
-                    await CardPileCmd.Add(card, PileType.Hand);
-                    if (card.Pile?.Type == PileType.Hand)
-                        NightMustStay.Core.Nodes.Vfx.RevenantAttackEffects.PlayHaloReturn(card);
-                }
+                await CardPileCmd.Add(card, PileType.Hand);
+                if (card.Pile?.Type == PileType.Hand)
+                    NightMustStay.Core.Nodes.Vfx.RevenantAttackEffects.PlayHaloReturn(card);
             }
         }
 

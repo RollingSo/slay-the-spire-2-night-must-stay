@@ -342,7 +342,7 @@
   "WYLDER_ENDLESS_WILL_POWER.title": "无终战意",
   "WYLDER_ENDLESS_WILL_POWER.description": "[gold]击晕[/gold]敌人时，进入[gold]追击[/gold]。",
   "WYLDER_SHRIEK_OF_MILOS_POWER.title": "灭洛斯的嚎叫",
-  "WYLDER_SHRIEK_OF_MILOS_POWER.description": "你接下来打出的{Amount}张攻击牌伤害翻倍。",
+  "WYLDER_SHRIEK_OF_MILOS_POWER.description": "下个回合打出的首张攻击牌伤害翻倍。",
   "WYLDER_SEAMLESS_POWER.title": "天衣无缝",
   "WYLDER_SEAMLESS_POWER.description": "打出[gold]手牌[/gold]中的最后1张牌时，获得{Block}点[gold]格挡[/gold]。",
   "WYLDER_MOONLIGHT_SWORD_POWER.title": "月光剑",

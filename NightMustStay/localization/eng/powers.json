@@ -342,7 +342,7 @@
   "WYLDER_ENDLESS_WILL_POWER.title": "Endless Will",
   "WYLDER_ENDLESS_WILL_POWER.description": "Whenever an enemy is Stunned, enter [gold]Pursuit[/gold].",
   "WYLDER_SHRIEK_OF_MILOS_POWER.title": "Shriek of Milos",
-  "WYLDER_SHRIEK_OF_MILOS_POWER.description": "Your next {Amount} Attacks deal double damage.",
+  "WYLDER_SHRIEK_OF_MILOS_POWER.description": "The first Attack you play next turn deals double damage.",
   "WYLDER_SEAMLESS_POWER.title": "Seamless",
   "WYLDER_SEAMLESS_POWER.description": "Whenever you play the last card in your hand, gain {Block} [gold]Block[/gold].",
   "WYLDER_MOONLIGHT_SWORD_POWER.title": "Moonlight Greatsword",

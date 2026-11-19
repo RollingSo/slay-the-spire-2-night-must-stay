@@ -61,6 +61,7 @@
   "DUCHESS.goldMonologue": "[sine]Enough for the road ahead. I should set some aside for the others.[/sine]",
   "WYLDER.title": "Wylder",
   "WYLDER.shortTitle": "Wylder",
+  "WYLDER.aromaPrinciple": "[sine]...Still have a ways to go. Can't stop here.[/sine]",
   "WYLDER.titleObject": "Wylder",
   "WYLDER.banter.alive.endTurnPing": "...Time to move.",
   "WYLDER.banter.dead.endTurnPing": "Leave me. Keep moving.",

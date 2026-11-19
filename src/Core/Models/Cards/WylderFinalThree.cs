@@ -48,17 +48,63 @@ public sealed class WylderShriekOfMilos : WylderCard
 {
     public WylderShriekOfMilos() : base(1, CardType.Skill, CardRarity.Rare, TargetType.Self) { }
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
-    protected override IEnumerable<MegaCrit.Sts2.Core.HoverTips.IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new MegaCrit.Sts2.Core.HoverTips.IHoverTip[]
-        { MegaCrit.Sts2.Core.HoverTips.HoverTipFactory.FromPower<VulnerablePower>(), MegaCrit.Sts2.Core.HoverTips.HoverTipFactory.FromPower<VigorPower>() });
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        { new PowerVar<VulnerablePower>("Vulnerable", 2m), new PowerVar<VigorPower>("Vigor", 6m) };
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p)
     {
-        foreach (var enemy in CombatState.GetOpponentsOf(Owner.Creature).Where(e => e.IsAlive).ToArray())
-            await PowerCmd.Apply<VulnerablePower>(c, enemy, DynamicVars["Vulnerable"].BaseValue, Owner.Creature, this);
-        await PowerCmd.Apply<VigorPower>(c, Owner.Creature, DynamicVars["Vigor"].BaseValue, Owner.Creature, this);
+        var power = Owner.Creature.GetPower<WylderShriekOfMilosPower>()
+            ?? await PowerCmd.Apply<WylderShriekOfMilosPower>(c, Owner.Creature, 1m, Owner.Creature, this);
+        power?.Schedule(CombatState.RoundNumber + 1);
     }
     protected override void OnUpgrade() => EnergyCost.UpgradeBy(-1);
+}
+public sealed class WylderShriekOfMilosPower : PowerModel
+{
+    private int _nextRound = -1;
+    private bool _ready;
+    private CardPlay _attack;
+
+    public override PowerType Type => PowerType.Buff;
+    public override PowerStackType StackType => PowerStackType.Single;
+
+    internal void Schedule(int round) => _nextRound = round;
+
+    public override Task AfterSideTurnStart(CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    {
+        if (side == Owner.Side && participants.Contains(Owner) && combatState.RoundNumber == _nextRound)
+        {
+            _nextRound = -1;
+            _ready = true;
+        }
+        return Task.CompletedTask;
+    }
+
+    public override Task BeforeCardPlayed(CardPlay play)
+    {
+        if (_ready && play.Card.Owner?.Creature == Owner && play.Card.Type == CardType.Attack)
+        {
+            _ready = false;
+            _attack = play;
+        }
+        return Task.CompletedTask;
+    }
+
+    internal decimal DamageMultiplier(Creature dealer, CardModel source, ValueProp props) =>
+        dealer == Owner && source?.Type == CardType.Attack && props.IsPoweredAttack()
+            && (_attack?.Card == source || (_ready && _attack == null)) ? 2m : 1m;
+
+    public override async Task AfterCardPlayedLate(PlayerChoiceContext context, CardPlay play)
+    {
+        if (_attack != play) return;
+        _attack = null;
+        if (_nextRound < 0) await PowerCmd.Remove(this);
+    }
+
+    public override async Task AfterSideTurnEnd(PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> participants)
+    {
+        if (side != Owner.Side || !participants.Contains(Owner)) return;
+        _ready = false;
+        _attack = null;
+        if (_nextRound < 0) await PowerCmd.Remove(this);
+    }
 }
 internal static class WylderGrantedDesperation
 {
@@ -93,19 +139,48 @@ internal static class WylderGrantedDesperation
         batch.Resolving.Add(first.Owner);
         try
         {
-            foreach (var card in hand.Cards.ToArray())
+            var cards = hand.Cards.ToArray();
+            var pendingExecutions = cards.OfType<WylderDesperateSurvival>().ToList();
+            foreach (var card in cards)
             {
-                if (card.Pile != hand) continue;
-                var enemies = card.Owner.Creature.CombatState.GetOpponentsOf(card.Owner.Creature).Where(e => e.IsAlive).ToArray(); if (enemies.Length == 0) break;
-                Creature target = null;
-                if (card.TargetType == TargetType.AnyEnemy) { var legal = card is WylderDesperationCard d ? d.GrantedLegalTargets().ToArray() : enemies.Where(card.IsValidTarget).ToArray(); if (legal.Length == 0) continue; target = card.Owner.RunState.Rng.CombatTargets.NextItem(legal); }
-                if (card.TargetType == TargetType.AnyPlayer) target = card.Owner.Creature;
-                await CardCmd.AutoPlay(c, card, target);
+                if (card is WylderDesperateSurvival execution && !pendingExecutions.Contains(execution))
+                    continue;
+                if (!await TryAutoplay(card))
+                    continue;
+                if (card is WylderDesperateSurvival playedExecution)
+                    pendingExecutions.Remove(playedExecution);
+
+                for (int index = 0; index < pendingExecutions.Count;)
+                {
+                    if (await TryAutoplay(pendingExecutions[index]))
+                        pendingExecutions.RemoveAt(index);
+                    else
+                        index++;
+                }
             }
         }
         finally
         {
             batch.Resolving.Remove(first.Owner);
+        }
+
+        async Task<bool> TryAutoplay(CardModel card)
+        {
+            if (card.Pile != hand) return false;
+            var enemies = card.Owner.Creature.CombatState.GetOpponentsOf(card.Owner.Creature).Where(e => e.IsAlive).ToArray();
+            if (enemies.Length == 0) return false;
+            Creature target = null;
+            if (card.TargetType == TargetType.AnyEnemy)
+            {
+                var legal = card is WylderDesperationCard desperation
+                    ? desperation.GrantedLegalTargets().ToArray()
+                    : enemies.Where(card.IsValidTarget).ToArray();
+                if (legal.Length == 0) return false;
+                target = card.Owner.RunState.Rng.CombatTargets.NextItem(legal);
+            }
+            if (card.TargetType == TargetType.AnyPlayer) target = card.Owner.Creature;
+            await CardCmd.AutoPlay(c, card, target);
+            return true;
         }
     }
 }

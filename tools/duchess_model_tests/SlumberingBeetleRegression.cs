@@ -66,8 +66,64 @@ internal static class SlumberingBeetleRegression
             }
             }
             Console.WriteLine("PASS: reproduced native lost wake-up before patch; patched stun wakes exactly once and resumes Rollout; intact sleep and awake beetles unaffected.");
+            CheckScriptedTransitions(harmony);
         }
         finally { harmony.UnpatchAll(harmony.Id); }
+    }
+
+    private static void CheckScriptedTransitions(HarmonyLib.Harmony harmony)
+    {
+        var segment = MakeMonster<DecimillipedeSegmentFront>();
+        var beast = MakeMonster<CeremonialBeast>();
+        var reattach = new MoveState("REATTACH_MOVE", _ => Task.CompletedTask);
+        AccessTools.PropertySetter(typeof(DecimillipedeSegment), nameof(DecimillipedeSegment.DeadState))
+            .Invoke(segment, new object[] { new MoveState("DEAD_MOVE", _ => Task.CompletedTask) { FollowUpState = reattach } });
+        beast.BeastCryState = new MoveState("BEAST_CRY_MOVE", _ => Task.CompletedTask);
+        AccessTools.PropertySetter(typeof(CeremonialBeast), nameof(CeremonialBeast.IsInSecondPhase))
+            .Invoke(beast, new object[] { true });
+        int phaseMoves = 0;
+        foreach (bool patched in new[] { false, true })
+        {
+            if (patched)
+                harmony.CreateClassProcessor(typeof(Fearless).Assembly.GetType(
+                    "NightMustStay.Core.Patches.MonsterScriptedStunTransitionPatch")!).Patch();
+            Reset(segment, reattach);
+            Reset(beast, beast.BeastCryState);
+            var pending = beast.NextMove;
+            beast.Creature.StunInternal(_ => Task.CompletedTask, null);
+            if (!ReferenceEquals(pending, beast.NextMove))
+                throw new Exception("A second ordinary stun replaced the pending stun.");
+            segment.SetMoveImmediate(segment.DeadState);
+            beast.Creature.StunInternal(_ => { phaseMoves++; return Task.CompletedTask; }, beast.BeastCryState.Id);
+            if (ReferenceEquals(segment.NextMove, segment.DeadState) != patched
+                || ReferenceEquals(beast.NextMove, pending) == patched)
+                throw new Exception("Wrong priority for reattachment or phase transition.");
+            beast.NextMove.PerformMove(Array.Empty<Creature>()).GetAwaiter().GetResult();
+            if (phaseMoves != (patched ? 1 : 0)
+                || (patched && beast.NextMove.GetNextState(beast.Creature, null!) != beast.BeastCryState.Id))
+                throw new Exception("The beast did not perform its scripted stun and resume with Beast Cry.");
+        }
+        Console.WriteLine("PASS: pending stun yields to reattachment and phase transition, but not to another ordinary stun.");
+    }
+
+    private static T MakeMonster<T>() where T : MonsterModel
+    {
+        if (!ModelDb.Contains(typeof(T)))
+            AccessTools.Method(typeof(ModelDb), "Inject").Invoke(null, new object[] { typeof(T) });
+        var monster = (T)ModelDb.Monster<T>().MutableClone();
+        var creature = new Creature(TrackingArrowRegression.MakePlayer(), 86, 86) { CombatState = new CombatState() };
+        AccessTools.Field(typeof(Creature), "<Monster>k__BackingField").SetValue(creature, monster);
+        AccessTools.PropertySetter(typeof(MonsterModel), nameof(MonsterModel.Creature)).Invoke(monster, new object[] { creature });
+        return monster;
+    }
+
+    private static void Reset(MonsterModel monster, MoveState followUp)
+    {
+        var attack = new MoveState("ATTACK", _ => Task.CompletedTask) { FollowUpState = followUp };
+        var machine = new MonsterMoveStateMachine(new MonsterState[] { attack, followUp }, attack);
+        AccessTools.Field(typeof(MonsterModel), "_moveStateMachine").SetValue(monster, machine);
+        AccessTools.PropertySetter(typeof(MonsterModel), nameof(MonsterModel.NextMove)).Invoke(monster, new object[] { attack });
+        monster.Creature.StunInternal(_ => Task.CompletedTask, null);
     }
 
     private static bool Wake(SlumberingBeetle __instance, ref Task __result)

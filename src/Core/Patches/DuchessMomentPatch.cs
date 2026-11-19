@@ -4,13 +4,10 @@ using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Hooks;
-using NightMustStay.Core.Models.Characters;
 using NightMustStay.Core.Models.Power;
 
 namespace NightMustStay.Core.Patches;
 
-// Moment belongs to the character, not the starter relic, so relic replacement
-// and multiplayer clients cannot accidentally disable the resource controller.
 [HarmonyPatch]
 public static class DuchessMomentPatch
 {
@@ -24,7 +21,7 @@ public static class DuchessMomentPatch
         await original;
         foreach (var player in combatState.Players)
         {
-            if (player.Character is Duchess)
+            if (player.Creature.IsAlive)
                 await DuchessMomentPower.Ensure(new BlockingPlayerChoiceContext(), player.Creature);
         }
     }
@@ -33,7 +30,7 @@ public static class DuchessMomentPatch
     [HarmonyPostfix]
     public static void RepairMissingController(CardPlay __1, ref Task __result)
     {
-        if (__1.Card.Owner?.Character is Duchess)
+        if (__1.Card.Owner?.Creature is { IsAlive: true } owner && !owner.HasPower<DuchessMomentPower>())
             __result = RepairAfterHooks(__result, __1);
     }
 

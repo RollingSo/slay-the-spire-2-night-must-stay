@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Cards;
+using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
@@ -33,13 +34,20 @@ public sealed class WylderVerticalCleave:WylderFollowThroughCard
 public sealed class WylderOrdovisVortex:WylderCard
 {
  private AttackCommand _resolvingAttack;
+ private int _bonusHits;
  public WylderOrdovisVortex():base(1,CardType.Attack,CardRarity.Rare,TargetType.AnyEnemy){}
- protected override IEnumerable<DynamicVar> CanonicalVars=>new DynamicVar[]{new DamageVar(11m,ValueProp.Move),new DynamicVar("Break",20m),new RepeatVar(2)};
+ protected override IEnumerable<DynamicVar> CanonicalVars=>new DynamicVar[]{new DamageVar(11m,ValueProp.Move),new DynamicVar("Break",20m),new DynamicVar("SecondBreak",40m)};
  protected override decimal BreakThreshold=>DynamicVars["Break"].BaseValue;
- internal bool AddsHits(AttackCommand command)=>ReferenceEquals(command,_resolvingAttack)&&BrokeThisPlay;
+ internal int BonusHits(AttackCommand command)=>ReferenceEquals(command,_resolvingAttack) ? _bonusHits : 0;
+ protected override void OnBreakHit(Creature target, decimal damage)
+ {
+  if (_resolvingAttack == null || damage < BreakThreshold) return;
+  _bonusHits = Math.Max(_bonusHits, damage >= DynamicVars["SecondBreak"].BaseValue ? 2 : 1);
+ }
  protected override async Task OnPlay(PlayerChoiceContext c,CardPlay p)
  {
   WylderAnimationPatch.QueueAttackMotion(Owner.Creature,"AttackTwoHand");
+  _bonusHits=0;
   _resolvingAttack=DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(p.Target).WithHitCount(1).WithWylderFx(WylderAttackVfx.Kind.OrdovisVortex,Owner.Creature);
   try{await _resolvingAttack.Execute(c);}finally{_resolvingAttack=null;}
  }

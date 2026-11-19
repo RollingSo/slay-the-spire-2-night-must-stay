@@ -58,6 +58,7 @@ public abstract class WylderCard : CardModel
     protected virtual int BreakHitCount => 1;
     public bool HasBreak => BreakThreshold > 0m;
     protected virtual Task OnBreak(PlayerChoiceContext context) => Task.CompletedTask;
+    protected virtual void OnBreakHit(Creature target, decimal damage) { }
     protected CardPlay ResolvingPlay => BreakStates.GetOrCreateValue(this).Play;
     protected Creature BrokenTarget => BreakStates.GetOrCreateValue(this).Target;
     protected bool BrokeThisPlay => BreakStates.GetOrCreateValue(this).Triggered;
@@ -98,17 +99,19 @@ public abstract class WylderCard : CardModel
     {
         BreakData data = BreakStates.GetOrCreateValue(this);
         if (cardSource != this || dealer != Owner.Creature || !props.IsPoweredAttack()
-            || BreakThreshold <= 0 || !data.Resolving || data.Triggered || target.Side == dealer.Side) return;
-        if (!data.Damage.TryGetValue(target, out List<decimal> hits))
-        {
-            hits = new List<decimal>();
-            data.Damage[target] = hits;
-        }
+            || BreakThreshold <= 0 || !data.Resolving || target.Side == dealer.Side) return;
         // DamageResult.TotalDamage omits overkill. That made multiplicative
         // bonuses such as the Necrobinder's Lethality disappear from Break
         // checks whenever the boosted hit killed its target. Break is based on
         // the attack's dealt amount before HP capping, so include overkill.
         decimal dealtDamage = result.TotalDamage + result.OverkillDamage;
+        OnBreakHit(target, dealtDamage);
+        if (data.Triggered) return;
+        if (!data.Damage.TryGetValue(target, out List<decimal> hits))
+        {
+            hits = new List<decimal>();
+            data.Damage[target] = hits;
+        }
         hits.Add(dealtDamage);
         int requiredHits = BreakHitCount;
         if (requiredHits <= 0) return;
@@ -179,7 +182,7 @@ public sealed class WylderDashAttack : WylderCard
     public WylderDashAttack() : base(1, CardType.Attack, CardRarity.Basic, TargetType.AnyEnemy) { }
     protected override bool HasPursuitCondition => true;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        { new DamageVar(9m, ValueProp.Move), new PowerVar<VulnerablePower>("Vulnerable", 1m) };
+        { new DamageVar(9m, ValueProp.Move), new PowerVar<VulnerablePower>("Vulnerable", 2m) };
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         bool pursuit = Pursuing;
