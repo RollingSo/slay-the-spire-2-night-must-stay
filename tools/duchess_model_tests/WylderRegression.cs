@@ -97,7 +97,7 @@ internal static class WylderRegression
                 foreach(var canonical in character.CardPool.AllCards)
                 {
                     var c=canonical.ToMutable(); if(up && c.MaxUpgradeLevel > 0)c.UpgradeInternal();
-                    int cost=c switch { WylderFlamelightOnSnow => up?1:2, WylderTriumph => 0,
+                    int cost=c switch { WylderFlamelightOnSnow => up?1:2, WylderTriumph or WylderPassTheFlame => 0,
                         WylderVerticalCleave => 2, WylderSiluriaVortex => up?2:3, WylderEndlessWill or WylderLastResort or WylderShriekOfMilos or WylderTwinToken or WylderGrappleShot or WylderLoneCourage => up?0:1, WylderGamble or WylderAgility => 0, WylderHeroesAssemble => up?0:1, WylderEndTheNight => 5, WylderTrueFlame => up?4:5, WylderDesperateFlurry => 3, WylderClawMovement or WylderAncientClawLeap or WylderMagnanimity or WylderOffensiveInstinct => up?0:1,
                         WylderRuinousGhostflame => 1, WylderWildfire => up?0:1,
                         WylderSpark or WylderResolve or WylderDebut or WylderBideTheMoment or WylderKick => 0,
@@ -111,7 +111,7 @@ internal static class WylderRegression
                         WylderCriticalStrike => 3,
                         WylderFatesJudgment or WylderTakersFlames or WylderFlameChaseSlash => 2,
                         WylderStormBlade or WylderEochaidsDancingBlade => 0,
-                        WylderAssaultStake => 3,
+                        WylderAssaultStake => 4,
                         WylderLionsClaw
                             or WylderJumpingHeavy or WylderDualGreatswordLeap or WylderGhostflameExplosion or WylderCorpseWaxCutter => 2,
                         WylderPoise or WylderEruption => up?0:1, _=>1 };

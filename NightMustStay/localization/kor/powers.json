@@ -310,7 +310,7 @@
   "WYLDER_BREAK_DESCRIPTION_POWER.title": "태세 붕괴",
   "WYLDER_BREAK_DESCRIPTION_POWER.description": "이 카드의 공격 피해가 요구치에 도달하면 추가 [gold]태세 붕괴[/gold] 효과를 발동합니다.",
   "WYLDER_RUINOUS_GHOSTFLAME_POWER.title": "멸망의 영혼 불",
-  "WYLDER_RUINOUS_GHOSTFLAME_POWER.description": "한 번의 공격으로 적에게 20을 초과하는 피해를 주면 [gold]동상[/gold]을 2 부여합니다.",
+  "WYLDER_RUINOUS_GHOSTFLAME_POWER.description": "한 번의 공격으로 적에게 20을 초과하는 피해를 주면 [gold]동상[/gold]을 {Freeze} 부여합니다.",
   "WYLDER_VETERAN_EDGE_POWER.title": "백전의 칼날",
   "WYLDER_VETERAN_EDGE_POWER.description": "[gold]태세 붕괴[/gold]를 발동할 때마다 중첩당 [gold]힘[/gold]을 2 얻습니다.",
   "WYLDER_BOLDNESS_POWER.title": "과감함",
@@ -348,5 +348,5 @@
   "WYLDER_MOONLIGHT_SWORD_POWER.title": "월광검",
   "WYLDER_MOONLIGHT_SWORD_POWER.description": "[gold]추격[/gold]에 진입할 때마다 무작위 적 하나에게 [gold]동상[/gold]을 2, {Amount}회 부여합니다.",
   "WYLDER_FLAMELIGHT_ON_SNOW_POWER.title": "눈을 비추는 불빛",
-  "WYLDER_FLAMELIGHT_ON_SNOW_POWER.description": "[gold]활력[/gold]을 얻을 때마다 무작위 적 하나에게 [gold]동상[/gold]을 {Freeze} 부여합니다.\n[gold]동상[/gold]이 있는 적에게 공격 피해를 준 후 [gold]활력[/gold]을 {Vigor} 얻습니다."
+  "WYLDER_FLAMELIGHT_ON_SNOW_POWER.description": "매 턴 처음으로 [gold]활력[/gold]을 얻을 때, 무작위 적 하나에게 [gold]동상[/gold]을 {Freeze} 부여합니다.\n매 턴 처음으로 [gold]동상[/gold]이 있는 적에게 공격 피해를 준 후, [gold]활력[/gold]을 {Vigor} 얻습니다."
 }

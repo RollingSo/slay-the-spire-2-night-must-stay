@@ -22,7 +22,7 @@ namespace NightMustStay.Core.Models.Cards;
 // Verified native portraits remain interim assets, never approved custom art.
 public sealed class WylderAssaultStake : WylderDesperationCard
 {
-    public WylderAssaultStake() : base(3, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) { }
+    public WylderAssaultStake() : base(4, CardType.Attack, CardRarity.Rare, TargetType.AllEnemies) { }
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
     protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new DamageVar(20m, ValueProp.Move) };
     protected override IEnumerable<IHoverTip> ExtraHoverTips => base.ExtraHoverTips.Concat(new[]

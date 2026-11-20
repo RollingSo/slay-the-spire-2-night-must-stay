@@ -25,7 +25,19 @@ public abstract class WylderAbilityPower : PowerModel
     public int Highest(int normal, int upgraded) => UpgradedCopies > 0 ? upgraded : Amount > 0 ? normal : 0;
 }
 
-public sealed class WylderRuinousGhostflamePower : WylderAbilityPower { }
+public sealed class WylderRuinousGhostflamePower : WylderAbilityPower
+{
+    internal int FreezePerHit => Sum(WylderRuinousGhostflame.BaseFreeze, WylderRuinousGhostflame.UpgradedFreeze);
+    public override LocString Description
+    {
+        get
+        {
+            LocString description = base.Description;
+            description.Add("Freeze", FreezePerHit);
+            return description;
+        }
+    }
+}
 public sealed class WylderVeteranEdgePower : WylderAbilityPower { }
 public sealed class WylderBoldnessPower : WylderAbilityPower { }
 public sealed class WylderNightFormPower : WylderAbilityPower

@@ -310,7 +310,7 @@
   "WYLDER_BREAK_DESCRIPTION_POWER.title": "Break",
   "WYLDER_BREAK_DESCRIPTION_POWER.description": "When this card's attack damage reaches the requirement, trigger its additional [gold]Break[/gold] effect.",
   "WYLDER_RUINOUS_GHOSTFLAME_POWER.title": "Ruinous Ghostflame",
-  "WYLDER_RUINOUS_GHOSTFLAME_POWER.description": "Whenever an attack deals more than 20 damage to an enemy, apply 2 [gold]Freeze[/gold].",
+  "WYLDER_RUINOUS_GHOSTFLAME_POWER.description": "Whenever an attack deals more than 20 damage to an enemy, apply {Freeze} [gold]Freeze[/gold].",
   "WYLDER_VETERAN_EDGE_POWER.title": "Veteran Edge",
   "WYLDER_VETERAN_EDGE_POWER.description": "Whenever you trigger [gold]Break[/gold], gain 2 [gold]Strength[/gold] per stack.",
   "WYLDER_BOLDNESS_POWER.title": "Boldness",
@@ -348,5 +348,5 @@
   "WYLDER_MOONLIGHT_SWORD_POWER.title": "Moonlight Greatsword",
   "WYLDER_MOONLIGHT_SWORD_POWER.description": "Whenever you enter [gold]Pursuit[/gold], apply 2 [gold]Freeze[/gold] to a random enemy {Amount} times.",
   "WYLDER_FLAMELIGHT_ON_SNOW_POWER.title": "Flamelight on Snow",
-  "WYLDER_FLAMELIGHT_ON_SNOW_POWER.description": "Whenever you gain [gold]Vigor[/gold], apply {Freeze} [gold]Freeze[/gold] to a random enemy.\nAfter dealing Attack damage to an enemy with [gold]Freeze[/gold], gain {Vigor} [gold]Vigor[/gold]."
+  "WYLDER_FLAMELIGHT_ON_SNOW_POWER.description": "The first time you gain [gold]Vigor[/gold] each turn, apply {Freeze} [gold]Freeze[/gold] to a random enemy.\nThe first time you deal Attack damage to an enemy with [gold]Freeze[/gold] each turn, gain {Vigor} [gold]Vigor[/gold]."
 }

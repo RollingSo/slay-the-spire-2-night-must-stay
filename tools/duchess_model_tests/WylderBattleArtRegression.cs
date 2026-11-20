@@ -92,6 +92,8 @@ internal static partial class WylderBattleArtRegression
             }
             VortexCards();
             KickAndPoiseCards();
+            FlamelightOncePerTurn();
+            RuinousGhostflameFreeze();
             FinalThreeCards();
             NovemberCards();
             SparkAndRollingAttack();
@@ -284,17 +286,8 @@ internal static partial class WylderBattleArtRegression
             Play(wax);
             Check(Attacks.Single().Aoe && Attacks.Single().Raw==(up?18:14) && _enemies.All(e=>e.GetPowerAmount<VulnerablePower>()==(up?3:2) && e.GetPowerAmount<WeakPower>()==(up?3:2)),"Corpse Wax group Break applies both debuffs once");
             Fixture();
-            var ghost = AddPower<WylderRuinousGhostflamePower>(_owner.Creature,1); ghost.UpgradedCopies=up?1:0;
-            var attack=Card(ModelDb.Card<WylderStrike>(),false);
-            foreach (int amount in new[] {20,21})
-            {
-                var result=new DamageResult(_enemies[0],ValueProp.Move){BlockedDamage=amount,UnblockedDamage=0};
-                WylderCombatEvents.AfterDamage(null!,_owner.Creature,_enemies[0],result,ValueProp.Move,attack).GetAwaiter().GetResult();
-                Check(_enemies[0].GetPowerAmount<FreezePower>()==(amount==20?0:up?3:2),"Ghostflame strict >20 with full Block and mixed upgrade support");
-            }
-            Fixture();
             var bold=AddPower<WylderBoldnessPower>(_owner.Creature,1);bold.UpgradedCopies=up?1:0;
-            attack=Card(ModelDb.Card<WylderStrike>(),false);
+            var attack=Card(ModelDb.Card<WylderStrike>(),false);
             WylderCombatEvents.AfterDamage(null!,_owner.Creature,_enemies[0],new DamageResult(_enemies[0],ValueProp.Move){BlockedDamage=19},ValueProp.Move,attack).GetAwaiter().GetResult();
             Check(!Rewards.Any(r=>r.Kind=="Block"),"Boldness does not trigger below 20 damage");
             WylderCombatEvents.AfterDamage(null!,_owner.Creature,_enemies[0],new DamageResult(_enemies[0],ValueProp.Move){BlockedDamage=20},ValueProp.Move,attack).GetAwaiter().GetResult();
@@ -321,6 +314,50 @@ internal static partial class WylderBattleArtRegression
     private static void HorizontalReviewCards()
     {
         // Removed with unregistered legacy card models.
+    }
+
+    private static void RuinousGhostflameFreeze()
+    {
+        foreach (bool upgraded in new[] { false, true })
+        {
+            Fixture();
+            var source = Card(ModelDb.Card<WylderRuinousGhostflame>(), upgraded);
+            Play(source);
+            var strike = Card(ModelDb.Card<WylderStrike>(), false);
+            foreach (int damage in new[] { 20, 21 })
+            {
+                var target = _enemies[0];
+                var hit = new DamageResult(target, ValueProp.Move) { BlockedDamage = damage };
+                WylderCombatEvents.AfterDamage(null!, _owner.Creature, target, hit, ValueProp.Move, strike).GetAwaiter().GetResult();
+                Check(target.GetPowerAmount<FreezePower>() == (damage == 20 ? 0 : upgraded ? 2 : 1),
+                    "Ghostflame applies the card's Freeze amount only after damage above 20");
+            }
+        }
+        Console.WriteLine("PASS: Ruinous Ghostflame applies 1/2 Freeze with its existing damage threshold.");
+    }
+
+    private static void FlamelightOncePerTurn()
+    {
+        Fixture();
+        var flamelight = AddPower<WylderFlamelightOnSnowPower>(_owner.Creature, 1);
+        var vigor = AddPower<VigorPower>(_owner.Creature, 1);
+        var strike = Card(ModelDb.Card<WylderStrike>(), false);
+        for (int round = 1; round <= 2; round++)
+        {
+            _combat.RoundNumber = round;
+            Rewards.Clear();
+            for (int gain = 0; gain < 2; gain++)
+                flamelight.AfterPowerAmountChanged(null!, vigor, 1m, _owner.Creature, strike).GetAwaiter().GetResult();
+            var freeze = Rewards.Single(reward => reward.Kind == nameof(FreezePower));
+            Check(freeze.Amount == 1, "Flamelight applies Freeze only on the first Vigor gain of the round");
+            var target = freeze.Target ?? throw new Exception("Flamelight must apply Freeze to an enemy.");
+            var hit = new DamageResult(target, ValueProp.Move) { UnblockedDamage = 6 };
+            for (int attack = 0; attack < 2; attack++)
+                flamelight.AfterDamageGiven(null!, _owner.Creature, hit, ValueProp.Move, target, strike).GetAwaiter().GetResult();
+            Check(Rewards.Single(reward => reward.Kind == nameof(VigorPower)).Amount == 3,
+                "Flamelight gains Vigor only on the first qualifying hit of the round, independently of the Freeze trigger");
+        }
+        Console.WriteLine("PASS: Flamelight independently limits Freeze and Vigor to one trigger per round.");
     }
 
     private static void Put(CardModel card, PileType destination)

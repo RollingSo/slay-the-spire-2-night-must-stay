@@ -74,12 +74,12 @@ internal static class WylderEochaidRegression
                 var card = Card(up, x);
                 Check(card.EnergyCost.CostsX && card.Type == CardType.Attack && card.Rarity == CardRarity.Rare
                     && card.TargetType == TargetType.AnyEnemy, "Native X-cost Rare single-target attack");
-                Check(card.DynamicVars.Damage.BaseValue == 9 && card.DynamicVars["Break"].BaseValue == 20
-                    && card.DynamicVars.Repeat.BaseValue == (up ? 1 : 0), "Fixed9/Break20 and upgraded extra1");
-                Check(!card.DynamicVars.Damage.WasJustUpgraded && !card.DynamicVars["Break"].WasJustUpgraded
-                    && card.DynamicVars.Repeat.WasJustUpgraded == up, "Only X bonus changes on upgrade");
+                Check(card.DynamicVars.Damage.BaseValue == (up ? 9 : 7) && card.DynamicVars["Break"].BaseValue == 20
+                    && !card.DynamicVars.ContainsKey("Repeat"), "Damage 7/9, Break20 and unchanged X hits");
+                Check(card.DynamicVars.Damage.WasJustUpgraded == up && !card.DynamicVars["Break"].WasJustUpgraded,
+                    "Only damage changes on upgrade");
                 Play(card);
-                int initial = x + (up ? 1 : 0), hitDamage = pursuit ? 13 : 9;
+                int initial = x, hitDamage = (int)Math.Floor((up ? 9 : 7) * (pursuit ? 1.5m : 1m));
                 int expected = initial;
                 Check(DamageValues.Count == expected && DamageValues.All(v => v == hitDamage),
                     $"Actual native loop: X{x}, up{up}, pursuit{pursuit}, blocked{blocked} -> {expected} hits");
@@ -97,7 +97,7 @@ internal static class WylderEochaidRegression
             Fixture(true);
             AccessTools.Method(Shared, "AddPower").MakeGenericMethod(typeof(VigorPower)).Invoke(null, new object[] { Owner.Creature, 2 });
             var vigor = Card(false, 2); Play(vigor);
-            Check(DamageValues.SequenceEqual(new[] { 16, 16 }) && !Owner.Creature.HasPower<VigorPower>(),
+            Check(DamageValues.SequenceEqual(new[] { 13, 13 }) && !Owner.Creature.HasPower<VigorPower>(),
                 "Vigor and Pursuit remain active through all original hits and clear at attack/play end");
             Fixture(); _xBonus = 2;
             Play(Card(false, 1));
@@ -108,7 +108,7 @@ internal static class WylderEochaidRegression
             Check(DamageValues.Count == 2, "Other copies do not inherit successful Break");
             Fixture(); _killAttacker = true; Play(Card(false, 4));
             Check(DamageValues.Count == 1, "Native attacker-death exit retained");
-            Fixture(); Enemies[0].SetCurrentHpInternal(15); Play(Card(false, 4));
+            Fixture(); Enemies[0].SetCurrentHpInternal(13); Play(Card(false, 4));
             Check(DamageValues.Count == 2 && Enemies[0].IsDead, "No damage is dealt to a dead target for remaining/bonus hits");
             LocalizedText();
             Check(File.Exists(ModelDb.Card<WylderEochaidsDancingBlade>().PortraitPath.Replace("res://", "")), "Custom portrait resolves");
@@ -183,8 +183,9 @@ internal static class WylderEochaidRegression
                 return formatter.Format(System.Globalization.CultureInfo.InvariantCulture, text, vars);
             }
             string basic = Render(false), upgraded = Render(true), preview = Render(true, true);
-            Check(basic != upgraded && !basic.Contains('{') && !upgraded.Contains('{') && upgraded.Contains("X+"), "Runtime X vs X+1 text renders visibly different");
-            Check(preview.Contains("X+") && preview.Contains("[green]") && !preview.Contains('{'), "Upgrade preview displays X+1 change");
+            Check(basic != upgraded && !basic.Contains('{') && !upgraded.Contains('{')
+                && basic.Contains("7") && upgraded.Contains("9") && !upgraded.Contains("X+"), "Only damage differs in runtime text");
+            Check(preview.Contains("9") && preview.Contains("[green]") && !preview.Contains('{'), "Upgrade preview highlights 9 damage");
             string keyword = locale switch { "zhs" => "破势", "jpn" => "体勢崩し", "kor" => "태세 붕괴", _ => "Break" };
             Check(text.Contains("[gold]" + keyword + "[/gold]"), "Break keyword gold");
         }

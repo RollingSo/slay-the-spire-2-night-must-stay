@@ -22,10 +22,13 @@ public abstract class WylderAbilityCard<T> : WylderCard where T : WylderAbilityP
 }
 public sealed class WylderRuinousGhostflame : WylderAbilityCard<WylderRuinousGhostflamePower>
 {
+    internal const int BaseFreeze = 1;
+    internal const int UpgradedFreeze = 2;
+
     public WylderRuinousGhostflame() : base(1, CardRarity.Uncommon) { }
     public override string PortraitPath => "res://images/packed/card_portraits/wylder/wylder_ruinous_ghostflame.png";
-    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DynamicVar("Freeze", 2m), new EnergyVar(1) };
-    protected override void OnUpgrade() => DynamicVars["Freeze"].UpgradeValueBy(1m);
+    protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new DynamicVar("Freeze", BaseFreeze), new EnergyVar(1) };
+    protected override void OnUpgrade() => DynamicVars["Freeze"].UpgradeValueBy(UpgradedFreeze - BaseFreeze);
 }
 public sealed class WylderVeteranEdge : WylderAbilityCard<WylderVeteranEdgePower>
 {

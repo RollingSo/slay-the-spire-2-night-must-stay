@@ -11,7 +11,7 @@ namespace NightMustStay.Core.Models.Cards;
 public sealed class WylderResolve : WylderCard
 {
     public WylderResolve() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
-    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new CardsVar(3) };
+    protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new CardsVar(2) };
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
         await CardPileCmd.Draw(context, DynamicVars.Cards.BaseValue, Owner);

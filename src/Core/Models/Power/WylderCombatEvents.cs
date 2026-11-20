@@ -265,7 +265,7 @@ public static class WylderCombatEvents
             await InPowerScope(boldPlayer, () => Block(context, boldPlayer, bold.Sum(4,6), Current(boldPlayer)));
         if (props.IsPoweredAttack() && card?.Type == CardType.Attack && dealer?.Player is { } attacker && Eligible(attacker)
             && target.Side != dealer.Side && target.IsAlive && result.TotalDamage > 20 && Power<WylderRuinousGhostflamePower>(attacker) is { } ghost)
-            await InPowerScope(attacker, async () => { await PowerCmd.Apply<FreezePower>(context, target, ghost.Sum(2, 3), dealer, card); });
+            await InPowerScope(attacker, async () => { await PowerCmd.Apply<FreezePower>(context, target, ghost.FreezePerHit, dealer, card); });
     }
     public static async Task CompleteCard(PlayerChoiceContext context, CardPlay play)
     {

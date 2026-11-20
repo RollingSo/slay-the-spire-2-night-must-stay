@@ -310,7 +310,7 @@
   "WYLDER_BREAK_DESCRIPTION_POWER.title": "体勢崩し",
   "WYLDER_BREAK_DESCRIPTION_POWER.description": "このカードのアタックダメージが必要値に達すると、追加の[gold]体勢崩し[/gold]効果を発動する。",
   "WYLDER_RUINOUS_GHOSTFLAME_POWER.title": "滅びの霊炎",
-  "WYLDER_RUINOUS_GHOSTFLAME_POWER.description": "1回のアタックで敵に20を超えるダメージを与えると、[gold]凍傷[/gold]を2付与する。",
+  "WYLDER_RUINOUS_GHOSTFLAME_POWER.description": "1回のアタックで敵に20を超えるダメージを与えると、[gold]凍傷[/gold]を{Freeze}付与する。",
   "WYLDER_VETERAN_EDGE_POWER.title": "歴戦の刃",
   "WYLDER_VETERAN_EDGE_POWER.description": "[gold]体勢崩し[/gold]を発動するたび、スタックごとに[gold]筋力[/gold]を2得る。",
   "WYLDER_BOLDNESS_POWER.title": "果敢",
@@ -348,5 +348,5 @@
   "WYLDER_MOONLIGHT_SWORD_POWER.title": "月光剣",
   "WYLDER_MOONLIGHT_SWORD_POWER.description": "[gold]追撃[/gold]状態になるたび、ランダムな敵1体に[gold]凍傷[/gold]を2、{Amount}回付与する。",
   "WYLDER_FLAMELIGHT_ON_SNOW_POWER.title": "雪を照らす炎",
-  "WYLDER_FLAMELIGHT_ON_SNOW_POWER.description": "[gold]活力[/gold]を得るたび、ランダムな敵1体に[gold]凍傷[/gold]を{Freeze}付与する。\n[gold]凍傷[/gold]を持つ敵にアタックダメージを与えた後、[gold]活力[/gold]を{Vigor}得る。"
+  "WYLDER_FLAMELIGHT_ON_SNOW_POWER.description": "各ターンに初めて[gold]活力[/gold]を得た時、ランダムな敵1体に[gold]凍傷[/gold]を{Freeze}付与する。\n各ターンに初めて[gold]凍傷[/gold]のある敵にアタックダメージを与えた後、[gold]活力[/gold]を{Vigor}得る。"
 }

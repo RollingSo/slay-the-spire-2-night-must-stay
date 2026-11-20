@@ -39,6 +39,9 @@ public sealed class WylderFlamelightOnSnow : WylderAbilityCard<WylderFlamelightO
 
 public sealed class WylderFlamelightOnSnowPower : WylderAbilityPower
 {
+    private int _lastFreezeRound = -1;
+    private int _lastVigorRound = -1;
+
     public override LocString Description
     {
         get
@@ -54,6 +57,9 @@ public sealed class WylderFlamelightOnSnowPower : WylderAbilityPower
         decimal amount, Creature applier, CardModel cardSource)
     {
         if (amount <= 0 || power is not VigorPower || power.Owner != Owner) return;
+        int round = CombatState.RoundNumber;
+        if (_lastFreezeRound == round) return;
+        _lastFreezeRound = round;
         Creature[] enemies = CombatState.GetOpponentsOf(Owner)
             .Where(enemy => enemy.IsAlive && enemy.IsHittable).ToArray();
         if (enemies.Length == 0) return;
@@ -69,6 +75,9 @@ public sealed class WylderFlamelightOnSnowPower : WylderAbilityPower
         if (dealer != Owner || target == null || target.Side == Owner.Side || result.TotalDamage <= 0
             || !props.IsPoweredAttack() || cardSource?.Type != CardType.Attack
             || !target.HasPower<FreezePower>()) return;
+        int round = CombatState.RoundNumber;
+        if (_lastVigorRound == round) return;
+        _lastVigorRound = round;
         Flash();
         await PowerCmd.Apply<VigorPower>(context, Owner,
             WylderFlamelightOnSnow.VigorPerCopy * Copies, Owner, cardSource);

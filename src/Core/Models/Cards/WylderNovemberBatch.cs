@@ -161,7 +161,7 @@ public sealed class WylderGamble : WylderCard
 }
 public sealed class WylderPassTheFlame : WylderCard
 {
-    public WylderPassTheFlame() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyPlayer) { }
+    public WylderPassTheFlame() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.AnyPlayer) { }
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[] { new CardsVar(2) };
     protected override async Task OnPlay(PlayerChoiceContext c, CardPlay p) { var player = p.Target?.Player; if (player == null || player.Creature.IsDead) return; var candidates = PileType.Draw.GetPile(player).Cards.Where(x => x.Type == CardType.Attack).ToList(); for (int i = 0; i < DynamicVars.Cards.IntValue && candidates.Count > 0; i++) { var card = Owner.RunState.Rng.Niche.NextItem(candidates); candidates.Remove(card); if (card.Pile?.Type != PileType.Draw) continue; await CardPileCmd.Add(card, PileType.Draw, CardPilePosition.Top, this); await CardPileCmd.Draw(c, 1m, player); } }

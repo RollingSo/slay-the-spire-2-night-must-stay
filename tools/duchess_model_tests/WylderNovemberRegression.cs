@@ -75,7 +75,9 @@ internal static partial class WylderBattleArtRegression
       && Rewards.Any(r=>r.Kind==nameof(WylderMurderousAuraPower)&&r.Amount==1),
       "Aura grants Strength and Dexterity once on play and keeps only the draw-penalty power");
    Check(ModelDb.Card<WylderPassTheFlame>().MultiplayerConstraint==CardMultiplayerConstraint.MultiplayerOnly&&ModelDb.Card<WylderPassTheFlame>().TargetType==TargetType.AnyPlayer,"Pass Flame multiplayer target");
-   var pass=Card(ModelDb.Card<WylderPassTheFlame>(),up);Check(pass.DynamicVars.Cards.IntValue==(up?3:2),"Pass Flame upgrade");
+   var pass=Card(ModelDb.Card<WylderPassTheFlame>(),up);Check(pass.EnergyCost.GetResolved()==0&&pass.DynamicVars.Cards.IntValue==(up?3:2),"Pass Flame zero cost and draw upgrade");
+   Fixture();Play(Card(ModelDb.Card<WylderResolve>(),up));
+   Check(Rewards.Any(reward=>reward.Kind=="Draw"&&reward.Amount==(up?3:2)),"Resolve draws 2/3 cards");
    var heroes=Card(ModelDb.Card<WylderHeroesAssemble>(),up);Check(heroes.EnergyCost.GetResolved()==(up?0:1)&&heroes.MultiplayerConstraint==CardMultiplayerConstraint.MultiplayerOnly,"Heroes metadata");
   }
   var h=new HarmonyLib.Harmony("wylder.november.payments");

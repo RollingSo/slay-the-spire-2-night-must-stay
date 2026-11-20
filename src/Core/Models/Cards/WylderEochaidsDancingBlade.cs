@@ -16,7 +16,7 @@ public sealed class WylderEochaidsDancingBlade : WylderCard
     public WylderEochaidsDancingBlade() : base(0, CardType.Attack, CardRarity.Rare, TargetType.AnyEnemy) { }
     protected override bool HasEnergyCostX => true;
     protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
-        { new DamageVar(9m, ValueProp.Move), new DynamicVar("Break", 20m), new RepeatVar(0) };
+        { new DamageVar(7m, ValueProp.Move), new DynamicVar("Break", 20m) };
     protected override decimal BreakThreshold => DynamicVars["Break"].BaseValue;
     protected override int BreakHitCount => _breakHitCount;
 
@@ -27,12 +27,12 @@ public sealed class WylderEochaidsDancingBlade : WylderCard
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay play)
     {
-        int hits = ResolveEnergyXValue() + DynamicVars.Repeat.IntValue;
+        int hits = ResolveEnergyXValue();
         _breakHitCount = hits;
         _resolvingAttack = DamageCmd.Attack(DynamicVars.Damage.BaseValue).CompatFromCard(this)
             .Targeting(play.Target).WithHitCount(hits);
         try { await _resolvingAttack.Execute(context); }
         finally { _resolvingAttack = null; }
     }
-    protected override void OnUpgrade() => DynamicVars.Repeat.UpgradeValueBy(1m);
+    protected override void OnUpgrade() => DynamicVars.Damage.UpgradeValueBy(2m);
 }

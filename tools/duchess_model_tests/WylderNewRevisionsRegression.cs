@@ -54,7 +54,7 @@ internal static class WylderNewRevisionsRegression
                 Check(Damage.Last() == 6 && !Owner.Creature.HasPower<WylderPursuitPower>(), "Next attack gets no Pursuit bonus");
 
                 Fixture(pursuit); var stake = Card<WylderAssaultStake>(up);
-                Check(stake.EnergyCost.GetResolved() == 3 && stake.Rarity == CardRarity.Rare && stake.TargetType == TargetType.AllEnemies, "Assault Stake 3-cost rare AOE");
+                Check(stake.EnergyCost.GetResolved() == 4 && stake.Rarity == CardRarity.Rare && stake.TargetType == TargetType.AllEnemies, "Assault Stake 4-cost rare AOE");
                 Check(stake.Keywords.Contains(CardKeyword.Exhaust) && stake.Keywords.Contains(CardKeyword.Retain) == up, "Exhaust and upgraded Retain");
                 Play(stake);
                 Check(Damage.SequenceEqual(new[] { pursuit ? 30m : 20m, pursuit ? 30m : 20m }), "AOE hits both enemies with fixed20 and Pursuit");
