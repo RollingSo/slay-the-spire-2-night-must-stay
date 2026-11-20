@@ -1,0 +1,17 @@
+[h1]0.4.9｜追踪者卡牌调整[/h1]
+
+- 焰光照雪：每回合首次获得活力时施加冻伤，首次用攻击牌伤害已冻伤的敌人时获得活力。两项效果各自限一次。
+- 欧赫剑舞：每段伤害为 7，升级后为 9。升级不再额外增加攻击次数。
+- 决断：抽 2 张牌，升级后抽 3 张。
+- 唤起灵火：每次触发施加 1 层冻伤，升级后为 2 层。
+- 袭击桩柱：耗能从 3 提高到 4。
+- 传火：耗能从 1 降低到 0。
+
+[h1]0.4.9 | Wylder Card Balance[/h1]
+
+- Flamelight on Snow: Applies Freeze the first time you gain Vigor each turn and grants Vigor the first time an Attack damages a Frozen enemy each turn. Each effect can trigger once per turn.
+- Eochaid's Dancing Blade: Deals 7 damage per hit, or 9 when upgraded. Upgrading no longer adds a hit.
+- Resolve: Draws 2 cards, or 3 when upgraded.
+- Ruinous Ghostflame: Applies 1 Freeze per trigger, or 2 when upgraded.
+- Onslaught Stake: Cost increased from 3 to 4.
+- Pass the Flame: Cost reduced from 1 to 0.

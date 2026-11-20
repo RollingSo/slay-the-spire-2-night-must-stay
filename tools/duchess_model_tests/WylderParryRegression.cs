@@ -114,7 +114,13 @@ internal static class WylderParryRegression
                 AccessTools.Method(typeof(CardGlossaryRegression), "Load").Invoke(null, new object[] { locale });
                 using var json = JsonDocument.Parse(File.ReadAllText($"NightMustStay/localization/{locale}/cards.json"));
                 string text = json.RootElement.GetProperty("WYLDER_PARRY.description").GetString()!;
-                string term = locale == "zhs" ? "绝境" : "Desperation";
+                string term = locale switch
+                {
+                    "zhs" => "绝境",
+                    "jpn" => "窮地",
+                    "kor" => "궁지",
+                    _ => "Desperation",
+                };
                 Check(text.Contains("[gold]" + term + "[/gold]") && !text.Contains("Retain") && !text.Contains("保留"), "Gold Desperation, native Retain not duplicated");
                 Check(text == json.RootElement.GetProperty("WYLDER_PARRY.upgradeDescription").GetString(), "Keyword-only upgrade audit body synced");
                 Check(json.RootElement.GetProperty("WYLDER_DESPERATION.title").GetString() == term, "Desperation extra tip title localized");
