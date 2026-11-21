@@ -1,0 +1,9 @@
+[h1]0.4.10｜时刻界面与盾戳调整[/h1]
+
+- 时刻计数器现在会避开星星计数器。牌组里有使用时刻的牌时才显示，并会随牌组变化更新。
+- 守护者「盾戳」的基础伤害和基础格挡均从 3 提高到 4，升级后均从 5 提高到 6。
+
+[h1]0.4.10 | Moment HUD and Shield Poke[/h1]
+
+- The Moment counter now adjusts its position to avoid overlapping the Star counter. It appears when your deck contains a card that uses Moment and updates as your deck changes.
+- Guardian's Shield Poke now has 4 base damage and Block, up from 3. Both values are now 6 when upgraded, up from 5.
