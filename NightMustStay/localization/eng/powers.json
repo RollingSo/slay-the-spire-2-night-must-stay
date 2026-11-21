@@ -328,7 +328,7 @@
   "WYLDER_MARTIAL_MASTERY_POWER.title": "Martial Mastery",
   "WYLDER_MARTIAL_MASTERY_POWER.description": "At the start of your turn, choose 1 of 3 random Attacks from your draw pile and add it to your hand per stack.",
   "WYLDER_LIFE_FROM_DEATH_POWER.title": "Life from Death",
-  "WYLDER_LIFE_FROM_DEATH_POWER.description": "Draw {Amount} fewer cards each turn.",
+  "WYLDER_LIFE_FROM_DEATH_POWER.description": "At the start of each turn, draw {Amount} fewer cards and add {GeneratedCards} random [gold]Desperation[/gold] cards to your [gold]hand[/gold].",
   "WYLDER_MULTIPLAYER_POWER.title": "Wylder",
   "WYLDER_MULTIPLAYER_POWER.description": "Whenever you trigger [gold]Break[/gold], add {Amount} [gold]Fire Coating[/gold] cards to each other player's hand.",
   "WYLDER_OFFENSIVE_INSTINCT_POWER.title": "Offensive Instinct",

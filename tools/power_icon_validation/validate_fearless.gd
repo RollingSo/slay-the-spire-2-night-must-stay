@@ -10,7 +10,7 @@ func _initialize() -> void:
     for id in ["fearless_strength_power", "fearless_dexterity_down_power"]:
         var reference: Image
         for path in ["res://images/atlases/power_atlas.sprites/" + id + ".tres",
-                "res://images/powers/" + id + ".png", "res://powers/" + id + ".png"]:
+                "res://images/powers/" + id + ".png"]:
             var texture := load(path) as Texture2D
             if texture == null:
                 push_error("Missing " + path)

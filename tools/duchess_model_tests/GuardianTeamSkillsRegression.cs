@@ -23,7 +23,7 @@ internal static class GuardianTeamSkillsRegression
             if (offensive.Rarity != CardRarity.Uncommon || formation.Rarity != CardRarity.Rare
                 || offensive.DynamicVars["GuardCounter"].BaseValue != (upgraded ? 16 : 12)
                 || formation.DynamicVars["Regen"].BaseValue != (upgraded ? 5 : 4)
-                || formation.DynamicVars["DrawReduction"].BaseValue != 2
+                || formation.DynamicVars["DrawReduction"].BaseValue != 1
                 || formation.DynamicVars["DrawReduction"].WasJustUpgraded
                 || !formation.Keywords.Contains(CardKeyword.Exhaust)
                 || offensive.Keywords.Contains(CardKeyword.Exhaust))
@@ -35,16 +35,16 @@ internal static class GuardianTeamSkillsRegression
         AccessTools.Field(typeof(Player), "<Creature>k__BackingField").SetValue(owner, creature);
         var penalty = (SacredFeatherDrawReductionPower)ModelDb.Power<SacredFeatherDrawReductionPower>().ToMutable();
         typeof(PowerModel).GetProperty(nameof(PowerModel.Owner))!.SetValue(penalty, creature);
-        penalty.SetAmount(2, false);
+        penalty.SetAmount(1, false);
         penalty.AmountOnTurnStart = 0;
         if (penalty.ModifyHandDraw(owner, 5) != 5) throw new Exception("Penalty activated in the same turn it was applied.");
-        penalty.AmountOnTurnStart = 2;
-        if (penalty.ModifyHandDraw(owner, 5) != 3 || penalty.ModifyHandDraw(owner, 1) != 0
+        penalty.AmountOnTurnStart = 1;
+        if (penalty.ModifyHandDraw(owner, 5) != 4 || penalty.ModifyHandDraw(owner, 1) != 0
             || penalty.ModifyHandDraw(other, 5) != 5)
             throw new Exception("Penalty must reduce only its owner's next initial draw, clamped to zero.");
-        penalty.SetAmount(4, false);
-        penalty.AmountOnTurnStart = 4;
-        if (penalty.ModifyHandDraw(owner, 5) != 1) throw new Exception("Repeated formation penalties must stack.");
+        penalty.SetAmount(2, false);
+        penalty.AmountOnTurnStart = 2;
+        if (penalty.ModifyHandDraw(owner, 5) != 3) throw new Exception("Repeated formation penalties must stack.");
         Console.WriteLine("PASS: Guardian team skill values/keywords/multiplayer constraints; owner-only next-turn draw boundary, zero clamp and stacking.");
     }
 }

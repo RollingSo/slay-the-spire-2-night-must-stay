@@ -103,7 +103,7 @@ internal static class WylderRegression
                         WylderSpark or WylderResolve or WylderDebut or WylderBideTheMoment or WylderKick => 0,
                         WylderSixthSense => 4,
                         WylderUndying => up?1:2,
-                        WylderGoldenParry or WylderNightForm => 3, WylderMartialMastery => up?1:2, WylderDefiance => 2, WylderMultiplayerCard or WylderTinder or WylderBreakthrough or WylderLifeFromDeath => 0,
+                        WylderGoldenParry or WylderNightForm => 3, WylderMartialMastery => up?1:2, WylderDefiance => 2, WylderMultiplayerCard or WylderTinder or WylderBreakthrough => 0, WylderLifeFromDeath => 1,
                         WylderAerialStake => up?1:2,
                         WylderCounterRush => 3,
                         WylderTacticalRetreat or WylderParry or WylderDesperateSurvival => 4,

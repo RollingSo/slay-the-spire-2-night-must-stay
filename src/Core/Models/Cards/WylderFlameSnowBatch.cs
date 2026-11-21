@@ -20,7 +20,7 @@ namespace NightMustStay.Core.Models.Cards;
 
 public sealed class WylderFlamelightOnSnow : WylderAbilityCard<WylderFlamelightOnSnowPower>
 {
-    public const int FreezePerCopy = 1;
+    public const int FreezePerCopy = 2;
     public const int VigorPerCopy = 3;
 
     public WylderFlamelightOnSnow() : base(2, CardRarity.Rare) { }

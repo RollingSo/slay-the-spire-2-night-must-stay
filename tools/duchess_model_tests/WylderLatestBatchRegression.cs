@@ -54,7 +54,7 @@ internal static class WylderLatestBatchRegression
                 && inspire.DynamicVars["HandThreshold"].BaseValue == 2, "Inspire metadata and upgrade");
             Check(flamelight.Type == CardType.Power && flamelight.Rarity == CardRarity.Rare
                 && flamelight.EnergyCost.GetResolved() == (upgraded ? 1 : 2)
-                && flamelight.DynamicVars["Freeze"].BaseValue == 1
+                && flamelight.DynamicVars["Freeze"].BaseValue == 2
                 && flamelight.DynamicVars["Vigor"].BaseValue == 3, "Flamelight on Snow metadata and upgrade");
             Check(triumph.Type == CardType.Skill && triumph.Rarity == CardRarity.Rare
                 && triumph.EnergyCost.GetResolved() == 0

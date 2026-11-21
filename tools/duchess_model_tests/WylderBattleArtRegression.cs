@@ -349,7 +349,7 @@ internal static partial class WylderBattleArtRegression
             for (int gain = 0; gain < 2; gain++)
                 flamelight.AfterPowerAmountChanged(null!, vigor, 1m, _owner.Creature, strike).GetAwaiter().GetResult();
             var freeze = Rewards.Single(reward => reward.Kind == nameof(FreezePower));
-            Check(freeze.Amount == 1, "Flamelight applies Freeze only on the first Vigor gain of the round");
+            Check(freeze.Amount == 2, "Flamelight applies 2 Freeze only on the first Vigor gain of the round");
             var target = freeze.Target ?? throw new Exception("Flamelight must apply Freeze to an enemy.");
             var hit = new DamageResult(target, ValueProp.Move) { UnblockedDamage = 6 };
             for (int attack = 0; attack < 2; attack++)

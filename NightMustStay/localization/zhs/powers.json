@@ -328,7 +328,7 @@
   "WYLDER_MARTIAL_MASTERY_POWER.title": "百般武艺",
   "WYLDER_MARTIAL_MASTERY_POWER.description": "回合开始时，每层从[gold]抽牌堆[/gold]的随机3张攻击牌中选择1张加入[gold]手牌[/gold]。",
   "WYLDER_LIFE_FROM_DEATH_POWER.title": "向死而生",
-  "WYLDER_LIFE_FROM_DEATH_POWER.description": "每回合少抽{Amount}张牌。",
+  "WYLDER_LIFE_FROM_DEATH_POWER.description": "回合开始时，少抽{Amount}张牌，并将{GeneratedCards}张随机[gold]绝境[/gold]牌加入[gold]手牌[/gold]。",
   "WYLDER_MULTIPLAYER_POWER.title": "追踪者",
   "WYLDER_MULTIPLAYER_POWER.description": "触发[gold]破势[/gold]效果时，为每位其他玩家生成{Amount}张[gold]附火[/gold]。",
   "WYLDER_OFFENSIVE_INSTINCT_POWER.title": "进攻本能",

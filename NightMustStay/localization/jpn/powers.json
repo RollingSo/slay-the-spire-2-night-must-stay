@@ -328,7 +328,7 @@
   "WYLDER_MARTIAL_MASTERY_POWER.title": "武芸百般",
   "WYLDER_MARTIAL_MASTERY_POWER.description": "ターン開始時、スタックごとに山札のランダムなアタック3枚から1枚を選び、手札に加える。",
   "WYLDER_LIFE_FROM_DEATH_POWER.title": "死から生へ",
-  "WYLDER_LIFE_FROM_DEATH_POWER.description": "各ターン、引くカードが{Amount}枚減る。",
+  "WYLDER_LIFE_FROM_DEATH_POWER.description": "ターン開始時、引くカードが{Amount}枚減り、ランダムな[gold]窮地[/gold]カード{GeneratedCards}枚を[gold]手札[/gold]に加える。",
   "WYLDER_MULTIPLAYER_POWER.title": "追跡者",
   "WYLDER_MULTIPLAYER_POWER.description": "[gold]体勢崩し[/gold]を発動するたび、他の各プレイヤーの手札に[gold]火付け[/gold]を{Amount}枚加える。",
   "WYLDER_OFFENSIVE_INSTINCT_POWER.title": "攻撃本能",

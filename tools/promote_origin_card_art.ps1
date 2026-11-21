@@ -12,8 +12,5 @@ try {
         $graphics.PixelOffsetMode = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
         $graphics.DrawImage($source, 0, 0, 1000, 760)
     } finally { $graphics.Dispose() }
-    foreach ($relative in @('packed/card_portraits/ironeye', 'images/packed/card_portraits/ironeye')) {
-        New-Item -ItemType Directory -Path (Join-Path $taskRoot $relative) -Force | Out-Null
-        $output.Save((Join-Path $taskRoot "$relative/ironeye_origin.png"), [System.Drawing.Imaging.ImageFormat]::Png)
-    }
+    $output.Save((Join-Path $taskRoot 'images/packed/card_portraits/ironeye/ironeye_origin.png'), [System.Drawing.Imaging.ImageFormat]::Png)
 } finally { $output.Dispose(); $source.Dispose() }

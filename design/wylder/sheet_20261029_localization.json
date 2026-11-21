@@ -140,9 +140,9 @@
     ],
     "WYLDER_LIFE_FROM_DEATH": [
       "向死而生",
-      "回合开始时，抽牌数减少1张。\n下回合开始时，将2张{IfUpgraded:show:升级过的|}随机[gold]绝境[/gold]牌加入手牌。",
+      "回合开始时，少抽1张牌，并将2张随机{IfUpgraded:show:升级过的|}[gold]绝境[/gold]牌加入手牌。",
       "Life from Death",
-      "Draw 1 fewer card at the start of each turn.\nAt the start of your next turn, add 2 random {IfUpgraded:show:upgraded |}[gold]Desperation[/gold] cards to your hand."
+      "At the start of each turn, draw 1 fewer card and add 2 random {IfUpgraded:show:upgraded |}[gold]Desperation[/gold] cards to your hand."
     ],
     "WYLDER_GRAPPLE_SHOT": [
       "钩爪射击",
@@ -394,9 +394,9 @@
     ],
     "WYLDER_LIFE_FROM_DEATH_POWER": [
       "向死而生",
-      "每回合少抽{Amount}张牌。",
+      "回合开始时，少抽{Amount}张牌，并将{GeneratedCards}张随机[gold]绝境[/gold]牌加入[gold]手牌[/gold]。",
       "Life from Death",
-      "Draw {Amount} fewer cards each turn."
+      "At the start of each turn, draw {Amount} fewer cards and add {GeneratedCards} random [gold]Desperation[/gold] cards to your [gold]hand[/gold]."
     ],
     "WYLDER_MULTIPLAYER_POWER": [
       "追踪者",

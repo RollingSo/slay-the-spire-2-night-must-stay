@@ -26,8 +26,8 @@ internal static class WylderNewCardsRegression
         Check(burn.EnergyCost.CostsX && burn.DynamicVars["Vigor"].BaseValue==6 && burn.DynamicVars.Repeat.BaseValue==0,"Burn base");
         burn.UpgradeInternal(); Check(burn.DynamicVars.Repeat.BaseValue==1 && burn.DynamicVars["Vigor"].BaseValue==6,"Burn upgrade");
         var life=ModelDb.Card<WylderLifeFromDeath>().ToMutable();
-        Check(life.EnergyCost.GetResolved()==0 && life.Type==CardType.Power && life.Rarity==CardRarity.Ancient && life.TargetType==TargetType.Self,"Life metadata");
-        life.UpgradeInternal(); Check(life.IsUpgraded,"Life upgrade");
+        Check(life.EnergyCost.GetResolved()==1 && life.Type==CardType.Power && life.Rarity==CardRarity.Ancient && life.TargetType==TargetType.Self,"Life metadata");
+        life.UpgradeInternal(); Check(life.IsUpgraded && life.EnergyCost.GetResolved()==1,"Life upgrade keeps the same cost");
         var mapping=new Dictionary<ModelId,CardModel>();
         AccessTools.Method(typeof(GuardianArchaicToothPatch),"AddGuardianTranscendence").Invoke(null,new object[]{mapping});
         Check(ModelDb.CardPool<WylderCardPool>().AllCards.Where(c=>c.Rarity==CardRarity.Ancient && !mapping.Values.Contains(c)).Single() is WylderLifeFromDeath,"Dusty Tome exclusive eligible card");
@@ -36,15 +36,8 @@ internal static class WylderNewCardsRegression
         var creature=new Creature(owner,80,80){CombatState=new CombatState()};
         var p=(WylderLifeFromDeathPower)ModelDb.Power<WylderLifeFromDeathPower>().ToMutable();
         AccessTools.Property(typeof(PowerModel),nameof(PowerModel.Owner)).SetValue(p,creature);
-        p.SetAmount(2,true); p.PendingBasic=2; p.PendingUpgraded=2;
+        p.SetAmount(2,true);
         Check(p.ModifyHandDraw(owner,5)==3 && p.ModifyHandDraw(owner,1)==0 && p.ModifyHandDraw(other,5)==5,"Draw penalty owner/clamp/stack");
-        p.AfterSideTurnStart(CombatSide.Enemy,Array.Empty<Creature>(),creature.CombatState).GetAwaiter().GetResult();
-        Check(p.PendingBasic==2 && p.DueBasic==0,"Enemy turn ignored");
-        p.AfterSideTurnStart(creature.Side,new[]{creature},creature.CombatState).GetAwaiter().GetResult();
-        Check(p.PendingBasic==0 && p.PendingUpgraded==0 && p.DueBasic==2 && p.DueUpgraded==2,"Next-turn mixed upgrade batches");
-        p.DueBasic=p.DueUpgraded=0;
-        p.AfterSideTurnStart(creature.Side,new[]{creature},creature.CombatState).GetAwaiter().GetResult();
-        Check(p.DueBasic==0 && p.DueUpgraded==0 && p.ModifyHandDraw(owner,5)==3,"One-shot generation with lasting draw penalty");
-        Console.WriteLine("PASS: new card metadata/upgrades, Tome eligibility, draw penalty and next-turn queue boundaries.");
+        Console.WriteLine("PASS: new card metadata/upgrades, Tome eligibility and draw penalty.");
     }
 }

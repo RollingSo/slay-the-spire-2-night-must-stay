@@ -19,8 +19,7 @@ func _initialize() -> void:
         var compact_visible_hash := ""
         var paths: Array[String] = [
             "res://images/atlases/power_atlas.sprites/" + entry.id + ".tres",
-            "res://images/powers/" + entry.id + ".png",
-            "res://powers/" + entry.id + ".png"
+            "res://images/powers/" + entry.id + ".png"
         ]
         for resource_path in paths:
             checked += 1

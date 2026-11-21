@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
-using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
@@ -17,7 +16,7 @@ public sealed class GuardianMajesty : CardModel
 {
     public GuardianMajesty() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
 
-    public override string PortraitPath => ImageHelper.GetImagePath("packed/card_portraits/guardian/guardian_majesty.png");
+    public override string PortraitPath => "res://packed/card_portraits/guardian/guardian_majesty.png";
 
     public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
 

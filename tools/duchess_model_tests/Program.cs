@@ -53,6 +53,46 @@ foreach (Type type in typeof(PowerModel).Assembly.GetTypes().Where(type => !type
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+if (args.Contains("--card-portraits-only"))
+{
+    // Default portrait paths can resolve the card's pool through the full game model catalog.
+    foreach (Type type in typeof(CardModel).Assembly.GetTypes().Where(type => !type.IsAbstract
+        && (typeof(CharacterModel).IsAssignableFrom(type) || typeof(CardPoolModel).IsAssignableFrom(type))
+        && type.GetConstructor(Type.EmptyTypes) != null))
+        if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
+
+    var portraitHarmony = new HarmonyLib.Harmony("nightmuststay.portrait-regression");
+    Type detailPortraitPatch = typeof(ModelDbCharacterPatch).Assembly.GetType(
+        "NightMustStay.Core.Patches.CardDetailPortraitPatch", throwOnError: true)!;
+    foreach (Type patch in new[] { typeof(ModelDbCharacterPatch), typeof(ModelDbCharacterCardPoolPatch),
+        typeof(GuardianTokenCardPoolPatch), detailPortraitPatch })
+        portraitHarmony.CreateClassProcessor(patch).Patch();
+
+    var bigPortraitGetter = HarmonyLib.AccessTools.PropertyGetter(typeof(CardModel), "BigPortrait");
+    if (bigPortraitGetter != null && HarmonyLib.Harmony.GetPatchInfo(bigPortraitGetter)?.Owners.Contains(portraitHarmony.Id) != true)
+        throw new Exception("The card detail portrait patch is not installed.");
+
+    var missing = new List<string>();
+    var modelPortraitPaths = new SortedSet<string>(StringComparer.Ordinal);
+    int portraitModelCount = 0;
+    foreach (Type type in models.Where(type => typeof(CardModel).IsAssignableFrom(type)))
+    {
+        var card = ModelDb.GetById<CardModel>(ModelDb.GetId(type));
+        foreach (string path in card.AllPortraitPaths.Append(card.PortraitPath).Distinct())
+        {
+            modelPortraitPaths.Add(path);
+            if (!path.StartsWith("res://", StringComparison.Ordinal) || !File.Exists(path[6..]))
+                missing.Add($"{card.Id}: {path}");
+        }
+        portraitModelCount++;
+    }
+    if (missing.Count > 0)
+        throw new Exception("Missing card model portraits:\n" + string.Join("\n", missing));
+    if (args.Contains("--print-portrait-paths"))
+        foreach (string path in modelPortraitPaths) Console.WriteLine(path);
+    Console.WriteLine($"PASS: {portraitModelCount} card models resolve their portrait paths.");
+    return 0;
+}
 if (args.Contains("--card-pool-audit"))
 {
     foreach (var character in new CharacterModel[] { ModelDb.Character<Guardian>(), ModelDb.Character<Ironeye>(), ModelDb.Character<Revenant>(), duchess, ModelDb.Character<Wylder>() })

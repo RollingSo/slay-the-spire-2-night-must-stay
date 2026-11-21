@@ -87,16 +87,16 @@ internal static class WylderMultiplayerBatchRegression
    Generated.Clear();
    var lifePower=(WylderLifeFromDeathPower)ModelDb.Power<WylderLifeFromDeathPower>().ToMutable();
    AccessTools.Property(typeof(PowerModel),"Owner").SetValue(lifePower,owner.Creature);lifePower.SetAmount(2,true);
-   lifePower.PendingBasic=2;lifePower.PendingUpgraded=2;
-   lifePower.AfterPlayerTurnStartLate(null!,owner).GetAwaiter().GetResult();Check(Generated.Count==0,"Life cannot pay before next turn boundary");
-   lifePower.AfterSideTurnStart(owner.Creature.Side,new[]{owner.Creature},combat).GetAwaiter().GetResult();
-   lifePower.AfterPlayerTurnStartLate(null!,ally1).GetAwaiter().GetResult();Check(Generated.Count==0,"Life ignores teammate turn");
-   lifePower.AfterPlayerTurnStartLate(null!,owner).GetAwaiter().GetResult();
-   Check(Generated.Count==4&&Generated.All(c=>c is WylderDesperationCard&&c.Owner==owner)&&Generated.Count(c=>c.IsUpgraded)==2,"Life actually generates two basic and two upgraded Desperation cards for mixed copies");
-   lifePower.AfterSideTurnStart(owner.Creature.Side,new[]{owner.Creature},combat).GetAwaiter().GetResult();
-   lifePower.AfterPlayerTurnStartLate(null!,owner).GetAwaiter().GetResult();
-   Check(Generated.Count==4&&lifePower.ModifyHandDraw(owner,5)==3,"Life only generates once but draw reduction persists");
-   Console.WriteLine("PASS: Life from Death actual generated cards, upgraded mix, correct owner, next-turn only and lasting draw penalty.");
+   lifePower.UpgradedCopies=1;
+   for(int turn=0;turn<2;turn++){
+    Generated.Clear();
+    lifePower.AfterPlayerTurnStartLate(null!,ally1).GetAwaiter().GetResult();Check(Generated.Count==0,"Life ignores teammate turn");
+    Check(lifePower.ModifyHandDraw(owner,5)==3,"Life reduces draw on each turn");
+    lifePower.AfterPlayerTurnStartLate(null!,owner).GetAwaiter().GetResult();
+    Check(Generated.Count==4&&Generated.All(c=>c is WylderDesperationCard&&c.Owner==owner)&&Generated.Count(c=>c.IsUpgraded)==2,
+        $"Turn {turn + 1}: expected two basic and two upgraded Desperation cards. Generated: {string.Join(", ", Generated.Select(c => $"{c.Id} (upgraded={c.IsUpgraded})"))}");
+   }
+   Console.WriteLine("PASS: Life from Death recurring generation and draw penalty, mixed upgrades and owner isolation.");
   } finally {h.UnpatchAll(h.Id);}
   Console.WriteLine("PASS: six-card metadata/upgrades, multiplayer-only pool, per-ally ownership, mixed upgrades duplicate Break guard and repeated Pursuit entries.");
  }

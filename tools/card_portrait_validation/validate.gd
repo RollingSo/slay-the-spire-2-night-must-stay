@@ -19,6 +19,14 @@ func _initialize() -> void:
         quit(1)
         return
     var failed: Array[String] = []
+    for directory in manifest.get("excluded_directories", []):
+        for entry in ResourceLoader.list_directory(directory):
+            push_error("PACKAGED_LEGACY_PORTRAIT " + directory.path_join(entry))
+            failed.append(directory.path_join(entry))
+    for path in manifest.get("excluded_paths", []):
+        if ResourceLoader.exists(path) or FileAccess.file_exists(path):
+            push_error("PACKAGED_EXCLUDED_ASSET " + path)
+            failed.append(path)
     for path in manifest.paths:
         var texture = ResourceLoader.load(path, "Texture2D", ResourceLoader.CACHE_MODE_IGNORE) as Texture2D
         if texture == null:

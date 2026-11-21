@@ -15,7 +15,8 @@ func validate() -> void:
 	var manifest_path := args[1] if args.size() >= 2 else "res://design/wylder/asset_report.json"
 	var report = JSON.parse_string(FileAccess.get_file_as_string(manifest_path))
 	for path in report:
-		if args.size() >= 1 and path.begins_with("design/"):
+		# The report also records source-only art and local power icon mirrors.
+		if args.size() >= 1 and (path.begins_with("design/") or path.begins_with("powers/")):
 			continue
 		var texture = load("res://" + path)
 		if not texture is Texture2D:

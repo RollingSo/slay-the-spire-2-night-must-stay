@@ -10,7 +10,7 @@ func _initialize() -> void:
     for id in ["necro_attack_power", "necro_protect_power"]:
         var reference: PackedByteArray
         for path in ["res://revenant_assets/powers/" + id + ".png",
-                "res://images/powers/" + id + ".png", "res://powers/" + id + ".png",
+                "res://images/powers/" + id + ".png",
                 "res://images/atlases/power_atlas.sprites/" + id + ".tres"]:
             var texture = ResourceLoader.load(path, "Texture2D", ResourceLoader.CACHE_MODE_IGNORE) as Texture2D
             if texture == null:
@@ -38,5 +38,5 @@ func _initialize() -> void:
                 failures.append(path + " compact/flash pixels differ")
     for failure in failures:
         push_error(failure)
-    print("NECRO_ACTION_PACK: 8 textures, failures=", failures.size())
+    print("NECRO_ACTION_PACK: 6 textures, failures=", failures.size())
     quit(0 if failures.is_empty() else 1)

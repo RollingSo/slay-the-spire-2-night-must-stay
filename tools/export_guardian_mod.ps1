@@ -119,7 +119,18 @@ if (Test-Path -LiteralPath (Join-Path $root 'src/Core/Models/Characters/Wylder.c
         throw "Wylder card model regression failed with exit code $LASTEXITCODE"
     }
 }
-& (Join-Path $PSScriptRoot 'validate_card_portraits.ps1')
+Push-Location $root
+try {
+    $portraitAudit = @(dotnet run --project (Join-Path $PSScriptRoot 'duchess_model_tests') --no-build --no-restore -- --card-portraits-only --print-portrait-paths)
+    if ($LASTEXITCODE -ne 0) {
+        throw "Card model portrait validation failed with exit code $LASTEXITCODE"
+    }
+    $runtimePortraits = @($portraitAudit | Where-Object { $_.StartsWith('res://', [StringComparison]::Ordinal) })
+    if ($runtimePortraits.Count -eq 0) { throw 'Card model portrait validation returned no paths.' }
+    & (Join-Path $PSScriptRoot 'validate_card_portraits.ps1') -RuntimePortraitPaths $runtimePortraits
+} finally {
+    Pop-Location
+}
 
 # These standalone Ironeye icons previously existed in the source tree but
 # were exported as raw PNGs without import metadata. Build a focused manifest

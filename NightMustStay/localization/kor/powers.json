@@ -328,7 +328,7 @@
   "WYLDER_MARTIAL_MASTERY_POWER.title": "무예 통달",
   "WYLDER_MARTIAL_MASTERY_POWER.description": "턴 시작 시 중첩당 뽑을 카드 더미의 무작위 공격 카드 3장 중 1장을 선택해 손패에 추가합니다.",
   "WYLDER_LIFE_FROM_DEATH_POWER.title": "죽음에서 삶으로",
-  "WYLDER_LIFE_FROM_DEATH_POWER.description": "매 턴 카드를 {Amount}장 적게 뽑습니다.",
+  "WYLDER_LIFE_FROM_DEATH_POWER.description": "매 턴 시작 시 카드를 {Amount}장 적게 뽑고 무작위 [gold]궁지[/gold] 카드 {GeneratedCards}장을 [gold]손패[/gold]에 추가합니다.",
   "WYLDER_MULTIPLAYER_POWER.title": "추적자",
   "WYLDER_MULTIPLAYER_POWER.description": "[gold]태세 붕괴[/gold]를 발동할 때마다 다른 각 플레이어의 손패에 [gold]불 붙이기[/gold]를 {Amount}장 추가합니다.",
   "WYLDER_OFFENSIVE_INSTINCT_POWER.title": "공격 본능",
