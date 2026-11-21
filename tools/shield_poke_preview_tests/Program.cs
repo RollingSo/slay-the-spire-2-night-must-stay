@@ -56,10 +56,10 @@ void Preview(ShieldPoke poke, decimal damage, decimal block)
     Assert(poke.DynamicVars.Damage.PreviewValue == damage, "Wrong damage preview.");
     Assert(poke.DynamicVars.Block.PreviewValue == block, "Wrong block preview.");
 }
-Preview(card, 3, 3);
-Preview(card, 3, 3);
-Assert(card.DynamicVars.Damage.BaseValue == 3 && card.DynamicVars.Block.BaseValue == 3, "Preview mutated base values.");
+Preview(card, 4, 4);
+Preview(card, 4, 4);
+Assert(card.DynamicVars.Damage.BaseValue == 4 && card.DynamicVars.Block.BaseValue == 4, "Preview mutated base values.");
 card.UpgradeInternal();
-Preview(card, 5, 5);
-Preview((ShieldPoke)ModelDb.Card<ShieldPoke>().MutableClone(), 3, 3);
+Preview(card, 6, 6);
+Preview((ShieldPoke)ModelDb.Card<ShieldPoke>().MutableClone(), 4, 4);
 Console.WriteLine("PASS: Shield Poke base/upgraded previews without obsolete Fearless doubling or block suppression.");

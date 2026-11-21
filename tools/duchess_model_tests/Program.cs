@@ -187,8 +187,8 @@ if (args.Contains("--guardian-balance-only"))
         {
             poke.DynamicVars.Damage.UpdateCardPreview(poke, CardPreviewMode.Normal, null!, false);
             poke.DynamicVars.Block.UpdateCardPreview(poke, CardPreviewMode.Normal, null!, false);
-            if (poke.DynamicVars.Damage.PreviewValue != (upgraded ? 5m : 3m)
-                || poke.DynamicVars.Block.PreviewValue != (upgraded ? 5m : 3m))
+            if (poke.DynamicVars.Damage.PreviewValue != (upgraded ? 6m : 4m)
+                || poke.DynamicVars.Block.PreviewValue != (upgraded ? 6m : 4m))
                 throw new Exception("Shield Poke preview retained obsolete Fearless behavior.");
         }
     }

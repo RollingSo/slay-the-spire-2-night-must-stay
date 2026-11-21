@@ -44,6 +44,24 @@ internal static class TeamPotionMomentRegression
 
             var borrowed = ModelDb.Card<DuchessWaitAMoment>().ToMutable();
             borrowed.Owner = guardian;
+            var hasMomentCards = AccessTools.Method(typeof(DuchessAssetPatch), "HasMomentCards");
+            bool ShowsClock(Player player) => (bool)hasMomentCards.Invoke(null, new object[] { player })!;
+            var dodge = ModelDb.Card<DuchessDodge>().ToMutable();
+            dodge.Owner = guardian;
+            guardian.Deck.AddInternal(dodge, silent: true);
+            if (ShowsClock(guardian))
+                throw new Exception("A Duchess card without a Moment effect must not show the clock.");
+            guardian.Deck.AddInternal(borrowed, silent: true);
+            if (!ShowsClock(guardian) || ShowsClock(wylder))
+                throw new Exception("The clock must follow each player's deck, regardless of character.");
+            guardian.Deck.RemoveInternal(borrowed, silent: true);
+            if (ShowsClock(guardian))
+                throw new Exception("Removing the last Moment card must hide the clock.");
+            var variableCost = ModelDb.Card<DuchessLorettaSlash>().ToMutable();
+            variableCost.Owner = guardian;
+            guardian.Deck.AddInternal(variableCost, silent: true);
+            if (!ShowsClock(guardian))
+                throw new Exception("Moment-dependent energy costs must also show the clock.");
             var defend = ModelDb.Card<WylderDefend>().ToMutable();
             defend.Owner = guardian;
             moment.AfterCardPlayedLate(null!, TrackingArrowRegression.MakePlay(defend, guardian)).GetAwaiter().GetResult();

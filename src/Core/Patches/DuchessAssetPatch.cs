@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Assets;
@@ -8,11 +9,13 @@ using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Combat;
+using MegaCrit.Sts2.Core.Nodes.HoverTips;
 using MegaCrit.Sts2.Core.Nodes.RestSite;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 using MegaCrit.Sts2.Core.Nodes.Screens.Shops;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using NightMustStay.Core.Models.Characters;
+using NightMustStay.Core.Models.Cards;
 using NightMustStay.Core.Models.Power;
 
 namespace NightMustStay.Core.Patches
@@ -219,20 +222,45 @@ namespace NightMustStay.Core.Patches
             momentCounter.SetMeta(MomentCounterMeta, true);
             starCounter.AddSibling(momentCounter);
             momentCounter.Initialize(player);
-            momentCounter.Position = starCounter.Position + new Vector2(88f, 0f);
+            void PositionMomentCounter()
+            {
+                float offset = starCounter.Visible
+                    ? Mathf.Max(88f, starCounter.Size.X * Mathf.Abs(starCounter.Scale.X) + 16f)
+                    : 88f;
+                momentCounter.Position = starCounter.Position + new Vector2(offset, 0f);
+            }
+            starCounter.VisibilityChanged += PositionMomentCounter;
+            starCounter.Resized += PositionMomentCounter;
+            PositionMomentCounter();
             ApplyMomentCounterVisuals(momentCounter);
-            momentCounter.Visible = true;
+            var deck = player.Deck;
+            void RefreshDeckVisibility()
+            {
+                bool visible = HasMomentCards(player);
+                if (!visible && momentCounter.Visible)
+                    NHoverTipSet.Remove(momentCounter);
+                momentCounter.Visible = visible;
+            }
+            deck.ContentsChanged += RefreshDeckVisibility;
+            momentCounter.TreeExiting += () =>
+            {
+                deck.ContentsChanged -= RefreshDeckVisibility;
+                if (GodotObject.IsInstanceValid(starCounter))
+                {
+                    starCounter.VisibilityChanged -= PositionMomentCounter;
+                    starCounter.Resized -= PositionMomentCounter;
+                }
+            };
+            RefreshDeckVisibility();
         }
 
+        internal static bool HasMomentCards(Player player) =>
+            player?.Deck?.Cards.Any(card => card is DuchessCard { UsesMoment: true }) == true;
+
         [HarmonyPatch(typeof(NStarCounter), "RefreshVisibility")]
-        [HarmonyPostfix]
-        public static void KeepDuchessMomentCounterVisible(NStarCounter __instance)
-        {
-            if (!__instance.HasMeta(MomentCounterMeta))
-                return;
-            ApplyMomentCounterVisuals(__instance);
-            __instance.Visible = true;
-        }
+        [HarmonyPrefix]
+        public static bool KeepNativeVisibilityForStarCounter(NStarCounter __instance) =>
+            !__instance.HasMeta(MomentCounterMeta);
 
         [HarmonyPatch(typeof(NStarCounter), nameof(NStarCounter._Process))]
         [HarmonyPrefix]
@@ -240,6 +268,8 @@ namespace NightMustStay.Core.Patches
         {
             if (!__instance.HasMeta(MomentCounterMeta))
                 return true;
+            if (!__instance.Visible)
+                return false;
             Player player = AccessTools.Field(typeof(NStarCounter), "_player")?.GetValue(__instance) as Player;
             int moment = DuchessMomentPower.Current(player);
             int displayed = (int)(AccessTools.Field(typeof(NStarCounter), "_displayedStarCount")

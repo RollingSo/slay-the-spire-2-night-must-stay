@@ -142,6 +142,11 @@ public abstract class DuchessCard : CardModel
     }
 
     internal int RequiredMoment => IsUpgraded && Spec.UpgradedMoment >= 0 ? Spec.UpgradedMoment : Spec.Moment;
+    internal bool UsesMoment => RequiredMoment >= 0 || Spec.SecondaryMoment >= 0
+        || Spec.MomentCostReductionDynamic
+        || Spec.Effects.Any(effect => effect.Condition.StartsWith("moment", StringComparison.Ordinal)
+            || effect.Kind.Contains("Moment", StringComparison.Ordinal)
+            || effect.Kind is "RewindDamage" or "RewindTurn" or "RestageEndTurnAoe");
     internal bool IsMomentActive => IsMoment(RequiredMoment) || IsMoment(Spec.SecondaryMoment);
     private bool IsMoment(int moment) => moment >= 0 && DuchessMomentPower.Current(Owner) == moment;
     public bool HasReaction => Spec.Reaction;
