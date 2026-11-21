@@ -8,6 +8,9 @@
 **2026-11-15 追击首帧修正：** 旧绿幕图来自开发分支 `67021f3` 的运行图（`ff1b19…`），不是 main 最新版。已用 main `9b75c2e` 的 `wylder_pursuit_idle.png`（`acc291d2…`）重做追击待机末帧和普通→追击末帧；柄尾已改为分叉轮廓，姿态/画布保持不变。
 
 
+
+**2026-11-15 首帧去重：** 原先每个动作各复制一份首尾图，现只保留 4 张 canonical 参考图；WY15/WY02/WY08 等全部改为引用同一张普通/追击待机图，不再保留副本。
+
 ## Canonical 参考图（所有动作复用）
 
 只保留四张，不再为每个动作复制首尾帧：
@@ -26,8 +29,8 @@
 
 | 首帧 | 对应分支原图 | 使用范围 |
 |---|---|---|
-| [wylder_idle_reference_green.png](preview/wylder_normal_idle_green_2600.png) | `wylder_assets/combat_rig/wylder_combat_character.png` | WY01–WY06。人物自身右手持长直大剑，待机横搭右肩，左手持小圆盾，左前臂有钩爪机构。 |
-| [wylder_pursuit_idle_reference_green.png](preview/wylder_pursuit_idle_green_2600.png) | `wylder_assets/combat_rig/wylder_pursuit_idle.png` | WY07–WY08。双手共握同一把大剑，盾固定在上背部。现图有历史记录中的柄尾和握柄问题，保留获选姿势，生成时按正确剑形约束。 |
+| `preview/wylder_normal_idle_green_2600.png` | `wylder_assets/combat_rig/wylder_combat_character.png` | WY01、WY03–WY06 的普通首尾。右手持长直大剑横搭右肩，左手持小圆盾。 |
+| `preview/wylder_pursuit_idle_green_2600.png` | `wylder_assets/combat_rig/wylder_pursuit_idle.png` | WY07、WY13 的追击首尾。双手共握同一把大剑，盾固定在上背部。 |
 
 两张首帧均以正式运行贴图在纯绿 `#00FF00` 上合成，沿用原始 `2600×1700` 画布、角色比例和位置。朝屏幕右方的三分之四视角、完整金属面甲、分片翼饰、黑围巾、银色刻纹与深蓝衣摆以普通待机图为身份基准。大剑的柄尾中心、握柄、护手、剑脊和剑尖保持同轴，柄尾采用分叉轮廓。抠图时重点检查武器、盔翼、盾缘和细纹。
 
