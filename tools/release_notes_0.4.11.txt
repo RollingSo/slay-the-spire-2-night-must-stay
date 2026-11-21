@@ -1,0 +1,15 @@
+[h1]0.4.11｜卡牌平衡与卡图更新[/h1]
+
+- 圣光羽阵：下回合少抽的牌从 2 张减至 1 张。
+- 焰光照雪：每回合首次获得活力时，对随机敌人施加的冻伤从 1 层提高到 2 层。
+- 向死而生：耗能从 0 提高到 1。现在每回合开始时少抽 1 张牌，并将 2 张随机绝境牌加入手牌。
+- 更新铁之眼「共享情报」和复仇者「为我而战」的卡图。
+- 修复部分卡牌在详情界面的大图显示，并精简发布包中的未使用资源。
+
+[h1]0.4.11 | Card Balance and Artwork Updates[/h1]
+
+- Sacred Feather Formation: The next-turn draw penalty has been reduced from 2 cards to 1.
+- Flamelight on Snow: The first time you gain Vigor each turn, apply 2 Freeze to a random enemy, up from 1.
+- Life from Death: Energy cost increased from 0 to 1. At the start of each turn, draw 1 fewer card and add 2 random Desperation cards to your hand.
+- Updated the artwork for Ironeye's Shared Intelligence and Revenant's Fight for Me.
+- Fixed the large portraits for some cards in the card detail screen and removed unused assets from the release package.
