@@ -7,12 +7,27 @@
 
 **2026-11-15 追击首帧修正：** 旧绿幕图来自开发分支 `67021f3` 的运行图（`ff1b19…`），不是 main 最新版。已用 main `9b75c2e` 的 `wylder_pursuit_idle.png`（`acc291d2…`）重做追击待机末帧和普通→追击末帧；柄尾已改为分叉轮廓，姿态/画布保持不变。
 
+
+## Canonical 参考图（所有动作复用）
+
+只保留四张，不再为每个动作复制首尾帧：
+
+| 画布 | 普通待机 | 追击待机 |
+|---|---|---|
+| 2600×1700 | `preview/wylder_normal_idle_green_2600.png` | `preview/wylder_pursuit_idle_green_2600.png` |
+| 3400×2400 | `preview/wylder_normal_idle_green_3400.png` | `preview/wylder_pursuit_idle_green_3400.png` |
+
+引用规则：
+- 普通动作首/尾用普通待机图；追击动作首帧用追击待机图；追击攻击/追击→统一的尾帧用普通待机图。
+- 2600 图用于普通→追击、追击待机、普通待机。
+- 3400 图用于普通攻击、追击攻击、追击→统一；只加留白，角色像素尺寸和脚底不变。
+
 ## 首帧与姿势参考
 
 | 首帧 | 对应分支原图 | 使用范围 |
 |---|---|---|
-| [wylder_idle_reference_green.png](preview/wylder_idle_reference_green.png) | `wylder_assets/combat_rig/wylder_combat_character.png` | WY01–WY06。人物自身右手持长直大剑，待机横搭右肩，左手持小圆盾，左前臂有钩爪机构。 |
-| [wylder_pursuit_idle_reference_green.png](preview/wylder_pursuit_idle_reference_green.png) | `wylder_assets/combat_rig/wylder_pursuit_idle.png` | WY07–WY08。双手共握同一把大剑，盾固定在上背部。现图有历史记录中的柄尾和握柄问题，保留获选姿势，生成时按正确剑形约束。 |
+| [wylder_idle_reference_green.png](preview/wylder_normal_idle_green_2600.png) | `wylder_assets/combat_rig/wylder_combat_character.png` | WY01–WY06。人物自身右手持长直大剑，待机横搭右肩，左手持小圆盾，左前臂有钩爪机构。 |
+| [wylder_pursuit_idle_reference_green.png](preview/wylder_pursuit_idle_green_2600.png) | `wylder_assets/combat_rig/wylder_pursuit_idle.png` | WY07–WY08。双手共握同一把大剑，盾固定在上背部。现图有历史记录中的柄尾和握柄问题，保留获选姿势，生成时按正确剑形约束。 |
 
 两张首帧均以正式运行贴图在纯绿 `#00FF00` 上合成，沿用原始 `2600×1700` 画布、角色比例和位置。朝屏幕右方的三分之四视角、完整金属面甲、分片翼饰、黑围巾、银色刻纹与深蓝衣摆以普通待机图为身份基准。大剑的柄尾中心、握柄、护手、剑脊和剑尖保持同轴，柄尾采用分叉轮廓。抠图时重点检查武器、盔翼、盾缘和细纹。
 
@@ -146,8 +161,8 @@ IdleNormal  --Hit--> hurt_normal --> IdleNormal
 
 ## WY13 普通→追击 过渡提示词
 
-- 首帧：`preview/wylder_normal_to_pursuit_start_green.png`（普通待机：右手扛剑、左手小圆盾）
-- 末帧：`preview/wylder_normal_to_pursuit_end_green.png`（追击待机：双手握同一把剑、盾在上背）
+- 首帧：`preview/wylder_normal_idle_green_2600.png`（普通待机：右手扛剑、左手小圆盾）
+- 末帧：`preview/wylder_pursuit_idle_green_2600.png`（追击待机：双手握同一把剑、盾在上背）
 
 ```text
 【图生视频｜仅首尾帧】严格以我提供的首帧和末帧为唯一姿态、比例和构图基准。图中角色朝画面右侧，完整金属头盔、分片翼饰、黑围巾、银色胸甲、深蓝分片衣摆和棕色靴子保持不变；首帧右手把长直大剑横搭在右肩，左手持小圆盾；末帧双手共同握住同一把剑的连续剑柄，剑身斜在胸前，盾固定在上背部。只做这两个姿态之间的过渡，不要攻击、不要挥砍、不要施法。
@@ -172,7 +187,7 @@ IdleNormal  --Hit--> hurt_normal --> IdleNormal
 
 ## WY01 普通战斗待机 提示词
 
-首帧：`preview/wylder_normal_idle_start_green.png`（main 最新普通运行图，2600×1700）。
+首帧：`preview/wylder_normal_idle_green_2600.png`（main 最新普通运行图，2600×1700）。
 
 ```text
 【图生视频｜首帧循环】只使用我提供的这一张绿幕首帧，不需要尾帧参考。图中角色朝画面右侧，三分之四视角；保持完整金属头盔、分片翼饰、黑围巾、银色胸甲、深蓝分片衣摆、棕色绑绳靴和左前臂钩爪机构。右手把长直大剑横搭在右肩，左手持小圆盾。只做待机循环，不攻击、不移动脚步。
@@ -199,7 +214,7 @@ IdleNormal  --Hit--> hurt_normal --> IdleNormal
 
 ## WY07 追击待机 提示词
 
-首帧/末帧：`preview/wylder_pursuit_idle_start_green.png` / `preview/wylder_pursuit_idle_end_green.png`（同一张最新 main 追击待机图）。
+首帧/末帧：`preview/wylder_pursuit_idle_green_2600.png` / `preview/wylder_pursuit_idle_green_2600.png`（同一张最新 main 追击待机图）。
 
 ```text
 【图生视频｜首尾帧循环】首帧和末帧都使用我提供的追击待机图：图中角色朝画面右侧，三分之四视角；双手共同握住同一把大剑的连续剑柄，剑身斜向肩后上方，小圆盾固定在上背部，左前臂钩爪机构横在胸前。保持完整金属头盔、分片翼饰、黑围巾、银色胸甲、深蓝分片衣摆和棕色绑绳靴。只做待机循环，不攻击、不移动脚步。
@@ -224,8 +239,8 @@ IdleNormal  --Hit--> hurt_normal --> IdleNormal
 
 ## WY15 追击→统一攻击入口 提示词
 
-- 首帧：`preview/wylder_pursuit_to_unified_start_green_3400x2400.png`（追击待机，双手持剑/背盾）
-- 末帧：`preview/wylder_pursuit_to_unified_end_green_3400x2400.png`（普通单手持盾；统一动作从这里起手）
+- 首帧：`preview/wylder_pursuit_idle_green_3400.png`（追击待机，双手持剑/背盾）
+- 末帧：`preview/wylder_normal_idle_green_3400.png`（普通单手持盾；统一动作从这里起手）
 
 ```text
 【图生视频｜仅首尾帧】首帧是追击待机：双手共握同一把大剑、盾在上背；末帧是普通单手持盾：右手把剑横搭右肩，左手持小圆盾。图中角色朝画面右侧，保持完整金属头盔、分片翼饰、黑围巾、银色胸甲、深蓝分片衣摆和棕色绑绳靴。只做从追击回到统一攻击起手的过渡，不攻击。
@@ -246,8 +261,8 @@ IdleNormal  --Hit--> hurt_normal --> IdleNormal
 
 ## WY02 普通大剑斩 提示词
 
-- 首帧：`preview/wylder_normal_attack_start_green_3400x2400.png`
-- 末帧：`preview/wylder_normal_attack_end_green_3400x2400.png`（都使用普通单手持盾待机）
+- 首帧：`preview/wylder_normal_idle_green_3400.png`
+- 末帧：`preview/wylder_normal_idle_green_3400.png`（都使用普通单手持盾待机）
 
 ```text
 【图生视频｜仅首尾帧】首帧和末帧都使用我提供的普通待机图：图中角色朝画面右侧，右手把长直大剑横搭在右肩，左手持小圆盾，左前臂有钩爪机构。只做一次单手大剑斩击，最后回到同一待机。保持完整金属头盔、分片翼饰、黑围巾、银色胸甲、深蓝分片衣摆和棕色绑绳靴。
@@ -272,8 +287,8 @@ IdleNormal  --Hit--> hurt_normal --> IdleNormal
 
 ## WY08 追击双手斩 提示词
 
-- 首帧：`preview/wylder_pursuit_attack_start_green_3400x2400.png`（追击待机，双手握剑/背盾）
-- 末帧：`preview/wylder_pursuit_attack_end_green_3400x2400.png`（普通单手持盾）
+- 首帧：`preview/wylder_pursuit_idle_green_3400.png`（追击待机，双手握剑/背盾）
+- 末帧：`preview/wylder_normal_idle_green_3400.png`（普通单手持盾）
 
 ```text
 【图生视频｜仅首尾帧】首帧是追击待机：图中角色朝画面右侧，双手共握同一把大剑的连续剑柄，剑身斜向肩后上方，小圆盾固定在上背；末帧是普通单手持盾：右手把剑横搭右肩，左手持小圆盾。只做一次追击双手斩，命中后收剑取盾回到末帧；不要连续攻击。
