@@ -1,1 +1,12 @@
-{}
+{
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.GUARDIAN.title": "茶色",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.GUARDIAN.description": "守護者のカードを[blue]{Cards}[/blue]枚獲得する。",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.IRONEYE.title": "オリーブ色",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.IRONEYE.description": "鉄の目のカードを[blue]{Cards}[/blue]枚獲得する。",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.REVENANT.title": "灰青色",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.REVENANT.description": "復讐者のカードを[blue]{Cards}[/blue]枚獲得する。",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.DUCHESS.title": "空色",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.DUCHESS.description": "レディのカードを[blue]{Cards}[/blue]枚獲得する。",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.WYLDER.title": "濃藍色",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.WYLDER.description": "追跡者のカードを[blue]{Cards}[/blue]枚獲得する。"
+}

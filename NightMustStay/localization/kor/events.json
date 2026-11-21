@@ -1,1 +1,12 @@
-{}
+{
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.GUARDIAN.title": "갈색",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.GUARDIAN.description": "수호자의 카드 [blue]{Cards}[/blue]장을 획득합니다.",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.IRONEYE.title": "올리브색",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.IRONEYE.description": "철의 눈의 카드 [blue]{Cards}[/blue]장을 획득합니다.",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.REVENANT.title": "회청색",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.REVENANT.description": "복수자의 카드 [blue]{Cards}[/blue]장을 획득합니다.",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.DUCHESS.title": "하늘색",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.DUCHESS.description": "레이디의 카드 [blue]{Cards}[/blue]장을 획득합니다.",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.WYLDER.title": "짙은 남색",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.WYLDER.description": "추적자의 카드 [blue]{Cards}[/blue]장을 획득합니다."
+}

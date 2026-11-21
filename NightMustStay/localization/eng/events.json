@@ -1,1 +1,12 @@
-{}
+{
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.GUARDIAN.title": "Brown",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.GUARDIAN.description": "Obtain [blue]{Cards}[/blue] Guardian cards.",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.IRONEYE.title": "Olive Green",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.IRONEYE.description": "Obtain [blue]{Cards}[/blue] Ironeye cards.",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.REVENANT.title": "Mist Blue",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.REVENANT.description": "Obtain [blue]{Cards}[/blue] Revenant cards.",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.DUCHESS.title": "Sky Blue",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.DUCHESS.description": "Obtain [blue]{Cards}[/blue] Duchess cards.",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.WYLDER.title": "Deep Indigo",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.WYLDER.description": "Obtain [blue]{Cards}[/blue] Wylder cards."
+}

@@ -1,1 +1,12 @@
-{}
+{
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.GUARDIAN.title": "栗壳棕",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.GUARDIAN.description": "获得[blue]{Cards}[/blue]张守护者的卡牌。",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.IRONEYE.title": "橄榄绿",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.IRONEYE.description": "获得[blue]{Cards}[/blue]张铁之眼的卡牌。",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.REVENANT.title": "冷雾蓝",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.REVENANT.description": "获得[blue]{Cards}[/blue]张复仇者的卡牌。",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.DUCHESS.title": "浅天蓝",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.DUCHESS.description": "获得[blue]{Cards}[/blue]张女爵的卡牌。",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.WYLDER.title": "深靛蓝",
+  "COLORFUL_PHILOSOPHERS.pages.INITIAL.options.WYLDER.description": "获得[blue]{Cards}[/blue]张追踪者的卡牌。"
+}

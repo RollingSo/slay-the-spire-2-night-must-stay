@@ -53,6 +53,7 @@ foreach (Type type in typeof(PowerModel).Assembly.GetTypes().Where(type => !type
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+if (args.Contains("--colorful-philosophers-only")) { ColorfulPhilosophersRegression.Run(); return 0; }
 if (args.Contains("--card-portraits-only"))
 {
     // Default portrait paths can resolve the card's pool through the full game model catalog.
