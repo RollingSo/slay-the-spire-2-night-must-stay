@@ -30,6 +30,7 @@ namespace NightMustStay.Core.Models.Cards
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
+            NightMustStay.Core.Patches.GuardianAnimationPatch.PlayShieldPoke(base.Owner.Creature);
 
             await DamageCmd.Attack(base.DynamicVars.Damage.BaseValue).CompatFromCard(this).Targeting(cardPlay.Target)
                 .WithGuardianWeaponFx()

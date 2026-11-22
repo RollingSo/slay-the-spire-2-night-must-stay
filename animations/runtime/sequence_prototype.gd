@@ -13,6 +13,7 @@ const CONFIGS := {
 			"GuardCounter": "guard_counter",
 			"Cast": "cast_brace",
 			"PowerUp": "power_activate",
+			"ShieldPoke": "shield_poke",
 			"Hit": "hurt",
 			"Dead": "death",
 		},
@@ -58,6 +59,9 @@ var _card_motion := ""
 var _card_motion_active := false
 var _awaiting_native_attack := false
 var _time_command_active := false
+var _shield_poke_active := false
+var _target_height := 0.0
+var _parent_scale := 1.0
 var _idle_frames: SpriteFrames
 var _base_scale := 1.0
 var _warned: Dictionary = {}
@@ -76,8 +80,9 @@ func _ready() -> void:
 	var tex := _idle_frames.get_frame_texture(_idle_frames.get_animation_names()[0], 0)
 	var used := tex.get_image().get_used_rect()
 	var parent_node := get_parent() as CanvasItem
-	var parent_scale: float = parent_node.global_scale.y if parent_node != null else 1.0
-	_base_scale = float(_config["height"]) / maxf(1.0, float(used.size.y) * parent_scale)
+	_parent_scale = parent_node.global_scale.y if parent_node != null else 1.0
+	_target_height = float(_config["height"])
+	_base_scale = _target_height / maxf(1.0, float(used.size.y) * _parent_scale)
 	_play_idle()
 
 func _get_frames(action: String) -> SpriteFrames:
@@ -115,7 +120,10 @@ func _apply_frames(frames: SpriteFrames, loop: bool) -> void:
 	var anchor: Vector2 = frames.get_meta("anchor", Vector2.ZERO)
 	if canvas != Vector2i.ZERO:
 		sprite.offset = Vector2(canvas.x * 0.5 - anchor.x, canvas.y * 0.5 - anchor.y)
-		sprite.scale = Vector2.ONE * _base_scale
+		# Per-action normalization keeps resources with different texture heights at the approved final height.
+		var used := frames.get_frame_texture(anim, 0).get_image().get_used_rect()
+		var action_scale := _target_height / maxf(1.0, float(used.size.y) * _parent_scale)
+		sprite.scale = Vector2.ONE * action_scale
 	sprite.play(anim)
 
 func _play_idle() -> void:
@@ -123,6 +131,7 @@ func _play_idle() -> void:
 	_dead = false
 	_awaiting_native_attack = false
 	_time_command_active = false
+	_shield_poke_active = false
 	_apply_frames(_idle_frames, true)
 
 func _play_one_shot(action: String, loop := false) -> void:
@@ -132,6 +141,7 @@ func _play_one_shot(action: String, loop := false) -> void:
 		return
 	_return_to_idle = not loop
 	_time_command_active = action == "time_command"
+	_shield_poke_active = action == "shield_poke"
 	_apply_frames(frames, loop)
 
 func play_trigger(trigger: String) -> void:
@@ -139,6 +149,9 @@ func play_trigger(trigger: String) -> void:
 		return
 	# The native Cast/Attack hook can fire after OnPlay; do not cut the clock cinematic.
 	if _time_command_active and trigger in ["Attack", "Cast"]:
+		return
+	# Shield Poke is an explicit card animation; do not let the native attack cut it.
+	if _shield_poke_active and trigger in ["Attack", "Cast"]:
 		return
 	match trigger:
 		"Idle", "Relaxed", "Revive":
@@ -193,6 +206,7 @@ func set_action_timing(_trigger: String, _wait_time: float) -> void:
 
 func _on_animation_finished(_anim: StringName) -> void:
 	_time_command_active = false
+	_shield_poke_active = false
 	if _return_to_idle and not _dead:
 		_play_idle()
 

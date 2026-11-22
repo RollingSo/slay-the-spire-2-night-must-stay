@@ -28,7 +28,8 @@
         "Cast": "cast_brace",
         "PowerUp": "power_activate",
         "Hit": "hurt",
-        "Dead": "death"
+        "Dead": "death",
+        "ShieldPoke": "shield_poke"
       },
       "ready": [
         "combat_idle",
@@ -38,7 +39,8 @@
         "power_activate",
         "hurt",
         "death",
-        "camp_idle"
+        "camp_idle",
+        "shield_poke"
       ],
       "missing": []
     },

@@ -39,6 +39,7 @@ namespace NightMustStay.Core.Models.Cards
         protected override async Task OnPlay(PlayerChoiceContext choiceContext, CardPlay cardPlay)
         {
             ArgumentNullException.ThrowIfNull(cardPlay.Target, nameof(cardPlay.Target));
+            NightMustStay.Core.Patches.GuardianAnimationPatch.PlayShieldPoke(base.Owner.Creature);
 
             decimal damage = GetDamageBeforeHooks();
             await CreatureCmd.GainBlock(base.Owner.Creature, base.DynamicVars.Block, cardPlay);

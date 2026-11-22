@@ -4,7 +4,7 @@
 
 - 真实战斗动作：**7 个**（idle、attack、cast_brace、power_activate、hurt、death、guard_counter）；场景与扩展动作按实际触发另算
 - 衍生动画：**0 个**（守护者没有家人/召唤动作）
-- 当前已有 Guardian `.res`：**8 个**；其中 GD03/04/05/07 的盾正面有已知瑕疵（先保留），GD11 仍是无独立触发的候选。
+- 当前已有 Guardian `.res`：**9 个**；其中 GD03/04/05/07/11 的盾正面有已知瑕疵（用户已选择现视频），GD11 已补独立触发。
 - 正式素材目录：`animations/guardian/main/`
 - 预览目录：`animations/guardian/preview/`（只用于人工预览，不用于 Mod 接入或打包）
 - **方向规则（所有 Guardian 动画）**：2D 侧视，角色永远朝画面右侧，头/喙不转向镜头；攻击只在画面平面内，不做 3D 透视或转身。
@@ -66,7 +66,7 @@
 
 ## 已知瑕疵：盾牌正面（2026-11-15 决定保留）
 
-- 影响动作：**GD03、GD04、GD05、GD07、GD11**。
+- 影响动作：**GD03、GD04、GD05、GD07、GD11**；GD11 用户已选定 `GD-蹲戳.mp4` 并接受当前盾形。
 - 现象：盾正面被生成成完整椭圆/叶形，缺少神鹰盾顶部的凹口/缺口、外翼尖和单一底部尖点。
 - 当前决定：**先保留，不重做，不阻塞接入**；这些动作的盾形不作为合格素材宣传。
 - 已采纳的 GD03/GD04/GD05/GD07 仍保留原 `.res`；GD11 仍为无独立触发的候选。
@@ -82,7 +82,7 @@
 | GD10 篝火待机 | **已完成**：75 帧 / 15FPS / 5 秒循环 `.res`（时间采样优化），`guardian_rest_site.tscn` 已改为 AnimatedSprite2D |
 | GD06 Steel Guard | 未制作；无独立触发，暂定复用 Cast 架势 |
 | GD08 翼风/施法 | 未制作；无独立触发，暂定复用 Cast/Attack |
-| GD11 盾戳 | 未完成；无独立触发，当前视频还有盾牌让位问题 |
+| GD11 盾戳 | **已完成**：`GD-蹲戳.mp4` → 36帧/1.5秒；ShieldPoke/ShieldedThrust 独立触发；盾正面椭圆瑕疵保留 |
 | 盾正面瑕疵 | GD03/04/05/07/11 已登记为已知瑕疵，先保留不重做 |
 
 **结论：技能动画素材覆盖完成（7 个战斗动作 + 篝火）；商店动态暂不做；游戏内序列 rig 接入仍未完成，因此“游戏内整体”不能判为完成，但“动画制作/技能覆盖”可以结项。**
@@ -341,7 +341,7 @@
 - **已知限制：翅膀从源片 f24 起张开到末帧；用户已确认接受。**
 - 正式预览：`preview/guardian_death.gif` / `.mp4` / `_keyframes.png`。
 
-## 扩展候选：GD11 盾戳 `shield_poke`（当前无独立触发）
+## GD11 盾戳 `shield_poke`（已正式接入）
 
 参考首帧/末帧：`preview/guardian_attack_reference_green_square.png`（首帧和末帧都用同一张待机绿幕）。
 
@@ -413,3 +413,12 @@
 - 保留 `AnimationPlayer` 的空 `idle` 轨道，兼容现有 `GuardianAssetPatch` 的 `Play("idle")` 调用；翻转逻辑不变。
 - `.res` 约 3.4MB；7 页；独立复载通过，场景加载测试通过。
 - 正式预览：`preview/guardian_camp_idle.gif` / `.mp4` / `_keyframes.png`。
+
+## GD11 当前结果（2026-11-22）
+
+- 源：`GD-蹲戳.mp4`，960×960 / 60FPS / 121帧。
+- 正式资源：36帧 / 24FPS / 1.5秒；画布932×573，锚点406.582,563.207；纹理可见高512，最终可见高308.331。
+- 无损压缩约1.7MB，6页。
+- 触发：`ShieldPoke` 与 `ShieldedThrust` 的 `OnPlay` 调用 `GuardianAnimationPatch.PlayShieldPoke`；通用播放器在盾戳期间忽略原生 Attack/Cast，避免被普通攻击顶掉。
+- 盾牌正面仍是完整椭圆/叶盾，未按神鹰盾规范重做；用户已选定该视频。
+- 预览：`preview/guardian_shield_poke.gif`。

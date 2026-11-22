@@ -6,7 +6,7 @@
 
 | 角色 | 战斗视觉入口 | 动画来源 | 状态 |
 |---|---|---|---|
-| Guardian | `guardian_assets/combat_rig/guardian_combat_visuals.tscn` | `animations/guardian/main/*.res` | 7 个战斗动作 + 篝火；Prototype 已替换为序列播放器 |
+| Guardian | `guardian_assets/combat_rig/guardian_combat_visuals.tscn` | `animations/guardian/main/*.res` | 8 个战斗动作 + 篝火；盾戳已补独立触发 |
 | Duchess | `duchess_assets/combat_rig/duchess_combat_visuals.tscn` | `animations/duchess/main/*.res` | 战斗/篝火/商店；Block 映射 `dodge_defend` |
 | Revenant | `revenant_assets/combat/revenant_combat_visuals.tscn` | `animations/revenant/main/*.res` | 本体战斗 + 篝火；家人序列仍走各自旧路径 |
 | Ironeye | `ironeye_assets/combat_rig/ironeye_combat_visuals.tscn` | `ironeye_assets/combat_rig/ironeye_sequences.res` | 原序列 rig；已替换为 canonical 压缩资源；篝火/死亡缺素材 |
@@ -21,7 +21,7 @@ Headless 冒烟测试已通过：Guardian/Duchess/Revenant 最终可见高分别
 - **Ironeye**：没有 `death.res` 和 `camp_idle.res`；篝火仍是静态 `Sprite2D` + 程序呼吸。
 - **Revenant**：FR03 已补齐；家人动画未统一切到通用播放器。
 - **Duchess**：DU09 `TimeCommand` 已映射到重演、逆转时空；午夜圆舞曲不触发；`phantom_dial` 独立表盘层尚未叠加。
-- **Guardian**：已知盾牌正面瑕疵沿用；尚未实机验收。
+- **Guardian**：已知盾牌正面瑕疵沿用（含盾戳）；尚未实机验收。
 - 所有角色都还没做目标版本实机/导出 PCK 验证；`pack-ready` 只表示资源与场景引用已接好。
 
 ## 打包要求

@@ -328,16 +328,6 @@
       "camp_optimization": "15fps temporal resample; pixel resolution unchanged"
     },
     {
-      "id": "GD11",
-      "action": "shield_poke",
-      "animation": "shield_poke",
-      "file": null,
-      "exists": false,
-      "status": "candidate_with_known_shield_flaw",
-      "note": "ShieldPoke/ShieldedThrust currently use generic Attack; needs card-specific mapping.",
-      "shield_front_ok": false
-    },
-    {
       "id": "GD12",
       "action": "power_activate",
       "animation": "power_activate",
@@ -367,6 +357,40 @@
       "accepted_known_issue": "wings open from start; particles brighter than requested; user accepted",
       "mapping_status": "pending_sequence_rig",
       "compression": "PortableCompressedTexture2D lossless"
+    },
+    {
+      "id": "GD11",
+      "action": "shield_poke",
+      "animation": "shield_poke",
+      "file": "main/shield_poke.res",
+      "exists": true,
+      "priority": "P1",
+      "target_seconds": [
+        1.0,
+        1.5
+      ],
+      "loop": false,
+      "status": "adopted",
+      "trigger": "ShieldPoke/ShieldedThrust",
+      "note": "Explicit card trigger; native Attack suppressed while active. Shield front remains the accepted elliptical variant.",
+      "frames": 36,
+      "fps": 24,
+      "seconds": 1.5,
+      "canvas": [
+        932,
+        573
+      ],
+      "anchor": [
+        406.582,
+        563.207
+      ],
+      "texture_visible_height": 512,
+      "final_visible_height": 308.331,
+      "resource_bytes": 1742607,
+      "compression": "PortableCompressedTexture2D lossless",
+      "source_video": "GD-蹲戳.mp4",
+      "shield_front_ok": false,
+      "known_issue": "Shield front remains a complete oval/leaf; user chose this source video."
     }
   ],
   "optional": [
@@ -394,7 +418,7 @@
   ],
   "completion": {
     "skill_animation_assets": "complete",
-    "combat_asset_count": 7,
+    "combat_asset_count": 8,
     "camp_scene_animation": "complete",
     "merchant_dynamic_idle": "waived_out_of_scope",
     "runtime_sequence_integration": "pending",

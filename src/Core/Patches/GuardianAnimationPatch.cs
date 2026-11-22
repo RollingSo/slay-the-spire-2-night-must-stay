@@ -14,6 +14,14 @@ namespace NightMustStay.Core.Patches;
 [HarmonyPatch]
 public static class GuardianAnimationPatch
 {
+
+    public static void PlayShieldPoke(Creature owner)
+    {
+        NCreature creatureNode = NCombatRoom.Instance?.GetCreatureNode(owner);
+        if (creatureNode != null && TryGetGuardianRig(creatureNode, out var rig))
+            rig.Call("play_trigger", "ShieldPoke");
+    }
+
     public static void PlayGuardCounter(Creature owner)
     {
         NCreature creatureNode = NCombatRoom.Instance?.GetCreatureNode(owner);
