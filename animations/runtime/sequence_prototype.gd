@@ -27,6 +27,7 @@ const CONFIGS := {
 			"Cast": "cast",
 			"Hit": "hurt",
 			"Dead": "death",
+			"TimeCommand": "time_command",
 		},
 	},
 	"revenant": {

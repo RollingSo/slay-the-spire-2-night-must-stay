@@ -19,6 +19,13 @@ namespace NightMustStay.Core.Patches
                     Name = "DuchessStatusVisual", CreatureNode = __instance });
         }
 
+
+        public static void PlayTimeCommand(MegaCrit.Sts2.Core.Entities.Creatures.Creature creature)
+        {
+            if (creature.GetCreatureNode() is { } node && TryGetRig(node, out Node rig))
+                rig.Call("play_trigger", "TimeCommand");
+        }
+
         public static void PlayBlock(MegaCrit.Sts2.Core.Entities.Creatures.Creature creature)
         {
             if (creature.GetCreatureNode() is { } node && TryGetRig(node, out Node rig))
