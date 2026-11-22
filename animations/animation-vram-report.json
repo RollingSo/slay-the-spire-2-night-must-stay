@@ -4,11 +4,11 @@
       "anims": [
         "camp_idle"
       ],
-      "bytes": 10613309,
+      "bytes": 6793677,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/duchess/main/camp_idle.res",
-      "pages": 16,
-      "vram_bytes": 189388800,
-      "vram_mb": 180.62
+      "pages": 10,
+      "vram_bytes": 118368000,
+      "vram_mb": 112.88
     },
     {
       "anims": [
@@ -106,11 +106,11 @@
       "anims": [
         "camp_idle"
       ],
-      "bytes": 5719315,
+      "bytes": 3588978,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/guardian/main/camp_idle.res",
-      "pages": 10,
-      "vram_bytes": 129254400,
-      "vram_mb": 123.27
+      "pages": 7,
+      "vram_bytes": 81861120,
+      "vram_mb": 78.07
     },
     {
       "anims": [
@@ -310,11 +310,11 @@
       "anims": [
         "camp_idle"
       ],
-      "bytes": 4704941,
+      "bytes": 2949416,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/revenant/main/camp_idle.res",
-      "pages": 7,
-      "vram_bytes": 93045888,
-      "vram_mb": 88.74
+      "pages": 5,
+      "vram_bytes": 58584448,
+      "vram_mb": 55.87
     },
     {
       "anims": [
@@ -397,8 +397,8 @@
       "vram_mb": 167.19
     }
   ],
-  "total_file_bytes": 87955908,
-  "total_file_mb": 83.88,
-  "total_vram_bytes": 2076872892,
-  "total_vram_mb": 1980.66
+  "total_file_bytes": 80250414,
+  "total_file_mb": 76.53,
+  "total_vram_bytes": 1923997372,
+  "total_vram_mb": 1834.87
 }

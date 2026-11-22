@@ -1,0 +1,9 @@
+{
+  "mode": "temporal resample for camp idles only; pixel resolution unchanged",
+  "target_fps": 15,
+  "items": [
+    {"character":"guardian","before":{"frames":120,"fps":24,"seconds":5.0,"pages":10,"vram_mb":123.3,"file_mb":5.45},"after":{"frames":75,"fps":15,"seconds":5.0,"pages":7,"vram_mb":78.07,"file_mb":3.42}},
+    {"character":"duchess","before":{"frames":190,"fps":24,"seconds":7.9167,"pages":16,"vram_mb":180.6,"file_mb":10.12},"after":{"frames":119,"fps":15,"seconds":7.9333,"pages":10,"vram_mb":112.88,"file_mb":6.48}},
+    {"character":"revenant","before":{"frames":107,"fps":24,"seconds":4.4583,"pages":7,"vram_mb":88.7,"file_mb":4.49},"after":{"frames":67,"fps":15,"seconds":4.4667,"pages":5,"vram_mb":55.87,"file_mb":2.81}}
+  ]
+}

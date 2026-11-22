@@ -79,7 +79,7 @@
 | 核心战斗动作 GD01/02/03/04/05/07/12 | 7/7 `.res` 已打包；GD01 仍标 `packed_pending_integration`，其余为 accepted/known flaw |
 | 序列资源接入 | **未完成**。当前 `guardian_combat_visuals.tscn` 仍用骨骼原型，`animations/guardian/main/*.res` 还没接到序列播放器；`PowerUp → power_activate` 映射也待接 |
 | GD09 商店待机 | **暂不做**（用户确认不纳入本次范围）；保留静态 fallback |
-| GD10 篝火待机 | **已完成**：120 帧 / 5 秒循环 `.res`，`guardian_rest_site.tscn` 已改为 AnimatedSprite2D |
+| GD10 篝火待机 | **已完成**：75 帧 / 15FPS / 5 秒循环 `.res`（时间采样优化），`guardian_rest_site.tscn` 已改为 AnimatedSprite2D |
 | GD06 Steel Guard | 未制作；无独立触发，暂定复用 Cast 架势 |
 | GD08 翼风/施法 | 未制作；无独立触发，暂定复用 Cast/Attack |
 | GD11 盾戳 | 未完成；无独立触发，当前视频还有盾牌让位问题 |
@@ -407,9 +407,9 @@
 
 ## GD10 当前结果
 
-- 源：`GD-篝火待机.mp4`；120 帧 / 24FPS / 5.0 秒循环。
+- 源：`GD-篝火待机.mp4`；2026-11-22 起使用 75 帧 / 15FPS / 5.0 秒循环，像素分辨率不变，仅降低时间采样。
 - 画布 480×561，锚点 240,550；纹理可见高 528；场景缩放 1.099769，位置 63.866,299.294。
 - `guardian_assets/rest_site/guardian_rest_site.tscn` 的静态 `Sprite2D` 已替换为 `AnimatedSprite2D`，播放 `camp_idle`。
 - 保留 `AnimationPlayer` 的空 `idle` 轨道，兼容现有 `GuardianAssetPatch` 的 `Play("idle")` 调用；翻转逻辑不变。
-- `.res` 约 51MB；独立复载通过，场景加载测试通过。
+- `.res` 约 3.4MB；7 页；独立复载通过，场景加载测试通过。
 - 正式预览：`preview/guardian_camp_idle.gif` / `.mp4` / `_keyframes.png`。

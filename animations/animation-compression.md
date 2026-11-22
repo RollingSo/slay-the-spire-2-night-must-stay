@@ -58,8 +58,9 @@
 
 - 处理范围：`animations/*/main/*.res` 与 `animations/revenant/derived/*/*.res`，共 **39 个**。
 - 全部按 `PortableCompressedTexture2D` / `COMPRESSION_MODE_LOSSY` / 质量 **0.85** 重编码；帧数、逐帧时长、`canvas`/`anchor` 在保存后复载校验。
-- 总体积：**510.8 MiB → 83.9 MiB（约 16.4%）**。
-- 示例：Guardian 篝火 51.1→5.45MB；Guardian 受击 11.2→1.16MB；Wylder 追击待机 39.1→4.85MB；Ironeye 合包 9.8→2.00MB。
+- 总体积：压缩后 **83.9 MiB**；篝火 15FPS 重采样后进一步降至 **76.5 MiB**。
+- 示例：Guardian 篝火 51.1→3.42MB（15FPS/75帧）；Guardian 受击 11.2→1.16MB；Wylder 追击待机 39.1→4.85MB；Ironeye 合包 9.8→2.00MB。
 - 原始资源备份：`.tmp/animation_compression/backup/`；逐文件结果：`animations/animation-compression-batch.json`。
 - 抽检：Guardian 受击/篝火/长戟、Wylder 追击待机、Duchess 时间牌面；画面边缘和武器未见明显退化。
-- **未降低 VRAM**。审计见 `animations/animation-vram-report.json`，全部资源同时常驻约 1.98GB；下一步必须做按场景/动作加载和显存优化。
+- 篝火 15FPS 时间重采样见 `animations/camp-lowfps-report.json`；未改像素尺寸。
+- **Lossy 压缩本身不降 VRAM**。篝火重采样后全部资源同时常驻估算约 **1.83GB**（原 1.98GB）；战斗资源仍保持原采样和画质。

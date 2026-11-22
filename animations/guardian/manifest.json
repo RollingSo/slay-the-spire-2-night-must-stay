@@ -304,8 +304,8 @@
       ],
       "loop": true,
       "status": "adopted_scene_replaced",
-      "frames": 120,
-      "fps": 24,
+      "frames": 75,
+      "fps": 15,
       "seconds": 5.0,
       "canvas": [
         480,
@@ -321,10 +321,11 @@
         63.866,
         299.294
       ],
-      "resource_bytes": 5719315,
+      "resource_bytes": 3588978,
       "source_video": "GD-篝火待机.mp4",
       "scene": "guardian_assets/rest_site/guardian_rest_site.tscn",
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "compression": "PortableCompressedTexture2D lossy q=0.85",
+      "camp_optimization": "15fps temporal resample; pixel resolution unchanged"
     },
     {
       "id": "GD11",

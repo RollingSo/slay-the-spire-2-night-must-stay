@@ -154,13 +154,14 @@
       ],
       "code": "RV09",
       "file": "main/camp_idle.res",
-      "fps": 24.0,
-      "frames": 107,
+      "fps": 15,
+      "frames": 67,
       "loop": true,
       "role": "main",
-      "seconds": 4.4583,
-      "resource_bytes": 4704941,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "seconds": 4.467,
+      "resource_bytes": 2949416,
+      "compression": "PortableCompressedTexture2D lossy q=0.85",
+      "camp_optimization": "15fps temporal resample; pixel resolution unchanged"
     },
     {
       "anchor": [

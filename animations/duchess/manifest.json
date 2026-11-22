@@ -176,10 +176,10 @@
       "action": "camp_idle",
       "file": "main/camp_idle.res",
       "animation": "camp_idle",
-      "frames": 190,
-      "fps": 24,
+      "frames": 119,
+      "fps": 15,
       "loop": true,
-      "seconds": 7.9167,
+      "seconds": 7.933,
       "canvas": [
         450,
         548
@@ -191,8 +191,9 @@
       "texture_visible_height": 526.6151,
       "final_visible_height": 526.6151,
       "integration_scale": 1.0,
-      "resource_bytes": 10613309,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 6793677,
+      "compression": "PortableCompressedTexture2D lossy q=0.85",
+      "camp_optimization": "15fps temporal resample; pixel resolution unchanged"
     },
     {
       "code": "DU09",
