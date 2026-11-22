@@ -104,43 +104,48 @@
     },
     {
       "anchor": [
-        86.0,
+        78.008,
         225.0
       ],
       "animation": "death",
       "canvas": [
-        162,
+        161,
         233
       ],
       "code": "RV07",
       "file": "main/death.res",
-      "fps": 24.0,
+      "fps": 24,
       "frames": 78,
       "loop": false,
       "role": "main",
       "seconds": 3.25,
-      "resource_bytes": 2097371,
-      "compression": "PortableCompressedTexture2D lossless"
+      "resource_bytes": 986591,
+      "compression": "PortableCompressedTexture2D lossless",
+      "note": "Rebuilt from 512x512 historical transparent frames; feet restored; 60 source poses resampled to 78 frames/3.25s."
     },
     {
       "anchor": [
-        85.0,
-        223.0
+        163.839,
+        483.789
       ],
       "animation": "merchant_idle",
       "canvas": [
-        154,
-        231
+        319,
+        492
       ],
       "code": "RV08",
       "file": "main/merchant_idle.res",
-      "fps": 24.0,
+      "fps": 24,
       "frames": 96,
       "loop": true,
       "role": "main",
       "seconds": 4.0,
-      "resource_bytes": 3290117,
-      "compression": "PortableCompressedTexture2D lossless"
+      "resource_bytes": 4427483,
+      "compression": "PortableCompressedTexture2D lossless",
+      "texture_visible_height": 474,
+      "final_visible_height": 473.954,
+      "integration_scale": 1.0,
+      "note": "Rebuilt from high-res 832x1120 transparent frames; 39 source poses resampled to 96 frames/4s."
     },
     {
       "anchor": [
