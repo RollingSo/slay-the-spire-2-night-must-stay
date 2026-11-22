@@ -22,13 +22,14 @@ const CONFIGS := {
 		"dir": "res://animations/duchess/main/",
 		"height": 307.546886,
 		"idle": "combat_idle",
+		"dial": "phantom_dial_short",
 		"map": {
 			"Attack": "dagger_slash",
 			"Block": "dodge_defend",
 			"Cast": "cast",
 			"Hit": "hurt",
 			"Dead": "death",
-			"TimeCommand": "time_command",
+			"TimeCommand": "time_command_short",
 		},
 	},
 	"revenant": {
@@ -51,6 +52,7 @@ const CONFIGS := {
 @export var force_loop := false
 
 var sprite: AnimatedSprite2D
+var dial: AnimatedSprite2D
 var _frames_cache: Dictionary = {}
 var _config: Dictionary = {}
 var _return_to_idle := false
@@ -68,6 +70,12 @@ var _warned: Dictionary = {}
 
 func _ready() -> void:
 	_config = CONFIGS.get(character_key, CONFIGS["guardian"])
+	dial = AnimatedSprite2D.new()
+	dial.name = "Dial"
+	dial.centered = false
+	dial.z_index = -1
+	dial.visible = false
+	add_child(dial)
 	sprite = AnimatedSprite2D.new()
 	sprite.name = "Sprite"
 	sprite.centered = true
@@ -132,6 +140,7 @@ func _play_idle() -> void:
 	_awaiting_native_attack = false
 	_time_command_active = false
 	_shield_poke_active = false
+	_hide_dial()
 	_apply_frames(_idle_frames, true)
 
 func _play_one_shot(action: String, loop := false) -> void:
@@ -140,9 +149,13 @@ func _play_one_shot(action: String, loop := false) -> void:
 		_play_idle()
 		return
 	_return_to_idle = not loop
-	_time_command_active = action == "time_command"
+	_time_command_active = action.begins_with("time_command")
 	_shield_poke_active = action == "shield_poke"
 	_apply_frames(frames, loop)
+	if _time_command_active:
+		_start_dial_time_command(frames)
+	else:
+		_hide_dial()
 
 func play_trigger(trigger: String) -> void:
 	if _dead and trigger != "Revive":
@@ -171,6 +184,30 @@ func play_trigger(trigger: String) -> void:
 		_:
 			if _config["map"].has(trigger):
 				_play_one_shot(String(_config["map"][trigger]))
+
+func _start_dial_time_command(frames: SpriteFrames) -> void:
+	if dial == null or _config.get("dial", "") == "":
+		return
+	var d_frames := _get_frames(String(_config["dial"]))
+	if d_frames == null:
+		return
+	var danim: StringName = d_frames.get_animation_names()[0]
+	dial.stop()
+	dial.sprite_frames = d_frames
+	dial.animation = danim
+	dial.frame = 0
+	dial.visible = true
+	var canvas: Vector2i = frames.get_meta("canvas", Vector2i.ZERO)
+	var anchor: Vector2 = frames.get_meta("anchor", Vector2.ZERO)
+	var action_scale := sprite.scale.x
+	dial.scale = Vector2.ONE * action_scale
+	dial.position = (Vector2(-anchor.x, -anchor.y) + Vector2(120, -30)) * action_scale
+	dial.play(danim)
+
+func _hide_dial() -> void:
+	if dial != null:
+		dial.stop()
+		dial.visible = false
 
 func _attack_action_revenant() -> String:
 	if _card_motion == "Prayer":
@@ -207,6 +244,7 @@ func set_action_timing(_trigger: String, _wait_time: float) -> void:
 func _on_animation_finished(_anim: StringName) -> void:
 	_time_command_active = false
 	_shield_poke_active = false
+	_hide_dial()
 	if _return_to_idle and not _dead:
 		_play_idle()
 

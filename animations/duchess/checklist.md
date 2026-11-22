@@ -58,7 +58,7 @@
 
 | 编号 | 动作／文件名 | 设计方向与用途 | 第一版安排 | 状态 |
 |---|---|---|---|---|
-| DU09 | 重演／时间操纵 `time_command` | 从衣襟取出小怀表，按表后显现虚幻表盘，随后收表归位；人物与表盘独立成层 | v02 原速完整版 5.017 秒 | 2026-11-09：用户采纳原速完整版，保留源片全部 121 帧和原始时间戳。1.458 秒紧凑版因剪辑跳跃未采纳。正式接入选用人物 `time_command` 和表盘 `phantom_dial`。Godot 独立验证 1865 项通过，待正式接入与实战测时。[独立预览](DU09_重演_独立预览_v02_20261109.tscn) · [人物资源](DU09_重演_SpriteFrames_v02_20261109.res) · [表盘资源](DU09_重演_表盘_SpriteFrames_v02_20261109.res) · [制作记录](DU09_重演_制作记录_v02_20261109.json) |
+| DU09 | 重演／时间操纵 `time_command` | 从衣襟取出小怀表，按表后显现虚幻表盘，随后收表归位；人物与表盘独立成层 | 游戏内 1.5 秒 | 2026-11-22：游戏内改用 36帧/1.5秒短版 `time_command_short.res` + `phantom_dial_short.res`；完整121帧/5.017秒保留为档案。表盘在人物后方，偏移(120,-30)。[独立预览](DU09_重演_独立预览_v02_20261109.tscn) · [人物资源](DU09_重演_SpriteFrames_v02_20261109.res) · [表盘资源](DU09_重演_表盘_SpriteFrames_v02_20261109.res) · [制作记录](DU09_重演_制作记录_v02_20261109.json) |
 
 ### 暂不制作
 
@@ -69,24 +69,13 @@
 
 ## DU09 触发（2026-11-22 已接入）
 
-DU09 的 `time_command` 已接到以下入口：
-
-- **重演** `DuchessReenactment`：每次打出时触发。
-- **逆转时空** `DuchessReverseTime`：当前时刻为 12 时触发。
-- **午夜圆舞曲** `DuchessMidnightWaltz`：不使用 DU09；保留它自己的演出。
-
-实现位置：
-
-- `src/Core/Models/Cards/DuchessCard.cs` 的 `OnPlay`，在 `RestageAoe` 结算前判断。
-- `src/Core/Patches/DuchessAnimationPatch.cs` 的 `PlayTimeCommand`。
-- `animations/runtime/sequence_prototype.gd` 的 Duchess `TimeCommand` 映射到 `time_command.res`。
-
-注意：
-
-- 当前播放完整 **121 帧 / 5.04 秒**；默认 Cast 等待只有 0.25 秒，长时间演出会盖住后续动作。若实机觉得拖，需要另做 1.2–1.5 秒短版，不要直接改完整资源。
-- 时钟演出期间通用播放器会忽略原生 `Cast`/`Attack`，避免被普通施法动作顶掉；`Hit`/`Dead` 仍可打断。
-- `phantom_dial` 表层暂未叠加；游戏侧已有 Clock VFX，避免重复表盘。若实机缺表盘，再单独接表盘层并校准位置。
-- 只有重演和逆转时空共用同一入口；`DuchessMidnightWaltz`（午夜圆舞曲）、`DuchessRestage`（短剑重演）和 `DuchessParallelTime` 不触发。
+- **重演** `DuchessReenactment`：每次打出触发。
+- **逆转时空** `DuchessReverseTime`：当前时刻为12时触发。
+- 午夜圆舞曲、短剑重演、平行时间不触发。
+- 游戏内播放 **36帧/1.5秒** 短版；完整121帧/5.017秒资源保留为档案。
+- 人物：`time_command_short.res`；表盘：`phantom_dial_short.res`，作为人物后方独立 `AnimatedSprite2D`，偏移 `(120,-30)`。
+- 时钟演出期间忽略原生 `Cast/Attack`；受击/死亡可打断。
+- 预览：`preview/du09_short_with_dial.gif`。
 
 ## 4. 触发与时间适配
 

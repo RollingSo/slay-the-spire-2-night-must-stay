@@ -66,7 +66,7 @@
         "camp_idle",
         "merchant_idle"
       ],
-      "known": "DU09 TimeCommand wired for Reenactment + ReverseTime; MidnightWaltz excluded; phantom_dial layer pending."
+      "known": "DU09 short 1.5s + dial overlay wired; full 5.017s kept as archive."
     },
     "revenant": {
       "combat_scene": "res://revenant_assets/combat/revenant_combat_visuals.tscn",
@@ -92,7 +92,7 @@
         "camp_idle",
         "attack_b"
       ],
-      "known": "Main body wired; family/summon sequence rigs remain separate. FR03 now ready.",
+      "known": "Main body wired; family/summon sequence rigs remain separate. Merchant scene now AnimatedSprite2D.",
       "missing": []
     },
     "ironeye": {

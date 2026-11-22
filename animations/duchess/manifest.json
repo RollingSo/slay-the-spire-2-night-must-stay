@@ -216,7 +216,13 @@
       "final_visible_height": 307.546886,
       "integration_scale": 1.0,
       "resource_bytes": 9508220,
-      "compression": "PortableCompressedTexture2D lossless"
+      "compression": "PortableCompressedTexture2D lossless",
+      "gameplay_file": "main/time_command_short.res",
+      "short_frames": 36,
+      "short_seconds": 1.5,
+      "short_fps": 24,
+      "status": "gameplay_short_adopted",
+      "note": "Full 121-frame 5.017s kept as archive; gameplay uses 36-frame 1.5s short."
     },
     {
       "code": "DU09",
@@ -240,7 +246,12 @@
       "integration_scale": 1.0,
       "type": "effect",
       "resource_bytes": 934699,
-      "compression": "PortableCompressedTexture2D lossless"
+      "compression": "PortableCompressedTexture2D lossless",
+      "gameplay_file": "main/phantom_dial_short.res",
+      "short_frames": 36,
+      "short_seconds": 1.5,
+      "status": "overlay_adopted",
+      "note": "Overlay offset (120,-30) in character canvas; same 36-frame clock as time_command_short."
     }
   ],
   "layout": "animations/duchess/main/",
@@ -263,8 +274,10 @@
       "DuchessRestage",
       "DuchessParallelTime"
     ],
-    "resource": "main/time_command.res",
-    "duration_seconds": 5.0167,
-    "note": "Full resource; phantom_dial overlay not separately wired; game Clock VFX remains."
+    "resource": "main/time_command_short.res",
+    "dial": "main/phantom_dial_short.res",
+    "duration_seconds": 1.5,
+    "full_archive": "main/time_command.res",
+    "note": "Dial overlay at (120,-30); full 5.017s archive retained."
   }
 }

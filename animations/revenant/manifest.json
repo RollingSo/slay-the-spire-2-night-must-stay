@@ -145,7 +145,10 @@
       "texture_visible_height": 474,
       "final_visible_height": 473.954,
       "integration_scale": 1.0,
-      "note": "Rebuilt from full 120-frame 832x1120 source (matte_light threshold 60); 96 unique frames/4s, no 39-frame repeat."
+      "note": "Rebuilt from full 120-frame 832x1120 source (matte_light threshold 60); 96 unique frames/4s, no 39-frame repeat.",
+      "scene": "res://revenant_assets/merchant/revenant_merchant.tscn",
+      "scene_node": "AnimatedSprite2D",
+      "scene_status": "sequence_wired"
     },
     {
       "anchor": [
