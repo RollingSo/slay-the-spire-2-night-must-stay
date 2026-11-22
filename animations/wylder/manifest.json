@@ -28,9 +28,9 @@
         0,
         95
       ],
-      "resource_bytes": 5090727,
+      "resource_bytes": 18720224,
       "note": "Wylder still uses static pose rig; sequence player integration pending.",
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "compression": "PortableCompressedTexture2D lossless"
     }
   ],
   "completion": {
@@ -42,10 +42,9 @@
     "remaining": "WY01-WY06, WY08-WY15"
   },
   "compression": {
-    "mode": "lossy",
-    "quality": 0.85,
-    "applied_at": "2026-11-22",
+    "combat": "lossless",
+    "camp": "lossy q=0.85 + 15fps temporal resample",
     "tool": "tools/animation_forge/compress_lossy.gd",
-    "note": "PCK/disk size reduction; decoded VRAM is not reduced by lossy WebP."
+    "note": "Combat pixels verified exact against pre-compression backups; camp resampled temporally only."
   }
 }

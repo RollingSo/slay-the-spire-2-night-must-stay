@@ -54,13 +54,16 @@
 
 基线包中测得约 150.3 MiB 的新旧路径重复资源。过滤测试包通过铁之眼现有 23 项动画检查，压缩后的资源通过独立重载和时间线校验。表中 PCK 和动画资源的体积属于不同统计范围。正式接入后的整包大小与实战画质以目标版本复测为准。
 
-## 6. 2026-11-22 批量结果
+## 6. 2026-11-22 最终压缩结果
 
-- 处理范围：`animations/*/main/*.res` 与 `animations/revenant/derived/*/*.res`，共 **39 个**。
-- 全部按 `PortableCompressedTexture2D` / `COMPRESSION_MODE_LOSSY` / 质量 **0.85** 重编码；帧数、逐帧时长、`canvas`/`anchor` 在保存后复载校验。
-- 总体积：压缩后 **83.9 MiB**；篝火 15FPS 重采样后进一步降至 **76.5 MiB**。
-- 示例：Guardian 篝火 51.1→3.42MB（15FPS/75帧）；Guardian 受击 11.2→1.16MB；Wylder 追击待机 39.1→4.85MB；Ironeye 合包 9.8→2.00MB。
-- 原始资源备份：`.tmp/animation_compression/backup/`；逐文件结果：`animations/animation-compression-batch.json`。
-- 抽检：Guardian 受击/篝火/长戟、Wylder 追击待机、Duchess 时间牌面；画面边缘和武器未见明显退化。
-- 篝火 15FPS 时间重采样见 `animations/camp-lowfps-report.json`；未改像素尺寸。
-- **Lossy 压缩本身不降 VRAM**。篝火重采样后全部资源同时常驻估算约 **1.83GB**（原 1.98GB）；战斗资源仍保持原采样和画质。
+- 战斗/非篝火资源 **36 个 `.res`**：使用 `PortableCompressedTexture2D` **LOSSLESS**，保留原分辨率、帧数和逐帧时长。
+  - 373.1MB → **203.4MB**。
+  - 抽检 `combat_idle`、`death`、`time_command`、`ironeye_sequences`、`idle_pursuit`：逐帧 RGBA **0 diffs / exact**。
+- 篝火资源 **3 个**：有损 q=0.85 + 15FPS 时间重采样（不改像素尺寸）。
+  - Guardian 51.1→3.42MB（75帧/7页）
+  - Duchess 51.0→6.48MB（119帧/10页）
+  - Revenant 35.6→2.81MB（67帧/5页）
+- 最终全部动画 `.res`：**216.1MB / 1834.9MB 估算 VRAM**（全部动作同时常驻；实际应按场景/动作加载）。
+- 原始备份：`.tmp/animation_compression/backup/`。
+- 无损批量报告：`animations/animation-compression-lossless-batch.json`；旧有损测试报告：`animations/animation-compression-lossy-test.json`；篝火报告：`animations/camp-lowfps-report.json`。
+- 预览已排除出 PCK；压缩不降低 VRAM，加载优化仍需按场景/动作懒加载。

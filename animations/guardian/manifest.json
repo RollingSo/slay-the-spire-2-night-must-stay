@@ -37,9 +37,9 @@
       "source_video": "SY-待机.mp4",
       "actual_visible_height": 618,
       "integration_scale": 0.4989,
-      "resource_bytes": 2659498,
+      "resource_bytes": 10471838,
       "quality_policy": "2x_final",
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "id": "GD02",
@@ -69,13 +69,13 @@
       "actual_visible_height": 617,
       "final_visible_height": 308.331,
       "integration_scale": 0.4997,
-      "resource_bytes": 1795912,
+      "resource_bytes": 6953500,
       "source_video": "GD-截击-2.mp4",
       "omitted_source_frames": [
         57,
         59
       ],
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "id": "GD03",
@@ -107,11 +107,11 @@
       "actual_visible_height": 617,
       "final_visible_height": 308.331,
       "integration_scale": 0.4997,
-      "resource_bytes": 1383957,
+      "resource_bytes": 5425477,
       "source_video": "GD-举盾防御.mp4",
       "shield_front_ok": false,
       "known_issue": "shield front is complete oval/leaf; missing Eagle shield notch/wing tip; accepted for now",
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "id": "GD04",
@@ -141,7 +141,7 @@
       "actual_visible_height": 617,
       "final_visible_height": 308.331,
       "integration_scale": 0.4997,
-      "resource_bytes": 1213940,
+      "resource_bytes": 4857991,
       "source_video": "GD-受击.mp4",
       "source_seq": [
         0,
@@ -170,7 +170,7 @@
       ],
       "shield_front_ok": false,
       "known_issue": "shield front is complete oval/leaf; missing Eagle shield notch/wing tip; accepted for now",
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "id": "GD05",
@@ -200,7 +200,7 @@
       "actual_visible_height": 617,
       "final_visible_height": 308.331,
       "integration_scale": 0.4997,
-      "resource_bytes": 3322293,
+      "resource_bytes": 13974597,
       "source_video": "GD-死亡.mp4",
       "source_range_frames": [
         0,
@@ -209,7 +209,7 @@
       "accepted_known_issue": "wings open from f24 to end; user accepted",
       "shield_front_ok": false,
       "known_issue": "shield front is complete oval/leaf; missing Eagle shield notch/wing tip; accepted for now",
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "id": "GD06",
@@ -253,14 +253,14 @@
       "actual_visible_height": 617,
       "final_visible_height": 308.331,
       "integration_scale": 0.4997,
-      "resource_bytes": 1837324,
+      "resource_bytes": 7451910,
       "source_video": "GD-防御反击.mp4",
       "accepted_known_issue": "wings open; shield glow stronger than requested; user accepted",
       "ground_aligned": true,
       "speed_note": "hybrid: fast block-to-glow, slower thrust/recovery",
       "shield_front_ok": false,
       "known_issue": "shield front is complete oval/leaf; missing Eagle shield notch/wing tip; accepted for now",
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "id": "GD08",
@@ -324,7 +324,7 @@
       "resource_bytes": 3588978,
       "source_video": "GD-篝火待机.mp4",
       "scene": "guardian_assets/rest_site/guardian_rest_site.tscn",
-      "compression": "PortableCompressedTexture2D lossy q=0.85",
+      "compression": "PortableCompressedTexture2D lossy q=0.85; 15fps temporal resample",
       "camp_optimization": "15fps temporal resample; pixel resolution unchanged"
     },
     {
@@ -362,11 +362,11 @@
       "actual_visible_height": 617,
       "final_visible_height": 308.331,
       "integration_scale": 0.4997,
-      "resource_bytes": 2118444,
+      "resource_bytes": 7829015,
       "source_video": "GD-能力.mp4",
       "accepted_known_issue": "wings open from start; particles brighter than requested; user accepted",
       "mapping_status": "pending_sequence_rig",
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "compression": "PortableCompressedTexture2D lossless"
     }
   ],
   "optional": [
@@ -402,10 +402,9 @@
     "in_game_integration_status": "pending"
   },
   "compression": {
-    "mode": "lossy",
-    "quality": 0.85,
-    "applied_at": "2026-11-22",
+    "combat": "lossless",
+    "camp": "lossy q=0.85 + 15fps temporal resample",
     "tool": "tools/animation_forge/compress_lossy.gd",
-    "note": "PCK/disk size reduction; decoded VRAM is not reduced by lossy WebP."
+    "note": "Combat pixels verified exact against pre-compression backups; camp resampled temporally only."
   }
 }
