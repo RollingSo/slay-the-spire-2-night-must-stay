@@ -72,8 +72,8 @@
 DU09 的 `time_command` 已接到以下入口：
 
 - **重演** `DuchessReenactment`：每次打出时触发。
-- **逆转时空** `DuchessReverseTime`：`RequiredMoment == 12` 且当前时刻为 12 时触发。
-- **午夜圆舞曲** `DuchessMidnightWaltz`：同为时刻 12 条件，触发同一动画。
+- **逆转时空** `DuchessReverseTime`：当前时刻为 12 时触发。
+- **午夜圆舞曲** `DuchessMidnightWaltz`：不使用 DU09；保留它自己的演出。
 
 实现位置：
 
@@ -86,7 +86,7 @@ DU09 的 `time_command` 已接到以下入口：
 - 当前播放完整 **121 帧 / 5.04 秒**；默认 Cast 等待只有 0.25 秒，长时间演出会盖住后续动作。若实机觉得拖，需要另做 1.2–1.5 秒短版，不要直接改完整资源。
 - 时钟演出期间通用播放器会忽略原生 `Cast`/`Attack`，避免被普通施法动作顶掉；`Hit`/`Dead` 仍可打断。
 - `phantom_dial` 表层暂未叠加；游戏侧已有 Clock VFX，避免重复表盘。若实机缺表盘，再单独接表盘层并校准位置。
-- 三张牌共用同一入口；`DuchessRestage`（短剑重演）和 `DuchessParallelTime` 不触发。
+- 只有重演和逆转时空共用同一入口；`DuchessMidnightWaltz`（午夜圆舞曲）、`DuchessRestage`（短剑重演）和 `DuchessParallelTime` 不触发。
 
 ## 4. 触发与时间适配
 

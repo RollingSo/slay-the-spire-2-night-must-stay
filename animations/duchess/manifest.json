@@ -255,10 +255,14 @@
     "status": "implemented",
     "cards": [
       "DuchessReenactment",
-      "DuchessReverseTime",
-      "DuchessMidnightWaltz"
+      "DuchessReverseTime"
     ],
-    "condition": "Reenactment always; other two require RequiredMoment==12 and IsMomentActive",
+    "condition": "Reenactment always; ReverseTime when IsMomentActive (Moment 12)",
+    "excluded": [
+      "DuchessMidnightWaltz",
+      "DuchessRestage",
+      "DuchessParallelTime"
+    ],
     "resource": "main/time_command.res",
     "duration_seconds": 5.0167,
     "note": "Full resource; phantom_dial overlay not separately wired; game Clock VFX remains."

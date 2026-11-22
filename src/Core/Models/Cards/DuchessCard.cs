@@ -356,8 +356,8 @@ public abstract class DuchessCard : CardModel
     {
         if (GainsBlock)
             NightMustStay.Core.Patches.DuchessAnimationPatch.PlayBlock(Owner.Creature);
-        // DU09: the time-replay card and both Moment-12 payoffs share the pocket-watch sequence.
-        if (this is DuchessReenactment || (RequiredMoment == 12 && IsMomentActive))
+        // DU09: the time-replay card and Reverse Time share the pocket-watch sequence.
+        if (this is DuchessReenactment || (this is DuchessReverseTime && IsMomentActive))
             NightMustStay.Core.Patches.DuchessAnimationPatch.PlayTimeCommand(Owner.Creature);
         CardPlayFinishedEntry previous = CombatManager.Instance.History.CardPlaysFinished
             .LastOrDefault(entry => entry.HappenedThisTurn(CombatState) && entry.CardPlay.Card.Owner == Owner);
