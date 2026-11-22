@@ -1,0 +1,116 @@
+{
+  "status": "pack_ready_pending_export_test",
+  "note": "No export was run. Assets and scenes are wired so a normal all_resources export can include them.",
+  "export_requirements": {
+    "export_filter": "all_resources",
+    "must_include": [
+      "animations/*/main/*.res",
+      "animations/runtime/sequence_prototype.tscn",
+      "animations/runtime/sequence_prototype.gd"
+    ],
+    "exclude": [
+      "animations/*/preview/**",
+      "animations/*/derived/*/preview/**",
+      ".tmp/**",
+      "tools/**",
+      "design/**"
+    ]
+  },
+  "characters": {
+    "guardian": {
+      "combat_scene": "res://guardian_assets/combat_rig/guardian_combat_visuals.tscn",
+      "prototype": "res://animations/runtime/sequence_prototype.tscn",
+      "character_key": "guardian",
+      "actions": {
+        "Idle": "combat_idle",
+        "Attack": "halberd_attack",
+        "GuardCounter": "guard_counter",
+        "Cast": "cast_brace",
+        "PowerUp": "power_activate",
+        "Hit": "hurt",
+        "Dead": "death"
+      },
+      "ready": [
+        "combat_idle",
+        "halberd_attack",
+        "guard_counter",
+        "cast_brace",
+        "power_activate",
+        "hurt",
+        "death",
+        "camp_idle"
+      ],
+      "missing": []
+    },
+    "duchess": {
+      "combat_scene": "res://duchess_assets/combat_rig/duchess_combat_visuals.tscn",
+      "prototype": "res://animations/runtime/sequence_prototype.tscn",
+      "character_key": "duchess",
+      "actions": {
+        "Idle": "combat_idle",
+        "Attack": "dagger_slash",
+        "Block": "dodge_defend",
+        "Cast": "cast",
+        "Hit": "hurt",
+        "Dead": "death"
+      },
+      "ready": [
+        "combat_idle",
+        "dagger_slash",
+        "dodge_defend",
+        "cast",
+        "hurt",
+        "death",
+        "camp_idle",
+        "merchant_idle"
+      ],
+      "known": "DU09 time_command/phantom_dial not mapped to a native trigger; kept as assets."
+    },
+    "revenant": {
+      "combat_scene": "res://revenant_assets/combat/revenant_combat_visuals.tscn",
+      "prototype": "res://animations/runtime/sequence_prototype.tscn",
+      "character_key": "revenant",
+      "actions": {
+        "Idle": "combat_idle",
+        "Attack": "claw_attack",
+        "Cast": "lyre_command",
+        "Prayer": "prayer_attack",
+        "Call": "lyre_command",
+        "Resonance": "lyre_command",
+        "Hit": "hurt",
+        "Dead": "death"
+      },
+      "ready": [
+        "combat_idle",
+        "claw_attack",
+        "lyre_command",
+        "prayer_attack",
+        "hurt",
+        "death",
+        "camp_idle"
+      ],
+      "known": "Main body wired; family/summon sequence rigs remain separate. FR03 missing."
+    },
+    "ironeye": {
+      "combat_scene": "res://ironeye_assets/combat_rig/ironeye_combat_visuals.tscn",
+      "prototype": "res://ironeye_assets/combat_rig/ironeye_combat_rig.tscn",
+      "resource": "res://ironeye_assets/combat_rig/ironeye_sequences.res",
+      "ready": [
+        "idle",
+        "attack",
+        "cast",
+        "dagger",
+        "hurt",
+        "merchant_idle"
+      ],
+      "missing": [
+        "death",
+        "camp_idle"
+      ]
+    },
+    "wylder": {
+      "status": "paused_copyright",
+      "note": "Only WY07 pursuit idle exists; copyright review blocks further video generation."
+    }
+  }
+}

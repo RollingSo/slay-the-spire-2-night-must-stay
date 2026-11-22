@@ -401,5 +401,6 @@
     "camp": "lossy q=0.85 + 15fps temporal resample",
     "tool": "tools/animation_forge/compress_lossy.gd",
     "note": "Combat pixels verified exact against pre-compression backups; camp resampled temporally only."
-  }
+  },
+  "runtime_integration": "main_sequence_wired_pending_export_test"
 }

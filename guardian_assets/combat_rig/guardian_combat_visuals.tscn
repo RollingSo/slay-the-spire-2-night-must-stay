@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="PackedScene" path="res://guardian_assets/combat_rig/guardian_skeleton_prototype.tscn" id="2_prototype"]
+[ext_resource type="PackedScene" path="res://animations/runtime/sequence_prototype.tscn" id="2_prototype"]
 
 [node name="GuardianCombatVisuals" type="Node2D"]
 
@@ -10,8 +10,7 @@ position = Vector2(0, 2)
 scale = Vector2(0.8235, 0.8235)
 
 [node name="Prototype" parent="Visuals" instance=ExtResource("2_prototype")]
-position = Vector2(-480, -700)
-auto_demo = false
+character_key = "guardian"
 
 [node name="Bounds" type="Control" parent="."]
 unique_name_in_owner = true

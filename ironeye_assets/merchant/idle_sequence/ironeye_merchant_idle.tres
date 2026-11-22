@@ -1,13 +1,13 @@
 [gd_resource type="SpriteFrames" load_steps=129 format=3]
 
-[ext_resource type="Texture2D" path="res://ironeye_assets/merchant/idle_sequence/atlas_01.png" id="1"]
-[ext_resource type="Texture2D" path="res://ironeye_assets/merchant/idle_sequence/atlas_02.png" id="2"]
-[ext_resource type="Texture2D" path="res://ironeye_assets/merchant/idle_sequence/atlas_03.png" id="3"]
-[ext_resource type="Texture2D" path="res://ironeye_assets/merchant/idle_sequence/atlas_04.png" id="4"]
-[ext_resource type="Texture2D" path="res://ironeye_assets/merchant/idle_sequence/atlas_05.png" id="5"]
-[ext_resource type="Texture2D" path="res://ironeye_assets/merchant/idle_sequence/atlas_06.png" id="6"]
-[ext_resource type="Texture2D" path="res://ironeye_assets/merchant/idle_sequence/atlas_07.png" id="7"]
-[ext_resource type="Texture2D" path="res://ironeye_assets/merchant/idle_sequence/atlas_08.png" id="8"]
+[ext_resource type="Texture2D" path="res://animations/ironeye/main/merchant_idle/atlas_01.png" id="1"]
+[ext_resource type="Texture2D" path="res://animations/ironeye/main/merchant_idle/atlas_02.png" id="2"]
+[ext_resource type="Texture2D" path="res://animations/ironeye/main/merchant_idle/atlas_03.png" id="3"]
+[ext_resource type="Texture2D" path="res://animations/ironeye/main/merchant_idle/atlas_04.png" id="4"]
+[ext_resource type="Texture2D" path="res://animations/ironeye/main/merchant_idle/atlas_05.png" id="5"]
+[ext_resource type="Texture2D" path="res://animations/ironeye/main/merchant_idle/atlas_06.png" id="6"]
+[ext_resource type="Texture2D" path="res://animations/ironeye/main/merchant_idle/atlas_07.png" id="7"]
+[ext_resource type="Texture2D" path="res://animations/ironeye/main/merchant_idle/atlas_08.png" id="8"]
 
 [sub_resource type="AtlasTexture" id="Frame_000"]
 atlas = ExtResource("1")

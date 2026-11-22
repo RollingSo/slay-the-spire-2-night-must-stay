@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3]
 
-[ext_resource type="PackedScene" path="res://duchess_assets/combat_rig/duchess_combat_rig.tscn" id="1_rig"]
+[ext_resource type="PackedScene" path="res://animations/runtime/sequence_prototype.tscn" id="1_rig"]
 
 [node name="DuchessCombatVisuals" type="Node2D"]
 
@@ -10,6 +10,7 @@ position = Vector2(0, -7.831054963)
 scale = Vector2(0.711914088, 0.711914088)
 
 [node name="Prototype" parent="Visuals" instance=ExtResource("1_rig")]
+character_key = "duchess"
 
 [node name="Bounds" type="Control" parent="."]
 unique_name_in_owner = true
