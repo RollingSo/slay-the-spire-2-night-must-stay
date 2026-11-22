@@ -382,14 +382,33 @@
       "seconds": 0.9583,
       "resource_bytes": 3648075,
       "compression": "PortableCompressedTexture2D lossless"
-    }
-  ],
-  "missing": [
+    },
     {
       "code": "FR03",
       "action": "attack_b",
-      "note": "Frederick headbutt not generated; see checklist"
-    },
+      "file": "derived/frederick/attack_b.res",
+      "animation": "attack_b",
+      "frames": 36,
+      "fps": 24,
+      "loop": false,
+      "seconds": 1.5,
+      "canvas": [
+        468,
+        365
+      ],
+      "anchor": [
+        224.268,
+        357.438
+      ],
+      "role": "frederick",
+      "resource_bytes": 1301949,
+      "compression": "PortableCompressedTexture2D lossless",
+      "status": "accepted",
+      "source_video": "FR头槌.mp4",
+      "note": "36 frames resampled from 5.0167s source; full-body headbutt; first/last FR01 idle."
+    }
+  ],
+  "missing": [
     {
       "code": "RV05",
       "action": "support_cast",

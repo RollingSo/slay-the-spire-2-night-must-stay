@@ -87,9 +87,11 @@
         "prayer_attack",
         "hurt",
         "death",
-        "camp_idle"
+        "camp_idle",
+        "attack_b"
       ],
-      "known": "Main body wired; family/summon sequence rigs remain separate. FR03 missing."
+      "known": "Main body wired; family/summon sequence rigs remain separate. FR03 now ready.",
+      "missing": []
     },
     "ironeye": {
       "combat_scene": "res://ironeye_assets/combat_rig/ironeye_combat_visuals.tscn",
