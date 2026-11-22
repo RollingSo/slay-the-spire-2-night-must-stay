@@ -1,0 +1,254 @@
+[
+  {
+    "file": "animations/revenant/derived/sebastian/attack_a.res",
+    "status": "ok",
+    "before": 28104516,
+    "after": 17835655,
+    "ratio": 0.6346
+  },
+  {
+    "file": "animations/wylder/main/idle_pursuit.res",
+    "status": "ok",
+    "before": 40961974,
+    "after": 18720224,
+    "ratio": 0.457
+  },
+  {
+    "file": "animations/revenant/derived/sebastian/idle.res",
+    "status": "ok",
+    "before": 20776916,
+    "after": 14195378,
+    "ratio": 0.6832
+  },
+  {
+    "file": "animations/duchess/main/combat_idle.res",
+    "status": "ok",
+    "before": 13719262,
+    "after": 8598847,
+    "ratio": 0.6268
+  },
+  {
+    "file": "animations/guardian/main/death.res",
+    "status": "ok",
+    "before": 31643060,
+    "after": 13974597,
+    "ratio": 0.4416
+  },
+  {
+    "file": "animations/duchess/main/merchant_idle.res",
+    "status": "ok",
+    "before": 13351080,
+    "after": 7913325,
+    "ratio": 0.5927
+  },
+  {
+    "file": "animations/duchess/main/time_command.res",
+    "status": "ok",
+    "before": 15398322,
+    "after": 9508220,
+    "ratio": 0.6175
+  },
+  {
+    "file": "animations/revenant/derived/helen/idle.res",
+    "status": "ok",
+    "before": 13708374,
+    "after": 8762759,
+    "ratio": 0.6392
+  },
+  {
+    "file": "animations/revenant/derived/frederick/idle.res",
+    "status": "ok",
+    "before": 10649989,
+    "after": 7102364,
+    "ratio": 0.6669
+  },
+  {
+    "file": "animations/guardian/main/combat_idle.res",
+    "status": "ok",
+    "before": 20702500,
+    "after": 10471838,
+    "ratio": 0.5058
+  },
+  {
+    "file": "animations/revenant/derived/helen/attack_a.res",
+    "status": "ok",
+    "before": 12846356,
+    "after": 7589751,
+    "ratio": 0.5908
+  },
+  {
+    "file": "animations/guardian/main/power_activate.res",
+    "status": "ok",
+    "before": 18821307,
+    "after": 7829015,
+    "ratio": 0.416
+  },
+  {
+    "file": "animations/ironeye/main/ironeye_sequences.res",
+    "status": "ok",
+    "before": 10272635,
+    "after": 6533581,
+    "ratio": 0.636
+  },
+  {
+    "file": "animations/guardian/main/guard_counter.res",
+    "status": "ok",
+    "before": 19648703,
+    "after": 7451910,
+    "ratio": 0.3793
+  },
+  {
+    "file": "animations/guardian/main/halberd_attack.res",
+    "status": "ok",
+    "before": 17200094,
+    "after": 6953500,
+    "ratio": 0.4043
+  },
+  {
+    "file": "animations/duchess/main/death.res",
+    "status": "ok",
+    "before": 7362540,
+    "after": 4214650,
+    "ratio": 0.5724
+  },
+  {
+    "file": "animations/revenant/derived/frederick/attack_a.res",
+    "status": "ok",
+    "before": 6182056,
+    "after": 4186808,
+    "ratio": 0.6773
+  },
+  {
+    "file": "animations/revenant/main/claw_attack.res",
+    "status": "ok",
+    "before": 6524581,
+    "after": 4276187,
+    "ratio": 0.6554
+  },
+  {
+    "file": "animations/revenant/derived/frederick/hurt.res",
+    "status": "ok",
+    "before": 4919276,
+    "after": 3353399,
+    "ratio": 0.6817
+  },
+  {
+    "file": "animations/guardian/main/cast_brace.res",
+    "status": "ok",
+    "before": 12918901,
+    "after": 5425477,
+    "ratio": 0.42
+  },
+  {
+    "file": "animations/revenant/derived/sebastian/attack_b.res",
+    "status": "ok",
+    "before": 6851285,
+    "after": 4189961,
+    "ratio": 0.6116
+  },
+  {
+    "file": "animations/guardian/main/hurt.res",
+    "status": "ok",
+    "before": 11746489,
+    "after": 4857991,
+    "ratio": 0.4136
+  },
+  {
+    "file": "animations/revenant/main/combat_idle.res",
+    "status": "ok",
+    "before": 4737825,
+    "after": 3389393,
+    "ratio": 0.7154
+  },
+  {
+    "file": "animations/revenant/main/merchant_idle.res",
+    "status": "ok",
+    "before": 4588270,
+    "after": 3290117,
+    "ratio": 0.7171
+  },
+  {
+    "file": "animations/revenant/derived/sebastian/hurt.res",
+    "status": "ok",
+    "before": 5813465,
+    "after": 3648075,
+    "ratio": 0.6275
+  },
+  {
+    "file": "animations/duchess/main/cast.res",
+    "status": "ok",
+    "before": 4507491,
+    "after": 2643394,
+    "ratio": 0.5864
+  },
+  {
+    "file": "animations/duchess/main/hurt.res",
+    "status": "ok",
+    "before": 3549134,
+    "after": 2143911,
+    "ratio": 0.6041
+  },
+  {
+    "file": "animations/duchess/main/dodge_defend.res",
+    "status": "ok",
+    "before": 3231609,
+    "after": 1948217,
+    "ratio": 0.6029
+  },
+  {
+    "file": "animations/revenant/main/death.res",
+    "status": "ok",
+    "before": 3175477,
+    "after": 2097371,
+    "ratio": 0.6605
+  },
+  {
+    "file": "animations/revenant/derived/helen/attack_b.res",
+    "status": "ok",
+    "before": 3969597,
+    "after": 2257002,
+    "ratio": 0.5686
+  },
+  {
+    "file": "animations/duchess/main/phantom_dial.res",
+    "status": "ok",
+    "before": 1607632,
+    "after": 934699,
+    "ratio": 0.5814
+  },
+  {
+    "file": "animations/revenant/main/prayer_attack.res",
+    "status": "ok",
+    "before": 2550470,
+    "after": 1613498,
+    "ratio": 0.6326
+  },
+  {
+    "file": "animations/duchess/main/dagger_slash.res",
+    "status": "ok",
+    "before": 3361403,
+    "after": 1836997,
+    "ratio": 0.5465
+  },
+  {
+    "file": "animations/revenant/derived/helen/hurt.res",
+    "status": "ok",
+    "before": 2693103,
+    "after": 1572460,
+    "ratio": 0.5839
+  },
+  {
+    "file": "animations/revenant/main/lyre_command.res",
+    "status": "ok",
+    "before": 1929694,
+    "after": 1198902,
+    "ratio": 0.6213
+  },
+  {
+    "file": "animations/revenant/main/hurt.res",
+    "status": "ok",
+    "before": 1218885,
+    "after": 762164,
+    "ratio": 0.6253
+  }
+]

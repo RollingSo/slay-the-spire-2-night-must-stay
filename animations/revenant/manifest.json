@@ -19,8 +19,8 @@
       "loop": true,
       "role": "main",
       "seconds": 4.0,
-      "resource_bytes": 1197353,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 3389393,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "anchor": [
@@ -39,8 +39,8 @@
       "loop": false,
       "role": "main",
       "seconds": 4.5833,
-      "resource_bytes": 1487367,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 4276187,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "anchor": [
@@ -59,8 +59,8 @@
       "loop": false,
       "role": "main",
       "seconds": 1.3333,
-      "resource_bytes": 420838,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 1198902,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "anchor": [
@@ -79,8 +79,8 @@
       "loop": false,
       "role": "main",
       "seconds": 1.8333,
-      "resource_bytes": 566121,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 1613498,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "anchor": [
@@ -99,8 +99,8 @@
       "loop": false,
       "role": "main",
       "seconds": 0.8333,
-      "resource_bytes": 257501,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 762164,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "anchor": [
@@ -119,8 +119,8 @@
       "loop": false,
       "role": "main",
       "seconds": 3.25,
-      "resource_bytes": 821320,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 2097371,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "anchor": [
@@ -139,8 +139,8 @@
       "loop": true,
       "role": "main",
       "seconds": 4.0,
-      "resource_bytes": 1150656,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 3290117,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "anchor": [
@@ -160,7 +160,7 @@
       "role": "main",
       "seconds": 4.467,
       "resource_bytes": 2949416,
-      "compression": "PortableCompressedTexture2D lossy q=0.85",
+      "compression": "PortableCompressedTexture2D lossy q=0.85; 15fps temporal resample",
       "camp_optimization": "15fps temporal resample; pixel resolution unchanged"
     },
     {
@@ -180,8 +180,8 @@
       "loop": true,
       "role": "helen",
       "seconds": 4.0,
-      "resource_bytes": 2961884,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 8762759,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "anchor": [
@@ -200,8 +200,8 @@
       "loop": false,
       "role": "helen",
       "seconds": 3.7083,
-      "resource_bytes": 2439444,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 7589751,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "anchor": [
@@ -220,8 +220,8 @@
       "loop": false,
       "role": "helen",
       "seconds": 1.0,
-      "resource_bytes": 647828,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 2257002,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "anchor": [
@@ -240,8 +240,8 @@
       "loop": false,
       "role": "helen",
       "seconds": 0.7083,
-      "resource_bytes": 480676,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 1572460,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "anchor": [
@@ -260,8 +260,8 @@
       "loop": true,
       "role": "frederick",
       "seconds": 2.4167,
-      "resource_bytes": 2814222,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 7102364,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "anchor": [
@@ -280,8 +280,8 @@
       "loop": false,
       "role": "frederick",
       "seconds": 1.5417,
-      "resource_bytes": 1633810,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 4186808,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "anchor": [
@@ -300,8 +300,8 @@
       "loop": false,
       "role": "frederick",
       "seconds": 1.2083,
-      "resource_bytes": 1410082,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 3353399,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "anchor": [
@@ -320,8 +320,8 @@
       "loop": true,
       "role": "sebastian",
       "seconds": 4.125,
-      "resource_bytes": 4039939,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 14195378,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "anchor": [
@@ -340,8 +340,8 @@
       "loop": false,
       "role": "sebastian",
       "seconds": 4.875,
-      "resource_bytes": 5165247,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 17835655,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "anchor": [
@@ -360,8 +360,8 @@
       "loop": false,
       "role": "sebastian",
       "seconds": 1.2083,
-      "resource_bytes": 1383387,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 4189961,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "anchor": [
@@ -380,8 +380,8 @@
       "loop": false,
       "role": "sebastian",
       "seconds": 0.9583,
-      "resource_bytes": 1039064,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 3648075,
+      "compression": "PortableCompressedTexture2D lossless"
     }
   ],
   "missing": [
@@ -397,10 +397,9 @@
     }
   ],
   "compression": {
-    "mode": "lossy",
-    "quality": 0.85,
-    "applied_at": "2026-11-22",
+    "combat": "lossless",
+    "camp": "lossy q=0.85 + 15fps temporal resample",
     "tool": "tools/animation_forge/compress_lossy.gd",
-    "note": "PCK/disk size reduction; decoded VRAM is not reduced by lossy WebP."
+    "note": "Combat pixels verified exact against pre-compression backups; camp resampled temporally only."
   }
 }

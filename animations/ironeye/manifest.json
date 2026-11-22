@@ -11,8 +11,8 @@
       "loop": true,
       "canvas": null,
       "anchor": null,
-      "resource_bytes": 2092665,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 6533581,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "action": "attack",
@@ -23,8 +23,8 @@
       "loop": false,
       "canvas": null,
       "anchor": null,
-      "resource_bytes": 2092665,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 6533581,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "action": "cast",
@@ -35,8 +35,8 @@
       "loop": false,
       "canvas": null,
       "anchor": null,
-      "resource_bytes": 2092665,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 6533581,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "action": "dagger",
@@ -47,8 +47,8 @@
       "loop": false,
       "canvas": null,
       "anchor": null,
-      "resource_bytes": 2092665,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 6533581,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "action": "hurt",
@@ -59,8 +59,8 @@
       "loop": false,
       "canvas": null,
       "anchor": null,
-      "resource_bytes": 2092665,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 6533581,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "action": "merchant_idle",
@@ -84,10 +84,9 @@
     }
   ],
   "compression": {
-    "mode": "lossy",
-    "quality": 0.85,
-    "applied_at": "2026-11-22",
+    "combat": "lossless",
+    "camp": "lossy q=0.85 + 15fps temporal resample",
     "tool": "tools/animation_forge/compress_lossy.gd",
-    "note": "PCK/disk size reduction; decoded VRAM is not reduced by lossy WebP."
+    "note": "Combat pixels verified exact against pre-compression backups; camp resampled temporally only."
   }
 }

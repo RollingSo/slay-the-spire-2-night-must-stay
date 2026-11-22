@@ -14,7 +14,7 @@
       "anims": [
         "cast"
       ],
-      "bytes": 871262,
+      "bytes": 2643394,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/duchess/main/cast.res",
       "pages": 2,
       "vram_bytes": 23696400,
@@ -24,7 +24,7 @@
       "anims": [
         "combat_idle"
       ],
-      "bytes": 3720073,
+      "bytes": 8598847,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/duchess/main/combat_idle.res",
       "pages": 4,
       "vram_bytes": 49864080,
@@ -34,7 +34,7 @@
       "anims": [
         "dagger_slash"
       ],
-      "bytes": 563185,
+      "bytes": 1836997,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/duchess/main/dagger_slash.res",
       "pages": 2,
       "vram_bytes": 19521792,
@@ -44,7 +44,7 @@
       "anims": [
         "death"
       ],
-      "bytes": 1665950,
+      "bytes": 4214650,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/duchess/main/death.res",
       "pages": 3,
       "vram_bytes": 33355224,
@@ -54,7 +54,7 @@
       "anims": [
         "dodge_defend"
       ],
-      "bytes": 851668,
+      "bytes": 1948217,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/duchess/main/dodge_defend.res",
       "pages": 2,
       "vram_bytes": 16302400,
@@ -64,7 +64,7 @@
       "anims": [
         "hurt"
       ],
-      "bytes": 867406,
+      "bytes": 2143911,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/duchess/main/hurt.res",
       "pages": 1,
       "vram_bytes": 13632192,
@@ -74,7 +74,7 @@
       "anims": [
         "merchant_idle"
       ],
-      "bytes": 3186069,
+      "bytes": 7913325,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/duchess/main/merchant_idle.res",
       "pages": 3,
       "vram_bytes": 36711468,
@@ -85,7 +85,7 @@
         "phantom_dial",
         "phantom_dial_compact"
       ],
-      "bytes": 634126,
+      "bytes": 934699,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/duchess/main/phantom_dial.res",
       "pages": 2,
       "vram_bytes": 23724792,
@@ -96,7 +96,7 @@
         "time_command",
         "time_command_compact"
       ],
-      "bytes": 3127105,
+      "bytes": 9508220,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/duchess/main/time_command.res",
       "pages": 6,
       "vram_bytes": 67878720,
@@ -116,7 +116,7 @@
       "anims": [
         "cast_brace"
       ],
-      "bytes": 1383957,
+      "bytes": 5425477,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/guardian/main/cast_brace.res",
       "pages": 3,
       "vram_bytes": 33003072,
@@ -126,7 +126,7 @@
       "anims": [
         "combat_idle"
       ],
-      "bytes": 2659498,
+      "bytes": 10471838,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/guardian/main/combat_idle.res",
       "pages": 4,
       "vram_bytes": 50156928,
@@ -136,7 +136,7 @@
       "anims": [
         "death"
       ],
-      "bytes": 3322293,
+      "bytes": 13974597,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/guardian/main/death.res",
       "pages": 11,
       "vram_bytes": 140306040,
@@ -146,7 +146,7 @@
       "anims": [
         "guard_counter"
       ],
-      "bytes": 1837324,
+      "bytes": 7451910,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/guardian/main/guard_counter.res",
       "pages": 11,
       "vram_bytes": 92106456,
@@ -156,7 +156,7 @@
       "anims": [
         "halberd_attack"
       ],
-      "bytes": 1795912,
+      "bytes": 6953500,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/guardian/main/halberd_attack.res",
       "pages": 9,
       "vram_bytes": 129467520,
@@ -166,7 +166,7 @@
       "anims": [
         "hurt"
       ],
-      "bytes": 1213940,
+      "bytes": 4857991,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/guardian/main/hurt.res",
       "pages": 3,
       "vram_bytes": 33758400,
@@ -176,7 +176,7 @@
       "anims": [
         "power_activate"
       ],
-      "bytes": 2118444,
+      "bytes": 7829015,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/guardian/main/power_activate.res",
       "pages": 8,
       "vram_bytes": 71520120,
@@ -190,7 +190,7 @@
         "hurt",
         "idle"
       ],
-      "bytes": 2092665,
+      "bytes": 6533581,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/ironeye/main/ironeye_sequences.res",
       "pages": 142,
       "vram_bytes": 61276976,
@@ -200,7 +200,7 @@
       "anims": [
         "attack_a"
       ],
-      "bytes": 1633810,
+      "bytes": 4186808,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/revenant/derived/frederick/attack_a.res",
       "pages": 2,
       "vram_bytes": 23978880,
@@ -210,7 +210,7 @@
       "anims": [
         "hurt"
       ],
-      "bytes": 1410082,
+      "bytes": 3353399,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/revenant/derived/frederick/hurt.res",
       "pages": 2,
       "vram_bytes": 19282560,
@@ -220,7 +220,7 @@
       "anims": [
         "idle"
       ],
-      "bytes": 2814222,
+      "bytes": 7102364,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/revenant/derived/frederick/idle.res",
       "pages": 3,
       "vram_bytes": 34443360,
@@ -230,7 +230,7 @@
       "anims": [
         "attack_a"
       ],
-      "bytes": 2439444,
+      "bytes": 7589751,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/revenant/derived/helen/attack_a.res",
       "pages": 6,
       "vram_bytes": 92368000,
@@ -240,7 +240,7 @@
       "anims": [
         "attack_b"
       ],
-      "bytes": 647828,
+      "bytes": 2257002,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/revenant/derived/helen/attack_b.res",
       "pages": 2,
       "vram_bytes": 15701760,
@@ -250,7 +250,7 @@
       "anims": [
         "hurt"
       ],
-      "bytes": 480676,
+      "bytes": 1572460,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/revenant/derived/helen/hurt.res",
       "pages": 1,
       "vram_bytes": 12481760,
@@ -260,7 +260,7 @@
       "anims": [
         "idle"
       ],
-      "bytes": 2961884,
+      "bytes": 8762759,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/revenant/derived/helen/idle.res",
       "pages": 4,
       "vram_bytes": 53728800,
@@ -270,7 +270,7 @@
       "anims": [
         "attack_a"
       ],
-      "bytes": 5165247,
+      "bytes": 17835655,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/revenant/derived/sebastian/attack_a.res",
       "pages": 10,
       "vram_bytes": 127670400,
@@ -280,7 +280,7 @@
       "anims": [
         "attack_b"
       ],
-      "bytes": 1383387,
+      "bytes": 4189961,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/revenant/derived/sebastian/attack_b.res",
       "pages": 4,
       "vram_bytes": 44175000,
@@ -290,7 +290,7 @@
       "anims": [
         "hurt"
       ],
-      "bytes": 1039064,
+      "bytes": 3648075,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/revenant/derived/sebastian/hurt.res",
       "pages": 2,
       "vram_bytes": 21688128,
@@ -300,7 +300,7 @@
       "anims": [
         "idle"
       ],
-      "bytes": 4039939,
+      "bytes": 14195378,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/revenant/derived/sebastian/idle.res",
       "pages": 5,
       "vram_bytes": 72738000,
@@ -320,7 +320,7 @@
       "anims": [
         "claw_attack"
       ],
-      "bytes": 1487367,
+      "bytes": 4276187,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/revenant/main/claw_attack.res",
       "pages": 2,
       "vram_bytes": 17455680,
@@ -330,7 +330,7 @@
       "anims": [
         "combat_idle"
       ],
-      "bytes": 1197353,
+      "bytes": 3389393,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/revenant/main/combat_idle.res",
       "pages": 1,
       "vram_bytes": 14103936,
@@ -340,7 +340,7 @@
       "anims": [
         "death"
       ],
-      "bytes": 821320,
+      "bytes": 2097371,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/revenant/main/death.res",
       "pages": 1,
       "vram_bytes": 12682656,
@@ -350,7 +350,7 @@
       "anims": [
         "hurt"
       ],
-      "bytes": 257501,
+      "bytes": 762164,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/revenant/main/hurt.res",
       "pages": 1,
       "vram_bytes": 3643200,
@@ -360,7 +360,7 @@
       "anims": [
         "lyre_command"
       ],
-      "bytes": 420838,
+      "bytes": 1198902,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/revenant/main/lyre_command.res",
       "pages": 1,
       "vram_bytes": 5345280,
@@ -370,7 +370,7 @@
       "anims": [
         "merchant_idle"
       ],
-      "bytes": 1150656,
+      "bytes": 3290117,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/revenant/main/merchant_idle.res",
       "pages": 1,
       "vram_bytes": 14798784,
@@ -380,7 +380,7 @@
       "anims": [
         "prayer_attack"
       ],
-      "bytes": 566121,
+      "bytes": 1613498,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/revenant/main/prayer_attack.res",
       "pages": 1,
       "vram_bytes": 7305216,
@@ -390,15 +390,15 @@
       "anims": [
         "idle_pursuit"
       ],
-      "bytes": 5090727,
+      "bytes": 18720224,
       "file": "/Users/yahoooo/Projects/slay-the-spire-2-night-must-stay/animations/wylder/main/idle_pursuit.res",
       "pages": 16,
       "vram_bytes": 175309824,
       "vram_mb": 167.19
     }
   ],
-  "total_file_bytes": 80250414,
-  "total_file_mb": 76.53,
+  "total_file_bytes": 226613708,
+  "total_file_mb": 216.12,
   "total_vram_bytes": 1923997372,
   "total_vram_mb": 1834.87
 }

@@ -30,8 +30,8 @@
       "texture_visible_height": 432,
       "final_visible_height": 307.546886,
       "integration_scale": 1.0,
-      "resource_bytes": 3720073,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 8598847,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "code": "DU02",
@@ -53,8 +53,8 @@
       "texture_visible_height": 432,
       "final_visible_height": 307.546886,
       "integration_scale": 1.0,
-      "resource_bytes": 563185,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 1836997,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "code": "DU03",
@@ -76,8 +76,8 @@
       "texture_visible_height": 432,
       "final_visible_height": 307.546886,
       "integration_scale": 1.0,
-      "resource_bytes": 851668,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 1948217,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "code": "DU04",
@@ -99,8 +99,8 @@
       "texture_visible_height": 432,
       "final_visible_height": 307.546886,
       "integration_scale": 1.0,
-      "resource_bytes": 871262,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 2643394,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "code": "DU05",
@@ -122,8 +122,8 @@
       "texture_visible_height": 432,
       "final_visible_height": 307.546886,
       "integration_scale": 1.0,
-      "resource_bytes": 867406,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 2143911,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "code": "DU06",
@@ -145,8 +145,8 @@
       "texture_visible_height": 432,
       "final_visible_height": 307.546886,
       "integration_scale": 1.0,
-      "resource_bytes": 1665950,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 4214650,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "code": "DU07",
@@ -168,8 +168,8 @@
       "texture_visible_height": 526.6405,
       "final_visible_height": 526.6405,
       "integration_scale": 1.0,
-      "resource_bytes": 3186069,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 7913325,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "code": "DU08",
@@ -192,7 +192,7 @@
       "final_visible_height": 526.6151,
       "integration_scale": 1.0,
       "resource_bytes": 6793677,
-      "compression": "PortableCompressedTexture2D lossy q=0.85",
+      "compression": "PortableCompressedTexture2D lossy q=0.85; 15fps temporal resample",
       "camp_optimization": "15fps temporal resample; pixel resolution unchanged"
     },
     {
@@ -215,8 +215,8 @@
       "texture_visible_height": 432,
       "final_visible_height": 307.546886,
       "integration_scale": 1.0,
-      "resource_bytes": 3127105,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 9508220,
+      "compression": "PortableCompressedTexture2D lossless"
     },
     {
       "code": "DU09",
@@ -239,16 +239,15 @@
       "final_visible_height": null,
       "integration_scale": 1.0,
       "type": "effect",
-      "resource_bytes": 634126,
-      "compression": "PortableCompressedTexture2D lossy q=0.85"
+      "resource_bytes": 934699,
+      "compression": "PortableCompressedTexture2D lossless"
     }
   ],
   "layout": "animations/duchess/main/",
   "compression": {
-    "mode": "lossy",
-    "quality": 0.85,
-    "applied_at": "2026-11-22",
+    "combat": "lossless",
+    "camp": "lossy q=0.85 + 15fps temporal resample",
     "tool": "tools/animation_forge/compress_lossy.gd",
-    "note": "PCK/disk size reduction; decoded VRAM is not reduced by lossy WebP."
+    "note": "Combat pixels verified exact against pre-compression backups; camp resampled temporally only."
   }
 }
