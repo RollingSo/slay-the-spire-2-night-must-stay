@@ -250,5 +250,24 @@
     "tool": "tools/animation_forge/compress_lossy.gd",
     "note": "Combat pixels verified exact against pre-compression backups; camp resampled temporally only."
   },
-  "runtime_integration": "sequence_wired_pending_export_test"
+  "runtime_integration": "sequence_wired_pending_export_test",
+  "du09_trigger_candidate": {
+    "card": "DuchessReenactment",
+    "zhs": "重演",
+    "reason": "Clock VFX matches; RestageAoe is time replay; initial deck",
+    "recommended_segment_seconds": [
+      1.2,
+      1.5
+    ],
+    "full_asset_seconds": 5.017,
+    "status": "recommendation_only",
+    "alternate": [
+      "DuchessFleetingInstant"
+    ],
+    "avoid": [
+      "DuchessRestage",
+      "DuchessReverseTime",
+      "DuchessParallelTime"
+    ]
+  }
 }

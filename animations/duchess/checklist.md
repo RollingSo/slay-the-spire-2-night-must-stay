@@ -66,6 +66,28 @@
 
 基础版 8 个独立动作均已具备采纳素材，另有 DU09 重演。低血量与战斗放松第一版计划复用 DU01。复活先保证状态可靠恢复，暂不新增独立视频。
 
+
+## DU09 触发候选（2026-11-22）
+
+DU09 的 `time_command` + `phantom_dial` 是 5.017 秒完整时间演出，不能像普通 Cast 一样挂到所有技能上。最合适的入口是 **“重演” `DuchessReenactment`**：
+
+- 1 费罕见技能，初始牌组自带；`DuchessCard` 的 `RestageAoe` 分支明确对应“本回合伤害回放”。
+- `DuchessAttackEffects.KindFor` 已把 `DuchessReenactment` 映射到 `Kind.Clock`，与 DU09 的怀表/表盘视觉完全一致。
+- 触发点：`DuchessCard.OnPlay` 中在 `RestageAoe` 结算前调用一个新的 `DuchessAnimationPatch.PlayTimeCommand(Owner.Creature)`，由它 `rig.Call("play_trigger", "TimeCommand")`。
+- **不能直接播完整 5.017 秒**：默认 Cast 等待只有 0.25 秒，完整版会长时间占住角色。建议只取“取出怀表 → 表盘展开 → 收表”的约 1.2–1.5 秒段；完整 5.017 秒只保留为独立预览/特殊演出。
+
+其他候选：
+
+| 卡 | 结论 | 原因 |
+|---|---|---|
+| `DuchessFleetingInstant`（瞬息） | 次选 | 稀有攻击，`Kind.Clock`，时间回朔语义强；但会与普通 Attack 身体动作冲突，需要触发时抑制 Attack。 |
+| `DuchessBackToPast`（回到过去） | 可选 | 常见技能，重置时刻；适合短版 DU09，但视觉冲击弱。 |
+| `DuchessRestage`（短剑重演） | 不建议 | 0 费攻击、使用频率高，5 秒/长版会频繁打断战斗。 |
+| `DuchessReverseTime`（逆转时间） | 不建议 | 已有独立全屏逆转 VFX，再叠 DU09 会重复演出。 |
+| `DuchessParallelTime`（平行时间） | 不建议 | 没有 Clock VFX，语义也不是“重演”。 |
+
+当前只做推荐，不写触发代码；若确认“重演”方案，再补 `PlayTimeCommand` 和短版资源。
+
 ## 4. 触发与时间适配
 
 2026-10-25仓库静态核对结果：
