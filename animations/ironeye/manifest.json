@@ -71,16 +71,24 @@
       "loop": true,
       "canvas": null,
       "anchor": null
+    },
+    {
+      "action": "camp_idle",
+      "file": "main/camp_idle.res",
+      "animation": "camp_idle",
+      "frames": null,
+      "fps": 24,
+      "loop": true,
+      "canvas": null,
+      "anchor": null,
+      "status": "prompt_ready",
+      "note": "First frame and prompt ready; video not generated."
     }
   ],
   "missing": [
     {
       "action": "death",
       "note": "No separate death animation in this repository snapshot; verify rig fallback."
-    },
-    {
-      "action": "camp_idle",
-      "note": "No separate camp idle animation in this repository snapshot."
     }
   ],
   "compression": {
