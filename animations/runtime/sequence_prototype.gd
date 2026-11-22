@@ -57,6 +57,7 @@ var _dead := false
 var _card_motion := ""
 var _card_motion_active := false
 var _awaiting_native_attack := false
+var _time_command_active := false
 var _idle_frames: SpriteFrames
 var _base_scale := 1.0
 var _warned: Dictionary = {}
@@ -121,6 +122,7 @@ func _play_idle() -> void:
 	_return_to_idle = false
 	_dead = false
 	_awaiting_native_attack = false
+	_time_command_active = false
 	_apply_frames(_idle_frames, true)
 
 func _play_one_shot(action: String, loop := false) -> void:
@@ -129,10 +131,14 @@ func _play_one_shot(action: String, loop := false) -> void:
 		_play_idle()
 		return
 	_return_to_idle = not loop
+	_time_command_active = action == "time_command"
 	_apply_frames(frames, loop)
 
 func play_trigger(trigger: String) -> void:
 	if _dead and trigger != "Revive":
+		return
+	# The native Cast/Attack hook can fire after OnPlay; do not cut the clock cinematic.
+	if _time_command_active and trigger in ["Attack", "Cast"]:
 		return
 	match trigger:
 		"Idle", "Relaxed", "Revive":
@@ -186,6 +192,7 @@ func set_action_timing(_trigger: String, _wait_time: float) -> void:
 	pass
 
 func _on_animation_finished(_anim: StringName) -> void:
+	_time_command_active = false
 	if _return_to_idle and not _dead:
 		_play_idle()
 
