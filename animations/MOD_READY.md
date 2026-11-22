@@ -20,7 +20,7 @@ Headless 冒烟测试已通过：Guardian/Duchess/Revenant 最终可见高分别
 - **Wylder**：版权原因暂停，只有 WY07 追击待机；不能打包成完整战斗动画。
 - **Ironeye**：没有 `death.res` 和 `camp_idle.res`；篝火仍是静态 `Sprite2D` + 程序呼吸。
 - **Revenant**：FR03（Frederick 攻击）缺失；家人动画未统一切到通用播放器。
-- **Duchess**：DU09 `time_command` / `phantom_dial` 尚未映射到真实触发。
+- **Duchess**：DU09 `TimeCommand` 已映射到重演、逆转时空、午夜圆舞曲；`phantom_dial` 独立表盘层尚未叠加。
 - **Guardian**：已知盾牌正面瑕疵沿用；尚未实机验收。
 - 所有角色都还没做目标版本实机/导出 PCK 验证；`pack-ready` 只表示资源与场景引用已接好。
 

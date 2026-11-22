@@ -64,7 +64,7 @@
         "camp_idle",
         "merchant_idle"
       ],
-      "known": "DU09 time_command/phantom_dial not mapped to a native trigger; kept as assets."
+      "known": "DU09 TimeCommand wired for Reenactment + Moment-12 cards (ReverseTime/MidnightWaltz); phantom_dial layer pending."
     },
     "revenant": {
       "combat_scene": "res://revenant_assets/combat/revenant_combat_visuals.tscn",
