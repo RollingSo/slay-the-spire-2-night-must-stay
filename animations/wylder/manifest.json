@@ -31,5 +31,13 @@
       "resource_bytes": 40961974,
       "note": "Wylder still uses static pose rig; sequence player integration pending."
     }
-  ]
+  ],
+  "completion": {
+    "status": "paused_copyright",
+    "reason": "参考图版权审核导致视频生成无法继续",
+    "completed_assets": [
+      "WY07"
+    ],
+    "remaining": "WY01-WY06, WY08-WY15"
+  }
 }
