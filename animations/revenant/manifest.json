@@ -125,12 +125,12 @@
     },
     {
       "anchor": [
-        163.839,
-        483.789
+        163.531,
+        484.244
       ],
       "animation": "merchant_idle",
       "canvas": [
-        319,
+        328,
         492
       ],
       "code": "RV08",
@@ -140,12 +140,12 @@
       "loop": true,
       "role": "main",
       "seconds": 4.0,
-      "resource_bytes": 4427483,
+      "resource_bytes": 3975521,
       "compression": "PortableCompressedTexture2D lossless",
       "texture_visible_height": 474,
       "final_visible_height": 473.954,
       "integration_scale": 1.0,
-      "note": "Rebuilt from high-res 832x1120 transparent frames; 39 source poses resampled to 96 frames/4s."
+      "note": "Rebuilt from full 120-frame 832x1120 source (matte_light threshold 60); 96 unique frames/4s, no 39-frame repeat."
     },
     {
       "anchor": [
