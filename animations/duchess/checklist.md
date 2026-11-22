@@ -78,7 +78,7 @@ DU09 的 `time_command` 已接到以下入口：
 实现位置：
 
 - `src/Core/Models/Cards/DuchessCard.cs` 的 `OnPlay`，在 `RestageAoe` 结算前判断。
-- `src/Core/Packets` 对应的 `DuchessAnimationPatch.PlayTimeCommand`（实际文件：`src/Core/Patches/DuchessAnimationPatch.cs`）。
+- `src/Core/Patches/DuchessAnimationPatch.cs` 的 `PlayTimeCommand`。
 - `animations/runtime/sequence_prototype.gd` 的 Duchess `TimeCommand` 映射到 `time_command.res`。
 
 注意：
