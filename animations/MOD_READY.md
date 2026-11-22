@@ -13,6 +13,8 @@
 
 通用播放器：`animations/runtime/sequence_prototype.tscn` / `.gd`。C# 仍从 `Visuals/Prototype` 调用 `play_trigger`，接口不变。
 
+Headless 冒烟测试已通过：Guardian/Duchess/Revenant 最终可见高分别精确到 308.3310 / 307.5469 / 215.7527；`Block`、`Prayer` 和原生 `Attack` 确认路径正常。测试脚本：`tools/animation_forge/test_sequence_scenes.gd`。
+
 ## 未完成 / 不允许假装完成
 
 - **Wylder**：版权原因暂停，只有 WY07 追击待机；不能打包成完整战斗动画。

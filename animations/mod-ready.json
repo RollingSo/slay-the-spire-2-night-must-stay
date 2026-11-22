@@ -112,5 +112,15 @@
       "status": "paused_copyright",
       "note": "Only WY07 pursuit idle exists; copyright review blocks further video generation."
     }
+  },
+  "smoke_test": {
+    "script": "tools/animation_forge/test_sequence_scenes.gd",
+    "status": "passed",
+    "checks": [
+      "guardian height",
+      "duchess height",
+      "revenant height",
+      "trigger playback"
+    ]
   }
 }
