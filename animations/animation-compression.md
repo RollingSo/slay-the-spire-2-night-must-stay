@@ -53,3 +53,13 @@
 | 女爵重演人物和表盘两层，压缩并移除弃用短版 | 16.2 MiB | 3.6 MiB |
 
 基线包中测得约 150.3 MiB 的新旧路径重复资源。过滤测试包通过铁之眼现有 23 项动画检查，压缩后的资源通过独立重载和时间线校验。表中 PCK 和动画资源的体积属于不同统计范围。正式接入后的整包大小与实战画质以目标版本复测为准。
+
+## 6. 2026-11-22 批量结果
+
+- 处理范围：`animations/*/main/*.res` 与 `animations/revenant/derived/*/*.res`，共 **39 个**。
+- 全部按 `PortableCompressedTexture2D` / `COMPRESSION_MODE_LOSSY` / 质量 **0.85** 重编码；帧数、逐帧时长、`canvas`/`anchor` 在保存后复载校验。
+- 总体积：**510.8 MiB → 83.9 MiB（约 16.4%）**。
+- 示例：Guardian 篝火 51.1→5.45MB；Guardian 受击 11.2→1.16MB；Wylder 追击待机 39.1→4.85MB；Ironeye 合包 9.8→2.00MB。
+- 原始资源备份：`.tmp/animation_compression/backup/`；逐文件结果：`animations/animation-compression-batch.json`。
+- 抽检：Guardian 受击/篝火/长戟、Wylder 追击待机、Duchess 时间牌面；画面边缘和武器未见明显退化。
+- **未降低 VRAM**。审计见 `animations/animation-vram-report.json`，全部资源同时常驻约 1.98GB；下一步必须做按场景/动作加载和显存优化。

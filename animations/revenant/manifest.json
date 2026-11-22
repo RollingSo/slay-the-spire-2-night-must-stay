@@ -18,7 +18,9 @@
       "frames": 96,
       "loop": true,
       "role": "main",
-      "seconds": 4.0
+      "seconds": 4.0,
+      "resource_bytes": 1197353,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "anchor": [
@@ -36,7 +38,9 @@
       "frames": 110,
       "loop": false,
       "role": "main",
-      "seconds": 4.5833
+      "seconds": 4.5833,
+      "resource_bytes": 1487367,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "anchor": [
@@ -54,7 +58,9 @@
       "frames": 32,
       "loop": false,
       "role": "main",
-      "seconds": 1.3333
+      "seconds": 1.3333,
+      "resource_bytes": 420838,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "anchor": [
@@ -72,7 +78,9 @@
       "frames": 44,
       "loop": false,
       "role": "main",
-      "seconds": 1.8333
+      "seconds": 1.8333,
+      "resource_bytes": 566121,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "anchor": [
@@ -90,7 +98,9 @@
       "frames": 20,
       "loop": false,
       "role": "main",
-      "seconds": 0.8333
+      "seconds": 0.8333,
+      "resource_bytes": 257501,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "anchor": [
@@ -108,7 +118,9 @@
       "frames": 78,
       "loop": false,
       "role": "main",
-      "seconds": 3.25
+      "seconds": 3.25,
+      "resource_bytes": 821320,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "anchor": [
@@ -126,7 +138,9 @@
       "frames": 96,
       "loop": true,
       "role": "main",
-      "seconds": 4.0
+      "seconds": 4.0,
+      "resource_bytes": 1150656,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "anchor": [
@@ -144,7 +158,9 @@
       "frames": 107,
       "loop": true,
       "role": "main",
-      "seconds": 4.4583
+      "seconds": 4.4583,
+      "resource_bytes": 4704941,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "anchor": [
@@ -162,7 +178,9 @@
       "frames": 96,
       "loop": true,
       "role": "helen",
-      "seconds": 4.0
+      "seconds": 4.0,
+      "resource_bytes": 2961884,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "anchor": [
@@ -180,7 +198,9 @@
       "frames": 89,
       "loop": false,
       "role": "helen",
-      "seconds": 3.7083
+      "seconds": 3.7083,
+      "resource_bytes": 2439444,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "anchor": [
@@ -198,7 +218,9 @@
       "frames": 24,
       "loop": false,
       "role": "helen",
-      "seconds": 1.0
+      "seconds": 1.0,
+      "resource_bytes": 647828,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "anchor": [
@@ -216,7 +238,9 @@
       "frames": 17,
       "loop": false,
       "role": "helen",
-      "seconds": 0.7083
+      "seconds": 0.7083,
+      "resource_bytes": 480676,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "anchor": [
@@ -234,7 +258,9 @@
       "frames": 58,
       "loop": true,
       "role": "frederick",
-      "seconds": 2.4167
+      "seconds": 2.4167,
+      "resource_bytes": 2814222,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "anchor": [
@@ -252,7 +278,9 @@
       "frames": 37,
       "loop": false,
       "role": "frederick",
-      "seconds": 1.5417
+      "seconds": 1.5417,
+      "resource_bytes": 1633810,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "anchor": [
@@ -270,7 +298,9 @@
       "frames": 29,
       "loop": false,
       "role": "frederick",
-      "seconds": 1.2083
+      "seconds": 1.2083,
+      "resource_bytes": 1410082,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "anchor": [
@@ -288,7 +318,9 @@
       "frames": 99,
       "loop": true,
       "role": "sebastian",
-      "seconds": 4.125
+      "seconds": 4.125,
+      "resource_bytes": 4039939,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "anchor": [
@@ -306,7 +338,9 @@
       "frames": 117,
       "loop": false,
       "role": "sebastian",
-      "seconds": 4.875
+      "seconds": 4.875,
+      "resource_bytes": 5165247,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "anchor": [
@@ -324,7 +358,9 @@
       "frames": 29,
       "loop": false,
       "role": "sebastian",
-      "seconds": 1.2083
+      "seconds": 1.2083,
+      "resource_bytes": 1383387,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "anchor": [
@@ -342,7 +378,9 @@
       "frames": 23,
       "loop": false,
       "role": "sebastian",
-      "seconds": 0.9583
+      "seconds": 0.9583,
+      "resource_bytes": 1039064,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     }
   ],
   "missing": [
@@ -356,5 +394,12 @@
       "action": "support_cast",
       "note": "reuses RV03 lyre_command by design"
     }
-  ]
+  ],
+  "compression": {
+    "mode": "lossy",
+    "quality": 0.85,
+    "applied_at": "2026-11-22",
+    "tool": "tools/animation_forge/compress_lossy.gd",
+    "note": "PCK/disk size reduction; decoded VRAM is not reduced by lossy WebP."
+  }
 }

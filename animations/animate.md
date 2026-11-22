@@ -2,7 +2,7 @@
 
 This directory is the single source of truth for character animation assets that will be packaged into the mod. All file and folder names under `animations/` must be English. The repository keeps production resources, checklists, manifests, per-character preview folders, and later the built mod files. Preview content is for human review only and is never used by the mod. Extracted frame folders and temporary build caches are still not committed.
 
-See [Animation Compression](animation-compression.md) for the PCK size audit, compression order, and visual acceptance checks.
+See [Animation Compression](animation-compression.md) for the PCK size audit, compression order, and visual acceptance checks. See [Animation Performance](animation-performance.md) for VRAM/load/playback optimization.
 
 ## Directory tree
 

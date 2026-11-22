@@ -28,8 +28,9 @@
         0,
         95
       ],
-      "resource_bytes": 40961974,
-      "note": "Wylder still uses static pose rig; sequence player integration pending."
+      "resource_bytes": 5090727,
+      "note": "Wylder still uses static pose rig; sequence player integration pending.",
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     }
   ],
   "completion": {
@@ -39,5 +40,12 @@
       "WY07"
     ],
     "remaining": "WY01-WY06, WY08-WY15"
+  },
+  "compression": {
+    "mode": "lossy",
+    "quality": 0.85,
+    "applied_at": "2026-11-22",
+    "tool": "tools/animation_forge/compress_lossy.gd",
+    "note": "PCK/disk size reduction; decoded VRAM is not reduced by lossy WebP."
   }
 }

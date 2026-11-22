@@ -29,7 +29,9 @@
       ],
       "texture_visible_height": 432,
       "final_visible_height": 307.546886,
-      "integration_scale": 1.0
+      "integration_scale": 1.0,
+      "resource_bytes": 3720073,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "code": "DU02",
@@ -50,7 +52,9 @@
       ],
       "texture_visible_height": 432,
       "final_visible_height": 307.546886,
-      "integration_scale": 1.0
+      "integration_scale": 1.0,
+      "resource_bytes": 563185,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "code": "DU03",
@@ -71,7 +75,9 @@
       ],
       "texture_visible_height": 432,
       "final_visible_height": 307.546886,
-      "integration_scale": 1.0
+      "integration_scale": 1.0,
+      "resource_bytes": 851668,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "code": "DU04",
@@ -92,7 +98,9 @@
       ],
       "texture_visible_height": 432,
       "final_visible_height": 307.546886,
-      "integration_scale": 1.0
+      "integration_scale": 1.0,
+      "resource_bytes": 871262,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "code": "DU05",
@@ -113,7 +121,9 @@
       ],
       "texture_visible_height": 432,
       "final_visible_height": 307.546886,
-      "integration_scale": 1.0
+      "integration_scale": 1.0,
+      "resource_bytes": 867406,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "code": "DU06",
@@ -134,7 +144,9 @@
       ],
       "texture_visible_height": 432,
       "final_visible_height": 307.546886,
-      "integration_scale": 1.0
+      "integration_scale": 1.0,
+      "resource_bytes": 1665950,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "code": "DU07",
@@ -155,7 +167,9 @@
       ],
       "texture_visible_height": 526.6405,
       "final_visible_height": 526.6405,
-      "integration_scale": 1.0
+      "integration_scale": 1.0,
+      "resource_bytes": 3186069,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "code": "DU08",
@@ -176,7 +190,9 @@
       ],
       "texture_visible_height": 526.6151,
       "final_visible_height": 526.6151,
-      "integration_scale": 1.0
+      "integration_scale": 1.0,
+      "resource_bytes": 10613309,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "code": "DU09",
@@ -197,7 +213,9 @@
       ],
       "texture_visible_height": 432,
       "final_visible_height": 307.546886,
-      "integration_scale": 1.0
+      "integration_scale": 1.0,
+      "resource_bytes": 3127105,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     },
     {
       "code": "DU09",
@@ -219,8 +237,17 @@
       "texture_visible_height": null,
       "final_visible_height": null,
       "integration_scale": 1.0,
-      "type": "effect"
+      "type": "effect",
+      "resource_bytes": 634126,
+      "compression": "PortableCompressedTexture2D lossy q=0.85"
     }
   ],
-  "layout": "animations/duchess/main/"
+  "layout": "animations/duchess/main/",
+  "compression": {
+    "mode": "lossy",
+    "quality": 0.85,
+    "applied_at": "2026-11-22",
+    "tool": "tools/animation_forge/compress_lossy.gd",
+    "note": "PCK/disk size reduction; decoded VRAM is not reduced by lossy WebP."
+  }
 }
