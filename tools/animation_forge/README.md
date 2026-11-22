@@ -44,3 +44,19 @@ python tools/animation_forge/forge.py pack --config .tmp/canvas_v03/SE02_咆哮/
 4. `forge.py verify` 过闸门
 5. 家人动作复制到 `revenant_assets/families/animations/<角色>/<clip>.res`（clip = idle / attack_a / attack_b / hurt）
 6. 更新 `design/复仇者与家人_动画视频制作清单.md`
+
+## 压缩运行时 SpriteFrames
+
+`compress_lossy.gd` 把 `.res` 里的底层图集替换为 `PortableCompressedTexture2D`（质量 0.85），保留动画名、帧序、逐帧时长、`canvas`/`anchor`，并在保存后用新进程复载自检。
+
+```bash
+# 先备份原文件，再输出到临时路径
+cp animations/guardian/main/camp_idle.res .tmp/camp_idle.original.res
+godot --headless --path . --script tools/animation_forge/compress_lossy.gd -- \
+  "$(pwd)/animations/guardian/main/camp_idle.res" \
+  "$(pwd)/.tmp/camp_idle.compressed.res"
+# 自检通过后再替换
+mv .tmp/camp_idle.compressed.res animations/guardian/main/camp_idle.res
+```
+
+注意：这主要降低 PCK/下载体积；`PortableCompressedTexture2D` 解码后的显存通常仍是 RGBA。显存优化见 [animation-performance.md](../../animations/animation-performance.md)。
