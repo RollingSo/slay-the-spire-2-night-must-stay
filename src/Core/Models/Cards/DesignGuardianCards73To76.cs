@@ -63,17 +63,16 @@ namespace NightMustStay.Core.Models.Cards
 
     public sealed class RetreatingDefense : CardModel
     {
-        public override IEnumerable<CardKeyword> CanonicalKeywords => new[] { CardKeyword.Exhaust };
         public override string PortraitPath =>
             "res://packed/card_portraits/guardian/retreating_defense.png";
 
         public override bool GainsBlock => true;
 
         protected override IEnumerable<DynamicVar> CanonicalVars =>
-            new DynamicVar[] { new BlockVar(4m, ValueProp.Move) };
+            new DynamicVar[] { new BlockVar(4m, ValueProp.Move), new EnergyVar("Discount", 1) };
 
         protected override IEnumerable<IHoverTip> ExtraHoverTips =>
-            new[] { HoverTipFactory.Static(StaticHoverTip.Block), HoverTipFactory.FromPower<GuardCounterPower>() };
+            new[] { HoverTipFactory.Static(StaticHoverTip.Block) };
 
         public RetreatingDefense()
             : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.Self)
@@ -84,10 +83,10 @@ namespace NightMustStay.Core.Models.Cards
         {
             await CreatureCmd.GainBlock(Owner.Creature, DynamicVars.Block, cardPlay);
             await PowerCmd.Apply<RetreatingDefensePower>(
-                context, Owner.Creature, 1m, Owner.Creature, this);
+                context, Owner.Creature, DynamicVars["Discount"].BaseValue, Owner.Creature, this);
         }
 
-        protected override void OnUpgrade() => RemoveKeyword(CardKeyword.Exhaust);
+        protected override void OnUpgrade() => DynamicVars.Block.UpgradeValueBy(2m);
     }
 
     public sealed class SkySweepingGod : CardModel
@@ -190,28 +189,31 @@ namespace NightMustStay.Core.Models.Power
         public override PowerType Type => PowerType.Buff;
         public override PowerStackType StackType => PowerStackType.Counter;
 
-        public override async Task AfterDamageReceived(
-            PlayerChoiceContext context, Creature target, DamageResult result,
-            ValueProp props, Creature dealer, CardModel cardSource)
-        {
-            if (target != Owner || result.BlockedDamage <= 0 || !props.IsPoweredAttack()
-                || dealer == null || dealer.Side != CombatSide.Enemy)
-                return;
+        private bool IsOwnerAttack(CardModel card) =>
+            card.Type == CardType.Attack && card.Owner.Creature == Owner;
 
-            // Damage hooks finish before GuardCounterAttackPatch resolves the attack,
-            // so this attack can use the counter gained from its own blocked damage.
-            Flash();
-            await PowerCmd.Apply<GuardCounterPower>(
-                context, Owner, result.BlockedDamage, Owner, cardSource);
+        public override bool TryModifyEnergyCostInCombatLate(CardModel card, decimal originalCost, out decimal modifiedCost)
+        {
+            modifiedCost = originalCost;
+            if (Amount <= 0 || !IsOwnerAttack(card) || originalCost <= 0m || card.EnergyCost.CostsX)
+                return false;
+
+            modifiedCost = Math.Max(0m, originalCost - 1m);
+            return true;
         }
 
-        public override async Task AfterSideTurnStart(
-            CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+        public override async Task BeforeCardPlayed(CardPlay cardPlay)
         {
-            if (participants.Contains(Owner))
-                // Each stack is one remaining turn; stacking extends duration,
-                // never multiplies the counter gained from blocked damage.
-                await PowerCmd.Decrement(this);
+            if (Amount <= 0 || cardPlay.PlayIndex != 0 || !IsOwnerAttack(cardPlay.Card)) return;
+            Flash();
+            await PowerCmd.Decrement(this);
+        }
+
+        public override async Task AfterSideTurnEnd(
+            PlayerChoiceContext context, CombatSide side, IEnumerable<Creature> participants)
+        {
+            if (side == Owner.Side && participants.Contains(Owner))
+                await PowerCmd.Remove(this);
         }
     }
 }

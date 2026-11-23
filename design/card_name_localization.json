@@ -255,10 +255,10 @@
       "reference": "User-requested new Guardian card, 2026-10-08"
     },
     "WHIRLING_STRIKE": {
-      "zhs": "回旋击",
-      "eng": "Spinning Strikes",
-      "jpn": "回転撃",
-      "kor": "회전격",
+      "zhs": "回旋打击",
+      "eng": "Spinning Strike",
+      "jpn": "回転ストライク",
+      "kor": "회전 타격",
       "reference": "ArtsName.fmg/111"
     },
     "STORM_ASSAULT": {

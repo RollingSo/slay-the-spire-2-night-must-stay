@@ -223,6 +223,8 @@ try {
         'duchess_assets/char_select_duchess_locked.png.import',
         'duchess_assets/character_select_duchess_bg.png.import',
         'duchess_assets/map_marker_duchess.png.import',
+        'images/atlases/power_atlas.sprites/hold_the_line_power.tres.remap',
+        'images/powers/hold_the_line_power.png.import',
         'materials/character_select_idle.gdshader',
         'materials/transitions/duchess_transition_mat.tres.remap'
     )
@@ -232,7 +234,7 @@ try {
     }
     foreach ($requiredEntry in $requiredEntries) {
         if (-not $entryNames.Contains($requiredEntry)) {
-            throw "Required Duchess resource missing from exported pack: $requiredEntry"
+            throw "Required resource missing from exported pack: $requiredEntry"
         }
     }
 }

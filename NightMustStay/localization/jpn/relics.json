@@ -30,7 +30,7 @@
   "GREATSHIELD_TALISMAN.description": "[gold]堅守[/gold]を得るたび、同量の[gold]ブロック[/gold]を得る。",
   "GREATSHIELD_TALISMAN.flavor": "その影だけで全身を覆える、小さな盾。",
   "TACTICAL_COMPENDIUM.title": "戦技図鑑",
-  "TACTICAL_COMPENDIUM.description": "戦闘開始時、[gold]盾突き+[/gold]を1枚[gold]山札[/gold]に加える。",
+  "TACTICAL_COMPENDIUM.description": "拾った時、アタックを[blue]{Cards}[/blue]枚選び、[purple]墨塗り[/purple]を付与する。",
   "TACTICAL_COMPENDIUM.flavor": "どの頁にも同じ動きが描かれている。それでも、同じ頁は一つもない。",
   "CRACKED_SEALING_WAX.title": "ひび割れた封蝋",
   "CRACKED_SEALING_WAX.description": "戦闘開始時、すべての敵に[gold]マーク[/gold]{NightMustStayMarkPower}を与える。",

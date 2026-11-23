@@ -358,6 +358,8 @@ namespace NightMustStay.Core.Patches
                     "res://guardian_assets/energy_counter/guardian_orb_layer_5.png",
                     "res://guardian_assets/energy_icon/guardian_energy_card_icon.png",
                     "res://images/atlases/ui_atlas.sprites/card/energy_guardian.tres",
+                    "res://images/atlases/power_atlas.sprites/hold_the_line_power.tres",
+                    "res://images/powers/hold_the_line_power.png",
                     "res://images/packed/sprite_fonts/guardian_energy_icon.png",
                     "res://guardian_assets/relics/single_wing_greatshield.png",
                     "res://guardian_assets/relics/twin_wing_greatshield.png",

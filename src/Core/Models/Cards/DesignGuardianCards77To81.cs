@@ -79,6 +79,9 @@ namespace NightMustStay.Core.Models.Cards
     {
         private const int StunnedDamageMultiplier = 4;
 
+        protected override bool ShouldGlowGoldInternal =>
+            CombatState?.HittableEnemies.Any(enemy => enemy.IsAlive && enemy.IsStunned) == true;
+
         public override string PortraitPath =>
             "res://packed/card_portraits/guardian/dust_return_slash.png";
 

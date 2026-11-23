@@ -8,7 +8,9 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.CommonUi;
+using MegaCrit.Sts2.Core.Random;
 using MegaCrit.Sts2.Core.Runs;
+using NightMustStay.Core.Models.CardPools;
 using NightMustStay.Core.Models.Cards;
 using NightMustStay.Core.Models.Characters;
 using NightMustStay.Core.Models.Power;
@@ -17,6 +19,7 @@ internal static class WylderMultiplayerBatchRegression
  static CardModel? Selected, Transformed;
  static readonly List<CardModel> Generated=new();
  static readonly List<(PowerModel power,Creature target,decimal amount)> Applied=new();
+ static int _nextLifeFromDeathRoll;
  static void Check(bool ok,string label){if(!ok)throw new Exception(label);}
  public static void Run()
  {
@@ -96,9 +99,38 @@ internal static class WylderMultiplayerBatchRegression
     Check(Generated.Count==4&&Generated.All(c=>c is WylderDesperationCard&&c.Owner==owner)&&Generated.Count(c=>c.IsUpgraded)==2,
         $"Turn {turn + 1}: expected two basic and two upgraded Desperation cards. Generated: {string.Join(", ", Generated.Select(c => $"{c.Id} (upgraded={c.IsUpgraded})"))}");
    }
+   CheckLifeFromDeathProbabilities(h, lifePower, owner);
    Console.WriteLine("PASS: Life from Death recurring generation and draw penalty, mixed upgrades and owner isolation.");
   } finally {h.UnpatchAll(h.Id);}
   Console.WriteLine("PASS: six-card metadata/upgrades, multiplayer-only pool, per-ally ownership, mixed upgrades duplicate Break guard and repeated Pursuit entries.");
+ }
+
+ private static void CheckLifeFromDeathProbabilities(HarmonyLib.Harmony harmony, WylderLifeFromDeathPower power, Player owner)
+ {
+     var pool = ModelDb.CardPool<WylderCardPool>().AllCards.OfType<WylderDesperationCard>().ToArray();
+     int standardCardCount = pool.Count(card => card is not WylderSixthSense and not WylderDesperateSurvival);
+     int totalRolls = 100 * standardCardCount;
+     _nextLifeFromDeathRoll = 0;
+     harmony.Patch(AccessTools.Method(typeof(Rng), nameof(Rng.NextInt), new[] { typeof(int) }),
+         prefix: new HarmonyMethod(typeof(WylderMultiplayerBatchRegression), nameof(NextLifeFromDeathRoll)));
+     Generated.Clear();
+     for (int roll = 0; roll < totalRolls; roll += 4)
+         power.AfterPlayerTurnStartLate(null!, owner).GetAwaiter().GetResult();
+     Check(_nextLifeFromDeathRoll == totalRolls && Generated.Count == totalRolls, "One roll per generated card");
+     foreach (var card in pool)
+     {
+         int expected = card is WylderSixthSense or WylderDesperateSurvival ? 3 * standardCardCount : 94;
+         Check(Generated.Count(generated => generated.Id == card.Id) == expected,
+             $"Life from Death probability for {card.Id}");
+     }
+     Console.WriteLine("PASS: Life from Death gives Sixth Sense and Desperate Survival exactly 3% each.");
+ }
+
+ private static bool NextLifeFromDeathRoll(int __0, ref int __result)
+ {
+     Check(_nextLifeFromDeathRoll < __0, "Life from Death rolls its complete ticket range");
+     __result = _nextLifeFromDeathRoll++;
+     return false;
  }
  public static bool Combat(CardModel __instance,ref ICombatState __result){__result=__instance.Owner.Creature.CombatState!;return false;}
  public static bool Select(ref Task<IEnumerable<CardModel>> __result){__result=Task.FromResult<IEnumerable<CardModel>>(new[]{Selected!});return false;}

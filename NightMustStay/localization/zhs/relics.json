@@ -30,7 +30,7 @@
   "GREATSHIELD_TALISMAN.description": "每当你获得[gold]固守[/gold]时，获得等量的[gold]格挡[/gold]。",
   "GREATSHIELD_TALISMAN.flavor": "小小的盾形护符，投下的影子却足以遮蔽全身。",
   "TACTICAL_COMPENDIUM.title": "战斗术图鉴",
-  "TACTICAL_COMPENDIUM.description": "战斗开始时，将1张[gold]盾戳+[/gold]加入你的[gold]抽牌堆[/gold]。",
+  "TACTICAL_COMPENDIUM.description": "拾起时，选择[blue]{Cards}[/blue]张攻击牌，为其附魔[purple]墨影[/purple]。",
   "TACTICAL_COMPENDIUM.flavor": "每一页都画着同一个动作，却没有两页完全相同。",
   "CRACKED_SEALING_WAX.title": "裂开的封蜡",
   "CRACKED_SEALING_WAX.description": "战斗开始时，给予所有敌人{NightMustStayMarkPower}层[gold]标记[/gold]。",

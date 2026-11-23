@@ -30,7 +30,7 @@
   "GREATSHIELD_TALISMAN.description": "Whenever you gain [gold]Fortify[/gold], gain that much [gold]Block[/gold].",
   "GREATSHIELD_TALISMAN.flavor": "A tiny shield whose shadow can cover the whole body.",
   "TACTICAL_COMPENDIUM.title": "Tactical Compendium",
-  "TACTICAL_COMPENDIUM.description": "At the start of combat, add 1 [gold]Shield Poke+[/gold] to your [gold]Draw Pile[/gold].",
+  "TACTICAL_COMPENDIUM.description": "Upon pickup, choose [blue]{Cards}[/blue] Attacks to Enchant with [purple]Inky[/purple].",
   "TACTICAL_COMPENDIUM.flavor": "Every page depicts the same motion, yet no two pages are alike.",
   "CRACKED_SEALING_WAX.title": "Cracked Sealing Wax",
   "CRACKED_SEALING_WAX.description": "At the start of combat, apply {NightMustStayMarkPower} [gold]Mark[/gold] to ALL enemies.",

@@ -1,6 +1,6 @@
 {
   "HOLD_THE_LINE_POWER.title": "Hold the Line",
-  "HOLD_THE_LINE_POWER.description": "Double the [gold]Block[/gold] gained from the next card you play.",
+  "HOLD_THE_LINE_POWER.description": "Double the next [gold]Block[/gold] you gain from a card.",
   "DUCHESS_RADIANT_BLADE_TURNS_POWER.title": "Magic Glintblade",
   "DUCHESS_RADIANT_BLADE_TURNS_POWER.description": "For {Amount} more turns, add 1 [gold]Radiant Blade[/gold] to your hand at the start of your turn.",
   "DESPERATE_STRUGGLE_POWER.title": "Desperate Struggle",
@@ -122,7 +122,7 @@
   "HEAVENFALL_POWER.title": "Heavenfall",
   "HEAVENFALL_POWER.description": "Whenever you gain [gold]Block[/gold] this turn, gain that much [gold]Guard Counter[/gold].",
   "RETREATING_DEFENSE_POWER.title": "Retreating Defense",
-  "RETREATING_DEFENSE_POWER.description": "Whenever you [gold]block[/gold] enemy attack damage, gain that much [gold]Guard Counter[/gold].\nLasts {Amount} turns, decreasing by 1 at the start of your turn.",
+  "RETREATING_DEFENSE_POWER.description": "This turn, your next {Amount} {Amount:plural:Attack costs|Attacks each cost} 1{energyPrefix:energyIcons(1)} less.",
   "FEATHERSTEP_POWER.title": "Featherstep",
   "FEATHERSTEP_POWER.description": "Whenever you play a [gold]Concealed Edge[/gold] card, draw {Amount} {Amount:plural:card|cards}.",
   "CLOUD_RENDING_STRENGTH_RESTORE_POWER.title": "Cloud-Rending Sweep",

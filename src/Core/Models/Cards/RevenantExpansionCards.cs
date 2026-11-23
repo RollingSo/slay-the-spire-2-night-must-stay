@@ -233,7 +233,7 @@ public sealed class NightMustStaySoulbound : CardModel
         IsUpgraded ? new[] { CardKeyword.Retain } : Array.Empty<CardKeyword>();
     public override string PortraitPath => "res://revenant_assets/cards/soulbound.png";
 
-    public NightMustStaySoulbound() : base(0, CardType.Skill, CardRarity.Common, TargetType.Self) { }
+    public NightMustStaySoulbound() : base(0, CardType.Skill, CardRarity.Uncommon, TargetType.Self) { }
 
     protected override async Task OnPlay(PlayerChoiceContext context, CardPlay cardPlay)
     {

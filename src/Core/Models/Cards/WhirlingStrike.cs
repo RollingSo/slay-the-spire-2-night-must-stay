@@ -14,6 +14,8 @@ namespace NightMustStay.Core.Models.Cards
 {
     public sealed class WhirlingStrike : CardModel
     {
+        protected override HashSet<CardTag> CanonicalTags => new() { CardTag.Strike };
+
         protected override IEnumerable<DynamicVar> CanonicalVars => new DynamicVar[]
         {
             new DamageVar(5m, ValueProp.Move),

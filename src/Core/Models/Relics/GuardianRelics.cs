@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MegaCrit.Sts2.Core.CardSelection;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -11,6 +12,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Enchantments;
 using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.Rooms;
 using MegaCrit.Sts2.Core.Saves.Runs;
@@ -199,13 +201,25 @@ namespace NightMustStay.Core.Models.Relics
     {
         protected override string GuardianIconName => "tactical_compendium";
         public override RelicRarity Rarity => RelicRarity.Shop;
+        public override bool HasUponPickupEffect => true;
 
-        public override async Task BeforeCombatStart()
+        protected override IEnumerable<DynamicVar> CanonicalVars => new[] { new CardsVar(2) };
+        protected override IEnumerable<IHoverTip> ExtraHoverTips => HoverTipFactory.FromEnchantment<Inky>();
+
+        public override async Task AfterObtained()
         {
-            CardModel shieldPoke = Owner.Creature.CombatState.CreateCard<ShieldPoke>(Owner);
-            CardCmd.Upgrade(shieldPoke);
-            Flash();
-            await CardPileCmd.AddGeneratedCardToCombat(shieldPoke, PileType.Draw, Owner, CardPilePosition.Random);
+            var prefs = new CardSelectorPrefs(CardSelectorPrefs.EnchantSelectionPrompt, DynamicVars.Cards.IntValue)
+            {
+                Cancelable = false,
+                RequireManualConfirmation = true
+            };
+            var inky = ModelDb.Enchantment<Inky>();
+            foreach (var card in await CardSelectCmd.FromDeckForEnchantment(
+                Owner, inky, 1, card => card?.Type == CardType.Attack, prefs))
+            {
+                CardCmd.Enchant<Inky>(card, 1m);
+                CardCmd.Preview(card);
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 {
   "HOLD_THE_LINE_POWER.title": "据守",
-  "HOLD_THE_LINE_POWER.description": "你打出的下张卡牌获得的[gold]格挡[/gold]翻倍。",
+  "HOLD_THE_LINE_POWER.description": "你下次从卡牌中获得的[gold]格挡[/gold]翻倍。",
   "DUCHESS_RADIANT_BLADE_TURNS_POWER.title": "魔法辉剑",
   "DUCHESS_RADIANT_BLADE_TURNS_POWER.description": "剩余{Amount}回合。\n回合开始时，将1张[gold]辉剑[/gold]加入手牌。",
   "DESPERATE_STRUGGLE_POWER.title": "奋力搏击",
@@ -122,7 +122,7 @@
   "HEAVENFALL_POWER.title": "天坠",
   "HEAVENFALL_POWER.description": "本回合获得[gold]格挡[/gold]时，获得等量[gold]防御反击[/gold]。",
   "RETREATING_DEFENSE_POWER.title": "后撤防御",
-  "RETREATING_DEFENSE_POWER.description": "每当你[gold]格挡[/gold]敌方攻击伤害时，获得等量[gold]防御反击[/gold]。\n持续{Amount}回合，回合开始时减少1。",
+  "RETREATING_DEFENSE_POWER.description": "本回合内接下来打出的{Amount}张攻击牌，每张耗能减少1{energyPrefix:energyIcons(1)}。",
   "FEATHERSTEP_POWER.title": "飞羽步",
   "FEATHERSTEP_POWER.description": "打出[gold]藏锋[/gold]牌时，抽{Amount}张牌。",
   "CLOUD_RENDING_STRENGTH_RESTORE_POWER.title": "卷残云",

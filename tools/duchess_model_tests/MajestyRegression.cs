@@ -30,6 +30,8 @@ internal static class MajestyRegression
             prefix: new HarmonyMethod(typeof(MajestyRegression), nameof(CombatEndingFixture)));
         harmony.Patch(AccessTools.PropertyGetter(typeof(Creature), nameof(Creature.IsStunned)),
             prefix: new HarmonyMethod(typeof(MajestyRegression), nameof(StunFixture)));
+        harmony.Patch(AccessTools.PropertyGetter(typeof(Creature), nameof(Creature.IsHittable)),
+            prefix: new HarmonyMethod(typeof(MajestyRegression), nameof(HittableFixture)));
         try
         {
             foreach (bool upgraded in new[] { false, true })
@@ -74,6 +76,12 @@ internal static class MajestyRegression
                 if (upgraded) dust.UpgradeInternal();
                 var normalTarget = new Creature(player, 70, 70);
                 _stunnedTarget = new Creature(player, 70, 70);
+                var enemies = (List<Creature>)AccessTools.Field(typeof(CombatState), "_enemies")
+                    .GetValue(player.Creature.CombatState)!;
+                enemies.Add(normalTarget);
+                if (dust.ShouldGlowGold) throw new Exception("Dust Return Slash glows without a stunned enemy.");
+                enemies.Add(_stunnedTarget);
+                if (!dust.ShouldGlowGold) throw new Exception("Dust Return Slash does not glow with a stunned enemy.");
                 foreach (Creature? target in new Creature?[] { null, normalTarget, _stunnedTarget })
                 {
                     decimal expected = (upgraded ? 14m : 11m) * (target == _stunnedTarget ? 4 : 1);
@@ -82,6 +90,8 @@ internal static class MajestyRegression
                         || dust.DynamicVars.CalculatedDamage.Calculate(target) != expected)
                         throw new Exception("Dust Return Slash must preview its stunned multiplier only for a stunned target.");
                 }
+                enemies.Remove(_stunnedTarget);
+                if (dust.ShouldGlowGold) throw new Exception("Dust Return Slash glow persists after the stunned enemy is gone.");
                 for (int count = 0; count <= 3; count++)
                 {
                     draw.Clear();
@@ -109,6 +119,12 @@ internal static class MajestyRegression
     public static bool StunFixture(Creature __instance, ref bool __result)
     {
         __result = ReferenceEquals(__instance, _stunnedTarget);
+        return false;
+    }
+
+    public static bool HittableFixture(Creature __instance, ref bool __result)
+    {
+        __result = __instance.IsAlive;
         return false;
     }
 

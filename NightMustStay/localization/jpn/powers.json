@@ -1,6 +1,6 @@
 {
   "HOLD_THE_LINE_POWER.title": "堅守",
-  "HOLD_THE_LINE_POWER.description": "次にプレイするカードから得る[gold]ブロック[/gold]が2倍になる。",
+  "HOLD_THE_LINE_POWER.description": "次にカードから得る[gold]ブロック[/gold]が2倍になる。",
   "DUCHESS_RADIANT_BLADE_TURNS_POWER.title": "魔術の輝剣",
   "DUCHESS_RADIANT_BLADE_TURNS_POWER.description": "残り{Amount}ターン。\nターン開始時、[gold]輝剣[/gold]1枚を手札に加える。",
   "DESPERATE_STRUGGLE_POWER.title": "必死の抵抗",
@@ -122,7 +122,7 @@
   "HEAVENFALL_POWER.title": "天墜",
   "HEAVENFALL_POWER.description": "このターンに[gold]ブロック[/gold]を得るたび、同量の[gold]ガードカウンター[/gold]を得る。",
   "RETREATING_DEFENSE_POWER.title": "退き守り",
-  "RETREATING_DEFENSE_POWER.description": "敵の攻撃ダメージを[gold]ブロック[/gold]するたび、その量の[gold]ガードカウンター[/gold]を得る。\n残り{Amount}ターン。自分のターン開始時に1減少する。",
+  "RETREATING_DEFENSE_POWER.description": "このターンに次にプレイするアタック{Amount}枚は、それぞれコストが1{energyPrefix:energyIcons(1)}減る。",
   "FEATHERSTEP_POWER.title": "羽歩",
   "FEATHERSTEP_POWER.description": "[gold]隠し刃[/gold]カードをプレイするたび、カードを{Amount}枚引く。",
   "CLOUD_RENDING_STRENGTH_RESTORE_POWER.title": "雲裂き薙ぎ",

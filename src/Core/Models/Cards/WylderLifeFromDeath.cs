@@ -26,12 +26,14 @@ public sealed class WylderLifeFromDeath : WylderAbilityCard<WylderLifeFromDeathP
         .Concat(HoverTipFactory.FromCardWithCardHoverTips<WylderParry>(IsUpgraded))
         .Concat(HoverTipFactory.FromCardWithCardHoverTips<WylderCounterRush>(IsUpgraded))
         .Concat(HoverTipFactory.FromCardWithCardHoverTips<WylderAssaultStake>(IsUpgraded))
+        .Concat(HoverTipFactory.FromCardWithCardHoverTips<WylderSixthSense>(IsUpgraded))
         .Concat(HoverTipFactory.FromCardWithCardHoverTips<WylderDesperateSurvival>(IsUpgraded));
 }
 
 public sealed class WylderLifeFromDeathPower : WylderAbilityPower
 {
     private const int CardsPerCopy = 2;
+    private const int RareCardPercent = 3;
 
     public override LocString Description
     {
@@ -52,10 +54,21 @@ public sealed class WylderLifeFromDeathPower : WylderAbilityPower
         int basic = BasicCopies * CardsPerCopy;
         int total = Copies * CardsPerCopy;
         Flash();
-        var choices = ModelDb.CardPool<WylderCardPool>().AllCards.OfType<WylderDesperationCard>().ToArray();
+        var choices = ModelDb.CardPool<WylderCardPool>().AllCards.OfType<WylderDesperationCard>()
+            .Where(card => card is not WylderSixthSense and not WylderDesperateSurvival).ToArray();
+        var rng = player.RunState.Rng.Niche;
         for (int i = 0; i < total; i++)
         {
-            var card = CombatState.CreateCard(player.RunState.Rng.Niche.NextItem(choices), player);
+            // Every percentage point has one slot per regular choice. This keeps
+            // the two fixed probabilities exact with a single RNG call per card.
+            int roll = rng.NextInt(100 * choices.Length);
+            var model = (roll / choices.Length) switch
+            {
+                < RareCardPercent => ModelDb.Card<WylderSixthSense>(),
+                < 2 * RareCardPercent => ModelDb.Card<WylderDesperateSurvival>(),
+                _ => choices[roll % choices.Length]
+            };
+            var card = CombatState.CreateCard(model, player);
             if (i >= basic) CardCmd.Upgrade(card);
             CardCmd.PreviewCardPileAdd(await CardPileCmd.AddGeneratedCardToCombat(card, PileType.Hand, player));
         }

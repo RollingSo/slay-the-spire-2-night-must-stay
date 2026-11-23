@@ -53,6 +53,8 @@ foreach (Type type in typeof(PowerModel).Assembly.GetTypes().Where(type => !type
     if (!ModelDb.Contains(type)) typeof(ModelDb).GetMethod("Inject", flags)!.Invoke(null, new object[] { type });
 
 var duchess = ModelDb.Character<Duchess>();
+if (args.Contains("--retreating-defense-only")) { RetreatingDefenseRegression.Run(); return 0; }
+if (args.Contains("--guardian-compendium-only")) { GuardianCompendiumRegression.Run(); return 0; }
 if (args.Contains("--colorful-philosophers-only")) { ColorfulPhilosophersRegression.Run(); return 0; }
 if (args.Contains("--card-portraits-only"))
 {
@@ -155,6 +157,12 @@ if (args.Contains("--revenant-november-only"))
         if (stunCall.EnergyCost.GetResolved() != (upgraded ? 1 : 2) || stunCall.DynamicVars.Damage.BaseValue != 8)
             throw new Exception("Stun Call cost-only upgrade");
     }
+    var harmonyCard = ModelDb.Card<NightMustStay.Core.Models.Cards.Harmony>().ToMutable();
+    if (harmonyCard.Rarity != CardRarity.Common || harmonyCard.DynamicVars.Damage.BaseValue != 7
+        || ModelDb.Card<NightMustStaySoulbound>().Rarity != CardRarity.Uncommon)
+        throw new Exception("Harmony and Soulbound base balance.");
+    harmonyCard.UpgradeInternal();
+    if (harmonyCard.DynamicVars.Damage.BaseValue != 10) throw new Exception("Harmony upgrade damage.");
     Console.WriteLine("PASS: Revenant card values, Stun cost-only upgrade and repeated Halo growth.");
     return 0;
 }
@@ -492,6 +500,7 @@ if (args.Contains("--majesty-only"))
     MajestyRegression.Run();
     return 0;
 }
+if (args.Contains("--hold-the-line-only")) { HoldTheLineRegression.Run(); return 0; }
 if (args.Contains("--five-card-balance-only"))
 {
     var arrowhead = ModelDb.Card<LightningArrowhead>().ToMutable();
@@ -604,15 +613,7 @@ if (wingsBalance.DynamicVars.Damage.BaseValue != 7 || wingsBalance.TargetType !=
     throw new Exception("World Ending Wings must use 7-damage native AOE hits.");
 wingsBalance.UpgradeInternal();
 if (wingsBalance.DynamicVars.Damage.BaseValue != 9) throw new Exception("World Ending Wings upgrade must deal 9 per exhausted Skill.");
-var retreatBalance = (RetreatingDefense)ModelDb.Card<RetreatingDefense>().ToMutable();
-if (retreatBalance.DynamicVars.Block.BaseValue != 4 || !retreatBalance.Keywords.Contains(CardKeyword.Exhaust))
-    throw new Exception("Retreating Defense must give 4 Block and exhaust before upgrade.");
-if (retreatBalance.DynamicVars.ContainsKey("BlockedAttackDamage"))
-    throw new Exception("Retreating Defense must use immediate power conversion, not past-turn damage.");
-retreatBalance.UpgradeInternal();
-if (retreatBalance.Keywords.Contains(CardKeyword.Exhaust) || retreatBalance.DynamicVars.Block.BaseValue != 4
-    || retreatBalance.DynamicVars.Block.WasJustUpgraded)
-    throw new Exception("Retreating Defense upgrade must only remove Exhaust.");
+RetreatingDefenseRegression.Run();
 var probingBalance = ModelDb.Card<ProbingStab>().ToMutable();
 if (probingBalance.DynamicVars.Damage.BaseValue != 7 || probingBalance.DynamicVars.Cards.IntValue != 1)
     throw new Exception("Probing Stab must deal 7 and draw one defensive card.");
