@@ -1,0 +1,21 @@
+[h1]0.4.12｜卡牌平衡与事件更新[/h1]
+
+- 后撤防御：移除消耗，升级后格挡从 4 提高到 6。改为在本回合为接下来的攻击牌减费，每层使一张攻击牌少花 1 点能量。
+- 据守：在下一次通过卡牌实际获得格挡时使格挡翻倍。
+- 归尘斩：有可攻击且已被击晕的敌人时，卡牌会高亮。
+- 回旋击更名为回旋打击，并能与打击木偶联动。
+- 魂牵：稀有度由普通调整为罕见。和音：稀有度由罕见调整为普通，伤害由 9/12 降至 7/10。
+- 向死而生：每张生成的牌有 3% 概率是「第六感」，另有 3% 概率是「绝处逢生」。
+- 战斗术图鉴：拾取时可为至多两张攻击牌附魔「墨影」。
+- 五名渡夜者的牌池加入 Colorful Philosophers 事件，并更新守护者的商人立绘。
+
+[h1]0.4.12 | Card Balance and Event Updates[/h1]
+
+- Retreating Defense: No longer Exhausts. Upgrading raises Block from 4 to 6. Each stack now reduces the cost of one upcoming Attack by 1 Energy this turn.
+- Defend the Line: Doubles the Block gained the next time a card actually grants you Block.
+- Dust Return Slash: Glows when a stunned enemy can be targeted.
+- Spinning Strike now works with Strike Dummy.
+- Soulbound is now Uncommon instead of Common. Harmony is now Common instead of Uncommon, and its damage is reduced from 9/12 to 7/10.
+- Life from Death: Each generated card has a 3% chance to be Sixth Sense and a separate 3% chance to be Desperate Survival.
+- Tactical Compendium: On pickup, apply the Inky enchantment to up to two Attacks.
+- Added all five Nightfarer card pools to the Colorful Philosophers event and updated Guardian's merchant portrait.
