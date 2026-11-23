@@ -3,7 +3,7 @@ extends SceneTree
 const COMBAT_SCENE := "res://guardian_assets/combat_rig/guardian_combat_visuals.tscn"
 const COMBAT_TEXTURE := "res://guardian_assets/combat_rig/guardian_combat_character.png"
 const MERCHANT_SCENE := "res://guardian_assets/merchant/guardian_merchant.tscn"
-const MERCHANT_TEXTURE := "res://guardian_assets/merchant/guardian_merchant.png"
+const MERCHANT_TEXTURE := "res://guardian_assets/merchant/guardian_merchant_standing.png"
 const REQUIRED_ANIMATIONS := [
 	"idle_loop",
 	"guard",

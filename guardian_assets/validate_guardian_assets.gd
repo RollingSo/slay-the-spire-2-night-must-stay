@@ -18,7 +18,7 @@ func _initialize() -> void:
 		"res://guardian_assets/combat_rig/guardian_combat_visuals.tscn",
 		"res://guardian_assets/combat_rig/guardian_skeleton_prototype.tscn",
 		"res://guardian_assets/combat_rig/guardian_skeleton_prototype.gd",
-		"res://guardian_assets/merchant/guardian_merchant.png",
+		"res://guardian_assets/merchant/guardian_merchant_standing.png",
 		"res://guardian_assets/merchant/guardian_merchant.tscn",
 		"res://guardian_assets/rest_site/guardian_rest_site.png",
 		"res://guardian_assets/rest_site/guardian_rest_site.tscn",
