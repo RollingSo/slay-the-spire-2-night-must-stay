@@ -1,12 +1,32 @@
 using System.Collections.Generic;
+using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Ancients;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Events;
+using MegaCrit.Sts2.Core.Nodes.Events;
 using NightMustStay.Core.Models.Characters;
 
 namespace NightMustStay.Core.Patches
 {
+    [HarmonyPatch(typeof(NAncientEventLayout), nameof(NAncientEventLayout._Ready))]
+    internal static class AncientDialogueInputPatch
+    {
+        [HarmonyPostfix]
+        private static void KeepContinuePromptClickThrough(NAncientEventLayout __instance)
+        {
+            // The prompt only displays text and an arrow. The sibling dialogue hitbox
+            // handles advancing, so even the prompt's decorative children must pass clicks through.
+            var prompt = __instance.GetNodeOrNull<Control>("%FakeNextButtonContainer");
+            if (prompt == null)
+                return;
+
+            prompt.MouseFilter = Control.MouseFilterEnum.Ignore;
+            foreach (Control child in prompt.FindChildren("*", nameof(Control), owned: false))
+                child.MouseFilter = Control.MouseFilterEnum.Ignore;
+        }
+    }
+
     [HarmonyPatch(typeof(AncientEventModel), nameof(AncientEventModel.DialogueSet), MethodType.Getter)]
     public static class GuardianAncientDialoguePatch
     {

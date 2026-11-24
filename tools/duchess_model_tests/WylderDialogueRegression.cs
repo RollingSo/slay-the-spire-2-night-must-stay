@@ -4,6 +4,7 @@ using HarmonyLib;
 using MegaCrit.Sts2.Core.Entities.Ancients;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Models.Characters;
 using MegaCrit.Sts2.Core.Models.Events;
 using NightMustStay.Core.Models.Characters;
 using NightMustStay.Core.Patches;
@@ -22,6 +23,11 @@ internal static class WylderDialogueRegression
         int checks = 0;
         try
         {
+            var inject = AccessTools.Method(typeof(ModelDb), "Inject")!;
+            foreach (Type type in new[] { typeof(Ironclad), typeof(Silent), typeof(Defect), typeof(Necrobinder), typeof(Regent) })
+                if (!ModelDb.Contains(type))
+                    inject.Invoke(null, new object[] { type });
+
             foreach (string locale in new[] { "zhs", "eng", "jpn", "kor" })
             {
                 using (var characters = JsonDocument.Parse(File.ReadAllText($"NightMustStay/localization/{locale}/characters.json")))
@@ -46,11 +52,27 @@ internal static class WylderDialogueRegression
                     if (!ModelDb.Contains(type))
                         typeof(ModelDb).GetMethod("Inject", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)!.Invoke(null, new object[] { type });
                     var ancient = ModelDb.GetById<AncientEventModel>(ModelDb.GetId(type));
-                    var set = NewSet();
+                    var set = type == typeof(Vakuu) ? ancient.DialogueSet : NewSet();
                     // Call the actual runtime postfix, not a hand-written copy
                     // of the dialogue lengths, speaker rules or repeating logic.
                     GuardianAncientDialoguePatch.AddGuardianDialogue(ancient, set);
                     Check(set, ancient.Id.Entry, locale, ref checks);
+                    if (type == typeof(Vakuu))
+                    {
+                        foreach (string character in new[] { "GUARDIAN", "IRONEYE", "REVENANT", "DUCHESS", "WYLDER" })
+                        {
+                            var characterId = new ModelId(ModelDb.GetCategory(typeof(CharacterModel)), character);
+                            for (int visit = 0; visit <= 12; visit++)
+                            {
+                                var dialogues = set.GetValidDialogues(characterId, visit, visit + 1, true).ToArray();
+                                if (dialogues.Length == 0)
+                                    throw new Exception($"{locale}/VAKUU/{character}: no dialogue at visit {visit}.");
+                                foreach (var dialogue in dialogues)
+                                    Read(dialogue);
+                            }
+                        }
+                        Read(set.FirstVisitEverDialogue!);
+                    }
                     if (type == typeof(Neow))
                     {
                         if (set.CharacterDialogues["WYLDER"][0].Lines[0].Speaker != AncientDialogueSpeaker.Ancient)
@@ -78,7 +100,7 @@ internal static class WylderDialogueRegression
                     .Invoke(null, new object[] { architect, "WYLDER" });
                 Check(architect, "THE_ARCHITECT", locale, ref checks);
             }
-            Console.WriteLine($"PASS: {checks} Wylder Ancient dialogue lines and alive/dead end-turn banter in four locales, native speaker/repeating/Next resolution, visits 0-12, and missing-key regression probes.");
+            Console.WriteLine($"PASS: {checks} Wylder Ancient dialogue lines, end-turn banter, and Vakuu dialogue selection for all five Nightfarers in four locales.");
         }
         finally { fixture.UnpatchAll(fixture.Id); _table.Clear(); }
     }
