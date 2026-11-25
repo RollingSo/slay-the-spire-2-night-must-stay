@@ -17,8 +17,14 @@ namespace NightMustStay.Core.Patches;
 internal static class WylderEochaidHitBudgetPatch
 {
     private static MethodBase TargetMethod() => AccessTools.Method(StateMachine(), "MoveNext");
-    private static Type StateMachine() => AccessTools.Method(typeof(AttackCommand), nameof(AttackCommand.Execute))
-        .GetCustomAttribute<AsyncStateMachineAttribute>().StateMachineType;
+
+    private static Type StateMachine()
+    {
+        // v0.114 wraps the existing hit loop in ExecuteInternal.
+        var execute = AccessTools.DeclaredMethod(typeof(AttackCommand), "ExecuteInternal")
+            ?? AccessTools.DeclaredMethod(typeof(AttackCommand), nameof(AttackCommand.Execute));
+        return execute.GetCustomAttribute<AsyncStateMachineAttribute>().StateMachineType;
+    }
 
     private static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {

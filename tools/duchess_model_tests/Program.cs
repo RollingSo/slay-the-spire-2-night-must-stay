@@ -113,6 +113,7 @@ if (args.Contains("--wylder-sheet-lifecycle-only")) { WylderBattleArtRegression.
 if (args.Contains("--wylder-new-cards-only")) { WylderNewCardsRegression.Run(); return 0; }
 if (args.Contains("--wylder-multiplayer-batch-only")) { WylderMultiplayerBatchRegression.Run(); return 0; }
 if (args.Contains("--wylder-latest-batch-only")) { WylderLatestBatchRegression.Run(); return 0; }
+if (args.Contains("--twin-token-only")) { TwinTokenRegression.Run(); return 0; }
 if (args.Contains("--wylder-only"))
 {
     WylderDialogueRegression.Run();
@@ -121,6 +122,7 @@ if (args.Contains("--wylder-only"))
     WylderNewCardsRegression.Run();
     WylderMultiplayerBatchRegression.Run();
     WylderLatestBatchRegression.Run();
+    TwinTokenRegression.Run();
     return 0;
 }
 if (args.Contains("--spirit-form-stack-only"))
@@ -1053,7 +1055,7 @@ foreach (var entry in DuchessCardCatalog.All)
             throw new Exception(entry.Key + " base variable " + key);
     }
     if (hasUpgrade)
-        typeof(CardModel).GetMethod("UpgradeInternal", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)!.Invoke(card, null);
+        NightMustStay.Core.Compatibility.Sts2BranchCompat.UpgradeInternal(card);
     foreach (var effect in entry.Value.Effects)
     {
         string key = effect.Kind switch
@@ -1560,8 +1562,7 @@ foreach (var (name, expectedEffect) in new[]
 var swordsmanship = ModelDb.Card<DuchessCarianSwordsmanship>().ToMutable();
 if (swordsmanship.TargetType != TargetType.Self || swordsmanship.EnergyCost.GetResolved() != 2)
     throw new Exception("Carian Swordsmanship must require no enemy target and cost 2.");
-typeof(CardModel).GetMethod("UpgradeInternal", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)!
-    .Invoke(swordsmanship, null);
+NightMustStay.Core.Compatibility.Sts2BranchCompat.UpgradeInternal(swordsmanship);
 if (swordsmanship.EnergyCost.GetResolved() != 1)
     throw new Exception("Upgraded Carian Swordsmanship must cost 1.");
 var carryUpgrade = typeof(DuchessCard).GetMethod("CarryStrikeUpgrade", BindingFlags.Static | BindingFlags.NonPublic)!;
@@ -1571,8 +1572,7 @@ foreach (bool upgradedStrike in new[] { false, true })
     var deckSlicer = ModelDb.Card<DuchessCarianSlicer>().ToMutable();
     var combatSlicer = ModelDb.Card<DuchessCarianSlicer>().ToMutable();
     if (upgradedStrike)
-        typeof(CardModel).GetMethod("UpgradeInternal", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)!
-            .Invoke(strike, null);
+        NightMustStay.Core.Compatibility.Sts2BranchCompat.UpgradeInternal(strike);
     carryUpgrade.Invoke(null, new object[] { strike, deckSlicer, combatSlicer });
     if (deckSlicer.IsUpgraded != upgradedStrike || combatSlicer.IsUpgraded != upgradedStrike)
         throw new Exception("Carian Swordsmanship must preserve the chosen Strike's upgrade in both deck and combat.");
@@ -1613,8 +1613,7 @@ if (restageCard.TargetType != TargetType.AnyEnemy || restageCard.CanonicalKeywor
     || !restageCard.DynamicVars.ContainsKey("CalculatedDamage"))
     throw new Exception("Dagger Restage must target an enemy and expose calculated damage preview variables.");
 _ = restageCard.DynamicVars.CalculatedDamage.Calculate(null);
-typeof(CardModel).GetMethod("UpgradeInternal", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)!
-    .Invoke(restageCard, null);
+NightMustStay.Core.Compatibility.Sts2BranchCompat.UpgradeInternal(restageCard);
 if (!restageCard.CanonicalKeywords.Contains(CardKeyword.Retain))
     throw new Exception("Restage upgrade preview must add Retain.");
 

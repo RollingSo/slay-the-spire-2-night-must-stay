@@ -21,12 +21,22 @@ using MegaCrit.Sts2.Core.ValueProps;
 namespace NightMustStay.Core.Compatibility;
 
 /// <summary>
-/// Runtime bridge for API signatures that differ between the v0.111 main
-/// branch and the v0.113 Public Beta. Calls are resolved against the currently
+/// Runtime bridge for API signatures that differ between the main
+/// and Public Beta branches. Calls are resolved against the currently
 /// loaded game assembly so one NightMustStay DLL can run on both branches.
 /// </summary>
 public static class Sts2BranchCompat
 {
+    private static readonly MethodInfo UpgradeInternalMethod =
+        typeof(CardModel).GetMethod("UpgradeInternal", Type.EmptyTypes)
+        ?? typeof(CardModel).GetMethod("UpgradeInternal", new[] { typeof(bool) })!;
+
+    private static readonly object[]? UpgradeInternalArguments =
+        UpgradeInternalMethod.GetParameters().Length == 0 ? null : new object[] { false };
+
+    public static void UpgradeInternal(CardModel card) =>
+        UpgradeInternalMethod.Invoke(card, UpgradeInternalArguments);
+
     private static readonly MethodInfo[] DamageMethods =
         typeof(CreatureCmd).GetMethods(BindingFlags.Public | BindingFlags.Static)
             .Where(method => method.Name == nameof(CreatureCmd.Damage))

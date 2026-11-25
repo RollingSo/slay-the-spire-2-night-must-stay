@@ -45,7 +45,7 @@ public partial class DuchessMidnightWaltzVfx : Node2D
         _manual = true;
         _phase = impact ? Phase.Impact : Phase.Prelude;
         _focus = focus;
-        _age = Mathf.Clamp(progress, 0f, 1f) * (impact ? 0.7f : NGrandFinaleVfx.totalAnticipationDuration);
+_age = Mathf.Clamp(progress, 0f, 1f) * (impact ? 0.7f : NightreignHitVfx.GrandFinaleAnticipationSeconds);
         QueueRedraw();
     }
 
@@ -80,7 +80,7 @@ public partial class DuchessMidnightWaltzVfx : Node2D
 
         // Grand Finale deliberately holds damage until its spotlight, wind-up,
         // slash and hit cue have completed. Keep the exact production timing.
-        await Cmd.Wait(NGrandFinaleVfx.totalAnticipationDuration, false);
+await Cmd.Wait(NightreignHitVfx.GrandFinaleAnticipationSeconds, false);
     }
 
     public static Node2D CreateImpact(Creature target)
@@ -109,7 +109,7 @@ public partial class DuchessMidnightWaltzVfx : Node2D
         if (_manual) return;
         _age += (float)delta;
         float lifetime = _phase == Phase.Prelude
-            ? NGrandFinaleVfx.totalAnticipationDuration + 0.12f
+? NightreignHitVfx.GrandFinaleAnticipationSeconds + 0.12f
             : 0.7f;
         if (_age >= lifetime)
         {
@@ -129,7 +129,7 @@ public partial class DuchessMidnightWaltzVfx : Node2D
 
     private void DrawPrelude()
     {
-        float duration = NGrandFinaleVfx.totalAnticipationDuration;
+float duration = NightreignHitVfx.GrandFinaleAnticipationSeconds;
         float t = Mathf.Clamp(_age / duration, 0f, 1f);
         float swell = Mathf.SmoothStep(0f, 1f, t);
         Vector2 size = GetViewportRect().Size;

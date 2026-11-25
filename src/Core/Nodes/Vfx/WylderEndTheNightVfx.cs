@@ -29,7 +29,7 @@ public partial class WylderEndTheNightVfx : Node2D
         if (container != null && original != null) container.AddChildSafely(original);
         if (container != null && owner?.GetCreatureNode() is { } node)
             container.AddChildSafely(new WylderEndTheNightVfx { _phase = Phase.Prelude, _focus = node.VfxSpawnPosition, ZIndex = 28 });
-        await Cmd.Wait(NGrandFinaleVfx.totalAnticipationDuration, false);
+await Cmd.Wait(NightreignHitVfx.GrandFinaleAnticipationSeconds, false);
     }
 
     public static Node2D? CreateImpact(Creature target)
@@ -44,7 +44,7 @@ public partial class WylderEndTheNightVfx : Node2D
     public override void _Process(double delta)
     {
         _age += (float)delta;
-        float lifetime = _phase == Phase.Prelude ? NGrandFinaleVfx.totalAnticipationDuration + .08f : .76f;
+float lifetime = _phase == Phase.Prelude ? NightreignHitVfx.GrandFinaleAnticipationSeconds + .08f : .76f;
         if (_age >= lifetime) { QueueFree(); return; }
         QueueRedraw();
     }
@@ -56,7 +56,7 @@ public partial class WylderEndTheNightVfx : Node2D
 
     private void DrawPrelude()
     {
-        float t = Mathf.Clamp(_age / NGrandFinaleVfx.totalAnticipationDuration, 0f, 1f);
+float t = Mathf.Clamp(_age / NightreignHitVfx.GrandFinaleAnticipationSeconds, 0f, 1f);
         Vector2 size = GetViewportRect().Size;
         DrawRect(new Rect2(Vector2.Zero, size), new Color("13060A", .12f + .28f * t));
         for (int i = 0; i < 3; i++)

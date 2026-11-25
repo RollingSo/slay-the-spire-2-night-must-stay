@@ -178,7 +178,8 @@ internal static class WylderGrantedDesperation
                 if (legal.Length == 0) return false;
                 target = card.Owner.RunState.Rng.CombatTargets.NextItem(legal);
             }
-            if (card.TargetType == TargetType.AnyPlayer) target = card.Owner.Creature;
+            if (card.TargetType == TargetType.AnyPlayer || card is WylderTwinToken)
+                target = card.Owner.Creature;
             await CardCmd.AutoPlay(c, card, target);
             return true;
         }

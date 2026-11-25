@@ -25,7 +25,8 @@ internal static class IroneyeHybridTargetState
     public static CardModel ActiveCard => ActiveCardPlays.Values.FirstOrDefault();
 
     public static bool IsHybridTargetCard(CardModel card) =>
-        card is WylderGrappleShot
+        card is WylderTwinToken
+            or WylderGrappleShot
             or AdvanceAndRetreat
             or IroneyeSwift
             or AncientDragonLightning { IsChargeComplete: false }
@@ -50,6 +51,8 @@ internal static class IroneyeHybridTargetState
     {
         if (!creature.IsAlive)
             return false;
+        if (card is WylderTwinToken)
+            return creature.Player != null && creature.Side == card.Owner.Creature.Side;
         if (card is EmergencyRestore)
         {
             RevenantSummonManager manager = RevenantSummonManager.For(card.Owner);
@@ -62,6 +65,23 @@ internal static class IroneyeHybridTargetState
         if (card is IRevenantChargeCard { IsChargeComplete: true })
             return creature.Side != card.Owner.Creature.Side;
         return creature.Side != card.Owner.Creature.Side || creature == card.Owner.Creature;
+    }
+}
+
+[HarmonyPatch(typeof(CardModel), nameof(CardModel.CanPlay), new[] {
+    typeof(UnplayableReason), typeof(AbstractModel) },
+    new[] { ArgumentType.Out, ArgumentType.Out })]
+internal static class TwinTokenCanPlayPatch
+{
+    [HarmonyPostfix]
+    private static void AllowLivingOwner(CardModel __instance, ref UnplayableReason reason, ref bool __result)
+    {
+        if (__instance is WylderTwinToken && reason.HasFlag(UnplayableReason.NoLivingAllies)
+            && __instance.Owner.Creature.IsAlive)
+        {
+            reason &= ~UnplayableReason.NoLivingAllies;
+            __result = reason == UnplayableReason.None;
+        }
     }
 }
 
@@ -202,13 +222,16 @@ internal static class AdvanceAndRetreatControllerTargetingPatch
         NControllerCardPlay play,
         CardModel card)
     {
-        IEnumerable<Creature> targets = card is EmergencyRestore
-            ? GetEmergencyRestoreTargets(card)
-            : card.CombatState.GetOpponentsOf(card.Owner.Creature)
+        IEnumerable<Creature> targets = card switch
+        {
+            WylderTwinToken => card.CombatState.PlayerCreatures,
+            EmergencyRestore => GetEmergencyRestoreTargets(card),
+            _ => card.CombatState.GetOpponentsOf(card.Owner.Creature)
                 .Where(creature => creature.IsHittable)
                 .Prepend(card.Owner.Creature)
-                .Where(creature => IroneyeHybridTargetState.IsValid(creature, card));
+        };
         List<NCreature> nodes = targets
+            .Where(creature => IroneyeHybridTargetState.IsValid(creature, card))
             .Select(creature => NCombatRoom.Instance.GetCreatureNode(creature))
             .OfType<NCreature>()
             .ToList();
@@ -220,7 +243,7 @@ internal static class AdvanceAndRetreatControllerTargetingPatch
 
         NTargetManager manager = NTargetManager.Instance;
         manager.StartTargeting(
-            TargetType.AnyEnemy,
+            card is WylderTwinToken ? TargetType.AnyAlly : TargetType.AnyEnemy,
             play.Holder.CardNode,
             TargetMode.Controller,
             () => !GodotObject.IsInstanceValid(play),
@@ -230,7 +253,7 @@ internal static class AdvanceAndRetreatControllerTargetingPatch
 
         Node selected = await manager.SelectionFinished();
         NCombatRoom.Instance.EnableControllerNavigation();
-        if (!GodotObject.IsInstanceValid(play) || selected == null)
+        if (!GodotObject.IsInstanceValid(play))
             return;
 
         Creature target = selected switch

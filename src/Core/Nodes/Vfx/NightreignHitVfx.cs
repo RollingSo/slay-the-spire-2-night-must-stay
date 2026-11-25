@@ -7,6 +7,9 @@ namespace NightMustStay.Core.Nodes.Vfx;
 /// <summary>Compatibility entry points. Production drawing and audio live in each character's effect suite.</summary>
 public partial class NightreignHitVfx : Node2D
 {
+    // This is the wait used by the base game's Grand Finale after the named field was removed.
+    internal const float GrandFinaleAnticipationSeconds = 1.625f;
+
     public static Node2D? CreateIroneyeShot(Creature attacker, Creature target) =>
         IroneyeAttackEffects.Create(target, IroneyeAttackVfx.Kind.Shot, attacker);
 

@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using HarmonyLib;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands.Builders;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
@@ -13,22 +14,28 @@ namespace NightMustStay.Core.Patches;
 [HarmonyPatch(typeof(AttackCommand), nameof(AttackCommand.Execute), typeof(PlayerChoiceContext))]
 public static class GuardCounterAttackPatch
 {
+    [HarmonyPrefix]
+    private static void CaptureCombat(AttackCommand __instance, out ICombatState __state) =>
+        __state = __instance.Attacker?.CombatState;
+
     [HarmonyPostfix]
-    public static void AfterAttack(ref Task<AttackCommand> __result)
+    public static void AfterAttack(ref Task<AttackCommand> __result, ICombatState __state)
     {
-        __result = ResolveGuardCounters(__result);
+        __result = ResolveGuardCounters(__result, __state);
     }
 
-    private static async Task<AttackCommand> ResolveGuardCounters(Task<AttackCommand> attackTask)
+    private static async Task<AttackCommand> ResolveGuardCounters(Task<AttackCommand> attackTask, ICombatState startingCombat)
     {
         AttackCommand command = await attackTask;
         Creature attacker = command.Attacker;
-        if (attacker == null)
+        // v0.114 can detach an enemy that died during its own attack before this postfix runs.
+        var combat = attacker?.CombatState ?? startingCombat;
+        if (attacker == null || combat == null)
         {
             return command;
         }
 
-        foreach (Creature playerCreature in attacker.CombatState.PlayerCreatures)
+        foreach (Creature playerCreature in combat.PlayerCreatures)
         {
             var resultsAgainstPlayer = command.Results.SelectMany(hitResults => hitResults)
                 .Where(result => result.Receiver == playerCreature)

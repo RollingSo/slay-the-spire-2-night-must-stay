@@ -107,7 +107,9 @@ internal static partial class WylderBattleArtRegression
                 CardModel card = Card(spec.Model, upgraded);
                 decimal raw = upgraded ? spec.UpgradeDamage : spec.Damage;
                 card.DynamicVars.Damage.UpdateCardPreview(card, CardPreviewMode.Normal, _enemies[0], true);
-                Check(card.DynamicVars.Damage.PreviewValue == raw * (pursuit ? 1.5m : 1m), "Native Pursuit preview " + card.Id);
+                // v0.114 resolves targeted previews through integer DamageResults.
+                Check(Math.Floor(card.DynamicVars.Damage.PreviewValue) == Math.Floor(raw * (pursuit ? 1.5m : 1m)),
+                    "Native Pursuit preview " + card.Id);
                 Play(card);
                 int hits = card is WylderStormBlade && pursuit ? 3 : spec.Hits;
                 Check(Attacks.Count == 1 && Attacks[0] == (spec.Aoe, hits, raw), "One native attack builder/hit count/targeting " + card.Id);
@@ -147,7 +149,7 @@ internal static partial class WylderBattleArtRegression
             AddPower<VulnerablePower>(_enemies[0], 1);
             var vacuum = Card(ModelDb.Card<WylderVacuumSlice>(), false);
             vacuum.DynamicVars.Damage.UpdateCardPreview(vacuum, CardPreviewMode.Normal, _enemies[0], true);
-            Check(vacuum.DynamicVars.Damage.PreviewValue == 22.5m, "Strength/Vulnerable/Pursuit native preview");
+            Check(Math.Floor(vacuum.DynamicVars.Damage.PreviewValue) == 22m, "Strength/Vulnerable/Pursuit native preview");
             Play(vacuum);
             Check(ResolvedDamage.SequenceEqual(new decimal[] { 22, 15 }) && Rewards.Count == 2
                 && Rewards.All(reward => reward.Kind == nameof(WeakPower) && reward.Amount == 2), "Modified AOE damage crosses Break20 on one target and applies Weak once to each enemy");
@@ -156,7 +158,7 @@ internal static partial class WylderBattleArtRegression
             AddPower<VulnerablePower>(_enemies[0], 1);
             var lion = Card(ModelDb.Card<WylderLionsClaw>(), true);
             lion.DynamicVars.Damage.UpdateCardPreview(lion, CardPreviewMode.Normal, _enemies[0], true);
-            Check(lion.DynamicVars.Damage.PreviewValue == 40.5m, "Lion native Strength/Vulnerable preview");
+            Check(Math.Floor(lion.DynamicVars.Damage.PreviewValue) == 40m, "Lion native Strength/Vulnerable preview");
             Play(lion);
             Check(ResolvedDamage.Single() == 40
                 && Rewards.Any(r => r.Kind == nameof(PhantomImbalancePower) && r.Amount == 3 && r.Target == _enemies[0]),

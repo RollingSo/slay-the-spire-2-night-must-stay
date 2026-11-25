@@ -72,7 +72,7 @@ public static class GuardianAttackEffects
         container.AddChildSafely(original);
         container.AddChildSafely(new GuardianHeavenfallPreludeVfx {
             GlobalPosition = node.VfxSpawnPosition, ZIndex = 27 });
-        await Cmd.Wait(NGrandFinaleVfx.totalAnticipationDuration, false);
+await Cmd.Wait(NightreignHitVfx.GrandFinaleAnticipationSeconds, false);
     }
 
     public static void PlaySpecial(Creature target, GuardianSpecialAttackVfx.Kind kind, bool echoOnly = false)

@@ -45,7 +45,7 @@ internal static class WylderLatestBatchRegression
                 && moonlight.EnergyCost.GetResolved() == 1
                 && moonlight.DynamicVars["Freeze"].BaseValue == (upgraded ? 3 : 2), "Moonlight Sword metadata and upgrade");
             Check(twin.Type == CardType.Skill && twin.Rarity == CardRarity.Uncommon
-                && twin.TargetType == TargetType.AnyPlayer
+                && twin.TargetType == TargetType.AnyAlly
                 && twin.MultiplayerConstraint == CardMultiplayerConstraint.MultiplayerOnly
                 && twin.EnergyCost.GetResolved() == (upgraded ? 0 : 1), "Twin Token metadata and upgrade");
             Check(inspire.Type == CardType.Skill && inspire.Rarity == CardRarity.Uncommon

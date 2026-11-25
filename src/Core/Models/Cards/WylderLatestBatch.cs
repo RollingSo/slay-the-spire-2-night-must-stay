@@ -41,7 +41,8 @@ public sealed class WylderTwinToken : WylderCard
 {
     private bool _transferred;
 
-    public WylderTwinToken() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyPlayer) { }
+    // Use the native targeted-card path. The hybrid targeting patch also allows the card owner.
+    public WylderTwinToken() : base(1, CardType.Skill, CardRarity.Uncommon, TargetType.AnyAlly) { }
     public override CardMultiplayerConstraint MultiplayerConstraint => CardMultiplayerConstraint.MultiplayerOnly;
     protected override IEnumerable<IHoverTip> ExtraHoverTips =>
         base.ExtraHoverTips.Concat(HoverTipFactory.FromCardWithCardHoverTips<WylderSixthSense>(false));

@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Localization.DynamicVars;
 using MegaCrit.Sts2.Core.Models;
+using NightMustStay.Core.Compatibility;
 
 namespace NightMustStay.Core.Models.Cards
 {
@@ -52,7 +53,7 @@ namespace NightMustStay.Core.Models.Cards
             if (base.IsUpgraded)
             {
                 card = (CardModel)card.MutableClone();
-                card.UpgradeInternal();
+                Sts2BranchCompat.UpgradeInternal(card);
             }
 
             return card.Title;
